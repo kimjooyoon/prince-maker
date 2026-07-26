@@ -122,6 +122,17 @@ void main() {
     expect(find.byKey(const ValueKey('4-2-0-0')), findsOneWidget);
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/save.png'));
   });
+  testWidgets('ending collection survives a restart', (tester) async {
+    await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아'}));
+    await tester.pumpAndSettle();
+    for (var i = 0; i < 11; i++) { await tester.tapAt(const Offset(200, 550)); await tester.pump(); }
+    await tester.tapAt(const Offset(500, 440));
+    await tester.pump();
+    await tester.tapAt(const Offset(300, 550));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('4-1-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/collection.png'));
+  });
   testWidgets('canonical SSOT renders a stable Canvas home', (tester) async {
     final source = jsonDecode(await rootBundle.loadString('story/story.json')) as Map;
     await tester.pumpWidget(Game(Map<String, dynamic>.from(source)));

@@ -50,7 +50,7 @@ void main() {
   }
   final uiEvidence = File('test/golden_test.dart').existsSync() ? File('test/golden_test.dart').readAsStringSync() : '';
   final readmeEvidence = File('README.md').existsSync() ? File('README.md').readAsStringSync() : '';
-  const goldenNames = {'home.png', 'milestone.png', 'event.png', 'illustration.png', 'ending.png', 'save.png', 'restart.png', 'canonical-home.png'};
+  const goldenNames = {'home.png', 'milestone.png', 'event.png', 'illustration.png', 'ending.png', 'save.png', 'restart.png', 'canonical-home.png', 'collection.png'};
   final goldenFiles = Directory('test/goldens').existsSync()
       ? Directory('test/goldens').listSync().whereType<File>().map((f) => f.uri.pathSegments.last).toSet()
       : <String>{};
@@ -68,7 +68,7 @@ void main() {
     'inputContract': uiEvidence.contains('750, 580') && uiEvidence.contains('300, 580') && uiEvidence.contains('650, 550'),
     'saveContinuity': coreEvidence.contains('restore returns the saved page for reload continuity') && File('lib/save_adapter_web.dart').existsSync(),
     'terminalSafety': coreEvidence.contains('completed campaign rejects stale event input too') && storyEvidence.contains('12-week route'),
-    'purity': purityEvidence.contains('same schedule budget yields distinct authored outcomes') && purityEvidence.contains("'stargazer-master'") && purityEvidence.contains("'gardener-master'"),
+    'purity': purityEvidence.contains('same schedule budget yields distinct authored outcomes') && purityEvidence.contains("'stargazer-master'") && purityEvidence.contains("'gardener-master'") && File('test/collection_test.dart').existsSync() && uiEvidence.contains('ending collection survives a restart'),
   };
   final score = (dimensions.values.where((v) => v).length * 100 / dimensions.length).round();
   if (score < 95) fail('completeness score below 95%: $score%');
