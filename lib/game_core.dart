@@ -7,12 +7,12 @@ class JsonStoryAdapter implements StoryPort { JsonStoryAdapter(this.source); fin
 class MemorySaveAdapter implements SavePort { String? value; @override void write(String value) => this.value = value; @override String? read() => value; }
 
 sealed class GameEvent { const GameEvent(); }
-class ActivityChosen extends GameEvent { const ActivityChosen(this.stat, this.delta, this.coins); final String stat; final int delta, coins; }
+class ActivityChosen extends GameEvent { const ActivityChosen(this.stat, this.delta, this.coins, this.fatigue); final String stat; final int delta, coins, fatigue; }
 class StoryChoiceMade extends GameEvent { const StoryChoiceMade(this.stat, this.delta, this.coins, this.label); final String stat, label; final int delta, coins; }
 class WeekAdvanced extends GameEvent { const WeekAdvanced(); }
 
 class StatsComponent { StatsComponent(this.values); final Map<String, int> values; }
-class ProgressComponent { int week = 1; int coins = 12; int selected = 0; int persona = 0; int eventIndex = 0; final trace = <String>[]; }
+class ProgressComponent { int week = 1; int coins = 12; int fatigue = 0; int selected = 0; int persona = 0; int eventIndex = 0; final trace = <String>[]; }
 
 /// DOD/ECS core: components are data, systems consume ordered events.
 class GameWorld {
@@ -21,9 +21,9 @@ class GameWorld {
   final progress = <Entity, ProgressComponent>{};
   final _queue = <GameEvent>[];
   void dispatch(GameEvent event) { _queue.add(event); while (_queue.isNotEmpty) _system(_queue.removeAt(0)); }
-  void _system(GameEvent e) { final s = stats[0]!.values, p = progress[0]!; switch (e) { case ActivityChosen(:final stat, :final delta, :final coins): s[stat] = s[stat]! + delta; p.coins += coins; p.trace.add('activity:$stat'); case StoryChoiceMade(:final stat, :final delta, :final coins, :final label): s[stat] = s[stat]! + delta; p.coins += coins; p.trace.add('event:$label'); case WeekAdvanced(): p.week++; } }
-  GameSnapshot snapshot({int page = 0}) { final p = progress[0]!; return GameSnapshot(week: p.week, coins: p.coins, selected: p.selected, persona: p.persona, page: page, eventIndex: p.eventIndex, stats: Map.of(stats[0]!.values), history: List.of(p.trace)); }
-  void restore(GameSnapshot s) { final p = progress[0]!; p.week=s.week; p.coins=s.coins; p.selected=s.selected; p.persona=s.persona; p.eventIndex=s.eventIndex; p.trace..clear()..addAll(s.history); stats[0]!.values..clear()..addAll(s.stats); }
+  void _system(GameEvent e) { final s = stats[0]!.values, p = progress[0]!; switch (e) { case ActivityChosen(:final stat, :final delta, :final coins, :final fatigue): s[stat] = s[stat]! + delta; p.coins += coins; p.fatigue += fatigue; p.trace.add('activity:$stat'); case StoryChoiceMade(:final stat, :final delta, :final coins, :final label): s[stat] = s[stat]! + delta; p.coins += coins; p.trace.add('event:$label'); case WeekAdvanced(): p.week++; } }
+  GameSnapshot snapshot({int page = 0}) { final p = progress[0]!; return GameSnapshot(week: p.week, coins: p.coins, fatigue: p.fatigue, selected: p.selected, persona: p.persona, page: page, eventIndex: p.eventIndex, stats: Map.of(stats[0]!.values), history: List.of(p.trace)); }
+  void restore(GameSnapshot s) { final p = progress[0]!; p.week=s.week; p.coins=s.coins; p.fatigue=s.fatigue; p.selected=s.selected; p.persona=s.persona; p.eventIndex=s.eventIndex; p.trace..clear()..addAll(s.history); stats[0]!.values..clear()..addAll(s.stats); }
 }
 
 /// Application port: UI sends commands; adapters handle story and saves.

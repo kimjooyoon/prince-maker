@@ -16,6 +16,7 @@ void main() {
   if (events.map((e) => e['week']).toList().join(',') != '4,8') fail('events must occur at weeks 4 and 8');
   for (final ref in refs) { final path = (ref['ref'] as String).split('#').first; if (!File(path).existsSync()) fail('missing code ref $path'); final actual = sha256.convert(File(path).readAsBytesSync()).toString(); if (actual != ref['sha256']) fail('code ref hash drift: $path'); }
   final stats = activities.map((e) => e['stat']).toSet();
+  if (activities.any((e) => e['fatigue'] is! int || e['fatigue'] < 0)) fail('every activity needs non-negative fatigue');
   for (final event in events) {
     final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
     if (choices.length != 2) fail('each event needs exactly 2 choices');

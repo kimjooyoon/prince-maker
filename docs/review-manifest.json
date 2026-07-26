@@ -2,13 +2,13 @@
   "schema": "agent-review-v1",
   "reviewedRef": "docs/game-completeness.md#deterministic-loop-v1",
   "reviewedFiles": [
-    {"path":"story/story.json","ref":"story/story.json#root","sha256":"1fc1afe1a5d3f5423773bd54140231b7d9bef74173fbef8c4046fb4f12c8808f"},
-    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"56cf1a1b511e028381296105c50263020f3b92e64e7f5377e0195660123acf2c"},
-    {"path":"lib/game_core.dart","ref":"lib/game_core.dart#GameWorld+GameSession","sha256":"7518a19fc68e5b47bf90ba30b768ec0040069594b252243a669256a6e837aaf0"},
-    {"path":"lib/save_state.dart","ref":"lib/save_state.dart#GameSnapshot","sha256":"d06b548fcb72fcf13f6cfc71b09f9bc535786ce870a7b3312371cc8ca47bbd35"},
+    {"path":"story/story.json","ref":"story/story.json#root","sha256":"6c6a39a96d5fd20b4a5614ac9d08eca22252a4c795a29ec34ce3844061fa835b"},
+    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"48aabcfdac55008514a29a2caed87dab41d7a1b79d6f253e3086a0c0528e31af"},
+    {"path":"lib/game_core.dart","ref":"lib/game_core.dart#GameWorld+GameSession","sha256":"5183b34b8673c566a1c74612315afb3deed4d92e7572e9c3434ffb19833dc3cc"},
+    {"path":"lib/save_state.dart","ref":"lib/save_state.dart#GameSnapshot","sha256":"dbc50b30abad5462e521f2b257e6ff56f8560432a7abccf15e32e8ceb850d578"},
     {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"5457eef597e4993c326f966f626a2e3b42f5fd510e00774135b8d3cb0b31a288"},
-    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"bf8e80c59255d6b750e466f11ec9787421c9e100ceab7fd15e5f0b909e96dded"},
-    {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"f791b5053ac6d8231a42361687e570a35433320210c7dded9099f38a9bd3fe12"},
-    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"fc96093f760a3399a8a1c07f18ba3b993d4fbd82f04a864ca74bd4f70610b902"}
+    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"65f314535a70aff64c1523592e29c9f09179e5a321024010eed1d37f5d676f00"},
+    {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"99badb8e74d6a570d027705be15d36f7d22369bf1fb21e235b51c6b9d241e5f0"},
+    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"a4f1b53ad00570a5346b4454e2f197c6dfebc91648b93e0941f8cd6f2ceb1146"}
   ]
 }

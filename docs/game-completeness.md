@@ -16,10 +16,11 @@
 | --- | --- | ---: |
 | 활동 조합 공간 | 활동 3개 × 12주 | 36 |
 | 성장 축 | 지혜·공감·용기 | 3 |
+| 리스크 축 | 피로 0–12, 활동마다 +1 | 1 |
 | 성격 대화 | 독립 성격 3개 | 3 |
 | 분기 사건 | 4·8주차 × 선택 2개 | 2 × 2 |
 | 시각 회귀 | 홈·일러스트·엔딩 Golden | 3 |
 | 자동 게이트 | SSOT 검사·Flutter test·Wasm | 3 |
-| 저장/replay | versioned JSON snapshot + trace round trip | 1 |
+| 저장/replay | `lumen-save-v2` snapshot + trace round trip | 1 |
 
 검증 스크립트는 [`tool/verify_game.dart`](../tool/verify_game.dart)이며, 실패 시 0이 아닌 종료 코드로 CI를 중단한다. 저장 코드는 [`lib/save_state.dart`](../lib/save_state.dart)의 `lumen-save-v1` 형식으로 복사/복원되고, `history` trace가 동일하게 보존된다. 현재 콘텐츠·렌더링·자동화·저장 기준 점수는 100%로 측정된다.
