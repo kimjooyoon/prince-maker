@@ -31,7 +31,7 @@
 | Canvas 입력 계약 | 활동·일러스트·성격 탭·일러스트 복귀·사건·보관소 좌표 회귀 | 1 |
 | personality campaign 경로 | 지혜·공감·용기 각 성격의 숙련 엔딩 재현 | 3 |
 | 글리프 안정성 | 번들 Noto Sans KR + Canvas 벡터 활동 아이콘 | 1 |
-| 순수성 분기 | 동일 일정 예산의 지혜·공감 경로가 서로 다른 authored 엔딩·유대를 생성 | 2 |
+| 순수성 분기 | 동일 일정 예산의 지혜·공감 경로 + 5개 SSOT 일정 정책이 서로 다른 authored 엔딩·유대·목표 서명을 생성 | 3 |
 | 자동 게이트 | SSOT 검사·해시 매니페스트·정적 분석·Flutter test·Golden·코어 benchmark·Wasm | 7 |
 | 상태 안전성 | 저장 화면 복원·종료 후 활동/사건 입력 차단 | 2 |
 | 저장/replay | 행동·사건 후 자동 `lumen-save-v6` snapshot + WASM `localStorage` 새로고침 복원 + trace round trip | 1 |
