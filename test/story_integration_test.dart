@@ -32,7 +32,7 @@ void main() {
       if (events.isNotEmpty) {
         final choices = (events.first['choices'] as List).cast<Map<String, dynamic>>();
         final choice = choices.firstWhere((c) => c['requiresStat'] == null || (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >= (c['requiresMin'] as int? ?? 0));
-        session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta']));
+        session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta'], line: choice['line']));
       }
     }
     final progress = session.world.progress[0]!, ending = resolveEnding(story, session.world.stats[0]!.values, bonds: progress.bonds, milestones: progress.milestones);

@@ -57,6 +57,12 @@ void main() {
     session.chooseEvent(const StoryChoiceMade('지혜', 2, 0, '별'));
     expect(session.world.progress[0]!.milestones['spring'], isTrue);
   });
+  test('event dialogue is part of the deterministic replay trace', () {
+    final world = GameWorld();
+    world.dispatch(const StoryChoiceMade('공감', 2, 0, '등불', bondId: 'bora', bondDelta: 4, line: '작은 빛도 함께라면 길이 돼.'));
+    expect(world.progress[0]!.lastLine, '작은 빛도 함께라면 길이 돼.');
+    expect(world.snapshot().replayTrace, contains('line:작은 빛도 함께라면 길이 돼.'));
+  });
   test('core rejects a locked choice even without the UI adapter', () {
     final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'endings': [], 'events': [], 'milestones': []});
     final session = GameSession(story, MemorySaveAdapter());
