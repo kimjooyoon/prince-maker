@@ -52,7 +52,7 @@ void main() {
   final canonicalUiEvidence = File('test/canonical_golden_test.dart').existsSync() ? File('test/canonical_golden_test.dart').readAsStringSync() : '';
   final gameplayEvidence = File('test/gameplay_metrics_test.dart').existsSync() ? File('test/gameplay_metrics_test.dart').readAsStringSync() : '';
   final readmeEvidence = File('README.md').existsSync() ? File('README.md').readAsStringSync() : '';
-  const goldenNames = {'home.png', 'milestone.png', 'event.png', 'illustration.png', 'ending.png', 'save.png', 'restart.png', 'canonical-home.png', 'collection.png', 'canonical-ending.png'};
+  const goldenNames = {'home.png', 'milestone.png', 'event.png', 'illustration.png', 'ending.png', 'save.png', 'restart.png', 'canonical-home.png', 'collection.png', 'canonical-ending.png', 'feedback.png'};
   final goldenFiles = Directory('test/goldens').existsSync()
       ? Directory('test/goldens').listSync().whereType<File>().map((f) => f.uri.pathSegments.last).toSet()
       : <String>{};
