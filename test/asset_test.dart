@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,5 +22,16 @@ void main() {
   test('bundled Korean font is loadable for deterministic Canvas text', () async {
     final bytes = await rootBundle.load('assets/fonts/NotoSansKR-Regular.ttf');
     expect(bytes.lengthInBytes, greaterThan(100000));
+  });
+  test('SSOT maps three original personality designs to unique PNG frames', () async {
+    final source = jsonDecode(await rootBundle.loadString('story/story.json')) as Map<String, dynamic>;
+    final people = (source['personalities'] as List).cast<Map<String, dynamic>>();
+    expect(people.length, 3);
+    expect(people.map((p) => p['portraitAsset']).toSet(), {'assets/lumen-personality-sheet.png'});
+    expect(people.map((p) => p['portraitFrame']).toSet(), {0, 1, 2});
+    expect(people.every((p) {
+      final design = p['design'] as Map<String, dynamic>;
+      return design['palette'] is String && design['motif'] is String && design['silhouette'] is String;
+    }), isTrue);
   });
 }

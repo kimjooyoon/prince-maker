@@ -25,7 +25,7 @@
     {"path":"test/game_core_test.dart","ref":"test/game_core_test.dart#rules","sha256":"5950019b1b423d43de914a6efaca7e4090407e47f7c5e38b1ceb0fc3a9ae859a"},
     {"path":"test/save_state_test.dart","ref":"test/save_state_test.dart#lumen-save-v6","sha256":"51a88da1f794d2d871f5f36698bf253e415db4e28c4a0c57c85ecec6ba8dc1f2"},
     {"path":"test/flutter_test_config.dart","ref":"test/flutter_test_config.dart#CanvasGoldenComparator","sha256":"3d3524871d26fc1d4c4a09f4ef953af311910689e9380ecc6aed1dde71e04182"},
-    {"path":"test/asset_test.dart","ref":"test/asset_test.dart#personality-and-hero-PNG","sha256":"9c81f6ee12f70502eb9985e9ba764f5ec14ae280809888d06e28d207704ae651"},
+    {"path":"test/asset_test.dart","ref":"test/asset_test.dart#personality-and-hero-PNG","sha256":"f31c7890300419d40062dba348e59ac5f04f93ae4f998ccd638e54f067feee47"},
     {"path":"test/story_integration_test.dart","ref":"test/story_integration_test.dart#canonical-12-week-route","sha256":"be3be496b83120499bb7a1f9c30bcbe1da20e85172ac202042c4df24e6e51887"},
     {"path":"assets/lumen-personality-sheet.png","ref":"assets/lumen-personality-sheet.png#personality-frames","sha256":"4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"},
     {"path":"assets/lumen-personality-sheet-source.png","ref":"assets/lumen-personality-sheet-source.png#chroma-key-source","sha256":"0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8"},
