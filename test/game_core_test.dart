@@ -10,6 +10,13 @@ void main() {
     expect(resolveEnding(story, {'지혜': 24, '공감': 6, '용기': 4})['id'], 'a+');
     expect(resolveEnding(story, {'지혜': 12, '공감': 6, '용기': 4})['id'], 'a');
   });
+  test('master ending requires its authored seasonal goals', () {
+    final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [], 'milestones': [{'id':'spring','week':3}], 'endings': [
+      {'id':'basic','stat':'지혜','min':12}, {'id':'master','stat':'지혜','min':24,'requiresMilestones':['spring']}
+    ]});
+    expect(resolveEnding(story, {'지혜': 30, '공감': 1, '용기': 1}, milestones: {'spring': false})['id'], 'basic');
+    expect(resolveEnding(story, {'지혜': 30, '공감': 1, '용기': 1}, milestones: {'spring': true})['id'], 'master');
+  });
   test('fatigue is a bounded risk and rest restores it', () {
     final world = GameWorld()..progress[0]!.fatigue = 8;
     world.dispatch(const ActivityChosen('지혜', 3, 0, 1));
@@ -32,7 +39,7 @@ void main() {
   });
   test('bond threshold adds a deterministic companion epilogue', () {
     final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [{'id':'lumi','bondThreshold':8,'epilogue':'별표'}], 'endings': [{'id':'a','stat':'지혜','min':1,'title':'별'}]});
-    expect(resolveEnding(story, {'지혜': 2}, {'lumi': 8})['epilogue'], '별표');
+    expect(resolveEnding(story, {'지혜': 2}, bonds: {'lumi': 8})['epilogue'], '별표');
   });
   test('season milestone resolves once with its authored reward', () {
     final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [], 'milestones': [{'id':'spring','week':3,'title':'봄','stat':'지혜','min':8,'coins':3,'pass':'달성','fail':'실패'}], 'endings': []});

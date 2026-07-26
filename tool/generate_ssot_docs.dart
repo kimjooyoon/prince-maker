@@ -29,7 +29,7 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln('\n## 사건\n');
   for (final e in events) { b.writeln('### ${e['week']}주차 · ${e['title']}\n\n${e['body']}'); for (final c in (e['choices'] as List)) b.writeln('- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']}, ${c['bondId']} 유대 +${c['bondDelta']}${c['requiresStat'] == null ? '' : ', 조건 ${c['requiresStat']} ≥ ${c['requiresMin']}'} · “${c['line']}”'); }
   b.writeln('\n## 엔딩\n');
-  for (final e in endings) b.writeln('- **${e['title']}** (`${e['id']}`): ${e['stat']} ≥ ${e['min']} · ${e['body']}');
+  for (final e in endings) b.writeln('- **${e['title']}** (`${e['id']}`): ${e['stat']} ≥ ${e['min']}${(e['requiresMilestones'] as List? ?? []).isEmpty ? '' : ' · 목표 ${((e['requiresMilestones'] as List).join(', '))}'} · ${e['body']}');
   return b.toString();
 }
 void main(List<String> args) {

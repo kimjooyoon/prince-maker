@@ -17,10 +17,11 @@ void main() {
         session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta']));
       }
     }
-    final progress = session.world.progress[0]!, ending = resolveEnding(story, session.world.stats[0]!.values, progress.bonds);
+    final progress = session.world.progress[0]!, ending = resolveEnding(story, session.world.stats[0]!.values, bonds: progress.bonds, milestones: progress.milestones);
     expect(progress.week, 12);
     expect(progress.milestones.length, 4);
     expect(progress.bonds['bora'], 12);
+    expect(ending['id'], 'stargazer-master');
     expect(ending['epilogue'], isNotNull);
     expect(progress.trace.where((e) => e.startsWith('milestone:')).length, 4);
   });

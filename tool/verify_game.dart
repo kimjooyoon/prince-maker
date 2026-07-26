@@ -29,7 +29,7 @@ void main() {
   for (final ref in assetRefs) { final path = (ref['ref'] as String).split('#').first; if (!File(path).existsSync()) fail('missing asset ref $path'); final actual = sha256.convert(File(path).readAsBytesSync()).toString(); if (actual != ref['sha256']) fail('asset ref hash drift: $path'); }
   for (final ref in fontRefs) { final path = (ref['ref'] as String).split('#').first; if (!File(path).existsSync()) fail('missing font ref $path'); final actual = sha256.convert(File(path).readAsBytesSync()).toString(); if (actual != ref['sha256']) fail('font ref hash drift: $path'); }
   final stats = activities.map((e) => e['stat']).toSet();
-  if (endings.any((e) => !stats.contains(e['stat']) || e['min'] is! int || e['min'] < 1)) fail('ending stat/min contract invalid');
+  if (endings.any((e) => !stats.contains(e['stat']) || e['min'] is! int || e['min'] < 1 || ((e['requiresMilestones'] as List? ?? []).any((id) => !milestones.any((m) => m['id'] == id))))) fail('ending stat/min/milestone contract invalid');
   if ({...endings.map((e) => e['id'])}.length != endings.length) fail('ending ids are not unique');
   if (endings.map((e) => e['stat']).toSet().length != stats.length) fail('every growth axis needs an ending');
   if (activities.any((e) => e['fatigue'] is! int || e['fatigue'] < -2 || e['fatigue'] > 2 || e['coins'] is! int)) fail('activity risk/reward contract invalid');
