@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:prince_maker/main.dart';
 
 void main() {
@@ -119,5 +121,13 @@ void main() {
     await tester.pump();
     expect(find.byKey(const ValueKey('4-2-0-0')), findsOneWidget);
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/save.png'));
+  });
+  testWidgets('canonical SSOT renders a stable Canvas home', (tester) async {
+    final source = jsonDecode(await rootBundle.loadString('story/story.json')) as Map;
+    await tester.pumpWidget(Game(Map<String, dynamic>.from(source)));
+    await tester.pumpAndSettle();
+    await tester.runAsync(() async => Future<void>.delayed(const Duration(seconds: 1)));
+    await tester.pump();
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/canonical-home.png'));
   });
 }

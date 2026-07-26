@@ -28,6 +28,7 @@ git config core.hooksPath .githooks
 ![12주 엔딩 화면](test/goldens/ending.png)
 ![replay 기록 보관소 화면](test/goldens/save.png)
 ![새 캠페인 재시작 화면](test/goldens/restart.png)
+![SSOT에서 직접 렌더링한 canonical 홈](test/goldens/canonical-home.png)
 
 ## SSOT와 게임성 지표
 
@@ -45,7 +46,7 @@ git config core.hooksPath .githooks
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 5개 활동 × 12주 = 60개의 계획 조합, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 3개 성격 대화, 3명 동료 유대도·에필로그, 4개 계절 목표·보상, 6개 고정 사건(각 2선택, 조건부 잠금 포함), 6개 엔딩·12개 사건 선택의 18/18 도달성 계약 테스트, 7개 골든 화면, 세 성격 숙련 엔딩 campaign 3종, 피로 기반 성장 페널티, 사건 대사 replay, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 목표·유대 포함 `lumen-save-v6` trace, 12주 이후 추가 입력을 차단하는 terminal 상태 불변식입니다.
+현재 지표: 5개 활동 × 12주 = 60개의 계획 조합, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 3개 성격 대화, 3명 동료 유대도·에필로그, 4개 계절 목표·보상, 6개 고정 사건(각 2선택, 조건부 잠금 포함), 6개 엔딩·12개 사건 선택의 18/18 도달성 계약 테스트, fixture 7개와 실제 SSOT canonical 1개의 8개 골든 화면, 세 성격 숙련 엔딩 campaign 3종, 피로 기반 성장 페널티, 사건 대사 replay, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 목표·유대 포함 `lumen-save-v6` trace, 12주 이후 추가 입력을 차단하는 terminal 상태 불변식입니다.
 
 ## 장기 설계 기준
 
