@@ -3,6 +3,11 @@
   "setting": "바람과 별빛이 공존하는 작은 영지 루멘",
   "hero": "노아",
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
+  "personalities": [
+    {"id":"quiet","name":"고요한 관찰자","voice":"짧고 신중하게 말한다.","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래."},
+    {"id":"kind","name":"다정한 연결자","voice":"상대의 마음을 먼저 살핀다.","line":"네가 웃으면 정원도 조금 더 환해지는 것 같아."},
+    {"id":"bold","name":"용감한 개척자","voice":"실수해도 먼저 움직인다.","line":"길이 없다면, 오늘 한 걸음으로 만들면 돼!"}
+  ],
   "activities": [
     {"id":"observatory","label":"별 관측","icon":"✦","hint":"지혜 +3 · 피로 +1","stat":"지혜","delta":3},
     {"id":"garden","label":"정원 돌보기","icon":"❈","hint":"공감 +3 · 피로 +1","stat":"공감","delta":3},
