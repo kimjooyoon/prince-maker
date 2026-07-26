@@ -20,6 +20,7 @@ JsonStoryAdapter BrowserSaveAdapter / MemorySaveAdapter / GameSnapshot
 - `GameWorld.dispatch`는 FIFO 큐를 drain하며 한 번에 하나의 시스템 전이만 적용한다.
 - 같은 이벤트 배열과 같은 SSOT를 주면 같은 `GameSnapshot`과 `replayTrace`가 나온다.
 - 같은 목표·유대 상태를 주면 같은 엔딩과 1–3성 `rank` 결산이 나온다.
+- 진행 `SavePort`와 캠페인 간 `CollectionPort`는 분리된다. 전자는 `lumen-save-v6`, 후자는 WASM `localStorage`의 `lumen-collection-v1` 키를 사용한다.
 
 ## EDA와 Hexagonal 경계
 
