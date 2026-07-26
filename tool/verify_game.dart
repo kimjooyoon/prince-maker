@@ -214,6 +214,7 @@ void main() {
     'save.png',
     'restart.png',
     'canonical-home.png',
+    'canonical-event.png',
     'collection.png',
     'canonical-ending.png',
     'feedback.png',
