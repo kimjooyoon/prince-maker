@@ -57,4 +57,11 @@ void main() {
     session.chooseEvent(const StoryChoiceMade('지혜', 2, 0, '별'));
     expect(session.world.progress[0]!.milestones['spring'], isTrue);
   });
+  test('core rejects a locked choice even without the UI adapter', () {
+    final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'endings': [], 'events': [], 'milestones': []});
+    final session = GameSession(story, MemorySaveAdapter());
+    session.chooseEvent(const StoryChoiceMade('용기', 9, 0, '잠긴 길', requiresStat: '지혜', requiresMin: 99));
+    expect(session.world.stats[0]!.values['용기'], 3);
+    expect(session.world.progress[0]!.lastResult, contains('조건 부족'));
+  });
 }

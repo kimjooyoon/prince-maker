@@ -32,6 +32,8 @@ void main() {
   if (endings.any((e) => !stats.contains(e['stat']) || e['min'] is! int || e['min'] < 1 || ((e['requiresMilestones'] as List? ?? []).any((id) => !milestones.any((m) => m['id'] == id))))) fail('ending stat/min/milestone contract invalid');
   if ({...endings.map((e) => e['id'])}.length != endings.length) fail('ending ids are not unique');
   if (endings.map((e) => e['stat']).toSet().length != stats.length) fail('every growth axis needs an ending');
+  final masters = endings.where((e) => (e['id'] as String).endsWith('-master')).toList();
+  if (masters.length != stats.length || masters.any((e) => (e['requiresMilestones'] as List? ?? []).isEmpty)) fail('every growth axis needs a milestone-gated master ending');
   if (activities.any((e) => e['fatigue'] is! int || e['fatigue'] < -2 || e['fatigue'] > 2 || e['coins'] is! int)) fail('activity risk/reward contract invalid');
   for (final event in events) {
     final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
