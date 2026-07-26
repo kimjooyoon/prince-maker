@@ -103,6 +103,15 @@ void main() {
     expect(restored.stats['공감'], 6);
     expect(restored.replayTrace, contains('event:등불'));
   });
+  test('restore returns the saved page for reload continuity', () {
+    final save = MemorySaveAdapter();
+    final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'milestones': [], 'events': [], 'endings': []});
+    final source = GameSession(story, save);
+    source.persist(page: 2);
+    final restored = GameSession(story, save);
+    expect(restored.restore()!.page, 2);
+    expect(restored.snapshot().week, 1);
+  });
   test('starting a new campaign clears the previous save adapter state', () {
     final save = MemorySaveAdapter()..write('old');
     save.clear();

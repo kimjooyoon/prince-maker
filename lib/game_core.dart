@@ -36,6 +36,6 @@ class GameSession {
   void chooseEvent(StoryChoiceMade e) { final p = world.progress[0]!; if (e.requiresStat != null && (world.stats[0]!.values[e.requiresStat] ?? 0) < e.requiresMin) { p.lastResult = '조건 부족 · ${e.requiresStat} $e.requiresMin 필요'; persist(); return; } world.dispatch(e); _resolveMilestone(); persist(); }
   void _resolveMilestone() { final m = story.milestones.where((m) => m['week'] == world.progress[0]!.week && !world.progress[0]!.milestones.containsKey(m['id'])).firstOrNull; if (m != null) world.dispatch(MilestoneResolved(m['id'], m['title'], m['stat'], m['min'], m['coins'], m['pass'], m['fail'])); }
   void persist({int page = 0}) => save.write(world.snapshot(page: page).encode());
-  void restore() { final raw = save.read(); if (raw != null) world.restore(GameSnapshot.decode(raw)); }
+  GameSnapshot? restore() { final raw = save.read(); if (raw == null) return null; final snapshot = GameSnapshot.decode(raw); world.restore(snapshot); return snapshot; }
   GameSnapshot snapshot({int page = 0}) => world.snapshot(page: page);
 }

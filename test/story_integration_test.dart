@@ -48,4 +48,25 @@ void main() {
     expect((await play('공감', 1))['id'], 'gardener-master');
     expect((await play('용기', 2))['id'], 'pathfinder-master');
   });
+  test('every authored ending and event choice is reachable under its contract', () async {
+    final source = jsonDecode(await rootBundle.loadString('story/story.json')) as Map<String, dynamic>;
+    final story = JsonStoryAdapter(source);
+    for (final ending in story.endings) {
+      final stats = {'지혜': 1, '공감': 1, '용기': 1};
+      stats[ending['stat'] as String] = (ending['min'] as int) + 10;
+      final milestones = {for (final id in (ending['requiresMilestones'] as List? ?? const [])) '$id': true};
+      expect(resolveEnding(story, stats, milestones: milestones)['id'], ending['id']);
+    }
+    for (final event in story.events) {
+      for (final raw in (event['choices'] as List).cast<Map<String, dynamic>>()) {
+        final session = GameSession(story, MemorySaveAdapter());
+        final required = raw['requiresStat'] as String?;
+        if (required != null) session.world.stats[0]!.values[required] = raw['requiresMin'] as int;
+        final before = session.world.stats[0]!.values[raw['stat'] as String]!;
+        session.chooseEvent(StoryChoiceMade(raw['stat'], raw['delta'], raw['coins'], raw['label'], bondId: raw['bondId'], bondDelta: raw['bondDelta'], requiresStat: required, requiresMin: raw['requiresMin'] ?? 0, line: raw['line']));
+        expect(session.world.stats[0]!.values[raw['stat'] as String], before + (raw['delta'] as int));
+        expect(session.world.progress[0]!.trace.last, startsWith('event:${raw['label']}'));
+      }
+    }
+  });
 }

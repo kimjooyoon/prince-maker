@@ -49,9 +49,10 @@ void main() {
     }
   }
   final uiEvidence = File('test/golden_test.dart').existsSync() ? File('test/golden_test.dart').readAsStringSync() : '';
+  final storyEvidence = File('test/story_integration_test.dart').existsSync() ? File('test/story_integration_test.dart').readAsStringSync() : '';
   final dimensions = <String, bool>{
     'content': activities.length >= 5 && people.length >= 3 && companions.length >= 3 && milestones.length == 4,
-    'branching': events.length >= 4 && events.every((e) => (e['choices'] as List).length == 2) && endings.length >= 6,
+    'branching': events.length >= 4 && events.every((e) => (e['choices'] as List).length == 2) && endings.length >= 6 && storyEvidence.contains('every authored ending and event choice is reachable'),
     'determinism': File('test/game_core_test.dart').existsSync() && File('test/story_integration_test.dart').existsSync() && File('test/save_state_test.dart').existsSync(),
     'visual': Directory('test/goldens').existsSync() && Directory('test/goldens').listSync().whereType<File>().where((f) => f.path.endsWith('.png')).length >= 5,
     'assets': assetRefs.length >= 4 && fontRefs.isNotEmpty,
