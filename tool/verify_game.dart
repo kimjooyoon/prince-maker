@@ -49,8 +49,9 @@ void main() {
     }
   }
   final uiEvidence = File('test/golden_test.dart').existsSync() ? File('test/golden_test.dart').readAsStringSync() : '';
+  final canonicalUiEvidence = File('test/canonical_golden_test.dart').existsSync() ? File('test/canonical_golden_test.dart').readAsStringSync() : '';
   final readmeEvidence = File('README.md').existsSync() ? File('README.md').readAsStringSync() : '';
-  const goldenNames = {'home.png', 'milestone.png', 'event.png', 'illustration.png', 'ending.png', 'save.png', 'restart.png', 'canonical-home.png', 'collection.png'};
+  const goldenNames = {'home.png', 'milestone.png', 'event.png', 'illustration.png', 'ending.png', 'save.png', 'restart.png', 'canonical-home.png', 'collection.png', 'canonical-ending.png'};
   final goldenFiles = Directory('test/goldens').existsSync()
       ? Directory('test/goldens').listSync().whereType<File>().map((f) => f.uri.pathSegments.last).toSet()
       : <String>{};
@@ -63,7 +64,7 @@ void main() {
     'content': activities.length >= 5 && people.length >= 3 && companions.length >= 3 && milestones.length == 4,
     'branching': events.length >= 4 && events.every((e) => (e['choices'] as List).length == 2) && endings.length >= 6 && storyEvidence.contains('every authored ending and event choice is reachable'),
     'determinism': File('test/game_core_test.dart').existsSync() && File('test/story_integration_test.dart').existsSync() && File('test/save_state_test.dart').existsSync(),
-    'visual': goldenFiles.containsAll(goldenNames) && goldenNames.every((name) => readmeEvidence.contains('test/goldens/$name')) && uiEvidence.contains('matchesGoldenFile'),
+    'visual': goldenFiles.containsAll(goldenNames) && goldenNames.every((name) => readmeEvidence.contains('test/goldens/$name')) && (uiEvidence + canonicalUiEvidence).contains('matchesGoldenFile') && canonicalUiEvidence.contains('canonical SSOT renders a stable Canvas ending'),
     'assets': assetRefs.length >= 4 && fontRefs.isNotEmpty,
     'traceability': refs.length >= 3 && File('docs/review-manifest.json').existsSync() && File('docs/ssot-metrics.md').existsSync(),
     'delivery': File('.github/workflows/verify.yml').existsSync() && File('.githooks/pre-commit').existsSync(),

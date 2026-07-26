@@ -16,7 +16,7 @@
 | 사건 | 6 | `events.length` |
 | 사건 선택 | 12 | 모든 사건 choices 합계 |
 | 엔딩 | 6 | `endings.length` |
-| Canvas Golden | 9 | `test/goldens/*.png` |
+| Canvas Golden | 10 | `test/goldens/*.png` |
 | 코드 ref | 9 | `codeRefs.length` |
 | 이미지 ref | 4 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
