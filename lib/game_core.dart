@@ -1,10 +1,11 @@
 import 'save_state.dart';
 
 typedef Entity = int;
-abstract interface class StoryPort { List<Map<String, dynamic>> get events; }
+abstract interface class StoryPort { List<Map<String, dynamic>> get events; List<Map<String, dynamic>> get endings; }
 abstract interface class SavePort { void write(String value); String? read(); }
-class JsonStoryAdapter implements StoryPort { JsonStoryAdapter(this.source); final Map<String, dynamic> source; @override List<Map<String, dynamic>> get events => (source['events'] as List? ?? []).cast<Map<String, dynamic>>(); }
+class JsonStoryAdapter implements StoryPort { JsonStoryAdapter(this.source); final Map<String, dynamic> source; @override List<Map<String, dynamic>> get events => (source['events'] as List? ?? []).cast<Map<String, dynamic>>(); @override List<Map<String, dynamic>> get endings => (source['endings'] as List? ?? []).cast<Map<String, dynamic>>(); }
 class MemorySaveAdapter implements SavePort { String? value; @override void write(String value) => this.value = value; @override String? read() => value; }
+Map<String, dynamic> resolveEnding(StoryPort story, Map<String, int> stats) { final winner = stats.entries.reduce((a, b) => a.value > b.value ? a : b); return story.endings.firstWhere((e) => e['stat'] == winner.key, orElse: () => {'id': 'unwritten', 'title': '루멘의 다음 장', 'stat': winner.key}); }
 
 sealed class GameEvent { const GameEvent(); }
 class ActivityChosen extends GameEvent { const ActivityChosen(this.stat, this.delta, this.coins, this.fatigue); final String stat; final int delta, coins, fatigue; }

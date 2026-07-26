@@ -4,8 +4,8 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"48aabcfdac55008514a29a2caed87dab41d7a1b79d6f253e3086a0c0528e31af"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession","sha256":"5183b34b8673c566a1c74612315afb3deed4d92e7572e9c3434ffb19833dc3cc"},
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"23b5c910ee14481d7a8d0d62569c84879cd349677ef4477e16e4e37f5037ce8b"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"205a7736de97d228b2b6c37981cf13efb99f5878314dc3726221a352e0f16871"},
     {"ref":"lib/save_state.dart#GameSnapshot","sha256":"dbc50b30abad5462e521f2b257e6ff56f8560432a7abccf15e32e8ceb850d578"}
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
@@ -13,6 +13,11 @@
     {"id":"quiet","name":"고요한 관찰자","voice":"짧고 신중하게 말한다.","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래."},
     {"id":"kind","name":"다정한 연결자","voice":"상대의 마음을 먼저 살핀다.","line":"네가 웃으면 정원도 조금 더 환해지는 것 같아."},
     {"id":"bold","name":"용감한 개척자","voice":"실수해도 먼저 움직인다.","line":"길이 없다면, 오늘 한 걸음으로 만들면 돼!"}
+  ],
+  "endings": [
+    {"id":"stargazer","stat":"지혜","min":12,"title":"루멘의 별읽기꾼","body":"노아는 밤하늘의 결을 읽어 영지의 항로를 밝히는 사람이 되었다."},
+    {"id":"gardener","stat":"공감","min":12,"title":"마음의 정원사","body":"노아는 서로 다른 마음이 함께 피어나는 정원을 만들었다."},
+    {"id":"pathfinder","stat":"용기","min":12,"title":"새 길의 개척자","body":"노아는 아직 이름 없는 길에 첫 발자국을 남겼다."}
   ],
   "activities": [
     {"id":"observatory","label":"별 관측","icon":"✦","hint":"지혜 +3 · 피로 +1","stat":"지혜","delta":3,"fatigue":1},

@@ -10,6 +10,9 @@
 flutter pub get
 flutter run -d chrome
 flutter build web --wasm --release
+
+# 한 번만 설정하면 이후 커밋 때 동일한 검증을 자동 실행합니다.
+git config core.hooksPath .githooks
 ```
 
 ## 골든 테스트 증적
@@ -24,7 +27,7 @@ flutter build web --wasm --release
 
 스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, 일러스트 페이지에서 상반신 대화 연출로 사용합니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
-초기 지표: 3개 활동 × 12주 = 36개의 계획 조합, 3개 성장축(지혜·공감·용기), 3개 성격 대화, 3개 골든 화면, 1회 행동 입력당 1회 상태 전이, 12주 종료 판정 1개, versioned save/replay trace 1개입니다.
+초기 지표: 3개 활동 × 12주 = 36개의 계획 조합, 3개 성장축(지혜·공감·용기), 3개 성격 대화, 3개 골든 화면, 3개 authored 엔딩, 1회 행동 입력당 1회 상태 전이, 12주 종료 판정, versioned save/replay trace입니다.
 
 ## 장기 설계 기준
 
