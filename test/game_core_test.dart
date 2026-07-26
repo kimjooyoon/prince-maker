@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/game_core.dart';
+import 'package:prince_maker/save_state.dart';
 
 void main() {
   test('same stats resolve to the same authored ending', () {
@@ -90,5 +91,16 @@ void main() {
     expect(session.world.stats[0]!.values['지혜'], 4);
     expect(session.world.progress[0]!.coins, 12);
     expect(session.world.progress[0]!.lastResult, contains('기록이 완성되었습니다'));
+  });
+  test('activity and event commands automatically persist the latest snapshot', () {
+    final save = MemorySaveAdapter();
+    final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'milestones': [], 'events': [{'week':2,'choices':[{'stat':'공감','delta':1,'coins':0,'label':'등불'}]}], 'endings': []});
+    final session = GameSession(story, save);
+    session.choose(const ActivityChosen('지혜', 2, 0, 0, label: '관측'));
+    expect(GameSnapshot.decode(save.read()!).week, 2);
+    session.chooseEvent(const StoryChoiceMade('공감', 1, 0, '등불'));
+    final restored = GameSnapshot.decode(save.read()!);
+    expect(restored.stats['공감'], 6);
+    expect(restored.replayTrace, contains('event:등불'));
   });
 }

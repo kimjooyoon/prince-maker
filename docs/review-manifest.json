@@ -2,9 +2,9 @@
   "schema": "agent-review-v1",
   "reviewedRef": "docs/game-completeness.md#deterministic-loop-v1",
   "reviewedFiles": [
-    {"path":"story/story.json","ref":"story/story.json#root","sha256":"aa1db85779d04794de9bbdc5ff2899038cc48cf5471ce9d0ee8d985320aa1007"},
-    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"07bb79a438dc5c00fa4faf97ad6bc9c7f992586d4ce4943f3d686c85bc35c0e1"},
-    {"path":"lib/game_core.dart","ref":"lib/game_core.dart#GameWorld+GameSession","sha256":"d823bcb80109d4d684077c13ab19c0b4b8101a4ca6592808fdecc79b5a38a302"},
+    {"path":"story/story.json","ref":"story/story.json#root","sha256":"b8c4d73ad6c54fa19a582b39a7e9dd262e30395a4bebe8694636f5e86f9eaa06"},
+    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"268f27dd00b4ea585e573eef1670d2fccff1f54e8109b7b06ea37f7d91870a9d"},
+    {"path":"lib/game_core.dart","ref":"lib/game_core.dart#GameWorld+GameSession","sha256":"0c38c82be0138184616c522c8fdd2b310ace1181f3f0408b08d13250eab5e714"},
     {"path":"lib/save_state.dart","ref":"lib/save_state.dart#GameSnapshot","sha256":"2aa9d60d2176154b6e205c43b727926e5ec1a0692505ce8cfaf20bec56a360bb"},
     {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"ec19b674600b94d50ded8b001233b919d8aa80834440e2178b7b1b1d2554e7a6"},
     {"path":"test/goldens/home.png","ref":"test/goldens/home.png#golden","sha256":"8abc2e6c24e047228cde7a018a4e8725c97b64723b01c49cbed5c1acfb795663"},
@@ -13,12 +13,12 @@
     {"path":"test/goldens/milestone.png","ref":"test/goldens/milestone.png#season-goal","sha256":"b821164286a88346703ce26fc821434fa6fc77330e82246a1828ecd4ef33a4c9"},
     {"path":"test/goldens/event.png","ref":"test/goldens/event.png#event-choice","sha256":"5a6183a4cbc722a2ce71bd117fcafb0596fda887cd98acc50cbc5b4acd55f155"},
     {"path":"test/goldens/save.png","ref":"test/goldens/save.png#replay-archive","sha256":"95a38fe2c2e420b9453bcd2f03992e2dd5c31e8145406683152b4a95f2cc73e0"},
-    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"a31a09518d36b189e71817ac98fee534164258edd2caf45f5cc64fe9d2dc9a26"},
-    {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"1e745789ad66831b86ef0bfd34496cc9821da41ca9ef1a913f4e04c0f7463aae"},
-    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"077f7a5cb42d2adc2d35736828e8f39aa6629d072d287a3f0ec88d7dffcf8370"},
+    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"bdb68a1938256c6ed19b98552274480d9a533cba2c8e89fbec3cf7d0820504e0"},
+    {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"05bd58467d8a82a05fabeeac91f90a0585a47ed4166a2f16acc3928c7ee3b7a6"},
+    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"23b5ce36f0cca4fd45faddd35360c678a786a6c3e1f322ad94ad511765740602"},
     {"path":"docs/design-system.md","ref":"docs/design-system.md#personality_portrait","sha256":"35fc9136d22c0b44aa20e6ddc23efb4e5cb4f1fd81e8591bf67666b9dc1493d9"},
     {"path":"docs/art-provenance.md","ref":"docs/art-provenance.md#design-contract","sha256":"f3e1406bf31171a18d1901614b4c16bfd69ed61acd283e1e621fcfae655744bd"},
-    {"path":"test/game_core_test.dart","ref":"test/game_core_test.dart#rules","sha256":"af58f1f53b96708e9ec93d54e7557f1cfe9395bc07e1659f68a54752c9b17b50"},
+    {"path":"test/game_core_test.dart","ref":"test/game_core_test.dart#rules","sha256":"45b6db388de09219bee004fa7c9944cca96a5a23e17bd8e2d1486a8766913b87"},
     {"path":"test/save_state_test.dart","ref":"test/save_state_test.dart#lumen-save-v6","sha256":"51a88da1f794d2d871f5f36698bf253e415db4e28c4a0c57c85ecec6ba8dc1f2"},
     {"path":"test/flutter_test_config.dart","ref":"test/flutter_test_config.dart#CanvasGoldenComparator","sha256":"e8bf55353325ae987816e8c2b0ec4773cc6beedce6b3a33fc046f23643de2509"},
     {"path":"test/asset_test.dart","ref":"test/asset_test.dart#personality-and-hero-PNG","sha256":"9c81f6ee12f70502eb9985e9ba764f5ec14ae280809888d06e28d207704ae651"},
@@ -30,6 +30,6 @@
     {"path":"pubspec.yaml","ref":"pubspec.yaml#assets-and-fonts","sha256":"2551f8632c164929ec06c5047d13c67a63a9a800a7eec8e11203b5f8dc68029f"},
     {"path":"tool/generate_ssot_docs.dart","ref":"tool/generate_ssot_docs.dart#render","sha256":"0d162f901642a4de5f5458b549390302bbd3c8a5da62f0a1ddbdbb33732edf03"},
     {"path":"tool/verify_game.dart","ref":"tool/verify_game.dart#assetRefs-and-fontRefs-and-score","sha256":"48350ce4e09fe34664c09a76b66b15bb0a2a84c8271e6f6fc629834ed0484bc4"},
-    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"ff45170aa13ea0e25905751211cc80bfe4d24b8b1a1bd2d8e9809d8b37da1f3a"}
+    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"6080c306a2b52b2745b21579d37a2184797e5e629e2d191861373c646b356594"}
   ]
 }
