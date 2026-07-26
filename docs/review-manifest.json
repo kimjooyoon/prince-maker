@@ -17,7 +17,7 @@
     {"path":"test/goldens/event.png","ref":"test/goldens/event.png#event-choice","sha256":"5a6183a4cbc722a2ce71bd117fcafb0596fda887cd98acc50cbc5b4acd55f155"},
     {"path":"test/goldens/save.png","ref":"test/goldens/save.png#replay-archive","sha256":"dccea5eac02921ce435380425a536f37fd36ee806f44582f9db8fbfba25f8aa5"},
     {"path":"test/goldens/restart.png","ref":"test/goldens/restart.png#new-campaign","sha256":"7c2f4a79abbf63cbf699b869ad26c9f0a663899ebf2b051d0e774a85b365ad77"},
-    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"91a6c9e75243f6e35cc6944b7ff234b1c0ba8baf0fa775af72c31eebb9299460"},
+    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"317758784d42d88bbe424f82baa7f2beec0355b8f8c57c92278b1fbcbc48460e"},
     {"path":"docs/trilemma.md","ref":"docs/trilemma.md#closed-loop","sha256":"8b7b3c4a83fe22288eab70dd1d7aedc1b1efe603048ca390290e3b6996dbdb9e"},
     {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"129467cadb3f569a01aa84ca98c95c9735ac0a82c0ce180f96eab51b1d957d0a"},
     {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"58ae188834d773b0ef202bec68e628271906d3942ea7f95747fdfa59ca15b3d1"},
@@ -28,6 +28,7 @@
     {"path":"test/flutter_test_config.dart","ref":"test/flutter_test_config.dart#CanvasGoldenComparator","sha256":"3d3524871d26fc1d4c4a09f4ef953af311910689e9380ecc6aed1dde71e04182"},
     {"path":"test/asset_test.dart","ref":"test/asset_test.dart#personality-and-hero-PNG","sha256":"f31c7890300419d40062dba348e59ac5f04f93ae4f998ccd638e54f067feee47"},
     {"path":"test/story_integration_test.dart","ref":"test/story_integration_test.dart#canonical-12-week-route","sha256":"be3be496b83120499bb7a1f9c30bcbe1da20e85172ac202042c4df24e6e51887"},
+    {"path":"test/purity_integration_test.dart","ref":"test/purity_integration_test.dart#same-schedule-budget-outcomes","sha256":"39b892e4aa6cfad00d498e0d470f4f3ce823d96734d325d040764cdf6c3b81ec"},
     {"path":"assets/lumen-personality-sheet.png","ref":"assets/lumen-personality-sheet.png#personality-frames","sha256":"4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"},
     {"path":"assets/lumen-personality-sheet-source.png","ref":"assets/lumen-personality-sheet-source.png#chroma-key-source","sha256":"0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8"},
     {"path":"assets/fonts/NotoSansKR-Regular.ttf","ref":"assets/fonts/NotoSansKR-Regular.ttf#font","sha256":"c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"},
@@ -35,9 +36,9 @@
     {"path":"pubspec.yaml","ref":"pubspec.yaml#assets-and-fonts","sha256":"44bf6bb98a86d6954ae180316fa57a1335267b0bbf32724c9ab63e5449772aaa"},
     {"path":"pubspec.lock","ref":"pubspec.lock#resolved-dependencies","sha256":"310c9161547693da71996eb566c3c92a741c161df51f42497505f30d17b3faf6"},
     {"path":"tool/generate_ssot_docs.dart","ref":"tool/generate_ssot_docs.dart#render","sha256":"0d162f901642a4de5f5458b549390302bbd3c8a5da62f0a1ddbdbb33732edf03"},
-    {"path":"tool/verify_game.dart","ref":"tool/verify_game.dart#assetRefs-and-fontRefs-and-score","sha256":"04ede2534b3c991d8390928d32ddef2a099cb657f91a8866fa2c3b7bb298f1cd"},
+    {"path":"tool/verify_game.dart","ref":"tool/verify_game.dart#assetRefs-and-fontRefs-and-score","sha256":"d238c9de2e6cfa3890d24f8b1ef838ef5de22dc704e43711139b23b1e4d851e3"},
     {"path":"tool/benchmark_game.dart","ref":"tool/benchmark_game.dart#core-throughput","sha256":"6f8078c1843c69be7ab6b7137629109707d8c76c8a60781b98ab551b97bd26b0"},
-    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"c00a4a81615c9ff8a926832e6db3f4d3de6dee2724fc2f4c9a0636e27b476278"},
+    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"43a8a38a6156e8f4cb5a62d5b15c98bf80d2bf4fb4d74bc051f79ae9adda26e1"},
     {"path":".githooks/pre-commit","ref":".githooks/pre-commit#quality-gate","sha256":"ef4861731f6c182fdf203a6a01678360f02713c841ffee345efe692ef4e9705d"}
   ]
 }

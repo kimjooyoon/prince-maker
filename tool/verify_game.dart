@@ -51,6 +51,7 @@ void main() {
   final uiEvidence = File('test/golden_test.dart').existsSync() ? File('test/golden_test.dart').readAsStringSync() : '';
   final storyEvidence = File('test/story_integration_test.dart').existsSync() ? File('test/story_integration_test.dart').readAsStringSync() : '';
   final coreEvidence = File('test/game_core_test.dart').existsSync() ? File('test/game_core_test.dart').readAsStringSync() : '';
+  final purityEvidence = File('test/purity_integration_test.dart').existsSync() ? File('test/purity_integration_test.dart').readAsStringSync() : '';
   final dimensions = <String, bool>{
     'content': activities.length >= 5 && people.length >= 3 && companions.length >= 3 && milestones.length == 4,
     'branching': events.length >= 4 && events.every((e) => (e['choices'] as List).length == 2) && endings.length >= 6 && storyEvidence.contains('every authored ending and event choice is reachable'),
@@ -62,6 +63,7 @@ void main() {
     'inputContract': uiEvidence.contains('750, 580') && uiEvidence.contains('300, 580') && uiEvidence.contains('650, 550'),
     'saveContinuity': coreEvidence.contains('restore returns the saved page for reload continuity') && File('lib/save_adapter_web.dart').existsSync(),
     'terminalSafety': coreEvidence.contains('completed campaign rejects stale event input too') && storyEvidence.contains('12-week route'),
+    'purity': purityEvidence.contains('same schedule budget yields distinct authored outcomes') && purityEvidence.contains("'stargazer-master'") && purityEvidence.contains("'gardener-master'"),
   };
   final score = (dimensions.values.where((v) => v).length * 100 / dimensions.length).round();
   if (score < 95) fail('completeness score below 95%: $score%');
