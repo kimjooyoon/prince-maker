@@ -1,0 +1,11 @@
+{
+  "schema": "agent-review-v1",
+  "reviewedRef": "docs/game-completeness.md#deterministic-loop-v1",
+  "reviewedFiles": [
+    {"path":"story/story.json","ref":"story/story.json#root","sha256":"38408ab69485b139e961ff47d6932e1fd1e512afe8929b14b3d03d5476d1df98"},
+    {"path":"lib/main.dart","ref":"lib/main.dart#Game+Scene","sha256":"1e50b48c6ff1843dbc83774226ea32501bf1d4fbcad44559851fe20d96af590d"},
+    {"path":"lib/save_state.dart","ref":"lib/save_state.dart#GameSnapshot","sha256":"d06b548fcb72fcf13f6cfc71b09f9bc535786ce870a7b3312371cc8ca47bbd35"},
+    {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"8e247aaa0b82d8850895563f0184ba3389a01d5857df2b77919615b9c1f68edc"},
+    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"7abef60b1cdb098190e436b15ee716c28320cf7d50245f9cb36103f82c6bce79"}
+  ]
+}

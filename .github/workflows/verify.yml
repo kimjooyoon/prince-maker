@@ -9,5 +9,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: flutter pub get
       - run: dart run tool/verify_game.dart
+      - run: dart run tool/generate_ssot_docs.dart --check
+      - run: dart run tool/verify_review_manifest.dart
       - run: flutter test
       - run: flutter build web --wasm --release
