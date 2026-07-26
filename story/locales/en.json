@@ -1,6 +1,10 @@
 {
   "ui.locale.toggle": "한국어",
   "ui.locale.current": "English",
+  "ui.ending.title": "The End of 12 Weeks",
+  "ui.ending.subtitle": "Lumen remembers the direction Noa chose.",
+  "ui.ending.record": "Lumen record",
+  "ui.ending.restart": "Return to Lumen",
   "personality.quiet.name": "Quiet Observer",
   "personality.quiet.voice": "They speak briefly and carefully.",
   "personality.kind.name": "Kind Connector",

@@ -44,11 +44,17 @@ void main() {
     }
     expect(catalogs['ko']!.keys, containsAll(required));
     expect(catalogs['en']!.keys, containsAll(required));
-    expect(catalogs['ko']!.keys,
-        containsAll(['ui.locale.toggle', 'ui.locale.current']));
-    expect(catalogs['en']!.keys,
-        containsAll(['ui.locale.toggle', 'ui.locale.current']));
-    expect(catalogs['ko']!.length, 77);
-    expect(catalogs['en']!.length, 77);
+    const endingUiKeys = [
+      'ui.locale.toggle',
+      'ui.locale.current',
+      'ui.ending.title',
+      'ui.ending.subtitle',
+      'ui.ending.record',
+      'ui.ending.restart',
+    ];
+    expect(catalogs['ko']!.keys, containsAll(endingUiKeys));
+    expect(catalogs['en']!.keys, containsAll(endingUiKeys));
+    expect(catalogs['ko']!.length, 81);
+    expect(catalogs['en']!.length, 81);
   });
 }

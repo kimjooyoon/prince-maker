@@ -132,10 +132,14 @@ void main() {
     if (missing.isNotEmpty)
       fail('locale contract missing keys in $path: ${missing.join(',')}');
     if (catalog.length < (dialogueMetrics['minimumLocaleKeys'] as int? ?? 0) ||
-        !catalog.keys
-            .toSet()
-            .containsAll(['ui.locale.toggle', 'ui.locale.current']))
-      fail('locale catalog size/UI contract invalid: $path');
+        !catalog.keys.toSet().containsAll([
+          'ui.locale.toggle',
+          'ui.locale.current',
+          'ui.ending.title',
+          'ui.ending.subtitle',
+          'ui.ending.record',
+          'ui.ending.restart',
+        ])) fail('locale catalog size/UI contract invalid: $path');
   }
   final stats = activities.map((e) => e['stat']).toSet();
   if (endings.any((e) =>
@@ -213,7 +217,8 @@ void main() {
     'canonical-ending.png',
     'feedback.png',
     'english-illustration.png',
-    'english-event.png'
+    'english-event.png',
+    'english-ending.png'
   };
   final goldenFiles = Directory('test/goldens').existsSync()
       ? Directory('test/goldens')
@@ -259,7 +264,7 @@ void main() {
         canonicalUiEvidence
             .contains('canonical SSOT renders a stable Canvas ending') &&
         i18nEvidence.contains(
-            'English locale renders original personality and event dialogue') &&
+            'English locale renders original dialogue and authored ending epilogue') &&
         File('story/locales/ko.json').existsSync() &&
         File('story/locales/en.json').existsSync(),
     'localeContract': localeEvidence.contains(

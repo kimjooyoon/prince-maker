@@ -1,6 +1,10 @@
 {
   "ui.locale.toggle": "EN",
   "ui.locale.current": "한국어",
+  "ui.ending.title": "12주의 끝",
+  "ui.ending.subtitle": "루멘은 노아가 고른 방향을 기억합니다.",
+  "ui.ending.record": "루멘 기록 등급",
+  "ui.ending.restart": "다시 루멘으로",
   "personality.quiet.name": "고요한 관찰자",
   "personality.quiet.voice": "짧고 신중하게 말한다.",
   "personality.kind.name": "다정한 연결자",
