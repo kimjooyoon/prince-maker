@@ -1,10 +1,22 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 5eb6fd9fae7a7eeaa3eb0864e82de1babf5fcfba20f529a21c69a2103acac67f -->
+<!-- ssot-sha256: f594d0ea30d19868ce462e6bd24d64c0065ae39de282dd2e6c9d235c930ba2af -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
 
 바람과 별빛이 공존하는 작은 영지 루멘에서 노아는 12주 동안 스스로 선택한 내일을 걷는다.
+
+## 12주 진행도
+
+- **별씨앗의 도착** (`arrival`): 1–3주 · 낯선 기록과 첫 편지가 루멘의 평온을 흔든다. → 누구의 목소리를 먼저 믿을지 정한다. · 사건 2, 3주 · 목표 `spring`
+- **흔들리는 다리** (`crossing`): 4–6주 · 성장한 마음은 혼자 빠른 것보다 함께 건너는 법을 배운다. → 속도와 용기 중 오늘의 균형을 선택한다. · 사건 6주 · 목표 `summer`
+- **먼 곳의 답장** (`reply`): 7–9주 · 루멘 밖에서 온 부탁이 노아의 안전한 일상을 부른다. → 기록할지 떠날지, 선택의 대가를 감당한다. · 사건 8, 9주 · 목표 `autumn`
+- **겨울의 문턱** (`threshold`): 10–12주 · 축제의 빛 아래에서 지난 선택들이 하나의 방향으로 모인다. → 왕좌 대신 스스로 고른 내일의 문을 연다. · 사건 10주 · 목표 `winter`
+
+## 대사 구성 기준
+
+- locale 최소 키: **77** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **21**
+- 산식: catalog 77 = UI 2 + personality name/voice/line 9 + event title/body 12 + choice label/line 24 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units
 
 ## 생성 이미지 자산
 
@@ -19,8 +31,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `08021e3bc3e386b6884224d65b3a60f4f9e274ddcc50e6f229899e80e8935faf`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `81b3e8a49ed7c1b116a541ac683257987569fb06517f3cf8e88e097e0564d7eb`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `099646629dd4524b5dbdd12fe62f892f3ebd73dc78b770686b8c9019a86bb9d0`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `d7f0df7f26db1769ebed3eb403ce9ddbdf9ac1100e2dcd1e7d1197ef64739c26`
 
 ## 성격
 

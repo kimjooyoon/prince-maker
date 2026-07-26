@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 5eb6fd9fae7a7eeaa3eb0864e82de1babf5fcfba20f529a21c69a2103acac67f -->
+<!-- ssot-sha256: f594d0ea30d19868ce462e6bd24d64c0065ae39de282dd2e6c9d235c930ba2af -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -21,6 +21,10 @@
 | 이미지 ref | 4 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
+| 스토리 막 | 4 | `progression.length` · 1–3 / 4–6 / 7–9 / 10–12주 |
+| locale 최소 키 | 77 | `dialogueMetrics.minimumLocaleKeys` |
+| 캠페인 최소 대사 줄 | 7 | 성격 1 + 사건 선택 6 |
+| 캠페인 최소 서사 단위 | 27 | 성격·사건 제목/본문·선택·엔딩 |
 
 ## 폐쇄루프 연결
 

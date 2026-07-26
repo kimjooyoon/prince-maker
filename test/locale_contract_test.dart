@@ -1,0 +1,54 @@
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+Set<String> authoredKeys(dynamic node) {
+  final keys = <String>{};
+  if (node is Map) {
+    for (final entry in node.entries) {
+      if (entry.key is String &&
+          entry.key.toString().endsWith('Key') &&
+          entry.value is String) keys.add(entry.value as String);
+      keys.addAll(authoredKeys(entry.value));
+    }
+  } else if (node is List) {
+    for (final item in node) keys.addAll(authoredKeys(item));
+  }
+  return keys;
+}
+
+Future<Map<String, String>> loadCatalog(String locale) async {
+  final raw =
+      jsonDecode(await rootBundle.loadString('story/locales/$locale.json'))
+          as Map;
+  return raw.map((key, value) => MapEntry('$key', '$value'));
+}
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  test('all SSOT dialogue keys exist and are non-empty in every locale',
+      () async {
+    final story = jsonDecode(await rootBundle.loadString('story/story.json'));
+    final required = authoredKeys(story);
+    expect(required, isNotEmpty);
+    final catalogs = <String, Map<String, String>>{};
+    for (final locale in ['ko', 'en'])
+      catalogs[locale] = await loadCatalog(locale);
+    for (final entry in catalogs.entries) {
+      final missing = required
+          .where((key) =>
+              !entry.value.containsKey(key) || entry.value[key]!.trim().isEmpty)
+          .toList();
+      expect(missing, isEmpty,
+          reason: '${entry.key} missing SSOT keys: $missing');
+    }
+    expect(catalogs['ko']!.keys, containsAll(required));
+    expect(catalogs['en']!.keys, containsAll(required));
+    expect(catalogs['ko']!.keys,
+        containsAll(['ui.locale.toggle', 'ui.locale.current']));
+    expect(catalogs['en']!.keys,
+        containsAll(['ui.locale.toggle', 'ui.locale.current']));
+    expect(catalogs['ko']!.length, 77);
+    expect(catalogs['en']!.length, 77);
+  });
+}
