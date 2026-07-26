@@ -40,6 +40,7 @@ void main() {
       if (!stats.contains(choice['stat'])) fail('event choice targets an unknown stat');
       if (choice['delta'] is! int || choice['coins'] is! int) fail('event deltas must be ints');
       if (!companions.any((c) => c['id'] == choice['bondId']) || choice['bondDelta'] is! int || choice['bondDelta'] < 0) fail('event bond contract invalid');
+      if (choice['requiresStat'] != null && (!stats.contains(choice['requiresStat']) || choice['requiresMin'] is! int || choice['requiresMin'] < 1)) fail('event requirement contract invalid');
     }
   }
   final combinations = activities.length * (story['endingWeek'] as int);

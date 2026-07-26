@@ -27,7 +27,7 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln('\n## 계절 목표\n');
   for (final m in milestones) b.writeln('- **${m['title']}** (`${m['id']}`): ${m['week']}주차 · ${m['stat']} ≥ ${m['min']} · 성공 보상 은화 ${m['coins']} · “${m['pass']}” / “${m['fail']}”');
   b.writeln('\n## 사건\n');
-  for (final e in events) { b.writeln('### ${e['week']}주차 · ${e['title']}\n\n${e['body']}'); for (final c in (e['choices'] as List)) b.writeln('- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']}, ${c['bondId']} 유대 +${c['bondDelta']} · “${c['line']}”'); }
+  for (final e in events) { b.writeln('### ${e['week']}주차 · ${e['title']}\n\n${e['body']}'); for (final c in (e['choices'] as List)) b.writeln('- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']}, ${c['bondId']} 유대 +${c['bondDelta']}${c['requiresStat'] == null ? '' : ', 조건 ${c['requiresStat']} ≥ ${c['requiresMin']}'} · “${c['line']}”'); }
   b.writeln('\n## 엔딩\n');
   for (final e in endings) b.writeln('- **${e['title']}** (`${e['id']}`): ${e['stat']} ≥ ${e['min']} · ${e['body']}');
   return b.toString();

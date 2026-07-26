@@ -12,14 +12,15 @@ void main() {
       session.choose(const ActivityChosen('지혜', 3, 0, 1, label: '별 관측'));
       final events = story.events.where((e) => e['week'] == session.world.progress[0]!.week).toList();
       if (events.isNotEmpty) {
-        final choice = (events.first['choices'] as List).first as Map<String, dynamic>;
+        final choices = (events.first['choices'] as List).cast<Map<String, dynamic>>();
+        final choice = choices.firstWhere((c) => c['requiresStat'] == null || (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >= (c['requiresMin'] as int? ?? 0));
         session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta']));
       }
     }
     final progress = session.world.progress[0]!, ending = resolveEnding(story, session.world.stats[0]!.values, progress.bonds);
     expect(progress.week, 12);
     expect(progress.milestones.length, 4);
-    expect(progress.bonds['bora'], 8);
+    expect(progress.bonds['bora'], 12);
     expect(ending['epilogue'], isNotNull);
     expect(progress.trace.where((e) => e.startsWith('milestone:')).length, 4);
   });
