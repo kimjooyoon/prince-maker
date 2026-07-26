@@ -30,6 +30,8 @@ int runCampaigns(Map<String, dynamic> source, int campaigns) {
           choice['label'],
           bondId: choice['bondId'],
           bondDelta: choice['bondDelta'],
+          rivalId: choice['rivalId'],
+          rivalDelta: choice['rivalDelta'] ?? 0,
           requiresStat: choice['requiresStat'],
           requiresMin: choice['requiresMin'] ?? 0,
           line: choice['line'] ?? '',

@@ -4,8 +4,8 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"bc2a40f26266bbf51713a25688c6784582df5ccc5613591a3e1a8bc77ca7aaae"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"548b399ccd8fbd79afac33cfa0833b50b83dfe4fe5bfabdbacd2f6d95d519de9"},
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"6391b09adacaa55482b1b744a04acbda2cd4dec397b000ad80e7636c3b950c05"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"ea50e9ba780f6d4136be1cb03471d8f760dc85834f8479705f1f3c09859828c6"},
     {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
     {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
     {"ref":"lib/save_adapter_stub.dart#MemorySaveAdapter-fallback","sha256":"f14b98d51781f31f35a82a9259f9bace404e8197f813c5f5f4b0a8bc1a8b6875"},
@@ -41,7 +41,7 @@
       {"id":"feedback","name":"상태 피드백","target":"일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다","current":"stats, coins, fatigue, 4 milestones and 6 endings","evidence":"test/game_core_test.dart#rules"},
       {"id":"gating","name":"조건과 공개","target":"조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다","current":"3 locked choices / 4 chapter payoffs / milestone-gated master endings","evidence":"tool/verify_game.dart#scenario-contract"},
       {"id":"replay","name":"재플레이 가치","target":"동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다","current":"5 schedule policies / 4 distinct signatures / 6 endings / collection","evidence":"test/gameplay_metrics_test.dart#route-variety"},
-      {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"15 Goldens / ko+en catalogs / canonical week-4 event","evidence":"test/canonical_golden_test.dart#canonical-event-and-ending"},
+      {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"16 Goldens / ko+en catalogs / canonical week-4 event / rival feedback","evidence":"test/golden_test.dart#relationship-tension"},
       {"id":"closure","name":"종결과 회고","target":"엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다","current":"terminal input contract / save v6 / collection / SSOT campaign benchmark","evidence":"docs/trilemma.md#closed-loop"}
     ]
   },
@@ -104,8 +104,8 @@
       {"label":"타로와 종이 있는 곳을 찾아간다","labelKey":"event.bell.taro.label","stat":"용기","delta":2,"coins":-1,"bondId":"taro","bondDelta":3,"requiresStat":"용기","requiresMin":8,"line":"들리는 곳까지 직접 가보자!","lineKey":"event.bell.taro.line"}
     ]},
     {"week":8,"title":"바람이 멎은 오후","titleKey":"event.windmill.title","body":"풍차가 멈춰 온실의 창이 닫히지 않는다. 누구와 손을 맞출까?","bodyKey":"event.windmill.body","choices":[
-      {"label":"타로와 풍차를 고친다","labelKey":"event.windmill.taro.label","stat":"용기","delta":2,"coins":1,"bondId":"taro","bondDelta":2,"line":"멈춘 바람도 손을 대면 다시 움직여.","lineKey":"event.windmill.taro.line"},
-      {"label":"그늘을 만들 천을 나눈다","labelKey":"event.windmill.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":2,"line":"같은 그늘 아래라면 기다림도 덜 길어.","lineKey":"event.windmill.bora.line"}
+      {"label":"타로와 풍차를 고친다","labelKey":"event.windmill.taro.label","stat":"용기","delta":2,"coins":1,"bondId":"taro","bondDelta":2,"rivalId":"bora","rivalDelta":-1,"line":"멈춘 바람도 손을 대면 다시 움직여.","lineKey":"event.windmill.taro.line"},
+      {"label":"그늘을 만들 천을 나눈다","labelKey":"event.windmill.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":2,"rivalId":"taro","rivalDelta":-1,"line":"같은 그늘 아래라면 기다림도 덜 길어.","lineKey":"event.windmill.bora.line"}
     ]},
     {"week":9,"title":"바람의 편지","titleKey":"event.letter.title","body":"먼 영지에서 도움을 청하는 편지가 도착했다. 노아는 어떤 답을 보낼까?","bodyKey":"event.letter.body","choices":[
       {"label":"답장을 꼼꼼히 기록한다","labelKey":"event.letter.lumi.label","stat":"지혜","delta":2,"coins":1,"bondId":"lumi","bondDelta":4,"line":"정확한 말은 먼 곳에서도 길이 될 거야.","lineKey":"event.letter.lumi.line"},

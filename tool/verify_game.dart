@@ -204,12 +204,23 @@ void main() {
       if (!companions.any((c) => c['id'] == choice['bondId']) ||
           choice['bondDelta'] is! int ||
           choice['bondDelta'] < 0) fail('event bond contract invalid');
+      if (choice['rivalId'] != null &&
+          (!companions.any((c) => c['id'] == choice['rivalId']) ||
+              choice['rivalId'] == choice['bondId'] ||
+              choice['rivalDelta'] is! int)) {
+        fail('event rival bond contract invalid');
+      }
       if (choice['requiresStat'] != null &&
           (!stats.contains(choice['requiresStat']) ||
               choice['requiresMin'] is! int ||
               choice['requiresMin'] < 1))
         fail('event requirement contract invalid');
     }
+  }
+  if (!events.any((e) => (e['choices'] as List)
+      .cast<Map<String, dynamic>>()
+      .any((choice) => choice['rivalId'] != null))) {
+    fail('scenario needs at least one rival-bond choice');
   }
   final uiEvidence = File('test/golden_test.dart').existsSync()
       ? File('test/golden_test.dart').readAsStringSync()
@@ -247,6 +258,7 @@ void main() {
     'collection.png',
     'canonical-ending.png',
     'feedback.png',
+    'relationship-tension.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'

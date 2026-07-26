@@ -31,6 +31,18 @@ void main() {
     expect(find.byKey(const ValueKey('0-2-0-0')), findsOneWidget);
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/feedback.png'));
   });
+  testWidgets('rival bond choice shows relationship opportunity cost', (tester) async {
+    await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
+      {'week':2,'title':'바람이 멎은 오후','body':'누구와 손을 맞출까?','choices':[{'label':'타로와 고치기','stat':'용기','delta':2,'coins':1,'bondId':'taro','bondDelta':2,'rivalId':'bora','rivalDelta':-1,'line':'함께 고치면 다시 움직여.'},{'label':'보라와 나누기','stat':'공감','delta':2,'coins':-1,'bondId':'bora','bondDelta':2,'rivalId':'taro','rivalDelta':-1,'line':'같은 그늘이면 덜 외로워.'}]}
+    ]}));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(200, 550));
+    await tester.pump();
+    await tester.tapAt(const Offset(200, 350));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('0-2-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/relationship-tension.png'));
+  });
   testWidgets('season goal is visible before the first choice', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','milestones':[
       {'id':'spring','week':3,'title':'봄의 별씨앗','stat':'지혜','min':8,'coins':3,'pass':'달성','fail':'실패'}
