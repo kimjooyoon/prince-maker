@@ -3,6 +3,11 @@
   "setting": "바람과 별빛이 공존하는 작은 영지 루멘",
   "hero": "노아",
   "endingWeek": 12,
+  "codeRefs": [
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"56cf1a1b511e028381296105c50263020f3b92e64e7f5377e0195660123acf2c"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession","sha256":"7518a19fc68e5b47bf90ba30b768ec0040069594b252243a669256a6e837aaf0"},
+    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"d06b548fcb72fcf13f6cfc71b09f9bc535786ce870a7b3312371cc8ca47bbd35"}
+  ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
   "personalities": [
     {"id":"quiet","name":"고요한 관찰자","voice":"짧고 신중하게 말한다.","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래."},

@@ -40,7 +40,7 @@ void main() {
       {'name':'고요한 관찰자','voice':'신중','line':'별을 볼래.'},{'name':'다정한 연결자','voice':'다정','line':'함께 보자.'},{'name':'용감한 개척자','voice':'용감','line':'가 보자!'}
     ]}));
     await tester.pumpAndSettle();
-    for (var i=0; i<12; i++) { await tester.tapAt(const Offset(200, 550)); await tester.pump(); }
+    for (var i=0; i<11; i++) { await tester.tapAt(const Offset(200, 550)); await tester.pump(); }
     expect(find.byKey(const ValueKey('2-12-0-0')), findsOneWidget);
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/ending.png'));
   });
@@ -49,7 +49,7 @@ void main() {
       {'week':4,'title':'사건','body':'선택','choices':[{'label':'공감','stat':'공감','delta':2,'coins':0},{'label':'지혜','stat':'지혜','delta':2,'coins':0}]}
     ]}));
     await tester.pumpAndSettle();
-    for (var i=0; i<4; i++) { await tester.tapAt(const Offset(200, 550)); await tester.pump(); }
+    for (var i=0; i<3; i++) { await tester.tapAt(const Offset(200, 550)); await tester.pump(); }
     expect(find.byKey(const ValueKey('3-4-0-0')), findsOneWidget);
     await tester.tapAt(const Offset(120, 350));
     await tester.pump();

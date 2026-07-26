@@ -2,10 +2,13 @@
   "schema": "agent-review-v1",
   "reviewedRef": "docs/game-completeness.md#deterministic-loop-v1",
   "reviewedFiles": [
-    {"path":"story/story.json","ref":"story/story.json#root","sha256":"38408ab69485b139e961ff47d6932e1fd1e512afe8929b14b3d03d5476d1df98"},
-    {"path":"lib/main.dart","ref":"lib/main.dart#Game+Scene","sha256":"1e50b48c6ff1843dbc83774226ea32501bf1d4fbcad44559851fe20d96af590d"},
+    {"path":"story/story.json","ref":"story/story.json#root","sha256":"1fc1afe1a5d3f5423773bd54140231b7d9bef74173fbef8c4046fb4f12c8808f"},
+    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"56cf1a1b511e028381296105c50263020f3b92e64e7f5377e0195660123acf2c"},
+    {"path":"lib/game_core.dart","ref":"lib/game_core.dart#GameWorld+GameSession","sha256":"7518a19fc68e5b47bf90ba30b768ec0040069594b252243a669256a6e837aaf0"},
     {"path":"lib/save_state.dart","ref":"lib/save_state.dart#GameSnapshot","sha256":"d06b548fcb72fcf13f6cfc71b09f9bc535786ce870a7b3312371cc8ca47bbd35"},
-    {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"8e247aaa0b82d8850895563f0184ba3389a01d5857df2b77919615b9c1f68edc"},
-    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"7abef60b1cdb098190e436b15ee716c28320cf7d50245f9cb36103f82c6bce79"}
+    {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"5457eef597e4993c326f966f626a2e3b42f5fd510e00774135b8d3cb0b31a288"},
+    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"bf8e80c59255d6b750e466f11ec9787421c9e100ceab7fd15e5f0b909e96dded"},
+    {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"f791b5053ac6d8231a42361687e570a35433320210c7dded9099f38a9bd3fe12"},
+    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"fc96093f760a3399a8a1c07f18ba3b993d4fbd82f04a864ca74bd4f70610b902"}
   ]
 }
