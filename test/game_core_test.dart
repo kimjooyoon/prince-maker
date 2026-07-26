@@ -17,4 +17,10 @@ void main() {
     world.dispatch(const ActivityChosen('지혜', 0, 0, -2));
     expect(world.progress[0]!.fatigue, 7);
   });
+  test('story choices deterministically grow companion bonds', () {
+    final world = GameWorld();
+    world.dispatch(const StoryChoiceMade('공감', 2, 0, '등불', bondId: 'bora', bondDelta: 4));
+    expect(world.progress[0]!.bonds['bora'], 4);
+    expect(world.snapshot().history.single, contains('bond:bora+4'));
+  });
 }

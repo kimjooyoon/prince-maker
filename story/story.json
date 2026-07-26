@@ -4,9 +4,9 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"e8e4207c15fc5b2719d765b69c26cdf8ab32fb040d0fad5de97e0dd2d7457bdb"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"70c19e25074f35551a0d7a8b67d64ff347636e4f32197a5015dcca68d9a989f5"},
-    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"dbc50b30abad5462e521f2b257e6ff56f8560432a7abccf15e32e8ceb850d578"}
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"ab70a1f6276de1fc1d65ba3fec0d8638b1c021583165076847b9e5ce543dd633"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"30fe638698b9b5064183c30ce201ed5943143c7260247d9d53e057cc17a2c850"},
+    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"9298ae0c810d7bc44e764377c784d954414e8836254295a4fe743065dab69e79"}
   ],
   "assetRefs": [
     {"ref":"assets/lumen-personality-sheet.png#personality-frames","sha256":"4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"},
@@ -17,6 +17,11 @@
     {"id":"quiet","name":"고요한 관찰자","voice":"짧고 신중하게 말한다.","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래.","portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":0,"design":{"palette":"indigo-lavender","motif":"moon","silhouette":"short bob"}},
     {"id":"kind","name":"다정한 연결자","voice":"상대의 마음을 먼저 살핀다.","line":"네가 웃으면 정원도 조금 더 환해지는 것 같아.","portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":1,"design":{"palette":"teal-cream","motif":"flower","silhouette":"long braid"}},
     {"id":"bold","name":"용감한 개척자","voice":"실수해도 먼저 움직인다.","line":"길이 없다면, 오늘 한 걸음으로 만들면 돼!","portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":2,"design":{"palette":"coral-ochre","motif":"compass","silhouette":"short tousled hair"}}
+  ],
+  "companions": [
+    {"id":"lumi","name":"루미","role":"별자리 기록관","personality":"quiet","portraitFrame":0,"greeting":"기록은 마음이 다시 길을 찾게 해."},
+    {"id":"bora","name":"보라","role":"온실의 돌봄지기","personality":"kind","portraitFrame":1,"greeting":"함께 가꾼 시간은 쉽게 시들지 않아."},
+    {"id":"taro","name":"타로","role":"바람길 수리공","personality":"bold","portraitFrame":2,"greeting":"망가진 길도 손을 대면 다시 이어져!"}
   ],
   "endings": [
     {"id":"stargazer","stat":"지혜","min":12,"title":"루멘의 별읽기꾼","body":"노아는 밤하늘의 결을 읽어 영지의 항로를 밝히는 사람이 되었다."},
@@ -35,20 +40,20 @@
   ],
   "events": [
     {"week":3,"title":"비가 오던 밤","body":"마을의 등불이 꺼졌다. 노아는 누구의 손을 먼저 잡을까?","choices":[
-      {"label":"아이들과 등불을 나눈다","stat":"공감","delta":2,"coins":-1,"line":"작은 빛도 함께라면 길이 돼."},
-      {"label":"별을 읽어 길을 찾는다","stat":"지혜","delta":2,"coins":0,"line":"하늘은 아직 방향을 숨기지 않았어."}
+      {"label":"아이들과 등불을 나눈다","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"작은 빛도 함께라면 길이 돼."},
+      {"label":"별을 읽어 길을 찾는다","stat":"지혜","delta":2,"coins":0,"bondId":"lumi","bondDelta":4,"line":"하늘은 아직 방향을 숨기지 않았어."}
     ]},
     {"week":6,"title":"강을 건너는 법","body":"낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?","choices":[
-      {"label":"먼저 발을 내딛는다","stat":"용기","delta":2,"coins":0,"line":"떨려도, 한 걸음은 내 것이야."},
-      {"label":"모두의 속도를 맞춘다","stat":"공감","delta":2,"coins":1,"line":"같은 박자로 걸으면 강도 덜 무서워."}
+      {"label":"먼저 발을 내딛는다","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"line":"떨려도, 한 걸음은 내 것이야."},
+      {"label":"모두의 속도를 맞춘다","stat":"공감","delta":2,"coins":1,"bondId":"bora","bondDelta":4,"line":"같은 박자로 걸으면 강도 덜 무서워."}
     ]},
     {"week":9,"title":"바람의 편지","body":"먼 영지에서 도움을 청하는 편지가 도착했다. 노아는 어떤 답을 보낼까?","choices":[
-      {"label":"답장을 꼼꼼히 기록한다","stat":"지혜","delta":2,"coins":1,"line":"정확한 말은 먼 곳에서도 길이 될 거야."},
-      {"label":"직접 찾아가겠다고 약속한다","stat":"용기","delta":2,"coins":-2,"line":"기다리게 하지 않을게. 내가 갈게!"}
+      {"label":"답장을 꼼꼼히 기록한다","stat":"지혜","delta":2,"coins":1,"bondId":"lumi","bondDelta":4,"line":"정확한 말은 먼 곳에서도 길이 될 거야."},
+      {"label":"직접 찾아가겠다고 약속한다","stat":"용기","delta":2,"coins":-2,"bondId":"taro","bondDelta":4,"line":"기다리게 하지 않을게. 내가 갈게!"}
     ]},
     {"week":10,"title":"축제 전야","body":"마을 축제의 마지막 준비가 남았다. 노아는 무엇을 먼저 챙길까?","choices":[
-      {"label":"모두가 쉴 자리를 만든다","stat":"공감","delta":2,"coins":-1,"line":"즐거운 날일수록 쉬어갈 자리도 필요해."},
-      {"label":"새로운 무대를 직접 세운다","stat":"용기","delta":2,"coins":0,"line":"조금 삐뚤어도 우리 손으로 세워보자."}
+      {"label":"모두가 쉴 자리를 만든다","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"즐거운 날일수록 쉬어갈 자리도 필요해."},
+      {"label":"새로운 무대를 직접 세운다","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"line":"조금 삐뚤어도 우리 손으로 세워보자."}
     ]}
   ]
 }

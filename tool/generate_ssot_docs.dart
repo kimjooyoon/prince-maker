@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 String sha(String path) => sha256.convert(File(path).readAsBytesSync()).toString();
 String render(Map<String, dynamic> s, String hash) {
   final people = (s['personalities'] as List).cast<Map<String, dynamic>>();
+  final companions = (s['companions'] as List? ?? []).cast<Map<String, dynamic>>();
   final acts = (s['activities'] as List).cast<Map<String, dynamic>>();
   final events = (s['events'] as List).cast<Map<String, dynamic>>();
   final endings = (s['endings'] as List).cast<Map<String, dynamic>>();
@@ -15,10 +16,12 @@ String render(Map<String, dynamic> s, String hash) {
   for (final a in assets) b.writeln('- [`${a['ref']}`](../${a['ref'].toString().split('#').first}) · SHA-256 `${a['sha256']}`');
   b.writeln('\n## 성격\n');
   for (final p in people) { final d = (p['design'] as Map?) ?? {}; b.writeln('- **${p['name']}** (`${p['id']}`): ${p['voice']} “${p['line']}” · frame ${p['portraitFrame']} · `${p['portraitAsset']}` · ${d['palette']} / ${d['motif']}'); }
+  b.writeln('\n## 동료\n');
+  for (final c in companions) b.writeln('- **${c['name']}** (`${c['id']}`): ${c['role']} · ${c['personality']} · frame ${c['portraitFrame']} · “${c['greeting']}”');
   b.writeln('\n## 활동\n');
   for (final a in acts) b.writeln('- **${a['label']}** (`${a['id']}`): ${a['hint']}');
   b.writeln('\n## 사건\n');
-  for (final e in events) { b.writeln('### ${e['week']}주차 · ${e['title']}\n\n${e['body']}'); for (final c in (e['choices'] as List)) b.writeln('- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']} · “${c['line']}”'); }
+  for (final e in events) { b.writeln('### ${e['week']}주차 · ${e['title']}\n\n${e['body']}'); for (final c in (e['choices'] as List)) b.writeln('- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']}, ${c['bondId']} 유대 +${c['bondDelta']} · “${c['line']}”'); }
   b.writeln('\n## 엔딩\n');
   for (final e in endings) b.writeln('- **${e['title']}** (`${e['id']}`): ${e['stat']} ≥ ${e['min']} · ${e['body']}');
   return b.toString();
