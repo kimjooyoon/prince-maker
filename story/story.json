@@ -53,6 +53,10 @@
     {"id":"market","label":"장터 심부름","icon":"◇","hint":"은화 +6 · 피로 +1","stat":"공감","delta":0,"fatigue":1,"coins":6}
   ],
   "events": [
+    {"week":2,"title":"새벽 우편함","body":"아직 해가 오르기 전, 낯선 편지 한 장이 도착했다. 누구와 먼저 읽을까?","choices":[
+      {"label":"루미에게 별의 이름을 묻는다","stat":"지혜","delta":1,"coins":0,"bondId":"lumi","bondDelta":2,"line":"이름을 부르면 낯선 것도 조금 가까워져."},
+      {"label":"마을 게시판에 소식을 나눈다","stat":"공감","delta":1,"coins":1,"bondId":"bora","bondDelta":2,"line":"좋은 소식은 나눌수록 오래 남아."}
+    ]},
     {"week":3,"title":"비가 오던 밤","body":"마을의 등불이 꺼졌다. 노아는 누구의 손을 먼저 잡을까?","choices":[
       {"label":"아이들과 등불을 나눈다","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"작은 빛도 함께라면 길이 돼."},
       {"label":"별을 읽어 길을 찾는다","stat":"지혜","delta":2,"coins":0,"bondId":"lumi","bondDelta":4,"line":"하늘은 아직 방향을 숨기지 않았어."}
@@ -60,6 +64,10 @@
     {"week":6,"title":"강을 건너는 법","body":"낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?","choices":[
       {"label":"먼저 발을 내딛는다","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":8,"line":"떨려도, 한 걸음은 내 것이야."},
       {"label":"모두의 속도를 맞춘다","stat":"공감","delta":2,"coins":1,"bondId":"bora","bondDelta":4,"line":"같은 박자로 걸으면 강도 덜 무서워."}
+    ]},
+    {"week":8,"title":"바람이 멎은 오후","body":"풍차가 멈춰 온실의 창이 닫히지 않는다. 누구와 손을 맞출까?","choices":[
+      {"label":"타로와 풍차를 고친다","stat":"용기","delta":2,"coins":1,"bondId":"taro","bondDelta":2,"line":"멈춘 바람도 손을 대면 다시 움직여."},
+      {"label":"그늘을 만들 천을 나눈다","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":2,"line":"같은 그늘 아래라면 기다림도 덜 길어."}
     ]},
     {"week":9,"title":"바람의 편지","body":"먼 영지에서 도움을 청하는 편지가 도착했다. 노아는 어떤 답을 보낼까?","choices":[
       {"label":"답장을 꼼꼼히 기록한다","stat":"지혜","delta":2,"coins":1,"bondId":"lumi","bondDelta":4,"line":"정확한 말은 먼 곳에서도 길이 될 거야."},

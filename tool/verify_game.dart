@@ -21,7 +21,7 @@ void main() {
   if ({...companions.map((e) => e['id'])}.length != companions.length) fail('companion ids are not unique');
   if (people.any((e) => e['focusStat'] is! String || e['focusBonus'] is! int || e['focusBonus'] < 1)) fail('personality talent contract invalid');
   if (companions.any((e) => e['bondThreshold'] is! int || e['bondThreshold'] < 1 || e['epilogue'] is! String || (e['epilogue'] as String).isEmpty)) fail('companion epilogue contract invalid');
-  if (events.map((e) => e['week']).toList().join(',') != '3,6,9,10') fail('events must occur at weeks 3, 6, 9 and 10');
+  if (events.map((e) => e['week']).toList().join(',') != '2,3,6,8,9,10') fail('events must occur at weeks 2, 3, 6, 8, 9 and 10');
   final milestones = (story['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
   if (milestones.length != 4 || milestones.map((m) => m['week']).join(',') != '3,6,9,12') fail('milestones must cover the four seasons');
   if (milestones.any((m) => m['id'] is! String || m['title'] is! String || m['stat'] is! String || m['min'] is! int || m['coins'] is! int || m['pass'] is! String || m['fail'] is! String)) fail('milestone contract invalid');
