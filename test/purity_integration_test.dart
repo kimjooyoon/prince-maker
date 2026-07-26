@@ -20,7 +20,7 @@ void main() {
     }
     final p = session.world.progress[0]!;
     final ending = resolveEnding(story, session.world.stats[0]!.values, bonds: p.bonds, milestones: p.milestones);
-    return {'ending': ending['id'], 'stats': Map.of(session.world.stats[0]!.values), 'bonds': Map.of(p.bonds), 'trace': p.trace.length};
+    return {'ending': ending['id'], 'stats': Map.of(session.world.stats[0]!.values), 'bonds': Map.of(p.bonds), 'trace': List.of(p.trace)};
   }
 
   test('same schedule budget yields distinct authored outcomes', () async {
@@ -29,6 +29,11 @@ void main() {
     expect(empathy['ending'], 'gardener-master');
     expect(wisdom['stats'], isNot(equals(empathy['stats'])));
     expect(wisdom['bonds'], isNot(equals(empathy['bonds'])));
-    expect(wisdom['trace'], empathy['trace']);
+    expect((wisdom['trace'] as List).length, (empathy['trace'] as List).length);
+  });
+
+  test('same schedule and event policy replay identically', () async {
+    final first = await play('지혜', 3), replay = await play('지혜', 3);
+    expect(replay, equals(first));
   });
 }
