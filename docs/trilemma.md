@@ -4,7 +4,7 @@
 
 | 축 | 플레이어에게 의미 | 자동 증거 |
 | --- | --- | --- |
-| 완전성 | 콘텐츠·분기·저장·화면이 끝까지 이어지는가 | `verify_game.dart` 11차원, 18/18 authored branch, Golden 7종 |
+| 완전성 | 콘텐츠·분기·저장·화면이 끝까지 이어지는가 | `verify_game.dart` 11차원, 18/18 authored branch, Golden 8종(SSOT canonical 포함) |
 | 순수성 | 선택이 스탯·관계·목표·엔딩을 바꾸며 다시 플레이할 이유가 있는가 | 활동 5개, 성장축 3개, 동료 3명, 목표 4개, 사건 6개, 엔딩 6개, 60개 일정 조합 |
 | 성능 | 같은 입력을 빠르고 재현 가능하게 처리하는가 | `benchmark_game.dart` 5,000 campaign / 120,000 core transitions, 5초 예산 |
 
