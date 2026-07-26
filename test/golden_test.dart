@@ -53,7 +53,7 @@ void main() {
       {'name':'고요한 관찰자','voice':'신중','line':'별을 볼래.'},{'name':'다정한 연결자','voice':'다정','line':'함께 보자.'},{'name':'용감한 개척자','voice':'용감','line':'가 보자!'}
     ]}));
     await tester.pumpAndSettle();
-    await tester.tapAt(const Offset(620, 550));
+    await tester.tapAt(const Offset(500, 550));
     await tester.pump();
     await tester.runAsync(() async => Future<void>.delayed(const Duration(seconds: 1)));
     await tester.pump();
@@ -88,5 +88,18 @@ void main() {
     await tester.tapAt(const Offset(300, 550));
     await tester.pump();
     expect(find.byKey(const ValueKey('4-1-0-0')), findsOneWidget);
+  });
+  testWidgets('save archive exposes recent replay evidence', (tester) async {
+    await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아'}));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(200, 300));
+    await tester.pump();
+    await tester.tapAt(const Offset(650, 550));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('0-2-0-0')), findsOneWidget);
+    await tester.tapAt(const Offset(300, 550));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('4-2-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/save.png'));
   });
 }

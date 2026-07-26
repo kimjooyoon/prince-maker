@@ -2,19 +2,20 @@
   "schema": "agent-review-v1",
   "reviewedRef": "docs/game-completeness.md#deterministic-loop-v1",
   "reviewedFiles": [
-    {"path":"story/story.json","ref":"story/story.json#root","sha256":"e2089862bb2f07258cd8fcabce66790ddd93adb630dd53f6a408ebb8d71d697e"},
-    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"3a673d5101b7f55ef1c050d9641691b5e8d71e9aa1b392f997e312cbcf249bf3"},
+    {"path":"story/story.json","ref":"story/story.json#root","sha256":"213896a22d53c0b61171458a318063d51c2b03585a5431d7672dc4a4057c15a3"},
+    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"c9b3b7c685358ef3c0f75942a1586868cebfebb19c514d05c304316f097ddc6e"},
     {"path":"lib/game_core.dart","ref":"lib/game_core.dart#GameWorld+GameSession","sha256":"629067a07ae5132c8276b05f4fc3e91a26093a891ff0e4d8d7491917a39e07b6"},
     {"path":"lib/save_state.dart","ref":"lib/save_state.dart#GameSnapshot","sha256":"2aa9d60d2176154b6e205c43b727926e5ec1a0692505ce8cfaf20bec56a360bb"},
-    {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"4aae8b929a1fff747ce339dc9d0c4b8c5b4d391eb64d7a068217941516e7faba"},
+    {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"14b1ef93730fdd917c07162fcc26a1b531282d492a93247b9e498ba52f5fe706"},
     {"path":"test/goldens/home.png","ref":"test/goldens/home.png#golden","sha256":"db97b1467a45c212defc9788f7c60b02a3db2e0d7911a920f4717a889b3d71e3"},
     {"path":"test/goldens/illustration.png","ref":"test/goldens/illustration.png#personality-portrait","sha256":"c4d829fb5f4f4d560696fcfba3598a493f589c3123b9f05cf8da9aa2c3596e94"},
     {"path":"test/goldens/ending.png","ref":"test/goldens/ending.png#golden","sha256":"8eef50ead7d0c036808138b25136ed78bfa282558b80b0dab361aeb3899a177e"},
     {"path":"test/goldens/milestone.png","ref":"test/goldens/milestone.png#season-goal","sha256":"bccfc1ce858a3dc5c0685bf53fcf781dd3166f4938c6135394b2c03eeaebf230"},
     {"path":"test/goldens/event.png","ref":"test/goldens/event.png#event-choice","sha256":"5a6183a4cbc722a2ce71bd117fcafb0596fda887cd98acc50cbc5b4acd55f155"},
-    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"f7e2708e5cbfd390624995dd8f6a82e3955300bfdbd93b0648c01c55b451f7ec"},
+    {"path":"test/goldens/save.png","ref":"test/goldens/save.png#replay-archive","sha256":"95a38fe2c2e420b9453bcd2f03992e2dd5c31e8145406683152b4a95f2cc73e0"},
+    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"770129c1984ffe9edbd557d1b6e1650f90d5fcaf4269d01400db05409f7faad4"},
     {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"1e745789ad66831b86ef0bfd34496cc9821da41ca9ef1a913f4e04c0f7463aae"},
-    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"dd7eb47ca18ae6d578a7901b4b02b4635a17875eff8dae1062fbf4f8f69e15d7"},
+    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"13b8e25668d8284a65d1c5d44ac2343aa16357b8c051b37515b87254027df720"},
     {"path":"docs/design-system.md","ref":"docs/design-system.md#personality_portrait","sha256":"35fc9136d22c0b44aa20e6ddc23efb4e5cb4f1fd81e8591bf67666b9dc1493d9"},
     {"path":"docs/art-provenance.md","ref":"docs/art-provenance.md#design-contract","sha256":"f3e1406bf31171a18d1901614b4c16bfd69ed61acd283e1e621fcfae655744bd"},
     {"path":"test/game_core_test.dart","ref":"test/game_core_test.dart#rules","sha256":"8d78ee3b42c99938169fd407bd44ffa8fcc605453d0d7594e55a0c735e48b929"},
@@ -29,6 +30,6 @@
     {"path":"pubspec.yaml","ref":"pubspec.yaml#assets-and-fonts","sha256":"2551f8632c164929ec06c5047d13c67a63a9a800a7eec8e11203b5f8dc68029f"},
     {"path":"tool/generate_ssot_docs.dart","ref":"tool/generate_ssot_docs.dart#render","sha256":"0d162f901642a4de5f5458b549390302bbd3c8a5da62f0a1ddbdbb33732edf03"},
     {"path":"tool/verify_game.dart","ref":"tool/verify_game.dart#assetRefs-and-fontRefs-and-score","sha256":"635251ec30180e5de3ee7a6353b99cd8dea0ca82f90792d0589c925302b81c4d"},
-    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"684fbefe031c222ce862acc5b2ca2d5978a068acdff6043cd88d743d6856b875"}
+    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"14d49b634ed87c2b2c5365a4be06df59ab72d154211f29aa7b64636ca1af3a10"}
   ]
 }
