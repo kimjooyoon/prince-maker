@@ -4,7 +4,7 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"e2d1411639811eccb659a6c1729e82dbe357c753be5defa3ca2dfadbdef53b96"},
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"284b97ad13073439b48c40b5783065cf932104e8e3bbc4a32645387229db7993"},
     {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"bc5d18ac5c73e269f9381aac80c33c619c8a3140c61c78b9c2bd7bd16ba967a8"},
     {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
     {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
