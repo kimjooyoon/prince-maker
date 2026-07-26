@@ -19,6 +19,18 @@ void main() {
     expect(find.byKey(const ValueKey('3-3-0-0')), findsOneWidget);
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/event.png'));
   });
+  testWidgets('event choice shows a separated result banner', (tester) async {
+    await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
+      {'week':2,'title':'첫 번째 편지','body':'누구와 먼저 읽을까?','choices':[{'label':'루미에게 묻기','stat':'지혜','delta':1,'coins':0,'bondId':'lumi','bondDelta':2,'line':'이름을 부르면 가까워져.'},{'label':'마을에 나누기','stat':'공감','delta':1,'coins':1,'bondId':'bora','bondDelta':2,'line':'좋은 소식은 오래 남아.'}]}
+    ]}));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(200, 550));
+    await tester.pump();
+    await tester.tapAt(const Offset(200, 350));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('0-2-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/feedback.png'));
+  });
   testWidgets('season goal is visible before the first choice', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','milestones':[
       {'id':'spring','week':3,'title':'봄의 별씨앗','stat':'지혜','min':8,'coins':3,'pass':'달성','fail':'실패'}
