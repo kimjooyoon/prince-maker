@@ -4,6 +4,8 @@
 
 화면은 Flutter 위젯 카드가 아니라 `CustomPaint`/`Canvas`를 기준으로 그립니다. 입력은 얇은 `GestureDetector`가 좌표를 게임 상태 전이로 바꾸고, 상태·도형·텍스트는 한 개의 painter에서 결정론적으로 렌더링합니다.
 
+한글 Golden 재현성을 위해 [Noto Sans KR](https://github.com/google/fonts/tree/main/ofl/notosanskr)을 OFL 폰트 자산으로 번들합니다. 캐릭터와 UI 일러스트는 이 폰트와 독자 PNG 시트만 사용하며 원작의 이미지·문구·캐릭터를 복제하지 않습니다.
+
 ## 실행
 
 ```bash
@@ -37,7 +39,7 @@ git config core.hooksPath .githooks
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 5개 활동 × 12주 = 60개의 계획 조합, 3개 성장축(지혜·공감·용기), 3개 성격 대화, 3명 동료 유대도, 4개 고정 사건(각 2선택), 3개 골든 화면, 6개 authored 엔딩 티어, 피로 기반 성장 페널티, 유대 포함 versioned save/replay trace입니다.
+현재 지표: 5개 활동 × 12주 = 60개의 계획 조합, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개, 3개 성격 대화, 3명 동료 유대도·에필로그, 4개 고정 사건(각 2선택), 3개 골든 화면, 6개 authored 엔딩 티어, 피로 기반 성장 페널티, 행동 결과 피드백, 유대 포함 versioned save/replay trace입니다.
 
 ## 장기 설계 기준
 

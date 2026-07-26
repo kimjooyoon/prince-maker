@@ -18,3 +18,7 @@ flutter:
     - story/story.json
     - assets/noa-sprite-sheet.png
     - assets/lumen-personality-sheet.png
+  fonts:
+    - family: NotoSansKR
+      fonts:
+        - asset: assets/fonts/NotoSansKR-Regular.ttf

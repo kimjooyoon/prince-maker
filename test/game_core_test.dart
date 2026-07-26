@@ -23,4 +23,15 @@ void main() {
     expect(world.progress[0]!.bonds['bora'], 4);
     expect(world.snapshot().history.single, contains('bond:bora+4'));
   });
+  test('selected personality gives a deterministic focus bonus', () {
+    final story = JsonStoryAdapter({'personalities': [{'focusStat':'지혜','focusBonus':1}], 'endings': [], 'events': [], 'companions': []});
+    final session = GameSession(story, MemorySaveAdapter());
+    session.choose(const ActivityChosen('지혜', 3, 0, 1, label: '별 관측'));
+    expect(session.world.stats[0]!.values['지혜'], 8);
+    expect(session.world.progress[0]!.lastResult, contains('성격 재능 +1'));
+  });
+  test('bond threshold adds a deterministic companion epilogue', () {
+    final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [{'id':'lumi','bondThreshold':8,'epilogue':'별표'}], 'endings': [{'id':'a','stat':'지혜','min':1,'title':'별'}]});
+    expect(resolveEnding(story, {'지혜': 2}, {'lumi': 8})['epilogue'], '별표');
+  });
 }

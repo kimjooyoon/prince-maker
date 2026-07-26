@@ -1,0 +1,7 @@
+Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+The complete license text is maintained by the upstream font project:
+https://scripts.sil.org/OFL
+
+Upstream source: https://github.com/google/fonts/tree/main/ofl/notosanskr

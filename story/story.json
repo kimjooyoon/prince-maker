@@ -4,24 +4,27 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"ab70a1f6276de1fc1d65ba3fec0d8638b1c021583165076847b9e5ce543dd633"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"30fe638698b9b5064183c30ce201ed5943143c7260247d9d53e057cc17a2c850"},
-    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"9298ae0c810d7bc44e764377c784d954414e8836254295a4fe743065dab69e79"}
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"773e237e6a2d25a35e778715a89a4e5ca0b924304ccbaa3f45274a07cb6db5f6"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"d9c3efd0cd21f1652d258b7a9d5b90e7bf967272dbe06eb61dca56e842117888"},
+    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"9002f24b983a657382fa6839cc8af1d78ea77775a185d2cee6a2df7eed60bb6c"}
   ],
   "assetRefs": [
     {"ref":"assets/lumen-personality-sheet.png#personality-frames","sha256":"4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"},
     {"ref":"assets/lumen-personality-sheet-source.png#chroma-key-source","sha256":"0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8"}
   ],
+  "fontRefs": [
+    {"ref":"assets/fonts/NotoSansKR-Regular.ttf#canvas-korean-font","sha256":"c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"}
+  ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
   "personalities": [
-    {"id":"quiet","name":"고요한 관찰자","voice":"짧고 신중하게 말한다.","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래.","portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":0,"design":{"palette":"indigo-lavender","motif":"moon","silhouette":"short bob"}},
-    {"id":"kind","name":"다정한 연결자","voice":"상대의 마음을 먼저 살핀다.","line":"네가 웃으면 정원도 조금 더 환해지는 것 같아.","portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":1,"design":{"palette":"teal-cream","motif":"flower","silhouette":"long braid"}},
-    {"id":"bold","name":"용감한 개척자","voice":"실수해도 먼저 움직인다.","line":"길이 없다면, 오늘 한 걸음으로 만들면 돼!","portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":2,"design":{"palette":"coral-ochre","motif":"compass","silhouette":"short tousled hair"}}
+    {"id":"quiet","name":"고요한 관찰자","voice":"짧고 신중하게 말한다.","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래.","focusStat":"지혜","focusBonus":1,"portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":0,"design":{"palette":"indigo-lavender","motif":"moon","silhouette":"short bob"}},
+    {"id":"kind","name":"다정한 연결자","voice":"상대의 마음을 먼저 살핀다.","line":"네가 웃으면 정원도 조금 더 환해지는 것 같아.","focusStat":"공감","focusBonus":1,"portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":1,"design":{"palette":"teal-cream","motif":"flower","silhouette":"long braid"}},
+    {"id":"bold","name":"용감한 개척자","voice":"실수해도 먼저 움직인다.","line":"길이 없다면, 오늘 한 걸음으로 만들면 돼!","focusStat":"용기","focusBonus":1,"portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":2,"design":{"palette":"coral-ochre","motif":"compass","silhouette":"short tousled hair"}}
   ],
   "companions": [
-    {"id":"lumi","name":"루미","role":"별자리 기록관","personality":"quiet","portraitFrame":0,"greeting":"기록은 마음이 다시 길을 찾게 해."},
-    {"id":"bora","name":"보라","role":"온실의 돌봄지기","personality":"kind","portraitFrame":1,"greeting":"함께 가꾼 시간은 쉽게 시들지 않아."},
-    {"id":"taro","name":"타로","role":"바람길 수리공","personality":"bold","portraitFrame":2,"greeting":"망가진 길도 손을 대면 다시 이어져!"}
+    {"id":"lumi","name":"루미","role":"별자리 기록관","personality":"quiet","portraitFrame":0,"bondThreshold":8,"greeting":"기록은 마음이 다시 길을 찾게 해.","epilogue":"루미는 노아의 기록 첫 장에 작은 별표를 남겼다."},
+    {"id":"bora","name":"보라","role":"온실의 돌봄지기","personality":"kind","portraitFrame":1,"bondThreshold":8,"greeting":"함께 가꾼 시간은 쉽게 시들지 않아.","epilogue":"보라는 노아와 함께 계절마다 새로운 씨앗을 심었다."},
+    {"id":"taro","name":"타로","role":"바람길 수리공","personality":"bold","portraitFrame":2,"bondThreshold":8,"greeting":"망가진 길도 손을 대면 다시 이어져!","epilogue":"타로는 노아를 데리고 아직 지도에 없는 길로 떠났다."}
   ],
   "endings": [
     {"id":"stargazer","stat":"지혜","min":12,"title":"루멘의 별읽기꾼","body":"노아는 밤하늘의 결을 읽어 영지의 항로를 밝히는 사람이 되었다."},

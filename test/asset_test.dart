@@ -11,4 +11,8 @@ void main() {
     expect(frame.image.width / frame.image.height, closeTo(3, .05));
     expect(frame.image.width, greaterThan(1000));
   });
+  test('bundled Korean font is loadable for deterministic Canvas text', () async {
+    final bytes = await rootBundle.load('assets/fonts/NotoSansKR-Regular.ttf');
+    expect(bytes.lengthInBytes, greaterThan(100000));
+  });
 }

@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 3a31c9cdeb1814be29fc43635415a36c2a72f20e55cebbbc38c206cd9710850d -->
+<!-- ssot-sha256: 57515a72dccf01990efb16b3f174df8cea6c80419c9dd053f412195c80f9c04e -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -11,17 +11,21 @@
 - [`assets/lumen-personality-sheet.png#personality-frames`](../assets/lumen-personality-sheet.png) · SHA-256 `4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28`
 - [`assets/lumen-personality-sheet-source.png#chroma-key-source`](../assets/lumen-personality-sheet-source.png) · SHA-256 `0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8`
 
+## 폰트
+
+- [`assets/fonts/NotoSansKR-Regular.ttf#canvas-korean-font`](../assets/fonts/NotoSansKR-Regular.ttf) · SHA-256 `c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb`
+
 ## 성격
 
-- **고요한 관찰자** (`quiet`): 짧고 신중하게 말한다. “별은 서두르지 않아. 나도 오늘은 천천히 볼래.” · frame 0 · `assets/lumen-personality-sheet.png` · indigo-lavender / moon
-- **다정한 연결자** (`kind`): 상대의 마음을 먼저 살핀다. “네가 웃으면 정원도 조금 더 환해지는 것 같아.” · frame 1 · `assets/lumen-personality-sheet.png` · teal-cream / flower
-- **용감한 개척자** (`bold`): 실수해도 먼저 움직인다. “길이 없다면, 오늘 한 걸음으로 만들면 돼!” · frame 2 · `assets/lumen-personality-sheet.png` · coral-ochre / compass
+- **고요한 관찰자** (`quiet`): 짧고 신중하게 말한다. “별은 서두르지 않아. 나도 오늘은 천천히 볼래.” · 지혜 재능 +1 · frame 0 · `assets/lumen-personality-sheet.png` · indigo-lavender / moon
+- **다정한 연결자** (`kind`): 상대의 마음을 먼저 살핀다. “네가 웃으면 정원도 조금 더 환해지는 것 같아.” · 공감 재능 +1 · frame 1 · `assets/lumen-personality-sheet.png` · teal-cream / flower
+- **용감한 개척자** (`bold`): 실수해도 먼저 움직인다. “길이 없다면, 오늘 한 걸음으로 만들면 돼!” · 용기 재능 +1 · frame 2 · `assets/lumen-personality-sheet.png` · coral-ochre / compass
 
 ## 동료
 
-- **루미** (`lumi`): 별자리 기록관 · quiet · frame 0 · “기록은 마음이 다시 길을 찾게 해.”
-- **보라** (`bora`): 온실의 돌봄지기 · kind · frame 1 · “함께 가꾼 시간은 쉽게 시들지 않아.”
-- **타로** (`taro`): 바람길 수리공 · bold · frame 2 · “망가진 길도 손을 대면 다시 이어져!”
+- **루미** (`lumi`): 별자리 기록관 · quiet · frame 0 · 유대 8에서 에필로그 · “기록은 마음이 다시 길을 찾게 해.”
+- **보라** (`bora`): 온실의 돌봄지기 · kind · frame 1 · 유대 8에서 에필로그 · “함께 가꾼 시간은 쉽게 시들지 않아.”
+- **타로** (`taro`): 바람길 수리공 · bold · frame 2 · 유대 8에서 에필로그 · “망가진 길도 손을 대면 다시 이어져!”
 
 ## 활동
 

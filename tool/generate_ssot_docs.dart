@@ -10,14 +10,17 @@ String render(Map<String, dynamic> s, String hash) {
   final events = (s['events'] as List).cast<Map<String, dynamic>>();
   final endings = (s['endings'] as List).cast<Map<String, dynamic>>();
   final assets = (s['assetRefs'] as List? ?? []).cast<Map<String, dynamic>>();
+  final fonts = (s['fontRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final b = StringBuffer('<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
   b.writeln('${s['setting']}에서 ${s['hero']}는 ${s['endingWeek']}주 동안 스스로 선택한 내일을 걷는다.');
   b.writeln('\n## 생성 이미지 자산\n');
   for (final a in assets) b.writeln('- [`${a['ref']}`](../${a['ref'].toString().split('#').first}) · SHA-256 `${a['sha256']}`');
+  b.writeln('\n## 폰트\n');
+  for (final f in fonts) b.writeln('- [`${f['ref']}`](../${f['ref'].toString().split('#').first}) · SHA-256 `${f['sha256']}`');
   b.writeln('\n## 성격\n');
-  for (final p in people) { final d = (p['design'] as Map?) ?? {}; b.writeln('- **${p['name']}** (`${p['id']}`): ${p['voice']} “${p['line']}” · frame ${p['portraitFrame']} · `${p['portraitAsset']}` · ${d['palette']} / ${d['motif']}'); }
+  for (final p in people) { final d = (p['design'] as Map?) ?? {}; b.writeln('- **${p['name']}** (`${p['id']}`): ${p['voice']} “${p['line']}” · ${p['focusStat']} 재능 +${p['focusBonus']} · frame ${p['portraitFrame']} · `${p['portraitAsset']}` · ${d['palette']} / ${d['motif']}'); }
   b.writeln('\n## 동료\n');
-  for (final c in companions) b.writeln('- **${c['name']}** (`${c['id']}`): ${c['role']} · ${c['personality']} · frame ${c['portraitFrame']} · “${c['greeting']}”');
+  for (final c in companions) b.writeln('- **${c['name']}** (`${c['id']}`): ${c['role']} · ${c['personality']} · frame ${c['portraitFrame']} · 유대 ${c['bondThreshold']}에서 에필로그 · “${c['greeting']}”');
   b.writeln('\n## 활동\n');
   for (final a in acts) b.writeln('- **${a['label']}** (`${a['id']}`): ${a['hint']}');
   b.writeln('\n## 사건\n');
