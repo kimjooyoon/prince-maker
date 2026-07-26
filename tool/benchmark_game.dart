@@ -2,8 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:prince_maker/game_core.dart';
 
-int runCampaigns(Map<String, dynamic> source, int campaigns) {
+class CampaignMetrics {
+  CampaignMetrics(this.checksum, this.endings, this.signatures);
+  final int checksum;
+  final Set<String> endings, signatures;
+}
+
+CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   var checksum = 0;
+  final endings = <String>{}, signatures = <String>{};
   final story = JsonStoryAdapter(source);
   for (var i = 0; i < campaigns; i++) {
     final session = GameSession(story, MemorySaveAdapter());
@@ -39,12 +46,17 @@ int runCampaigns(Map<String, dynamic> source, int campaigns) {
       }
     }
     final p = session.world.progress[0]!;
+    final ending = resolveEnding(story, session.world.stats[0]!.values,
+        bonds: p.bonds, milestones: p.milestones);
+    endings.add('${ending['id']}');
+    signatures.add(
+        '${ending['id']}|${session.world.stats[0]!.values}|${p.bonds}|${p.milestones.values.where((v) => v).length}');
     checksum += p.week +
         session.world.stats[0]!.values.values.reduce((a, b) => a + b) +
         p.bonds.values.reduce((a, b) => a + b) +
         p.trace.length;
   }
-  return checksum;
+  return CampaignMetrics(checksum, endings, signatures);
 }
 
 void main() {
@@ -52,14 +64,19 @@ void main() {
   final source = jsonDecode(File('story/story.json').readAsStringSync())
       as Map<String, dynamic>;
   final watch = Stopwatch()..start();
-  final checksum = runCampaigns(source, campaigns);
+  final first = runCampaigns(source, campaigns);
   watch.stop();
-  final replayChecksum = runCampaigns(source, campaigns);
+  final replay = runCampaigns(source, campaigns);
   final millis = watch.elapsedMicroseconds / 1000;
   final transitions = campaigns * (11 + 8);
   stdout.writeln(
-      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=8 ms=${millis.toStringAsFixed(1)} checksum=$checksum replayChecksum=$replayChecksum');
-  if (millis > 5000 || checksum <= campaigns || replayChecksum != checksum) {
+      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=8 ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
+  if (millis > 5000 ||
+      first.checksum <= campaigns ||
+      replay.checksum != first.checksum ||
+      replay.endings.length != first.endings.length ||
+      replay.signatures.length != first.signatures.length ||
+      first.signatures.length < 3) {
     stderr.writeln(
         'TRILEMMA_PERFORMANCE_FAIL: deterministic core budget or checksum drift');
     exit(1);

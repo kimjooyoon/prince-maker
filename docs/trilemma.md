@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | 완전성 | 콘텐츠·분기·저장·화면·대사가 끝까지 이어지는가 | `verify_game.dart` 14차원, 시나리오 8축, 22/22 authored branch, Golden 16종, SSOT 대사 키 × 한국어·English locale 계약 |
 | 순수성 | 선택이 스탯·관계·목표·엔딩을 바꾸며 다시 플레이할 이유가 있는가 | 활동 5개, 성장축 3개, 동료 3명, 관계 rival bond, 목표 4개, 사건 8개, 엔딩 6개, 1–3성 결산 등급, 누적 엔딩 도감, 5개 SSOT 일정 정책 중 3개 이상 distinct ending/signature |
-| 성능 | 같은 입력을 빠르고 재현 가능하게 처리하는가 | `benchmark_game.dart` 실제 SSOT 5,000 campaign / 95,000 application transitions, 8 사건, 5초 예산 |
+| 성능 | 같은 입력을 빠르고 재현 가능하게 처리하는가 | `benchmark_game.dart` 실제 SSOT 5,000 campaign / 95,000 application transitions, 8 사건, 5초 예산, replay signature 3개 이상 |
 
 ## 폐쇄루프
 
@@ -16,6 +16,6 @@ SSOT 콘텐츠 → GameWorld 전이 → Canvas/Golden 증거
   재플레이 ← 저장·replay trace ← benchmark
 ```
 
-성능 benchmark는 렌더러 프레임을 임의로 측정하지 않고, `story/story.json`을 읽은 `GameSession`이 5,000개의 12주 campaign과 8개 사건 선택을 처리하는 시간을 측정한다. 측정 후 동일 workload를 한 번 더 실행해 `replayChecksum`을 첫 checksum과 대조한다. 따라서 네트워크·폰트·브라우저 상태와 무관하게 SSOT 콘텐츠가 실제로 연결된 게임 규칙의 비용과 checksum 재현성을 함께 감시한다.
+성능 benchmark는 렌더러 프레임을 임의로 측정하지 않고, `story/story.json`을 읽은 `GameSession`이 5,000개의 12주 campaign과 8개 사건 선택을 처리하는 시간을 측정한다. 각 campaign의 `(ending, stats, bonds, goals)` 서명을 수집해 최소 3개의 순수성 signature가 생기는지도 확인하고, 동일 workload를 한 번 더 실행해 `replayChecksum`과 signature cardinality를 대조한다. 따라서 네트워크·폰트·브라우저 상태와 무관하게 SSOT 콘텐츠가 실제로 연결된 게임 규칙의 비용·재현성·결과 다양성을 함께 감시한다.
 
 각 축이 독립적으로 통과해야 하며, 하나라도 실패하면 pre-commit과 GitHub Actions가 변경을 거부한다. 완전성의 시각 하위 게이트는 16개 Golden 파일과 README 연결을 정확히 대조하고, 시나리오 하위 게이트는 SSOT의 8축(아크·행위성·관계·피드백·조건·재플레이·장면·종결)을 문서와 테스트로 대조한다. 대사 하위 게이트는 SSOT의 모든 `*Key`와 엔딩 UI 키가 각 locale에 존재하고 비어 있지 않은지 확인한다. 순수성의 replay 하위 게이트는 같은 입력의 snapshot·trace 동일성, rival bond의 기회비용 trace, 다른 성장축의 authored 결과 차이, 5개 SSOT 일정 정책의 실제 결과 다양성을 함께 확인한다.
