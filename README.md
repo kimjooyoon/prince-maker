@@ -17,12 +17,18 @@ flutter build web --wasm --release
 `flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test`가 픽셀 변화를 차단합니다.
 
 ![골든 기준 화면](test/goldens/home.png)
+![성격별 상반신 일러스트 페이지](test/goldens/illustration.png)
+![12주 엔딩 화면](test/goldens/ending.png)
 
 ## SSOT와 게임성 지표
 
-스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공을 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
+스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, 일러스트 페이지에서 상반신 대화 연출로 사용합니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
-초기 지표: 3개 활동 × 12주 = 36개의 계획 조합, 3개 성장축(지혜·공감·용기), 1회 행동 입력당 1회 상태 전이, 정적 홈 골든 1장. 다음 단계에서 12주 종료 판정과 리플레이 지표를 추가합니다.
+초기 지표: 3개 활동 × 12주 = 36개의 계획 조합, 3개 성장축(지혜·공감·용기), 3개 성격 대화, 3개 골든 화면, 1회 행동 입력당 1회 상태 전이, 12주 종료 판정 1개. 다음 단계는 리플레이 지표와 저장 슬롯입니다.
+
+## 장기 설계 기준
+
+초안 이후 기능은 재활용 가능한 [Lumen Canvas Kit](docs/design-system.md)를 먼저 설계한 뒤 구현합니다. 토큰은 [`design/tokens.json`](design/tokens.json)과 [`lib/design_tokens.dart`](lib/design_tokens.dart)에 분리되어 있으며, 화면은 `stat_panel`, `choice_card`, `portrait_page`, `ending_panel` 조합으로 확장합니다.
 
 ## 렌더러 검토: Flutter Canvas 우선
 
