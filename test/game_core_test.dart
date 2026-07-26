@@ -103,4 +103,9 @@ void main() {
     expect(restored.stats['공감'], 6);
     expect(restored.replayTrace, contains('event:등불'));
   });
+  test('starting a new campaign clears the previous save adapter state', () {
+    final save = MemorySaveAdapter()..write('old');
+    save.clear();
+    expect(save.read(), isNull);
+  });
 }

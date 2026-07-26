@@ -84,6 +84,7 @@ void main() {
     await tester.tapAt(const Offset(500, 440));
     await tester.pump();
     expect(find.byKey(const ValueKey('0-1-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/restart.png'));
   });
   testWidgets('authored event branches and returns to the loop', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
