@@ -17,7 +17,8 @@
     {"path":"test/goldens/event.png","ref":"test/goldens/event.png#event-choice","sha256":"5a6183a4cbc722a2ce71bd117fcafb0596fda887cd98acc50cbc5b4acd55f155"},
     {"path":"test/goldens/save.png","ref":"test/goldens/save.png#replay-archive","sha256":"dccea5eac02921ce435380425a536f37fd36ee806f44582f9db8fbfba25f8aa5"},
     {"path":"test/goldens/restart.png","ref":"test/goldens/restart.png#new-campaign","sha256":"7c2f4a79abbf63cbf699b869ad26c9f0a663899ebf2b051d0e774a85b365ad77"},
-    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"03acbbdd57d411aeef48639ba1d88bb4bd4ad69c43b32b1e84cbbdce3c707d0c"},
+    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"91a6c9e75243f6e35cc6944b7ff234b1c0ba8baf0fa775af72c31eebb9299460"},
+    {"path":"docs/trilemma.md","ref":"docs/trilemma.md#closed-loop","sha256":"8b7b3c4a83fe22288eab70dd1d7aedc1b1efe603048ca390290e3b6996dbdb9e"},
     {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"129467cadb3f569a01aa84ca98c95c9735ac0a82c0ce180f96eab51b1d957d0a"},
     {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"58ae188834d773b0ef202bec68e628271906d3942ea7f95747fdfa59ca15b3d1"},
     {"path":"docs/design-system.md","ref":"docs/design-system.md#personality_portrait","sha256":"35fc9136d22c0b44aa20e6ddc23efb4e5cb4f1fd81e8591bf67666b9dc1493d9"},
@@ -35,7 +36,8 @@
     {"path":"pubspec.lock","ref":"pubspec.lock#resolved-dependencies","sha256":"310c9161547693da71996eb566c3c92a741c161df51f42497505f30d17b3faf6"},
     {"path":"tool/generate_ssot_docs.dart","ref":"tool/generate_ssot_docs.dart#render","sha256":"0d162f901642a4de5f5458b549390302bbd3c8a5da62f0a1ddbdbb33732edf03"},
     {"path":"tool/verify_game.dart","ref":"tool/verify_game.dart#assetRefs-and-fontRefs-and-score","sha256":"04ede2534b3c991d8390928d32ddef2a099cb657f91a8866fa2c3b7bb298f1cd"},
-    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"1cd213c73dca15b29e05f85131b797d57cd80ca43c71bb2a7cfb9678ee431f21"},
-    {"path":".githooks/pre-commit","ref":".githooks/pre-commit#quality-gate","sha256":"42c1aa321deb903d4881f635257c95fa79407bdbde7565826e797cbd5dc8ccf4"}
+    {"path":"tool/benchmark_game.dart","ref":"tool/benchmark_game.dart#core-throughput","sha256":"6f8078c1843c69be7ab6b7137629109707d8c76c8a60781b98ab551b97bd26b0"},
+    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"c00a4a81615c9ff8a926832e6db3f4d3de6dee2724fc2f4c9a0636e27b476278"},
+    {"path":".githooks/pre-commit","ref":".githooks/pre-commit#quality-gate","sha256":"ef4861731f6c182fdf203a6a01678360f02713c841ffee345efe692ef4e9705d"}
   ]
 }
