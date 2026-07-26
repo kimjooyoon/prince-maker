@@ -49,6 +49,11 @@ void main() {
     final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [{'id':'lumi','bondThreshold':8,'epilogue':'별표'}], 'endings': [{'id':'a','stat':'지혜','min':1,'title':'별'}]});
     expect(resolveEnding(story, {'지혜': 2}, bonds: {'lumi': 8})['epilogue'], '별표');
   });
+  test('ending rank rewards authored goals and companion bonds', () {
+    final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [{'id':'lumi','bondThreshold':8}], 'milestones': [{'id':'spring'}], 'endings': [{'id':'a','stat':'지혜','min':1}]});
+    expect(resolveEnding(story, {'지혜': 2}, milestones: {'spring': false}, bonds: {'lumi': 0})['rank'], 1);
+    expect(resolveEnding(story, {'지혜': 2}, milestones: {'spring': true}, bonds: {'lumi': 8})['rank'], 3);
+  });
   test('season milestone resolves once with its authored reward', () {
     final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [], 'milestones': [{'id':'spring','week':3,'title':'봄','stat':'지혜','min':8,'coins':3,'pass':'달성','fail':'실패'}], 'endings': []});
     final session = GameSession(story, MemorySaveAdapter());

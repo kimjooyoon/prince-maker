@@ -19,6 +19,7 @@ JsonStoryAdapter BrowserSaveAdapter / MemorySaveAdapter / GameSnapshot
 - `ActivityChosen`, `StoryChoiceMade`, `WeekAdvanced`는 불변 이벤트 데이터다.
 - `GameWorld.dispatch`는 FIFO 큐를 drain하며 한 번에 하나의 시스템 전이만 적용한다.
 - 같은 이벤트 배열과 같은 SSOT를 주면 같은 `GameSnapshot`과 `replayTrace`가 나온다.
+- 같은 목표·유대 상태를 주면 같은 엔딩과 1–3성 `rank` 결산이 나온다.
 
 ## EDA와 Hexagonal 경계
 
