@@ -32,8 +32,17 @@ String render(Map<String, dynamic> s, String hash) {
   for (final e in endings) b.writeln('- **${e['title']}** (`${e['id']}`): ${e['stat']} ≥ ${e['min']}${(e['requiresMilestones'] as List? ?? []).isEmpty ? '' : ' · 목표 ${((e['requiresMilestones'] as List).join(', '))}'} · ${e['body']}');
   return b.toString();
 }
+String renderMetrics(Map<String, dynamic> s, String hash) {
+  final acts = (s['activities'] as List).length, people = (s['personalities'] as List).length, companions = (s['companions'] as List? ?? []).length, milestones = (s['milestones'] as List? ?? []).length, events = (s['events'] as List).cast<Map<String, dynamic>>(), endings = (s['endings'] as List).length, choices = events.fold<int>(0, (sum, e) => sum + (e['choices'] as List).length), goldens = Directory('test/goldens').existsSync() ? Directory('test/goldens').listSync().whereType<File>().where((f) => f.path.endsWith('.png')).length : 0;
+  final b = StringBuffer('<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · SSOT 자동 품질 지표\n\n');
+  b.writeln('이 문서는 `story/story.json`에서 자동 생성된다. 코드·Golden·CI의 수치가 SSOT 변경과 함께 갱신되는지 pre-commit에서 확인한다.\n');
+  b.writeln('| 항목 | 현재 | 산출 기준 |\n| --- | ---: | --- |');
+  b.writeln('| 캠페인 길이 | ${s['endingWeek']}주 | `endingWeek` |'); b.writeln('| 활동 | $acts | `activities.length` |'); b.writeln('| 성격 | $people | `personalities.length` |'); b.writeln('| 동료 | $companions | `companions.length` |'); b.writeln('| 계절 목표 | $milestones | `milestones.length` |'); b.writeln('| 사건 | ${events.length} | `events.length` |'); b.writeln('| 사건 선택 | $choices | 모든 사건 choices 합계 |'); b.writeln('| 엔딩 | $endings | `endings.length` |'); b.writeln('| Canvas Golden | $goldens | `test/goldens/*.png` |'); b.writeln('| 코드 ref | ${(s['codeRefs'] as List).length} | `codeRefs.length` |'); b.writeln('| 이미지 ref | ${(s['assetRefs'] as List).length} | `assetRefs.length` |'); b.writeln('| 폰트 ref | ${(s['fontRefs'] as List? ?? []).length} | `fontRefs.length` |');
+  b.writeln('\n## 폐쇄루프 연결\n\nSSOT → GameWorld 전이 → Canvas/Golden → 저장·replay → benchmark → 같은 SSOT로 재검증. 상세 설계는 [`docs/trilemma.md`](trilemma.md), 전체 지표는 [`docs/game-completeness.md`](game-completeness.md)에서 확인한다.');
+  return b.toString();
+}
 void main(List<String> args) {
-  final input = 'story/story.json', output = 'docs/story-ssot.md', hash = sha(input), expected = render(jsonDecode(File(input).readAsStringSync()), hash);
-  if (args.contains('--check')) { if (!File(output).existsSync() || File(output).readAsStringSync() != expected) { stderr.writeln('SSOT_DOC_FAIL: regenerate $output'); exit(1); } stdout.writeln('SSOT_DOC_OK: $output sha256=$hash'); return; }
-  File(output).writeAsStringSync(expected); stdout.writeln('SSOT_DOC_WRITTEN: $output sha256=$hash');
+  final input = 'story/story.json', hash = sha(input), source = jsonDecode(File(input).readAsStringSync()) as Map<String, dynamic>, outputs = {'docs/story-ssot.md': render(source, hash), 'docs/ssot-metrics.md': renderMetrics(source, hash)};
+  if (args.contains('--check')) { for (final entry in outputs.entries) { if (!File(entry.key).existsSync() || File(entry.key).readAsStringSync() != entry.value) { stderr.writeln('SSOT_DOC_FAIL: regenerate ${entry.key}'); exit(1); } } stdout.writeln('SSOT_DOC_OK: ${outputs.keys.join(', ')} sha256=$hash'); return; }
+  for (final entry in outputs.entries) File(entry.key).writeAsStringSync(entry.value); stdout.writeln('SSOT_DOC_WRITTEN: ${outputs.keys.join(', ')} sha256=$hash');
 }
