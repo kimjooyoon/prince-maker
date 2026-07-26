@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 58dd172dedeac5898129c8773e093f4379298204ed25fde67d5fd39b72922081 -->
+<!-- ssot-sha256: 248e0f35e409b46765022fe0d4ac64a59b1d11bee0c932feba49230960ac0756 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
