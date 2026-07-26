@@ -11,6 +11,13 @@ void main() {
     expect(frame.image.width / frame.image.height, closeTo(3, .05));
     expect(frame.image.width, greaterThan(1000));
   });
+  test('Noa PNG is loadable as a three-frame two-head hero sheet', () async {
+    final bytes = await rootBundle.load('assets/noa-sprite-sheet.png');
+    final codec = await ui.instantiateImageCodec(bytes.buffer.asUint8List());
+    final frame = await codec.getNextFrame();
+    expect(frame.image.width, greaterThan(1600));
+    expect(frame.image.height, greaterThan(500));
+  });
   test('bundled Korean font is loadable for deterministic Canvas text', () async {
     final bytes = await rootBundle.load('assets/fonts/NotoSansKR-Regular.ttf');
     expect(bytes.lengthInBytes, greaterThan(100000));

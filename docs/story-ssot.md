@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 78a2356289af16e621b6bb11cc072ca05fc1b5e5e215705b16e8dbeb7759f128 -->
+<!-- ssot-sha256: e2089862bb2f07258cd8fcabce66790ddd93adb630dd53f6a408ebb8d71d697e -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -8,6 +8,8 @@
 
 ## 생성 이미지 자산
 
+- [`assets/noa-sprite-sheet.png#hero-2-head-frames`](../assets/noa-sprite-sheet.png) · SHA-256 `1ed524abb6e4eda65e651e25ea008d31efcdebaab28b39086bb1f67a4b32581d`
+- [`assets/noa-sprite-sheet-source.png#hero-chroma-key-source`](../assets/noa-sprite-sheet-source.png) · SHA-256 `5dd8207030fb83554ed7e8b420995a4d2dc8cf8a00f9ae8f54770fef61c90dd9`
 - [`assets/lumen-personality-sheet.png#personality-frames`](../assets/lumen-personality-sheet.png) · SHA-256 `4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28`
 - [`assets/lumen-personality-sheet-source.png#chroma-key-source`](../assets/lumen-personality-sheet-source.png) · SHA-256 `0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8`
 
