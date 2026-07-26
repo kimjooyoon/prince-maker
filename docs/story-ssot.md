@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 08af961560efa14c7d292ec09c36a54cb9772e3a7da323c6b82f6d86b9bbfc1c -->
+<!-- ssot-sha256: c4af3e52937c83bb5e80ada85c937a51c69901e2d6f8ee41bcc31f844467d8d7 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -9,14 +9,14 @@
 ## 12주 진행도
 
 - **별씨앗의 도착** (`arrival`): 1–3주 · 낯선 기록과 첫 편지가 루멘의 평온을 흔든다. → 누구의 목소리를 먼저 믿을지 정한다. · 사건 2, 3주 · 목표 `spring`
-- **흔들리는 다리** (`crossing`): 4–6주 · 성장한 마음은 혼자 빠른 것보다 함께 건너는 법을 배운다. → 속도와 용기 중 오늘의 균형을 선택한다. · 사건 6주 · 목표 `summer`
-- **먼 곳의 답장** (`reply`): 7–9주 · 루멘 밖에서 온 부탁이 노아의 안전한 일상을 부른다. → 기록할지 떠날지, 선택의 대가를 감당한다. · 사건 8, 9주 · 목표 `autumn`
+- **흔들리는 다리** (`crossing`): 4–6주 · 성장한 마음은 혼자 빠른 것보다 함께 건너는 법을 배운다. → 속도와 용기 중 오늘의 균형을 선택한다. · 사건 4, 6주 · 목표 `summer`
+- **먼 곳의 답장** (`reply`): 7–9주 · 루멘 밖에서 온 부탁이 노아의 안전한 일상을 부른다. → 기록할지 떠날지, 선택의 대가를 감당한다. · 사건 7, 8, 9주 · 목표 `autumn`
 - **겨울의 문턱** (`threshold`): 10–12주 · 축제의 빛 아래에서 지난 선택들이 하나의 방향으로 모인다. → 왕좌 대신 스스로 고른 내일의 문을 연다. · 사건 10주 · 목표 `winter`
 
 ## 대사 구성 기준
 
-- locale 최소 키: **81** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **21**
-- 산식: catalog 81 = UI 6 + personality name/voice/line 9 + event title/body 12 + choice label/line 24 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units
+- locale 최소 키: **93** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **25**
+- 산식: catalog 93 = UI 6 + personality name/voice/line 9 + event title/body 16 + choice label/line 32 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units
 
 ## 생성 이미지 자산
 
@@ -31,8 +31,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `3ec307738c31e664e33bb3e53946db15dceca18c9e6af2888df97070bf01a883`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `8d9a77a97e9b62fcf1071dd2d2010c9f9580d0b57a358f43e14cf581dc8b7b87`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `115fd8ed4702c8e55f9c742c471e530fb9f09247d260a43878b50311b7bbb918`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `29e60a8fa275fbab0c6a0f643aa5a36f2dd1d04ea7e62ac64c74254f49377768`
 
 ## 성격
 
@@ -73,11 +73,21 @@
 마을의 등불이 꺼졌다. 노아는 누구의 손을 먼저 잡을까?
 - 아이들과 등불을 나눈다: 공감 +2, 은화 -1, bora 유대 +4 · “작은 빛도 함께라면 길이 돼.”
 - 별을 읽어 길을 찾는다: 지혜 +2, 은화 0, lumi 유대 +4 · “하늘은 아직 방향을 숨기지 않았어.”
+### 4주차 · 온실의 작은 균열
+
+온실 지붕에 작은 금이 갔다. 누구의 방식으로 봄을 지킬까?
+- 루미에게 별빛의 각도를 묻는다: 지혜 +1, 은화 0, lumi 유대 +2 · “빛이 머무는 각도를 알면, 금도 길이 될 수 있어.”
+- 보라와 천을 덧댄다: 공감 +2, 은화 -1, bora 유대 +2 · “함께 덧댄 자리는 오래 버틸 거야.”
 ### 6주차 · 강을 건너는 법
 
 낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?
 - 먼저 발을 내딛는다: 용기 +2, 은화 0, taro 유대 +4, 조건 용기 ≥ 8 · “떨려도, 한 걸음은 내 것이야.”
 - 모두의 속도를 맞춘다: 공감 +2, 은화 1, bora 유대 +4 · “같은 박자로 걸으면 강도 덜 무서워.”
+### 7주차 · 지도에 없는 종
+
+저녁마다 지도 밖에서 종소리가 들린다. 노아는 어디에 귀를 기울일까?
+- 루미와 소리의 간격을 기록한다: 지혜 +2, 은화 1, lumi 유대 +2 · “간격을 기록하면 보이지 않는 길도 드러날 거야.”
+- 타로와 종이 있는 곳을 찾아간다: 용기 +2, 은화 -1, taro 유대 +3, 조건 용기 ≥ 8 · “들리는 곳까지 직접 가보자!”
 ### 8주차 · 바람이 멎은 오후
 
 풍차가 멈춰 온실의 창이 닫히지 않는다. 누구와 손을 맞출까?

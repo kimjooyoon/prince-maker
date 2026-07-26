@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 08af961560efa14c7d292ec09c36a54cb9772e3a7da323c6b82f6d86b9bbfc1c -->
+<!-- ssot-sha256: c4af3e52937c83bb5e80ada85c937a51c69901e2d6f8ee41bcc31f844467d8d7 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -13,8 +13,8 @@
 | 성격 | 3 | `personalities.length` |
 | 동료 | 3 | `companions.length` |
 | 계절 목표 | 4 | `milestones.length` |
-| 사건 | 6 | `events.length` |
-| 사건 선택 | 12 | 모든 사건 choices 합계 |
+| 사건 | 8 | `events.length` |
+| 사건 선택 | 16 | 모든 사건 choices 합계 |
 | 엔딩 | 6 | `endings.length` |
 | Canvas Golden | 14 | `test/goldens/*.png` |
 | 코드 ref | 11 | `codeRefs.length` |
@@ -22,7 +22,7 @@
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
 | 스토리 막 | 4 | `progression.length` · 1–3 / 4–6 / 7–9 / 10–12주 |
-| locale 최소 키 | 81 | `dialogueMetrics.minimumLocaleKeys` |
+| locale 최소 키 | 93 | `dialogueMetrics.minimumLocaleKeys` |
 | 캠페인 최소 대사 줄 | 7 | 성격 1 + 사건 선택 6 |
 | 캠페인 최소 서사 단위 | 27 | 성격·사건 제목/본문·선택·엔딩 |
 

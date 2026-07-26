@@ -60,8 +60,9 @@ void main() {
       e['epilogue'] is! String ||
       (e['epilogue'] as String).isEmpty))
     fail('companion epilogue contract invalid');
-  if (events.map((e) => e['week']).toList().join(',') != '2,3,6,8,9,10')
-    fail('events must occur at weeks 2, 3, 6, 8, 9 and 10');
+  if (events.length != 8 ||
+      events.map((e) => e['week']).toList().join(',') != '2,3,4,6,7,8,9,10')
+    fail('events must occur at weeks 2, 3, 4, 6, 7, 8, 9 and 10');
   if (progression.length != 4 ||
       progression.map((c) => '${c['weekStart']}-${c['weekEnd']}').join(',') !=
           '1-3,4-6,7-9,10-12')

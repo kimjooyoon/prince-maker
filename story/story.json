@@ -26,15 +26,15 @@
     {"ref":"assets/fonts/NotoSansKR-Regular.ttf#canvas-korean-font","sha256":"c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"}
   ],
   "localeRefs": [
-    {"ref":"story/locales/ko.json#catalog","sha256":"3ec307738c31e664e33bb3e53946db15dceca18c9e6af2888df97070bf01a883"},
-    {"ref":"story/locales/en.json#catalog","sha256":"8d9a77a97e9b62fcf1071dd2d2010c9f9580d0b57a358f43e14cf581dc8b7b87"}
+    {"ref":"story/locales/ko.json#catalog","sha256":"115fd8ed4702c8e55f9c742c471e530fb9f09247d260a43878b50311b7bbb918"},
+    {"ref":"story/locales/en.json#catalog","sha256":"29e60a8fa275fbab0c6a0f643aa5a36f2dd1d04ea7e62ac64c74254f49377768"}
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
-  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":81,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":21,"formula":"catalog 81 = UI 6 + personality name/voice/line 9 + event title/body 12 + choice label/line 24 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units"},
+  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":93,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":25,"formula":"catalog 93 = UI 6 + personality name/voice/line 9 + event title/body 16 + choice label/line 32 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units"},
   "progression": [
     {"id":"arrival","weekStart":1,"weekEnd":3,"title":"별씨앗의 도착","titleKey":"chapter.arrival.title","premise":"낯선 기록과 첫 편지가 루멘의 평온을 흔든다.","premiseKey":"chapter.arrival.premise","payoff":"누구의 목소리를 먼저 믿을지 정한다.","payoffKey":"chapter.arrival.payoff","eventWeeks":[2,3],"milestoneId":"spring"},
-    {"id":"crossing","weekStart":4,"weekEnd":6,"title":"흔들리는 다리","titleKey":"chapter.crossing.title","premise":"성장한 마음은 혼자 빠른 것보다 함께 건너는 법을 배운다.","premiseKey":"chapter.crossing.premise","payoff":"속도와 용기 중 오늘의 균형을 선택한다.","payoffKey":"chapter.crossing.payoff","eventWeeks":[6],"milestoneId":"summer"},
-    {"id":"reply","weekStart":7,"weekEnd":9,"title":"먼 곳의 답장","titleKey":"chapter.reply.title","premise":"루멘 밖에서 온 부탁이 노아의 안전한 일상을 부른다.","premiseKey":"chapter.reply.premise","payoff":"기록할지 떠날지, 선택의 대가를 감당한다.","payoffKey":"chapter.reply.payoff","eventWeeks":[8,9],"milestoneId":"autumn"},
+    {"id":"crossing","weekStart":4,"weekEnd":6,"title":"흔들리는 다리","titleKey":"chapter.crossing.title","premise":"성장한 마음은 혼자 빠른 것보다 함께 건너는 법을 배운다.","premiseKey":"chapter.crossing.premise","payoff":"속도와 용기 중 오늘의 균형을 선택한다.","payoffKey":"chapter.crossing.payoff","eventWeeks":[4,6],"milestoneId":"summer"},
+    {"id":"reply","weekStart":7,"weekEnd":9,"title":"먼 곳의 답장","titleKey":"chapter.reply.title","premise":"루멘 밖에서 온 부탁이 노아의 안전한 일상을 부른다.","premiseKey":"chapter.reply.premise","payoff":"기록할지 떠날지, 선택의 대가를 감당한다.","payoffKey":"chapter.reply.payoff","eventWeeks":[7,8,9],"milestoneId":"autumn"},
     {"id":"threshold","weekStart":10,"weekEnd":12,"title":"겨울의 문턱","titleKey":"chapter.threshold.title","premise":"축제의 빛 아래에서 지난 선택들이 하나의 방향으로 모인다.","premiseKey":"chapter.threshold.premise","payoff":"왕좌 대신 스스로 고른 내일의 문을 연다.","payoffKey":"chapter.threshold.payoff","eventWeeks":[10],"milestoneId":"winter"}
   ],
   "personalities": [
@@ -77,9 +77,17 @@
       {"label":"아이들과 등불을 나눈다","labelKey":"event.rain.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"작은 빛도 함께라면 길이 돼.","lineKey":"event.rain.bora.line"},
       {"label":"별을 읽어 길을 찾는다","labelKey":"event.rain.lumi.label","stat":"지혜","delta":2,"coins":0,"bondId":"lumi","bondDelta":4,"line":"하늘은 아직 방향을 숨기지 않았어.","lineKey":"event.rain.lumi.line"}
     ]},
+    {"week":4,"title":"온실의 작은 균열","titleKey":"event.greenhouse.title","body":"온실 지붕에 작은 금이 갔다. 누구의 방식으로 봄을 지킬까?","bodyKey":"event.greenhouse.body","choices":[
+      {"label":"루미에게 별빛의 각도를 묻는다","labelKey":"event.greenhouse.lumi.label","stat":"지혜","delta":1,"coins":0,"bondId":"lumi","bondDelta":2,"line":"빛이 머무는 각도를 알면, 금도 길이 될 수 있어.","lineKey":"event.greenhouse.lumi.line"},
+      {"label":"보라와 천을 덧댄다","labelKey":"event.greenhouse.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":2,"line":"함께 덧댄 자리는 오래 버틸 거야.","lineKey":"event.greenhouse.bora.line"}
+    ]},
     {"week":6,"title":"강을 건너는 법","titleKey":"event.bridge.title","body":"낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?","bodyKey":"event.bridge.body","choices":[
       {"label":"먼저 발을 내딛는다","labelKey":"event.bridge.taro.label","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":8,"line":"떨려도, 한 걸음은 내 것이야.","lineKey":"event.bridge.taro.line"},
       {"label":"모두의 속도를 맞춘다","labelKey":"event.bridge.bora.label","stat":"공감","delta":2,"coins":1,"bondId":"bora","bondDelta":4,"line":"같은 박자로 걸으면 강도 덜 무서워.","lineKey":"event.bridge.bora.line"}
+    ]},
+    {"week":7,"title":"지도에 없는 종","titleKey":"event.bell.title","body":"저녁마다 지도 밖에서 종소리가 들린다. 노아는 어디에 귀를 기울일까?","bodyKey":"event.bell.body","choices":[
+      {"label":"루미와 소리의 간격을 기록한다","labelKey":"event.bell.lumi.label","stat":"지혜","delta":2,"coins":1,"bondId":"lumi","bondDelta":2,"line":"간격을 기록하면 보이지 않는 길도 드러날 거야.","lineKey":"event.bell.lumi.line"},
+      {"label":"타로와 종이 있는 곳을 찾아간다","labelKey":"event.bell.taro.label","stat":"용기","delta":2,"coins":-1,"bondId":"taro","bondDelta":3,"requiresStat":"용기","requiresMin":8,"line":"들리는 곳까지 직접 가보자!","lineKey":"event.bell.taro.line"}
     ]},
     {"week":8,"title":"바람이 멎은 오후","titleKey":"event.windmill.title","body":"풍차가 멈춰 온실의 창이 닫히지 않는다. 누구와 손을 맞출까?","bodyKey":"event.windmill.body","choices":[
       {"label":"타로와 풍차를 고친다","labelKey":"event.windmill.taro.label","stat":"용기","delta":2,"coins":1,"bondId":"taro","bondDelta":2,"line":"멈춘 바람도 손을 대면 다시 움직여.","lineKey":"event.windmill.taro.line"},
