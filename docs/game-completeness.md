@@ -25,12 +25,13 @@
 | 분기 사건 | 6개 사건 × 선택 2개 | 6 × 2 |
 | 분기 도달성 | SSOT의 6개 엔딩·12개 사건 선택 계약 테스트 | 18/18 |
 | 조건부 선택 | 용기 성장 조건이 있는 잠금 선택지 | 3 |
-| 시각 회귀 | fixture 홈·계절 목표·사건·일러스트·엔딩·replay 보관소·재시작·사건 피드백 + canonical SSOT 홈·엔딩·엔딩 도감 Golden | 11 |
+| 시각 회귀 | 한국어 fixture 8개·English locale 2개·사건 피드백 + canonical SSOT 홈·엔딩·엔딩 도감 Golden | 13 |
 | canonical 통합 경로 | 실제 `story/story.json` 12주 완주·사건 4개·목표 4개·에필로그 | 1 |
 | 종료 불변식 | 12주 완료 뒤 추가 활동 입력 차단 + 새 세션 재시작 | 1 |
 | Canvas 입력 계약 | 활동·일러스트·성격 탭·일러스트 복귀·사건·보관소 좌표 회귀 | 1 |
 | personality campaign 경로 | 지혜·공감·용기 각 성격의 숙련 엔딩 재현 | 3 |
 | 글리프 안정성 | 번들 Noto Sans KR + Canvas 벡터 활동 아이콘 | 1 |
+| i18n 대사 | `key → locale catalog → Canvas` 한국어/English 대사 경로 | 2 locale |
 | 순수성 분기 | 동일 일정 예산의 지혜·공감 경로 + 5개 SSOT 일정 정책이 서로 다른 authored 엔딩·유대·목표 서명을 생성 | 3 |
 | 자동 게이트 | SSOT 검사·해시 매니페스트·정적 분석·Flutter test·Golden·코어 benchmark·Wasm | 7 |
 | 상태 안전성 | 저장 화면 복원·종료 후 활동/사건 입력 차단 | 2 |
