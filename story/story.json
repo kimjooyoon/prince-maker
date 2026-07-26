@@ -2,6 +2,7 @@
   "title": "프린스 메이커",
   "setting": "바람과 별빛이 공존하는 작은 영지 루멘",
   "hero": "노아",
+  "endingWeek": 12,
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
   "personalities": [
     {"id":"quiet","name":"고요한 관찰자","voice":"짧고 신중하게 말한다.","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래."},
@@ -12,5 +13,15 @@
     {"id":"observatory","label":"별 관측","icon":"✦","hint":"지혜 +3 · 피로 +1","stat":"지혜","delta":3},
     {"id":"garden","label":"정원 돌보기","icon":"❈","hint":"공감 +3 · 피로 +1","stat":"공감","delta":3},
     {"id":"workshop","label":"공방 돕기","icon":"◈","hint":"용기 +2 · 은화 +4","stat":"용기","delta":2}
+  ],
+  "events": [
+    {"week":4,"title":"비가 오던 밤","body":"마을의 등불이 꺼졌다. 노아는 누구의 손을 먼저 잡을까?","choices":[
+      {"label":"아이들과 등불을 나눈다","stat":"공감","delta":2,"coins":-1,"line":"작은 빛도 함께라면 길이 돼."},
+      {"label":"별을 읽어 길을 찾는다","stat":"지혜","delta":2,"coins":0,"line":"하늘은 아직 방향을 숨기지 않았어."}
+    ]},
+    {"week":8,"title":"강을 건너는 법","body":"낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?","choices":[
+      {"label":"먼저 발을 내딛는다","stat":"용기","delta":2,"coins":0,"line":"떨려도, 한 걸음은 내 것이야."},
+      {"label":"모두의 속도를 맞춘다","stat":"공감","delta":2,"coins":1,"line":"같은 박자로 걸으면 강도 덜 무서워."}
+    ]}
   ]
 }

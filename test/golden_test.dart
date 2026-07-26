@@ -21,7 +21,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tapAt(const Offset(300, 550));
     await tester.pump();
-    expect(find.byKey(const ValueKey('0-2-0')), findsOneWidget);
+    expect(find.byKey(const ValueKey('0-2-0-0')), findsOneWidget);
   });
   testWidgets('illustration page switches personality dialogue', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','personalities':[
@@ -33,7 +33,7 @@ void main() {
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/illustration.png'));
     await tester.tapAt(const Offset(300, 230));
     await tester.pump();
-    expect(find.byKey(const ValueKey('1-1-1')), findsOneWidget);
+    expect(find.byKey(const ValueKey('1-1-1-0')), findsOneWidget);
   });
   testWidgets('twelve-week loop resolves to an ending', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','personalities':[
@@ -41,7 +41,18 @@ void main() {
     ]}));
     await tester.pumpAndSettle();
     for (var i=0; i<12; i++) { await tester.tapAt(const Offset(300, 550)); await tester.pump(); }
-    expect(find.byKey(const ValueKey('2-12-0')), findsOneWidget);
+    expect(find.byKey(const ValueKey('2-12-0-0')), findsOneWidget);
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/ending.png'));
+  });
+  testWidgets('authored event branches and returns to the loop', (tester) async {
+    await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
+      {'week':4,'title':'사건','body':'선택','choices':[{'label':'공감','stat':'공감','delta':2,'coins':0},{'label':'지혜','stat':'지혜','delta':2,'coins':0}]}
+    ]}));
+    await tester.pumpAndSettle();
+    for (var i=0; i<4; i++) { await tester.tapAt(const Offset(300, 550)); await tester.pump(); }
+    expect(find.byKey(const ValueKey('3-4-0-0')), findsOneWidget);
+    await tester.tapAt(const Offset(120, 350));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('0-4-0-0')), findsOneWidget);
   });
 }

@@ -30,6 +30,8 @@ flutter build web --wasm --release
 
 초안 이후 기능은 재활용 가능한 [Lumen Canvas Kit](docs/design-system.md)를 먼저 설계한 뒤 구현합니다. 토큰은 [`design/tokens.json`](design/tokens.json)과 [`lib/design_tokens.dart`](lib/design_tokens.dart)에 분리되어 있으며, 화면은 `stat_panel`, `choice_card`, `portrait_page`, `ending_panel` 조합으로 확장합니다.
 
+게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), CI 강제 검사는 [`tool/verify_game.dart`](tool/verify_game.dart)에 있습니다. SSOT 검사 → 상태/Golden 테스트 → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
+
 ## 렌더러 검토: Flutter Canvas 우선
 
 | 선택지 | 장점 | 현재 판정 |
