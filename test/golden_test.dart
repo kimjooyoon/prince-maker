@@ -30,6 +30,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tapAt(const Offset(620, 550));
     await tester.pump();
+    await tester.runAsync(() async => Future<void>.delayed(const Duration(seconds: 1)));
+    await tester.pump();
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/illustration.png'));
     await tester.tapAt(const Offset(300, 230));
     await tester.pump();

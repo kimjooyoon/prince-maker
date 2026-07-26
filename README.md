@@ -25,9 +25,19 @@ git config core.hooksPath .githooks
 
 ## SSOT와 게임성 지표
 
-스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, 일러스트 페이지에서 상반신 대화 연출로 사용합니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
+스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, `assets/lumen-personality-sheet.png`는 고요·다정·용감 성격의 3프레임 상반신 시트입니다. 두 PNG는 SSOT의 `assetRefs`와 각 personality의 `portraitAsset`/`portraitFrame`으로 연결되어 Canvas 일러스트 페이지에서 표시됩니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
-초기 지표: 3개 활동 × 12주 = 36개의 계획 조합, 3개 성장축(지혜·공감·용기), 3개 성격 대화, 3개 골든 화면, 3개 authored 엔딩, 1회 행동 입력당 1회 상태 전이, 12주 종료 판정, versioned save/replay trace입니다.
+### 성격 유형 캐릭터 시트
+
+![루멘 성격 유형 3종 캐릭터 시트](assets/lumen-personality-sheet.png)
+
+| SSOT id | 유형 | 디자인 연결 |
+| --- | --- | --- |
+| `quiet` | 고요한 관찰자 | 인디고·라벤더 / 달 모티프 / frame 0 |
+| `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
+| `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
+
+현재 지표: 5개 활동 × 12주 = 60개의 계획 조합, 3개 성장축(지혜·공감·용기), 3개 성격 대화, 4개 고정 사건(각 2선택), 3개 골든 화면, 6개 authored 엔딩 티어, 피로 기반 성장 페널티, 1회 행동 입력당 1회 상태 전이, versioned save/replay trace입니다.
 
 ## 장기 설계 기준
 
@@ -54,4 +64,4 @@ Bevy의 UI는 Flexbox/CSS Grid 모델과 ECS에 강하지만, 공식 표준 위�
 - [Bevy standard widgets](https://bevy.org/examples/ui-user-interface/standard-widgets/), [Bevy UI API](https://docs.rs/bevy/latest/bevy/ui/index.html)
 - 장르 참고: [Princess Maker 1 mechanics overview](https://princessmaker.fandom.com/wiki/Princess_Maker_1), [comparative study](https://uu.diva-portal.org/smash/get/diva2:1966128/FULLTEXT01.pdf)
 
-기준 해시: `38376acf84db0433ebddddafe6746af51316ad836b2aae7e6d5ac9686e1d4aa4` (코드·SSOT·테스트·골든·CI 입력의 SHA-256)
+리뷰 매니페스트 기준 해시: `6f40538df1dfc3c4e2fdf6ac5e4b768abafa0acf50a8d032c0fcfd84b3436c51` (코드·SSOT·테스트·골든·CI 입력의 SHA-256)

@@ -17,3 +17,4 @@ flutter:
   assets:
     - story/story.json
     - assets/noa-sprite-sheet.png
+    - assets/lumen-personality-sheet.png

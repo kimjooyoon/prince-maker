@@ -10,17 +10,20 @@ void main() {
   final events = (story['events'] as List).cast<Map<String, dynamic>>();
   final endings = (story['endings'] as List).cast<Map<String, dynamic>>();
   final refs = (story['codeRefs'] as List).cast<Map<String, dynamic>>();
+  final assetRefs = (story['assetRefs'] as List).cast<Map<String, dynamic>>();
   if (story['endingWeek'] != 12) fail('endingWeek must be 12');
-  if (activities.length != 3 || people.length != 3) fail('expected 3 activities and 3 personalities');
-  if (endings.length != 3) fail('expected 3 authored endings');
+  if (activities.length != 5 || people.length != 3) fail('expected 5 activities and 3 personalities');
+  if (endings.length != 6) fail('expected 6 authored endings');
   if ({...activities.map((e) => e['id'])}.length != activities.length) fail('activity ids are not unique');
   if ({...people.map((e) => e['id'])}.length != people.length) fail('personality ids are not unique');
-  if (events.map((e) => e['week']).toList().join(',') != '4,8') fail('events must occur at weeks 4 and 8');
+  if (events.map((e) => e['week']).toList().join(',') != '3,6,9,10') fail('events must occur at weeks 3, 6, 9 and 10');
   for (final ref in refs) { final path = (ref['ref'] as String).split('#').first; if (!File(path).existsSync()) fail('missing code ref $path'); final actual = sha256.convert(File(path).readAsBytesSync()).toString(); if (actual != ref['sha256']) fail('code ref hash drift: $path'); }
+  for (final ref in assetRefs) { final path = (ref['ref'] as String).split('#').first; if (!File(path).existsSync()) fail('missing asset ref $path'); final actual = sha256.convert(File(path).readAsBytesSync()).toString(); if (actual != ref['sha256']) fail('asset ref hash drift: $path'); }
   final stats = activities.map((e) => e['stat']).toSet();
   if (endings.any((e) => !stats.contains(e['stat']) || e['min'] is! int || e['min'] < 1)) fail('ending stat/min contract invalid');
-  if (endings.map((e) => e['stat']).toSet().length != endings.length) fail('ending stats are not unique');
-  if (activities.any((e) => e['fatigue'] is! int || e['fatigue'] < 0)) fail('every activity needs non-negative fatigue');
+  if ({...endings.map((e) => e['id'])}.length != endings.length) fail('ending ids are not unique');
+  if (endings.map((e) => e['stat']).toSet().length != stats.length) fail('every growth axis needs an ending');
+  if (activities.any((e) => e['fatigue'] is! int || e['fatigue'] < -2 || e['fatigue'] > 2 || e['coins'] is! int)) fail('activity risk/reward contract invalid');
   for (final event in events) {
     final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
     if (choices.length != 2) fail('each event needs exactly 2 choices');
@@ -30,5 +33,5 @@ void main() {
     }
   }
   final combinations = activities.length * (story['endingWeek'] as int);
-  stdout.writeln('GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} codeRefs=${refs.length} combinations=$combinations score=100%');
+  stdout.writeln('GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} codeRefs=${refs.length} assetRefs=${assetRefs.length} combinations=$combinations score=100%');
 }

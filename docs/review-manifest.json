@@ -2,14 +2,25 @@
   "schema": "agent-review-v1",
   "reviewedRef": "docs/game-completeness.md#deterministic-loop-v1",
   "reviewedFiles": [
-    {"path":"story/story.json","ref":"story/story.json#root","sha256":"248e0f35e409b46765022fe0d4ac64a59b1d11bee0c932feba49230960ac0756"},
-    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"72474edaabdc7220715cb2b57f23b86f14a41a24269a32a15b92616b2e44c2ce"},
-    {"path":"lib/game_core.dart","ref":"lib/game_core.dart#GameWorld+GameSession","sha256":"205a7736de97d228b2b6c37981cf13efb99f5878314dc3726221a352e0f16871"},
+    {"path":"story/story.json","ref":"story/story.json#root","sha256":"b4381a02f0d220a0f6d56b0c8c7449ddff3c03d4f87fb3b3898123019635d387"},
+    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"e8e4207c15fc5b2719d765b69c26cdf8ab32fb040d0fad5de97e0dd2d7457bdb"},
+    {"path":"lib/game_core.dart","ref":"lib/game_core.dart#GameWorld+GameSession","sha256":"70c19e25074f35551a0d7a8b67d64ff347636e4f32197a5015dcca68d9a989f5"},
     {"path":"lib/save_state.dart","ref":"lib/save_state.dart#GameSnapshot","sha256":"dbc50b30abad5462e521f2b257e6ff56f8560432a7abccf15e32e8ceb850d578"},
-    {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"5457eef597e4993c326f966f626a2e3b42f5fd510e00774135b8d3cb0b31a288"},
-    {"path":"test/flutter_test_config.dart","ref":"test/flutter_test_config.dart#CanvasGoldenComparator","sha256":"8ccfe453defbf1515dd704a09583cd3870ad33062cddc89318dcec4aa4f092a1"},
-    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"559a0e740ac7124dd95bc7699be53b8ace254f2a407401728440785a6da59dab"},
+    {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"e8b820b49791c1e9f395fcace465aaa8267fb78709df0ef45c92eed35e3b1a57"},
+    {"path":"test/goldens/home.png","ref":"test/goldens/home.png#golden","sha256":"f398bd27ce13faeb1ecfe820dd758fb4cf3bde8ae3914d7c08a64348f3b1be2c"},
+    {"path":"test/goldens/illustration.png","ref":"test/goldens/illustration.png#personality-portrait","sha256":"4de3176787e77bfdb0dadae12d9f3397c856641fd9f65268f0d1f6774f5ea214"},
+    {"path":"test/goldens/ending.png","ref":"test/goldens/ending.png#golden","sha256":"0972fa74c8502cd6f2461aa724fb014c07e161e81ef791f4bbaa45f85e48f0ad"},
+    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"d5c4d3103263cbe7d52af6567c2e5b8baacf6df51e2e66ae36c56bd84ff9ce9f"},
     {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"36759795a7a4c12375cc278a7a8e1d3f3b7b65d1c4f73a422a648f4c6bafb687"},
-    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"e5246650c54e41543eaf214d9e42d4ec1875a17ef8ee78db70b40dff5b80515c"}
+    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"2846da4bedac455d0c30b60ee1b7b13e0837e7c08ef7e48118df4537d5138a0e"},
+    {"path":"docs/design-system.md","ref":"docs/design-system.md#personality_portrait","sha256":"de4ef5dda11c919e958ab8491dd2df7315048b79744763e008e95f93abce11ca"},
+    {"path":"test/game_core_test.dart","ref":"test/game_core_test.dart#rules","sha256":"8c678e88726e1298b34148b1b44c69e1abb7515fc8f9a92528b2093e53f3a397"},
+    {"path":"test/flutter_test_config.dart","ref":"test/flutter_test_config.dart#CanvasGoldenComparator","sha256":"f5371d1b05aafa02848e370f9684557d7dda72e746f3520d40e9c88150876d5a"},
+    {"path":"test/asset_test.dart","ref":"test/asset_test.dart#personality-PNG","sha256":"d2455bf2d98f7e5f9e3a3f01523c21d9439942b15a30af08117de35647d8d38f"},
+    {"path":"assets/lumen-personality-sheet.png","ref":"assets/lumen-personality-sheet.png#personality-frames","sha256":"4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"},
+    {"path":"assets/lumen-personality-sheet-source.png","ref":"assets/lumen-personality-sheet-source.png#chroma-key-source","sha256":"0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8"},
+    {"path":"pubspec.yaml","ref":"pubspec.yaml#assets","sha256":"18093e4effe447e1779eb0fa95e8deb1413dac5048a8232536be78f70a811703"},
+    {"path":"tool/generate_ssot_docs.dart","ref":"tool/generate_ssot_docs.dart#render","sha256":"de25ed487f7d066a561488ebf6e3257a78e3cc89085fe9ccec65277f76f189b4"},
+    {"path":"tool/verify_game.dart","ref":"tool/verify_game.dart#assetRefs","sha256":"8d1e7186c563228ed76e41c684e864422a90e305978b538cd176cedcb21dbaf6"}
   ]
 }

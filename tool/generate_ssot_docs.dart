@@ -8,12 +8,15 @@ String render(Map<String, dynamic> s, String hash) {
   final acts = (s['activities'] as List).cast<Map<String, dynamic>>();
   final events = (s['events'] as List).cast<Map<String, dynamic>>();
   final endings = (s['endings'] as List).cast<Map<String, dynamic>>();
+  final assets = (s['assetRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final b = StringBuffer('<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
   b.writeln('${s['setting']}에서 ${s['hero']}는 ${s['endingWeek']}주 동안 스스로 선택한 내일을 걷는다.');
+  b.writeln('\n## 생성 이미지 자산\n');
+  for (final a in assets) b.writeln('- [`${a['ref']}`](../${a['ref'].toString().split('#').first}) · SHA-256 `${a['sha256']}`');
   b.writeln('\n## 성격\n');
-  for (final p in people) b.writeln('- **${p['name']}** (`${p['id']}`): ${p['voice']} “${p['line']}”');
+  for (final p in people) { final d = (p['design'] as Map?) ?? {}; b.writeln('- **${p['name']}** (`${p['id']}`): ${p['voice']} “${p['line']}” · frame ${p['portraitFrame']} · `${p['portraitAsset']}` · ${d['palette']} / ${d['motif']}'); }
   b.writeln('\n## 활동\n');
-  for (final a in acts) b.writeln('- **${a['label']}** (`${a['id']}`): ${a['stat']} +${a['delta']} · ${a['hint']}');
+  for (final a in acts) b.writeln('- **${a['label']}** (`${a['id']}`): ${a['hint']}');
   b.writeln('\n## 사건\n');
   for (final e in events) { b.writeln('### ${e['week']}주차 · ${e['title']}\n\n${e['body']}'); for (final c in (e['choices'] as List)) b.writeln('- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']} · “${c['line']}”'); }
   b.writeln('\n## 엔딩\n');
