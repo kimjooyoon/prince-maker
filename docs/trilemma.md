@@ -16,6 +16,6 @@ SSOT 콘텐츠 → GameWorld 전이 → Canvas/Golden 증거
   재플레이 ← 저장·replay trace ← benchmark
 ```
 
-성능 benchmark는 렌더러 프레임을 임의로 측정하지 않고, 게임의 순수 결정론 코어가 5,000개의 12주 campaign을 처리하는 시간을 측정한다. 따라서 네트워크·폰트·브라우저 상태와 무관하게 게임 규칙의 비용과 checksum 재현성을 감시한다.
+성능 benchmark는 렌더러 프레임을 임의로 측정하지 않고, 게임의 순수 결정론 코어가 5,000개의 12주 campaign을 처리하는 시간을 측정한다. 측정 후 동일 workload를 한 번 더 실행해 `replayChecksum`을 첫 checksum과 대조한다. 따라서 네트워크·폰트·브라우저 상태와 무관하게 게임 규칙의 비용과 checksum 재현성을 함께 감시한다.
 
 각 축이 독립적으로 통과해야 하며, 하나라도 실패하면 pre-commit과 GitHub Actions가 변경을 거부한다. 완전성의 시각 하위 게이트는 7개 Golden 파일과 README 연결을 정확히 대조하고, 순수성의 replay 하위 게이트는 같은 입력의 snapshot·trace 동일성과 다른 성장축의 authored 결과 차이를 함께 확인한다.
