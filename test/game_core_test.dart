@@ -70,4 +70,9 @@ void main() {
     expect(session.world.stats[0]!.values['용기'], 3);
     expect(session.world.progress[0]!.lastResult, contains('조건 부족'));
   });
+  test('coin balance is bounded when an event has a cost', () {
+    final world = GameWorld()..progress[0]!.coins = 1;
+    world.dispatch(const StoryChoiceMade('공감', 0, -5, '비용이 큰 선택'));
+    expect(world.progress[0]!.coins, 0);
+  });
 }
