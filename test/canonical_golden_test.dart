@@ -14,6 +14,11 @@ void main() {
     for (var week = 1; week <= 11; week++) {
       await tester.tapAt(const Offset(200, 550));
       await tester.pump();
+      if (week + 1 == 4) {
+        expect(find.byKey(const ValueKey('3-4-0-2')), findsOneWidget);
+        await expectLater(
+            find.byType(Game), matchesGoldenFile('goldens/canonical-event.png'));
+      }
       if (eventWeeks.contains(week + 1)) {
         await tester.tapAt(Offset(week + 1 == 6 ? 500 : 200, 350));
         await tester.pump();
