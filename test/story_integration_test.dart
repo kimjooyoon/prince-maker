@@ -17,7 +17,7 @@ void main() {
         final choices = (events.first['choices'] as List).cast<Map<String, dynamic>>();
         final available = choices.where((c) => c['requiresStat'] == null || (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >= (c['requiresMin'] as int? ?? 0)).toList();
         final choice = available.firstWhere((c) => c['stat'] == stat, orElse: () => available.first);
-        session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta'], requiresStat: choice['requiresStat'], requiresMin: choice['requiresMin'] ?? 0));
+        session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta'], rivalId: choice['rivalId'], rivalDelta: choice['rivalDelta'] ?? 0, requiresStat: choice['requiresStat'], requiresMin: choice['requiresMin'] ?? 0));
       }
     }
     final p = session.world.progress[0]!;
@@ -32,13 +32,13 @@ void main() {
       if (events.isNotEmpty) {
         final choices = (events.first['choices'] as List).cast<Map<String, dynamic>>();
         final choice = choices.firstWhere((c) => c['requiresStat'] == null || (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >= (c['requiresMin'] as int? ?? 0));
-        session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta'], line: choice['line']));
+        session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta'], rivalId: choice['rivalId'], rivalDelta: choice['rivalDelta'] ?? 0, line: choice['line']));
       }
     }
     final progress = session.world.progress[0]!, ending = resolveEnding(story, session.world.stats[0]!.values, bonds: progress.bonds, milestones: progress.milestones);
     expect(progress.week, 12);
     expect(progress.milestones.length, 4);
-    expect(progress.bonds['bora'], 12);
+    expect(progress.bonds['bora'], 11);
     expect(ending['id'], 'stargazer-master');
     expect(ending['epilogue'], isNotNull);
     expect(progress.trace.where((e) => e.startsWith('milestone:')).length, 4);
@@ -63,7 +63,7 @@ void main() {
         final required = raw['requiresStat'] as String?;
         if (required != null) session.world.stats[0]!.values[required] = raw['requiresMin'] as int;
         final before = session.world.stats[0]!.values[raw['stat'] as String]!;
-        session.chooseEvent(StoryChoiceMade(raw['stat'], raw['delta'], raw['coins'], raw['label'], bondId: raw['bondId'], bondDelta: raw['bondDelta'], requiresStat: required, requiresMin: raw['requiresMin'] ?? 0, line: raw['line']));
+        session.chooseEvent(StoryChoiceMade(raw['stat'], raw['delta'], raw['coins'], raw['label'], bondId: raw['bondId'], bondDelta: raw['bondDelta'], rivalId: raw['rivalId'], rivalDelta: raw['rivalDelta'] ?? 0, requiresStat: required, requiresMin: raw['requiresMin'] ?? 0, line: raw['line']));
         expect(session.world.stats[0]!.values[raw['stat'] as String], before + (raw['delta'] as int));
         expect(session.world.progress[0]!.trace.last, startsWith('event:${raw['label']}'));
       }

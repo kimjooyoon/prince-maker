@@ -31,6 +31,15 @@ void main() {
     expect(world.progress[0]!.bonds['bora'], 4);
     expect(world.snapshot().history.single, contains('bond:bora+4'));
   });
+  test('rival bond choice preserves relationship opportunity cost in trace', () {
+    final world = GameWorld();
+    world.progress[0]!.bonds['taro'] = 5;
+    world.progress[0]!.bonds['bora'] = 4;
+    world.dispatch(const StoryChoiceMade('용기', 2, 0, '풍차', bondId: 'taro', bondDelta: 2, rivalId: 'bora', rivalDelta: -1, line: '바람'));
+    expect(world.progress[0]!.bonds['taro'], 7);
+    expect(world.progress[0]!.bonds['bora'], 3);
+    expect(world.progress[0]!.trace.last, 'event:풍차|bond:taro+2|rival:bora-1|line:바람');
+  });
   test('selected personality gives a deterministic focus bonus', () {
     final story = JsonStoryAdapter({'personalities': [{'focusStat':'지혜','focusBonus':1}], 'endings': [], 'events': [], 'companions': []});
     final session = GameSession(story, MemorySaveAdapter());
