@@ -34,4 +34,20 @@ void main() {
     final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [{'id':'lumi','bondThreshold':8,'epilogue':'별표'}], 'endings': [{'id':'a','stat':'지혜','min':1,'title':'별'}]});
     expect(resolveEnding(story, {'지혜': 2}, {'lumi': 8})['epilogue'], '별표');
   });
+  test('season milestone resolves once with its authored reward', () {
+    final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [], 'milestones': [{'id':'spring','week':3,'title':'봄','stat':'지혜','min':8,'coins':3,'pass':'달성','fail':'실패'}], 'endings': []});
+    final session = GameSession(story, MemorySaveAdapter());
+    for (var i = 0; i < 2; i++) session.choose(const ActivityChosen('지혜', 2, 0, 0, label: '관측'));
+    expect(session.world.progress[0]!.milestones['spring'], isTrue);
+    expect(session.world.progress[0]!.coins, 15);
+    expect(session.world.snapshot().history.where((e) => e.startsWith('milestone:')).length, 1);
+  });
+  test('event choice resolves the milestone after its stat contribution', () {
+    final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'endings': [], 'events': [{'week':3,'choices':[{'stat':'지혜','delta':2,'coins':0,'label':'별'}]}], 'milestones': [{'id':'spring','week':3,'title':'봄','stat':'지혜','min':8,'coins':3,'pass':'달성','fail':'실패'}]});
+    final session = GameSession(story, MemorySaveAdapter());
+    session.choose(const ActivityChosen('지혜', 2, 0, 0));
+    session.choose(const ActivityChosen('지혜', 2, 0, 0));
+    session.chooseEvent(const StoryChoiceMade('지혜', 2, 0, '별'));
+    expect(session.world.progress[0]!.milestones['spring'], isTrue);
+  });
 }

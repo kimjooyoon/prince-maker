@@ -22,6 +22,7 @@ git config core.hooksPath .githooks
 `flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test`가 픽셀 변화를 차단합니다. OS 글꼴 안티앨리어싱 차이는 1.0% 이내만 허용하며, 그 이상은 실패합니다.
 
 ![골든 기준 화면](test/goldens/home.png)
+![계절 목표가 보이는 계획 화면](test/goldens/milestone.png)
 ![성격별 상반신 일러스트 페이지](test/goldens/illustration.png)
 ![12주 엔딩 화면](test/goldens/ending.png)
 
@@ -39,7 +40,7 @@ git config core.hooksPath .githooks
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 5개 활동 × 12주 = 60개의 계획 조합, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개, 3개 성격 대화, 3명 동료 유대도·에필로그, 4개 고정 사건(각 2선택), 3개 골든 화면, 6개 authored 엔딩 티어, 피로 기반 성장 페널티, 행동 결과 피드백, 유대 포함 versioned save/replay trace입니다.
+현재 지표: 5개 활동 × 12주 = 60개의 계획 조합, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개, 3개 성격 대화, 3명 동료 유대도·에필로그, 4개 계절 목표·보상, 4개 고정 사건(각 2선택), 3개 골든 화면, 6개 authored 엔딩 티어, 피로 기반 성장 페널티, 행동 결과 피드백, 목표·유대 포함 versioned save/replay trace입니다.
 
 ## 장기 설계 기준
 

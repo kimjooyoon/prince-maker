@@ -3,6 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:prince_maker/main.dart';
 
 void main() {
+  testWidgets('season goal is visible before the first choice', (tester) async {
+    await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','milestones':[
+      {'id':'spring','week':3,'title':'봄의 별씨앗','stat':'지혜','min':8,'coins':3,'pass':'달성','fail':'실패'}
+    ]}));
+    await tester.pumpAndSettle();
+    await tester.runAsync(() async => Future<void>.delayed(const Duration(seconds: 1)));
+    await tester.pump();
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/milestone.png'));
+  });
   testWidgets('home screen is stable', (tester) async {
     await tester.pumpWidget(
       const Game({

@@ -22,6 +22,6 @@ JsonStoryAdapter MemorySaveAdapter / GameSnapshot
 
 ## EDA와 Hexagonal 경계
 
-UI는 `GameSession`의 명령만 호출하고 JSON 파일이나 저장 구현을 직접 알지 않는다. 스토리는 `StoryPort`와 결정론적 `resolveEnding`, 저장은 `SavePort`로 분리해 향후 IndexedDB·파일 저장·서버 동기화 어댑터를 교체할 수 있다. 현재 기본 저장 어댑터는 단일 사용자 로컬 플레이를 위한 메모리 어댑터이며, export/import는 동료 유대·마지막 행동 피드백까지 포함한 versioned `lumen-save-v4` JSON snapshot으로 제공한다. v3 입력도 읽어 기존 기록을 폐기하지 않는다.
+UI는 `GameSession`의 명령만 호출하고 JSON 파일이나 저장 구현을 직접 알지 않는다. 스토리는 `StoryPort`와 결정론적 `resolveEnding`, 저장은 `SavePort`로 분리해 향후 IndexedDB·파일 저장·서버 동기화 어댑터를 교체할 수 있다. 현재 기본 저장 어댑터는 단일 사용자 로컬 플레이를 위한 메모리 어댑터이며, export/import는 동료 유대·계절 목표·마지막 행동 피드백까지 포함한 versioned `lumen-save-v5` JSON snapshot으로 제공한다. v3/v4 입력도 읽어 기존 기록을 폐기하지 않는다.
 
 스토리 영향 코드의 연결은 [`story/story.json#codeRefs`](../story/story.json)에서 파일 ref와 SHA-256으로 선언하고, `verify_game.dart`가 drift를 거부한다. 문서 생성 결과와 에이전트 검토 해시는 [`docs/review-manifest.json`](review-manifest.json)이 관리한다.

@@ -4,9 +4,9 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"773e237e6a2d25a35e778715a89a4e5ca0b924304ccbaa3f45274a07cb6db5f6"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"d9c3efd0cd21f1652d258b7a9d5b90e7bf967272dbe06eb61dca56e842117888"},
-    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"9002f24b983a657382fa6839cc8af1d78ea77775a185d2cee6a2df7eed60bb6c"}
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"cb97d44f114d4d2854ca2562b488b08b4c25b442409df82a2b6750b34245a66d"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"3ac9e8d56032058227cf8d02c2076679aebb2fec58512c0a34a3d9ef662e36d0"},
+    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"a0cc585c11d255679c5378ea4598c0debfec385158204be1f3108216ae1f6ef6"}
   ],
   "assetRefs": [
     {"ref":"assets/lumen-personality-sheet.png#personality-frames","sha256":"4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"},
@@ -25,6 +25,12 @@
     {"id":"lumi","name":"루미","role":"별자리 기록관","personality":"quiet","portraitFrame":0,"bondThreshold":8,"greeting":"기록은 마음이 다시 길을 찾게 해.","epilogue":"루미는 노아의 기록 첫 장에 작은 별표를 남겼다."},
     {"id":"bora","name":"보라","role":"온실의 돌봄지기","personality":"kind","portraitFrame":1,"bondThreshold":8,"greeting":"함께 가꾼 시간은 쉽게 시들지 않아.","epilogue":"보라는 노아와 함께 계절마다 새로운 씨앗을 심었다."},
     {"id":"taro","name":"타로","role":"바람길 수리공","personality":"bold","portraitFrame":2,"bondThreshold":8,"greeting":"망가진 길도 손을 대면 다시 이어져!","epilogue":"타로는 노아를 데리고 아직 지도에 없는 길로 떠났다."}
+  ],
+  "milestones": [
+    {"id":"spring","week":3,"title":"봄의 별씨앗","stat":"지혜","min":8,"coins":3,"pass":"첫 별씨앗이 싹텄다.","fail":"별씨앗은 아직 잠들어 있다."},
+    {"id":"summer","week":6,"title":"여름의 다리","stat":"공감","min":12,"coins":4,"pass":"서로의 속도가 하나의 다리가 되었다.","fail":"다리는 아직 흔들리지만 다시 건널 수 있다."},
+    {"id":"autumn","week":9,"title":"가을의 편지","stat":"용기","min":16,"coins":5,"pass":"답장을 바람에 맡길 용기가 생겼다.","fail":"편지는 아직 서랍 안에서 다음 계절을 기다린다."},
+    {"id":"winter","week":12,"title":"겨울의 문","stat":"지혜","min":20,"coins":8,"pass":"노아는 루멘의 다음 문을 열었다.","fail":"문은 닫혔지만 다음 열쇠를 남겼다."}
   ],
   "endings": [
     {"id":"stargazer","stat":"지혜","min":12,"title":"루멘의 별읽기꾼","body":"노아는 밤하늘의 결을 읽어 영지의 항로를 밝히는 사람이 되었다."},

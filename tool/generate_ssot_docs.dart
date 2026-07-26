@@ -9,6 +9,7 @@ String render(Map<String, dynamic> s, String hash) {
   final acts = (s['activities'] as List).cast<Map<String, dynamic>>();
   final events = (s['events'] as List).cast<Map<String, dynamic>>();
   final endings = (s['endings'] as List).cast<Map<String, dynamic>>();
+  final milestones = (s['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
   final assets = (s['assetRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final fonts = (s['fontRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final b = StringBuffer('<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
@@ -23,6 +24,8 @@ String render(Map<String, dynamic> s, String hash) {
   for (final c in companions) b.writeln('- **${c['name']}** (`${c['id']}`): ${c['role']} · ${c['personality']} · frame ${c['portraitFrame']} · 유대 ${c['bondThreshold']}에서 에필로그 · “${c['greeting']}”');
   b.writeln('\n## 활동\n');
   for (final a in acts) b.writeln('- **${a['label']}** (`${a['id']}`): ${a['hint']}');
+  b.writeln('\n## 계절 목표\n');
+  for (final m in milestones) b.writeln('- **${m['title']}** (`${m['id']}`): ${m['week']}주차 · ${m['stat']} ≥ ${m['min']} · 성공 보상 은화 ${m['coins']} · “${m['pass']}” / “${m['fail']}”');
   b.writeln('\n## 사건\n');
   for (final e in events) { b.writeln('### ${e['week']}주차 · ${e['title']}\n\n${e['body']}'); for (final c in (e['choices'] as List)) b.writeln('- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']}, ${c['bondId']} 유대 +${c['bondDelta']} · “${c['line']}”'); }
   b.writeln('\n## 엔딩\n');
