@@ -17,7 +17,7 @@ git config core.hooksPath .githooks
 
 ## 골든 테스트 증적
 
-`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test`가 픽셀 변화를 차단합니다.
+`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test`가 픽셀 변화를 차단합니다. OS 글꼴 안티앨리어싱 차이는 0.5% 이내만 허용하며, 그 이상은 실패합니다.
 
 ![골든 기준 화면](test/goldens/home.png)
 ![성격별 상반신 일러스트 페이지](test/goldens/illustration.png)
