@@ -117,6 +117,32 @@ void main() {
       m['coins'] is! int ||
       m['pass'] is! String ||
       m['fail'] is! String)) fail('milestone contract invalid');
+  const pressureAxes = {'stat', 'coins', 'fatigue', 'bond'};
+  final chapterContractsValid = progression.every((chapter) {
+    final contract = (chapter['contract'] as Map? ?? {}).cast<String, dynamic>();
+    final eventWeeks = (chapter['eventWeeks'] as List? ?? []).cast<int>();
+    final choiceWeeks = (contract['choiceWeeks'] as List? ?? []).cast<int>();
+    final axes = (contract['pressureAxes'] as List? ?? []).cast<String>();
+    final closure = contract['closureMilestone'];
+    final closureGoal = milestones.where((m) => m['id'] == closure).firstOrNull;
+    final chapterEvents = events.where((event) =>
+        (event['week'] as int) >= (chapter['weekStart'] as int) &&
+        (event['week'] as int) <= (chapter['weekEnd'] as int));
+    return contract['reveal'] is String &&
+        (contract['reveal'] as String).trim().isNotEmpty &&
+        axes.length >= 2 &&
+        axes.toSet().length == axes.length &&
+        axes.every(pressureAxes.contains) &&
+        choiceWeeks.toSet().length == eventWeeks.toSet().length &&
+        choiceWeeks.toSet().containsAll(eventWeeks) &&
+        choiceWeeks.every((week) => events.any((event) => event['week'] == week)) &&
+        chapterEvents.isNotEmpty &&
+        chapterEvents.every((event) => (event['choices'] as List).length == 2) &&
+        closureGoal != null &&
+        closureGoal['week'] == chapter['weekEnd'];
+  });
+  if (!chapterContractsValid)
+    fail('each chapter needs reveal, two pressure axes, authored choices and a closing milestone');
   for (final ref in refs) {
     final path = (ref['ref'] as String).split('#').first;
     if (!File(path).existsSync()) fail('missing code ref $path');
@@ -348,6 +374,7 @@ void main() {
         mainEvidence.contains('createCollectionAdapter') &&
         collectionEvidence.contains('lumen-collection-v1'),
     'scenarioCompleteness': scenarioDimensions.length == 8 &&
+        chapterContractsValid &&
         scenarioEvidence.contains('막 단위 계약') &&
         scenarioEvidence.contains('choiceConsequenceRate') &&
         storyEvidence

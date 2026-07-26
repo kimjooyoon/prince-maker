@@ -28,7 +28,7 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln('\n## 12주 진행도\n');
   for (final c in progression)
     b.writeln(
-        '- **${c['title']}** (`${c['id']}`): ${c['weekStart']}–${c['weekEnd']}주 · ${c['premise']} → ${c['payoff']} · 사건 ${((c['eventWeeks'] as List).join(', '))}주 · 목표 `${c['milestoneId']}`');
+        '- **${c['title']}** (`${c['id']}`): ${c['weekStart']}–${c['weekEnd']}주 · ${c['premise']} → ${c['payoff']} · 사건 ${((c['eventWeeks'] as List).join(', '))}주 · 목표 `${c['milestoneId']}`\n  - 막 계약: 공개 ${c['contract']['reveal']} · 압력 ${(c['contract']['pressureAxes'] as List).join('·')} · 선택 ${(c['contract']['choiceWeeks'] as List).join(', ')}주 · 결산 `${c['contract']['closureMilestone']}`');
   b.writeln('\n## 대사 구성 기준\n');
   b.writeln(
       '- locale 최소 키: **${dialogue['minimumLocaleKeys']}** · 한 캠페인 최소 대사 줄: **${dialogue['minimumVisibleDialogueLines']}** · 최소 노출 서사 단위: **${dialogue['minimumVisibleNarrativeUnits']}** · 전체 authored 대사 줄: **${dialogue['authoredDialogueLines']}**');
@@ -100,6 +100,9 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
               .length
           : 0,
       progression = (s['progression'] as List? ?? []).length,
+      chapterContracts = (s['progression'] as List? ?? [])
+          .where((chapter) => (chapter as Map)['contract'] is Map)
+          .length,
       dialogue = (s['dialogueMetrics'] as Map? ?? {}),
       scenario = (s['scenarioCompleteness'] as Map? ?? {});
   final b = StringBuffer(
@@ -126,6 +129,8 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       '| 대사 locale | ${(s['localeRefs'] as List? ?? []).length} | `localeRefs.length` |');
   b.writeln(
       '| 스토리 막 | $progression | `progression.length` · 1–3 / 4–6 / 7–9 / 10–12주 |');
+  b.writeln(
+      '| 막 계약 | $chapterContracts/$progression | 각 막의 `contract` 공개·압력·선택·결산 선언 |');
   b.writeln(
       '| 시나리오 완전성 차원 | ${(scenario['dimensions'] as List? ?? []).length} | `scenarioCompleteness.dimensions.length` |');
   b.writeln(

@@ -31,6 +31,29 @@ void main() {
             events.any((event) =>
                 (chapter['eventWeeks'] as List).contains(event['week']))),
         isTrue);
+    const axes = {'stat', 'coins', 'fatigue', 'bond'};
+    expect(
+        chapters.every((chapter) {
+          final contract =
+              (chapter['contract'] as Map).cast<String, dynamic>();
+          final eventWeeks = (chapter['eventWeeks'] as List).cast<int>();
+          final choiceWeeks =
+              (contract['choiceWeeks'] as List).cast<int>();
+          final pressure =
+              (contract['pressureAxes'] as List).cast<String>();
+          final closing = source['milestones']
+              .cast<Map<String, dynamic>>()
+              .firstWhere((m) => m['id'] == contract['closureMilestone']);
+          return (contract['reveal'] as String).isNotEmpty &&
+              pressure.length >= 2 &&
+              pressure.toSet().difference(axes).isEmpty &&
+              choiceWeeks.toSet().containsAll(eventWeeks) &&
+              choiceWeeks.every((week) =>
+                  events.any((event) => event['week'] == week)) &&
+              closing['week'] == chapter['weekEnd'];
+        }),
+        isTrue,
+        reason: 'each chapter must prove reveal → pressure → choice → closure');
     final choices = events
         .expand(
             (event) => (event['choices'] as List).cast<Map<String, dynamic>>())
