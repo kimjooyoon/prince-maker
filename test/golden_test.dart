@@ -12,6 +12,8 @@ void main() {
       }),
     );
     await tester.pumpAndSettle();
+    await tester.runAsync(() async => Future<void>.delayed(const Duration(seconds: 1)));
+    await tester.pump();
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/home.png'));
   });
   testWidgets('activity advances the authored loop', (tester) async {
