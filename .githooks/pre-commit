@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+dart run tool/verify_game.dart
+dart run tool/benchmark_game.dart
+dart run tool/generate_ssot_docs.dart --check
+dart run tool/verify_review_manifest.dart
+flutter analyze
+flutter test
+git diff --check

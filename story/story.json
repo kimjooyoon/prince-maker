@@ -4,29 +4,78 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"48aabcfdac55008514a29a2caed87dab41d7a1b79d6f253e3086a0c0528e31af"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession","sha256":"5183b34b8673c566a1c74612315afb3deed4d92e7572e9c3434ffb19833dc3cc"},
-    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"dbc50b30abad5462e521f2b257e6ff56f8560432a7abccf15e32e8ceb850d578"}
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"1288191a24facd8ca910a11f8e4739ecee0045bc62991a108785d82fa6ed764e"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"559af65c549e3c3923f5b3aee237901749575804a8dfe877a9f83f76206e07e1"},
+    {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
+    {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
+    {"ref":"lib/save_adapter_stub.dart#MemorySaveAdapter-fallback","sha256":"f14b98d51781f31f35a82a9259f9bace404e8197f813c5f5f4b0a8bc1a8b6875"},
+    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"2aa9d60d2176154b6e205c43b727926e5ec1a0692505ce8cfaf20bec56a360bb"}
+  ],
+  "assetRefs": [
+    {"ref":"assets/noa-sprite-sheet.png#hero-2-head-frames","sha256":"1ed524abb6e4eda65e651e25ea008d31efcdebaab28b39086bb1f67a4b32581d"},
+    {"ref":"assets/noa-sprite-sheet-source.png#hero-chroma-key-source","sha256":"5dd8207030fb83554ed7e8b420995a4d2dc8cf8a00f9ae8f54770fef61c90dd9"},
+    {"ref":"assets/lumen-personality-sheet.png#personality-frames","sha256":"4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"},
+    {"ref":"assets/lumen-personality-sheet-source.png#chroma-key-source","sha256":"0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8"}
+  ],
+  "fontRefs": [
+    {"ref":"assets/fonts/NotoSansKR-Regular.ttf#canvas-korean-font","sha256":"c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"}
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
   "personalities": [
-    {"id":"quiet","name":"고요한 관찰자","voice":"짧고 신중하게 말한다.","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래."},
-    {"id":"kind","name":"다정한 연결자","voice":"상대의 마음을 먼저 살핀다.","line":"네가 웃으면 정원도 조금 더 환해지는 것 같아."},
-    {"id":"bold","name":"용감한 개척자","voice":"실수해도 먼저 움직인다.","line":"길이 없다면, 오늘 한 걸음으로 만들면 돼!"}
+    {"id":"quiet","name":"고요한 관찰자","voice":"짧고 신중하게 말한다.","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래.","focusStat":"지혜","focusBonus":1,"portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":0,"design":{"palette":"indigo-lavender","motif":"moon","silhouette":"short bob"}},
+    {"id":"kind","name":"다정한 연결자","voice":"상대의 마음을 먼저 살핀다.","line":"네가 웃으면 정원도 조금 더 환해지는 것 같아.","focusStat":"공감","focusBonus":1,"portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":1,"design":{"palette":"teal-cream","motif":"flower","silhouette":"long braid"}},
+    {"id":"bold","name":"용감한 개척자","voice":"실수해도 먼저 움직인다.","line":"길이 없다면, 오늘 한 걸음으로 만들면 돼!","focusStat":"용기","focusBonus":1,"portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":2,"design":{"palette":"coral-ochre","motif":"compass","silhouette":"short tousled hair"}}
+  ],
+  "companions": [
+    {"id":"lumi","name":"루미","role":"별자리 기록관","personality":"quiet","portraitFrame":0,"bondThreshold":8,"greeting":"기록은 마음이 다시 길을 찾게 해.","epilogue":"루미는 노아의 기록 첫 장에 작은 별표를 남겼다."},
+    {"id":"bora","name":"보라","role":"온실의 돌봄지기","personality":"kind","portraitFrame":1,"bondThreshold":8,"greeting":"함께 가꾼 시간은 쉽게 시들지 않아.","epilogue":"보라는 노아와 함께 계절마다 새로운 씨앗을 심었다."},
+    {"id":"taro","name":"타로","role":"바람길 수리공","personality":"bold","portraitFrame":2,"bondThreshold":8,"greeting":"망가진 길도 손을 대면 다시 이어져!","epilogue":"타로는 노아를 데리고 아직 지도에 없는 길로 떠났다."}
+  ],
+  "milestones": [
+    {"id":"spring","week":3,"title":"봄의 별씨앗","stat":"지혜","min":8,"coins":3,"pass":"첫 별씨앗이 싹텄다.","fail":"별씨앗은 아직 잠들어 있다."},
+    {"id":"summer","week":6,"title":"여름의 다리","stat":"공감","min":12,"coins":4,"pass":"서로의 속도가 하나의 다리가 되었다.","fail":"다리는 아직 흔들리지만 다시 건널 수 있다."},
+    {"id":"autumn","week":9,"title":"가을의 편지","stat":"용기","min":16,"coins":5,"pass":"답장을 바람에 맡길 용기가 생겼다.","fail":"편지는 아직 서랍 안에서 다음 계절을 기다린다."},
+    {"id":"winter","week":12,"title":"겨울의 문","stat":"지혜","min":20,"coins":8,"pass":"노아는 루멘의 다음 문을 열었다.","fail":"문은 닫혔지만 다음 열쇠를 남겼다."}
+  ],
+  "endings": [
+    {"id":"stargazer","stat":"지혜","min":12,"title":"루멘의 별읽기꾼","body":"노아는 밤하늘의 결을 읽어 영지의 항로를 밝히는 사람이 되었다."},
+    {"id":"stargazer-master","stat":"지혜","min":24,"requiresMilestones":["spring","winter"],"title":"새벽을 계산하는 항해사","body":"노아는 별과 바람의 주기를 기록해 누구나 길을 찾는 지도를 남겼다."},
+    {"id":"gardener","stat":"공감","min":12,"title":"마음의 정원사","body":"노아는 서로 다른 마음이 함께 피어나는 정원을 만들었다."},
+    {"id":"gardener-master","stat":"공감","min":24,"requiresMilestones":["summer"],"title":"마을의 온기를 잇는 사람","body":"노아는 다툼이 시작되기 전에 서로의 이야기를 건네는 광장을 열었다."},
+    {"id":"pathfinder","stat":"용기","min":12,"title":"새 길의 개척자","body":"노아는 아직 이름 없는 길에 첫 발자국을 남겼다."},
+    {"id":"pathfinder-master","stat":"용기","min":24,"requiresMilestones":["autumn"],"title":"경계를 넘어선 선봉장","body":"노아는 두려움을 없애지 않고도 앞으로 나아갈 수 있다는 길을 보여주었다."}
   ],
   "activities": [
-    {"id":"observatory","label":"별 관측","icon":"✦","hint":"지혜 +3 · 피로 +1","stat":"지혜","delta":3,"fatigue":1},
-    {"id":"garden","label":"정원 돌보기","icon":"❈","hint":"공감 +3 · 피로 +1","stat":"공감","delta":3,"fatigue":1},
-    {"id":"workshop","label":"공방 돕기","icon":"◈","hint":"용기 +2 · 은화 +4","stat":"용기","delta":2,"fatigue":1}
+    {"id":"observatory","label":"별 관측","icon":"✦","hint":"지혜 +3 · 피로 +1","stat":"지혜","delta":3,"fatigue":1,"coins":0},
+    {"id":"garden","label":"정원 돌보기","icon":"❈","hint":"공감 +3 · 피로 +1","stat":"공감","delta":3,"fatigue":1,"coins":0},
+    {"id":"workshop","label":"공방 돕기","icon":"◈","hint":"용기 +2 · 은화 +4","stat":"용기","delta":2,"fatigue":1,"coins":4},
+    {"id":"rest","label":"달빛 아래 휴식","icon":"☾","hint":"피로 -2 · 성장 없음","stat":"지혜","delta":0,"fatigue":-2,"coins":0},
+    {"id":"market","label":"장터 심부름","icon":"◇","hint":"은화 +6 · 피로 +1","stat":"공감","delta":0,"fatigue":1,"coins":6}
   ],
   "events": [
-    {"week":4,"title":"비가 오던 밤","body":"마을의 등불이 꺼졌다. 노아는 누구의 손을 먼저 잡을까?","choices":[
-      {"label":"아이들과 등불을 나눈다","stat":"공감","delta":2,"coins":-1,"line":"작은 빛도 함께라면 길이 돼."},
-      {"label":"별을 읽어 길을 찾는다","stat":"지혜","delta":2,"coins":0,"line":"하늘은 아직 방향을 숨기지 않았어."}
+    {"week":2,"title":"새벽 우편함","body":"아직 해가 오르기 전, 낯선 편지 한 장이 도착했다. 누구와 먼저 읽을까?","choices":[
+      {"label":"루미에게 별의 이름을 묻는다","stat":"지혜","delta":1,"coins":0,"bondId":"lumi","bondDelta":2,"line":"이름을 부르면 낯선 것도 조금 가까워져."},
+      {"label":"마을 게시판에 소식을 나눈다","stat":"공감","delta":1,"coins":1,"bondId":"bora","bondDelta":2,"line":"좋은 소식은 나눌수록 오래 남아."}
     ]},
-    {"week":8,"title":"강을 건너는 법","body":"낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?","choices":[
-      {"label":"먼저 발을 내딛는다","stat":"용기","delta":2,"coins":0,"line":"떨려도, 한 걸음은 내 것이야."},
-      {"label":"모두의 속도를 맞춘다","stat":"공감","delta":2,"coins":1,"line":"같은 박자로 걸으면 강도 덜 무서워."}
+    {"week":3,"title":"비가 오던 밤","body":"마을의 등불이 꺼졌다. 노아는 누구의 손을 먼저 잡을까?","choices":[
+      {"label":"아이들과 등불을 나눈다","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"작은 빛도 함께라면 길이 돼."},
+      {"label":"별을 읽어 길을 찾는다","stat":"지혜","delta":2,"coins":0,"bondId":"lumi","bondDelta":4,"line":"하늘은 아직 방향을 숨기지 않았어."}
+    ]},
+    {"week":6,"title":"강을 건너는 법","body":"낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?","choices":[
+      {"label":"먼저 발을 내딛는다","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":8,"line":"떨려도, 한 걸음은 내 것이야."},
+      {"label":"모두의 속도를 맞춘다","stat":"공감","delta":2,"coins":1,"bondId":"bora","bondDelta":4,"line":"같은 박자로 걸으면 강도 덜 무서워."}
+    ]},
+    {"week":8,"title":"바람이 멎은 오후","body":"풍차가 멈춰 온실의 창이 닫히지 않는다. 누구와 손을 맞출까?","choices":[
+      {"label":"타로와 풍차를 고친다","stat":"용기","delta":2,"coins":1,"bondId":"taro","bondDelta":2,"line":"멈춘 바람도 손을 대면 다시 움직여."},
+      {"label":"그늘을 만들 천을 나눈다","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":2,"line":"같은 그늘 아래라면 기다림도 덜 길어."}
+    ]},
+    {"week":9,"title":"바람의 편지","body":"먼 영지에서 도움을 청하는 편지가 도착했다. 노아는 어떤 답을 보낼까?","choices":[
+      {"label":"답장을 꼼꼼히 기록한다","stat":"지혜","delta":2,"coins":1,"bondId":"lumi","bondDelta":4,"line":"정확한 말은 먼 곳에서도 길이 될 거야."},
+      {"label":"직접 찾아가겠다고 약속한다","stat":"용기","delta":2,"coins":-2,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":14,"line":"기다리게 하지 않을게. 내가 갈게!"}
+    ]},
+    {"week":10,"title":"축제 전야","body":"마을 축제의 마지막 준비가 남았다. 노아는 무엇을 먼저 챙길까?","choices":[
+      {"label":"모두가 쉴 자리를 만든다","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"즐거운 날일수록 쉬어갈 자리도 필요해."},
+      {"label":"새로운 무대를 직접 세운다","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":12,"line":"조금 삐뚤어도 우리 손으로 세워보자."}
     ]}
   ]
 }

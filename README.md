@@ -4,33 +4,54 @@
 
 화면은 Flutter 위젯 카드가 아니라 `CustomPaint`/`Canvas`를 기준으로 그립니다. 입력은 얇은 `GestureDetector`가 좌표를 게임 상태 전이로 바꾸고, 상태·도형·텍스트는 한 개의 painter에서 결정론적으로 렌더링합니다.
 
+한글 Golden 재현성을 위해 [Noto Sans KR](https://github.com/google/fonts/tree/main/ofl/notosanskr)을 OFL 폰트 자산으로 번들합니다. 캐릭터와 UI 일러스트는 이 폰트와 독자 PNG 시트만 사용하며 원작의 이미지·문구·캐릭터를 복제하지 않습니다.
+
 ## 실행
 
 ```bash
 flutter pub get
 flutter run -d chrome
 flutter build web --wasm --release
+
+# 한 번만 설정하면 이후 커밋 때 동일한 검증을 자동 실행합니다.
+git config core.hooksPath .githooks
 ```
 
 ## 골든 테스트 증적
 
-`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test`가 픽셀 변화를 차단합니다.
+`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test`가 픽셀 변화를 차단합니다. OS별 Canvas 글꼴 안티앨리어싱 차이는 2.0% 이하의 bounded tolerance만 허용하며, 그 이상은 실패합니다.
 
 ![골든 기준 화면](test/goldens/home.png)
+![계절 목표가 보이는 계획 화면](test/goldens/milestone.png)
+![사건 선택 Golden](test/goldens/event.png)
 ![성격별 상반신 일러스트 페이지](test/goldens/illustration.png)
 ![12주 엔딩 화면](test/goldens/ending.png)
+![replay 기록 보관소 화면](test/goldens/save.png)
+![새 캠페인 재시작 화면](test/goldens/restart.png)
 
 ## SSOT와 게임성 지표
 
-스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, 일러스트 페이지에서 상반신 대화 연출로 사용합니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
+스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, `assets/lumen-personality-sheet.png`는 고요·다정·용감 성격의 3프레임 상반신 시트입니다. 두 PNG는 SSOT의 `assetRefs`와 각 personality의 `portraitAsset`/`portraitFrame`으로 연결되어 Canvas 일러스트 페이지에서 표시됩니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
-초기 지표: 3개 활동 × 12주 = 36개의 계획 조합, 3개 성장축(지혜·공감·용기), 3개 성격 대화, 3개 골든 화면, 1회 행동 입력당 1회 상태 전이, 12주 종료 판정 1개, versioned save/replay trace 1개입니다.
+캐릭터의 독자 조형 규칙과 자산 provenance는 [`docs/art-provenance.md`](docs/art-provenance.md)에 기록하고, SSOT verifier가 PNG 매핑·성격별 색상·모티프·실루엣 필드를 강제합니다.
+
+### 성격 유형 캐릭터 시트
+
+![루멘 성격 유형 3종 캐릭터 시트](assets/lumen-personality-sheet.png)
+
+| SSOT id | 유형 | 디자인 연결 |
+| --- | --- | --- |
+| `quiet` | 고요한 관찰자 | 인디고·라벤더 / 달 모티프 / frame 0 |
+| `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
+| `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
+
+현재 지표: 5개 활동 × 12주 = 60개의 계획 조합, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 3개 성격 대화, 3명 동료 유대도·에필로그, 4개 계절 목표·보상, 6개 고정 사건(각 2선택, 조건부 잠금 포함), 6개 엔딩·12개 사건 선택의 18/18 도달성 계약 테스트, 7개 골든 화면, 세 성격 숙련 엔딩 campaign 3종, 피로 기반 성장 페널티, 사건 대사 replay, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 목표·유대 포함 `lumen-save-v6` trace, 12주 이후 추가 입력을 차단하는 terminal 상태 불변식입니다.
 
 ## 장기 설계 기준
 
 초안 이후 기능은 재활용 가능한 [Lumen Canvas Kit](docs/design-system.md)를 먼저 설계한 뒤 구현합니다. 토큰은 [`design/tokens.json`](design/tokens.json)과 [`lib/design_tokens.dart`](lib/design_tokens.dart)에 분리되어 있으며, 화면은 `stat_panel`, `choice_card`, `portrait_page`, `ending_panel` 조합으로 확장합니다.
 
-게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), CI 강제 검사는 [`tool/verify_game.dart`](tool/verify_game.dart)에 있습니다. SSOT 검사 → 상태/Golden 테스트 → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
+게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), 트릴레마 폐쇄루프는 [`docs/trilemma.md`](docs/trilemma.md), CI 강제 검사는 [`tool/verify_game.dart`](tool/verify_game.dart)와 [`tool/benchmark_game.dart`](tool/benchmark_game.dart)에 있습니다. 게이트는 완전성·순수성·성능을 함께 확인하며, 완전성 점수가 95% 미만이거나 코어 benchmark가 실패하면 변경을 거부합니다. SSOT 검사 → 해시 매니페스트 → 정적 분석 → 상태/Golden 테스트 → 결정론 코어 benchmark → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
 
 SSOT에서 생성된 문서는 [`docs/story-ssot.md`](docs/story-ssot.md)이며, 문서 헤더의 SHA-256과 `source-ref`를 CI가 검사합니다. 핵심 변경 파일은 [`docs/review-manifest.json`](docs/review-manifest.json)에 해시와 ref가 있어, 파일을 다시 읽고 검토하지 않은 변경은 통합되지 않습니다.
 
@@ -51,4 +72,4 @@ Bevy의 UI는 Flexbox/CSS Grid 모델과 ECS에 강하지만, 공식 표준 위�
 - [Bevy standard widgets](https://bevy.org/examples/ui-user-interface/standard-widgets/), [Bevy UI API](https://docs.rs/bevy/latest/bevy/ui/index.html)
 - 장르 참고: [Princess Maker 1 mechanics overview](https://princessmaker.fandom.com/wiki/Princess_Maker_1), [comparative study](https://uu.diva-portal.org/smash/get/diva2:1966128/FULLTEXT01.pdf)
 
-기준 해시: `38376acf84db0433ebddddafe6746af51316ad836b2aae7e6d5ac9686e1d4aa4` (코드·SSOT·테스트·골든·CI 입력의 SHA-256)
+리뷰 매니페스트의 파일별 SHA-256은 [`docs/review-manifest.json`](docs/review-manifest.json)을 단일 기준으로 사용합니다.

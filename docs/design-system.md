@@ -8,7 +8,8 @@
 - 760×700 기준 좌표계, 작은 화면에서는 균일 비율 축소
 - `ink / teal / sun / paper` 4색과 8·16·24 간격만으로 화면 간 일관성 유지
 - 모든 상호작용 컴포넌트는 `idle / selected / disabled` 상태를 갖고, 골든으로 상태를 고정
-- 상반신 대화 화면은 `portrait_page`, 성장 계획 화면은 `choice_card`, 결과 화면은 `ending_panel`을 조합
+- 한글 텍스트는 번들 폰트로 고정하고, 활동 장식 아이콘은 폰트 글리프 대신 Canvas 벡터로 그려 플랫폼별 tofu를 차단
+- 상반신 대화 화면은 `portrait_page`, 성격별 PNG 프레임은 `personality_portrait`, 성장 계획 화면은 `choice_card`, 결과 화면은 `ending_panel`을 조합
 
 ## 재활용 단위
 
@@ -17,7 +18,10 @@
 | `stat_panel` | 주인공·스탯·은화 요약 | 홈 화면 |
 | `choice_card` | 일정 선택과 상태 강조 | 주간 계획 |
 | `portrait_page` | 성격 탭과 상반신 대화 | 노아의 기록 |
+| `personality_portrait` | SSOT `portraitAsset` + `portraitFrame`을 읽는 캐릭터 프레임 | 고요·다정·용감 3종 |
 | `ending_panel` | 성장 결과와 재시작 | 12주 엔딩 |
+| `feedback_banner` | 마지막 행동 결과와 조건 피드백 | 홈 화면 |
+| `vector_activity_icon` | 활동별 별·꽃·나침반·달·보석 마크 | 선택 카드 |
 
 런타임 토큰은 [`lib/design_tokens.dart`](../lib/design_tokens.dart), 사람이 읽는 토큰 원본은 [`design/tokens.json`](../design/tokens.json)입니다. 새 화면은 색상·간격을 직접 하드코딩하지 않고 이 두 파일의 기준으로 설계합니다.
 

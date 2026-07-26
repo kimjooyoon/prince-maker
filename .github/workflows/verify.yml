@@ -8,8 +8,5 @@ jobs:
         with: {flutter-version: '3.44.5', channel: stable}
       - uses: actions/checkout@v4
       - run: flutter pub get
-      - run: dart run tool/verify_game.dart
-      - run: dart run tool/generate_ssot_docs.dart --check
-      - run: dart run tool/verify_review_manifest.dart
-      - run: flutter test
+      - run: bash .githooks/pre-commit
       - run: flutter build web --wasm --release

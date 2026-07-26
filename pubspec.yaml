@@ -8,6 +8,7 @@ dependencies:
   flutter:
     sdk: flutter
   crypto: ^3.0.6
+  web: ^1.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -17,3 +18,8 @@ flutter:
   assets:
     - story/story.json
     - assets/noa-sprite-sheet.png
+    - assets/lumen-personality-sheet.png
+  fonts:
+    - family: NotoSansKR
+      fonts:
+        - asset: assets/fonts/NotoSansKR-Regular.ttf
