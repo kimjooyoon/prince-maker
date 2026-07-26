@@ -61,9 +61,9 @@ git config core.hooksPath .githooks
 
 초안 이후 기능은 재활용 가능한 [Lumen Canvas Kit](docs/design-system.md)를 먼저 설계한 뒤 구현합니다. 토큰은 [`design/tokens.json`](design/tokens.json)과 [`lib/design_tokens.dart`](lib/design_tokens.dart)에 분리되어 있으며, 화면은 `stat_panel`, `choice_card`, `portrait_page`, `ending_panel` 조합으로 확장합니다.
 
-게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), 트릴레마 폐쇄루프는 [`docs/trilemma.md`](docs/trilemma.md), CI 강제 검사는 [`tool/verify_game.dart`](tool/verify_game.dart)와 [`tool/benchmark_game.dart`](tool/benchmark_game.dart)에 있습니다. 게이트는 완전성·순수성·성능을 함께 확인하며, 완전성 점수가 95% 미만이거나 코어 benchmark가 실패하면 변경을 거부합니다. 동일한 일정 예산으로 지혜·공감 경로가 서로 다른 authored 엔딩과 유대를 만드는 순수성 회귀도 고정합니다. SSOT 검사 → 해시 매니페스트 → 정적 분석 → 상태/Golden 테스트 → 결정론 코어 benchmark → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
+게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), 시나리오 표본은 [`docs/scenario-completeness.md`](docs/scenario-completeness.md), 트릴레마 폐쇄루프는 [`docs/trilemma.md`](docs/trilemma.md), CI 강제 검사는 [`tool/verify_game.dart`](tool/verify_game.dart)와 [`tool/benchmark_game.dart`](tool/benchmark_game.dart)에 있습니다. 게이트는 완전성·순수성·성능을 함께 확인하며, 완전성 점수가 95% 미만이거나 실제 SSOT campaign benchmark가 실패하면 변경을 거부합니다. 동일한 일정 예산으로 지혜·공감 경로가 서로 다른 authored 엔딩과 유대를 만드는 순수성 회귀도 고정합니다. SSOT 검사 → 해시 매니페스트 → 정적 분석 → 상태/Golden 테스트 → 실제 SSOT campaign benchmark → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
 
-SSOT에서 생성된 문서는 [`docs/story-ssot.md`](docs/story-ssot.md)와 [`docs/ssot-metrics.md`](docs/ssot-metrics.md)이며, 문서 헤더의 SHA-256과 `source-ref`를 CI가 검사합니다. 성능 benchmark는 같은 5,000 campaign workload를 재실행해 `checksum`과 `replayChecksum`까지 일치해야 통과합니다. 핵심 변경 파일은 [`docs/review-manifest.json`](docs/review-manifest.json)에 해시와 ref가 있어, 파일을 다시 읽고 검토하지 않은 변경은 통합되지 않습니다.
+SSOT에서 생성된 문서는 [`docs/story-ssot.md`](docs/story-ssot.md)와 [`docs/ssot-metrics.md`](docs/ssot-metrics.md)이며, 문서 헤더의 SHA-256과 `source-ref`를 CI가 검사합니다. 성능 benchmark는 `story/story.json`을 실제 `GameSession`에 주입해 8개 사건을 포함한 같은 5,000 campaign workload를 재실행하고 `checksum`과 `replayChecksum`까지 일치해야 통과합니다. 핵심 변경 파일은 [`docs/review-manifest.json`](docs/review-manifest.json)에 해시와 ref가 있어, 파일을 다시 읽고 검토하지 않은 변경은 통합되지 않습니다.
 
 런타임 구조는 [architecture.md](docs/architecture.md)에 정의된 ECS/DOD + EDA + Hexagonal 경계를 따릅니다. Canvas는 어댑터이고, `GameSession`은 애플리케이션 포트이며, `GameWorld`는 결정론적 이벤트 시스템입니다.
 

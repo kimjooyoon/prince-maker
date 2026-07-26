@@ -19,6 +19,8 @@ String render(Map<String, dynamic> s, String hash) {
   final progression =
       (s['progression'] as List? ?? []).cast<Map<String, dynamic>>();
   final dialogue = (s['dialogueMetrics'] as Map? ?? {}).cast<String, dynamic>();
+  final scenario =
+      (s['scenarioCompleteness'] as Map? ?? {}).cast<String, dynamic>();
   final b = StringBuffer(
       '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
   b.writeln(
@@ -31,6 +33,13 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln(
       '- locale 최소 키: **${dialogue['minimumLocaleKeys']}** · 한 캠페인 최소 대사 줄: **${dialogue['minimumVisibleDialogueLines']}** · 최소 노출 서사 단위: **${dialogue['minimumVisibleNarrativeUnits']}** · 전체 authored 대사 줄: **${dialogue['authoredDialogueLines']}**');
   b.writeln('- 산식: ${dialogue['formula']}');
+  b.writeln('\n## 시나리오 완전성 표본\n');
+  b.writeln(
+      '참조 모델: **${scenario['referenceModel']}** (`${scenario['schema']}`)\n');
+  b.writeln('| 차원 | 목표 | 현재 증적 | 검증 ref |\n| --- | --- | --- | --- |');
+  for (final d in (scenario['dimensions'] as List? ?? const []))
+    b.writeln(
+        '| ${d['name']} | ${d['target']} | ${d['current']} | `${d['evidence']}` |');
   b.writeln('\n## 생성 이미지 자산\n');
   for (final a in assets)
     b.writeln(
@@ -91,7 +100,8 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
               .length
           : 0,
       progression = (s['progression'] as List? ?? []).length,
-      dialogue = (s['dialogueMetrics'] as Map? ?? {});
+      dialogue = (s['dialogueMetrics'] as Map? ?? {}),
+      scenario = (s['scenarioCompleteness'] as Map? ?? {});
   final b = StringBuffer(
       '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · SSOT 자동 품질 지표\n\n');
   b.writeln(
@@ -116,6 +126,8 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       '| 대사 locale | ${(s['localeRefs'] as List? ?? []).length} | `localeRefs.length` |');
   b.writeln(
       '| 스토리 막 | $progression | `progression.length` · 1–3 / 4–6 / 7–9 / 10–12주 |');
+  b.writeln(
+      '| 시나리오 완전성 차원 | ${(scenario['dimensions'] as List? ?? []).length} | `scenarioCompleteness.dimensions.length` |');
   b.writeln(
       '| locale 최소 키 | ${dialogue['minimumLocaleKeys']} | `dialogueMetrics.minimumLocaleKeys` |');
   b.writeln(
