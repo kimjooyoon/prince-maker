@@ -5,7 +5,7 @@
   "endingWeek": 12,
   "codeRefs": [
     {"ref":"lib/main.dart#_Game/Scene","sha256":"af3fc4a669e86bb2c7ea8f7494f5d49901d9b35bcc0b45c3133e1a607c01c136"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"e6acc4468eceb0c1971ce06c5ac59e386b9b0fbf3c3f14e9b24d36adbafde568"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"559af65c549e3c3923f5b3aee237901749575804a8dfe877a9f83f76206e07e1"},
     {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
     {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
     {"ref":"lib/save_adapter_stub.dart#MemorySaveAdapter-fallback","sha256":"f14b98d51781f31f35a82a9259f9bace404e8197f813c5f5f4b0a8bc1a8b6875"},

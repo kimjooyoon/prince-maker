@@ -92,6 +92,15 @@ void main() {
     expect(session.world.progress[0]!.coins, 12);
     expect(session.world.progress[0]!.lastResult, contains('기록이 완성되었습니다'));
   });
+  test('completed campaign rejects stale event input too', () {
+    final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'milestones': [], 'events': [], 'endings': []});
+    final session = GameSession(story, MemorySaveAdapter());
+    session.world.progress[0]!.week = 12;
+    session.chooseEvent(const StoryChoiceMade('용기', 99, 99, '늦은 사건'));
+    expect(session.world.stats[0]!.values['용기'], 3);
+    expect(session.world.progress[0]!.coins, 12);
+    expect(session.world.progress[0]!.lastResult, contains('기록이 완성되었습니다'));
+  });
   test('activity and event commands automatically persist the latest snapshot', () {
     final save = MemorySaveAdapter();
     final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'milestones': [], 'events': [{'week':2,'choices':[{'stat':'공감','delta':1,'coins':0,'label':'등불'}]}], 'endings': []});
