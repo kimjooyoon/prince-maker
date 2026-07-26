@@ -1,0 +1,136 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+const ink = Color(0xff17324d),
+    teal = Color(0xff4fa7a0),
+    sun = Color(0xffffc857),
+    paper = Color(0xfff6f1e8);
+typedef Activity = ({
+  String label,
+  String icon,
+  String hint,
+  String stat,
+  int delta
+});
+const activities = <Activity>[
+  (label: '별 관측', icon: '✦', hint: '지혜 +3 · 피로 +1', stat: '지혜', delta: 3),
+  (label: '정원 돌보기', icon: '❈', hint: '공감 +3 · 피로 +1', stat: '공감', delta: 3),
+  (label: '공방 돕기', icon: '◈', hint: '용기 +2 · 은화 +4', stat: '용기', delta: 2)
+];
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final s = jsonDecode(await rootBundle.loadString('story/story.json'));
+  runApp(Game(s));
+}
+
+class Game extends StatefulWidget {
+  const Game(this.story, {super.key});
+  final Map<String, dynamic> story;
+  @override
+  State<Game> createState() => _Game();
+}
+
+class _Game extends State<Game> {
+  int week = 1, coins = 12, selected = 0;
+  final stats = {'지혜': 4, '공감': 5, '용기': 3};
+  void next() {
+    final a = activities[selected];
+    setState(() {
+      stats[a.stat] = stats[a.stat]! + a.delta;
+      coins += selected == 2 ? 4 : 0;
+      week++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext c) => MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+          backgroundColor: paper,
+          body: SafeArea(
+              child: GestureDetector(
+                  onTapUp: (d) {
+                    if (d.localPosition.dy > 500)
+                      next();
+                    else if (d.localPosition.dy > 250)
+                      setState(() =>
+                          selected = (d.localPosition.dx ~/ 245).clamp(0, 2));
+                  },
+                  child: CustomPaint(
+                      key: ValueKey('week-$week'),
+                      painter:
+                          Scene(widget.story, week, coins, selected, stats),
+                      size: const Size(760, 700))))));
+}
+
+class Scene extends CustomPainter {
+  Scene(this.s, this.week, this.coins, this.selected, this.stats);
+  final Map<String, dynamic> s;
+  final int week, coins, selected;
+  final Map<String, int> stats;
+  void txt(Canvas c, String v, Offset p, double z, Color color,
+      {bool bold = false}) {
+    final t = TextPainter(
+        text: TextSpan(
+            text: v,
+            style: TextStyle(
+                fontSize: z,
+                color: color,
+                fontWeight: bold ? FontWeight.w800 : FontWeight.w400)),
+        textDirection: TextDirection.ltr)
+      ..layout();
+    t.paint(c, p);
+  }
+
+  void box(Canvas c, Rect r, Color color, {double radius = 18, Color? stroke}) {
+    c.drawRRect(RRect.fromRectAndRadius(r, Radius.circular(radius)),
+        Paint()..color = color);
+    if (stroke != null)
+      c.drawRRect(
+          RRect.fromRectAndRadius(r, Radius.circular(radius)),
+          Paint()
+            ..color = stroke
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2);
+  }
+
+  @override
+  void paint(Canvas c, Size z) {
+    final u = (z.width / 760).clamp(.5, 1.0);
+    c.scale(u);
+    box(c, const Rect.fromLTWH(0, 0, 760, 700), paper, radius: 0);
+    txt(c, s['title'], const Offset(24, 24), 30, ink, bold: true);
+    txt(c, s['setting'], const Offset(25, 65), 14, teal);
+    box(c, const Rect.fromLTWH(24, 105, 712, 120), ink, radius: 22);
+    box(c, const Rect.fromLTWH(44, 125, 76, 76), sun, radius: 18);
+    txt(c, 'N', const Offset(64, 139), 38, ink, bold: true);
+    txt(c, '${s['hero']} · $week주차', const Offset(140, 128), 20, Colors.white,
+        bold: true);
+    txt(c, '지혜 ${stats['지혜']}   공감 ${stats['공감']}   용기 ${stats['용기']}',
+        const Offset(140, 166), 14, Colors.white70);
+    txt(c, '은화 $coins', const Offset(140, 190), 14, sun);
+    txt(c, '이번 주의 방향', const Offset(24, 250), 16, ink, bold: true);
+    for (var i = 0; i < 3; i++) {
+      final a = activities[i], x = 24 + i * 236.0, on = i == selected;
+      box(c, Rect.fromLTWH(x, 280, 220, 150), on ? teal : Colors.white,
+          stroke: on ? teal : ink.withOpacity(.12));
+      txt(c, a.icon, Offset(x + 16, 298), 28, on ? Colors.white : teal);
+      txt(c, a.label, Offset(x + 16, 365), 16, on ? Colors.white : ink,
+          bold: true);
+      txt(c, a.hint, Offset(x + 16, 393), 11,
+          on ? Colors.white70 : ink.withOpacity(.55));
+    }
+    txt(c, '계획을 고르고 아래를 눌러 하루를 보냅니다.', const Offset(24, 610), 14,
+        ink.withOpacity(.55));
+    box(c, const Rect.fromLTWH(540, 590, 196, 54), teal, radius: 15);
+    txt(c, '하루 보내기  →', const Offset(568, 607), 16, Colors.white, bold: true);
+  }
+
+  @override
+  bool shouldRepaint(Scene o) =>
+      o.week != week ||
+      o.selected != selected ||
+      o.coins != coins ||
+      o.stats != stats;
+}
