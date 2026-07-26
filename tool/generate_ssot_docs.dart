@@ -12,12 +12,15 @@ String render(Map<String, dynamic> s, String hash) {
   final milestones = (s['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
   final assets = (s['assetRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final fonts = (s['fontRefs'] as List? ?? []).cast<Map<String, dynamic>>();
+  final locales = (s['localeRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final b = StringBuffer('<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
   b.writeln('${s['setting']}에서 ${s['hero']}는 ${s['endingWeek']}주 동안 스스로 선택한 내일을 걷는다.');
   b.writeln('\n## 생성 이미지 자산\n');
   for (final a in assets) b.writeln('- [`${a['ref']}`](../${a['ref'].toString().split('#').first}) · SHA-256 `${a['sha256']}`');
   b.writeln('\n## 폰트\n');
   for (final f in fonts) b.writeln('- [`${f['ref']}`](../${f['ref'].toString().split('#').first}) · SHA-256 `${f['sha256']}`');
+  b.writeln('\n## 대사 로케일\n');
+  for (final l in locales) b.writeln('- [`${l['ref']}`](../${l['ref'].toString().split('#').first}) · SHA-256 `${l['sha256']}`');
   b.writeln('\n## 성격\n');
   for (final p in people) { final d = (p['design'] as Map?) ?? {}; b.writeln('- **${p['name']}** (`${p['id']}`): ${p['voice']} “${p['line']}” · ${p['focusStat']} 재능 +${p['focusBonus']} · frame ${p['portraitFrame']} · `${p['portraitAsset']}` · ${d['palette']} / ${d['motif']}'); }
   b.writeln('\n## 동료\n');
@@ -37,7 +40,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   final b = StringBuffer('<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · SSOT 자동 품질 지표\n\n');
   b.writeln('이 문서는 `story/story.json`에서 자동 생성된다. 코드·Golden·CI의 수치가 SSOT 변경과 함께 갱신되는지 pre-commit에서 확인한다.\n');
   b.writeln('| 항목 | 현재 | 산출 기준 |\n| --- | ---: | --- |');
-  b.writeln('| 캠페인 길이 | ${s['endingWeek']}주 | `endingWeek` |'); b.writeln('| 활동 | $acts | `activities.length` |'); b.writeln('| 성격 | $people | `personalities.length` |'); b.writeln('| 동료 | $companions | `companions.length` |'); b.writeln('| 계절 목표 | $milestones | `milestones.length` |'); b.writeln('| 사건 | ${events.length} | `events.length` |'); b.writeln('| 사건 선택 | $choices | 모든 사건 choices 합계 |'); b.writeln('| 엔딩 | $endings | `endings.length` |'); b.writeln('| Canvas Golden | $goldens | `test/goldens/*.png` |'); b.writeln('| 코드 ref | ${(s['codeRefs'] as List).length} | `codeRefs.length` |'); b.writeln('| 이미지 ref | ${(s['assetRefs'] as List).length} | `assetRefs.length` |'); b.writeln('| 폰트 ref | ${(s['fontRefs'] as List? ?? []).length} | `fontRefs.length` |');
+  b.writeln('| 캠페인 길이 | ${s['endingWeek']}주 | `endingWeek` |'); b.writeln('| 활동 | $acts | `activities.length` |'); b.writeln('| 성격 | $people | `personalities.length` |'); b.writeln('| 동료 | $companions | `companions.length` |'); b.writeln('| 계절 목표 | $milestones | `milestones.length` |'); b.writeln('| 사건 | ${events.length} | `events.length` |'); b.writeln('| 사건 선택 | $choices | 모든 사건 choices 합계 |'); b.writeln('| 엔딩 | $endings | `endings.length` |'); b.writeln('| Canvas Golden | $goldens | `test/goldens/*.png` |'); b.writeln('| 코드 ref | ${(s['codeRefs'] as List).length} | `codeRefs.length` |'); b.writeln('| 이미지 ref | ${(s['assetRefs'] as List).length} | `assetRefs.length` |'); b.writeln('| 폰트 ref | ${(s['fontRefs'] as List? ?? []).length} | `fontRefs.length` |'); b.writeln('| 대사 locale | ${(s['localeRefs'] as List? ?? []).length} | `localeRefs.length` |');
   b.writeln('\n## 폐쇄루프 연결\n\nSSOT → GameWorld 전이 → Canvas/Golden → 저장·replay → benchmark → 같은 SSOT로 재검증. 상세 설계는 [`docs/trilemma.md`](trilemma.md), 전체 지표는 [`docs/game-completeness.md`](game-completeness.md)에서 확인한다.');
   return b.toString();
 }

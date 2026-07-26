@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 8cb0c729a0d0e0a495bbb6e189304292a4c0ffb95af4f720e916fe2a6798a3ba -->
+<!-- ssot-sha256: 5eb6fd9fae7a7eeaa3eb0864e82de1babf5fcfba20f529a21c69a2103acac67f -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -16,6 +16,11 @@
 ## 폰트
 
 - [`assets/fonts/NotoSansKR-Regular.ttf#canvas-korean-font`](../assets/fonts/NotoSansKR-Regular.ttf) · SHA-256 `c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb`
+
+## 대사 로케일
+
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `08021e3bc3e386b6884224d65b3a60f4f9e274ddcc50e6f229899e80e8935faf`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `81b3e8a49ed7c1b116a541ac683257987569fb06517f3cf8e88e097e0564d7eb`
 
 ## 성격
 

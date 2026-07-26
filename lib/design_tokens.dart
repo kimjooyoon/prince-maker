@@ -5,6 +5,8 @@ const ink = Color(0xff17324d);
 const teal = Color(0xff4fa7a0);
 const sun = Color(0xffffc857);
 const paper = Color(0xfff6f1e8);
+const twilight = Color(0xff24284d);
+const mist = Color(0xffa7b0c8);
 
 abstract final class DesignTokens {
   static const gap1 = 8.0;
