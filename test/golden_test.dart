@@ -69,6 +69,9 @@ void main() {
     await tester.tapAt(const Offset(300, 230));
     await tester.pump();
     expect(find.byKey(const ValueKey('1-1-1-0')), findsOneWidget);
+    await tester.tapAt(const Offset(750, 580));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('0-1-1-0')), findsOneWidget);
   });
   testWidgets('twelve-week loop resolves to an ending', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','personalities':[

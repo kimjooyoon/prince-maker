@@ -50,7 +50,7 @@ git config core.hooksPath .githooks
 
 초안 이후 기능은 재활용 가능한 [Lumen Canvas Kit](docs/design-system.md)를 먼저 설계한 뒤 구현합니다. 토큰은 [`design/tokens.json`](design/tokens.json)과 [`lib/design_tokens.dart`](lib/design_tokens.dart)에 분리되어 있으며, 화면은 `stat_panel`, `choice_card`, `portrait_page`, `ending_panel` 조합으로 확장합니다.
 
-게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), CI 강제 검사는 [`tool/verify_game.dart`](tool/verify_game.dart)에 있습니다. 게이트는 콘텐츠·분기·결정론·시각·자산·추적성·배포 7개 차원을 계산하며 95% 미만이면 실패합니다. SSOT 검사 → 상태/Golden 테스트 → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
+게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), CI 강제 검사는 [`tool/verify_game.dart`](tool/verify_game.dart)에 있습니다. 게이트는 콘텐츠·분기·결정론·시각·자산·추적성·배포·입력 계약 8개 차원을 계산하며 95% 미만이면 실패합니다. SSOT 검사 → 상태/Golden 테스트 → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
 
 SSOT에서 생성된 문서는 [`docs/story-ssot.md`](docs/story-ssot.md)이며, 문서 헤더의 SHA-256과 `source-ref`를 CI가 검사합니다. 핵심 변경 파일은 [`docs/review-manifest.json`](docs/review-manifest.json)에 해시와 ref가 있어, 파일을 다시 읽고 검토하지 않은 변경은 통합되지 않습니다.
 

@@ -48,6 +48,7 @@ void main() {
       if (choice['requiresStat'] != null && (!stats.contains(choice['requiresStat']) || choice['requiresMin'] is! int || choice['requiresMin'] < 1)) fail('event requirement contract invalid');
     }
   }
+  final uiEvidence = File('test/golden_test.dart').existsSync() ? File('test/golden_test.dart').readAsStringSync() : '';
   final dimensions = <String, bool>{
     'content': activities.length >= 5 && people.length >= 3 && companions.length >= 3 && milestones.length == 4,
     'branching': events.length >= 4 && events.every((e) => (e['choices'] as List).length == 2) && endings.length >= 6,
@@ -56,6 +57,7 @@ void main() {
     'assets': assetRefs.length >= 4 && fontRefs.isNotEmpty,
     'traceability': refs.length >= 3 && File('docs/review-manifest.json').existsSync(),
     'delivery': File('.github/workflows/verify.yml').existsSync() && File('.githooks/pre-commit').existsSync(),
+    'inputContract': uiEvidence.contains('750, 580') && uiEvidence.contains('300, 580') && uiEvidence.contains('650, 550'),
   };
   final score = (dimensions.values.where((v) => v).length * 100 / dimensions.length).round();
   if (score < 95) fail('completeness score below 95%: $score%');
