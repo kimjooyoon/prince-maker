@@ -16,6 +16,7 @@
     {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"1e745789ad66831b86ef0bfd34496cc9821da41ca9ef1a913f4e04c0f7463aae"},
     {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"dd7eb47ca18ae6d578a7901b4b02b4635a17875eff8dae1062fbf4f8f69e15d7"},
     {"path":"docs/design-system.md","ref":"docs/design-system.md#personality_portrait","sha256":"35fc9136d22c0b44aa20e6ddc23efb4e5cb4f1fd81e8591bf67666b9dc1493d9"},
+    {"path":"docs/art-provenance.md","ref":"docs/art-provenance.md#design-contract","sha256":"f3e1406bf31171a18d1901614b4c16bfd69ed61acd283e1e621fcfae655744bd"},
     {"path":"test/game_core_test.dart","ref":"test/game_core_test.dart#rules","sha256":"8d78ee3b42c99938169fd407bd44ffa8fcc605453d0d7594e55a0c735e48b929"},
     {"path":"test/save_state_test.dart","ref":"test/save_state_test.dart#lumen-save-v6","sha256":"51a88da1f794d2d871f5f36698bf253e415db4e28c4a0c57c85ecec6ba8dc1f2"},
     {"path":"test/flutter_test_config.dart","ref":"test/flutter_test_config.dart#CanvasGoldenComparator","sha256":"e8bf55353325ae987816e8c2b0ec4773cc6beedce6b3a33fc046f23643de2509"},
@@ -27,7 +28,7 @@
     {"path":"assets/fonts/OFL.txt","ref":"assets/fonts/OFL.txt#license","sha256":"881a6561b1010be07f884299f1beae4b6fd77e06463c905759ad7f9db997b51a"},
     {"path":"pubspec.yaml","ref":"pubspec.yaml#assets-and-fonts","sha256":"2551f8632c164929ec06c5047d13c67a63a9a800a7eec8e11203b5f8dc68029f"},
     {"path":"tool/generate_ssot_docs.dart","ref":"tool/generate_ssot_docs.dart#render","sha256":"0d162f901642a4de5f5458b549390302bbd3c8a5da62f0a1ddbdbb33732edf03"},
-    {"path":"tool/verify_game.dart","ref":"tool/verify_game.dart#assetRefs-and-fontRefs-and-score","sha256":"eee34f6f0baa3b1b9543212551474214c1e2bac86e4ba0d46188011fa49bd6f2"},
-    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"5e1c4386f72c8c34e442c2054dba2eb24e71d7efdf959bf7ce5d48e3e235919c"}
+    {"path":"tool/verify_game.dart","ref":"tool/verify_game.dart#assetRefs-and-fontRefs-and-score","sha256":"635251ec30180e5de3ee7a6353b99cd8dea0ca82f90792d0589c925302b81c4d"},
+    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"684fbefe031c222ce862acc5b2ca2d5978a068acdff6043cd88d743d6856b875"}
   ]
 }

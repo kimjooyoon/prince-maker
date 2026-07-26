@@ -27,6 +27,9 @@ void main() {
   if (milestones.any((m) => m['id'] is! String || m['title'] is! String || m['stat'] is! String || m['min'] is! int || m['coins'] is! int || m['pass'] is! String || m['fail'] is! String)) fail('milestone contract invalid');
   for (final ref in refs) { final path = (ref['ref'] as String).split('#').first; if (!File(path).existsSync()) fail('missing code ref $path'); final actual = sha256.convert(File(path).readAsBytesSync()).toString(); if (actual != ref['sha256']) fail('code ref hash drift: $path'); }
   for (final ref in assetRefs) { final path = (ref['ref'] as String).split('#').first; if (!File(path).existsSync()) fail('missing asset ref $path'); final actual = sha256.convert(File(path).readAsBytesSync()).toString(); if (actual != ref['sha256']) fail('asset ref hash drift: $path'); }
+  final assetPaths = assetRefs.map((r) => (r['ref'] as String).split('#').first).toSet();
+  if (!assetPaths.contains('assets/noa-sprite-sheet.png') || !assetPaths.contains('assets/lumen-personality-sheet.png')) fail('hero/personality PNGs must be declared in assetRefs');
+  if (people.any((p) => !assetPaths.contains(p['portraitAsset']) || (p['design'] as Map?)?['palette'] is! String || (p['design'] as Map?)?['motif'] is! String || (p['design'] as Map?)?['silhouette'] is! String)) fail('personality design-to-PNG contract invalid');
   for (final ref in fontRefs) { final path = (ref['ref'] as String).split('#').first; if (!File(path).existsSync()) fail('missing font ref $path'); final actual = sha256.convert(File(path).readAsBytesSync()).toString(); if (actual != ref['sha256']) fail('font ref hash drift: $path'); }
   final stats = activities.map((e) => e['stat']).toSet();
   if (endings.any((e) => !stats.contains(e['stat']) || e['min'] is! int || e['min'] < 1 || ((e['requiresMilestones'] as List? ?? []).any((id) => !milestones.any((m) => m['id'] == id))))) fail('ending stat/min/milestone contract invalid');
