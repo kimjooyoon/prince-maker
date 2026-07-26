@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: c4af3e52937c83bb5e80ada85c937a51c69901e2d6f8ee41bcc31f844467d8d7 -->
+<!-- ssot-sha256: 8791be718666b529813a6c875f9005a16c5e3f6345d5bb84ec7182c8559067a8 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -22,6 +22,7 @@
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
 | 스토리 막 | 4 | `progression.length` · 1–3 / 4–6 / 7–9 / 10–12주 |
+| 시나리오 완전성 차원 | 8 | `scenarioCompleteness.dimensions.length` |
 | locale 최소 키 | 93 | `dialogueMetrics.minimumLocaleKeys` |
 | 캠페인 최소 대사 줄 | 7 | 성격 1 + 사건 선택 6 |
 | 캠페인 최소 서사 단위 | 27 | 성격·사건 제목/본문·선택·엔딩 |

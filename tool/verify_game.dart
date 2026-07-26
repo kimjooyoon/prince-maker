@@ -40,7 +40,36 @@ void main() {
       (story['progression'] as List? ?? []).cast<Map<String, dynamic>>();
   final dialogueMetrics =
       (story['dialogueMetrics'] as Map? ?? {}).cast<String, dynamic>();
+  final scenario =
+      (story['scenarioCompleteness'] as Map? ?? {}).cast<String, dynamic>();
   if (story['endingWeek'] != 12) fail('endingWeek must be 12');
+  final scenarioDimensions =
+      (scenario['dimensions'] as List? ?? []).cast<Map<String, dynamic>>();
+  const scenarioIds = {
+    'arc',
+    'agency',
+    'relationship',
+    'feedback',
+    'gating',
+    'replay',
+    'presentation',
+    'closure'
+  };
+  if (scenario['schema'] != 'life-sim-scenario-v1' ||
+      scenarioDimensions.length != scenarioIds.length ||
+      scenarioDimensions.map((d) => d['id']).toSet().length !=
+          scenarioDimensions.length ||
+      !scenarioDimensions
+          .map((d) => d['id'])
+          .toSet()
+          .containsAll(scenarioIds) ||
+      scenarioDimensions.any((d) =>
+          d['name'] is! String ||
+          d['target'] is! String ||
+          d['current'] is! String ||
+          d['evidence'] is! String)) {
+    fail('scenario completeness contract invalid');
+  }
   if (activities.length != 5 || people.length != 3 || companions.length != 3)
     fail('expected 5 activities, 3 personalities and 3 companions');
   if (endings.length != 6) fail('expected 6 authored endings');
@@ -238,6 +267,9 @@ void main() {
   final purityEvidence = File('test/purity_integration_test.dart').existsSync()
       ? File('test/purity_integration_test.dart').readAsStringSync()
       : '';
+  final scenarioEvidence = File('docs/scenario-completeness.md').existsSync()
+      ? File('docs/scenario-completeness.md').readAsStringSync()
+      : '';
   final mainEvidence = File('lib/main.dart').existsSync()
       ? File('lib/main.dart').readAsStringSync()
       : '';
@@ -303,6 +335,11 @@ void main() {
         uiEvidence.contains('ending collection survives a restart') &&
         mainEvidence.contains('createCollectionAdapter') &&
         collectionEvidence.contains('lumen-collection-v1'),
+    'scenarioCompleteness': scenarioDimensions.length == 8 &&
+        scenarioEvidence.contains('막 단위 계약') &&
+        scenarioEvidence.contains('choiceConsequenceRate') &&
+        storyEvidence
+            .contains('every authored ending and event choice is reachable'),
   };
   final score =
       (dimensions.values.where((v) => v).length * 100 / dimensions.length)
