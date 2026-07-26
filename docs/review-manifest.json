@@ -10,7 +10,7 @@
     {"path":"test/goldens/home.png","ref":"test/goldens/home.png#golden","sha256":"8abc2e6c24e047228cde7a018a4e8725c97b64723b01c49cbed5c1acfb795663"},
     {"path":"test/goldens/illustration.png","ref":"test/goldens/illustration.png#personality-portrait","sha256":"c4d829fb5f4f4d560696fcfba3598a493f589c3123b9f05cf8da9aa2c3596e94"},
     {"path":"test/goldens/ending.png","ref":"test/goldens/ending.png#golden","sha256":"8eef50ead7d0c036808138b25136ed78bfa282558b80b0dab361aeb3899a177e"},
-    {"path":"test/goldens/milestone.png","ref":"test/goldens/milestone.png#season-goal","sha256":"bccfc1ce858a3dc5c0685bf53fcf781dd3166f4938c6135394b2c03eeaebf230"},
+    {"path":"test/goldens/milestone.png","ref":"test/goldens/milestone.png#season-goal","sha256":"b821164286a88346703ce26fc821434fa6fc77330e82246a1828ecd4ef33a4c9"},
     {"path":"test/goldens/event.png","ref":"test/goldens/event.png#event-choice","sha256":"5a6183a4cbc722a2ce71bd117fcafb0596fda887cd98acc50cbc5b4acd55f155"},
     {"path":"test/goldens/save.png","ref":"test/goldens/save.png#replay-archive","sha256":"95a38fe2c2e420b9453bcd2f03992e2dd5c31e8145406683152b4a95f2cc73e0"},
     {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"9596450c8e66396a86b1d5778219db8a5df0f423fc24d99893c56dd1bff36a11"},
