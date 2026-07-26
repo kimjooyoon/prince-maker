@@ -15,7 +15,7 @@
     {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"2846da4bedac455d0c30b60ee1b7b13e0837e7c08ef7e48118df4537d5138a0e"},
     {"path":"docs/design-system.md","ref":"docs/design-system.md#personality_portrait","sha256":"de4ef5dda11c919e958ab8491dd2df7315048b79744763e008e95f93abce11ca"},
     {"path":"test/game_core_test.dart","ref":"test/game_core_test.dart#rules","sha256":"8c678e88726e1298b34148b1b44c69e1abb7515fc8f9a92528b2093e53f3a397"},
-    {"path":"test/flutter_test_config.dart","ref":"test/flutter_test_config.dart#CanvasGoldenComparator","sha256":"f5371d1b05aafa02848e370f9684557d7dda72e746f3520d40e9c88150876d5a"},
+    {"path":"test/flutter_test_config.dart","ref":"test/flutter_test_config.dart#CanvasGoldenComparator","sha256":"e8bf55353325ae987816e8c2b0ec4773cc6beedce6b3a33fc046f23643de2509"},
     {"path":"test/asset_test.dart","ref":"test/asset_test.dart#personality-PNG","sha256":"d2455bf2d98f7e5f9e3a3f01523c21d9439942b15a30af08117de35647d8d38f"},
     {"path":"assets/lumen-personality-sheet.png","ref":"assets/lumen-personality-sheet.png#personality-frames","sha256":"4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"},
     {"path":"assets/lumen-personality-sheet-source.png","ref":"assets/lumen-personality-sheet-source.png#chroma-key-source","sha256":"0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8"},

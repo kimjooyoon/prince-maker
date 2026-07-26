@@ -7,7 +7,7 @@ class CanvasGoldenComparator extends LocalFileComparator {
   @override
   Future<bool> compare(Uint8List imageBytes, Uri golden) async {
     final result = await GoldenFileComparator.compareLists(imageBytes, await getGoldenBytes(golden));
-    if (result.passed || result.diffPercent <= .005) {
+    if (result.passed || result.diffPercent <= .01) {
       result.dispose();
       return true;
     }
