@@ -37,6 +37,13 @@ void main() {
     expect(session.world.stats[0]!.values['지혜'], 8);
     expect(session.world.progress[0]!.lastResult, contains('성격 재능 +1'));
   });
+  test('rest does not turn a personality talent into free growth', () {
+    final story = JsonStoryAdapter({'personalities': [{'focusStat':'지혜','focusBonus':1}], 'endings': [], 'events': [], 'companions': []});
+    final session = GameSession(story, MemorySaveAdapter());
+    session.choose(const ActivityChosen('지혜', 0, 0, -2, label: '달빛 아래 휴식'));
+    expect(session.world.stats[0]!.values['지혜'], 4);
+    expect(session.world.progress[0]!.lastResult, isNot(contains('재능')));
+  });
   test('bond threshold adds a deterministic companion epilogue', () {
     final story = JsonStoryAdapter({'personalities': [], 'events': [], 'companions': [{'id':'lumi','bondThreshold':8,'epilogue':'별표'}], 'endings': [{'id':'a','stat':'지혜','min':1,'title':'별'}]});
     expect(resolveEnding(story, {'지혜': 2}, bonds: {'lumi': 8})['epilogue'], '별표');
@@ -74,5 +81,14 @@ void main() {
     final world = GameWorld()..progress[0]!.coins = 1;
     world.dispatch(const StoryChoiceMade('공감', 0, -5, '비용이 큰 선택'));
     expect(world.progress[0]!.coins, 0);
+  });
+  test('completed campaign is terminal until a new session is created', () {
+    final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'milestones': [], 'events': [], 'endings': []});
+    final session = GameSession(story, MemorySaveAdapter());
+    session.world.progress[0]!.week = 12;
+    session.choose(const ActivityChosen('지혜', 99, 99, 0, label: '불가능한 추가 주차'));
+    expect(session.world.stats[0]!.values['지혜'], 4);
+    expect(session.world.progress[0]!.coins, 12);
+    expect(session.world.progress[0]!.lastResult, contains('기록이 완성되었습니다'));
   });
 }

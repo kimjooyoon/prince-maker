@@ -32,6 +32,11 @@ void main() {
         'title': '프린스 메이커',
         'setting': '바람과 별빛이 공존하는 작은 영지 루멘',
         'hero': '노아',
+        'personalities': [
+          {'name':'고요한 관찰자','focusStat':'지혜','focusBonus':1},
+          {'name':'다정한 연결자','focusStat':'공감','focusBonus':1},
+          {'name':'용감한 개척자','focusStat':'용기','focusBonus':1},
+        ],
       }),
     );
     await tester.pumpAndSettle();
