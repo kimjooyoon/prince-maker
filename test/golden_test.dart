@@ -58,6 +58,9 @@ void main() {
     await tester.runAsync(() async => Future<void>.delayed(const Duration(seconds: 1)));
     await tester.pump();
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/illustration.png'));
+    await tester.tapAt(const Offset(300, 580));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('1-1-1-0')), findsOneWidget);
     await tester.tapAt(const Offset(300, 230));
     await tester.pump();
     expect(find.byKey(const ValueKey('1-1-1-0')), findsOneWidget);
@@ -70,6 +73,9 @@ void main() {
     for (var i=0; i<11; i++) { await tester.tapAt(const Offset(200, 550)); await tester.pump(); }
     expect(find.byKey(const ValueKey('2-12-0-0')), findsOneWidget);
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/ending.png'));
+    await tester.tapAt(const Offset(500, 440));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('0-1-0-0')), findsOneWidget);
   });
   testWidgets('authored event branches and returns to the loop', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
@@ -88,6 +94,9 @@ void main() {
     await tester.tapAt(const Offset(300, 550));
     await tester.pump();
     expect(find.byKey(const ValueKey('4-1-0-0')), findsOneWidget);
+    await tester.tapAt(const Offset(80, 570));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('0-1-0-0')), findsOneWidget);
   });
   testWidgets('save archive exposes recent replay evidence', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아'}));
