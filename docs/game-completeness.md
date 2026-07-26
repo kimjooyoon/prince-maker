@@ -22,7 +22,8 @@
 | 장기 목표 | 봄·여름·가을·겨울 목표/보상/성공·실패 피드백 | 4 |
 | 엔딩 콘텐츠 | 스탯별 SSOT 엔딩 6개(기본/숙련) | 6 |
 | 분기 사건 | 4개 사건 × 선택 2개 | 4 × 2 |
-| 시각 회귀 | 홈·계절 목표·일러스트·엔딩 Golden | 4 |
+| 시각 회귀 | 홈·계절 목표·사건·일러스트·엔딩 Golden | 5 |
+| canonical 통합 경로 | 실제 `story/story.json` 12주 완주·사건 4개·목표 4개·에필로그 | 1 |
 | 글리프 안정성 | 번들 Noto Sans KR + Canvas 벡터 활동 아이콘 | 1 |
 | 자동 게이트 | SSOT 검사·Flutter test·Wasm | 3 |
 | 저장/replay | `lumen-save-v5` snapshot(유대·목표·마지막 결과 포함) + trace round trip | 1 |

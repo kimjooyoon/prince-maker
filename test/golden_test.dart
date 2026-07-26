@@ -3,6 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:prince_maker/main.dart';
 
 void main() {
+  testWidgets('canonical event page is stable', (tester) async {
+    await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
+      {'week':3,'title':'비가 오던 밤','body':'마을의 등불이 꺼졌다.','choices':[{'label':'아이들과 등불을 나눈다','stat':'공감','delta':2,'coins':-1,'bondId':'bora','bondDelta':4},{'label':'별을 읽어 길을 찾는다','stat':'지혜','delta':2,'coins':0,'bondId':'lumi','bondDelta':4}]}
+    ],'milestones':[
+      {'id':'spring','week':3,'title':'봄의 별씨앗','stat':'지혜','min':8,'coins':3,'pass':'달성','fail':'실패'}
+    ]}));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(200, 550));
+    await tester.pump();
+    await tester.tapAt(const Offset(200, 550));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('3-3-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/event.png'));
+  });
   testWidgets('season goal is visible before the first choice', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','milestones':[
       {'id':'spring','week':3,'title':'봄의 별씨앗','stat':'지혜','min':8,'coins':3,'pass':'달성','fail':'실패'}

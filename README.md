@@ -23,6 +23,7 @@ git config core.hooksPath .githooks
 
 ![골든 기준 화면](test/goldens/home.png)
 ![계절 목표가 보이는 계획 화면](test/goldens/milestone.png)
+![사건 선택 Golden](test/goldens/event.png)
 ![성격별 상반신 일러스트 페이지](test/goldens/illustration.png)
 ![12주 엔딩 화면](test/goldens/ending.png)
 
