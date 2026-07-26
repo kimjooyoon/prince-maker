@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: f594d0ea30d19868ce462e6bd24d64c0065ae39de282dd2e6c9d235c930ba2af -->
+<!-- ssot-sha256: 08af961560efa14c7d292ec09c36a54cb9772e3a7da323c6b82f6d86b9bbfc1c -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -15,8 +15,8 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **77** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **21**
-- 산식: catalog 77 = UI 2 + personality name/voice/line 9 + event title/body 12 + choice label/line 24 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units
+- locale 최소 키: **81** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **21**
+- 산식: catalog 81 = UI 6 + personality name/voice/line 9 + event title/body 12 + choice label/line 24 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units
 
 ## 생성 이미지 자산
 
@@ -31,8 +31,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `099646629dd4524b5dbdd12fe62f892f3ebd73dc78b770686b8c9019a86bb9d0`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `d7f0df7f26db1769ebed3eb403ce9ddbdf9ac1100e2dcd1e7d1197ef64739c26`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `3ec307738c31e664e33bb3e53946db15dceca18c9e6af2888df97070bf01a883`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `8d9a77a97e9b62fcf1071dd2d2010c9f9580d0b57a358f43e14cf581dc8b7b87`
 
 ## 성격
 
