@@ -65,7 +65,7 @@ void main() {
     'determinism': File('test/game_core_test.dart').existsSync() && File('test/story_integration_test.dart').existsSync() && File('test/save_state_test.dart').existsSync(),
     'visual': goldenFiles.containsAll(goldenNames) && goldenNames.every((name) => readmeEvidence.contains('test/goldens/$name')) && uiEvidence.contains('matchesGoldenFile'),
     'assets': assetRefs.length >= 4 && fontRefs.isNotEmpty,
-    'traceability': refs.length >= 3 && File('docs/review-manifest.json').existsSync(),
+    'traceability': refs.length >= 3 && File('docs/review-manifest.json').existsSync() && File('docs/ssot-metrics.md').existsSync(),
     'delivery': File('.github/workflows/verify.yml').existsSync() && File('.githooks/pre-commit').existsSync(),
     'inputContract': uiEvidence.contains('750, 580') && uiEvidence.contains('300, 580') && uiEvidence.contains('650, 550'),
     'saveContinuity': coreEvidence.contains('restore returns the saved page for reload continuity') && File('lib/save_adapter_web.dart').existsSync(),
