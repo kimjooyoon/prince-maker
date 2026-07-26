@@ -39,4 +39,4 @@ Bevy의 UI는 Flexbox/CSS Grid 모델과 ECS에 강하지만, 공식 표준 위�
 - [Bevy standard widgets](https://bevy.org/examples/ui-user-interface/standard-widgets/), [Bevy UI API](https://docs.rs/bevy/latest/bevy/ui/index.html)
 - 장르 참고: [Princess Maker 1 mechanics overview](https://princessmaker.fandom.com/wiki/Princess_Maker_1), [comparative study](https://uu.diva-portal.org/smash/get/diva2:1966128/FULLTEXT01.pdf)
 
-기준 해시: `c192b2a82569c02c15cf58edd9d7ef22d8477136cb335ea59987c63e23eafca9` (코드·SSOT·테스트·골든·CI 입력의 SHA-256)
+기준 해시: `38376acf84db0433ebddddafe6746af51316ad836b2aae7e6d5ac9686e1d4aa4` (코드·SSOT·테스트·골든·CI 입력의 SHA-256)
