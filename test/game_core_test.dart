@@ -103,6 +103,18 @@ void main() {
     expect(session.world.stats[0]!.values['용기'], 4);
     expect(session.world.progress[0]!.bonds['taro'], 5);
   });
+  test('core gates a memory choice and records the authored flag', () {
+    final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'endings': [], 'events': [], 'milestones': []});
+    final session = GameSession(story, MemorySaveAdapter());
+    session.chooseEvent(const StoryChoiceMade('용기', 1, 0, '기억을 잇기', requiresFlag: 'windmill-repair', setsFlag: 'festival-stage'));
+    expect(session.world.stats[0]!.values['용기'], 3);
+    expect(session.world.progress[0]!.lastResult, contains('기억 조건 부족'));
+    session.world.progress[0]!.flags['windmill-repair'] = true;
+    session.chooseEvent(const StoryChoiceMade('용기', 1, 0, '기억을 잇기', requiresFlag: 'windmill-repair', setsFlag: 'festival-stage'));
+    expect(session.world.stats[0]!.values['용기'], 4);
+    expect(session.world.progress[0]!.flags['festival-stage'], isTrue);
+    expect(session.world.snapshot().replayTrace, contains('flag:festival-stage'));
+  });
   test('coin balance is bounded when an event has a cost', () {
     final world = GameWorld()..progress[0]!.coins = 1;
     world.dispatch(const StoryChoiceMade('공감', 0, -5, '비용이 큰 선택'));
