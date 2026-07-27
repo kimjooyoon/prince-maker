@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 861c740174ff9fee59a1010b0fa4a851f4fdb261c28935cfd87fe1a06f530aca -->
+<!-- ssot-sha256: f16a8392d6f51b62b550da88660e0c51bbaf27886fde7bb6c0c86edff69d4a95 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -32,9 +32,9 @@
 | 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 20 event choices; outing choices trade time-budget coins for stat and bond | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / greeting / bond threshold / epilogue | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
-| 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 3 locked choices / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
+| 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 5 locked choices including 1 bond gate / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / collection | `test/gameplay_metrics_test.dart#route-variety` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 17 Goldens / ko+en catalogs / canonical week-4 event / outing choice | `test/golden_test.dart#outing-choice` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 18 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond gate | `test/golden_test.dart#relationship-gate` |
 | 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v6 / collection / SSOT campaign benchmark | `docs/trilemma.md#closed-loop` |
 
 ## 생성 이미지 자산
@@ -130,7 +130,7 @@
 ### 11주차 · 바람 언덕의 약속
 
 엔딩 전 마지막 휴일이다. 누구와 걸은 시간이 다음 계절의 방향이 될까?
-- 타로와 이름 없는 길을 걷는다: 용기 +1, 은화 -2, taro 유대 +3 · “길의 이름은 걸은 뒤에 붙여도 늦지 않아.”
+- 타로와 이름 없는 길을 걷는다: 용기 +1, 은화 -2, taro 유대 +3, 관계 taro 유대 ≥ 2 · “길의 이름은 걸은 뒤에 붙여도 늦지 않아.”
 - 루미와 별빛 표식을 남긴다: 지혜 +1, 은화 -2, lumi 유대 +3 · “돌아올 표식이 있으면 멀리 가도 길을 잃지 않아.”
 
 ## 엔딩

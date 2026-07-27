@@ -25,9 +25,12 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
         final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
         final available = choices
             .where((c) =>
-                c['requiresStat'] == null ||
-                (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >=
-                    (c['requiresMin'] as int? ?? 0))
+                (c['requiresStat'] == null ||
+                    (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >=
+                        (c['requiresMin'] as int? ?? 0)) &&
+                (c['requiresBondId'] == null ||
+                    (session.world.progress[0]!.bonds[c['requiresBondId']] ?? 0) >=
+                        (c['requiresBondMin'] as int? ?? 0)))
             .toList();
         final choice = available[(i + week) % available.length];
         session.chooseEvent(StoryChoiceMade(
@@ -41,6 +44,8 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
           rivalDelta: choice['rivalDelta'] ?? 0,
           requiresStat: choice['requiresStat'],
           requiresMin: choice['requiresMin'] ?? 0,
+          requiresBondId: choice['requiresBondId'],
+          requiresBondMin: choice['requiresBondMin'] ?? 0,
           line: choice['line'] ?? '',
         ));
       }

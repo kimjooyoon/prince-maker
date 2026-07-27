@@ -74,7 +74,7 @@ String render(Map<String, dynamic> s, String hash) {
     b.writeln('### ${e['week']}주차 · ${e['title']}\n\n${e['body']}');
     for (final c in (e['choices'] as List))
       b.writeln(
-          '- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']}, ${c['bondId']} 유대 +${c['bondDelta']}${c['requiresStat'] == null ? '' : ', 조건 ${c['requiresStat']} ≥ ${c['requiresMin']}'} · “${c['line']}”');
+          '- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']}, ${c['bondId']} 유대 +${c['bondDelta']}${c['requiresStat'] == null ? '' : ', 조건 ${c['requiresStat']} ≥ ${c['requiresMin']}'}${c['requiresBondId'] == null ? '' : ', 관계 ${c['requiresBondId']} 유대 ≥ ${c['requiresBondMin']}'} · “${c['line']}”');
   }
   b.writeln('\n## 엔딩\n');
   for (final e in endings)
