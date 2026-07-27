@@ -13,9 +13,9 @@ void main() {
       final event = story.events.where((e) => e['week'] == session.world.progress[0]!.week).firstOrNull;
       if (event != null) {
         final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
-        final available = choices.where((c) => c['requiresStat'] == null || (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >= (c['requiresMin'] as int? ?? 0)).toList();
+        final available = choices.where((c) => (c['requiresStat'] == null || (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >= (c['requiresMin'] as int? ?? 0)) && (c['requiresBondId'] == null || (session.world.progress[0]!.bonds[c['requiresBondId']] ?? 0) >= (c['requiresBondMin'] as int? ?? 0))).toList();
         final choice = available.firstWhere((c) => c['stat'] == stat, orElse: () => available.first);
-        session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta'], rivalId: choice['rivalId'], rivalDelta: choice['rivalDelta'] ?? 0, requiresStat: choice['requiresStat'], requiresMin: choice['requiresMin'] ?? 0, line: choice['line']));
+        session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta'], rivalId: choice['rivalId'], rivalDelta: choice['rivalDelta'] ?? 0, requiresStat: choice['requiresStat'], requiresMin: choice['requiresMin'] ?? 0, requiresBondId: choice['requiresBondId'], requiresBondMin: choice['requiresBondMin'] ?? 0, line: choice['line']));
       }
     }
     final p = session.world.progress[0]!;

@@ -242,6 +242,11 @@ void main() {
               choice['requiresMin'] is! int ||
               choice['requiresMin'] < 1))
         fail('event requirement contract invalid');
+      if (choice['requiresBondId'] != null &&
+          (!companions.any((c) => c['id'] == choice['requiresBondId']) ||
+              choice['requiresBondMin'] is! int ||
+              choice['requiresBondMin'] < 1))
+        fail('event relationship requirement contract invalid');
     }
   }
   if (!events.any((e) => (e['choices'] as List)
@@ -287,6 +292,7 @@ void main() {
     'feedback.png',
     'relationship-tension.png',
     'outing.png',
+    'relationship-gate.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'

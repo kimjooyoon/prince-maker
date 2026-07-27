@@ -35,6 +35,7 @@ git config core.hooksPath .githooks
 ![사건 선택 결과 피드백 배너](test/goldens/feedback.png)
 ![관계 긴장 선택 결과 피드백](test/goldens/relationship-tension.png)
 ![외출 선택의 은화·유대 교환](test/goldens/outing.png)
+![유대 조건 잠금 Golden](test/goldens/relationship-gate.png)
 ![English locale 성격 대화](test/goldens/english-illustration.png)
 ![English locale 사건 선택](test/goldens/english-event.png)
 ![English locale 엔딩·동료 에필로그](test/goldens/english-ending.png)

@@ -92,6 +92,17 @@ void main() {
     expect(session.world.stats[0]!.values['용기'], 3);
     expect(session.world.progress[0]!.lastResult, contains('조건 부족'));
   });
+  test('core gates a relationship choice deterministically', () {
+    final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'endings': [], 'events': [], 'milestones': []});
+    final session = GameSession(story, MemorySaveAdapter());
+    session.chooseEvent(const StoryChoiceMade('용기', 1, -2, '이름 없는 길', bondId: 'taro', bondDelta: 3, requiresBondId: 'taro', requiresBondMin: 2));
+    expect(session.world.stats[0]!.values['용기'], 3);
+    expect(session.world.progress[0]!.lastResult, contains('관계 조건 부족'));
+    session.world.progress[0]!.bonds['taro'] = 2;
+    session.chooseEvent(const StoryChoiceMade('용기', 1, -2, '이름 없는 길', bondId: 'taro', bondDelta: 3, requiresBondId: 'taro', requiresBondMin: 2));
+    expect(session.world.stats[0]!.values['용기'], 4);
+    expect(session.world.progress[0]!.bonds['taro'], 5);
+  });
   test('coin balance is bounded when an event has a cost', () {
     final world = GameWorld()..progress[0]!.coins = 1;
     world.dispatch(const StoryChoiceMade('공감', 0, -5, '비용이 큰 선택'));

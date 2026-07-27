@@ -58,7 +58,7 @@ void drawLocalizedIllustration(
 }
 
 void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
-    Map<String, int> stats) {
+    Map<String, int> stats, Map<String, int> bonds) {
   if (activeLocale == 'ko') return;
   final event = story['events'][eventIndex] as Map;
   c.drawRect(const Rect.fromLTWH(0, 0, 590, 100), Paint()..color = paper);
@@ -86,7 +86,10 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
         choice = choices[i],
         req = choice['requiresStat'] as String?,
         min = choice['requiresMin'] as int?,
-        locked = req != null && (stats[req] ?? 0) < (min ?? 0);
+        bondReq = choice['requiresBondId'] as String?,
+        bondMin = choice['requiresBondMin'] as int?,
+        locked = (req != null && (stats[req] ?? 0) < (min ?? 0)) ||
+            (bondReq != null && (bonds[bondReq] ?? 0) < (bondMin ?? 0));
     c.drawRRect(
         RRect.fromRectAndRadius(
             Rect.fromLTWH(x, 270, 332, 190), const Radius.circular(18)),
