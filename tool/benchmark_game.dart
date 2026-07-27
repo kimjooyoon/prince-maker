@@ -68,9 +68,10 @@ void main() {
   watch.stop();
   final replay = runCampaigns(source, campaigns);
   final millis = watch.elapsedMicroseconds / 1000;
-  final transitions = campaigns * (11 + 8);
+  final transitions = campaigns * ((source['endingWeek'] as int) - 1 +
+      (source['events'] as List).length);
   stdout.writeln(
-      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=8 ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
+      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
   if (millis > 5000 ||
       first.checksum <= campaigns ||
       replay.checksum != first.checksum ||
