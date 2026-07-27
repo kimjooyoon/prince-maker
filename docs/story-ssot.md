@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 002d3f40c8c8eb28d6280c2b1e9bf6762c77edba836b5a8d11414f91c79db2e5 -->
+<!-- ssot-sha256: 6494e29bf9bc92ef4b0179adfe980027eefdcf1bb7c9976c31362edff9c18dee -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -32,9 +32,9 @@
 | 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 20 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / greeting / bond threshold / epilogue | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
-| 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 5 locked choices including bond and memory gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
-| 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / collection | `test/gameplay_metrics_test.dart#route-variety` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 19 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond and memory gates | `test/golden_test.dart#memory-gate` |
+| 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
+| 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / collection-driven legacy unlock | `test/gameplay_metrics_test.dart#route-variety` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 20 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond, memory and legacy gates | `test/golden_test.dart#legacy-gate` |
 | 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v7 with memory flags / collection / SSOT campaign benchmark | `docs/trilemma.md#closed-loop` |
 
 ## 생성 이미지 자산
@@ -86,7 +86,7 @@
 
 아직 해가 오르기 전, 낯선 편지 한 장이 도착했다. 누구와 먼저 읽을까?
 - 루미에게 별의 이름을 묻는다: 지혜 +1, 은화 0, lumi 유대 +2 · “이름을 부르면 낯선 것도 조금 가까워져.”
-- 마을 게시판에 소식을 나눈다: 공감 +1, 은화 1, bora 유대 +2 · “좋은 소식은 나눌수록 오래 남아.”
+- 마을 게시판에 소식을 나눈다: 공감 +1, 은화 1, bora 유대 +2, 기억 legacy-star 필요 · “좋은 소식은 나눌수록 오래 남아.”
 ### 3주차 · 비가 오던 밤
 
 마을의 등불이 꺼졌다. 노아는 누구의 손을 먼저 잡을까?

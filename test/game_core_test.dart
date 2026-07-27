@@ -115,6 +115,14 @@ void main() {
     expect(session.world.progress[0]!.flags['festival-stage'], isTrue);
     expect(session.world.snapshot().replayTrace, contains('flag:festival-stage'));
   });
+  test('legacy collection seed deterministically unlocks a new choice space', () {
+    final story = JsonStoryAdapter({'personalities': [], 'companions': [], 'endings': [], 'events': [], 'milestones': []});
+    final fresh = GameSession(story, MemorySaveAdapter());
+    final legacy = GameSession(story, MemorySaveAdapter(), legacyUnlocked: true);
+    expect(fresh.world.progress[0]!.flags['legacy-star'], isNull);
+    expect(legacy.world.progress[0]!.flags['legacy-star'], isTrue);
+    expect(legacy.world.snapshot().replayTrace, 'legacy:star');
+  });
   test('coin balance is bounded when an event has a cost', () {
     final world = GameWorld()..progress[0]!.coins = 1;
     world.dispatch(const StoryChoiceMade('공감', 0, -5, '비용이 큰 선택'));

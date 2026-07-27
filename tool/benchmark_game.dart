@@ -13,7 +13,7 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   final endings = <String>{}, signatures = <String>{};
   final story = JsonStoryAdapter(source);
   for (var i = 0; i < campaigns; i++) {
-    final session = GameSession(story, MemorySaveAdapter());
+    final session = GameSession(story, MemorySaveAdapter(), legacyUnlocked: i.isEven);
     while (session.world.progress[0]!.week < story.endingWeek) {
       final week = session.world.progress[0]!.week;
       final stat = switch ((i + week) % 3) { 0 => '지혜', 1 => '공감', _ => '용기' };
@@ -30,7 +30,9 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
                         (c['requiresMin'] as int? ?? 0)) &&
                 (c['requiresBondId'] == null ||
                     (session.world.progress[0]!.bonds[c['requiresBondId']] ?? 0) >=
-                        (c['requiresBondMin'] as int? ?? 0)))
+                        (c['requiresBondMin'] as int? ?? 0)) &&
+                (c['requiresFlag'] == null ||
+                    session.world.progress[0]!.flags[c['requiresFlag']] == true))
             .toList();
         final choice = available[(i + week) % available.length];
         session.chooseEvent(StoryChoiceMade(
@@ -46,6 +48,8 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
           requiresMin: choice['requiresMin'] ?? 0,
           requiresBondId: choice['requiresBondId'],
           requiresBondMin: choice['requiresBondMin'] ?? 0,
+          requiresFlag: choice['requiresFlag'],
+          setsFlag: choice['setsFlag'],
           line: choice['line'] ?? '',
         ));
       }
@@ -55,7 +59,7 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
         bonds: p.bonds, milestones: p.milestones);
     endings.add('${ending['id']}');
     signatures.add(
-        '${ending['id']}|${session.world.stats[0]!.values}|${p.bonds}|${p.milestones.values.where((v) => v).length}');
+        '${ending['id']}|${session.world.stats[0]!.values}|${p.bonds}|${p.milestones.values.where((v) => v).length}|${p.flags}');
     checksum += p.week +
         session.world.stats[0]!.values.values.reduce((a, b) => a + b) +
         p.bonds.values.reduce((a, b) => a + b) +

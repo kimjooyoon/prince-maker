@@ -19,6 +19,16 @@ void main() {
     expect(find.byKey(const ValueKey('3-3-0-0')), findsOneWidget);
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/event.png'));
   });
+  testWidgets('legacy collection seed unlocks a replay choice', (tester) async {
+    await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
+      {'week':2,'title':'새벽 우편함','body':'기록을 남긴 사람은 오늘 다른 소식을 읽는다.','choices':[{'label':'루미에게 별의 이름을 묻는다','stat':'지혜','delta':2,'coins':0,'bondId':'lumi','bondDelta':2},{'label':'마을 게시판에 소식을 나눈다','stat':'공감','delta':1,'coins':1,'bondId':'bora','bondDelta':2,'requiresFlag':'legacy-star'}]}
+    ]}, legacySeed: true));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(200, 550));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('3-2-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/legacy-gate.png'));
+  });
   testWidgets('outing choice shows time-budget tradeoff', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
       {'week':5,'title':'달빛 시장 산책','body':'은화를 써서 누구와 루멘 밖을 걸을까?','choices':[{'label':'루미와 지도 찾기','stat':'지혜','delta':1,'coins':-2,'bondId':'lumi','bondDelta':3,'line':'다음 길의 단서를 찾자.'},{'label':'보라와 씨앗 장터','stat':'공감','delta':1,'coins':-2,'bondId':'bora','bondDelta':3,'line':'내일의 정원을 골라보자.'}]}
