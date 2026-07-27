@@ -10,10 +10,12 @@ class LocaleCatalog {
 
 String activeLocale = 'ko';
 LocaleCatalog activeCatalog = const LocaleCatalog({});
+Map<String, bool> activeFlags = const {};
 void setActiveLocale(String locale, LocaleCatalog catalog) {
   activeLocale = locale;
   activeCatalog = catalog;
 }
+void setActiveFlags(Map<String, bool> flags) => activeFlags = flags;
 
 String localized(String key, String fallback) =>
     activeCatalog.text(activeLocale, key, fallback: fallback);
@@ -58,8 +60,10 @@ void drawLocalizedIllustration(
 }
 
 void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
-    Map<String, int> stats, Map<String, int> bonds) {
+    Map<String, int> stats, Map<String, int> bonds,
+    [Map<String, bool>? flags]) {
   if (activeLocale == 'ko') return;
+  final memoryFlags = flags ?? activeFlags;
   final event = story['events'][eventIndex] as Map;
   c.drawRect(const Rect.fromLTWH(0, 0, 590, 100), Paint()..color = paper);
   _text(
@@ -88,8 +92,10 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
         min = choice['requiresMin'] as int?,
         bondReq = choice['requiresBondId'] as String?,
         bondMin = choice['requiresBondMin'] as int?,
+        flagReq = choice['requiresFlag'] as String?,
         locked = (req != null && (stats[req] ?? 0) < (min ?? 0)) ||
-            (bondReq != null && (bonds[bondReq] ?? 0) < (bondMin ?? 0));
+            (bondReq != null && (bonds[bondReq] ?? 0) < (bondMin ?? 0)) ||
+            (flagReq != null && memoryFlags[flagReq] != true);
     c.drawRRect(
         RRect.fromRectAndRadius(
             Rect.fromLTWH(x, 270, 332, 190), const Radius.circular(18)),

@@ -4,17 +4,17 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"0389ed6b83d07cdf996e0182530adee20dd6cdc63c9a6a96de5048c625fa3bfe"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"d60c54f6b8878f84c8b9f9bdf5264f6be3964dd3147fc0872b45599218ed3617"},
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"6a22d0ec027cfdbcec6ec0fcfbe06aa8ca59c69f092bcaeb15591a1bbe85cb03"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"ab463364cc8a98c629f57d8c8f752bbaf9f1fcc4c593f223e3997660bea76b3e"},
     {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
     {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
     {"ref":"lib/save_adapter_stub.dart#MemorySaveAdapter-fallback","sha256":"f14b98d51781f31f35a82a9259f9bace404e8197f813c5f5f4b0a8bc1a8b6875"},
-    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"2aa9d60d2176154b6e205c43b727926e5ec1a0692505ce8cfaf20bec56a360bb"}
+    {"ref":"lib/save_state.dart#GameSnapshot","sha256":"779c472668cd37ae6845d962687b1dd8ecce05ac578b76ec5cf8877c3e6ae27e"}
     ,{"ref":"lib/collection_adapter.dart#CollectionPort","sha256":"b535455a663dadb369cd33a4f0c71fefb31bc97d083f6445e24a856385ef4b54"}
     ,{"ref":"lib/collection_adapter_web.dart#BrowserCollectionAdapter","sha256":"d3cd20404e90421850e410238d63ab40a96f447443c2b022355d4170c024e83a"}
     ,{"ref":"lib/collection_adapter_stub.dart#MemoryCollectionAdapter-fallback","sha256":"7b2b0f265eeec8362aa6b6e910d305a48f79fccf67892f202e7464fb8d03956d"}
     ,{"ref":"lib/feedback_banner.dart#drawFeedbackBanner","sha256":"a7a12b6210e4be393e03d1fe3e86e591ae9b276d8846b559b3b3c6e4b65c00e1"}
-    ,{"ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"472655547827b9e66324f60b09903575ebad6e0470407b58f91df062c5c1d3d1"}
+    ,{"ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"cfe8d1278db2680ede885648282c7ef78cc1a59c2606efc8b53a4c70b796cb98"}
   ],
   "assetRefs": [
     {"ref":"assets/noa-sprite-sheet.png#hero-2-head-frames","sha256":"1ed524abb6e4eda65e651e25ea008d31efcdebaab28b39086bb1f67a4b32581d"},
@@ -36,13 +36,13 @@
     "referenceModel": "장기 성장·관계·선택·결산이 하나의 반복 가능한 생활 루프를 이루는 시나리오",
     "dimensions": [
       {"id":"arc","name":"장기 아크","target":"도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다","current":"4 chapters / 10 events / 4 milestones / 4 chapter contracts / ending week 12","evidence":"story/story.json#progression.contract"},
-      {"id":"agency","name":"선택의 행위성","target":"모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다","current":"20 event choices; outing choices trade time-budget coins for stat and bond","evidence":"test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable"},
+      {"id":"agency","name":"선택의 행위성","target":"모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다","current":"20 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences","evidence":"test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable"},
       {"id":"relationship","name":"관계 아크","target":"등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다","current":"3 companions / greeting / bond threshold / epilogue","evidence":"story/story.json#companions"},
       {"id":"feedback","name":"상태 피드백","target":"일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다","current":"stats, coins, fatigue, 4 milestones and 6 endings","evidence":"test/game_core_test.dart#rules"},
-      {"id":"gating","name":"조건과 공개","target":"조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다","current":"5 locked choices including 1 bond gate / 4 chapter contracts / 4 closing milestones / milestone-gated master endings","evidence":"tool/verify_game.dart#scenario-contract"},
+      {"id":"gating","name":"조건과 공개","target":"조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다","current":"5 locked choices including bond and memory gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings","evidence":"tool/verify_game.dart#scenario-contract"},
       {"id":"replay","name":"재플레이 가치","target":"동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다","current":"5 schedule policies / 4 distinct signatures / 6 endings / collection","evidence":"test/gameplay_metrics_test.dart#route-variety"},
-      {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"18 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond gate","evidence":"test/golden_test.dart#relationship-gate"},
-      {"id":"closure","name":"종결과 회고","target":"엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다","current":"terminal input contract / save v6 / collection / SSOT campaign benchmark","evidence":"docs/trilemma.md#closed-loop"}
+      {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"19 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond and memory gates","evidence":"test/golden_test.dart#memory-gate"},
+      {"id":"closure","name":"종결과 회고","target":"엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다","current":"terminal input contract / save v7 with memory flags / collection / SSOT campaign benchmark","evidence":"docs/trilemma.md#closed-loop"}
     ]
   },
   "progression": [
@@ -108,7 +108,7 @@
       {"label":"타로와 종이 있는 곳을 찾아간다","labelKey":"event.bell.taro.label","stat":"용기","delta":2,"coins":-1,"bondId":"taro","bondDelta":3,"requiresStat":"용기","requiresMin":8,"line":"들리는 곳까지 직접 가보자!","lineKey":"event.bell.taro.line"}
     ]},
     {"week":8,"title":"바람이 멎은 오후","titleKey":"event.windmill.title","body":"풍차가 멈춰 온실의 창이 닫히지 않는다. 누구와 손을 맞출까?","bodyKey":"event.windmill.body","choices":[
-      {"label":"타로와 풍차를 고친다","labelKey":"event.windmill.taro.label","stat":"용기","delta":2,"coins":1,"bondId":"taro","bondDelta":2,"rivalId":"bora","rivalDelta":-1,"line":"멈춘 바람도 손을 대면 다시 움직여.","lineKey":"event.windmill.taro.line"},
+      {"label":"타로와 풍차를 고친다","labelKey":"event.windmill.taro.label","stat":"용기","delta":2,"coins":1,"bondId":"taro","bondDelta":2,"rivalId":"bora","rivalDelta":-1,"setsFlag":"windmill-repair","line":"멈춘 바람도 손을 대면 다시 움직여.","lineKey":"event.windmill.taro.line"},
       {"label":"그늘을 만들 천을 나눈다","labelKey":"event.windmill.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":2,"rivalId":"taro","rivalDelta":-1,"line":"같은 그늘 아래라면 기다림도 덜 길어.","lineKey":"event.windmill.bora.line"}
     ]},
     {"week":9,"title":"바람의 편지","titleKey":"event.letter.title","body":"먼 영지에서 도움을 청하는 편지가 도착했다. 노아는 어떤 답을 보낼까?","bodyKey":"event.letter.body","choices":[
@@ -117,7 +117,7 @@
     ]},
     {"week":10,"title":"축제 전야","titleKey":"event.festival.title","body":"마을 축제의 마지막 준비가 남았다. 노아는 무엇을 먼저 챙길까?","bodyKey":"event.festival.body","choices":[
       {"label":"모두가 쉴 자리를 만든다","labelKey":"event.festival.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"즐거운 날일수록 쉬어갈 자리도 필요해.","lineKey":"event.festival.bora.line"},
-      {"label":"새로운 무대를 직접 세운다","labelKey":"event.festival.taro.label","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":12,"line":"조금 삐뚤어도 우리 손으로 세워보자.","lineKey":"event.festival.taro.line"}
+      {"label":"새로운 무대를 직접 세운다","labelKey":"event.festival.taro.label","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":12,"requiresFlag":"windmill-repair","line":"조금 삐뚤어도 우리 손으로 세워보자.","lineKey":"event.festival.taro.line"}
     ]},
     {"week":11,"title":"바람 언덕의 약속","titleKey":"event.outing.hill.title","body":"엔딩 전 마지막 휴일이다. 누구와 걸은 시간이 다음 계절의 방향이 될까?","bodyKey":"event.outing.hill.body","choices":[
       {"label":"타로와 이름 없는 길을 걷는다","labelKey":"event.outing.hill.taro.label","stat":"용기","delta":1,"coins":-2,"bondId":"taro","bondDelta":3,"requiresBondId":"taro","requiresBondMin":2,"line":"길의 이름은 걸은 뒤에 붙여도 늦지 않아.","lineKey":"event.outing.hill.taro.line"},

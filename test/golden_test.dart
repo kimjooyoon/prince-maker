@@ -43,6 +43,18 @@ void main() {
     expect(find.byKey(const ValueKey('3-11-0-0')), findsOneWidget);
     await expectLater(find.byType(Game), matchesGoldenFile('goldens/relationship-gate.png'));
   });
+  testWidgets('memory gate is visible before a prior choice is made', (tester) async {
+    await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
+      {'week':10,'title':'축제 전야','body':'지난 선택이 오늘의 무대를 여는가?','choices':[{'label':'새로운 무대를 직접 세운다','stat':'용기','delta':2,'coins':0,'bondId':'taro','bondDelta':4,'requiresFlag':'windmill-repair','requiresStat':'용기','requiresMin':12},{'label':'모두가 쉴 자리를 만든다','stat':'공감','delta':1,'coins':1,'bondId':'bora','bondDelta':2}]}
+    ]}));
+    await tester.pumpAndSettle();
+    for (var i = 0; i < 9; i++) {
+      await tester.tapAt(const Offset(200, 550));
+      await tester.pump();
+    }
+    expect(find.byKey(const ValueKey('3-10-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game), matchesGoldenFile('goldens/memory-gate.png'));
+  });
   testWidgets('event choice shows a separated result banner', (tester) async {
     await tester.pumpWidget(const Game({'title':'프린스 메이커','setting':'루멘','hero':'노아','events':[
       {'week':2,'title':'첫 번째 편지','body':'누구와 먼저 읽을까?','choices':[{'label':'루미에게 묻기','stat':'지혜','delta':1,'coins':0,'bondId':'lumi','bondDelta':2,'line':'이름을 부르면 가까워져.'},{'label':'마을에 나누기','stat':'공감','delta':1,'coins':1,'bondId':'bora','bondDelta':2,'line':'좋은 소식은 오래 남아.'}]}

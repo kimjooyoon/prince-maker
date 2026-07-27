@@ -247,8 +247,25 @@ void main() {
               choice['requiresBondMin'] is! int ||
               choice['requiresBondMin'] < 1))
         fail('event relationship requirement contract invalid');
+      if (choice['requiresFlag'] != null && choice['requiresFlag'] is! String)
+        fail('event memory requirement contract invalid');
+      if (choice['setsFlag'] != null &&
+          (choice['setsFlag'] is! String || (choice['setsFlag'] as String).isEmpty))
+        fail('event memory output contract invalid');
     }
   }
+  final writtenFlags = events
+      .expand((e) => (e['choices'] as List).cast<Map<String, dynamic>>())
+      .map((c) => c['setsFlag'])
+      .whereType<String>()
+      .toSet();
+  final requiredFlags = events
+      .expand((e) => (e['choices'] as List).cast<Map<String, dynamic>>())
+      .map((c) => c['requiresFlag'])
+      .whereType<String>()
+      .toSet();
+  if (writtenFlags.isEmpty || !writtenFlags.containsAll(requiredFlags))
+    fail('every event memory gate needs an authored prior flag');
   if (!events.any((e) => (e['choices'] as List)
       .cast<Map<String, dynamic>>()
       .any((choice) => choice['rivalId'] != null))) {
@@ -293,6 +310,7 @@ void main() {
     'relationship-tension.png',
     'outing.png',
     'relationship-gate.png',
+    'memory-gate.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -344,6 +362,7 @@ void main() {
         canonicalUiEvidence
             .contains('canonical SSOT renders a stable Canvas ending') &&
         uiEvidence.contains("matchesGoldenFile('goldens/outing.png')") &&
+        uiEvidence.contains("matchesGoldenFile('goldens/memory-gate.png')") &&
         i18nEvidence.contains(
             'English locale renders original dialogue and authored ending epilogue') &&
         File('story/locales/ko.json').existsSync() &&

@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: f16a8392d6f51b62b550da88660e0c51bbaf27886fde7bb6c0c86edff69d4a95 -->
+<!-- ssot-sha256: 002d3f40c8c8eb28d6280c2b1e9bf6762c77edba836b5a8d11414f91c79db2e5 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -16,7 +16,7 @@
 | 사건 | 10 | `events.length` |
 | 사건 선택 | 20 | 모든 사건 choices 합계 |
 | 엔딩 | 6 | `endings.length` |
-| Canvas Golden | 18 | `test/goldens/*.png` |
+| Canvas Golden | 19 | `test/goldens/*.png` |
 | 코드 ref | 11 | `codeRefs.length` |
 | 이미지 ref | 4 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
