@@ -58,7 +58,7 @@ void main() {
         .expand(
             (event) => (event['choices'] as List).cast<Map<String, dynamic>>())
         .toList();
-    expect(choices.length, 16);
+    expect(choices.length, 20);
     expect(
         choices.every((choice) =>
             choice['stat'] is String &&

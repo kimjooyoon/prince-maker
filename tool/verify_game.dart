@@ -89,9 +89,10 @@ void main() {
       e['epilogue'] is! String ||
       (e['epilogue'] as String).isEmpty))
     fail('companion epilogue contract invalid');
-  if (events.length != 8 ||
-      events.map((e) => e['week']).toList().join(',') != '2,3,4,6,7,8,9,10')
-    fail('events must occur at weeks 2, 3, 4, 6, 7, 8, 9 and 10');
+  if (events.length != 10 ||
+      events.map((e) => e['week']).toList().join(',') !=
+          '2,3,4,5,6,7,8,9,10,11')
+    fail('events must occur at weeks 2 through 11 with authored outings at 5 and 11');
   if (progression.length != 4 ||
       progression.map((c) => '${c['weekStart']}-${c['weekEnd']}').join(',') !=
           '1-3,4-6,7-9,10-12')
@@ -285,6 +286,7 @@ void main() {
     'canonical-ending.png',
     'feedback.png',
     'relationship-tension.png',
+    'outing.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -335,6 +337,7 @@ void main() {
             .contains('matchesGoldenFile') &&
         canonicalUiEvidence
             .contains('canonical SSOT renders a stable Canvas ending') &&
+        uiEvidence.contains("matchesGoldenFile('goldens/outing.png')") &&
         i18nEvidence.contains(
             'English locale renders original dialogue and authored ending epilogue') &&
         File('story/locales/ko.json').existsSync() &&

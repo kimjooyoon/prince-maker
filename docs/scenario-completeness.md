@@ -36,13 +36,13 @@
 
 | 축 | 최소 표본 | 현재 증거 | 다음 확장 기준 |
 | --- | ---: | --- | --- |
-| 시간/막 | 4막, 막당 사건 1개 이상 | `progression.contract` 4/4 · 공개·압력·선택·결산 100% | 막마다 공개·압력·선택·결산 Golden 추가 |
+| 시간/막 | 4막, 막당 사건 1개 이상 | `progression.contract` 4/4 · 10개 사건 · 공개·압력·선택·결산 100% | 막마다 공개·압력·선택·결산 Golden 추가 |
 | 성장축 | 3축, 축당 기본/숙련 엔딩 | 지혜·공감·용기 6엔딩 | 축 간 상쇄 또는 혼합 엔딩 추가 |
 | 관계 | 동료 3명, 인사→유대→긴장→에필로그 | 3 companion, threshold, rival bond, epilogue | 관계 충돌/소원함/상호 배타 선택 추가 |
 | 자원 | 능력·은화·피로 중 2개 이상이 선택에 영향 | 세 자원과 계절 목표 | 외출·아이템·시간 예산을 별도 phase로 확장 |
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 3개, master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
 | 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection | 계승 unlock이 다음 회차의 선택 공간을 넓히는지 측정 |
-| 장면 | 도입·중반 사건·관계 긴장·엔딩 Golden | 16 Golden, canonical 4주차 사건, rival feedback | 막별 canonical event Golden 4종으로 확장 |
+| 장면 | 도입·중반 사건·관계 긴장·외출·엔딩 Golden | 17 Golden, canonical 4주차 사건, outing feedback | 막별 canonical event Golden 4종으로 확장 |
 | 종결 | terminal·저장·컬렉션·재시작 | save v6, terminal, collection | 엔딩 회고 화면에서 선택 원인과 누락 목표를 표시 |
 
 ### 정량 게이트
@@ -54,8 +54,8 @@ chapterClosureRate = 공개·압력·선택·결산을 모두 가진 막 / 전�
 replaySignatureCount = (ending, stats, bonds, goals) 고유 서명 수
 ```
 
-현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 16/16 사건 선택 도달성, 6/6 엔딩 도달성, `choiceConsequenceRate = 100%`, `chapterClosureRate = 100%`, `replaySignatureCount ≥ 3`을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum과 replayChecksum을 비교한다.
+현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 20/20 사건 선택 도달성, 6/6 엔딩 도달성, `choiceConsequenceRate = 100%`, `chapterClosureRate = 100%`, `replaySignatureCount ≥ 3`을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum과 replayChecksum을 비교한다.
 
 ## 3. 의도적인 차이와 확장 순서
 
-프린세스 메이커 5의 장기(8년)·다층 일정·외출·모험 규모를 그대로 따라가지 않는다. 현재 게임은 12주로 압축해 한 회차의 원인과 결과를 Golden과 replay trace로 읽을 수 있게 만든다. 다음 순서는 `관계 충돌 → 외출/시간 예산 → 중반 공간 확장 → 회차 계승`이며, 각 단계는 반드시 SSOT 행렬·Canvas Golden·결정론 benchmark를 동시에 갱신한다.
+프린세스 메이커 5의 장기(8년)·다층 일정·외출·모험 규모를 그대로 따라가지 않는다. 현재 게임은 12주로 압축해 한 회차의 원인과 결과를 Golden과 replay trace로 읽을 수 있게 만든다. 외출은 5·11주차에 은화 2를 시간 예산으로 지불하고 성장축·동료 유대를 교환하는 작은 표본으로 구현했다. 다음 순서는 `관계 충돌 → 외출/시간 예산 → 중반 공간 확장 → 회차 계승`이며, 각 단계는 반드시 SSOT 행렬·Canvas Golden·결정론 benchmark를 동시에 갱신한다.

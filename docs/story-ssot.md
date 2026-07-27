@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 27cc688994325cc75324612eb6c2508c29518f61b24e2292ddb211c8f0e0adfb -->
+<!-- ssot-sha256: 861c740174ff9fee59a1010b0fa4a851f4fdb261c28935cfd87fe1a06f530aca -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -10,17 +10,17 @@
 
 - **별씨앗의 도착** (`arrival`): 1–3주 · 낯선 기록과 첫 편지가 루멘의 평온을 흔든다. → 누구의 목소리를 먼저 믿을지 정한다. · 사건 2, 3주 · 목표 `spring`
   - 막 계약: 공개 별씨앗 기록과 첫 동료의 목소리를 공개한다. · 압력 stat·coins·bond · 선택 2, 3주 · 결산 `spring`
-- **흔들리는 다리** (`crossing`): 4–6주 · 성장한 마음은 혼자 빠른 것보다 함께 건너는 법을 배운다. → 속도와 용기 중 오늘의 균형을 선택한다. · 사건 4, 6주 · 목표 `summer`
-  - 막 계약: 공개 온실과 강 건너의 협력 규칙을 공개한다. · 압력 stat·coins·bond · 선택 4, 6주 · 결산 `summer`
+- **흔들리는 다리** (`crossing`): 4–6주 · 성장한 마음은 혼자 빠른 것보다 함께 건너는 법을 배운다. → 속도와 용기 중 오늘의 균형을 선택한다. · 사건 4, 5, 6주 · 목표 `summer`
+  - 막 계약: 공개 온실과 강 건너의 협력 규칙을 공개한다. · 압력 stat·coins·bond · 선택 4, 5, 6주 · 결산 `summer`
 - **먼 곳의 답장** (`reply`): 7–9주 · 루멘 밖에서 온 부탁이 노아의 안전한 일상을 부른다. → 기록할지 떠날지, 선택의 대가를 감당한다. · 사건 7, 8, 9주 · 목표 `autumn`
   - 막 계약: 공개 지도 밖의 신호와 먼 영지의 요청을 공개한다. · 압력 stat·coins·bond · 선택 7, 8, 9주 · 결산 `autumn`
-- **겨울의 문턱** (`threshold`): 10–12주 · 축제의 빛 아래에서 지난 선택들이 하나의 방향으로 모인다. → 왕좌 대신 스스로 고른 내일의 문을 연다. · 사건 10주 · 목표 `winter`
-  - 막 계약: 공개 축제와 마지막 진로의 무대를 공개한다. · 압력 stat·coins·bond · 선택 10주 · 결산 `winter`
+- **겨울의 문턱** (`threshold`): 10–12주 · 축제의 빛 아래에서 지난 선택들이 하나의 방향으로 모인다. → 왕좌 대신 스스로 고른 내일의 문을 연다. · 사건 10, 11주 · 목표 `winter`
+  - 막 계약: 공개 축제와 마지막 진로의 무대를 공개한다. · 압력 stat·coins·bond · 선택 10, 11주 · 결산 `winter`
 
 ## 대사 구성 기준
 
-- locale 최소 키: **93** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **25**
-- 산식: catalog 93 = UI 6 + personality name/voice/line 9 + event title/body 16 + choice label/line 32 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units
+- locale 최소 키: **105** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
+- 산식: catalog 105 = UI 6 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units
 
 ## 시나리오 완전성 표본
 
@@ -28,13 +28,13 @@
 
 | 차원 | 목표 | 현재 증적 | 검증 ref |
 | --- | --- | --- | --- |
-| 장기 아크 | 도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다 | 4 chapters / 8 events / 4 milestones / 4 chapter contracts / ending week 12 | `story/story.json#progression.contract` |
-| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 16 event choices; each has stat, coins, bond and replay line | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
+| 장기 아크 | 도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다 | 4 chapters / 10 events / 4 milestones / 4 chapter contracts / ending week 12 | `story/story.json#progression.contract` |
+| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 20 event choices; outing choices trade time-budget coins for stat and bond | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / greeting / bond threshold / epilogue | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 3 locked choices / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / collection | `test/gameplay_metrics_test.dart#route-variety` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 16 Goldens / ko+en catalogs / canonical week-4 event / rival feedback | `test/golden_test.dart#relationship-tension` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 17 Goldens / ko+en catalogs / canonical week-4 event / outing choice | `test/golden_test.dart#outing-choice` |
 | 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v6 / collection / SSOT campaign benchmark | `docs/trilemma.md#closed-loop` |
 
 ## 생성 이미지 자산
@@ -50,8 +50,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `115fd8ed4702c8e55f9c742c471e530fb9f09247d260a43878b50311b7bbb918`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `29e60a8fa275fbab0c6a0f643aa5a36f2dd1d04ea7e62ac64c74254f49377768`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `2154d04e46aa1afb34e8d2a149464f4ee0fb903a21a8e4fddf260c2c69c3819c`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `68d8d3bead7c7ec6cf41065c7d5e62b3a00cedfea4aff33abb316d58530599d4`
 
 ## 성격
 
@@ -97,6 +97,11 @@
 온실 지붕에 작은 금이 갔다. 누구의 방식으로 봄을 지킬까?
 - 루미에게 별빛의 각도를 묻는다: 지혜 +1, 은화 0, lumi 유대 +2 · “빛이 머무는 각도를 알면, 금도 길이 될 수 있어.”
 - 보라와 천을 덧댄다: 공감 +2, 은화 -1, bora 유대 +2 · “함께 덧댄 자리는 오래 버틸 거야.”
+### 5주차 · 달빛 시장 산책
+
+짧은 휴일이 생겼다. 은화를 써서 누구와 루멘 밖의 표정을 만날까?
+- 루미와 오래된 지도를 찾는다: 지혜 +1, 은화 -2, lumi 유대 +3 · “지도 가장자리에도 다음 길의 단서가 있어.”
+- 보라와 씨앗 장터를 둘러본다: 공감 +1, 은화 -2, bora 유대 +3 · “같은 씨앗을 고르면 내일의 정원도 닮아갈 거야.”
 ### 6주차 · 강을 건너는 법
 
 낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?
@@ -122,6 +127,11 @@
 마을 축제의 마지막 준비가 남았다. 노아는 무엇을 먼저 챙길까?
 - 모두가 쉴 자리를 만든다: 공감 +2, 은화 -1, bora 유대 +4 · “즐거운 날일수록 쉬어갈 자리도 필요해.”
 - 새로운 무대를 직접 세운다: 용기 +2, 은화 0, taro 유대 +4, 조건 용기 ≥ 12 · “조금 삐뚤어도 우리 손으로 세워보자.”
+### 11주차 · 바람 언덕의 약속
+
+엔딩 전 마지막 휴일이다. 누구와 걸은 시간이 다음 계절의 방향이 될까?
+- 타로와 이름 없는 길을 걷는다: 용기 +1, 은화 -2, taro 유대 +3 · “길의 이름은 걸은 뒤에 붙여도 늦지 않아.”
+- 루미와 별빛 표식을 남긴다: 지혜 +1, 은화 -2, lumi 유대 +3 · “돌아올 표식이 있으면 멀리 가도 길을 잃지 않아.”
 
 ## 엔딩
 

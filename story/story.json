@@ -26,30 +26,30 @@
     {"ref":"assets/fonts/NotoSansKR-Regular.ttf#canvas-korean-font","sha256":"c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"}
   ],
   "localeRefs": [
-    {"ref":"story/locales/ko.json#catalog","sha256":"115fd8ed4702c8e55f9c742c471e530fb9f09247d260a43878b50311b7bbb918"},
-    {"ref":"story/locales/en.json#catalog","sha256":"29e60a8fa275fbab0c6a0f643aa5a36f2dd1d04ea7e62ac64c74254f49377768"}
+    {"ref":"story/locales/ko.json#catalog","sha256":"2154d04e46aa1afb34e8d2a149464f4ee0fb903a21a8e4fddf260c2c69c3819c"},
+    {"ref":"story/locales/en.json#catalog","sha256":"68d8d3bead7c7ec6cf41065c7d5e62b3a00cedfea4aff33abb316d58530599d4"}
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
-  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":93,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":25,"formula":"catalog 93 = UI 6 + personality name/voice/line 9 + event title/body 16 + choice label/line 32 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units"},
+  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":105,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":29,"formula":"catalog 105 = UI 6 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units"},
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
     "referenceModel": "장기 성장·관계·선택·결산이 하나의 반복 가능한 생활 루프를 이루는 시나리오",
     "dimensions": [
-      {"id":"arc","name":"장기 아크","target":"도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다","current":"4 chapters / 8 events / 4 milestones / 4 chapter contracts / ending week 12","evidence":"story/story.json#progression.contract"},
-      {"id":"agency","name":"선택의 행위성","target":"모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다","current":"16 event choices; each has stat, coins, bond and replay line","evidence":"test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable"},
+      {"id":"arc","name":"장기 아크","target":"도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다","current":"4 chapters / 10 events / 4 milestones / 4 chapter contracts / ending week 12","evidence":"story/story.json#progression.contract"},
+      {"id":"agency","name":"선택의 행위성","target":"모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다","current":"20 event choices; outing choices trade time-budget coins for stat and bond","evidence":"test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable"},
       {"id":"relationship","name":"관계 아크","target":"등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다","current":"3 companions / greeting / bond threshold / epilogue","evidence":"story/story.json#companions"},
       {"id":"feedback","name":"상태 피드백","target":"일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다","current":"stats, coins, fatigue, 4 milestones and 6 endings","evidence":"test/game_core_test.dart#rules"},
       {"id":"gating","name":"조건과 공개","target":"조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다","current":"3 locked choices / 4 chapter contracts / 4 closing milestones / milestone-gated master endings","evidence":"tool/verify_game.dart#scenario-contract"},
       {"id":"replay","name":"재플레이 가치","target":"동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다","current":"5 schedule policies / 4 distinct signatures / 6 endings / collection","evidence":"test/gameplay_metrics_test.dart#route-variety"},
-      {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"16 Goldens / ko+en catalogs / canonical week-4 event / rival feedback","evidence":"test/golden_test.dart#relationship-tension"},
+      {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"17 Goldens / ko+en catalogs / canonical week-4 event / outing choice","evidence":"test/golden_test.dart#outing-choice"},
       {"id":"closure","name":"종결과 회고","target":"엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다","current":"terminal input contract / save v6 / collection / SSOT campaign benchmark","evidence":"docs/trilemma.md#closed-loop"}
     ]
   },
   "progression": [
     {"id":"arrival","weekStart":1,"weekEnd":3,"title":"별씨앗의 도착","titleKey":"chapter.arrival.title","premise":"낯선 기록과 첫 편지가 루멘의 평온을 흔든다.","premiseKey":"chapter.arrival.premise","payoff":"누구의 목소리를 먼저 믿을지 정한다.","payoffKey":"chapter.arrival.payoff","eventWeeks":[2,3],"milestoneId":"spring","contract":{"reveal":"별씨앗 기록과 첫 동료의 목소리를 공개한다.","pressureAxes":["stat","coins","bond"],"choiceWeeks":[2,3],"closureMilestone":"spring"}},
-    {"id":"crossing","weekStart":4,"weekEnd":6,"title":"흔들리는 다리","titleKey":"chapter.crossing.title","premise":"성장한 마음은 혼자 빠른 것보다 함께 건너는 법을 배운다.","premiseKey":"chapter.crossing.premise","payoff":"속도와 용기 중 오늘의 균형을 선택한다.","payoffKey":"chapter.crossing.payoff","eventWeeks":[4,6],"milestoneId":"summer","contract":{"reveal":"온실과 강 건너의 협력 규칙을 공개한다.","pressureAxes":["stat","coins","bond"],"choiceWeeks":[4,6],"closureMilestone":"summer"}},
+    {"id":"crossing","weekStart":4,"weekEnd":6,"title":"흔들리는 다리","titleKey":"chapter.crossing.title","premise":"성장한 마음은 혼자 빠른 것보다 함께 건너는 법을 배운다.","premiseKey":"chapter.crossing.premise","payoff":"속도와 용기 중 오늘의 균형을 선택한다.","payoffKey":"chapter.crossing.payoff","eventWeeks":[4,5,6],"milestoneId":"summer","contract":{"reveal":"온실과 강 건너의 협력 규칙을 공개한다.","pressureAxes":["stat","coins","bond"],"choiceWeeks":[4,5,6],"closureMilestone":"summer"}},
     {"id":"reply","weekStart":7,"weekEnd":9,"title":"먼 곳의 답장","titleKey":"chapter.reply.title","premise":"루멘 밖에서 온 부탁이 노아의 안전한 일상을 부른다.","premiseKey":"chapter.reply.premise","payoff":"기록할지 떠날지, 선택의 대가를 감당한다.","payoffKey":"chapter.reply.payoff","eventWeeks":[7,8,9],"milestoneId":"autumn","contract":{"reveal":"지도 밖의 신호와 먼 영지의 요청을 공개한다.","pressureAxes":["stat","coins","bond"],"choiceWeeks":[7,8,9],"closureMilestone":"autumn"}},
-    {"id":"threshold","weekStart":10,"weekEnd":12,"title":"겨울의 문턱","titleKey":"chapter.threshold.title","premise":"축제의 빛 아래에서 지난 선택들이 하나의 방향으로 모인다.","premiseKey":"chapter.threshold.premise","payoff":"왕좌 대신 스스로 고른 내일의 문을 연다.","payoffKey":"chapter.threshold.payoff","eventWeeks":[10],"milestoneId":"winter","contract":{"reveal":"축제와 마지막 진로의 무대를 공개한다.","pressureAxes":["stat","coins","bond"],"choiceWeeks":[10],"closureMilestone":"winter"}}
+    {"id":"threshold","weekStart":10,"weekEnd":12,"title":"겨울의 문턱","titleKey":"chapter.threshold.title","premise":"축제의 빛 아래에서 지난 선택들이 하나의 방향으로 모인다.","premiseKey":"chapter.threshold.premise","payoff":"왕좌 대신 스스로 고른 내일의 문을 연다.","payoffKey":"chapter.threshold.payoff","eventWeeks":[10,11],"milestoneId":"winter","contract":{"reveal":"축제와 마지막 진로의 무대를 공개한다.","pressureAxes":["stat","coins","bond"],"choiceWeeks":[10,11],"closureMilestone":"winter"}}
   ],
   "personalities": [
     {"id":"quiet","name":"고요한 관찰자","nameKey":"personality.quiet.name","voice":"짧고 신중하게 말한다.","voiceKey":"personality.quiet.voice","line":"별은 서두르지 않아. 나도 오늘은 천천히 볼래.","lineKey":"personality.quiet.line","focusStat":"지혜","focusBonus":1,"portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":0,"design":{"palette":"indigo-lavender","motif":"moon","silhouette":"short bob"}},
@@ -95,6 +95,10 @@
       {"label":"루미에게 별빛의 각도를 묻는다","labelKey":"event.greenhouse.lumi.label","stat":"지혜","delta":1,"coins":0,"bondId":"lumi","bondDelta":2,"line":"빛이 머무는 각도를 알면, 금도 길이 될 수 있어.","lineKey":"event.greenhouse.lumi.line"},
       {"label":"보라와 천을 덧댄다","labelKey":"event.greenhouse.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":2,"line":"함께 덧댄 자리는 오래 버틸 거야.","lineKey":"event.greenhouse.bora.line"}
     ]},
+    {"week":5,"title":"달빛 시장 산책","titleKey":"event.outing.market.title","body":"짧은 휴일이 생겼다. 은화를 써서 누구와 루멘 밖의 표정을 만날까?","bodyKey":"event.outing.market.body","choices":[
+      {"label":"루미와 오래된 지도를 찾는다","labelKey":"event.outing.market.lumi.label","stat":"지혜","delta":1,"coins":-2,"bondId":"lumi","bondDelta":3,"line":"지도 가장자리에도 다음 길의 단서가 있어.","lineKey":"event.outing.market.lumi.line"},
+      {"label":"보라와 씨앗 장터를 둘러본다","labelKey":"event.outing.market.bora.label","stat":"공감","delta":1,"coins":-2,"bondId":"bora","bondDelta":3,"line":"같은 씨앗을 고르면 내일의 정원도 닮아갈 거야.","lineKey":"event.outing.market.bora.line"}
+    ]},
     {"week":6,"title":"강을 건너는 법","titleKey":"event.bridge.title","body":"낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?","bodyKey":"event.bridge.body","choices":[
       {"label":"먼저 발을 내딛는다","labelKey":"event.bridge.taro.label","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":8,"line":"떨려도, 한 걸음은 내 것이야.","lineKey":"event.bridge.taro.line"},
       {"label":"모두의 속도를 맞춘다","labelKey":"event.bridge.bora.label","stat":"공감","delta":2,"coins":1,"bondId":"bora","bondDelta":4,"line":"같은 박자로 걸으면 강도 덜 무서워.","lineKey":"event.bridge.bora.line"}
@@ -114,6 +118,10 @@
     {"week":10,"title":"축제 전야","titleKey":"event.festival.title","body":"마을 축제의 마지막 준비가 남았다. 노아는 무엇을 먼저 챙길까?","bodyKey":"event.festival.body","choices":[
       {"label":"모두가 쉴 자리를 만든다","labelKey":"event.festival.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"즐거운 날일수록 쉬어갈 자리도 필요해.","lineKey":"event.festival.bora.line"},
       {"label":"새로운 무대를 직접 세운다","labelKey":"event.festival.taro.label","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":12,"line":"조금 삐뚤어도 우리 손으로 세워보자.","lineKey":"event.festival.taro.line"}
+    ]},
+    {"week":11,"title":"바람 언덕의 약속","titleKey":"event.outing.hill.title","body":"엔딩 전 마지막 휴일이다. 누구와 걸은 시간이 다음 계절의 방향이 될까?","bodyKey":"event.outing.hill.body","choices":[
+      {"label":"타로와 이름 없는 길을 걷는다","labelKey":"event.outing.hill.taro.label","stat":"용기","delta":1,"coins":-2,"bondId":"taro","bondDelta":3,"line":"길의 이름은 걸은 뒤에 붙여도 늦지 않아.","lineKey":"event.outing.hill.taro.line"},
+      {"label":"루미와 별빛 표식을 남긴다","labelKey":"event.outing.hill.lumi.label","stat":"지혜","delta":1,"coins":-2,"bondId":"lumi","bondDelta":3,"line":"돌아올 표식이 있으면 멀리 가도 길을 잃지 않아.","lineKey":"event.outing.hill.lumi.line"}
     ]}
   ]
 }

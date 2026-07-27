@@ -17,7 +17,7 @@ void main() {
         '1-3,4-6,7-9,10-12');
     final events = (story['events'] as List).cast<Map<String, dynamic>>();
     final eventWeeks = events.map((event) => event['week']).toSet();
-    expect(events.map((event) => event['week']).join(','), '2,3,4,6,7,8,9,10');
+    expect(events.map((event) => event['week']).join(','), '2,3,4,5,6,7,8,9,10,11');
     for (final chapter in chapters) {
       expect(chapter['titleKey'], isA<String>());
       expect(chapter['premiseKey'], isA<String>());
