@@ -31,8 +31,9 @@ class GameWorld {
 
 /// Application port: UI sends commands; adapters handle story and saves.
 class GameSession {
-  GameSession(this.story, this.save);
+  GameSession(this.story, this.save, {this.legacyUnlocked = false}) { if (legacyUnlocked) { world.progress[0]!.flags['legacy-star'] = true; world.progress[0]!.trace.add('legacy:star'); } }
   final StoryPort story; final SavePort save; final world = GameWorld();
+  final bool legacyUnlocked;
   void choose(ActivityChosen e) { final p = world.progress[0]!; if (p.week >= story.endingWeek) { p.lastResult = '${story.endingWeek}주 기록이 완성되었습니다 · 새 기록을 시작하세요.'; persist(); return; } final people = story.personalities, person = people.isEmpty ? null : people[p.persona.clamp(0, people.length - 1)]; final bonus = e.delta > 0 && person?['focusStat'] == e.stat ? (person?['focusBonus'] as int? ?? 0) : 0; world.dispatch(ActivityChosen(e.stat, e.delta, e.coins, e.fatigue, label: e.label, bonus: bonus)); world.dispatch(const WeekAdvanced()); if (!story.events.any((e) => e['week'] == world.progress[0]!.week)) _resolveMilestone(); persist(); }
   void chooseEvent(StoryChoiceMade e) { final p = world.progress[0]!; if (p.week >= story.endingWeek) { p.lastResult = '${story.endingWeek}주 기록이 완성되었습니다 · 새 기록을 시작하세요.'; persist(); return; } if (e.requiresStat != null && (world.stats[0]!.values[e.requiresStat] ?? 0) < e.requiresMin) { p.lastResult = '조건 부족 · ${e.requiresStat} $e.requiresMin 필요'; persist(); return; } if (e.requiresBondId != null && (p.bonds[e.requiresBondId] ?? 0) < e.requiresBondMin) { p.lastResult = '관계 조건 부족 · ${e.requiresBondId} 유대 $e.requiresBondMin 필요'; persist(); return; } if (e.requiresFlag != null && p.flags[e.requiresFlag] != true) { p.lastResult = '기억 조건 부족 · ${e.requiresFlag} 필요'; persist(); return; } world.dispatch(e); _resolveMilestone(); persist(); }
   void _resolveMilestone() { final m = story.milestones.where((m) => m['week'] == world.progress[0]!.week && !world.progress[0]!.milestones.containsKey(m['id'])).firstOrNull; if (m != null) world.dispatch(MilestoneResolved(m['id'], m['title'], m['stat'], m['min'], m['coins'], m['pass'], m['fail'])); }

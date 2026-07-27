@@ -264,7 +264,10 @@ void main() {
       .map((c) => c['requiresFlag'])
       .whereType<String>()
       .toSet();
-  if (writtenFlags.isEmpty || !writtenFlags.containsAll(requiredFlags))
+  const seededFlags = {'legacy-star'};
+  if (writtenFlags.isEmpty ||
+      !requiredFlags.contains('legacy-star') ||
+      !writtenFlags.containsAll(requiredFlags.difference(seededFlags)))
     fail('every event memory gate needs an authored prior flag');
   if (!events.any((e) => (e['choices'] as List)
       .cast<Map<String, dynamic>>()
@@ -311,6 +314,7 @@ void main() {
     'outing.png',
     'relationship-gate.png',
     'memory-gate.png',
+    'legacy-gate.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -363,6 +367,7 @@ void main() {
             .contains('canonical SSOT renders a stable Canvas ending') &&
         uiEvidence.contains("matchesGoldenFile('goldens/outing.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/memory-gate.png')") &&
+        uiEvidence.contains("matchesGoldenFile('goldens/legacy-gate.png')") &&
         i18nEvidence.contains(
             'English locale renders original dialogue and authored ending epilogue') &&
         File('story/locales/ko.json').existsSync() &&
