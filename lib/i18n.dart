@@ -15,6 +15,7 @@ void setActiveLocale(String locale, LocaleCatalog catalog) {
   activeLocale = locale;
   activeCatalog = catalog;
 }
+
 void setActiveFlags(Map<String, bool> flags) => activeFlags = flags;
 
 String localized(String key, String fallback) =>
@@ -114,8 +115,41 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
   }
 }
 
-void drawLocalizedEnding(Canvas c, Map<String, dynamic> story,
-    Map<String, dynamic> ending, int rank) {
+void drawEndingRetrospective(Canvas c, List<String> history, int goalCount) {
+  final events = history
+      .where((entry) => entry.startsWith('event:'))
+      .map((entry) => entry.replaceFirst('event:', '').split('|').first)
+      .take(3)
+      .toList();
+  final title = localized('ui.ending.retrospective', '기록 회고');
+  final causes = events.isEmpty
+      ? localized('ui.ending.noEvents', '기록된 사건이 없습니다.')
+      : events
+          .asMap()
+          .entries
+          .map((entry) => '${entry.key + 1}. ${entry.value}')
+          .join('  ');
+  c.drawRRect(
+      RRect.fromRectAndRadius(
+          const Rect.fromLTWH(365, 400, 300, 100), const Radius.circular(18)),
+      Paint()..color = Colors.white);
+  _text(c, title, const Offset(385, 410), 14, teal, bold: true, width: 260);
+  _text(
+      c,
+      '$causes\n${localized('ui.ending.goalCause', '달성 목표')} · $goalCount',
+      const Offset(385, 440),
+      11,
+      ink,
+      width: 260);
+}
+
+void drawLocalizedEnding(
+    Canvas c,
+    Map<String, dynamic> story,
+    Map<String, dynamic> ending,
+    int rank,
+    List<String> history,
+    int goalCount) {
   if (activeLocale == 'ko') return;
   c.drawRect(const Rect.fromLTWH(0, 0, 740, 100), Paint()..color = paper);
   _text(c, localized('ui.ending.title', 'The End of 12 Weeks'),
@@ -165,12 +199,13 @@ void drawLocalizedEnding(Canvas c, Map<String, dynamic> story,
     _text(c, localized('${companion['epilogueKey']}', '${ending['epilogue']}'),
         const Offset(365, 378), 12, teal,
         width: 350);
+  drawEndingRetrospective(c, history, goalCount);
   c.drawRRect(
       RRect.fromRectAndRadius(
-          const Rect.fromLTWH(365, 410, 300, 64), const Radius.circular(18)),
+          const Rect.fromLTWH(365, 510, 300, 64), const Radius.circular(18)),
       Paint()..color = sun);
   _text(c, localized('ui.ending.restart', 'Return to Lumen'),
-      const Offset(450, 432), 17, ink,
+      const Offset(450, 532), 17, ink,
       bold: true, width: 220);
 }
 

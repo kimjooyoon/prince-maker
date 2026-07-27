@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 6494e29bf9bc92ef4b0179adfe980027eefdcf1bb7c9976c31362edff9c18dee -->
+<!-- ssot-sha256: fc936a9c47d042e6d0b249cf62822e30b74a6978b2cd222de2a881bd3d9022d4 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -19,8 +19,8 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **105** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
-- 산식: catalog 105 = UI 6 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units
+- locale 최소 키: **108** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
+- 산식: catalog 108 = UI 9 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12; one route exposes at least 7 dialogue lines and 27 narrative units
 
 ## 시나리오 완전성 표본
 
@@ -34,8 +34,8 @@
 | 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / collection-driven legacy unlock | `test/gameplay_metrics_test.dart#route-variety` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 20 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond, memory and legacy gates | `test/golden_test.dart#legacy-gate` |
-| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v7 with memory flags / collection / SSOT campaign benchmark | `docs/trilemma.md#closed-loop` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 20 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond, memory, legacy gates / ending retrospective board | `test/golden_test.dart#twelve-week-loop-resolves-to-an-ending` |
+| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / SSOT campaign benchmark | `test/game_core_test.dart#ending-retrospective-keeps-authored-causes-in-deterministic-order` |
 
 ## 생성 이미지 자산
 
@@ -50,8 +50,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `2154d04e46aa1afb34e8d2a149464f4ee0fb903a21a8e4fddf260c2c69c3819c`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `68d8d3bead7c7ec6cf41065c7d5e62b3a00cedfea4aff33abb316d58530599d4`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `47dda5fdd0795b7f8958add0b10ffc2f3fd59e2b8be2394f970f964f41b65c73`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `811a14aaff54d537b412b79fc7b19d556e9be9770886e5f4167c45b6336df199`
 
 ## 성격
 
