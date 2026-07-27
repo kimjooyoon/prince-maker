@@ -50,11 +50,14 @@ void main() {
       'ui.ending.title',
       'ui.ending.subtitle',
       'ui.ending.record',
+      'ui.ending.retrospective',
+      'ui.ending.noEvents',
+      'ui.ending.goalCause',
       'ui.ending.restart',
     ];
     expect(catalogs['ko']!.keys, containsAll(endingUiKeys));
     expect(catalogs['en']!.keys, containsAll(endingUiKeys));
-    expect(catalogs['ko']!.length, 105);
-    expect(catalogs['en']!.length, 105);
+    expect(catalogs['ko']!.length, 108);
+    expect(catalogs['en']!.length, 108);
   });
 }

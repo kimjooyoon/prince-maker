@@ -30,7 +30,22 @@
 
 `reveal`은 공개된 장면의 근거, `pressureAxes`는 충돌하는 자원(통계·은화·피로·유대), `choiceWeeks`는 실제 authored 사건 주차, `closureMilestone`은 막의 마지막 주에 해결되는 계절 목표를 뜻한다. 따라서 텍스트가 존재하는지만 세지 않고, 선택 주차마다 두 선택지가 있고 결산 목표의 주차가 막의 끝과 일치하는지 CI가 계산한다.
 
-현재 12주 prototype은 4막, 8사건, 4계절 목표로 이 계약을 고정한다. 네 막 모두 공개·압력 3축 이상·authored 선택·막 종료 목표를 통과하며, 각 사건 선택은 `stat`, `coins`, `bondDelta`, `line`을 가지고 `GameSession`과 replay trace를 통해 검증한다.
+현재 12주 prototype은 4막, 10사건, 4계절 목표로 이 계약을 고정한다. 네 막 모두 공개·압력 3축 이상·authored 선택·막 종료 목표를 통과하며, 각 사건 선택은 `stat`, `coins`, `bondDelta`, `line`을 가지고 `GameSession`과 replay trace를 통해 검증한다.
+
+## 프린세스 메이커 5에서 추출한 시나리오 표본
+
+프린세스 메이커 5는 평일 학교와 방과 후·휴일 계획을 분리하고, 주간 스케줄·아르바이트·스트레스·친구 관계를 장기 성장에 연결하는 구조로 소개된다. [4Gamer의 당시 소개](https://www.4gamer.net/preview/pm5/pm5.shtml)는 평일 낮 학교와 방과 후·휴일 육성을 설명하고, [Steam 소개](https://store.steampowered.com/app/724250/Princess_Maker_5/?l=english)는 학교 일정·방과 후 활동·아르바이트·스트레스의 교환을 요약한다. 여기서 가져오는 것은 시스템 관계의 표본이지, 원작의 캐릭터·문구·이미지·수치가 아니다.
+
+| PM5에서 관찰한 축 | `프린스 메이커`의 독자적 압축 표본 | 완전성 증적 |
+|---|---|---|
+| 시간 예산 | 12주 × 하루 활동 1회, 5·11주차 외출은 은화·성장·유대를 교환 | `tool/benchmark_game.dart` 5,000 campaign |
+| 상태 피드백 | 성장 3축·피로·은화·계절 목표가 다음 사건과 엔딩에 되돌아옴 | `test/game_core_test.dart` 규칙·trace |
+| 관계 아크 | 3명 동료, rival bond, 임계 유대 에필로그, 관계 게이트 | `relationship-gate.png`·`relationship-tension.png` |
+| 감정/기억 | 이전 사건의 `setsFlag`가 후속 선택을 열고 회고 보드에 원인으로 남음 | `memory-gate.png`·`ending.png` |
+| 장기 재플레이 | 6개 authored 엔딩, 엔딩 도감, 다음 회차 `legacy-star` 해금 | `legacy-gate.png`·collection Golden |
+| 장면 결산 | 결말명만이 아니라 최대 3개 사건과 달성 목표 수를 결정론적으로 표시 | `ending.png`·`canonical-ending.png` |
+
+따라서 현재 표본의 시나리오 완전성 최소 단위는 `계획 → 상태 변화 → 조건 공개 → 관계/기억 결과 → authored ending → 원인 회고 → 다음 회차 해금`의 7단 연결이다. 각 연결은 SSOT, 코어 trace, Canvas Golden, benchmark 중 둘 이상으로 교차 증명하며, 회고 보드는 마지막 연결을 시각 증거로 고정한다.
 
 ### 상태·관계·엔딩 완전성 행렬
 
@@ -43,7 +58,7 @@
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
 | 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock | 계승 unlock이 다음 회차의 선택 공간을 넓히는지 측정 |
 | 장면 | 도입·중반 사건·관계 긴장·외출·유대·기억·계승 게이트·엔딩 Golden | 20 Golden, canonical 4주차 사건, outing/bond/memory/legacy feedback | 막별 canonical event Golden 4종으로 확장 |
-| 종결 | terminal·저장·컬렉션·재시작 | save v7, terminal, collection | 엔딩 회고 화면에서 선택 원인과 누락 목표를 표시 |
+| 종결 | terminal·저장·컬렉션·재시작·원인 회고 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 회고 | 누락 목표의 다음 회차 가이드와 동료별 회고 문구 추가 |
 
 ### 정량 게이트
 
