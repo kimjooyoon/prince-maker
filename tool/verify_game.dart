@@ -31,11 +31,13 @@ void verifyTrilemmaContract(String storyHash) {
       purity['minDistinctEndings'] < 3 ||
       purity['minDistinctSignatures'] < 3 ||
       purity['minLegacyProfiles'] < 3 ||
+      purity['minLegacyTargetEndings'] < 3 ||
       purity['deterministicReplay'] != true ||
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] != 105000 ||
       performance['maxMillis'] != 5000 ||
       performance['minSignatures'] < 3 ||
+      performance['lineageTargetEndings'] < 3 ||
       performance['checksumReplayMustMatch'] != true) {
     fail('trilemma targets or guardrails are below the project contract');
   }
@@ -74,6 +76,7 @@ void main() {
       (story['legacyProfiles'] as List).cast<Map<String, dynamic>>();
   final events = (story['events'] as List).cast<Map<String, dynamic>>();
   final endings = (story['endings'] as List).cast<Map<String, dynamic>>();
+  final endingIds = endings.map((ending) => '${ending['id']}').toSet();
   final refs = (story['codeRefs'] as List).cast<Map<String, dynamic>>();
   final assetRefs = (story['assetRefs'] as List).cast<Map<String, dynamic>>();
   final fontRefs =
@@ -105,7 +108,9 @@ void main() {
           profile['bonus'] is! int ||
           profile['bonus'] < 1 ||
           profile['titleKey'] is! String ||
-          (profile['endingIds'] as List? ?? const []).isEmpty)) {
+          (profile['endingIds'] as List? ?? const []).isEmpty ||
+          (profile['endingIds'] as List)
+              .any((ending) => !endingIds.contains('$ending')))) {
     fail('legacy profile contract must map three authored growth lineages');
   }
   final scenarioDimensions =

@@ -56,7 +56,7 @@
 | 관계 | 동료 3명, 인사→유대→긴장→중재/기억→동행 목표→에필로그 | 3 companion, rival loss and reciprocal mediation, truce flag, 3 route goals, epilogue | 관계 충돌/소원함/상호 배타 선택 추가 |
 | 자원 | 능력·은화·피로 중 2개 이상이 선택에 영향 | 세 자원과 계절 목표 | 외출·아이템·시간 예산을 별도 phase로 확장 |
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
-| 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock, 3 lineage profiles, week-2 authored bonus, profile별 route signature | 계승 unlock이 다음 회차의 성장축·선택 공간과 profile route signature를 넓히는지 측정 |
+| 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock, 3 lineage profiles, week-2 authored bonus, profile별 route signature·target ending | 계승 unlock이 다음 회차의 성장축·선택 공간과 profile target ending 분포를 넓히는지 측정 |
 | 장면 | 도입·중반 사건·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·계승 프로필·엔딩 Golden | 22 Golden, canonical 4주차 사건, 4 location discovery flags/traces, rival loss/mediation, outing/bond/memory/legacy feedback | 막별 canonical event Golden 4종으로 확장 |
 | 종결 | terminal·저장·컬렉션·재시작·원인 회고·다음 회차 가이드 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 + 미달 목표 2개 회고 | 동료별 관계 변화와 상호 배타 목표의 회고 문구 추가 |
 
@@ -69,7 +69,7 @@ chapterClosureRate = 공개·압력·선택·결산을 모두 가진 막 / 전�
 replaySignatureCount = (ending, stats, bonds, goals) 고유 서명 수
 ```
 
-현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 20/20 사건 선택 도달성, 6/6 엔딩 도달성, 4/4 장소 발견 trace, 3/3 회차 계승 프로필, 3/3 프로필별 2주차 authored 보정, 3/3 profile route signature, `choiceConsequenceRate = 100%`, `chapterClosureRate = 100%`, `replaySignatureCount ≥ 3`을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum·replayChecksum·profile별 signature 집합을 비교한다.
+현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 20/20 사건 선택 도달성, 6/6 엔딩 도달성, 4/4 장소 발견 trace, 3/3 회차 계승 프로필, 3/3 프로필별 2주차 authored 보정, 3/3 profile route signature, 3/3 profile target ending, `choiceConsequenceRate = 100%`, `chapterClosureRate = 100%`, `replaySignatureCount ≥ 3`을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum·replayChecksum·profile별 signature·target ending 집합을 비교한다.
 
 ## 3. 의도적인 차이와 확장 순서
 

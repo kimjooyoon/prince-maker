@@ -45,6 +45,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'minDistinctEndings': 3,
           'minDistinctSignatures': 3,
           'minLegacyProfiles': (story['legacyProfiles'] as List? ?? []).length,
+          'minLegacyTargetEndings':
+              (story['legacyProfiles'] as List? ?? []).length,
           'deterministicReplay': true,
         },
         'evidence': [
@@ -62,6 +64,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'maxMillis': 5000,
           'minSignatures': 3,
           'lineageProfiles': (story['legacyProfiles'] as List? ?? []).length,
+          'lineageTargetEndings':
+              (story['legacyProfiles'] as List? ?? []).length,
           'checksumReplayMustMatch': true,
         },
         'evidence': [
