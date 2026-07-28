@@ -8,6 +8,8 @@ String render(Map<String, dynamic> s, String hash) {
   final people = (s['personalities'] as List).cast<Map<String, dynamic>>();
   final companions =
       (s['companions'] as List? ?? []).cast<Map<String, dynamic>>();
+  final legacyProfiles =
+      (s['legacyProfiles'] as List? ?? []).cast<Map<String, dynamic>>();
   final acts = (s['activities'] as List).cast<Map<String, dynamic>>();
   final events = (s['events'] as List).cast<Map<String, dynamic>>();
   final endings = (s['endings'] as List).cast<Map<String, dynamic>>();
@@ -62,6 +64,10 @@ String render(Map<String, dynamic> s, String hash) {
   for (final c in companions)
     b.writeln(
         '- **${c['name']}** (`${c['id']}`): ${c['role']} · ${c['personality']} · frame ${c['portraitFrame']} · 유대 ${c['bondThreshold']}에서 에필로그 · “${c['greeting']}”');
+  b.writeln('\n## 회차 계승 프로필\n');
+  for (final p in legacyProfiles)
+    b.writeln(
+        '- **${p['title']}** (`${p['id']}`): 엔딩 ${(p['endingIds'] as List? ?? const []).join(', ')} · ${p['stat']} 시작 보너스 +${p['bonus']} · `${p['titleKey']}`');
   b.writeln('\n## 활동\n');
   for (final a in acts)
     b.writeln('- **${a['label']}** (`${a['id']}`): ${a['hint']}');
@@ -87,6 +93,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   final acts = (s['activities'] as List).length,
       people = (s['personalities'] as List).length,
       companions = (s['companions'] as List? ?? []).length,
+      legacyProfiles = (s['legacyProfiles'] as List? ?? []).length,
       milestones = (s['milestones'] as List? ?? []).length,
       events = (s['events'] as List).cast<Map<String, dynamic>>(),
       endings = (s['endings'] as List).length,
@@ -114,6 +121,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   b.writeln('| 활동 | $acts | `activities.length` |');
   b.writeln('| 성격 | $people | `personalities.length` |');
   b.writeln('| 동료 | $companions | `companions.length` |');
+  b.writeln('| 회차 계승 프로필 | $legacyProfiles | `legacyProfiles.length` |');
   b.writeln('| 계절 목표 | $milestones | `milestones.length` |');
   b.writeln('| 사건 | ${events.length} | `events.length` |');
   b.writeln('| 사건 선택 | $choices | 모든 사건 choices 합계 |');

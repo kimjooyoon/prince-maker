@@ -7,6 +7,7 @@ abstract interface class StoryPort {
   List<Map<String, dynamic>> get endings;
   List<Map<String, dynamic>> get personalities;
   List<Map<String, dynamic>> get companions;
+  List<Map<String, dynamic>> get legacyProfiles;
   List<Map<String, dynamic>> get milestones;
   int get endingWeek;
 }
@@ -32,6 +33,9 @@ class JsonStoryAdapter implements StoryPort {
   @override
   List<Map<String, dynamic>> get companions =>
       (source['companions'] as List? ?? []).cast<Map<String, dynamic>>();
+  @override
+  List<Map<String, dynamic>> get legacyProfiles =>
+      (source['legacyProfiles'] as List? ?? []).cast<Map<String, dynamic>>();
   @override
   List<Map<String, dynamic>> get milestones =>
       (source['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
@@ -318,16 +322,28 @@ class GameWorld {
 
 /// Application port: UI sends commands; adapters handle story and saves.
 class GameSession {
-  GameSession(this.story, this.save, {this.legacyUnlocked = false}) {
+  GameSession(this.story, this.save,
+      {this.legacyUnlocked = false, this.legacyId}) {
     if (legacyUnlocked) {
       world.progress[0]!.flags['legacy-star'] = true;
-      world.progress[0]!.trace.add('legacy:star');
+      final profile =
+          story.legacyProfiles.where((p) => p['id'] == legacyId).firstOrNull;
+      final stat = profile?['stat'] as String?,
+          bonus = (profile?['bonus'] as int?) ?? 0;
+      if (stat != null && world.stats[0]!.values.containsKey(stat)) {
+        world.stats[0]!.values[stat] = world.stats[0]!.values[stat]! + bonus;
+        world.progress[0]!.flags['legacy:$legacyId'] = true;
+        world.progress[0]!.trace.add('legacy:$legacyId|$stat+$bonus');
+      } else {
+        world.progress[0]!.trace.add('legacy:star');
+      }
     }
   }
   final StoryPort story;
   final SavePort save;
   final world = GameWorld();
   final bool legacyUnlocked;
+  final String? legacyId;
   void choose(ActivityChosen e) {
     final p = world.progress[0]!;
     if (p.week >= story.endingWeek) {

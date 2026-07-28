@@ -58,10 +58,11 @@ void main() {
       'ui.ending.seasonLedger',
       'ui.ending.relationshipGoals',
       'ui.ending.restart',
+      'ui.event.legacy',
     ];
     expect(catalogs['ko']!.keys, containsAll(endingUiKeys));
     expect(catalogs['en']!.keys, containsAll(endingUiKeys));
-    expect(catalogs['ko']!.length, 123);
-    expect(catalogs['en']!.length, 123);
+    expect(catalogs['ko']!.length, 127);
+    expect(catalogs['en']!.length, 127);
   });
 }

@@ -111,6 +111,18 @@ class _Game extends State<Game> {
   late GameSession session;
   late CollectionPort collection;
   LocaleCatalog get catalog => LocaleCatalog(widget.locales);
+  String? legacyProfileId() {
+    final profiles = (widget.story['legacyProfiles'] as List? ?? const [])
+        .cast<Map<String, dynamic>>();
+    final candidates = profiles.where((profile) {
+      final endings =
+          (profile['endingIds'] as List? ?? const []).cast<String>();
+      return collectionEntries.any((entry) => endings.contains(entry['id']));
+    }).toList()
+      ..sort((a, b) => '${a['id']}'.compareTo('${b['id']}'));
+    return candidates.isEmpty ? null : '${candidates.first['id']}';
+  }
+
   String tr(String key, String fallback) =>
       catalog.text(locale, key, fallback: fallback);
   void toggleLocale() => setState(() {
@@ -140,7 +152,8 @@ class _Game extends State<Game> {
     collection = createCollectionAdapter();
     collectionEntries.addAll(collection.read());
     session = GameSession(JsonStoryAdapter(widget.story), createSaveAdapter(),
-        legacyUnlocked: widget.legacySeed || collectionEntries.isNotEmpty);
+        legacyUnlocked: widget.legacySeed || collectionEntries.isNotEmpty,
+        legacyId: widget.legacySeed ? null : legacyProfileId());
     try {
       final restored = session.restore();
       if (restored != null) page = restored.page;
@@ -317,7 +330,8 @@ class _Game extends State<Game> {
     session.save.clear();
     setState(() {
       session = GameSession(JsonStoryAdapter(widget.story), createSaveAdapter(),
-          legacyUnlocked: collectionEntries.isNotEmpty);
+          legacyUnlocked: collectionEntries.isNotEmpty,
+          legacyId: legacyProfileId());
       week = 1;
       coins = 12;
       fatigue = 0;
@@ -787,14 +801,17 @@ class Scene extends CustomPainter {
     }
     txt(
         c,
-        lastResult.startsWith('조건') ||
-                lastResult.startsWith('관계 조건') ||
-                lastResult.startsWith('기억 조건')
-            ? lastResult
-            : '하나를 골라 이야기를 이어갑니다.',
+        flags['legacy-star'] == true
+            ? localized('ui.event.legacy', '계승의 기록이 새로운 선택을 열었습니다.')
+            : lastResult.startsWith('조건') ||
+                    lastResult.startsWith('관계 조건') ||
+                    lastResult.startsWith('기억 조건')
+                ? lastResult
+                : '하나를 골라 이야기를 이어갑니다.',
         const Offset(24, 570),
         14,
-        lastResult.startsWith('조건') ||
+        flags['legacy-star'] == true ||
+                lastResult.startsWith('조건') ||
                 lastResult.startsWith('관계 조건') ||
                 lastResult.startsWith('기억 조건')
             ? const Color(0xffa84f3c)

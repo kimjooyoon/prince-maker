@@ -12,9 +12,13 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   var checksum = 0;
   final endings = <String>{}, signatures = <String>{}, locations = <String>{};
   final story = JsonStoryAdapter(source);
+  final legacyIds = story.legacyProfiles.map((p) => '${p['id']}').toList();
   for (var i = 0; i < campaigns; i++) {
-    final session =
-        GameSession(story, MemorySaveAdapter(), legacyUnlocked: i.isEven);
+    final session = GameSession(story, MemorySaveAdapter(),
+        legacyUnlocked: i.isEven,
+        legacyId: i.isEven && legacyIds.isNotEmpty
+            ? legacyIds[i % legacyIds.length]
+            : null);
     while (session.world.progress[0]!.week < story.endingWeek) {
       final week = session.world.progress[0]!.week;
       final stat = switch ((i + week) % 3) { 0 => '지혜', 1 => '공감', _ => '용기' };
