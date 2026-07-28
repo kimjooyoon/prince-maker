@@ -58,7 +58,7 @@
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
 | 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock | 계승 unlock이 다음 회차의 선택 공간을 넓히는지 측정 |
 | 장면 | 도입·중반 사건·관계 긴장·외출·유대·기억·계승 게이트·엔딩 Golden | 20 Golden, canonical 4주차 사건, outing/bond/memory/legacy feedback | 막별 canonical event Golden 4종으로 확장 |
-| 종결 | terminal·저장·컬렉션·재시작·원인 회고 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 회고 | 누락 목표의 다음 회차 가이드와 동료별 회고 문구 추가 |
+| 종결 | terminal·저장·컬렉션·재시작·원인 회고·다음 회차 가이드 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 + 미달 목표 2개 회고 | 동료별 관계 변화와 상호 배타 목표의 회고 문구 추가 |
 
 ### 정량 게이트
 

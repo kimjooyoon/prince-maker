@@ -115,13 +115,17 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
   }
 }
 
-void drawEndingRetrospective(Canvas c, List<String> history, int goalCount) {
+void drawEndingRetrospective(
+    Canvas c, List<String> history, int goalCount, List<String> missingGoals) {
   final events = history
       .where((entry) => entry.startsWith('event:'))
       .map((entry) => entry.replaceFirst('event:', '').split('|').first)
       .take(3)
       .toList();
   final title = localized('ui.ending.retrospective', '기록 회고');
+  final next = missingGoals.isEmpty
+      ? localized('ui.ending.allGoals', '모든 목표를 확인했습니다.')
+      : '${localized('ui.ending.nextGoal', '다음 회차 단서')} · ${missingGoals.join(' · ')}';
   final causes = events.isEmpty
       ? localized('ui.ending.noEvents', '기록된 사건이 없습니다.')
       : events
@@ -134,13 +138,10 @@ void drawEndingRetrospective(Canvas c, List<String> history, int goalCount) {
           const Rect.fromLTWH(365, 400, 300, 100), const Radius.circular(18)),
       Paint()..color = Colors.white);
   _text(c, title, const Offset(385, 410), 14, teal, bold: true, width: 260);
-  _text(
-      c,
-      '$causes\n${localized('ui.ending.goalCause', '달성 목표')} · $goalCount',
-      const Offset(385, 440),
-      11,
-      ink,
+  _text(c, '$causes\n${localized('ui.ending.goalCause', '달성 목표')} · $goalCount',
+      const Offset(385, 440), 11, ink,
       width: 260);
+  _text(c, next, const Offset(385, 475), 10, teal, width: 260);
 }
 
 void drawLocalizedEnding(
@@ -149,7 +150,8 @@ void drawLocalizedEnding(
     Map<String, dynamic> ending,
     int rank,
     List<String> history,
-    int goalCount) {
+    int goalCount,
+    List<String> missingGoals) {
   if (activeLocale == 'ko') return;
   c.drawRect(const Rect.fromLTWH(0, 0, 740, 100), Paint()..color = paper);
   _text(c, localized('ui.ending.title', 'The End of 12 Weeks'),
@@ -199,7 +201,7 @@ void drawLocalizedEnding(
     _text(c, localized('${companion['epilogueKey']}', '${ending['epilogue']}'),
         const Offset(365, 378), 12, teal,
         width: 350);
-  drawEndingRetrospective(c, history, goalCount);
+  drawEndingRetrospective(c, history, goalCount, missingGoals);
   c.drawRRect(
       RRect.fromRectAndRadius(
           const Rect.fromLTWH(365, 510, 300, 64), const Radius.circular(18)),

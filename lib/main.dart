@@ -842,7 +842,16 @@ class Scene extends CustomPainter {
     final d = resolveEnding(JsonStoryAdapter(s), stats,
             bonds: bonds, milestones: milestones),
         rank = (d['rank'] as int?) ?? 1,
-        goalCount = milestones.values.where((v) => v).length;
+        goalCount = milestones.values.where((v) => v).length,
+        missingGoals = (s['milestones'] as List? ?? const [])
+            .cast<Map>()
+            .where((goal) => milestones[goal['id']] != true)
+            .take(2)
+            .map((goal) => activeLocale == 'ko'
+                ? '${goal['title']}'
+                : localized(
+                    goal['titleKey'] as String? ?? '', '${goal['title']}'))
+            .toList();
     txt(c, '${JsonStoryAdapter(s).endingWeek}주의 끝', const Offset(24, 28), 32,
         ink,
         bold: true);
@@ -864,10 +873,10 @@ class Scene extends CustomPainter {
         bold: true);
     if (d['epilogue'] != null)
       txt(c, d['epilogue'], const Offset(365, 378), 12, teal);
-    drawEndingRetrospective(c, history, goalCount);
+    drawEndingRetrospective(c, history, goalCount, missingGoals);
     box(c, const Rect.fromLTWH(365, 510, 300, 64), sun, radius: 18);
     txt(c, '다시 루멘으로', const Offset(450, 532), 17, ink, bold: true);
-    drawLocalizedEnding(c, s, d, rank, history, goalCount);
+    drawLocalizedEnding(c, s, d, rank, history, goalCount, missingGoals);
   }
 
   @override
