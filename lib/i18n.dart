@@ -67,6 +67,16 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
   final memoryFlags = flags ?? activeFlags;
   final event = story['events'][eventIndex] as Map;
   c.drawRect(const Rect.fromLTWH(0, 0, 590, 100), Paint()..color = paper);
+  final locations = (story['locations'] as List? ?? const []).cast<Map>(),
+      location = locations.firstWhere((l) => l['id'] == event['locationId'],
+          orElse: () => {'name': event['locationId'] ?? ''});
+  _text(
+      c,
+      '${event['week']} · ${localized('${location['nameKey']}', '${location['name']}')}',
+      const Offset(25, 28),
+      12,
+      teal,
+      bold: true);
   _text(
       c,
       '${event['titleKey'] == null ? event['title'] : localized(event['titleKey'], event['title'])}',

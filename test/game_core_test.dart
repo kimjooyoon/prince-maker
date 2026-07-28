@@ -89,6 +89,34 @@ void main() {
     expect(world.progress[0]!.trace.last,
         'event:중재|bond:bora+1|rival:taro1|flag:windmill-truce');
   });
+  test('discovering a new location is deterministic and replayable', () {
+    final story = JsonStoryAdapter({
+      'personalities': [],
+      'companions': [],
+      'endings': [],
+      'milestones': [],
+      'events': [
+        {
+          'week': 2,
+          'locationId': 'moon-market',
+          'location': '달빛 시장',
+          'choices': []
+        }
+      ]
+    });
+    final session = GameSession(story, MemorySaveAdapter());
+    session.choose(const ActivityChosen('지혜', 1, 0, 1, label: '기록'));
+    expect(session.world.progress[0]!.flags['place:moon-market'], isTrue);
+    expect(session.world.progress[0]!.trace, contains('location:moon-market'));
+    final before = session.world.progress[0]!.trace.length;
+    session.choose(const ActivityChosen('지혜', 1, 0, 1, label: '기록'));
+    expect(
+        session.world.progress[0]!.trace
+            .where((e) => e == 'location:moon-market')
+            .length,
+        1);
+    expect(session.world.progress[0]!.trace.length, greaterThan(before));
+  });
   test('selected personality gives a deterministic focus bonus', () {
     final story = JsonStoryAdapter({
       'personalities': [

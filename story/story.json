@@ -4,8 +4,8 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"9d8e7f4784f45acf46f4e9b6ff8036b617ca0559aacdede9c6e8ccfec8b81434"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"4d79ad1f47da818d7baa5924477c5760acc76601a122edb1b042d1e74234664c"},
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"fd748798f163fa6522101998e30f6c02a776d4a511d539e62ee9deed3aac86d8"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"4beb4359a87d1c3732bc924d781f2fd9e6a8f806604db1a115ff67cb34ddb729"},
     {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
     {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
     {"ref":"lib/save_adapter_stub.dart#MemorySaveAdapter-fallback","sha256":"f14b98d51781f31f35a82a9259f9bace404e8197f813c5f5f4b0a8bc1a8b6875"},
@@ -14,7 +14,7 @@
     ,{"ref":"lib/collection_adapter_web.dart#BrowserCollectionAdapter","sha256":"6fca4300faa3cda0967bf909ea04188f79072eaaff3cc848da17133ae3510b0a"}
     ,{"ref":"lib/collection_adapter_stub.dart#MemoryCollectionAdapter-fallback","sha256":"7b2b0f265eeec8362aa6b6e910d305a48f79fccf67892f202e7464fb8d03956d"}
     ,{"ref":"lib/feedback_banner.dart#drawFeedbackBanner","sha256":"7a91702170b256ce0d7008780525da9a4605b61d0449fdccd10e37135deabb9d"}
-    ,{"ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"da8c3a12584b8a6d26c499dad527ddba23a9899b7e4e07a21ec166bb03e35ed1"}
+    ,{"ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"f9dba489f06be89eb670d03cb743e654d3d1a6f6531c973eb8efda3d1d23f2e5"}
   ],
   "assetRefs": [
     {"ref":"assets/noa-sprite-sheet.png#hero-2-head-frames","sha256":"1ed524abb6e4eda65e651e25ea008d31efcdebaab28b39086bb1f67a4b32581d"},
@@ -26,16 +26,16 @@
     {"ref":"assets/fonts/NotoSansKR-Regular.ttf#canvas-korean-font","sha256":"c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"}
   ],
   "localeRefs": [
-    {"ref":"story/locales/ko.json#catalog","sha256":"fae7fea77e11e24243132af0522d51141b17e0686229a5f59bf583732bfac2da"},
-    {"ref":"story/locales/en.json#catalog","sha256":"7dad8f64fcbd608ec887e6fae7114776df966415314fec8f23966bc1c93bb397"}
+    {"ref":"story/locales/ko.json#catalog","sha256":"530b5991563279310bba3a1c9574a4e11daa0887a4de86f09f14c225558d2e87"},
+    {"ref":"story/locales/en.json#catalog","sha256":"e9b1a56d32599705b50882d88385ccdbf7306e9ae32b0730b9549d37062f1448"}
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
-  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":119,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":29,"formula":"catalog 119 = UI 13 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units"},
+  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":123,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":29,"formula":"catalog 123 = UI 13 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units"},
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
     "referenceModel": "장기 성장·관계·선택·결산이 하나의 반복 가능한 생활 루프를 이루는 시나리오",
     "dimensions": [
-      {"id":"arc","name":"장기 아크","target":"도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다","current":"4 chapters / 10 events / 4 milestones / 4 chapter contracts / ending week 12","evidence":"story/story.json#progression.contract"},
+      {"id":"arc","name":"장기 아크","target":"도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다","current":"4 chapters / 10 events / 4 locations / 4 milestones / 4 chapter contracts / ending week 12","evidence":"story/story.json#progression.contract"},
       {"id":"agency","name":"선택의 행위성","target":"모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다","current":"20 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences","evidence":"test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable"},
       {"id":"relationship","name":"관계 아크","target":"등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다","current":"3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues","evidence":"story/story.json#companions"},
       {"id":"feedback","name":"상태 피드백","target":"일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다","current":"stats, coins, fatigue, 4 milestones and 6 endings","evidence":"test/game_core_test.dart#rules"},
@@ -61,6 +61,12 @@
     {"id":"bora","name":"보라","role":"온실의 돌봄지기","personality":"kind","portraitFrame":1,"bondThreshold":8,"routeTitle":"온실의 약속","routeTitleKey":"companion.bora.routeTitle","greeting":"함께 가꾼 시간은 쉽게 시들지 않아.","greetingKey":"companion.bora.greeting","epilogue":"보라는 노아와 함께 계절마다 새로운 씨앗을 심었다.","epilogueKey":"companion.bora.epilogue"},
     {"id":"taro","name":"타로","role":"바람길 수리공","personality":"bold","portraitFrame":2,"bondThreshold":8,"routeTitle":"바람길 동행","routeTitleKey":"companion.taro.routeTitle","greeting":"망가진 길도 손을 대면 다시 이어져!","greetingKey":"companion.taro.greeting","epilogue":"타로는 노아를 데리고 아직 지도에 없는 길로 떠났다.","epilogueKey":"companion.taro.epilogue"}
   ],
+  "locations": [
+    {"id":"archive","name":"별자리 기록관","nameKey":"location.archive.name","kind":"memory"},
+    {"id":"greenhouse","name":"루멘 온실","nameKey":"location.greenhouse.name","kind":"care"},
+    {"id":"market","name":"달빛 시장","nameKey":"location.market.name","kind":"exchange"},
+    {"id":"river-road","name":"강 건너 바람길","nameKey":"location.riverRoad.name","kind":"crossing"}
+  ],
   "milestones": [
     {"id":"spring","week":3,"title":"봄의 별씨앗","titleKey":"milestone.spring.title","stat":"지혜","min":8,"coins":3,"pass":"첫 별씨앗이 싹텄다.","fail":"별씨앗은 아직 잠들어 있다."},
     {"id":"summer","week":6,"title":"여름의 다리","titleKey":"milestone.summer.title","stat":"공감","min":12,"coins":4,"pass":"서로의 속도가 하나의 다리가 되었다.","fail":"다리는 아직 흔들리지만 다시 건널 수 있다."},
@@ -83,43 +89,43 @@
     {"id":"market","label":"장터 심부름","icon":"◇","hint":"은화 +6 · 피로 +1","stat":"공감","delta":0,"fatigue":1,"coins":6}
   ],
   "events": [
-    {"week":2,"title":"새벽 우편함","titleKey":"event.mail.title","body":"아직 해가 오르기 전, 낯선 편지 한 장이 도착했다. 누구와 먼저 읽을까?","bodyKey":"event.mail.body","choices":[
+    {"week":2,"locationId":"archive","title":"새벽 우편함","titleKey":"event.mail.title","body":"아직 해가 오르기 전, 낯선 편지 한 장이 도착했다. 누구와 먼저 읽을까?","bodyKey":"event.mail.body","choices":[
       {"label":"루미에게 별의 이름을 묻는다","labelKey":"event.mail.lumi.label","stat":"지혜","delta":1,"coins":0,"bondId":"lumi","bondDelta":2,"line":"이름을 부르면 낯선 것도 조금 가까워져.","lineKey":"event.mail.lumi.line"},
       {"label":"마을 게시판에 소식을 나눈다","labelKey":"event.mail.bora.label","stat":"공감","delta":1,"coins":1,"bondId":"bora","bondDelta":2,"requiresFlag":"legacy-star","line":"좋은 소식은 나눌수록 오래 남아.","lineKey":"event.mail.bora.line"}
     ]},
-    {"week":3,"title":"비가 오던 밤","titleKey":"event.rain.title","body":"마을의 등불이 꺼졌다. 노아는 누구의 손을 먼저 잡을까?","bodyKey":"event.rain.body","choices":[
+    {"week":3,"locationId":"archive","title":"비가 오던 밤","titleKey":"event.rain.title","body":"마을의 등불이 꺼졌다. 노아는 누구의 손을 먼저 잡을까?","bodyKey":"event.rain.body","choices":[
       {"label":"아이들과 등불을 나눈다","labelKey":"event.rain.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"작은 빛도 함께라면 길이 돼.","lineKey":"event.rain.bora.line"},
       {"label":"별을 읽어 길을 찾는다","labelKey":"event.rain.lumi.label","stat":"지혜","delta":2,"coins":0,"bondId":"lumi","bondDelta":4,"line":"하늘은 아직 방향을 숨기지 않았어.","lineKey":"event.rain.lumi.line"}
     ]},
-    {"week":4,"title":"온실의 작은 균열","titleKey":"event.greenhouse.title","body":"온실 지붕에 작은 금이 갔다. 누구의 방식으로 봄을 지킬까?","bodyKey":"event.greenhouse.body","choices":[
+    {"week":4,"locationId":"greenhouse","title":"온실의 작은 균열","titleKey":"event.greenhouse.title","body":"온실 지붕에 작은 금이 갔다. 누구의 방식으로 봄을 지킬까?","bodyKey":"event.greenhouse.body","choices":[
       {"label":"루미에게 별빛의 각도를 묻는다","labelKey":"event.greenhouse.lumi.label","stat":"지혜","delta":1,"coins":0,"bondId":"lumi","bondDelta":2,"line":"빛이 머무는 각도를 알면, 금도 길이 될 수 있어.","lineKey":"event.greenhouse.lumi.line"},
       {"label":"보라와 천을 덧댄다","labelKey":"event.greenhouse.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":2,"line":"함께 덧댄 자리는 오래 버틸 거야.","lineKey":"event.greenhouse.bora.line"}
     ]},
-    {"week":5,"title":"달빛 시장 산책","titleKey":"event.outing.market.title","body":"짧은 휴일이 생겼다. 은화를 써서 누구와 루멘 밖의 표정을 만날까?","bodyKey":"event.outing.market.body","choices":[
+    {"week":5,"locationId":"market","title":"달빛 시장 산책","titleKey":"event.outing.market.title","body":"짧은 휴일이 생겼다. 은화를 써서 누구와 루멘 밖의 표정을 만날까?","bodyKey":"event.outing.market.body","choices":[
       {"label":"루미와 오래된 지도를 찾는다","labelKey":"event.outing.market.lumi.label","stat":"지혜","delta":1,"coins":-2,"bondId":"lumi","bondDelta":3,"line":"지도 가장자리에도 다음 길의 단서가 있어.","lineKey":"event.outing.market.lumi.line"},
       {"label":"보라와 씨앗 장터를 둘러본다","labelKey":"event.outing.market.bora.label","stat":"공감","delta":1,"coins":-2,"bondId":"bora","bondDelta":3,"line":"같은 씨앗을 고르면 내일의 정원도 닮아갈 거야.","lineKey":"event.outing.market.bora.line"}
     ]},
-    {"week":6,"title":"강을 건너는 법","titleKey":"event.bridge.title","body":"낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?","bodyKey":"event.bridge.body","choices":[
+    {"week":6,"locationId":"river-road","title":"강을 건너는 법","titleKey":"event.bridge.title","body":"낡은 다리가 흔들린다. 이번에는 어떤 마음으로 건널까?","bodyKey":"event.bridge.body","choices":[
       {"label":"먼저 발을 내딛는다","labelKey":"event.bridge.taro.label","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":8,"line":"떨려도, 한 걸음은 내 것이야.","lineKey":"event.bridge.taro.line"},
       {"label":"모두의 속도를 맞춘다","labelKey":"event.bridge.bora.label","stat":"공감","delta":2,"coins":1,"bondId":"bora","bondDelta":4,"line":"같은 박자로 걸으면 강도 덜 무서워.","lineKey":"event.bridge.bora.line"}
     ]},
-    {"week":7,"title":"지도에 없는 종","titleKey":"event.bell.title","body":"저녁마다 지도 밖에서 종소리가 들린다. 노아는 어디에 귀를 기울일까?","bodyKey":"event.bell.body","choices":[
+    {"week":7,"locationId":"river-road","title":"지도에 없는 종","titleKey":"event.bell.title","body":"저녁마다 지도 밖에서 종소리가 들린다. 노아는 어디에 귀를 기울일까?","bodyKey":"event.bell.body","choices":[
       {"label":"루미와 소리의 간격을 기록한다","labelKey":"event.bell.lumi.label","stat":"지혜","delta":2,"coins":1,"bondId":"lumi","bondDelta":2,"line":"간격을 기록하면 보이지 않는 길도 드러날 거야.","lineKey":"event.bell.lumi.line"},
       {"label":"타로와 종이 있는 곳을 찾아간다","labelKey":"event.bell.taro.label","stat":"용기","delta":2,"coins":-1,"bondId":"taro","bondDelta":3,"requiresStat":"용기","requiresMin":8,"line":"들리는 곳까지 직접 가보자!","lineKey":"event.bell.taro.line"}
     ]},
-    {"week":8,"title":"바람이 멎은 오후","titleKey":"event.windmill.title","body":"풍차가 멈춰 온실의 창이 닫히지 않는다. 누구와 손을 맞출까?","bodyKey":"event.windmill.body","choices":[
+    {"week":8,"locationId":"greenhouse","title":"바람이 멎은 오후","titleKey":"event.windmill.title","body":"풍차가 멈춰 온실의 창이 닫히지 않는다. 누구와 손을 맞출까?","bodyKey":"event.windmill.body","choices":[
       {"label":"타로와 풍차를 고친다","labelKey":"event.windmill.taro.label","stat":"용기","delta":2,"coins":1,"bondId":"taro","bondDelta":2,"rivalId":"bora","rivalDelta":-1,"setsFlag":"windmill-repair","line":"멈춘 바람도 손을 대면 다시 움직여.","lineKey":"event.windmill.taro.line"},
       {"label":"보라와 타로의 말을 함께 듣는다","labelKey":"event.windmill.bora.label","stat":"공감","delta":1,"coins":-2,"bondId":"bora","bondDelta":1,"rivalId":"taro","rivalDelta":1,"setsFlag":"windmill-truce","line":"서로의 바람을 들으면 다시 같은 길을 만들 수 있어.","lineKey":"event.windmill.bora.line"}
     ]},
-    {"week":9,"title":"바람의 편지","titleKey":"event.letter.title","body":"먼 영지에서 도움을 청하는 편지가 도착했다. 노아는 어떤 답을 보낼까?","bodyKey":"event.letter.body","choices":[
+    {"week":9,"locationId":"river-road","title":"바람의 편지","titleKey":"event.letter.title","body":"먼 영지에서 도움을 청하는 편지가 도착했다. 노아는 어떤 답을 보낼까?","bodyKey":"event.letter.body","choices":[
       {"label":"답장을 꼼꼼히 기록한다","labelKey":"event.letter.lumi.label","stat":"지혜","delta":2,"coins":1,"bondId":"lumi","bondDelta":4,"line":"정확한 말은 먼 곳에서도 길이 될 거야.","lineKey":"event.letter.lumi.line"},
       {"label":"직접 찾아가겠다고 약속한다","labelKey":"event.letter.taro.label","stat":"용기","delta":2,"coins":-2,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":14,"line":"기다리게 하지 않을게. 내가 갈게!","lineKey":"event.letter.taro.line"}
     ]},
-    {"week":10,"title":"축제 전야","titleKey":"event.festival.title","body":"마을 축제의 마지막 준비가 남았다. 노아는 무엇을 먼저 챙길까?","bodyKey":"event.festival.body","choices":[
+    {"week":10,"locationId":"market","title":"축제 전야","titleKey":"event.festival.title","body":"마을 축제의 마지막 준비가 남았다. 노아는 무엇을 먼저 챙길까?","bodyKey":"event.festival.body","choices":[
       {"label":"모두가 쉴 자리를 만든다","labelKey":"event.festival.bora.label","stat":"공감","delta":2,"coins":-1,"bondId":"bora","bondDelta":4,"line":"즐거운 날일수록 쉬어갈 자리도 필요해.","lineKey":"event.festival.bora.line"},
       {"label":"새로운 무대를 직접 세운다","labelKey":"event.festival.taro.label","stat":"용기","delta":2,"coins":0,"bondId":"taro","bondDelta":4,"requiresStat":"용기","requiresMin":12,"requiresFlag":"windmill-repair","line":"조금 삐뚤어도 우리 손으로 세워보자.","lineKey":"event.festival.taro.line"}
     ]},
-    {"week":11,"title":"바람 언덕의 약속","titleKey":"event.outing.hill.title","body":"엔딩 전 마지막 휴일이다. 누구와 걸은 시간이 다음 계절의 방향이 될까?","bodyKey":"event.outing.hill.body","choices":[
+    {"week":11,"locationId":"river-road","title":"바람 언덕의 약속","titleKey":"event.outing.hill.title","body":"엔딩 전 마지막 휴일이다. 누구와 걸은 시간이 다음 계절의 방향이 될까?","bodyKey":"event.outing.hill.body","choices":[
       {"label":"타로와 이름 없는 길을 걷는다","labelKey":"event.outing.hill.taro.label","stat":"용기","delta":1,"coins":-2,"bondId":"taro","bondDelta":3,"requiresBondId":"taro","requiresBondMin":2,"line":"길의 이름은 걸은 뒤에 붙여도 늦지 않아.","lineKey":"event.outing.hill.taro.line"},
       {"label":"루미와 별빛 표식을 남긴다","labelKey":"event.outing.hill.lumi.label","stat":"지혜","delta":1,"coins":-2,"bondId":"lumi","bondDelta":3,"line":"돌아올 표식이 있으면 멀리 가도 길을 잃지 않아.","lineKey":"event.outing.hill.lumi.line"}
     ]}
