@@ -2,7 +2,7 @@
   "schema": "prince-maker-trilemma-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "14a9219cbe71a15abcb21e3a973e5a265c6f27839280efee83520dd6d25e51e3"
+    "sha256": "f30930220d49789d41e4f6f3a96e4b51c1504d4235dc18b40c66b5d62d32a92d"
   },
   "axes": [
     {
@@ -13,7 +13,7 @@
         "scenarioDimensions": 8,
         "authoredBranches": 26,
         "goldens": 20,
-        "localeKeys": 118
+        "localeKeys": 119
       },
       "evidence": [
         "tool/verify_game.dart#scenario-contract",

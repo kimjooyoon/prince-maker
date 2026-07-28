@@ -32,7 +32,7 @@
 | personality campaign 경로 | 지혜·공감·용기 각 성격의 숙련 엔딩 재현 | 3 |
 | 글리프 안정성 | 번들 Noto Sans KR + Canvas 벡터 활동 아이콘 | 1 |
 | i18n 대사 | `key → locale catalog → Canvas` 한국어/English 대사·엔딩·동료 결산 경로 | 2 locale |
-| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 118키 및 엔딩 UI 키 검사 | 1 |
+| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 119키 및 엔딩 UI 키 검사 | 1 |
 | 스토리 진행도 | 1–3 / 4–6 / 7–9 / 10–12주 4막, 사건·계절 목표 연결 | 4 chapters |
 | 순수성 분기 | 동일 일정 예산의 지혜·공감 경로 + 5개 SSOT 일정 정책이 서로 다른 authored 엔딩·유대·목표 서명을 생성 | 3 |
 | 자동 게이트 | SSOT 검사·해시 매니페스트·정적 분석·Flutter test·Golden·코어 benchmark·Wasm | 7 |
