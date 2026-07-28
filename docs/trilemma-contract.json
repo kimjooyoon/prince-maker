@@ -2,7 +2,7 @@
   "schema": "prince-maker-trilemma-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "f30930220d49789d41e4f6f3a96e4b51c1504d4235dc18b40c66b5d62d32a92d"
+    "sha256": "58a852d2e68d57fa7f66067922824cbe0cc38198c6fadba63bb5db24ad7e59c5"
   },
   "axes": [
     {

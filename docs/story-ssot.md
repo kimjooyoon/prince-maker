@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: f30930220d49789d41e4f6f3a96e4b51c1504d4235dc18b40c66b5d62d32a92d -->
+<!-- ssot-sha256: 58a852d2e68d57fa7f66067922824cbe0cc38198c6fadba63bb5db24ad7e59c5 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -30,7 +30,7 @@
 | --- | --- | --- | --- |
 | 장기 아크 | 도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다 | 4 chapters / 10 events / 4 milestones / 4 chapter contracts / ending week 12 | `story/story.json#progression.contract` |
 | 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 20 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
-| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / greeting / bond threshold / epilogue | `story/story.json#companions` |
+| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / greeting / bond threshold / all-threshold epilogues | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / collection-driven legacy unlock | `test/gameplay_metrics_test.dart#route-variety` |

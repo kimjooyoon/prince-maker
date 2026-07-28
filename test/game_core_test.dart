@@ -116,6 +116,23 @@ void main() {
     expect(
         resolveEnding(story, {'지혜': 2}, bonds: {'lumi': 8})['epilogue'], '별표');
   });
+  test('all threshold companions become deterministic ending epilogues', () {
+    final story = JsonStoryAdapter({
+      'personalities': [],
+      'events': [],
+      'companions': [
+        {'id': 'lumi', 'bondThreshold': 8, 'epilogue': '별표'},
+        {'id': 'bora', 'bondThreshold': 8, 'epilogue': '씨앗표'}
+      ],
+      'endings': [
+        {'id': 'a', 'stat': '지혜', 'min': 1, 'title': '별'}
+      ]
+    });
+    final result =
+        resolveEnding(story, {'지혜': 2}, bonds: {'lumi': 8, 'bora': 9});
+    expect(result['epilogue'], '씨앗표');
+    expect((result['epilogues'] as List).map((e) => e['text']), ['별표', '씨앗표']);
+  });
   test('ending rank rewards authored goals and companion bonds', () {
     final story = JsonStoryAdapter({
       'personalities': [],
