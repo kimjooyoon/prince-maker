@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: e46366f6062130c69ee8c76f49abfd76535b82c0a13cd44a8b7224ca60f60996 -->
+<!-- ssot-sha256: fdb52e2cc59fab7dbd29754be3a7cdd4c3209dca9227cb15af5af133a42ab8f6 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -19,8 +19,8 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **127** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
-- 산식: catalog 127 = UI 14 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units
+- locale 최소 키: **128** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
+- 산식: catalog 128 = UI 15 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units
 
 ## 시나리오 완전성 표본
 
@@ -33,9 +33,9 @@
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
-| 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles seed the next campaign | `test/gameplay_metrics_test.dart#route-variety` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 21 Goldens / ko+en catalogs / canonical week-4 event / outing choice / rival loss and mediation recovery / bond, memory, legacy gates / ending retrospective board | `test/golden_test.dart#mediation-choice-shows-reciprocal-relationship-recovery` |
-| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / ending-based lineage bonus / SSOT campaign benchmark | `test/golden_test.dart#twelve-week-loop-resolves-to-an-ending` |
+| 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus | `test/game_core_test.dart#legacy-profile-changes-an-authored-choice-outcome-and-trace` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 22 Goldens / ko+en catalogs / canonical week-4 event / outing choice / rival loss and mediation recovery / bond, memory, legacy gates / lineage resonance choice / ending retrospective board | `test/golden_test.dart#legacy-lineage-resonance-is-visible-on-the-authored-choice` |
+| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / ending-based lineage bonus / authored lineage choice bonus / SSOT campaign benchmark | `test/golden_test.dart#twelve-week-loop-resolves-to-an-ending` |
 
 ## 생성 이미지 자산
 
@@ -50,8 +50,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `61a44fd4dc360da3533df61125d660823fbc5fb67455263a931c50acf8df7241`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `019fdd5573ff8deca184ea5199612fe7fe4335c991619b00eba4cef988dde340`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `c28612464df302bbe694fb54edecbd41d18b1acca3e74eca720cfadfdddfec64`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `b1123b7653f91e2fdfd0123e1012f194c346f0e0f4baca4c1eb17f6bb972cff9`
 
 ## 성격
 

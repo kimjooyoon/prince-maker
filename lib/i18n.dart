@@ -104,6 +104,13 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
         bondReq = choice['requiresBondId'] as String?,
         bondMin = choice['requiresBondMin'] as int?,
         flagReq = choice['requiresFlag'] as String?,
+        legacyId = memoryFlags.keys
+            .where((key) => key.startsWith('legacy:'))
+            .map((key) => key.substring('legacy:'.length))
+            .firstOrNull,
+        legacyBonus = legacyId == null
+            ? null
+            : (choice['legacyBonuses'] as Map?)?[legacyId],
         locked = (req != null && (stats[req] ?? 0) < (min ?? 0)) ||
             (bondReq != null && (bonds[bondReq] ?? 0) < (bondMin ?? 0)) ||
             (flagReq != null && memoryFlags[flagReq] != true);
@@ -122,6 +129,16 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
         locked ? ink.withValues(alpha: .45) : ink,
         bold: true,
         width: 280);
+    if (legacyBonus is Map)
+      _text(
+          c,
+          localized('ui.event.legacyBonus',
+                  'Legacy ${legacyBonus['stat']} +${legacyBonus['delta']}')
+              .replaceAll('{stat}', '${legacyBonus['stat']}')
+              .replaceAll('{delta}', '${legacyBonus['delta']}'),
+          Offset(x + 22, 400),
+          12,
+          teal);
   }
 }
 
