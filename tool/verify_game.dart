@@ -30,6 +30,7 @@ void verifyTrilemmaContract(String storyHash) {
       complete['localeKeys'] < 118 ||
       purity['minDistinctEndings'] < 3 ||
       purity['minDistinctSignatures'] < 3 ||
+      purity['minLegacyProfiles'] < 3 ||
       purity['deterministicReplay'] != true ||
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] != 105000 ||
@@ -494,6 +495,8 @@ void main() {
         purityEvidence.contains("'gardener-master'") &&
         gameplayEvidence.contains(
             'five SSOT schedule policies produce measurable route variety') &&
+        gameplayEvidence.contains(
+            'three legacy profiles produce distinct deterministic route signatures') &&
         gameplayEvidence.contains('endings.length, greaterThanOrEqualTo(3)') &&
         File('test/collection_test.dart').existsSync() &&
         uiEvidence.contains('ending collection survives a restart') &&

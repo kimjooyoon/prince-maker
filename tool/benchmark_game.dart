@@ -3,14 +3,18 @@ import 'dart:io';
 import 'package:prince_maker/game_core.dart';
 
 class CampaignMetrics {
-  CampaignMetrics(this.checksum, this.endings, this.signatures, this.locations);
+  CampaignMetrics(this.checksum, this.endings, this.signatures, this.locations,
+      this.lineageEndings, this.lineageSignatures);
   final int checksum;
   final Set<String> endings, signatures, locations;
+  final Map<String, Set<String>> lineageEndings, lineageSignatures;
 }
 
 CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   var checksum = 0;
   final endings = <String>{}, signatures = <String>{}, locations = <String>{};
+  final lineageEndings = <String, Set<String>>{},
+      lineageSignatures = <String, Set<String>>{};
   final story = JsonStoryAdapter(source);
   final legacyIds = story.legacyProfiles.map((p) => '${p['id']}').toList();
   for (var i = 0; i < campaigns; i++) {
@@ -69,20 +73,28 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
         bonds: p.bonds, milestones: p.milestones);
     endings.add('${ending['id']}');
     locations.addAll(p.flags.keys.where((key) => key.startsWith('place:')));
-    signatures.add(
-        '${ending['id']}|${session.world.stats[0]!.values}|${p.bonds}|${p.milestones.values.where((v) => v).length}|${p.flags}');
+    final signature =
+            '${ending['id']}|${session.world.stats[0]!.values}|${p.bonds}|${p.milestones.values.where((v) => v).length}|${p.flags}',
+        lineage = session.legacyId ?? 'none';
+    signatures.add(signature);
+    lineageEndings
+        .putIfAbsent(lineage, () => <String>{})
+        .add('${ending['id']}');
+    lineageSignatures.putIfAbsent(lineage, () => <String>{}).add(signature);
     checksum += p.week +
         session.world.stats[0]!.values.values.reduce((a, b) => a + b) +
         p.bonds.values.reduce((a, b) => a + b) +
         p.trace.length;
   }
-  return CampaignMetrics(checksum, endings, signatures, locations);
+  return CampaignMetrics(checksum, endings, signatures, locations,
+      lineageEndings, lineageSignatures);
 }
 
 void main() {
   const campaigns = 5000;
   final source = jsonDecode(File('story/story.json').readAsStringSync())
       as Map<String, dynamic>;
+  final story = JsonStoryAdapter(source);
   final watch = Stopwatch()..start();
   final first = runCampaigns(source, campaigns);
   watch.stop();
@@ -90,8 +102,15 @@ void main() {
   final millis = watch.elapsedMicroseconds / 1000;
   final transitions = campaigns *
       ((source['endingWeek'] as int) - 1 + (source['events'] as List).length);
+  final profileIds = story.legacyProfiles.map((p) => '${p['id']}').toSet(),
+      lineageEvidence = profileIds.every(
+          (id) => (first.lineageSignatures[id] ?? const <String>{}).isNotEmpty),
+      lineageSummary = profileIds
+          .map((id) =>
+              '$id:${first.lineageSignatures[id]?.length ?? 0}sig/${first.lineageEndings[id]?.length ?? 0}ending')
+          .join(',');
   stdout.writeln(
-      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
+      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
   if (millis > 5000 ||
       first.checksum <= campaigns ||
       replay.checksum != first.checksum ||
@@ -99,7 +118,10 @@ void main() {
       replay.signatures.length != first.signatures.length ||
       replay.locations.length != first.locations.length ||
       first.locations.length < 4 ||
-      first.signatures.length < 3) {
+      first.signatures.length < 3 ||
+      !lineageEvidence ||
+      replay.lineageSignatures.toString() !=
+          first.lineageSignatures.toString()) {
     stderr.writeln(
         'TRILEMMA_PERFORMANCE_FAIL: deterministic core budget or checksum drift');
     exit(1);
