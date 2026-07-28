@@ -83,10 +83,14 @@ Future<void> main() async {
 
 class Game extends StatefulWidget {
   const Game(this.story,
-      {this.locales = const {}, this.legacySeed = false, super.key});
+      {this.locales = const {},
+      this.legacySeed = false,
+      this.legacyId,
+      super.key});
   final Map<String, dynamic> story;
   final Map<String, Map<String, String>> locales;
   final bool legacySeed;
+  final String? legacyId;
   @override
   State<Game> createState() => _Game();
 }
@@ -152,8 +156,11 @@ class _Game extends State<Game> {
     collection = createCollectionAdapter();
     collectionEntries.addAll(collection.read());
     session = GameSession(JsonStoryAdapter(widget.story), createSaveAdapter(),
-        legacyUnlocked: widget.legacySeed || collectionEntries.isNotEmpty,
-        legacyId: widget.legacySeed ? null : legacyProfileId());
+        legacyUnlocked: widget.legacySeed ||
+            widget.legacyId != null ||
+            collectionEntries.isNotEmpty,
+        legacyId:
+            widget.legacyId ?? (widget.legacySeed ? null : legacyProfileId()));
     try {
       final restored = session.restore();
       if (restored != null) page = restored.page;
@@ -277,7 +284,9 @@ class _Game extends State<Game> {
           requiresBondMin: (e['requiresBondMin'] as int?) ?? 0,
           requiresFlag: e['requiresFlag'] as String?,
           setsFlag: e['setsFlag'] as String?,
-          line: e['line'] as String? ?? ''));
+          line: e['line'] as String? ?? '',
+          legacyBonuses: (e['legacyBonuses'] as Map?)?.cast<String, dynamic>(),
+          legacyId: session.legacyId));
       sync();
       page = 0;
       session.persist(page: page);
@@ -330,8 +339,9 @@ class _Game extends State<Game> {
     session.save.clear();
     setState(() {
       session = GameSession(JsonStoryAdapter(widget.story), createSaveAdapter(),
-          legacyUnlocked: collectionEntries.isNotEmpty,
-          legacyId: legacyProfileId());
+          legacyUnlocked:
+              widget.legacyId != null || collectionEntries.isNotEmpty,
+          legacyId: widget.legacyId ?? legacyProfileId());
       week = 1;
       coins = 12;
       fatigue = 0;
@@ -779,6 +789,19 @@ class Scene extends CustomPainter {
           tone = locked ? paper : Colors.white,
           rival = ch['rivalId'] as String?,
           rivalDelta = (ch['rivalDelta'] as int?) ?? 0,
+          legacyId = flags.keys
+              .where((key) => key.startsWith('legacy:'))
+              .map((key) => key.substring('legacy:'.length))
+              .firstOrNull,
+          legacyBonus = legacyId == null
+              ? null
+              : (ch['legacyBonuses'] as Map?)?[legacyId],
+          legacyText = legacyBonus is Map
+              ? localized('ui.event.legacyBonus',
+                      '계승 ${legacyBonus['stat']} +${legacyBonus['delta']}')
+                  .replaceAll('{stat}', '${legacyBonus['stat']}')
+                  .replaceAll('{delta}', '${legacyBonus['delta']}')
+              : '',
           relation = rival == null
               ? ''
               : ' · $rival 유대 ${rivalDelta >= 0 ? '+' : ''}$rivalDelta';
@@ -794,7 +817,7 @@ class Scene extends CustomPainter {
           c,
           locked
               ? '조건: ${flagReq != null ? '$flagReq 기억' : '${bondReq == null ? '$req $min' : '$bondReq 유대 $bondMin'}'} 필요'
-              : '${ch['stat']} +${ch['delta']}   은화 ${ch['coins']}   유대 +${(ch['bondDelta'] as int?) ?? 0}$relation',
+              : '${ch['stat']} +${ch['delta']}   은화 ${ch['coins']}   유대 +${(ch['bondDelta'] as int?) ?? 0}$relation$legacyText',
           Offset(x + 22, 400),
           13,
           locked ? ink.withValues(alpha: .45) : ink.withValues(alpha: .6));

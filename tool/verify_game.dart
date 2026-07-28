@@ -322,6 +322,21 @@ void main() {
           (choice['setsFlag'] is! String ||
               (choice['setsFlag'] as String).isEmpty))
         fail('event memory output contract invalid');
+      if (choice['legacyBonuses'] != null) {
+        final bonuses =
+            (choice['legacyBonuses'] as Map).cast<String, dynamic>();
+        final profileIds =
+            legacyProfiles.map((profile) => '${profile['id']}').toSet();
+        if (!bonuses.keys.toSet().containsAll(profileIds) ||
+            bonuses.length != profileIds.length ||
+            bonuses.values.any((bonus) =>
+                bonus is! Map ||
+                !stats.contains(bonus['stat']) ||
+                bonus['delta'] is! int ||
+                bonus['delta'] < 1)) {
+          fail('legacy choice must define one valid bonus for every lineage');
+        }
+      }
     }
   }
   final writtenFlags = events
@@ -339,6 +354,11 @@ void main() {
       !requiredFlags.contains('legacy-star') ||
       !writtenFlags.containsAll(requiredFlags.difference(seededFlags)))
     fail('every event memory gate needs an authored prior flag');
+  if (!events.any((event) => (event['choices'] as List)
+      .cast<Map<String, dynamic>>()
+      .any((choice) => choice['legacyBonuses'] is Map))) {
+    fail('scenario needs an authored lineage-specific choice bonus');
+  }
   if (!events.any((e) => (e['choices'] as List)
       .cast<Map<String, dynamic>>()
       .any((choice) => choice['rivalId'] != null))) {
@@ -385,6 +405,7 @@ void main() {
     'relationship-gate.png',
     'memory-gate.png',
     'legacy-gate.png',
+    'legacy-profile.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'

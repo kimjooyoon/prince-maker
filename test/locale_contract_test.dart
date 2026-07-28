@@ -59,10 +59,11 @@ void main() {
       'ui.ending.relationshipGoals',
       'ui.ending.restart',
       'ui.event.legacy',
+      'ui.event.legacyBonus',
     ];
     expect(catalogs['ko']!.keys, containsAll(endingUiKeys));
     expect(catalogs['en']!.keys, containsAll(endingUiKeys));
-    expect(catalogs['ko']!.length, 127);
-    expect(catalogs['en']!.length, 127);
+    expect(catalogs['ko']!.length, 128);
+    expect(catalogs['en']!.length, 128);
   });
 }

@@ -13,6 +13,7 @@
   "ui.ending.relationshipGoals": "Bond routes",
   "ui.ending.restart": "Return to Lumen",
   "ui.event.legacy": "A legacy record has opened a new choice.",
+  "ui.event.legacyBonus": "Legacy {stat} +{delta}",
   "milestone.spring.title": "Spring Star Seed",
   "milestone.summer.title": "Summer Bridge",
   "milestone.autumn.title": "Autumn Letter",

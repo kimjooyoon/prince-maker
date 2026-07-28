@@ -133,7 +133,9 @@ class StoryChoiceMade extends GameEvent {
       this.requiresBondMin = 0,
       this.requiresFlag,
       this.setsFlag,
-      this.line = ''});
+      this.line = '',
+      this.legacyBonuses,
+      this.legacyId});
   final String stat, label, line;
   final int delta, coins, bondDelta, rivalDelta, requiresMin, requiresBondMin;
   final String? bondId,
@@ -142,6 +144,8 @@ class StoryChoiceMade extends GameEvent {
       requiresBondId,
       requiresFlag,
       setsFlag;
+  final Map<String, dynamic>? legacyBonuses;
+  final String? legacyId;
 }
 
 class WeekAdvanced extends GameEvent {
@@ -225,7 +229,9 @@ class GameWorld {
           :final rivalId,
           :final rivalDelta,
           :final setsFlag,
-          :final line
+          :final line,
+          :final legacyBonuses,
+          :final legacyId
         ):
         s[stat] = s[stat]! + delta;
         p.coins += coins;
@@ -235,15 +241,20 @@ class GameWorld {
         if (rivalId != null)
           p.bonds[rivalId] =
               ((p.bonds[rivalId] ?? 0) + rivalDelta).clamp(0, 100).toInt();
+        final legacy = legacyId == null ? null : legacyBonuses?[legacyId];
+        final legacyStat = legacy is Map ? legacy['stat'] as String? : null,
+            legacyDelta = legacy is Map ? legacy['delta'] as int? ?? 0 : 0;
+        if (legacyStat != null && s.containsKey(legacyStat))
+          s[legacyStat] = s[legacyStat]! + legacyDelta;
         if (setsFlag != null) p.flags[setsFlag] = true;
         final relation = bondId == null
             ? ''
             : ' · $bondId 유대 +$bondDelta${rivalId == null ? '' : ' · $rivalId 유대 ${rivalDelta >= 0 ? '+' : ''}$rivalDelta'}';
         p.lastResult =
-            '$label · $stat +$delta$relation${setsFlag == null ? '' : ' · 기억 기록'}';
+            '$label · $stat +$delta$relation${legacyStat == null ? '' : ' · 계승 $legacyStat +$legacyDelta'}${setsFlag == null ? '' : ' · 기억 기록'}';
         p.lastLine = line;
         p.trace.add(
-            'event:$label${bondId == null ? '' : '|bond:$bondId+$bondDelta'}${rivalId == null ? '' : '|rival:$rivalId$rivalDelta'}${setsFlag == null ? '' : '|flag:$setsFlag'}${line.isEmpty ? '' : '|line:$line'}');
+            'event:$label${bondId == null ? '' : '|bond:$bondId+$bondDelta'}${rivalId == null ? '' : '|rival:$rivalId$rivalDelta'}${legacyStat == null ? '' : '|legacy:$legacyStat+$legacyDelta'}${setsFlag == null ? '' : '|flag:$setsFlag'}${line.isEmpty ? '' : '|line:$line'}');
       case WeekAdvanced():
         p.week++;
       case LocationDiscovered(:final id, :final name):

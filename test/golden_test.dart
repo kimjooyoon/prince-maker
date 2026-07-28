@@ -98,6 +98,54 @@ void main() {
     await expectLater(
         find.byType(Game), matchesGoldenFile('goldens/legacy-gate.png'));
   });
+  testWidgets('legacy lineage resonance is visible on the authored choice',
+      (tester) async {
+    await tester.pumpWidget(const Game({
+      'title': '프린스 메이커',
+      'setting': '루멘',
+      'hero': '노아',
+      'legacyProfiles': [
+        {'id': 'stargazer', 'stat': '지혜', 'bonus': 2}
+      ],
+      'events': [
+        {
+          'week': 2,
+          'title': '계승의 우편함',
+          'body': '이전 기록은 새로운 선택의 결을 남긴다.',
+          'choices': [
+            {
+              'label': '기록을 조용히 읽는다',
+              'stat': '지혜',
+              'delta': 1,
+              'coins': 0,
+              'bondId': 'lumi',
+              'bondDelta': 1
+            },
+            {
+              'label': '별의 소식을 나눈다',
+              'stat': '공감',
+              'delta': 1,
+              'coins': 1,
+              'bondId': 'bora',
+              'bondDelta': 1,
+              'requiresFlag': 'legacy-star',
+              'legacyBonuses': {
+                'stargazer': {'stat': '지혜', 'delta': 1},
+                'gardener': {'stat': '공감', 'delta': 1},
+                'pathfinder': {'stat': '용기', 'delta': 1}
+              }
+            }
+          ]
+        }
+      ]
+    }, legacyId: 'stargazer'));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(200, 550));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('3-2-0-0')), findsOneWidget);
+    await expectLater(
+        find.byType(Game), matchesGoldenFile('goldens/legacy-profile.png'));
+  });
   testWidgets('outing choice shows time-budget tradeoff', (tester) async {
     await tester.pumpWidget(const Game({
       'title': '프린스 메이커',
@@ -362,8 +410,8 @@ void main() {
     await tester.tapAt(const Offset(500, 350));
     await tester.pump();
     expect(find.byKey(const ValueKey('0-2-0-0')), findsOneWidget);
-    await expectLater(find.byType(Game),
-        matchesGoldenFile('goldens/mediation.png'));
+    await expectLater(
+        find.byType(Game), matchesGoldenFile('goldens/mediation.png'));
   });
   testWidgets('season goal is visible before the first choice', (tester) async {
     await tester.pumpWidget(const Game({

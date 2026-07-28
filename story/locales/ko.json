@@ -13,6 +13,7 @@
   "ui.ending.relationshipGoals": "관계 목표",
   "ui.ending.restart": "다시 루멘으로",
   "ui.event.legacy": "계승의 기록이 새로운 선택을 열었습니다.",
+  "ui.event.legacyBonus": "계승 {stat} +{delta}",
   "milestone.spring.title": "봄의 별씨앗",
   "milestone.summer.title": "여름의 다리",
   "milestone.autumn.title": "가을의 편지",

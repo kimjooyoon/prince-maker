@@ -57,6 +57,9 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
           requiresBondMin: choice['requiresBondMin'] ?? 0,
           requiresFlag: choice['requiresFlag'],
           setsFlag: choice['setsFlag'],
+          legacyBonuses:
+              (choice['legacyBonuses'] as Map?)?.cast<String, dynamic>(),
+          legacyId: session.legacyId,
           line: choice['line'] ?? '',
         ));
       }

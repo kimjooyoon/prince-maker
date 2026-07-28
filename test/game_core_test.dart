@@ -136,6 +136,27 @@ void main() {
     expect(session.world.progress[0]!.flags['legacy:stargazer'], isTrue);
     expect(session.world.progress[0]!.trace, ['legacy:stargazer|지혜+2']);
   });
+  test('legacy profile changes an authored choice outcome and trace', () {
+    final story = JsonStoryAdapter({
+      'personalities': [],
+      'companions': [],
+      'milestones': [],
+      'events': [],
+      'endings': [],
+      'legacyProfiles': [
+        {'id': 'stargazer', 'stat': '지혜', 'bonus': 2}
+      ]
+    });
+    final session = GameSession(story, MemorySaveAdapter(),
+        legacyUnlocked: true, legacyId: 'stargazer');
+    session.chooseEvent(const StoryChoiceMade('공감', 1, 0, '기록 공유',
+        legacyId: 'stargazer',
+        legacyBonuses: {
+          'stargazer': {'stat': '지혜', 'delta': 1}
+        }));
+    expect(session.world.stats[0]!.values, {'지혜': 7, '공감': 6, '용기': 3});
+    expect(session.world.progress[0]!.trace.last, 'event:기록 공유|legacy:지혜+1');
+  });
   test('selected personality gives a deterministic focus bonus', () {
     final story = JsonStoryAdapter({
       'personalities': [
