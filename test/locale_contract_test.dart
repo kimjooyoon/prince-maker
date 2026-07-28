@@ -55,11 +55,12 @@ void main() {
       'ui.ending.goalCause',
       'ui.ending.nextGoal',
       'ui.ending.allGoals',
+      'ui.ending.relationshipGoals',
       'ui.ending.restart',
     ];
     expect(catalogs['ko']!.keys, containsAll(endingUiKeys));
     expect(catalogs['en']!.keys, containsAll(endingUiKeys));
-    expect(catalogs['ko']!.length, 114);
-    expect(catalogs['en']!.length, 114);
+    expect(catalogs['ko']!.length, 118);
+    expect(catalogs['en']!.length, 118);
   });
 }

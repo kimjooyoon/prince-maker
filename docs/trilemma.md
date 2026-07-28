@@ -5,7 +5,7 @@
 | 축 | 플레이어에게 의미 | 자동 증거 |
 | --- | --- | --- |
 | 완전성 | 콘텐츠·분기·저장·화면·대사가 끝까지 이어지는가 | `verify_game.dart` 14차원, 시나리오 8축, 26/26 authored branch, Golden 20종, SSOT 대사 키 × 한국어·English locale 계약, 엔딩 원인·미달 목표 회고 |
-| 순수성 | 선택이 스탯·관계·목표·엔딩을 바꾸며 다시 플레이할 이유가 있는가 | 활동 5개, 성장축 3개, 동료 3명, 관계 rival bond, 외출 2개, 목표 4개, 사건 10개, 엔딩 6개, 1–3성 결산 등급, 누적 엔딩 도감·계승 해금, 5개 SSOT 일정 정책 중 3개 이상 distinct ending/signature |
+| 순수성 | 선택이 스탯·관계·목표·엔딩을 바꾸며 다시 플레이할 이유가 있는가 | 활동 5개, 성장축 3개, 동료 3명, 관계 rival bond·동행 목표 3개, 외출 2개, 목표 4개, 사건 10개, 엔딩 6개, 1–3성 결산 등급, 누적 엔딩 도감·계승 해금, 5개 SSOT 일정 정책 중 3개 이상 distinct ending/signature |
 | 성능 | 같은 입력을 빠르고 재현 가능하게 처리하는가 | `benchmark_game.dart` 실제 SSOT 5,000 campaign / 105,000 application transitions, 10 사건, 5초 예산, replay signature 3개 이상 |
 
 ## 폐쇄루프
