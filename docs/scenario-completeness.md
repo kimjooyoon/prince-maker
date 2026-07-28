@@ -42,7 +42,7 @@
 | 상태 피드백 | 성장 3축·피로·은화·계절 목표가 다음 사건과 엔딩에 되돌아옴 | `test/game_core_test.dart` 규칙·trace |
 | 관계 아크 | 3명 동료, rival bond 손실·상호 중재, 임계 유대 에필로그, 관계 게이트 | `relationship-gate.png`·`relationship-tension.png`·`mediation.png` |
 | 감정/기억 | 이전 사건의 `setsFlag`가 후속 선택을 열고 회고 보드에 원인으로 남음 | `memory-gate.png`·`ending.png` |
-| 장기 재플레이 | 6개 authored 엔딩, 엔딩 도감, 다음 회차 `legacy-star` 해금 | `legacy-gate.png`·collection Golden |
+| 장기 재플레이 | 6개 authored 엔딩, 엔딩 도감, 엔딩 계열별 3개 회차 계승 프로필이 다음 회차 성장·기억을 해금 | `legacy-gate.png`·collection Golden·legacy trace |
 | 장면 결산 | 결말명만이 아니라 최대 3개 사건과 달성 목표 수를 결정론적으로 표시 | `ending.png`·`canonical-ending.png` |
 
 따라서 현재 표본의 시나리오 완전성 최소 단위는 `계획 → 상태 변화 → 조건 공개 → 관계/기억 결과 → authored ending → 원인 회고 → 다음 회차 해금`의 7단 연결이다. 각 연결은 SSOT, 코어 trace, Canvas Golden, benchmark 중 둘 이상으로 교차 증명하며, 회고 보드는 마지막 연결을 시각 증거로 고정한다.
@@ -56,7 +56,7 @@
 | 관계 | 동료 3명, 인사→유대→긴장→중재/기억→동행 목표→에필로그 | 3 companion, rival loss and reciprocal mediation, truce flag, 3 route goals, epilogue | 관계 충돌/소원함/상호 배타 선택 추가 |
 | 자원 | 능력·은화·피로 중 2개 이상이 선택에 영향 | 세 자원과 계절 목표 | 외출·아이템·시간 예산을 별도 phase로 확장 |
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
-| 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock | 계승 unlock이 다음 회차의 선택 공간을 넓히는지 측정 |
+| 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock, 3 lineage profiles | 계승 unlock이 다음 회차의 성장축·선택 공간을 넓히는지 측정 |
 | 장면 | 도입·중반 사건·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·엔딩 Golden | 21 Golden, canonical 4주차 사건, 4 location discovery flags/traces, rival loss/mediation, outing/bond/memory/legacy feedback | 막별 canonical event Golden 4종으로 확장 |
 | 종결 | terminal·저장·컬렉션·재시작·원인 회고·다음 회차 가이드 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 + 미달 목표 2개 회고 | 동료별 관계 변화와 상호 배타 목표의 회고 문구 추가 |
 
@@ -69,8 +69,8 @@ chapterClosureRate = 공개·압력·선택·결산을 모두 가진 막 / 전�
 replaySignatureCount = (ending, stats, bonds, goals) 고유 서명 수
 ```
 
-현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 20/20 사건 선택 도달성, 6/6 엔딩 도달성, 4/4 장소 발견 trace, `choiceConsequenceRate = 100%`, `chapterClosureRate = 100%`, `replaySignatureCount ≥ 3`을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum과 replayChecksum을 비교한다.
+현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 20/20 사건 선택 도달성, 6/6 엔딩 도달성, 4/4 장소 발견 trace, 3/3 회차 계승 프로필, `choiceConsequenceRate = 100%`, `chapterClosureRate = 100%`, `replaySignatureCount ≥ 3`을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum과 replayChecksum을 비교한다.
 
 ## 3. 의도적인 차이와 확장 순서
 
-프린세스 메이커 5의 장기(8년)·다층 일정·외출·모험 규모를 그대로 따라가지 않는다. 현재 게임은 12주로 압축해 한 회차의 원인과 결과를 Golden과 replay trace로 읽을 수 있게 만든다. 외출은 5·11주차에 은화 2를 시간 예산으로 지불하고 성장축·동료 유대를 교환하는 작은 표본으로 구현했다. 중반 공간은 4개 장소를 사건 진입 시 최초 발견하고 `place:<id>` flag/trace로 저장한다. 다음 순서는 `관계 충돌 → 외출/시간 예산 → 중반 공간 확장 → 회차 계승` 중 앞의 세 단계를 닫았으며, 남은 회차 계승도 반드시 SSOT 행렬·Canvas Golden·결정론 benchmark를 동시에 갱신한다.
+프린세스 메이커 5의 장기(8년)·다층 일정·외출·모험 규모를 그대로 따라가지 않는다. 현재 게임은 12주로 압축해 한 회차의 원인과 결과를 Golden과 replay trace로 읽을 수 있게 만든다. 외출은 5·11주차에 은화 2를 시간 예산으로 지불하고 성장축·동료 유대를 교환하는 작은 표본으로 구현했다. 중반 공간은 4개 장소를 사건 진입 시 최초 발견하고 `place:<id>` flag/trace로 저장한다. 회차 계승은 도감의 authored 엔딩을 `stargazer/gardener/pathfinder` 3개 프로필로 정규화해 다음 회차 시작 스탯 +2, `legacy:<id>` flag, trace를 함께 생성한다. 다음 확장은 이 계승 프로필이 막별 선택 공간과 엔딩 분포를 어떻게 바꾸는지 Golden·replay·benchmark로 측정한다.

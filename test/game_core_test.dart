@@ -117,6 +117,25 @@ void main() {
         1);
     expect(session.world.progress[0]!.trace.length, greaterThan(before));
   });
+  test('legacy profile seeds the next campaign with deterministic lineage data',
+      () {
+    final story = JsonStoryAdapter({
+      'personalities': [],
+      'companions': [],
+      'milestones': [],
+      'events': [],
+      'endings': [],
+      'legacyProfiles': [
+        {'id': 'stargazer', 'stat': '지혜', 'bonus': 2}
+      ]
+    });
+    final session = GameSession(story, MemorySaveAdapter(),
+        legacyUnlocked: true, legacyId: 'stargazer');
+    expect(session.world.stats[0]!.values['지혜'], 6);
+    expect(session.world.progress[0]!.flags['legacy-star'], isTrue);
+    expect(session.world.progress[0]!.flags['legacy:stargazer'], isTrue);
+    expect(session.world.progress[0]!.trace, ['legacy:stargazer|지혜+2']);
+  });
   test('selected personality gives a deterministic focus bonus', () {
     final story = JsonStoryAdapter({
       'personalities': [

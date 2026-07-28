@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 31a9008f17d505a4d9217c20951d92109e0ae80a3e4567c54b37ab7e4e6c5e3b -->
+<!-- ssot-sha256: e46366f6062130c69ee8c76f49abfd76535b82c0a13cd44a8b7224ca60f60996 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -19,8 +19,8 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **123** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
-- 산식: catalog 123 = UI 13 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units
+- locale 최소 키: **127** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
+- 산식: catalog 127 = UI 14 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units
 
 ## 시나리오 완전성 표본
 
@@ -33,9 +33,9 @@
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
-| 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / route-aware collection-driven legacy unlock | `test/gameplay_metrics_test.dart#route-variety` |
+| 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles seed the next campaign | `test/gameplay_metrics_test.dart#route-variety` |
 | 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 21 Goldens / ko+en catalogs / canonical week-4 event / outing choice / rival loss and mediation recovery / bond, memory, legacy gates / ending retrospective board | `test/golden_test.dart#mediation-choice-shows-reciprocal-relationship-recovery` |
-| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / missing-goal next-run clue / SSOT campaign benchmark | `test/golden_test.dart#twelve-week-loop-resolves-to-an-ending` |
+| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / ending-based lineage bonus / SSOT campaign benchmark | `test/golden_test.dart#twelve-week-loop-resolves-to-an-ending` |
 
 ## 생성 이미지 자산
 
@@ -50,8 +50,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `530b5991563279310bba3a1c9574a4e11daa0887a4de86f09f14c225558d2e87`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `e9b1a56d32599705b50882d88385ccdbf7306e9ae32b0730b9549d37062f1448`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `61a44fd4dc360da3533df61125d660823fbc5fb67455263a931c50acf8df7241`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `019fdd5573ff8deca184ea5199612fe7fe4335c991619b00eba4cef988dde340`
 
 ## 성격
 
@@ -64,6 +64,12 @@
 - **루미** (`lumi`): 별자리 기록관 · quiet · frame 0 · 유대 8에서 에필로그 · “기록은 마음이 다시 길을 찾게 해.”
 - **보라** (`bora`): 온실의 돌봄지기 · kind · frame 1 · 유대 8에서 에필로그 · “함께 가꾼 시간은 쉽게 시들지 않아.”
 - **타로** (`taro`): 바람길 수리공 · bold · frame 2 · 유대 8에서 에필로그 · “망가진 길도 손을 대면 다시 이어져!”
+
+## 회차 계승 프로필
+
+- **별읽기의 유산** (`stargazer`): 엔딩 stargazer, stargazer-master · 지혜 시작 보너스 +2 · `legacy.stargazer.title`
+- **정원의 유산** (`gardener`): 엔딩 gardener, gardener-master · 공감 시작 보너스 +2 · `legacy.gardener.title`
+- **길잡이의 유산** (`pathfinder`): 엔딩 pathfinder, pathfinder-master · 용기 시작 보너스 +2 · `legacy.pathfinder.title`
 
 ## 활동
 

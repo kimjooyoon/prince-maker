@@ -69,6 +69,8 @@ void main() {
   final people = (story['personalities'] as List).cast<Map<String, dynamic>>();
   final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
   final locations = (story['locations'] as List).cast<Map<String, dynamic>>();
+  final legacyProfiles =
+      (story['legacyProfiles'] as List).cast<Map<String, dynamic>>();
   final events = (story['events'] as List).cast<Map<String, dynamic>>();
   final endings = (story['endings'] as List).cast<Map<String, dynamic>>();
   final refs = (story['codeRefs'] as List).cast<Map<String, dynamic>>();
@@ -93,6 +95,17 @@ void main() {
   final locationIds = locations.map((location) => location['id']).toSet();
   if (events.any((event) => !locationIds.contains(event['locationId']))) {
     fail('every authored event must enter a registered location');
+  }
+  if (legacyProfiles.length != 3 ||
+      legacyProfiles.map((profile) => profile['id']).toSet().length != 3 ||
+      legacyProfiles.any((profile) =>
+          profile['stat'] is! String ||
+          !activities.any((activity) => activity['stat'] == profile['stat']) ||
+          profile['bonus'] is! int ||
+          profile['bonus'] < 1 ||
+          profile['titleKey'] is! String ||
+          (profile['endingIds'] as List? ?? const []).isEmpty)) {
+    fail('legacy profile contract must map three authored growth lineages');
   }
   final scenarioDimensions =
       (scenario['dimensions'] as List? ?? []).cast<Map<String, dynamic>>();
@@ -407,6 +420,7 @@ void main() {
         people.length >= 3 &&
         companions.length >= 3 &&
         locations.length == 4 &&
+        legacyProfiles.length == 3 &&
         milestones.length == 4,
     'branching': events.length >= 4 &&
         events.every((e) => (e['choices'] as List).length == 2) &&
@@ -468,6 +482,7 @@ void main() {
         chapterContractsValid &&
         scenarioEvidence.contains('막 단위 계약') &&
         scenarioEvidence.contains('장소 발견') &&
+        scenarioEvidence.contains('회차 계승') &&
         scenarioEvidence.contains('choiceConsequenceRate') &&
         storyEvidence
             .contains('every authored ending and event choice is reachable'),
