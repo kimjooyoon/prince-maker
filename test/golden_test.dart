@@ -540,6 +540,56 @@ void main() {
     await expectLater(
         find.byType(Game), matchesGoldenFile('goldens/restart.png'));
   });
+  testWidgets('lineage companion epilogue is visible in the ending Canvas',
+      (tester) async {
+    await tester.pumpWidget(Game({
+      'title': '프린스 메이커',
+      'setting': '루멘',
+      'hero': '노아',
+      'endingWeek': 12,
+      'personalities': [
+        {'name': '고요한 관찰자', 'voice': '신중', 'line': '별을 볼래.'}
+      ],
+      'legacyProfiles': [
+        {
+          'id': 'stargazer',
+          'endingIds': ['stargazer'],
+          'stat': '지혜',
+          'bonus': 0,
+          'companionId': 'lumi'
+        }
+      ],
+      'companions': [
+        {
+          'id': 'lumi',
+          'name': '루미',
+          'routeTitle': '별자리 동행',
+          'routeTitleKey': 'companion.lumi.routeTitle',
+          'bondThreshold': 0,
+          'epilogue': '루미는 노아의 기록 첫 장에 작은 별표를 남겼다.',
+          'epilogueKey': 'companion.lumi.epilogue'
+        }
+      ],
+      'endings': [
+        {
+          'id': 'stargazer',
+          'stat': '지혜',
+          'min': 0,
+          'title': '루멘의 별읽기꾼',
+          'body': '노아는 밤하늘의 결을 읽는 사람이 되었다.'
+        }
+      ],
+      'milestones': <Map<String, dynamic>>[],
+    }, legacyId: 'stargazer'));
+    await tester.pumpAndSettle();
+    for (var i = 0; i < 11; i++) {
+      await tester.tapAt(const Offset(200, 550));
+      await tester.pump();
+    }
+    expect(find.byKey(const ValueKey('2-12-0-0')), findsOneWidget);
+    await expectLater(
+        find.byType(Game), matchesGoldenFile('goldens/companion-epilogue.png'));
+  });
   testWidgets('authored event branches and returns to the loop',
       (tester) async {
     await tester.pumpWidget(const Game({

@@ -57,7 +57,7 @@
 | 자원 | 능력·은화·피로 중 2개 이상이 선택에 영향 | 세 자원과 계절 목표 | 외출·아이템·시간 예산을 별도 phase로 확장 |
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
 | 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock, 3 lineage profiles, week-2 authored bonus, profile별 route signature·target ending·target companion epilogue | 계승 unlock이 다음 회차의 성장축·선택 공간과 profile target ending·관계 회고 분포를 넓히는지 측정 |
-| 장면 | 도입·중반 사건·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·계승 프로필·엔딩 Golden | 22 Golden, canonical 4주차 사건, 4 location discovery flags/traces, rival loss/mediation, outing/bond/memory/legacy feedback | 막별 canonical event Golden 4종으로 확장 |
+| 장면 | 도입·중반 사건·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·계승 프로필·엔딩 Golden | 23 Golden, canonical 4주차 사건, 4 location discovery flags/traces, rival loss/mediation, outing/bond/memory/legacy feedback, companion epilogue ending | 막별 canonical event Golden 4종으로 확장 |
 | 종결 | terminal·저장·컬렉션·재시작·원인 회고·다음 회차 가이드 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 + 미달 목표 2개 회고 | 동료별 관계 변화와 상호 배타 목표의 회고 문구 추가 |
 
 ### 정량 게이트
