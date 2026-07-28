@@ -416,6 +416,7 @@ void main() {
     'memory-gate.png',
     'legacy-gate.png',
     'legacy-profile.png',
+    'companion-epilogue.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -471,6 +472,8 @@ void main() {
         uiEvidence.contains("matchesGoldenFile('goldens/outing.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/memory-gate.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/legacy-gate.png')") &&
+        uiEvidence
+            .contains("matchesGoldenFile('goldens/companion-epilogue.png')") &&
         i18nEvidence.contains(
             'English locale renders original dialogue and authored ending epilogue') &&
         File('story/locales/ko.json').existsSync() &&
