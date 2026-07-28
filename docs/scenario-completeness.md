@@ -40,7 +40,7 @@
 |---|---|---|
 | 시간 예산 | 12주 × 하루 활동 1회, 5·11주차 외출은 은화·성장·유대를 교환 | `tool/benchmark_game.dart` 5,000 campaign |
 | 상태 피드백 | 성장 3축·피로·은화·계절 목표가 다음 사건과 엔딩에 되돌아옴 | `test/game_core_test.dart` 규칙·trace |
-| 관계 아크 | 3명 동료, rival bond, 임계 유대 에필로그, 관계 게이트 | `relationship-gate.png`·`relationship-tension.png` |
+| 관계 아크 | 3명 동료, rival bond 손실·상호 중재, 임계 유대 에필로그, 관계 게이트 | `relationship-gate.png`·`relationship-tension.png`·`mediation.png` |
 | 감정/기억 | 이전 사건의 `setsFlag`가 후속 선택을 열고 회고 보드에 원인으로 남음 | `memory-gate.png`·`ending.png` |
 | 장기 재플레이 | 6개 authored 엔딩, 엔딩 도감, 다음 회차 `legacy-star` 해금 | `legacy-gate.png`·collection Golden |
 | 장면 결산 | 결말명만이 아니라 최대 3개 사건과 달성 목표 수를 결정론적으로 표시 | `ending.png`·`canonical-ending.png` |
@@ -53,11 +53,11 @@
 | --- | ---: | --- | --- |
 | 시간/막 | 4막, 막당 사건 1개 이상 | `progression.contract` 4/4 · 10개 사건 · 공개·압력·선택·결산 100% | 막마다 공개·압력·선택·결산 Golden 추가 |
 | 성장축 | 3축, 축당 기본/숙련 엔딩 | 지혜·공감·용기 6엔딩 | 축 간 상쇄 또는 혼합 엔딩 추가 |
-| 관계 | 동료 3명, 인사→유대→긴장→동행 목표→에필로그 | 3 companion, threshold, rival bond, 3 route goals, epilogue | 관계 충돌/소원함/상호 배타 선택 추가 |
+| 관계 | 동료 3명, 인사→유대→긴장→중재/기억→동행 목표→에필로그 | 3 companion, rival loss and reciprocal mediation, truce flag, 3 route goals, epilogue | 관계 충돌/소원함/상호 배타 선택 추가 |
 | 자원 | 능력·은화·피로 중 2개 이상이 선택에 영향 | 세 자원과 계절 목표 | 외출·아이템·시간 예산을 별도 phase로 확장 |
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
 | 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock | 계승 unlock이 다음 회차의 선택 공간을 넓히는지 측정 |
-| 장면 | 도입·중반 사건·관계 긴장·외출·유대·기억·계승 게이트·엔딩 Golden | 20 Golden, canonical 4주차 사건, outing/bond/memory/legacy feedback | 막별 canonical event Golden 4종으로 확장 |
+| 장면 | 도입·중반 사건·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·엔딩 Golden | 21 Golden, canonical 4주차 사건, rival loss/mediation, outing/bond/memory/legacy feedback | 막별 canonical event Golden 4종으로 확장 |
 | 종결 | terminal·저장·컬렉션·재시작·원인 회고·다음 회차 가이드 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 + 미달 목표 2개 회고 | 동료별 관계 변화와 상호 배타 목표의 회고 문구 추가 |
 
 ### 정량 게이트

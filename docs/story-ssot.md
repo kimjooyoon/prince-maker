@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 30cd80cb65113e39cf4a792f4494074f5e1faefb2f8d5d4ecc88280a29d1fd94 -->
+<!-- ssot-sha256: c9d9d7b6fc868ca116bcd57d515b4ef0029c56c76dfc1094a26acf4e9e8c885e -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -30,11 +30,11 @@
 | --- | --- | --- | --- |
 | 장기 아크 | 도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다 | 4 chapters / 10 events / 4 milestones / 4 chapter contracts / ending week 12 | `story/story.json#progression.contract` |
 | 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 20 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
-| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / greeting / bond threshold / all-threshold epilogues | `story/story.json#companions` |
+| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / route-aware collection-driven legacy unlock | `test/gameplay_metrics_test.dart#route-variety` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 20 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond, memory, legacy gates / ending retrospective board | `test/golden_test.dart#twelve-week-loop-resolves-to-an-ending` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 21 Goldens / ko+en catalogs / canonical week-4 event / outing choice / rival loss and mediation recovery / bond, memory, legacy gates / ending retrospective board | `test/golden_test.dart#mediation-choice-shows-reciprocal-relationship-recovery` |
 | 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / missing-goal next-run clue / SSOT campaign benchmark | `test/golden_test.dart#twelve-week-loop-resolves-to-an-ending` |
 
 ## 생성 이미지 자산
@@ -50,8 +50,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `cd832dd803f9f27ef23e7e4a1c5206e01322dd66a3f478e585bf95f52d7b62b9`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `463ceb71390c0d7df98b5500fb7f54f745c08424810c7988f437a3ea4840ffaa`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `fae7fea77e11e24243132af0522d51141b17e0686229a5f59bf583732bfac2da`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `7dad8f64fcbd608ec887e6fae7114776df966415314fec8f23966bc1c93bb397`
 
 ## 성격
 
@@ -116,7 +116,7 @@
 
 풍차가 멈춰 온실의 창이 닫히지 않는다. 누구와 손을 맞출까?
 - 타로와 풍차를 고친다: 용기 +2, 은화 1, taro 유대 +2, 기억 windmill-repair 기록 · “멈춘 바람도 손을 대면 다시 움직여.”
-- 그늘을 만들 천을 나눈다: 공감 +2, 은화 -1, bora 유대 +2 · “같은 그늘 아래라면 기다림도 덜 길어.”
+- 보라와 타로의 말을 함께 듣는다: 공감 +1, 은화 -2, bora 유대 +1, 기억 windmill-truce 기록 · “서로의 바람을 들으면 다시 같은 길을 만들 수 있어.”
 ### 9주차 · 바람의 편지
 
 먼 영지에서 도움을 청하는 편지가 도착했다. 노아는 어떤 답을 보낼까?

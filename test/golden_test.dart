@@ -293,15 +293,16 @@ void main() {
               'line': '함께 고치면 다시 움직여.'
             },
             {
-              'label': '보라와 나누기',
+              'label': '보라와 타로의 말을 함께 듣기',
               'stat': '공감',
               'delta': 2,
               'coins': -1,
               'bondId': 'bora',
-              'bondDelta': 2,
+              'bondDelta': 1,
               'rivalId': 'taro',
-              'rivalDelta': -1,
-              'line': '같은 그늘이면 덜 외로워.'
+              'rivalDelta': 1,
+              'setsFlag': 'windmill-truce',
+              'line': '서로의 바람을 들으면 다시 이어져.'
             }
           ]
         }
@@ -315,6 +316,54 @@ void main() {
     expect(find.byKey(const ValueKey('0-2-0-0')), findsOneWidget);
     await expectLater(find.byType(Game),
         matchesGoldenFile('goldens/relationship-tension.png'));
+  });
+  testWidgets('mediation choice shows reciprocal relationship recovery',
+      (tester) async {
+    await tester.pumpWidget(const Game({
+      'title': '프린스 메이커',
+      'setting': '루멘',
+      'hero': '노아',
+      'events': [
+        {
+          'week': 2,
+          'title': '바람이 멎은 오후',
+          'body': '두 사람의 말이 엇갈렸다. 함께 들을 수 있을까?',
+          'choices': [
+            {
+              'label': '타로의 방식으로 고친다',
+              'stat': '용기',
+              'delta': 2,
+              'coins': 1,
+              'bondId': 'taro',
+              'bondDelta': 2,
+              'rivalId': 'bora',
+              'rivalDelta': -1,
+              'line': '먼저 움직이면 길이 열린다.'
+            },
+            {
+              'label': '보라와 타로의 말을 함께 듣는다',
+              'stat': '공감',
+              'delta': 1,
+              'coins': -2,
+              'bondId': 'bora',
+              'bondDelta': 1,
+              'rivalId': 'taro',
+              'rivalDelta': 1,
+              'setsFlag': 'windmill-truce',
+              'line': '서로의 바람을 들으면 다시 이어진다.'
+            }
+          ]
+        }
+      ]
+    }));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(200, 550));
+    await tester.pump();
+    await tester.tapAt(const Offset(500, 350));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('0-2-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game),
+        matchesGoldenFile('goldens/mediation.png'));
   });
   testWidgets('season goal is visible before the first choice', (tester) async {
     await tester.pumpWidget(const Game({

@@ -695,13 +695,6 @@ class Scene extends CustomPainter {
       txt(c, '${a.hint}$bonus', Offset(x + 52, y + 40), 9,
           on ? Colors.white70 : ink.withValues(alpha: .55));
     }
-    txt(
-        c,
-        lastResult.isEmpty ? '일정을 고르고 하루를 보냅니다.' : lastResult,
-        const Offset(24, 470),
-        13,
-        lastResult.isEmpty ? ink.withValues(alpha: .55) : teal,
-        bold: lastResult.isNotEmpty);
     box(c, const Rect.fromLTWH(260, 500, 150, 54), Colors.white,
         radius: 15, stroke: teal);
     txt(c, '기록 보관소', const Offset(282, 517), 14, teal, bold: true);
