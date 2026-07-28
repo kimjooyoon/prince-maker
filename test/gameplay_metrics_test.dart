@@ -89,22 +89,33 @@ void main() {
     final source = jsonDecode(await rootBundle.loadString('story/story.json'))
         as Map<String, dynamic>;
     final story = JsonStoryAdapter(source),
-        activity =
-            (source['activities'] as List).cast<Map<String, dynamic>>().first;
+        activities =
+            (source['activities'] as List).cast<Map<String, dynamic>>();
     final ids =
         story.legacyProfiles.map((profile) => '${profile['id']}').toList();
-    final routes = [for (final id in ids) play(story, activity, legacyId: id)];
+    final routes = <Map<String, dynamic>>[];
+    for (final id in ids) {
+      final profile = story.legacyProfiles.firstWhere((p) => p['id'] == id),
+          activity = activities.firstWhere((a) => a['stat'] == profile['stat']);
+      routes.add(play(story, activity, legacyId: id));
+    }
     final signatures = routes
         .map(
             (route) => '${route['ending']}|${route['stats']}|${route['bonds']}')
         .toSet();
+    final endings = routes.map((route) => '${route['ending']}').toSet();
+    final targetEndings = story.legacyProfiles
+        .expand((profile) => (profile['endingIds'] as List).map((id) => '$id'))
+        .toSet();
     expect(ids, hasLength(3));
     expect(signatures, hasLength(3));
+    expect(endings.every(targetEndings.contains), isTrue);
+    expect(endings, hasLength(3));
     expect(
         routes.every((route) => (route['trace'] as List)
             .any((entry) => entry.contains('|legacy:'))),
         isTrue);
     print(
-        'LEGACY_METRICS_OK: profiles=${ids.length} distinctSignatures=${signatures.length}');
+        'LEGACY_METRICS_OK: profiles=${ids.length} distinctEndings=${endings.length} distinctSignatures=${signatures.length}');
   });
 }

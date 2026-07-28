@@ -18,14 +18,18 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   final story = JsonStoryAdapter(source);
   final legacyIds = story.legacyProfiles.map((p) => '${p['id']}').toList();
   for (var i = 0; i < campaigns; i++) {
+    final legacyId = i.isEven && legacyIds.isNotEmpty
+        ? legacyIds[i % legacyIds.length]
+        : null;
     final session = GameSession(story, MemorySaveAdapter(),
-        legacyUnlocked: i.isEven,
-        legacyId: i.isEven && legacyIds.isNotEmpty
-            ? legacyIds[i % legacyIds.length]
-            : null);
+        legacyUnlocked: i.isEven, legacyId: legacyId);
+    final legacyProfile = legacyId == null
+        ? null
+        : story.legacyProfiles.firstWhere((p) => p['id'] == legacyId);
     while (session.world.progress[0]!.week < story.endingWeek) {
       final week = session.world.progress[0]!.week;
-      final stat = switch ((i + week) % 3) { 0 => '지혜', 1 => '공감', _ => '용기' };
+      final stat = legacyProfile?['stat'] as String? ??
+          switch ((i + week) % 3) { 0 => '지혜', 1 => '공감', _ => '용기' };
       session.choose(ActivityChosen(stat, 2, 1, 1, label: 'benchmark:$stat'));
       final event = story.events
           .where((e) => e['week'] == session.world.progress[0]!.week)
@@ -105,10 +109,19 @@ void main() {
   final profileIds = story.legacyProfiles.map((p) => '${p['id']}').toSet(),
       lineageEvidence = profileIds.every(
           (id) => (first.lineageSignatures[id] ?? const <String>{}).isNotEmpty),
-      lineageSummary = profileIds
-          .map((id) =>
-              '$id:${first.lineageSignatures[id]?.length ?? 0}sig/${first.lineageEndings[id]?.length ?? 0}ending')
-          .join(',');
+      lineageEndingEvidence = story.legacyProfiles.every((profile) {
+        final id = '${profile['id']}',
+            targets = (profile['endingIds'] as List? ?? const [])
+                .map((ending) => '$ending')
+                .toSet();
+        return (first.lineageEndings[id] ?? const <String>{})
+            .any(targets.contains);
+      }),
+      lineageSummary = profileIds.map((id) {
+        final endingIds =
+            (first.lineageEndings[id] ?? const <String>{}).toList()..sort();
+        return '$id:${endingIds.join('+')}/${first.lineageSignatures[id]?.length ?? 0}sig';
+      }).join(',');
   stdout.writeln(
       'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
   if (millis > 5000 ||
@@ -120,6 +133,7 @@ void main() {
       first.locations.length < 4 ||
       first.signatures.length < 3 ||
       !lineageEvidence ||
+      !lineageEndingEvidence ||
       replay.lineageSignatures.toString() !=
           first.lineageSignatures.toString()) {
     stderr.writeln(

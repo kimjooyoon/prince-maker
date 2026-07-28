@@ -2,7 +2,7 @@
   "schema": "prince-maker-trilemma-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "72d964e525e3c50e2bcc0ad4b8f11f7eaba5f89a4fc233d3ee1c99b3861b59b2"
+    "sha256": "f38e2cbbd739d74c3b2e88d11e21750f87a32cf4705c194b16e8a2e133b4165e"
   },
   "axes": [
     {
@@ -31,6 +31,7 @@
         "minDistinctEndings": 3,
         "minDistinctSignatures": 3,
         "minLegacyProfiles": 3,
+        "minLegacyTargetEndings": 3,
         "deterministicReplay": true
       },
       "evidence": [
@@ -48,6 +49,7 @@
         "maxMillis": 5000,
         "minSignatures": 3,
         "lineageProfiles": 3,
+        "lineageTargetEndings": 3,
         "checksumReplayMustMatch": true
       },
       "evidence": [
