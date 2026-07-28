@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: c9d9d7b6fc868ca116bcd57d515b4ef0029c56c76dfc1094a26acf4e9e8c885e -->
+<!-- ssot-sha256: 31a9008f17d505a4d9217c20951d92109e0ae80a3e4567c54b37ab7e4e6c5e3b -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -19,8 +19,8 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **119** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
-- 산식: catalog 119 = UI 13 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units
+- locale 최소 키: **123** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
+- 산식: catalog 123 = UI 13 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units
 
 ## 시나리오 완전성 표본
 
@@ -28,7 +28,7 @@
 
 | 차원 | 목표 | 현재 증적 | 검증 ref |
 | --- | --- | --- | --- |
-| 장기 아크 | 도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다 | 4 chapters / 10 events / 4 milestones / 4 chapter contracts / ending week 12 | `story/story.json#progression.contract` |
+| 장기 아크 | 도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다 | 4 chapters / 10 events / 4 locations / 4 milestones / 4 chapter contracts / ending week 12 | `story/story.json#progression.contract` |
 | 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 20 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
@@ -50,8 +50,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `fae7fea77e11e24243132af0522d51141b17e0686229a5f59bf583732bfac2da`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `7dad8f64fcbd608ec887e6fae7114776df966415314fec8f23966bc1c93bb397`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `530b5991563279310bba3a1c9574a4e11daa0887a4de86f09f14c225558d2e87`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `e9b1a56d32599705b50882d88385ccdbf7306e9ae32b0730b9549d37062f1448`
 
 ## 성격
 

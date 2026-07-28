@@ -592,7 +592,7 @@ class Scene extends CustomPainter {
       return;
     }
     if (page == 3) {
-      event(c);
+      if (activeLocale == 'ko') event(c);
       drawLocaleToggle(c, activeLocale, activeCatalog);
       drawLocalizedEvent(c, s, eventIndex, stats, bonds);
       return;
@@ -740,8 +740,15 @@ class Scene extends CustomPainter {
 
   void event(Canvas c) {
     final e = s['events'][eventIndex];
+    final locations = (s['locations'] as List? ?? const []).cast<Map>(),
+        location = locations.firstWhere((l) => l['id'] == e['locationId'],
+            orElse: () => {'name': e['locationId'] ?? ''}),
+        locationName = activeLocale == 'ko'
+            ? '${location['name']}'
+            : localized('${location['nameKey']}', '${location['name']}');
     txt(c, '작은 사건 · ${e['week']}주차', const Offset(24, 28), 30, ink, bold: true);
-    txt(c, e['title'], const Offset(25, 72), 18, teal);
+    txt(c, locationName, const Offset(25, 66), 11, teal, bold: true);
+    txt(c, e['title'], const Offset(25, 84), 16, teal);
     box(c, const Rect.fromLTWH(24, 120, 712, 110), ink, radius: 22);
     txt(c, e['body'], const Offset(48, 158), 22, Colors.white, bold: true);
     for (var i = 0; i < 2; i++) {

@@ -144,6 +144,11 @@ class WeekAdvanced extends GameEvent {
   const WeekAdvanced();
 }
 
+class LocationDiscovered extends GameEvent {
+  const LocationDiscovered(this.id, this.name);
+  final String id, name;
+}
+
 class MilestoneResolved extends GameEvent {
   const MilestoneResolved(this.id, this.title, this.stat, this.min, this.coins,
       this.pass, this.fail);
@@ -237,6 +242,14 @@ class GameWorld {
             'event:$label${bondId == null ? '' : '|bond:$bondId+$bondDelta'}${rivalId == null ? '' : '|rival:$rivalId$rivalDelta'}${setsFlag == null ? '' : '|flag:$setsFlag'}${line.isEmpty ? '' : '|line:$line'}');
       case WeekAdvanced():
         p.week++;
+      case LocationDiscovered(:final id, :final name):
+        final flag = 'place:$id';
+        if (p.flags[flag] != true) {
+          p.flags[flag] = true;
+          p.lastResult = '새 장소 · $name';
+          p.lastLine = '';
+          p.trace.add('location:$id');
+        }
       case MilestoneResolved(
           :final id,
           :final title,
@@ -334,6 +347,14 @@ class GameSession {
     world.dispatch(const WeekAdvanced());
     if (!story.events.any((e) => e['week'] == world.progress[0]!.week))
       _resolveMilestone();
+    final event = story.events
+        .where((e) => e['week'] == world.progress[0]!.week)
+        .firstOrNull;
+    final locationId = event?['locationId'] as String?;
+    if (locationId != null) {
+      final name = event?['location'] as String? ?? locationId;
+      world.dispatch(LocationDiscovered(locationId, name));
+    }
     persist();
   }
 

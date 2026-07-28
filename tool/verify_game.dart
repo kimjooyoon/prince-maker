@@ -68,6 +68,7 @@ void main() {
   final activities = (story['activities'] as List).cast<Map<String, dynamic>>();
   final people = (story['personalities'] as List).cast<Map<String, dynamic>>();
   final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
+  final locations = (story['locations'] as List).cast<Map<String, dynamic>>();
   final events = (story['events'] as List).cast<Map<String, dynamic>>();
   final endings = (story['endings'] as List).cast<Map<String, dynamic>>();
   final refs = (story['codeRefs'] as List).cast<Map<String, dynamic>>();
@@ -83,6 +84,16 @@ void main() {
   final scenario =
       (story['scenarioCompleteness'] as Map? ?? {}).cast<String, dynamic>();
   if (story['endingWeek'] != 12) fail('endingWeek must be 12');
+  if (locations.length != 4 ||
+      locations.map((location) => location['id']).toSet().length != 4 ||
+      locations.any((location) =>
+          location['name'] is! String || location['nameKey'] is! String)) {
+    fail('location registry must contain four localized unique places');
+  }
+  final locationIds = locations.map((location) => location['id']).toSet();
+  if (events.any((event) => !locationIds.contains(event['locationId']))) {
+    fail('every authored event must enter a registered location');
+  }
   final scenarioDimensions =
       (scenario['dimensions'] as List? ?? []).cast<Map<String, dynamic>>();
   const scenarioIds = {
@@ -395,6 +406,7 @@ void main() {
     'content': activities.length >= 5 &&
         people.length >= 3 &&
         companions.length >= 3 &&
+        locations.length == 4 &&
         milestones.length == 4,
     'branching': events.length >= 4 &&
         events.every((e) => (e['choices'] as List).length == 2) &&
@@ -455,6 +467,7 @@ void main() {
     'scenarioCompleteness': scenarioDimensions.length == 8 &&
         chapterContractsValid &&
         scenarioEvidence.contains('막 단위 계약') &&
+        scenarioEvidence.contains('장소 발견') &&
         scenarioEvidence.contains('choiceConsequenceRate') &&
         storyEvidence
             .contains('every authored ending and event choice is reachable'),
