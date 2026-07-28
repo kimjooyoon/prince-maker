@@ -213,14 +213,16 @@ void drawLocalizedEnding(
       teal,
       bold: true,
       width: 350);
-  final companion = (story['companions'] as List? ?? const [])
-      .cast<Map>()
-      .firstWhere((candidate) => candidate['epilogue'] == ending['epilogue'],
-          orElse: () => {});
-  if (companion.isNotEmpty)
-    _text(c, localized('${companion['epilogueKey']}', '${ending['epilogue']}'),
-        const Offset(365, 378), 12, teal,
-        width: 350);
+  final epilogues = (ending['epilogues'] as List? ?? const []).cast<Map>();
+  final epilogueLine = epilogues.isEmpty
+      ? '${ending['epilogue'] ?? ''}'
+      : epilogues.map((epilogue) {
+          final text =
+              localized('${epilogue['key']}', '${epilogue['text'] ?? ''}');
+          return text.length > 10 ? '${text.substring(0, 10)}…' : text;
+        }).join(' · ');
+  if (epilogueLine.isNotEmpty)
+    _text(c, epilogueLine, const Offset(365, 378), 11, teal, width: 350);
   drawEndingRetrospective(
       c, history, goalCount, missingGoals, milestones, milestoneState);
   c.drawRRect(

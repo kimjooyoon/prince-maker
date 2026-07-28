@@ -855,6 +855,11 @@ class Scene extends CustomPainter {
             .map((title) =>
                 title.length > 12 ? '${title.substring(0, 12)}…' : title)
             .join(' · '),
+        epilogues =
+            (d['epilogues'] as List? ?? const []).cast<Map>().map((epilogue) {
+          final text = '${epilogue['text']}';
+          return text.length > 10 ? '${text.substring(0, 10)}…' : text;
+        }).join(' · '),
         goalCount = milestones.values.where((v) => v).length,
         allMilestones =
             (s['milestones'] as List? ?? const []).cast<Map<String, dynamic>>(),
@@ -886,8 +891,9 @@ class Scene extends CustomPainter {
     txt(c, '루멘 기록 등급 · ${List.filled(rank, '★').join()}',
         const Offset(365, 350), 15, teal,
         bold: true);
-    if (d['epilogue'] != null)
-      txt(c, d['epilogue'], const Offset(365, 378), 12, teal);
+    if (epilogues.isNotEmpty || d['epilogue'] != null)
+      txt(c, epilogues.isEmpty ? '${d['epilogue']}' : epilogues,
+          const Offset(365, 378), 11, teal);
     if (companions.isNotEmpty) {
       txt(
           c,
