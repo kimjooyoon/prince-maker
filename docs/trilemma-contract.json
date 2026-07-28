@@ -1,0 +1,56 @@
+{
+  "schema": "prince-maker-trilemma-v1",
+  "source": {
+    "ref": "story/story.json#root",
+    "sha256": "14a9219cbe71a15abcb21e3a973e5a265c6f27839280efee83520dd6d25e51e3"
+  },
+  "axes": [
+    {
+      "id": "completeness",
+      "targetScore": 0.95,
+      "unit": "gate-score",
+      "guardrails": {
+        "scenarioDimensions": 8,
+        "authoredBranches": 26,
+        "goldens": 20,
+        "localeKeys": 118
+      },
+      "evidence": [
+        "tool/verify_game.dart#scenario-contract",
+        "test/scenario_completeness_test.dart#scenario-closure",
+        "test/golden_test.dart#all",
+        "test/locale_contract_test.dart#ssot-dialogue-contract"
+      ]
+    },
+    {
+      "id": "purity",
+      "targetScore": 0.75,
+      "unit": "route-variety",
+      "guardrails": {
+        "schedulePolicies": 5,
+        "minDistinctEndings": 3,
+        "minDistinctSignatures": 3,
+        "deterministicReplay": true
+      },
+      "evidence": [
+        "test/gameplay_metrics_test.dart#route-variety",
+        "test/purity_integration_test.dart#same-schedule-budget-outcomes"
+      ]
+    },
+    {
+      "id": "performance",
+      "targetScore": 0.95,
+      "unit": "campaign-throughput",
+      "guardrails": {
+        "campaigns": 5000,
+        "transitionBudget": 105000,
+        "maxMillis": 5000,
+        "minSignatures": 3,
+        "checksumReplayMustMatch": true
+      },
+      "evidence": [
+        "tool/benchmark_game.dart#ssot-campaign-throughput-signatures"
+      ]
+    }
+  ]
+}

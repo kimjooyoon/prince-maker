@@ -2,6 +2,44 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 
+void verifyTrilemmaContract(String storyHash) {
+  final file = File('docs/trilemma-contract.json');
+  if (!file.existsSync()) fail('missing trilemma contract');
+  final contract = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+  final source = (contract['source'] as Map).cast<String, dynamic>();
+  final axes =
+      (contract['axes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  const ids = {'completeness', 'purity', 'performance'};
+  if (contract['schema'] != 'prince-maker-trilemma-v1' ||
+      source['ref'] != 'story/story.json#root' ||
+      source['sha256'] != storyHash ||
+      axes.length != ids.length ||
+      axes.map((axis) => axis['id']).toSet().length != axes.length ||
+      !axes.map((axis) => axis['id']).toSet().containsAll(ids)) {
+    fail('trilemma contract schema/source drift');
+  }
+  final byId = {for (final axis in axes) axis['id'] as String: axis};
+  final complete =
+      (byId['completeness']!['guardrails'] as Map).cast<String, dynamic>();
+  final purity = (byId['purity']!['guardrails'] as Map).cast<String, dynamic>();
+  final performance =
+      (byId['performance']!['guardrails'] as Map).cast<String, dynamic>();
+  if ((byId['completeness']!['targetScore'] as num) < 0.95 ||
+      complete['scenarioDimensions'] != 8 ||
+      complete['goldens'] < 20 ||
+      complete['localeKeys'] < 118 ||
+      purity['minDistinctEndings'] < 3 ||
+      purity['minDistinctSignatures'] < 3 ||
+      purity['deterministicReplay'] != true ||
+      performance['campaigns'] != 5000 ||
+      performance['transitionBudget'] != 105000 ||
+      performance['maxMillis'] != 5000 ||
+      performance['minSignatures'] < 3 ||
+      performance['checksumReplayMustMatch'] != true) {
+    fail('trilemma targets or guardrails are below the project contract');
+  }
+}
+
 Set<String> authoredLocaleKeys(dynamic node) {
   final keys = <String>{};
   if (node is Map) {
@@ -25,6 +63,8 @@ Never fail(String message) {
 void main() {
   final story = jsonDecode(File('story/story.json').readAsStringSync())
       as Map<String, dynamic>;
+  verifyTrilemmaContract(
+      sha256.convert(File('story/story.json').readAsBytesSync()).toString());
   final activities = (story['activities'] as List).cast<Map<String, dynamic>>();
   final people = (story['personalities'] as List).cast<Map<String, dynamic>>();
   final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
@@ -92,7 +132,8 @@ void main() {
   if (events.length != 10 ||
       events.map((e) => e['week']).toList().join(',') !=
           '2,3,4,5,6,7,8,9,10,11')
-    fail('events must occur at weeks 2 through 11 with authored outings at 5 and 11');
+    fail(
+        'events must occur at weeks 2 through 11 with authored outings at 5 and 11');
   if (progression.length != 4 ||
       progression.map((c) => '${c['weekStart']}-${c['weekEnd']}').join(',') !=
           '1-3,4-6,7-9,10-12')
@@ -120,7 +161,8 @@ void main() {
       m['fail'] is! String)) fail('milestone contract invalid');
   const pressureAxes = {'stat', 'coins', 'fatigue', 'bond'};
   final chapterContractsValid = progression.every((chapter) {
-    final contract = (chapter['contract'] as Map? ?? {}).cast<String, dynamic>();
+    final contract =
+        (chapter['contract'] as Map? ?? {}).cast<String, dynamic>();
     final eventWeeks = (chapter['eventWeeks'] as List? ?? []).cast<int>();
     final choiceWeeks = (contract['choiceWeeks'] as List? ?? []).cast<int>();
     final axes = (contract['pressureAxes'] as List? ?? []).cast<String>();
@@ -136,14 +178,17 @@ void main() {
         axes.every(pressureAxes.contains) &&
         choiceWeeks.toSet().length == eventWeeks.toSet().length &&
         choiceWeeks.toSet().containsAll(eventWeeks) &&
-        choiceWeeks.every((week) => events.any((event) => event['week'] == week)) &&
+        choiceWeeks
+            .every((week) => events.any((event) => event['week'] == week)) &&
         chapterEvents.isNotEmpty &&
-        chapterEvents.every((event) => (event['choices'] as List).length == 2) &&
+        chapterEvents
+            .every((event) => (event['choices'] as List).length == 2) &&
         closureGoal != null &&
         closureGoal['week'] == chapter['weekEnd'];
   });
   if (!chapterContractsValid)
-    fail('each chapter needs reveal, two pressure axes, authored choices and a closing milestone');
+    fail(
+        'each chapter needs reveal, two pressure axes, authored choices and a closing milestone');
   for (final ref in refs) {
     final path = (ref['ref'] as String).split('#').first;
     if (!File(path).existsSync()) fail('missing code ref $path');
@@ -250,7 +295,8 @@ void main() {
       if (choice['requiresFlag'] != null && choice['requiresFlag'] is! String)
         fail('event memory requirement contract invalid');
       if (choice['setsFlag'] != null &&
-          (choice['setsFlag'] is! String || (choice['setsFlag'] as String).isEmpty))
+          (choice['setsFlag'] is! String ||
+              (choice['setsFlag'] as String).isEmpty))
         fail('event memory output contract invalid');
     }
   }

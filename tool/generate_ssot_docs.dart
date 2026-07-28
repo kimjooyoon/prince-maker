@@ -140,7 +140,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   b.writeln(
       '| 캠페인 최소 서사 단위 | ${dialogue['minimumVisibleNarrativeUnits']} | 성격·사건 제목/본문·선택·엔딩 |');
   b.writeln(
-      '\n## 폐쇄루프 연결\n\nSSOT → GameWorld 전이 → Canvas/Golden → 저장·replay → benchmark → 같은 SSOT로 재검증. 상세 설계는 [`docs/trilemma.md`](trilemma.md), 전체 지표는 [`docs/game-completeness.md`](game-completeness.md)에서 확인한다.');
+      '\n## 폐쇄루프 연결\n\nSSOT → GameWorld 전이 → Canvas/Golden → 저장·replay → benchmark → 같은 SSOT로 재검증. 기계 판정 기준은 [`docs/trilemma-contract.json`](trilemma-contract.json), 상세 설계는 [`docs/trilemma.md`](trilemma.md), 전체 지표는 [`docs/game-completeness.md`](game-completeness.md)에서 확인한다.');
   return b.toString();
 }
 
