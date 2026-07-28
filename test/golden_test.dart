@@ -411,6 +411,18 @@ void main() {
       'title': '프린스 메이커',
       'setting': '루멘',
       'hero': '노아',
+      'milestones': [
+        {
+          'id': 'spring',
+          'week': 3,
+          'title': '봄의 별씨앗',
+          'stat': '지혜',
+          'min': 99,
+          'coins': 3,
+          'pass': '달성',
+          'fail': '다음 회차에 다시 시도'
+        }
+      ],
       'personalities': [
         {'name': '고요한 관찰자', 'voice': '신중', 'line': '별을 볼래.'},
         {'name': '다정한 연결자', 'voice': '다정', 'line': '함께 보자.'},
