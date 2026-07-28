@@ -128,20 +128,22 @@ void drawEndingRetrospective(
       : '${localized('ui.ending.nextGoal', '다음 회차 단서')} · ${missingGoals.join(' · ')}';
   final causes = events.isEmpty
       ? localized('ui.ending.noEvents', '기록된 사건이 없습니다.')
-      : events
-          .asMap()
-          .entries
-          .map((entry) => '${entry.key + 1}. ${entry.value}')
-          .join('  ');
+      : events.asMap().entries.map((entry) {
+          final value = entry.value.length > 15
+              ? '${entry.value.substring(0, 15)}…'
+              : entry.value;
+          return '${entry.key + 1}. $value';
+        }).join('\n');
   c.drawRRect(
       RRect.fromRectAndRadius(
-          const Rect.fromLTWH(365, 400, 300, 100), const Radius.circular(18)),
+          const Rect.fromLTWH(365, 400, 300, 125), const Radius.circular(18)),
       Paint()..color = Colors.white);
   _text(c, title, const Offset(385, 410), 14, teal, bold: true, width: 260);
-  _text(c, '$causes\n${localized('ui.ending.goalCause', '달성 목표')} · $goalCount',
-      const Offset(385, 440), 11, ink,
+  _text(c, causes, const Offset(385, 440), 10, ink, width: 260);
+  _text(c, '${localized('ui.ending.goalCause', '달성 목표')} · $goalCount',
+      const Offset(385, 480), 10, ink,
       width: 260);
-  _text(c, next, const Offset(385, 475), 10, teal, width: 260);
+  _text(c, next, const Offset(385, 497), 10, teal, width: 260);
 }
 
 void drawLocalizedEnding(
@@ -204,10 +206,10 @@ void drawLocalizedEnding(
   drawEndingRetrospective(c, history, goalCount, missingGoals);
   c.drawRRect(
       RRect.fromRectAndRadius(
-          const Rect.fromLTWH(365, 510, 300, 64), const Radius.circular(18)),
+          const Rect.fromLTWH(365, 535, 300, 64), const Radius.circular(18)),
       Paint()..color = sun);
   _text(c, localized('ui.ending.restart', 'Return to Lumen'),
-      const Offset(450, 532), 17, ink,
+      const Offset(450, 557), 17, ink,
       bold: true, width: 220);
 }
 

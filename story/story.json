@@ -4,7 +4,7 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"7c2e20fa9e207f33eaa69eb0aa6f75d3eaef17d901efe0f323637e643c59418a"},
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"9b34ae2741c11cd73ade67eb3118e58a5e542d9c859f74ee040b7a27484369aa"},
     {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"537eace8671d742309a19e14873fd66d13ab1c2ca2d6278f18e6866ec6f2da34"},
     {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
     {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
@@ -14,7 +14,7 @@
     ,{"ref":"lib/collection_adapter_web.dart#BrowserCollectionAdapter","sha256":"d3cd20404e90421850e410238d63ab40a96f447443c2b022355d4170c024e83a"}
     ,{"ref":"lib/collection_adapter_stub.dart#MemoryCollectionAdapter-fallback","sha256":"7b2b0f265eeec8362aa6b6e910d305a48f79fccf67892f202e7464fb8d03956d"}
     ,{"ref":"lib/feedback_banner.dart#drawFeedbackBanner","sha256":"a7a12b6210e4be393e03d1fe3e86e591ae9b276d8846b559b3b3c6e4b65c00e1"}
-    ,{"ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"9f4ef4c98f7e0e69a08598cba5176926a7274b8c8a462fdb149fac95adec2a35"}
+    ,{"ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"c69eee384fb03f29e0df4499e28a7608b288f856494447e45a49842905b25b0d"}
   ],
   "assetRefs": [
     {"ref":"assets/noa-sprite-sheet.png#hero-2-head-frames","sha256":"1ed524abb6e4eda65e651e25ea008d31efcdebaab28b39086bb1f67a4b32581d"},
@@ -26,11 +26,11 @@
     {"ref":"assets/fonts/NotoSansKR-Regular.ttf#canvas-korean-font","sha256":"c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"}
   ],
   "localeRefs": [
-    {"ref":"story/locales/ko.json#catalog","sha256":"9a0b4300fbb7b95db53d13c169f4600da554921314d2b17b9e959b1f40c85b5f"},
-    {"ref":"story/locales/en.json#catalog","sha256":"90494fa65b0f75cbff48e339d4710d0e1c9f4cbfe6d254d2c347f2044d007780"}
+    {"ref":"story/locales/ko.json#catalog","sha256":"21124be87ed22b49fa7f5a3298059c7ffb0f59c14dfb981780e015cfb0b147b7"},
+    {"ref":"story/locales/en.json#catalog","sha256":"dd04783c9a74c5a178aa415a766f9123472150d5ad8ddace768680d390fd2dad"}
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
-  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":114,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":29,"formula":"catalog 114 = UI 11 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units"},
+  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":118,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":29,"formula":"catalog 118 = UI 12 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units"},
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
     "referenceModel": "장기 성장·관계·선택·결산이 하나의 반복 가능한 생활 루프를 이루는 시나리오",
@@ -40,7 +40,7 @@
       {"id":"relationship","name":"관계 아크","target":"등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다","current":"3 companions / greeting / bond threshold / epilogue","evidence":"story/story.json#companions"},
       {"id":"feedback","name":"상태 피드백","target":"일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다","current":"stats, coins, fatigue, 4 milestones and 6 endings","evidence":"test/game_core_test.dart#rules"},
       {"id":"gating","name":"조건과 공개","target":"조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다","current":"6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings","evidence":"tool/verify_game.dart#scenario-contract"},
-      {"id":"replay","name":"재플레이 가치","target":"동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다","current":"5 schedule policies / 4 distinct signatures / 6 endings / collection-driven legacy unlock","evidence":"test/gameplay_metrics_test.dart#route-variety"},
+      {"id":"replay","name":"재플레이 가치","target":"동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다","current":"5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / collection-driven legacy unlock","evidence":"test/gameplay_metrics_test.dart#route-variety"},
       {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"20 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond, memory, legacy gates / ending retrospective board","evidence":"test/golden_test.dart#twelve-week-loop-resolves-to-an-ending"},
       {"id":"closure","name":"종결과 회고","target":"엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다","current":"terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / missing-goal next-run clue / SSOT campaign benchmark","evidence":"test/golden_test.dart#twelve-week-loop-resolves-to-an-ending"}
     ]
@@ -57,9 +57,9 @@
     {"id":"bold","name":"용감한 개척자","nameKey":"personality.bold.name","voice":"실수해도 먼저 움직인다.","voiceKey":"personality.bold.voice","line":"길이 없다면, 오늘 한 걸음으로 만들면 돼!","lineKey":"personality.bold.line","focusStat":"용기","focusBonus":1,"portraitAsset":"assets/lumen-personality-sheet.png","portraitFrame":2,"design":{"palette":"coral-ochre","motif":"compass","silhouette":"short tousled hair"}}
   ],
   "companions": [
-    {"id":"lumi","name":"루미","role":"별자리 기록관","personality":"quiet","portraitFrame":0,"bondThreshold":8,"greeting":"기록은 마음이 다시 길을 찾게 해.","greetingKey":"companion.lumi.greeting","epilogue":"루미는 노아의 기록 첫 장에 작은 별표를 남겼다.","epilogueKey":"companion.lumi.epilogue"},
-    {"id":"bora","name":"보라","role":"온실의 돌봄지기","personality":"kind","portraitFrame":1,"bondThreshold":8,"greeting":"함께 가꾼 시간은 쉽게 시들지 않아.","greetingKey":"companion.bora.greeting","epilogue":"보라는 노아와 함께 계절마다 새로운 씨앗을 심었다.","epilogueKey":"companion.bora.epilogue"},
-    {"id":"taro","name":"타로","role":"바람길 수리공","personality":"bold","portraitFrame":2,"bondThreshold":8,"greeting":"망가진 길도 손을 대면 다시 이어져!","greetingKey":"companion.taro.greeting","epilogue":"타로는 노아를 데리고 아직 지도에 없는 길로 떠났다.","epilogueKey":"companion.taro.epilogue"}
+    {"id":"lumi","name":"루미","role":"별자리 기록관","personality":"quiet","portraitFrame":0,"bondThreshold":8,"routeTitle":"별자리 동행","routeTitleKey":"companion.lumi.routeTitle","greeting":"기록은 마음이 다시 길을 찾게 해.","greetingKey":"companion.lumi.greeting","epilogue":"루미는 노아의 기록 첫 장에 작은 별표를 남겼다.","epilogueKey":"companion.lumi.epilogue"},
+    {"id":"bora","name":"보라","role":"온실의 돌봄지기","personality":"kind","portraitFrame":1,"bondThreshold":8,"routeTitle":"온실의 약속","routeTitleKey":"companion.bora.routeTitle","greeting":"함께 가꾼 시간은 쉽게 시들지 않아.","greetingKey":"companion.bora.greeting","epilogue":"보라는 노아와 함께 계절마다 새로운 씨앗을 심었다.","epilogueKey":"companion.bora.epilogue"},
+    {"id":"taro","name":"타로","role":"바람길 수리공","personality":"bold","portraitFrame":2,"bondThreshold":8,"routeTitle":"바람길 동행","routeTitleKey":"companion.taro.routeTitle","greeting":"망가진 길도 손을 대면 다시 이어져!","greetingKey":"companion.taro.greeting","epilogue":"타로는 노아를 데리고 아직 지도에 없는 길로 떠났다.","epilogueKey":"companion.taro.epilogue"}
   ],
   "milestones": [
     {"id":"spring","week":3,"title":"봄의 별씨앗","titleKey":"milestone.spring.title","stat":"지혜","min":8,"coins":3,"pass":"첫 별씨앗이 싹텄다.","fail":"별씨앗은 아직 잠들어 있다."},

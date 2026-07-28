@@ -53,7 +53,7 @@
 | --- | ---: | --- | --- |
 | 시간/막 | 4막, 막당 사건 1개 이상 | `progression.contract` 4/4 · 10개 사건 · 공개·압력·선택·결산 100% | 막마다 공개·압력·선택·결산 Golden 추가 |
 | 성장축 | 3축, 축당 기본/숙련 엔딩 | 지혜·공감·용기 6엔딩 | 축 간 상쇄 또는 혼합 엔딩 추가 |
-| 관계 | 동료 3명, 인사→유대→긴장→에필로그 | 3 companion, threshold, rival bond, epilogue | 관계 충돌/소원함/상호 배타 선택 추가 |
+| 관계 | 동료 3명, 인사→유대→긴장→동행 목표→에필로그 | 3 companion, threshold, rival bond, 3 route goals, epilogue | 관계 충돌/소원함/상호 배타 선택 추가 |
 | 자원 | 능력·은화·피로 중 2개 이상이 선택에 영향 | 세 자원과 계절 목표 | 외출·아이템·시간 예산을 별도 phase로 확장 |
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
 | 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock | 계승 unlock이 다음 회차의 선택 공간을 넓히는지 측정 |

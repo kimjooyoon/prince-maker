@@ -363,7 +363,7 @@ class _Game extends State<Game> {
                           session.world.progress[0]!.persona = persona;
                         });
                     } else if (page == 2) {
-                      if (y > 490 && y < 590) restart();
+                      if (y > 490 && y < 630) restart();
                     } else if (page == 3) {
                       if (y > 260 && y < 470)
                         chooseEvent((x ~/ 380).clamp(0, 1));
@@ -842,6 +842,15 @@ class Scene extends CustomPainter {
     final d = resolveEnding(JsonStoryAdapter(s), stats,
             bonds: bonds, milestones: milestones),
         rank = (d['rank'] as int?) ?? 1,
+        companions = (s['companions'] as List? ?? const []).cast<Map>(),
+        routeTitles = companions
+            .where((companion) =>
+                (bonds[companion['id']] ?? 0) >=
+                ((companion['bondThreshold'] as int?) ?? 8))
+            .map((companion) => localized(
+                companion['routeTitleKey'] as String? ?? '',
+                '${companion['routeTitle'] ?? companion['name']}'))
+            .toList(),
         goalCount = milestones.values.where((v) => v).length,
         missingGoals = (s['milestones'] as List? ?? const [])
             .cast<Map>()
@@ -873,9 +882,21 @@ class Scene extends CustomPainter {
         bold: true);
     if (d['epilogue'] != null)
       txt(c, d['epilogue'], const Offset(365, 378), 12, teal);
+    if (companions.isNotEmpty) {
+      txt(
+          c,
+          '${localized('ui.ending.relationshipGoals', '관계 목표')} ${routeTitles.length}/${companions.length}',
+          const Offset(55, 488),
+          12,
+          sun,
+          bold: true);
+      if (routeTitles.isNotEmpty)
+        txt(c, routeTitles.join(' · '), const Offset(55, 510), 10,
+            Colors.white70);
+    }
     drawEndingRetrospective(c, history, goalCount, missingGoals);
-    box(c, const Rect.fromLTWH(365, 510, 300, 64), sun, radius: 18);
-    txt(c, '다시 루멘으로', const Offset(450, 532), 17, ink, bold: true);
+    box(c, const Rect.fromLTWH(365, 535, 300, 64), sun, radius: 18);
+    txt(c, '다시 루멘으로', const Offset(450, 557), 17, ink, bold: true);
     drawLocalizedEnding(c, s, d, rank, history, goalCount, missingGoals);
   }
 
