@@ -37,12 +37,12 @@
     "dimensions": [
       {"id":"arc","name":"장기 아크","target":"도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다","current":"4 chapters / 10 events / 4 locations / 4 milestones / 4 chapter contracts / ending week 12","evidence":"story/story.json#progression.contract"},
       {"id":"agency","name":"선택의 행위성","target":"모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다","current":"20 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences","evidence":"test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable"},
-      {"id":"relationship","name":"관계 아크","target":"등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다","current":"3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues","evidence":"story/story.json#companions"},
+      {"id":"relationship","name":"관계 아크","target":"등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다","current":"3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions","evidence":"story/story.json#companions"},
       {"id":"feedback","name":"상태 피드백","target":"일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다","current":"stats, coins, fatigue, 4 milestones and 6 endings","evidence":"test/game_core_test.dart#rules"},
       {"id":"gating","name":"조건과 공개","target":"조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다","current":"6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings","evidence":"tool/verify_game.dart#scenario-contract"},
-      {"id":"replay","name":"재플레이 가치","target":"동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다","current":"5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings","evidence":"test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures"},
-      {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"22 Goldens / ko+en catalogs / canonical week-4 event / outing choice / rival loss and mediation recovery / bond, memory, legacy gates / lineage resonance choice / ending retrospective board","evidence":"test/golden_test.dart#legacy-lineage-resonance-is-visible-on-the-authored-choice"},
-      {"id":"closure","name":"종결과 회고","target":"엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다","current":"terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / ending-based lineage bonus / authored lineage choice bonus / SSOT campaign benchmark","evidence":"test/golden_test.dart#twelve-week-loop-resolves-to-an-ending"}
+      {"id":"replay","name":"재플레이 가치","target":"동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다","current":"5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues","evidence":"test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures"},
+      {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"22 Goldens / ko+en catalogs / canonical week-4 event / outing choice / rival loss and mediation recovery / bond, memory, legacy gates / lineage resonance choice / ending retrospective board / companion epilogues","evidence":"test/golden_test.dart#legacy-lineage-resonance-is-visible-on-the-authored-choice"},
+      {"id":"closure","name":"종결과 회고","target":"엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다","current":"terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / ending-based lineage bonus / authored lineage choice bonus / target companion epilogues / SSOT campaign benchmark","evidence":"test/golden_test.dart#twelve-week-loop-resolves-to-an-ending"}
     ]
   },
   "progression": [
@@ -68,9 +68,9 @@
     {"id":"river-road","name":"강 건너 바람길","nameKey":"location.riverRoad.name","kind":"crossing"}
   ],
   "legacyProfiles": [
-    {"id":"stargazer","endingIds":["stargazer","stargazer-master"],"stat":"지혜","bonus":2,"title":"별읽기의 유산","titleKey":"legacy.stargazer.title"},
-    {"id":"gardener","endingIds":["gardener","gardener-master"],"stat":"공감","bonus":2,"title":"정원의 유산","titleKey":"legacy.gardener.title"},
-    {"id":"pathfinder","endingIds":["pathfinder","pathfinder-master"],"stat":"용기","bonus":2,"title":"길잡이의 유산","titleKey":"legacy.pathfinder.title"}
+    {"id":"stargazer","endingIds":["stargazer","stargazer-master"],"stat":"지혜","bonus":2,"companionId":"lumi","title":"별읽기의 유산","titleKey":"legacy.stargazer.title"},
+    {"id":"gardener","endingIds":["gardener","gardener-master"],"stat":"공감","bonus":2,"companionId":"bora","title":"정원의 유산","titleKey":"legacy.gardener.title"},
+    {"id":"pathfinder","endingIds":["pathfinder","pathfinder-master"],"stat":"용기","bonus":2,"companionId":"taro","title":"길잡이의 유산","titleKey":"legacy.pathfinder.title"}
   ],
   "milestones": [
     {"id":"spring","week":3,"title":"봄의 별씨앗","titleKey":"milestone.spring.title","stat":"지혜","min":8,"coins":3,"pass":"첫 별씨앗이 싹텄다.","fail":"별씨앗은 아직 잠들어 있다."},
