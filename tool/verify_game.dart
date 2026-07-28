@@ -32,12 +32,14 @@ void verifyTrilemmaContract(String storyHash) {
       purity['minDistinctSignatures'] < 3 ||
       purity['minLegacyProfiles'] < 3 ||
       purity['minLegacyTargetEndings'] < 3 ||
+      purity['minLegacyTargetCompanions'] < 3 ||
       purity['deterministicReplay'] != true ||
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] != 105000 ||
       performance['maxMillis'] != 5000 ||
       performance['minSignatures'] < 3 ||
       performance['lineageTargetEndings'] < 3 ||
+      performance['lineageTargetCompanions'] < 3 ||
       performance['checksumReplayMustMatch'] != true) {
     fail('trilemma targets or guardrails are below the project contract');
   }
@@ -107,6 +109,8 @@ void main() {
           !activities.any((activity) => activity['stat'] == profile['stat']) ||
           profile['bonus'] is! int ||
           profile['bonus'] < 1 ||
+          !companions
+              .any((companion) => companion['id'] == profile['companionId']) ||
           profile['titleKey'] is! String ||
           (profile['endingIds'] as List? ?? const []).isEmpty ||
           (profile['endingIds'] as List)

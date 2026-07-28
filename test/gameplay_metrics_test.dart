@@ -7,6 +7,10 @@ Map<String, dynamic> play(StoryPort story, Map<String, dynamic> activity,
     {String? legacyId}) {
   final session = GameSession(story, MemorySaveAdapter(),
       legacyUnlocked: legacyId != null, legacyId: legacyId);
+  final targetCompanion = legacyId == null
+      ? null
+      : story.legacyProfiles
+          .firstWhere((profile) => profile['id'] == legacyId)['companionId'];
   while (session.world.progress[0]!.week < story.endingWeek) {
     session.choose(ActivityChosen(activity['stat'], activity['delta'],
         activity['coins'], activity['fatigue'],
@@ -25,13 +29,15 @@ Map<String, dynamic> play(StoryPort story, Map<String, dynamic> activity,
                 (choice['requiresBondMin'] as int? ?? 0)) &&
         (choice['requiresFlag'] == null ||
             session.world.progress[0]!.flags[choice['requiresFlag']] == true));
+    final legacyChoice = available.where((choice) =>
+        (choice['legacyBonuses'] as Map?)?.containsKey(legacyId) == true);
+    final companionChoice =
+        available.where((choice) => choice['bondId'] == targetCompanion);
     final choice = legacyId == null
         ? available.first
-        : available.firstWhere(
-            (choice) =>
-                (choice['legacyBonuses'] as Map?)?.containsKey(legacyId) ==
-                true,
-            orElse: () => available.first);
+        : legacyChoice.firstOrNull ??
+            companionChoice.firstOrNull ??
+            available.first;
     session.chooseEvent(StoryChoiceMade(
         choice['stat'], choice['delta'], choice['coins'], choice['label'],
         bondId: choice['bondId'],
@@ -57,6 +63,9 @@ Map<String, dynamic> play(StoryPort story, Map<String, dynamic> activity,
     'stats': Map.of(session.world.stats[0]!.values),
     'bonds': Map.of(progress.bonds),
     'goals': progress.milestones.values.where((value) => value).length,
+    'epilogues': (ending['epilogues'] as List? ?? const [])
+        .map((route) => '${(route as Map)['id']}')
+        .toList(),
     'trace': List.of(progress.trace)
   };
 }
@@ -111,11 +120,15 @@ void main() {
     expect(signatures, hasLength(3));
     expect(endings.every(targetEndings.contains), isTrue);
     expect(endings, hasLength(3));
+    for (var i = 0; i < ids.length; i++) {
+      final target = story.legacyProfiles[i]['companionId'];
+      expect((routes[i]['epilogues'] as List).contains(target), isTrue);
+    }
     expect(
         routes.every((route) => (route['trace'] as List)
             .any((entry) => entry.contains('|legacy:'))),
         isTrue);
     print(
-        'LEGACY_METRICS_OK: profiles=${ids.length} distinctEndings=${endings.length} distinctSignatures=${signatures.length}');
+        'LEGACY_METRICS_OK: profiles=${ids.length} distinctEndings=${endings.length} targetCompanionEpilogues=3 distinctSignatures=${signatures.length}');
   });
 }

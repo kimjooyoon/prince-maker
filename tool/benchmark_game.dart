@@ -4,17 +4,20 @@ import 'package:prince_maker/game_core.dart';
 
 class CampaignMetrics {
   CampaignMetrics(this.checksum, this.endings, this.signatures, this.locations,
-      this.lineageEndings, this.lineageSignatures);
+      this.lineageEndings, this.lineageSignatures, this.lineageCompanions);
   final int checksum;
   final Set<String> endings, signatures, locations;
-  final Map<String, Set<String>> lineageEndings, lineageSignatures;
+  final Map<String, Set<String>> lineageEndings,
+      lineageSignatures,
+      lineageCompanions;
 }
 
 CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   var checksum = 0;
   final endings = <String>{}, signatures = <String>{}, locations = <String>{};
   final lineageEndings = <String, Set<String>>{},
-      lineageSignatures = <String, Set<String>>{};
+      lineageSignatures = <String, Set<String>>{},
+      lineageCompanions = <String, Set<String>>{};
   final story = JsonStoryAdapter(source);
   final legacyIds = story.legacyProfiles.map((p) => '${p['id']}').toList();
   for (var i = 0; i < campaigns; i++) {
@@ -50,25 +53,40 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
                         true))
             .toList();
         final choice = available[(i + week) % available.length];
+        final targetCompanion = legacyProfile?['companionId'] as String?;
+        final legacyChoice = available.where((candidate) {
+          final hasLegacyBonus =
+              (candidate['legacyBonuses'] as Map?)?.containsKey(legacyId) ==
+                  true;
+          return hasLegacyBonus;
+        }).toList();
+        final companionChoice = available
+            .where((candidate) => candidate['bondId'] == targetCompanion)
+            .toList();
+        final selected = legacyChoice.isNotEmpty
+            ? legacyChoice.first
+            : companionChoice.isNotEmpty
+                ? companionChoice.first
+                : choice;
         session.chooseEvent(StoryChoiceMade(
-          choice['stat'],
-          choice['delta'],
-          choice['coins'],
-          choice['label'],
-          bondId: choice['bondId'],
-          bondDelta: choice['bondDelta'],
-          rivalId: choice['rivalId'],
-          rivalDelta: choice['rivalDelta'] ?? 0,
-          requiresStat: choice['requiresStat'],
-          requiresMin: choice['requiresMin'] ?? 0,
-          requiresBondId: choice['requiresBondId'],
-          requiresBondMin: choice['requiresBondMin'] ?? 0,
-          requiresFlag: choice['requiresFlag'],
-          setsFlag: choice['setsFlag'],
+          selected['stat'],
+          selected['delta'],
+          selected['coins'],
+          selected['label'],
+          bondId: selected['bondId'],
+          bondDelta: selected['bondDelta'],
+          rivalId: selected['rivalId'],
+          rivalDelta: selected['rivalDelta'] ?? 0,
+          requiresStat: selected['requiresStat'],
+          requiresMin: selected['requiresMin'] ?? 0,
+          requiresBondId: selected['requiresBondId'],
+          requiresBondMin: selected['requiresBondMin'] ?? 0,
+          requiresFlag: selected['requiresFlag'],
+          setsFlag: selected['setsFlag'],
           legacyBonuses:
-              (choice['legacyBonuses'] as Map?)?.cast<String, dynamic>(),
+              (selected['legacyBonuses'] as Map?)?.cast<String, dynamic>(),
           legacyId: session.legacyId,
-          line: choice['line'] ?? '',
+          line: selected['line'] ?? '',
         ));
       }
     }
@@ -85,13 +103,16 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
         .putIfAbsent(lineage, () => <String>{})
         .add('${ending['id']}');
     lineageSignatures.putIfAbsent(lineage, () => <String>{}).add(signature);
+    lineageCompanions.putIfAbsent(lineage, () => <String>{}).addAll(
+        ((ending['epilogues'] as List?) ?? const [])
+            .map((route) => '${(route as Map)['id']}'));
     checksum += p.week +
         session.world.stats[0]!.values.values.reduce((a, b) => a + b) +
         p.bonds.values.reduce((a, b) => a + b) +
         p.trace.length;
   }
   return CampaignMetrics(checksum, endings, signatures, locations,
-      lineageEndings, lineageSignatures);
+      lineageEndings, lineageSignatures, lineageCompanions);
 }
 
 void main() {
@@ -117,10 +138,19 @@ void main() {
         return (first.lineageEndings[id] ?? const <String>{})
             .any(targets.contains);
       }),
+      lineageCompanionEvidence = story.legacyProfiles.every((profile) {
+        final id = '${profile['id']}', target = '${profile['companionId']}';
+        return (first.lineageCompanions[id] ?? const <String>{})
+            .contains(target);
+      }),
       lineageSummary = profileIds.map((id) {
+        final target = story.legacyProfiles
+            .firstWhere((profile) => profile['id'] == id)['companionId'];
         final endingIds =
             (first.lineageEndings[id] ?? const <String>{}).toList()..sort();
-        return '$id:${endingIds.join('+')}/${first.lineageSignatures[id]?.length ?? 0}sig';
+        final companions =
+            (first.lineageCompanions[id] ?? const <String>{}).toList()..sort();
+        return '$id:${endingIds.join('+')}|target:$target|routes:${companions.join('+')}/${first.lineageSignatures[id]?.length ?? 0}sig';
       }).join(',');
   stdout.writeln(
       'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
@@ -134,8 +164,11 @@ void main() {
       first.signatures.length < 3 ||
       !lineageEvidence ||
       !lineageEndingEvidence ||
+      !lineageCompanionEvidence ||
       replay.lineageSignatures.toString() !=
-          first.lineageSignatures.toString()) {
+          first.lineageSignatures.toString() ||
+      replay.lineageCompanions.toString() !=
+          first.lineageCompanions.toString()) {
     stderr.writeln(
         'TRILEMMA_PERFORMANCE_FAIL: deterministic core budget or checksum drift');
     exit(1);
