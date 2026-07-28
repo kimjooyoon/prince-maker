@@ -4,14 +4,14 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"eb308b823fa43b8afb3a321b7a2df8d422e162d06b498a5109b4c65d3e40d43d"},
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"f23343b688bd5b85075829f6268e471ab7b147a6cb879941e264f62e1e5fac98"},
     {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"4d79ad1f47da818d7baa5924477c5760acc76601a122edb1b042d1e74234664c"},
     {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
     {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
     {"ref":"lib/save_adapter_stub.dart#MemorySaveAdapter-fallback","sha256":"f14b98d51781f31f35a82a9259f9bace404e8197f813c5f5f4b0a8bc1a8b6875"},
     {"ref":"lib/save_state.dart#GameSnapshot","sha256":"779c472668cd37ae6845d962687b1dd8ecce05ac578b76ec5cf8877c3e6ae27e"}
-    ,{"ref":"lib/collection_adapter.dart#CollectionPort","sha256":"b535455a663dadb369cd33a4f0c71fefb31bc97d083f6445e24a856385ef4b54"}
-    ,{"ref":"lib/collection_adapter_web.dart#BrowserCollectionAdapter","sha256":"d3cd20404e90421850e410238d63ab40a96f447443c2b022355d4170c024e83a"}
+    ,{"ref":"lib/collection_adapter.dart#CollectionPort","sha256":"ee43f069fe2af6dbc6c1e6627460f86476c69068d5003b21e722c7b240c60206"}
+    ,{"ref":"lib/collection_adapter_web.dart#BrowserCollectionAdapter","sha256":"6fca4300faa3cda0967bf909ea04188f79072eaaff3cc848da17133ae3510b0a"}
     ,{"ref":"lib/collection_adapter_stub.dart#MemoryCollectionAdapter-fallback","sha256":"7b2b0f265eeec8362aa6b6e910d305a48f79fccf67892f202e7464fb8d03956d"}
     ,{"ref":"lib/feedback_banner.dart#drawFeedbackBanner","sha256":"a7a12b6210e4be393e03d1fe3e86e591ae9b276d8846b559b3b3c6e4b65c00e1"}
     ,{"ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"da8c3a12584b8a6d26c499dad527ddba23a9899b7e4e07a21ec166bb03e35ed1"}
@@ -40,7 +40,7 @@
       {"id":"relationship","name":"관계 아크","target":"등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다","current":"3 companions / greeting / bond threshold / all-threshold epilogues","evidence":"story/story.json#companions"},
       {"id":"feedback","name":"상태 피드백","target":"일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다","current":"stats, coins, fatigue, 4 milestones and 6 endings","evidence":"test/game_core_test.dart#rules"},
       {"id":"gating","name":"조건과 공개","target":"조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다","current":"6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings","evidence":"tool/verify_game.dart#scenario-contract"},
-      {"id":"replay","name":"재플레이 가치","target":"동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다","current":"5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / collection-driven legacy unlock","evidence":"test/gameplay_metrics_test.dart#route-variety"},
+      {"id":"replay","name":"재플레이 가치","target":"동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다","current":"5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / route-aware collection-driven legacy unlock","evidence":"test/gameplay_metrics_test.dart#route-variety"},
       {"id":"presentation","name":"장면 결산","target":"도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다","current":"20 Goldens / ko+en catalogs / canonical week-4 event / outing choice / bond, memory, legacy gates / ending retrospective board","evidence":"test/golden_test.dart#twelve-week-loop-resolves-to-an-ending"},
       {"id":"closure","name":"종결과 회고","target":"엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다","current":"terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / missing-goal next-run clue / SSOT campaign benchmark","evidence":"test/golden_test.dart#twelve-week-loop-resolves-to-an-ending"}
     ]

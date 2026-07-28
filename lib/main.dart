@@ -222,7 +222,10 @@ class _Game extends State<Game> {
   void recordEnding() {
     final d = resolveEnding(JsonStoryAdapter(widget.story), stats,
         bonds: bonds, milestones: milestones);
-    collection.record('${d['id']}', (d['rank'] as int?) ?? 1);
+    final routes = (d['epilogues'] as List? ?? const [])
+        .map((route) => '${(route as Map)['id']}')
+        .toList();
+    collection.record('${d['id']}', (d['rank'] as int?) ?? 1, routes: routes);
     collectionEntries
       ..clear()
       ..addAll(collection.read());
@@ -808,6 +811,19 @@ class Scene extends CustomPainter {
               orElse: () => {'title': entry['id']});
           return '${e['title']} ★${entry['rank']}';
         }).join(' · ');
+    final companions = (s['companions'] as List? ?? const []).cast<Map>(),
+        companionIds = companions.map((c) => '${c['id']}').toSet(),
+        routeIds = collectionEntries
+            .expand((entry) =>
+                (entry['routes'] as List? ?? const []).cast<String>())
+            .where(companionIds.contains)
+            .toSet()
+            .toList()
+          ..sort(),
+        routeNames = routeIds
+            .map((id) => companions.firstWhere((c) => c['id'] == id,
+                orElse: () => {'name': id})['name'])
+            .join(' · ');
     txt(c, '기록 보관소', const Offset(24, 28), 32, ink, bold: true);
     txt(c, '현재 상태를 코드로 보관하고 다른 실행에서 복원합니다.', const Offset(25, 70), 14, teal);
     box(c, const Rect.fromLTWH(24, 120, 712, 240), Colors.white,
@@ -828,7 +844,13 @@ class Scene extends CustomPainter {
     txt(
         c,
         '엔딩 도감 ${collectionEntries.length}/$known · ${discovered.isEmpty ? '아직 발견한 결말이 없습니다.' : discovered}',
-        const Offset(48, 330),
+        const Offset(48, 320),
+        11,
+        teal);
+    txt(
+        c,
+        '관계 도감 ${routeIds.length}/${companions.length} · ${routeNames.isEmpty ? '아직 발견한 동행이 없습니다.' : routeNames}',
+        const Offset(48, 343),
         11,
         teal);
     box(c, const Rect.fromLTWH(24, 390, 300, 64), teal, radius: 18);
