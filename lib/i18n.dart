@@ -116,7 +116,12 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
 }
 
 void drawEndingRetrospective(
-    Canvas c, List<String> history, int goalCount, List<String> missingGoals) {
+    Canvas c,
+    List<String> history,
+    int goalCount,
+    List<String> missingGoals,
+    List<Map<String, dynamic>> milestones,
+    Map<String, bool> milestoneState) {
   final events = history
       .where((entry) => entry.startsWith('event:'))
       .map((entry) => entry.replaceFirst('event:', '').split('|').first)
@@ -134,16 +139,27 @@ void drawEndingRetrospective(
               : entry.value;
           return '${entry.key + 1}. $value';
         }).join('\n');
+  final ledger = milestones.map((goal) {
+    final title = activeLocale == 'ko'
+        ? '${goal['title']}'
+        : localized(goal['titleKey'] as String? ?? '', '${goal['title']}');
+    final compact = title.length > 7 ? '${title.substring(0, 7)}…' : title;
+    return '$compact${milestoneState[goal['id']] == true ? ' ✓' : ' ·'}';
+  }).join('   ');
   c.drawRRect(
       RRect.fromRectAndRadius(
           const Rect.fromLTWH(365, 400, 300, 125), const Radius.circular(18)),
       Paint()..color = Colors.white);
   _text(c, title, const Offset(385, 410), 14, teal, bold: true, width: 260);
-  _text(c, causes, const Offset(385, 440), 10, ink, width: 260);
+  _text(c, causes, const Offset(385, 437), 10, ink, width: 260);
+  _text(c, localized('ui.ending.seasonLedger', '계절 목표'), const Offset(385, 473),
+      10, teal,
+      bold: true, width: 260);
+  _text(c, ledger, const Offset(385, 489), 9, ink, width: 260);
   _text(c, '${localized('ui.ending.goalCause', '달성 목표')} · $goalCount',
-      const Offset(385, 480), 10, ink,
+      const Offset(385, 507), 10, ink,
       width: 260);
-  _text(c, next, const Offset(385, 497), 10, teal, width: 260);
+  _text(c, next, const Offset(385, 521), 10, teal, width: 260);
 }
 
 void drawLocalizedEnding(
@@ -153,7 +169,9 @@ void drawLocalizedEnding(
     int rank,
     List<String> history,
     int goalCount,
-    List<String> missingGoals) {
+    List<String> missingGoals,
+    List<Map<String, dynamic>> milestones,
+    Map<String, bool> milestoneState) {
   if (activeLocale == 'ko') return;
   c.drawRect(const Rect.fromLTWH(0, 0, 740, 100), Paint()..color = paper);
   _text(c, localized('ui.ending.title', 'The End of 12 Weeks'),
@@ -203,7 +221,8 @@ void drawLocalizedEnding(
     _text(c, localized('${companion['epilogueKey']}', '${ending['epilogue']}'),
         const Offset(365, 378), 12, teal,
         width: 350);
-  drawEndingRetrospective(c, history, goalCount, missingGoals);
+  drawEndingRetrospective(
+      c, history, goalCount, missingGoals, milestones, milestoneState);
   c.drawRRect(
       RRect.fromRectAndRadius(
           const Rect.fromLTWH(365, 535, 300, 64), const Radius.circular(18)),

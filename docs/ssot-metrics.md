@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 14a9219cbe71a15abcb21e3a973e5a265c6f27839280efee83520dd6d25e51e3 -->
+<!-- ssot-sha256: f30930220d49789d41e4f6f3a96e4b51c1504d4235dc18b40c66b5d62d32a92d -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -24,7 +24,7 @@
 | 스토리 막 | 4 | `progression.length` · 1–3 / 4–6 / 7–9 / 10–12주 |
 | 막 계약 | 4/4 | 각 막의 `contract` 공개·압력·선택·결산 선언 |
 | 시나리오 완전성 차원 | 8 | `scenarioCompleteness.dimensions.length` |
-| locale 최소 키 | 118 | `dialogueMetrics.minimumLocaleKeys` |
+| locale 최소 키 | 119 | `dialogueMetrics.minimumLocaleKeys` |
 | 캠페인 최소 대사 줄 | 7 | 성격 1 + 사건 선택 6 |
 | 캠페인 최소 서사 단위 | 27 | 성격·사건 제목/본문·선택·엔딩 |
 

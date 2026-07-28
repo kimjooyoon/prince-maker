@@ -4,7 +4,7 @@
   "hero": "노아",
   "endingWeek": 12,
   "codeRefs": [
-    {"ref":"lib/main.dart#_Game/Scene","sha256":"9b34ae2741c11cd73ade67eb3118e58a5e542d9c859f74ee040b7a27484369aa"},
+    {"ref":"lib/main.dart#_Game/Scene","sha256":"7b7352eb591770d074c9223bcda68845975dbb591d07d5a2ee567e2d45e2b54a"},
     {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"537eace8671d742309a19e14873fd66d13ab1c2ca2d6278f18e6866ec6f2da34"},
     {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
     {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
@@ -14,7 +14,7 @@
     ,{"ref":"lib/collection_adapter_web.dart#BrowserCollectionAdapter","sha256":"d3cd20404e90421850e410238d63ab40a96f447443c2b022355d4170c024e83a"}
     ,{"ref":"lib/collection_adapter_stub.dart#MemoryCollectionAdapter-fallback","sha256":"7b2b0f265eeec8362aa6b6e910d305a48f79fccf67892f202e7464fb8d03956d"}
     ,{"ref":"lib/feedback_banner.dart#drawFeedbackBanner","sha256":"a7a12b6210e4be393e03d1fe3e86e591ae9b276d8846b559b3b3c6e4b65c00e1"}
-    ,{"ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"c69eee384fb03f29e0df4499e28a7608b288f856494447e45a49842905b25b0d"}
+    ,{"ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"b68e20058e6c52d4e8e81d158a1752bce64381b133a24a1e9493a1f797dd1808"}
   ],
   "assetRefs": [
     {"ref":"assets/noa-sprite-sheet.png#hero-2-head-frames","sha256":"1ed524abb6e4eda65e651e25ea008d31efcdebaab28b39086bb1f67a4b32581d"},
@@ -26,11 +26,11 @@
     {"ref":"assets/fonts/NotoSansKR-Regular.ttf#canvas-korean-font","sha256":"c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"}
   ],
   "localeRefs": [
-    {"ref":"story/locales/ko.json#catalog","sha256":"21124be87ed22b49fa7f5a3298059c7ffb0f59c14dfb981780e015cfb0b147b7"},
-    {"ref":"story/locales/en.json#catalog","sha256":"dd04783c9a74c5a178aa415a766f9123472150d5ad8ddace768680d390fd2dad"}
+    {"ref":"story/locales/ko.json#catalog","sha256":"cd832dd803f9f27ef23e7e4a1c5206e01322dd66a3f478e585bf95f52d7b62b9"},
+    {"ref":"story/locales/en.json#catalog","sha256":"463ceb71390c0d7df98b5500fb7f54f745c08424810c7988f437a3ea4840ffaa"}
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 12주를 걷는다.",
-  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":118,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":29,"formula":"catalog 118 = UI 12 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units"},
+  "dialogueMetrics": {"locales":"ko,en","minimumLocaleKeys":119,"minimumVisibleDialogueLines":7,"minimumVisibleNarrativeUnits":27,"authoredDialogueLines":29,"formula":"catalog 119 = UI 13 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units"},
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
     "referenceModel": "장기 성장·관계·선택·결산이 하나의 반복 가능한 생활 루프를 이루는 시나리오",

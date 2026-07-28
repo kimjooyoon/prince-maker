@@ -851,8 +851,14 @@ class Scene extends CustomPainter {
                 companion['routeTitleKey'] as String? ?? '',
                 '${companion['routeTitle'] ?? companion['name']}'))
             .toList(),
+        routeLine = routeTitles
+            .map((title) =>
+                title.length > 12 ? '${title.substring(0, 12)}…' : title)
+            .join(' · '),
         goalCount = milestones.values.where((v) => v).length,
-        missingGoals = (s['milestones'] as List? ?? const [])
+        allMilestones =
+            (s['milestones'] as List? ?? const []).cast<Map<String, dynamic>>(),
+        missingGoals = allMilestones
             .cast<Map>()
             .where((goal) => milestones[goal['id']] != true)
             .take(2)
@@ -891,13 +897,14 @@ class Scene extends CustomPainter {
           sun,
           bold: true);
       if (routeTitles.isNotEmpty)
-        txt(c, routeTitles.join(' · '), const Offset(55, 510), 10,
-            Colors.white70);
+        txt(c, routeLine, const Offset(55, 510), 10, Colors.white70);
     }
-    drawEndingRetrospective(c, history, goalCount, missingGoals);
+    drawEndingRetrospective(
+        c, history, goalCount, missingGoals, allMilestones, milestones);
     box(c, const Rect.fromLTWH(365, 535, 300, 64), sun, radius: 18);
     txt(c, '다시 루멘으로', const Offset(450, 557), 17, ink, bold: true);
-    drawLocalizedEnding(c, s, d, rank, history, goalCount, missingGoals);
+    drawLocalizedEnding(c, s, d, rank, history, goalCount, missingGoals,
+        allMilestones, milestones);
   }
 
   @override
