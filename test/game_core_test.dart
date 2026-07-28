@@ -74,6 +74,21 @@ void main() {
     expect(world.progress[0]!.trace.last,
         'event:풍차|bond:taro+2|rival:bora-1|line:바람');
   });
+  test('mediation restores a rival bond and records a new choice space', () {
+    final world = GameWorld();
+    world.progress[0]!.bonds['taro'] = 4;
+    world.dispatch(const StoryChoiceMade('공감', 1, -2, '중재',
+        bondId: 'bora',
+        bondDelta: 1,
+        rivalId: 'taro',
+        rivalDelta: 1,
+        setsFlag: 'windmill-truce'));
+    expect(world.progress[0]!.bonds['bora'], 1);
+    expect(world.progress[0]!.bonds['taro'], 5);
+    expect(world.progress[0]!.flags['windmill-truce'], isTrue);
+    expect(world.progress[0]!.trace.last,
+        'event:중재|bond:bora+1|rival:taro1|flag:windmill-truce');
+  });
   test('selected personality gives a deterministic focus bonus', () {
     final story = JsonStoryAdapter({
       'personalities': [
