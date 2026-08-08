@@ -5,12 +5,12 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "bd163f2ee40a911de0fb3016d310d17dfd64f93421a25fb51b1136605b9cb7d6"
+      "sha256": "0a424f9036755d882c37fbfaae3ed19ff2d744974d3dc0802589b3ac6f7a155c"
     },
     {
       "path": "lib/main.dart",
       "ref": "lib/main.dart#_Game+Scene",
-      "sha256": "b5e4833d4154ac83a23a4763bd784d343fef6a4c9641940d17050aa4768014b1"
+      "sha256": "a29da041fa28183e079055072647468ab3d39a60d66057f239e90a48948757a1"
     },
     {
       "path": "lib/feedback_banner.dart",
@@ -125,12 +125,12 @@
     {
       "path": "test/goldens/canonical-event.png",
       "ref": "test/goldens/canonical-event.png#ssot-canonical-week-4-event",
-      "sha256": "f84d305a0cda22b8041e7313092e7bb25f142064aa6a2abf0e99329943929f00"
+      "sha256": "fade082aa7da94c26c67823b38a317395ab5cd581081ada573197f4076c333cd"
     },
     {
       "path": "test/goldens/canonical-handoff-event.png",
       "ref": "test/goldens/canonical-handoff-event.png#ssot-canonical-week-48-handoff-event",
-      "sha256": "6bbd5e1d3316305502e6f0d9b8acab6cd37f61500f979722788c0b6ca112ee06"
+      "sha256": "eb05a326ca71a3343c51658e7b5af25ef7f21721323718c7959a68e1acc23b84"
     },
     {
       "path": "test/goldens/canonical-ending.png",
@@ -220,7 +220,7 @@
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "965124073f588f987a8ecd37d01a88de52529865d06552092e1c45ca41d0397c"
+      "sha256": "567186ea64ffd1649423aa7e3eb90afe43ba8383825fd7b9b0236ceb7b3bd638"
     },
     {
       "path": "docs/scenario-completeness.md",
@@ -235,7 +235,7 @@
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "b7802be2df745329d7552b2e7451d035a8181af13804f9ab085b31c38eadcd87"
+      "sha256": "6058b017fe2855b70108d23656ac36aadd09573c5c2f1e803c426845fd418c02"
     },
     {
       "path": "docs/design-system.md",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "26decc05a9308ab128f670986c61d03f4faa7dd32e3ed5660853f684c503346f"
+      "sha256": "4a44c0eaab13341e3fb3c5d51d6197aa2ee73aacdd77ce1743256738f56b53e8"
     },
     {
       "path": "design/tokens.json",
@@ -390,7 +390,7 @@
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "7287127020ecf6656d2eafa3eef65296ee97c34fb714d8dbad092d0e92a30735"
+      "sha256": "6e8d22bc02d24c7c9cb956c2363eb475cb220d44f2796740feeab91ba3ae0f7e"
     },
     {
       "path": "tool/ci_gate.dart",
@@ -405,7 +405,7 @@
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "df0b45b5c7a18a85b317c0633b614f42f1acaa4bdfa7cb500e41c204d2442b9f"
+      "sha256": "78f6fb7d745ef36824114dbb12c38b21f206d54e5cd9e2cd5761af25a19dd074"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
