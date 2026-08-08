@@ -34,7 +34,7 @@ void verifyTrilemmaContract(String storyHash,
       (complete['companionQuestStages'] as int? ?? 0) < 9 ||
       (complete['activityForecastGoldens'] as int? ?? 0) < 1 ||
       (complete['activityReflectionGoldens'] as int? ?? 0) < 1 ||
-      (complete['activityJournalGoldens'] as int? ?? 0) < 1 ||
+      (complete['activityJournalGoldens'] as int? ?? 0) < 2 ||
       complete['goldens'] < 20 ||
       complete['localeKeys'] < 118 ||
       complete['qualityScoreTarget'] != qualityScoreTarget ||
@@ -57,7 +57,7 @@ void verifyTrilemmaContract(String storyHash,
       purity['activityForecastDeterminism'] != true ||
       (purity['activityReflectionGoldens'] as int? ?? 0) < 1 ||
       purity['activityReflectionDeterminism'] != true ||
-      (purity['activityJournalGoldens'] as int? ?? 0) < 1 ||
+      (purity['activityJournalGoldens'] as int? ?? 0) < 2 ||
       purity['activityJournalDeterminism'] != true ||
       purity['qualityScoreTarget'] != qualityScoreTarget ||
       performance['campaigns'] != 5000 ||
@@ -858,6 +858,7 @@ void main() {
     'personality-bold.png',
     'activity-forecast.png',
     'activity-reflection-en.png',
+    'activity-journal-ko.png',
     'activity-journal-en.png',
     'english-illustration.png',
     'english-event.png',
@@ -963,6 +964,8 @@ void main() {
             'activity journal renders deterministic reflection pages') &&
         activityJournalGoldenEvidence
             .contains("goldens/activity-journal-en.png") &&
+        activityJournalGoldenEvidence
+            .contains("goldens/activity-journal-ko.png") &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(

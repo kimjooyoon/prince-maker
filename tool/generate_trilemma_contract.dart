@@ -26,11 +26,11 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       .where(
           (file) => file.uri.pathSegments.last == 'activity-reflection-en.png')
       .length;
-  final activityJournalGoldens = Directory('test/goldens')
-      .listSync()
-      .whereType<File>()
-      .where((file) => file.uri.pathSegments.last == 'activity-journal-en.png')
-      .length;
+  final activityJournalGoldens =
+      Directory('test/goldens').listSync().whereType<File>().where((file) {
+    final name = file.uri.pathSegments.last;
+    return name.startsWith('activity-journal-') && name.endsWith('.png');
+  }).length;
   final dialogue = (story['dialogueMetrics'] as Map).cast<String, dynamic>();
   final scenarioCases =
       (story['scenarioVariantBudget'] as Map).cast<String, dynamic>();
