@@ -384,6 +384,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/quality_score_test.dart#quality score weights are a deterministic closed sum',
     'test/trilemma_verdict_test.dart#closed-loop-receipt',
     'lib/legacy_profile_catalog.dart#unlockedLegacyProfiles',
+    'lib/main.dart#legacyProfile',
     'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order',
     'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
   ];
@@ -4594,6 +4595,7 @@ void main() {
   }
   ko.addAll({
     'ui.home.title': '프린스 메이커',
+    'ui.home.legacy': '계승 · {title} · {stat} +{bonus}',
     'ui.home.setting': '바람과 별빛이 공존하는 작은 영지 루멘',
     'ui.home.week': '{hero} · {week}주차',
     'ui.home.status': '은화 {coins} · 피로 {fatigue}/12 · {condition}',
@@ -4747,6 +4749,7 @@ void main() {
   });
   en.addAll({
     'ui.home.title': 'Prince Maker',
+    'ui.home.legacy': 'Inherited · {title} · {stat} +{bonus}',
     'ui.home.setting': 'A small domain where wind and starlight coexist',
     'ui.home.week': '{hero} · week {week}',
     'ui.home.status': 'Coins {coins} · Fatigue {fatigue}/12 · {condition}',
@@ -5074,9 +5077,12 @@ void main() {
     'maximumVisibleProfiles': 3,
     'defaultWhenUntouched': 'first unlocked profile in stable order',
     'effect': 'selected profile id becomes the next GameSession legacyId',
+    'homeFeedback':
+        'selected profile title, stat, and bonus are visible on the next-run home Canvas',
     'systemOwner': 'lumen-rule-engine',
     'evidence': [
       'lib/legacy_profile_catalog.dart#unlockedLegacyProfiles',
+      'lib/main.dart#legacyProfile',
       'lib/main.dart#legacyPicker',
       'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order',
       'test/golden_test.dart#ending exposes deterministic next-run legacy picker',

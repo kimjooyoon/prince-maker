@@ -1060,3 +1060,4 @@
 {"type":"entry","key":"ui.journal.lock","value":"다음 하루가 이곳에 한 줄을 남깁니다."}
 {"type":"entry","key":"ui.journal.back","value":"← 홈으로"}
 {"type":"entry","key":"ui.ending.legacyTitle","value":"다음 회차 계승 선택"}
+{"type":"entry","key":"ui.home.legacy","value":"계승 · {title} · {stat} +{bonus}"}

@@ -40,6 +40,7 @@ git config core.hooksPath .githooks
 ![다음 회차 계승 선택 Golden](test/goldens/legacy-picker.png)
 ![다음 회차 계승 선택 English Golden](test/goldens/legacy-picker-en.png)
 ![선택한 계승 프로필 Golden](test/goldens/legacy-picker-selected.png)
+![새 회차에 적용된 계승 프로필 Golden](test/goldens/legacy-home.png)
 ![계승 동행 에필로그가 보이는 엔딩 Canvas](test/goldens/companion-epilogue.png)
 ![별읽기 계승 동행 Golden](test/goldens/companion-stargazer.png)
 ![정원 계승 동행 Golden](test/goldens/companion-gardener.png)
@@ -110,7 +111,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
 ![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
 
-캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생됩니다. 전체 Canvas Golden 증적은 93장입니다.
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 94장입니다.
 
 ### 감정·이벤트 일러스트 매트릭스
 
@@ -118,7 +119,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 
 홈 하단의 `동행 기록`은 `page == 11`에서 `resolveRelationshipDynamics`·`resolveRelationshipFollowup`·`resolveCompanionQuests`를 동일 입력으로 투영합니다. 현재 관계 상태·유대 간격·상태별 후속 기록·루미/보라/타로의 상반신·퀘스트 진행을 [`lib/relationship_archive_painter.dart`](lib/relationship_archive_painter.dart)가 재사용 가능한 패널로 렌더링하고, ko/en 화면과 고요·다정·용감 세 성격의 공명 결과를 [`test/goldens/relationship-archive.png`](test/goldens/relationship-archive.png)·[`test/goldens/relationship-archive-en.png`](test/goldens/relationship-archive-en.png)·[`test/goldens/relationship-archive-kind.png`](test/goldens/relationship-archive-kind.png)·[`test/goldens/relationship-archive-bold.png`](test/goldens/relationship-archive-bold.png)으로 고정합니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·English 활동 reflection·ko/en 활동 회고 일지·엔딩 뒤 계승 프로필 선택도 각각 Golden으로 고정하며, 전체 Golden 증적은 93장입니다.
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·English 활동 reflection·ko/en 활동 회고 일지·엔딩 뒤 계승 프로필 선택·새 회차 적용 피드백도 각각 Golden으로 고정하며, 전체 Golden 증적은 94장입니다.
 
 ### 캐릭터 일러스트·감정표현 설계
 
@@ -134,7 +135,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 authored 대사 612줄, ko/en locale 1061키, 성격×동료 3×3 공명 matrix(매칭 3개·선택 유대 +1), 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
+현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 authored 대사 612줄, ko/en locale 1062키, 성격×동료 3×3 공명 matrix(매칭 3개·선택 유대 +1), 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다.
 

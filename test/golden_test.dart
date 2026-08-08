@@ -730,6 +730,8 @@ void main() {
     await tester.tapAt(const Offset(500, 480));
     await tester.pump();
     expect(find.byKey(const ValueKey('0-1-0-0')), findsOneWidget);
+    await expectLater(
+        find.byType(Game), matchesGoldenFile('goldens/legacy-home.png'));
   });
   testWidgets('all lineage companion epilogues have distinct Canvas evidence',
       (tester) async {
