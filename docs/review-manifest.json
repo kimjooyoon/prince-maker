@@ -5,7 +5,7 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "613ca1d383eafe8d483da01476382c21a33fe09e31dc99f83c640be812b25aec"
+      "sha256": "b70e1f936e46f7bb99250fab982294ac09634c10464ffaf70c1d943a966ec070"
     },
     {
       "path": "lib/main.dart",
@@ -215,12 +215,12 @@
     {
       "path": "docs/trilemma.md",
       "ref": "docs/trilemma.md#closed-loop",
-      "sha256": "1692cf88491b1a12e2ec7e57023d763f9e3413a6c39293b64389edbebb70b62b"
+      "sha256": "3032c096528aaa8ee03a8841fdec3e8b61247875428b807200b39006c30f93a6"
     },
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "5cb313546754c7b43e2ca5716a45aca9ccdffedfed8a9ecb69f2328959e71ff4"
+      "sha256": "cdc8f7fc36fa0a1a3c82bceff89588528eac26c071d44922298d60d5fe785c1b"
     },
     {
       "path": "docs/scenario-completeness.md",
@@ -235,7 +235,7 @@
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "7073a5ad39bca6f8f1bf48cf5ccf516cb00a66f631e5e6c03a0264216744fe8a"
+      "sha256": "bad3c0130906613e452970239b1517b07d9fc89cecb8694584cfb1b3aa26a73e"
     },
     {
       "path": "docs/design-system.md",
@@ -315,7 +315,7 @@
     {
       "path": "tool/generate_trilemma_contract.dart",
       "ref": "tool/generate_trilemma_contract.dart#buildContract",
-      "sha256": "d63c452e01cfc3aa5e060b3f2e1118bdcb4096194e4814c104abcf9bb63695a5"
+      "sha256": "819196b7b1bfb041ceb57d06af524da3d707ce26888f7ee859d4933dd1894da6"
     },
     {
       "path": "tool/verify_game.dart",
@@ -330,7 +330,7 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "31fade2258086abac8c8a41b55c7fadec922149e581240bcdada289501492bec"
+      "sha256": "2356f0c01f1de12d06339dbde0826a9f0f801250223d2a6c005b5cbaa562357c"
     },
     {
       "path": "test/locale_contract_test.dart",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "19e0490737e9a8d6e095139e27962ee09dc90ec1cb7cfe4fa889f3abd118ad49"
+      "sha256": "76ffc16ba791c0c8f9eb14500570a1cefb2af3401d3565de4d4ef727e2b381f9"
     },
     {
       "path": "design/tokens.json",
@@ -380,22 +380,22 @@
     {
       "path": ".github/workflows/verify.yml",
       "ref": ".github/workflows/verify.yml#system-approval",
-      "sha256": "25be61ef505e394ec84733389eda57ee67fbfec791e0d64ede5ca446d7fcd5a6"
+      "sha256": "b21c1d4f83c0c19c34b369a398f737d98558ebcc5171972dafd6c156aed200ec"
     },
     {
       "path": "docs/automation-policy.md",
       "ref": "docs/automation-policy.md#decision-authority",
-      "sha256": "bbf437ad8248e2010814f548a6843a2e84d38fdc613cff9de3ede384247e3647"
+      "sha256": "c2b34d7db79593222c5d2c1a85f0569cd9d063110f0456b346bb9c40602ebf64"
     },
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "4e1511db59c35f184cb03e80ae8733d6ddab591a7d7a8129b00cda5de0f0a2f9"
+      "sha256": "2d6ed4f399a9a70797f0413bee2edf4f9c4b5cc2bdb86ba3653bc453b36a1d77"
     },
     {
       "path": "tool/ci_gate.dart",
       "ref": "tool/ci_gate.dart#system-verdict",
-      "sha256": "c2943f8ec5df4a6b3d8ef22a5ffb1994d7c556cc006c53201609feaf6286055c"
+      "sha256": "c56128285a67e00809164a6c584e45514ac452e4b27339ff018c8b6a967a78ce"
     },
     {
       "path": "tool/verify_ci_policy.dart",
@@ -405,12 +405,12 @@
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "1096c9630c3ffb4f0610f41377a245cf11acb18006fe354683d1f38134449921"
+      "sha256": "6a3091c301d92dfb241067bd693bf16d38a1a80695752d6c4e2cec6f2154d27f"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
       "ref": "tool/refresh_review_manifest.dart#reviewed",
-      "sha256": "9cc6aa295c660a416daaf31c87bb4845160f70343e296b59a8f86c2a4b71f9da"
+      "sha256": "1e7a03e9c72826bf297cb219903e1de4db2df2fda55882f4fdc262fcb6e5e798"
     },
     {
       "path": "tool/verify_scenario_variants.dart",
@@ -441,6 +441,16 @@
       "path": "test/goldens/narrative-ledger-en.png",
       "ref": "test/goldens/narrative-ledger-en.png#reviewed",
       "sha256": "87e55073d8f53b6ce68d43e7308e2eb7eb9b7e16cc1078fd76259b75893d8381"
+    },
+    {
+      "path": "tool/trilemma_verdict.dart",
+      "ref": "tool/trilemma_verdict.dart#reviewed",
+      "sha256": "c4fe1a63cc1e6534dace4430b017dcca4ced65a1d0ae70402d0dfd385e4afe28"
+    },
+    {
+      "path": "test/trilemma_verdict_test.dart",
+      "ref": "test/trilemma_verdict_test.dart#reviewed",
+      "sha256": "192f9d2812aa4bb70a3ccbc1cc11a9761e6f35356c647efc6b3cb85308269e8c"
     }
   ]
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'trilemma_verdict.dart';
 
 class GateCheck {
   const GateCheck(this.id, this.executable, this.arguments);
@@ -77,7 +78,15 @@ Future<void> main(List<String> args) async {
     }
   }
   writeVerdict(mode, results, approved: approved);
-  if (approved) {
+  final trilemma = writeTrilemmaVerdict(mode, results),
+      trilemmaApproved = trilemma['decision'] == 'approve',
+      axes = (trilemma['axes'] as Map).cast<String, dynamic>();
+  stdout.writeln(
+      'TRILEMMA_APPROVAL: ${trilemmaApproved ? 'APPROVE' : 'REJECT'} · '
+      'completeness=${axes['completeness']['status']} '
+      'purity=${axes['purity']['status']} '
+      'performance=${axes['performance']['status']}');
+  if (approved && trilemmaApproved) {
     stdout.writeln('SYSTEM_APPROVAL: APPROVE · build/ci-verdict.json');
   } else {
     stderr.writeln('SYSTEM_APPROVAL: REJECT · build/ci-verdict.json');

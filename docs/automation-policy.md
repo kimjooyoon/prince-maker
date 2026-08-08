@@ -8,7 +8,7 @@
 SYSTEM_APPROVAL: APPROVE
 ```
 
-하나라도 실패하면 즉시 중단하고 `SYSTEM_APPROVAL: REJECT`를 남긴다. 결과 증적은 무시되지 않도록 `build/ci-verdict.json`에 기록한다. 이 파일은 빌드 산출물이므로 Git에 커밋하지 않는다.
+하나라도 실패하면 즉시 중단하고 `SYSTEM_APPROVAL: REJECT`를 남긴다. 결과 증적은 무시되지 않도록 `build/ci-verdict.json`과 완전성·순수성·성능 축별 판정인 `build/trilemma-verdict.json`에 기록한다. 두 파일은 빌드 산출물이므로 Git에 커밋하지 않는다.
 
 ## 동일한 검증 경로
 
@@ -25,6 +25,8 @@ CI 정책 → SSOT/완전성 → benchmark → 생성물 → 해시 매니페스
         ↓
 SYSTEM_APPROVAL: APPROVE | REJECT
 ```
+
+`trilemma-verdict.json`은 완전성에 SSOT·분기·생성물·Golden·정적 분석, 순수성에 분기 다양성·replay·benchmark, 성능에 benchmark·테스트·CI Wasm build를 각각 필수 게이트로 묶는다. 한 축이라도 누락되거나 실패하면 전체 시스템 판정도 거절된다.
 
 `.githooks/pre-commit`은 `--local`, GitHub Actions의 `system-approval` job은 `--ci`를 호출한다. 두 모드의 차이는 CI에서만 Wasm release build를 추가하는 것뿐이다. 실패를 무시하는 `continue-on-error`와 `|| true`는 정책 위반이다.
 
