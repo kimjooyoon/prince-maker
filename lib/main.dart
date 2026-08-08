@@ -10,6 +10,7 @@ import 'canvas_scene_fingerprint.dart';
 import 'activity_catalog.dart';
 import 'activity_forecast.dart';
 import 'activity_localization.dart';
+import 'activity_journal_painter.dart';
 import 'feedback_banner.dart';
 import 'i18n.dart';
 import 'decision_receipt.dart';
@@ -397,6 +398,8 @@ class _Game extends State<Game> {
         y = logical.dy;
     if (page == 0 && y < 100 && x > 590) {
       toggleLocale();
+    } else if (page == 0 && y < 100 && x >= 420) {
+      setState(() => page = 12);
     } else if (page == 1) {
       if (y < 100 && x > 590)
         toggleLocale();
@@ -501,6 +504,12 @@ class _Game extends State<Game> {
         toggleLocale();
       } else if (y > 640 && x < 220) {
         setState(() => page = 5);
+      } else if (y > 640) {
+        setState(() => page = 0);
+      }
+    } else if (page == 12) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
       } else if (y > 640) {
         setState(() => page = 0);
       }
@@ -1186,6 +1195,16 @@ class Scene extends CustomPainter {
       c.restore();
       return;
     }
+    if (page == 12) {
+      final scenes = (s['activityScenes'] as List? ?? const [])
+          .whereType<Map>()
+          .map((item) => item.cast<String, dynamic>())
+          .toList();
+      ActivityJournalPainter(scenes, history, localized).paint(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
     home(c);
     drawLocaleToggle(c, activeLocale, activeCatalog);
     drawFeedbackBanner(c, localizedResult(), localizedLine(),
@@ -1259,6 +1278,11 @@ class Scene extends CustomPainter {
     txt(c, localized('ui.home.title', '${s['title']}'), const Offset(24, 24),
         30, ink,
         bold: true);
+    box(c, const Rect.fromLTWH(420, 24, 160, 40), Colors.white,
+        radius: 14, stroke: teal);
+    txt(c, localized('ui.home.journal', 'Reflection journal'),
+        const Offset(442, 37), 11, teal,
+        bold: true, maxWidth: 132);
     txt(c, localized('ui.home.setting', '${s['setting']}'),
         const Offset(25, 65), 14, teal);
     box(c, const Rect.fromLTWH(24, 105, 712, 120), ink,

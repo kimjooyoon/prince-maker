@@ -82,6 +82,8 @@ void main() {
       read('test/activity_forecast_golden_test.dart');
   final activityReflectionGoldenTest =
       read('test/activity_reflection_golden_test.dart');
+  final activityJournalGoldenTest =
+      read('test/activity_journal_golden_test.dart');
   final characterRosterGoldenTest =
       read('test/character_roster_golden_test.dart');
   final environmentAtlasGoldenTest = read('test/environment_golden_test.dart');
@@ -122,6 +124,12 @@ void main() {
       'event shows localized activity reflection after day spend');
   requireText('test/activity_reflection_golden_test.dart',
       activityReflectionGoldenTest, 'goldens/activity-reflection-en.png');
+  requireText(
+      'test/activity_journal_golden_test.dart',
+      activityJournalGoldenTest,
+      'activity journal renders deterministic reflection pages');
+  requireText('test/activity_journal_golden_test.dart',
+      activityJournalGoldenTest, 'goldens/activity-journal-en.png');
   requireText('test/player_facing_golden_test.dart', playerFacingGoldenTest,
       'all personality illustration pages render deterministic portraits');
   for (final name in [

@@ -31,9 +31,17 @@ String render(String source) {
       .replaceAll('SSOT sheetIndex binding, 16개 closure Golden',
           'SSOT sheetIndex binding, 3개 성격별 page 1 상반신 Golden, 16개 closure Golden')
       .replaceAll('3×3 personality×companion matrix·5개 exclusive follow-up',
-          '3×3 personality×companion matrix·3개 성격별 상반신 Golden·활동 forecast Golden·5개 exclusive follow-up')
+          '3×3 personality×companion matrix·3개 성격별 상반신 Golden·활동 forecast Golden·활동 회고 일지 Golden·5개 exclusive follow-up')
       .replaceAll('3개 성격별 page 1 상반신 Golden, 16개 closure Golden',
-          '3개 성격별 page 1 상반신 Golden·활동 forecast Golden, 16개 closure Golden');
+          '3개 성격별 page 1 상반신 Golden·활동 forecast Golden·활동 회고 일지 Golden, 16개 closure Golden');
+  output = output
+      .replaceAll('Canvas UI 다섯 상태 행렬·실제 16막 chapter closure와 관계 장면·관계 상태',
+          'Canvas UI 다섯 상태 행렬·활동 forecast·활동 회고 일지·실제 16막 chapter closure와 관계 장면·관계 상태')
+      .replaceAll(
+          '3개 성격별 page 1 상반신 Golden·활동 forecast Golden, 16개 closure Golden',
+          '3개 성격별 page 1 상반신 Golden·활동 forecast Golden·활동 회고 일지 Golden, 16개 closure Golden')
+      .replaceAll('세 성격의 관계 공명 archive 화면과 세 성격별 page 1 상반신 일러스트 화면을 추가해',
+          '세 성격의 관계 공명 archive 화면과 활동 forecast·활동 회고 일지·세 성격별 page 1 상반신 일러스트 화면을 추가해');
   output = output.replaceAll('`replayChecksum`, signature cardinality',
       '`replayChecksum`·activity forecast checksum, signature cardinality');
   return output;
