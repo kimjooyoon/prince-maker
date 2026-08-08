@@ -48,7 +48,7 @@ GameSnapshot closureSnapshot(Map<String, dynamic> source, int targetWeek) {
         setsFlag: choice['setsFlag'],
         line: choice['line'] ?? ''));
   }
-  return session.snapshot(page: 0);
+  return session.snapshot(page: 6);
 }
 
 void main() {
@@ -68,6 +68,7 @@ void main() {
       await tester.pumpWidget(
           Game(source, initialSnapshot: snapshot, key: ValueKey(id)));
       await tester.pump(const Duration(milliseconds: 100));
+      expect(find.byKey(ValueKey('6-${snapshot.week}-0-0')), findsOneWidget);
       await expectLater(find.byType(Game),
           matchesGoldenFile('goldens/chapter-closure-$id.png'));
     }

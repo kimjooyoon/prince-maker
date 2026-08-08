@@ -4,11 +4,11 @@
   "source": [
     {
       "ref": "story/story.json#root",
-      "sha256": "9aeb82a76dfc40a767cc1df827b2853a96c092bc8e258550dd6baf73b551f106"
+      "sha256": "17c5acb0e30e92747a654f95fa499984f36c90e705ff9ad474f6d19f007b5a7e"
     },
     {
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "1f58c23afd2cdb5f56722f7af79ffb6bbc6de6ffe51b919ab8eb6798e5983c58"
+      "sha256": "c6d52f6d9d9891b0e439267f89e0af22c0baa9169d7970ebdd747588fcfaddcd"
     },
     {
       "ref": "docs/render-quality-contract.json#preconditions",
@@ -16,7 +16,7 @@
     },
     {
       "ref": "docs/decision-proof-contract.json#preconditionFields",
-      "sha256": "68ebfa85b0e9310a063e7ce9d23ce5d449591df9b4796e4b6dc62f2396c730c2"
+      "sha256": "51361439fd4daa9bfd1386e85250d84c9c70487b1d5e1f752957bdb394680728"
     }
   ],
   "decision": {
@@ -56,8 +56,8 @@
     {
       "id": "visual-locale-units",
       "unit": "presentation-unit",
-      "value": 934,
-      "formula": "62 Goldens + 2 locales × 419 keys + 29 code refs + 4 asset refs + 1 font refs",
+      "value": 998,
+      "formula": "62 Goldens + 2 locales × 451 keys + 29 code refs + 4 asset refs + 1 font refs",
       "scope": "visual regression, localization and traceable production assets"
     },
     {
@@ -189,7 +189,7 @@
       "target": {
         "goldens": 30,
         "locales": 2,
-        "keysPerLocale": 419,
+        "keysPerLocale": 451,
         "renderPreconditions": 3,
         "renderProofs": 3,
         "unit": "presentation-proof-units"
@@ -197,7 +197,7 @@
       "currentContract": {
         "goldens": 62,
         "locales": 2,
-        "keysPerLocale": 419,
+        "keysPerLocale": 451,
         "renderPreconditions": 3,
         "renderProofs": 3
       },

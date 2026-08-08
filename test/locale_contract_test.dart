@@ -71,10 +71,21 @@ void main() {
       'ui.ledger.complete',
       'ui.ledger.progress',
       'ui.ledger.back',
+      'ui.closure.recorded',
+      'ui.closure.next',
+      'ui.closure.week',
+      'ui.closure.goalCleared',
+      'ui.closure.keepGrowing',
+      'ui.closure.question',
+      'ui.closure.nextPage',
+      'ui.closure.link',
     ];
     expect(catalogs['ko']!.keys, containsAll(endingUiKeys));
     expect(catalogs['en']!.keys, containsAll(endingUiKeys));
-    expect(catalogs['ko']!.length, 419);
-    expect(catalogs['en']!.length, 419);
+    final minimum =
+        (story['dialogueMetrics'] as Map)['minimumLocaleKeys'] as int;
+    expect(catalogs['ko']!.length, greaterThanOrEqualTo(minimum));
+    expect(catalogs['en']!.length, greaterThanOrEqualTo(minimum));
+    expect(catalogs['ko']!.length, catalogs['en']!.length);
   });
 }

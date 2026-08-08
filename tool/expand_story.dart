@@ -1537,9 +1537,87 @@ void main() {
   milestones.addAll(newMilestones);
   milestones.sort((a, b) => (a['week'] as int).compareTo(b['week'] as int));
   story['milestones'] = milestones;
+  const milestoneEnglish = <String, List<String>>{
+    'spring': [
+      'The first star seed sprouted.',
+      'The star seed is still asleep.'
+    ],
+    'summer': [
+      'Different paces became one bridge.',
+      'The bridge still shakes, but it can be crossed again.'
+    ],
+    'autumn': [
+      'The courage to send the reply has grown.',
+      'The letter waits in the drawer for the next season.'
+    ],
+    'winter': [
+      'Noa opened the first ledger\'s door.',
+      'The door stayed closed, but left the next key.'
+    ],
+    'frost': [
+      'A care record remained even in the stopped season.',
+      'The seed still waits beneath cold soil.'
+    ],
+    'return': [
+      'A sent feeling returned as a shared promise.',
+      'The reply still waits for the next wave.'
+    ],
+    'constellation': [
+      'Different reasons became one public map.',
+      'The map still holds blank spaces that have not faded.'
+    ],
+    'horizon': [
+      'Noa left a horizon the next person can verify.',
+      'The horizon stayed open as a question for the next run.'
+    ],
+    'waterline': [
+      'The first waterway reached the empty field.',
+      'The waterway still waits for the next pair of hands.'
+    ],
+    'fair-share': [
+      'Invisible labour became part of the day.',
+      'A blank in the ledger still waits for someone.'
+    ],
+    'memory-house': [
+      'Memory became a path to find again, not a closed box.',
+      'The nameless box still waits for light.'
+    ],
+    'far-shore': [
+      'The far shore\'s answer changed Lumen\'s rule again.',
+      'The two waterways are still learning each other\'s pace.'
+    ],
+    'blank-map': [
+      'The mark for unknown became a starting point to walk together.',
+      'The map still has a blank that must be crossed alone.'
+    ],
+    'commons': [
+      'Even the smallest voice entered the rule.',
+      'A voice outside the agreement still knocks.'
+    ],
+    'returning-garden': [
+      'The first seed became the next person\'s flower.',
+      'The garden is still choosing a place for leaving and staying.'
+    ],
+    'handoff': [
+      'Noa left the first step for the next person\'s beginning.',
+      'The horizon remains open and waits for the next record.'
+    ],
+  };
   for (final m in newMilestones) {
     ko[m['titleKey'] as String] = m['title'];
     en[m['titleKey'] as String] = m['titleEn'];
+  }
+  for (final m in milestones) {
+    final id = '${m['id']}', words = milestoneEnglish[id];
+    if (words == null) continue;
+    m['passKey'] = 'milestone.$id.pass';
+    m['failKey'] = 'milestone.$id.fail';
+    m['passEn'] = words[0];
+    m['failEn'] = words[1];
+    ko[m['passKey'] as String] = m['pass'];
+    ko[m['failKey'] as String] = m['fail'];
+    en[m['passKey'] as String] = words[0];
+    en[m['failKey'] as String] = words[1];
   }
 
   story['endingWeek'] = 49;
@@ -1724,6 +1802,14 @@ void main() {
     'ui.ledger.receipt.rejected': '거절',
     'ui.ledger.receipt.activity': '활동',
     'ui.ledger.receipt.story-choice': '사건 선택',
+    'ui.closure.recorded': '장 결산 · 기록됨',
+    'ui.closure.next': '장 결산 · 다음 기회',
+    'ui.closure.week': '주차',
+    'ui.closure.goalCleared': '목표 달성',
+    'ui.closure.keepGrowing': '다음에 이어가기',
+    'ui.closure.question': '이번 장의 질문',
+    'ui.closure.nextPage': '다음 장으로 →',
+    'ui.closure.link': '결과는 시스템 영수증과 다음 선택에 연결됩니다.',
   });
   en.addAll({
     'ui.ledger.button': 'Fate ledger',
@@ -1742,6 +1828,15 @@ void main() {
     'ui.ledger.receipt.rejected': 'rejected',
     'ui.ledger.receipt.activity': 'activity',
     'ui.ledger.receipt.story-choice': 'story choice',
+    'ui.closure.recorded': 'Chapter closure · recorded',
+    'ui.closure.next': 'Chapter closure · next chance',
+    'ui.closure.week': ' weeks',
+    'ui.closure.goalCleared': 'GOAL CLEARED',
+    'ui.closure.keepGrowing': 'KEEP GROWING',
+    'ui.closure.question': 'This chapter\'s question',
+    'ui.closure.nextPage': 'Next chapter →',
+    'ui.closure.link':
+        'The result is linked to the system receipt and next choice.',
   });
   story['narrativeLoop'] = {
     'schema': 'lumen-memory-companion-loop-v1',
@@ -1824,12 +1919,12 @@ void main() {
   };
   story['dialogueMetrics'] = {
     'locales': 'ko,en',
-    'minimumLocaleKeys': 419,
+    'minimumLocaleKeys': 451,
     'minimumVisibleDialogueLines': 47,
     'minimumVisibleNarrativeUnits': 160,
     'authoredDialogueLines': 184,
     'formula':
-        'catalog 419 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15; one 48-week route exposes at least 47 authored choice lines and 160 narrative units',
+        'catalog 451 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32; one 48-week route exposes at least 47 authored choice lines and 160 narrative units',
   };
   final choices = (story['events'] as List)
       .cast<Map<String, dynamic>>()
@@ -1922,7 +2017,7 @@ void main() {
   byId['gating']!['current'] =
       '16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings';
   byId['presentation']!['current'] =
-      '62 Goldens including 16 canonical chapter event views and 16 chapter closure views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
+      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;

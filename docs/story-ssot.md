@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 9aeb82a76dfc40a767cc1df827b2853a96c092bc8e258550dd6baf73b551f106 -->
+<!-- ssot-sha256: 17c5acb0e30e92747a654f95fa499984f36c90e705ff9ad474f6d19f007b5a7e -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -51,8 +51,8 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **419** · 한 캠페인 최소 대사 줄: **47** · 최소 노출 서사 단위: **160** · 전체 authored 대사 줄: **184**
-- 산식: catalog 419 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15; one 48-week route exposes at least 47 authored choice lines and 160 narrative units
+- locale 최소 키: **451** · 한 캠페인 최소 대사 줄: **47** · 최소 노출 서사 단위: **160** · 전체 authored 대사 줄: **184**
+- 산식: catalog 451 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32; one 48-week route exposes at least 47 authored choice lines and 160 narrative units
 
 ## 최소 플레이타임 계약
 
@@ -107,7 +107,7 @@
 | 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 16 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues | `test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 62 Goldens including 16 canonical chapter event views and 16 chapter closure views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
 | 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | 48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark | `test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending` |
 
 ## 생성 이미지 자산
@@ -123,8 +123,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `dda8e2d0235ba3c9f2b6a6a06fe091bbb6d5a761e573873561013c41d8e98955`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `52e5a51b51cd82bb453e90fc6c85cba59193c1fd7f0c70f61387b63189f568db`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `0ed32bcb8cd08c9735030959a821e6374df7982f1356d5f5717b71276a89bfe7`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `efd7c68a964dd0bab2818c2ab5cb41ba682c7b2dd2786903c3273f60e9f3f706`
 
 ## 성격
 
