@@ -159,6 +159,22 @@ Map<String, dynamic> resolveRelationshipDynamics(
   };
 }
 
+Map<String, dynamic> resolveRelationshipFollowup(
+    StoryPort story, Map<String, dynamic> relationship) {
+  final design = story.relationshipDesign,
+      stateId = '${relationship['id']}',
+      group = design['followupExclusiveGroup'] as String? ??
+          'relationship-followup',
+      followups = (design['followups'] as List? ?? const [])
+          .whereType<Map>()
+          .map((item) => item.cast<String, dynamic>())
+          .where((item) =>
+              item['exclusiveGroup'] == group && item['stateId'] == stateId)
+          .toList();
+  if (followups.length != 1) return const {};
+  return {...followups.single, 'resolvedStateId': stateId};
+}
+
 class MemorySaveAdapter implements SavePort {
   String? value;
   @override
@@ -342,6 +358,11 @@ class RelationshipStateResolved extends GameEvent {
   final int gap;
 }
 
+class RelationshipFollowupResolved extends GameEvent {
+  const RelationshipFollowupResolved(this.id);
+  final String id;
+}
+
 class MilestoneResolved extends GameEvent {
   const MilestoneResolved(this.id, this.title, this.stat, this.min, this.coins,
       this.pass, this.fail);
@@ -444,6 +465,8 @@ class GameWorld {
             'event:$label${bondId == null ? '' : '|bond:$bondId+$bondDelta'}${rivalId == null ? '' : '|rival:$rivalId$rivalDelta'}${legacyStat == null ? '' : '|legacy:$legacyStat+$legacyDelta'}${setsFlag == null ? '' : '|flag:$setsFlag'}${line.isEmpty ? '' : '|line:$line'}');
       case RelationshipStateResolved(:final id, :final gap):
         p.trace.add('relationship:$id|gap:$gap');
+      case RelationshipFollowupResolved(:final id):
+        p.trace.add('relationship-followup:$id');
       case WeekAdvanced():
         p.week++;
       case LocationDiscovered(:final id, :final name):
@@ -662,6 +685,9 @@ class GameSession {
     final relationship = resolveRelationshipDynamics(story, p.bonds, p.flags);
     world.dispatch(RelationshipStateResolved(
         '${relationship['id']}', (relationship['gap'] as int?) ?? 0));
+    final followup = resolveRelationshipFollowup(story, relationship);
+    if (followup.isNotEmpty)
+      world.dispatch(RelationshipFollowupResolved('${followup['id']}'));
     _resolveMilestone();
     persist();
   }

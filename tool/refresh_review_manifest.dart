@@ -81,7 +81,8 @@ void main() {
     'docs/decision-proof-contract.json',
     'tool/verify_decision_proof.dart',
     'test/decision_proof_test.dart',
-    'test/relationship_dynamics_test.dart'
+    'test/relationship_dynamics_test.dart',
+    'test/relationship_followup_golden_test.dart'
   ]) {
     if (!known.containsKey(path)) {
       entries

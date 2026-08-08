@@ -4,11 +4,11 @@
   "source": [
     {
       "ref": "story/story.json#root",
-      "sha256": "de27e496c09067687e40cffb9df46478fa12e556a7824bb2451e81e6a9a7cd0e"
+      "sha256": "03135bb3a834ba592f13a82f8219ea7fb51becd29b00fde9171e1d03059aa693"
     },
     {
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "b1788e0d1fc4bd962b1642f5b165891d4d423e6f379cd11debcc26931de2bd0a"
+      "sha256": "9efaecb3af1e843c78278881ca912d6c68479d1f003eeed34a07c806721b0ca9"
     },
     {
       "ref": "docs/render-quality-contract.json#preconditions",
@@ -16,7 +16,7 @@
     },
     {
       "ref": "docs/decision-proof-contract.json#preconditionFields",
-      "sha256": "da6790463e5a0ed7decbcefe45c18ef26c911f9f545aac2d1e94af2a88180639"
+      "sha256": "1557225f990bcb2efb280f746e7c155793ffe5d1d534bf4a47a6aa076884b2b5"
     }
   ],
   "decision": {
@@ -42,8 +42,8 @@
     {
       "id": "narrative-relationship-units",
       "unit": "narrative-unit",
-      "value": 25,
-      "formula": "3 companions + 6 fate threads + 9 quest stages + 4 locations + 3 legacy profiles",
+      "value": 30,
+      "formula": "3 companions + 6 fate threads + 9 quest stages + 4 locations + 3 legacy profiles + 5 exclusive follow-ups",
       "scope": "relationship, memory, discovery and replay depth"
     },
     {
@@ -56,15 +56,15 @@
     {
       "id": "visual-locale-units",
       "unit": "presentation-unit",
-      "value": 1086,
-      "formula": "62 Goldens + 2 locales × 494 keys + 31 code refs + 4 asset refs + 1 font refs",
+      "value": 1111,
+      "formula": "63 Goldens + 2 locales × 505 keys + 33 code refs + 4 asset refs + 1 font refs",
       "scope": "visual regression, localization and traceable production assets"
     },
     {
       "id": "verification-units",
       "unit": "proof-unit",
-      "value": 61,
-      "formula": "15 CI checks + 26 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields",
+      "value": 62,
+      "formula": "15 CI checks + 27 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields",
       "scope": "repeatable automated proof and release readiness"
     }
   ],
@@ -189,15 +189,15 @@
       "target": {
         "goldens": 30,
         "locales": 2,
-        "keysPerLocale": 494,
+        "keysPerLocale": 505,
         "renderPreconditions": 3,
         "renderProofs": 3,
         "unit": "presentation-proof-units"
       },
       "currentContract": {
-        "goldens": 62,
+        "goldens": 63,
         "locales": 2,
-        "keysPerLocale": 494,
+        "keysPerLocale": 505,
         "renderPreconditions": 3,
         "renderProofs": 3
       },
@@ -224,7 +224,7 @@
         "test/golden_test.dart#all",
         "test/locale_contract_test.dart#ssot-dialogue-contract"
       ],
-      "acceptance": "Canvas 좌표·입력 역변환·62개 Golden·ko/en locale 계약이 전부 통과한다."
+      "acceptance": "Canvas 좌표·입력 역변환·63개 Golden·ko/en locale 계약이 전부 통과한다."
     },
     {
       "id": "G5-deterministic-throughput",
@@ -279,7 +279,7 @@
       },
       "currentContract": {
         "ciChecks": 15,
-        "codeRefs": 31,
+        "codeRefs": 33,
         "decisionProofFields": 14,
         "assetRefs": 4,
         "fontRefs": 1,

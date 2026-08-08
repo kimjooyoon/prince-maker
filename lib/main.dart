@@ -596,6 +596,9 @@ class Scene extends CustomPainter {
   Map<String, dynamic> get relationshipState =>
       resolveRelationshipDynamics(storyModel, bonds, flags);
 
+  Map<String, dynamic> get relationshipFollowup =>
+      resolveRelationshipFollowup(storyModel, relationshipState);
+
   List<Map<String, dynamic>> get fateProgress =>
       resolveFateThreads(storyModel, flags);
 
@@ -1051,7 +1054,8 @@ class Scene extends CustomPainter {
         result = localized('${passed ? goal['passKey'] : goal['failKey']}',
             '${passed ? goal['pass'] : goal['fail']}'),
         scene = (chapter['relationshipScene'] as Map? ?? const {}).cast(),
-        relation = relationshipState;
+        relation = relationshipState,
+        followup = relationshipFollowup;
     txt(
         c,
         localized(passed ? 'ui.closure.recorded' : 'ui.closure.next',
@@ -1098,7 +1102,7 @@ class Scene extends CustomPainter {
         17, Colors.white,
         bold: true);
     txt(c, localized('ui.closure.link', '결과는 시스템 영수증과 다음 선택에 연결됩니다.'),
-        const Offset(340, 680), 10, teal,
+        const Offset(340, 686), 10, teal,
         maxWidth: 360);
     if (scene.isNotEmpty) {
       txt(
@@ -1109,15 +1113,28 @@ class Scene extends CustomPainter {
           teal,
           bold: true,
           maxWidth: 360);
-      box(c, const Rect.fromLTWH(340, 606, 360, 64), Colors.white,
+      box(c, const Rect.fromLTWH(340, 606, 360, 72), Colors.white,
           radius: 14, stroke: teal, shadow: true);
       dialoguePortrait(c, const Rect.fromLTWH(350, 612, 44, 52), scene);
       txt(c, localized('${scene['titleKey']}', '${scene['title']}'),
           const Offset(410, 612), 10, ink,
           bold: true, maxWidth: 270);
       txt(c, localized('${scene['lineKey']}', '${scene['line']}'),
-          const Offset(410, 633), 10, ink.withValues(alpha: .65),
+          const Offset(410, 633), 9, ink.withValues(alpha: .65),
           maxWidth: 270);
+      if (followup.isNotEmpty) {
+        txt(
+            c,
+            '${localized('ui.relationship.followup', '상태별 후속 기록')} · ${localized('${followup['titleKey']}', '${followup['title']}')}',
+            const Offset(410, 650),
+            8,
+            teal,
+            bold: true,
+            maxWidth: 270);
+        txt(c, localized('${followup['lineKey']}', '${followup['line']}'),
+            const Offset(410, 662), 8, ink.withValues(alpha: .6),
+            maxWidth: 270);
+      }
     }
   }
 

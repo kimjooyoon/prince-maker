@@ -500,5 +500,16 @@
   "ui.relationship.state.balanced": "Side-by-side",
   "ui.relationship.state.tension": "Tension",
   "ui.relationship.state.estranged": "Estranged",
-  "ui.relationship.state.truce": "Truce"
+  "ui.relationship.state.truce": "Truce",
+  "ui.relationship.followup": "State follow-up",
+  "ui.relationship.followup.unformed.title": "A Promise in the Blank",
+  "ui.relationship.followup.unformed.line": "No path has been chosen yet, so leave the next record open as we walk.",
+  "ui.relationship.followup.balanced.title": "A Mark of Equal Pace",
+  "ui.relationship.followup.balanced.line": "We do not need to count who leads; the path remembers walking side by side.",
+  "ui.relationship.followup.tension.title": "The Cracked Greenhouse",
+  "ui.relationship.followup.tension.line": "Do not cover the split in our hearts; leave a gap for the next words to reach.",
+  "ui.relationship.followup.estranged.title": "A Late Reply",
+  "ui.relationship.followup.estranged.line": "Distance is not the name of failure. Let us keep a place for an answer.",
+  "ui.relationship.followup.truce.title": "Wind Tied Again",
+  "ui.relationship.followup.truce.line": "Only after returning each share can we ride the same wind again."
 }

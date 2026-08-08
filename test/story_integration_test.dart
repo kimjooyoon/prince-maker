@@ -171,8 +171,12 @@ void main() {
             .where((entry) => entry.startsWith('event:${raw['label']}'))
             .toList();
         expect(events, isNotEmpty);
-        expect(
-            session.world.progress[0]!.trace.last, startsWith('relationship:'));
+        final relationshipEntries = session.world.progress[0]!.trace
+            .where((entry) => entry.startsWith('relationship:'))
+            .toList();
+        expect(relationshipEntries, isNotEmpty);
+        expect(session.world.progress[0]!.trace.last,
+            startsWith('relationship-followup:'));
       }
     }
   });

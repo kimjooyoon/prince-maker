@@ -37,6 +37,9 @@ Map<String, dynamic> buildDocument() {
       legacyProfiles = maps(story['legacyProfiles']),
       fateThreads = maps(story['fateThreads']),
       companionQuests = maps(story['companionQuests']),
+      relationshipDesign =
+          (story['relationshipDesign'] as Map).cast<String, dynamic>(),
+      relationshipFollowups = maps(relationshipDesign['followups']),
       codeRefs = maps(story['codeRefs']),
       assetRefs = maps(story['assetRefs']),
       fontRefs = maps(story['fontRefs']),
@@ -67,7 +70,8 @@ Map<String, dynamic> buildDocument() {
       fateThreads.length +
       questStages +
       (story['locations'] as List).length +
-      legacyProfiles.length;
+      legacyProfiles.length +
+      relationshipFollowups.length;
   final transitions = 5000 * ((story['endingWeek'] as int) - 1 + events.length);
   final explorationUnits = (scenario['authoredBranchVectors'] as int) +
       (scenario['routeInputCases'] as int) +
@@ -115,7 +119,7 @@ Map<String, dynamic> buildDocument() {
       'unit': 'narrative-unit',
       'value': narrativeRelationshipUnits,
       'formula':
-          '${companions.length} companions + ${fateThreads.length} fate threads + $questStages quest stages + ${(story['locations'] as List).length} locations + ${legacyProfiles.length} legacy profiles',
+          '${companions.length} companions + ${fateThreads.length} fate threads + $questStages quest stages + ${(story['locations'] as List).length} locations + ${legacyProfiles.length} legacy profiles + ${relationshipFollowups.length} exclusive follow-ups',
       'scope': 'relationship, memory, discovery and replay depth',
     },
     {
@@ -280,7 +284,7 @@ Map<String, dynamic> buildDocument() {
         'test/golden_test.dart#all',
         'test/locale_contract_test.dart#ssot-dialogue-contract',
       ],
-      'acceptance': 'Canvas 좌표·입력 역변환·62개 Golden·ko/en locale 계약이 전부 통과한다.',
+      'acceptance': 'Canvas 좌표·입력 역변환·63개 Golden·ko/en locale 계약이 전부 통과한다.',
     },
     {
       'id': 'G5-deterministic-throughput',

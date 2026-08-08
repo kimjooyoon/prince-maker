@@ -23,6 +23,7 @@
 | `ending_panel` | 성장 결과와 재시작 | 48주 엔딩 |
 | `relationship_scene_panel` | SSOT speaker·portrait·title·line을 한 패널에 고정 | 16막 chapter closure |
 | `relationship_state_badge` | bond gap·기억 flag에서 나온 관계 상태를 Canvas/replay와 동일하게 표시 | 홈·막 결산·관계 Golden |
+| `relationship_followup_panel` | resolved state에 대응하는 exclusive speaker·portrait·title·line을 동일 카드에 표시 | 막 결산·관계 후속 Golden |
 | `feedback_banner` | 마지막 행동 결과와 조건 피드백 | 홈 화면 |
 | `locale_toggle` | locale catalog 전환 | 일러스트·사건 화면 |
 | `vector_activity_icon` | 활동별 별·꽃·나침반·달·보석 마크 | 선택 카드 |
