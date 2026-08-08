@@ -37,9 +37,12 @@ void main() {
           ],
         )));
     await tester.pumpAndSettle();
-    await tester.tapAt(const Offset(650, 50));
-    await tester.pump();
     await tester.tapAt(const Offset(500, 50));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('12-1-0-0')), findsOneWidget);
+    await expectLater(find.byType(Game),
+        matchesGoldenFile('goldens/activity-journal-ko.png'));
+    await tester.tapAt(const Offset(650, 50));
     await tester.pump();
     expect(find.byKey(const ValueKey('12-1-0-0-en')), findsOneWidget);
     await expectLater(find.byType(Game),

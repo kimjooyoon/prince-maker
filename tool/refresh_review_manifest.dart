@@ -111,6 +111,7 @@ void main() {
     'test/goldens/activity-forecast.png',
     'test/goldens/activity-reflection-en.png',
     'test/goldens/activity-journal-en.png',
+    'test/goldens/activity-journal-ko.png',
     'test/goldens/player-home-en.png',
     'test/goldens/personality-quiet.png',
     'test/goldens/personality-kind.png',

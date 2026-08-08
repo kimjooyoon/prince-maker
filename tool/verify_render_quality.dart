@@ -130,6 +130,8 @@ void main() {
       'activity journal renders deterministic reflection pages');
   requireText('test/activity_journal_golden_test.dart',
       activityJournalGoldenTest, 'goldens/activity-journal-en.png');
+  requireText('test/activity_journal_golden_test.dart',
+      activityJournalGoldenTest, 'goldens/activity-journal-ko.png');
   requireText('test/player_facing_golden_test.dart', playerFacingGoldenTest,
       'all personality illustration pages render deterministic portraits');
   for (final name in [
