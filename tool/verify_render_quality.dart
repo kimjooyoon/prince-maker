@@ -74,6 +74,12 @@ void main() {
       'all sixteen SSOT chapters have deterministic event Goldens');
   requireText('test/chapter_golden_test.dart', chapterGoldenTest,
       'goldens/chapter-\$id.png');
+  final chapterClosureGoldenTest =
+      read('test/chapter_closure_golden_test.dart');
+  requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
+      'all sixteen SSOT chapter closures have deterministic goal Goldens');
+  requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
+      'goldens/chapter-closure-\$id.png');
   final goldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
@@ -85,11 +91,23 @@ void main() {
       .listSync()
       .whereType<File>()
       .where((file) => file.path.endsWith('.png'))
-      .where((file) => file.uri.pathSegments.last.startsWith('chapter-'))
+      .where((file) =>
+          file.uri.pathSegments.last.startsWith('chapter-') &&
+          !file.uri.pathSegments.last.startsWith('chapter-closure-'))
       .length;
   if (chapterGoldens != 16)
     fail(
         'expected exactly 16 chapter golden evidence files, found $chapterGoldens');
+  final chapterClosureGoldens = Directory('test/goldens')
+      .listSync()
+      .whereType<File>()
+      .where((file) => file.path.endsWith('.png'))
+      .where(
+          (file) => file.uri.pathSegments.last.startsWith('chapter-closure-'))
+      .length;
+  if (chapterClosureGoldens != 16)
+    fail(
+        'expected exactly 16 chapter closure golden evidence files, found $chapterClosureGoldens');
   stdout.writeln(
-      'RENDER_QUALITY_PRECONDITIONS_OK: preconditions=${preconditions.length} proofs=${proofs.length} goldens=$goldens chapterGoldens=$chapterGoldens');
+      'RENDER_QUALITY_PRECONDITIONS_OK: preconditions=${preconditions.length} proofs=${proofs.length} goldens=$goldens chapterGoldens=$chapterGoldens chapterClosureGoldens=$chapterClosureGoldens');
 }
