@@ -55,7 +55,7 @@
 | 장기 재플레이 | 2,048개 실제 분기 벡터, 122,880개 route input, 6개 authored core 엔딩, 최대 48개 terminal route card, 엔딩 도감, 엔딩 계열별 3개 회차 계승 프로필이 다음 회차 성장·기억·선택 보정을 해금 | `tool/verify_scenario_variants.dart`·`legacy-gate.png`·collection Golden·legacy trace |
 | 장면 결산 | 결말명만이 아니라 최대 3개 사건과 달성 목표 수를 결정론적으로 표시 | `ending.png`·`canonical-ending.png` |
 
-따라서 현재 표본의 시나리오 완전성 최소 단위는 `계획 → 상태 변화 → 조건 공개 → 관계/기억 결과 → authored ending → 원인 회고 → 다음 회차 해금`의 7단 연결이다. 각 연결은 SSOT, 코어 trace, Canvas Golden, benchmark 중 둘 이상으로 교차 증명하며, 회고 보드는 마지막 연결을 시각 증거로 고정한다.
+따라서 현재 표본의 시나리오 완전성 최소 단위는 `계획 → 상태 변화 → 조건 공개 → 관계/기억 결과 → authored ending → 원인 회고 → 다음 회차 해금`의 7단 연결이다. 성격×동료 3×3 matrix는 matching choice의 유대 공명을 거쳐 실제 companion route set으로 닫히는 추가 연결이다. 각 연결은 SSOT, 코어 trace, Canvas Golden, benchmark 중 둘 이상으로 교차 증명하며, 회고 보드는 마지막 연결을 시각 증거로 고정한다.
 
 ### 나비효과·동료 퀘스트·발견 경로
 
@@ -89,4 +89,4 @@ replaySignatureCount = (ending, stats, bonds, goals) 고유 서명 수
 
 ## 3. 의도적인 차이와 확장 순서
 
-프린세스 메이커 5의 장기(8년)·다층 일정·외출·모험 규모를 그대로 따라가지 않는다. 현재 게임은 48주 16막으로 확장해 한 회차의 원인과 결과를 Golden과 replay trace로 읽을 수 있게 만든다. 48회 활동 선택과 47개 본편 사건 선택, 24개 사이드 장면은 각 주차의 성장·관계·기억을 갱신하고, 각 막 결산에는 SSOT가 지정한 동료의 상반신과 2줄 관계 scene beat가 함께 닫히며, 16개 막 결산이 다음 아크의 질문을 연다. 외출·관계·기억 선택은 초반 표본을 넘어 먼 영지·기억의 집·선택의 의회·새벽 관측소·별씨앗 채석장까지 이어지며, 장편 콘텐츠가 숫자만 늘어나지 않고 책임 추적 규칙을 플레이 선택으로 되돌려준다. 중반 공간은 6개 장소를 사건 진입 시 최초 발견하고 `place:<id>` flag/trace로 저장한다. 회차 계승은 도감의 authored 엔딩을 `stargazer/gardener/pathfinder` 3개 프로필로 정규화해 다음 회차 시작 스탯 +2, `legacy:<id>` flag, trace를 함께 생성하고, 2주차 게시판 선택에 프로필별 추가 성장축 +1을 적용한다. 다음 확장은 이 계승 프로필이 막별 선택 공간과 엔딩 분포를 어떻게 바꾸는지 Golden·replay·benchmark로 측정한다.
+프린세스 메이커 5의 장기(8년)·다층 일정·외출·모험 규모를 그대로 따라가지 않는다. 현재 게임은 48주 16막으로 확장해 한 회차의 원인과 결과를 Golden과 replay trace로 읽을 수 있게 만든다. 48회 활동 선택과 47개 본편 사건 선택, 24개 사이드 장면은 각 주차의 성장·관계·기억을 갱신하고, 각 막 결산에는 SSOT가 지정한 동료의 상반신과 2줄 관계 scene beat가 함께 닫히며, 16개 막 결산이 다음 아크의 질문을 연다. 외출·관계·기억 선택은 초반 표본을 넘어 먼 영지·기억의 집·선택의 의회·새벽 관측소·별씨앗 채석장까지 이어지며, 장편 콘텐츠가 숫자만 늘어나지 않고 책임 추적 규칙을 플레이 선택으로 되돌려준다. 중반 공간은 6개 장소를 사건 진입 시 최초 발견하고 `place:<id>` flag/trace로 저장한다. 회차 계승은 도감의 authored 엔딩을 `stargazer/gardener/pathfinder` 3개 프로필로 정규화해 다음 회차 시작 스탯 +2, `legacy:<id>` flag, trace를 함께 생성하고, 2주차 게시판 선택에 프로필별 추가 성장축 +1을 적용한다. 성격×동료 matrix는 matching choice의 +1 resonance와 엔딩 epilogue route set까지 core·Golden·replay로 측정한다. 다음 확장은 이 계승 프로필이 막별 선택 공간과 엔딩 분포를 어떻게 바꾸는지 Golden·replay·benchmark로 측정한다.

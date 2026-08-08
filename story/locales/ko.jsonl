@@ -1045,3 +1045,5 @@
 {"type":"entry","key":"ui.sideScene.mechanic.constellation-trace","value":"별자리 추적"}
 {"type":"entry","key":"ui.sideScene.mechanic.handoff-crossing","value":"넘김 건너기"}
 {"type":"entry","key":"ui.sideScene.mechanic.handoff-cairn","value":"넘김 돌무더기"}
+{"type":"entry","key":"ui.relationshipArchive.resonance.matched","value":"성격 공명 · 유대 +1"}
+{"type":"entry","key":"ui.relationshipArchive.resonance.neutral","value":"서로 다른 결 · 기본 유대"}

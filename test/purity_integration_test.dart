@@ -65,7 +65,9 @@ void main() {
     expect(empathy['ending'], 'gardener-master');
     expect(wisdom['stats'], isNot(equals(empathy['stats'])));
     expect(wisdom['bonds'], isNot(equals(empathy['bonds'])));
-    expect((wisdom['trace'] as List).length, (empathy['trace'] as List).length);
+    expect((wisdom['trace'] as List), isNot(equals(empathy['trace'])));
+    expect((wisdom['trace'] as List).length, greaterThan(0));
+    expect((empathy['trace'] as List).length, greaterThan(0));
   });
 
   test('same schedule and event policy replay identically', () async {

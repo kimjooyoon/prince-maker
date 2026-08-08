@@ -10,6 +10,9 @@ String render(Map<String, dynamic> s, String hash) {
       (s['characterArchive'] as List? ?? const []).cast<Map<String, dynamic>>();
   final companions =
       (s['companions'] as List? ?? []).cast<Map<String, dynamic>>();
+  final personalityCompanionRoutes =
+      (s['personalityCompanionRoutes'] as List? ?? const [])
+          .cast<Map<String, dynamic>>();
   final legacyProfiles =
       (s['legacyProfiles'] as List? ?? []).cast<Map<String, dynamic>>();
   final acts = (s['activities'] as List).cast<Map<String, dynamic>>();
@@ -151,6 +154,12 @@ String render(Map<String, dynamic> s, String hash) {
   for (final c in companions)
     b.writeln(
         '- **${c['name']}** (`${c['id']}`): ${c['role']} · ${c['personality']} · frame ${c['portraitFrame']} · 유대 ${c['bondThreshold']}에서 에필로그 · “${c['greeting']}”');
+  b.writeln('\n## 성격 × 동료 공명\n');
+  b.writeln(
+      '성격과 동료의 3×3 matrix는 선택이 승인될 때 같은 성격 결에 해당하는 동료 유대에 +1을 적용한다. 이 보너스는 `GameWorld` resonance event와 엔딩 route set으로 재생된다.');
+  for (final route in personalityCompanionRoutes)
+    b.writeln(
+        '- `${route['id']}` · ${route['matched'] == true ? '공명 +${route['bondBonus']}' : '서로 다른 결 · 기본 유대'} · `${route['evidence']}`');
   b.writeln('\n## 회차 계승 프로필\n');
   for (final p in legacyProfiles)
     b.writeln(
@@ -240,6 +249,12 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       scenarioVariants = (s['scenarioVariantBudget'] as Map? ?? {}),
       gameplay = (s['gameplayKpis'] as Map? ?? {}),
       endingDesign = (s['endingDesign'] as Map? ?? {}),
+      personalityCompanionRoutes =
+          (s['personalityCompanionRoutes'] as List? ?? const [])
+              .cast<Map<String, dynamic>>(),
+      personalityCompanionMatches = personalityCompanionRoutes
+          .where((route) => route['matched'] == true)
+          .length,
       fateThreads = (s['fateThreads'] as List? ?? []).length,
       companionQuests = (s['companionQuests'] as List? ?? []).length,
       companionQuestStages = (s['companionQuests'] as List? ?? []).fold<int>(
@@ -278,6 +293,8 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       '| 렌더러 결정 | `${(s['engineDecision'] as Map?)?['selectedOption'] ?? 'none'}` | SSOT `engineDecision` · Golden/WASM 적합도 계약 |');
   b.writeln('| 활동 | $acts | `activities.length` |');
   b.writeln('| 성격 | $people | `personalities.length` |');
+  b.writeln(
+      '| 성격 × 동료 공명 | ${personalityCompanionRoutes.length} ($personalityCompanionMatches matched) | `personalityCompanionRoutes` · matching choice bond +1 |');
   b.writeln(
       '| 캐릭터 아카이브 | $characterArchive | `characterArchive.length` · PNG sheetIndex |');
   b.writeln(

@@ -12,11 +12,13 @@ class RelationshipArchivePainter {
       required this.bonds,
       required this.flags,
       required this.portraitSheet,
+      required this.persona,
       required this.locale});
   final Map<String, dynamic> story;
   final Map<String, int> bonds;
   final Map<String, bool> flags;
   final ui.Image? portraitSheet;
+  final int persona;
   final String locale;
   String tr(String key, String fallback) => localized(key, fallback);
   void t(Canvas c, String v, Offset p, double size, Color color,
@@ -43,8 +45,8 @@ class RelationshipArchivePainter {
         Paint());
   }
 
-  void card(Canvas c, Map<String, dynamic> person, Map<String, dynamic> quest,
-      double x, Color accent) {
+  void card(Canvas c, StoryPort model, Map<String, dynamic> person,
+      Map<String, dynamic> quest, double x, Color accent) {
     final id = '${person['id']}',
         bond = bonds[id] ?? 0,
         threshold = person['bondThreshold'] as int? ?? 8;
@@ -71,6 +73,22 @@ class RelationshipArchivePainter {
         teal,
         bold: true);
     t(c, '${person['routeTitle']}', Offset(x + 16, 462), 11, ink, width: 190);
+    final resonance =
+        resolvePersonalityCompanionRoute(model, persona, '${person['id']}');
+    t(
+        c,
+        tr(
+            resonance['matched'] == true
+                ? 'ui.relationshipArchive.resonance.matched'
+                : 'ui.relationshipArchive.resonance.neutral',
+            resonance['matched'] == true
+                ? 'Personality resonance · Bond +1'
+                : 'Different grain · Base bond'),
+        Offset(x + 16, 490),
+        9,
+        resonance['matched'] == true ? accent : ink.withValues(alpha: .52),
+        bold: true,
+        width: 190);
   }
 
   void paint(Canvas c) {
@@ -116,6 +134,7 @@ class RelationshipArchivePainter {
     for (var i = 0; i < people.length && i < 3; i++)
       card(
           c,
+          model,
           people[i],
           quests[i],
           24 + i * 238.0,

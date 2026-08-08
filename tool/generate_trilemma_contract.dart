@@ -55,6 +55,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
                   0, (sum, scene) => sum + (scene['choices'] as List).length),
           'narrativeFateThreads': narrative['fateThreadCount'],
           'companionQuestStages': questStages,
+          'personalityCompanionRoutes':
+              (story['personalityCompanionRoutes'] as List? ?? const []).length,
           'goldens': goldens,
           'localeKeys': dialogue['minimumLocaleKeys'],
           'qualityScoreTarget': qualityScoreTarget,
@@ -98,6 +100,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'multiAxisImpactRate': gameplayTargets['multiAxisImpactRate'],
           'minimumTradeoffRate': gameplayTargets['minimumTradeoffRate'],
           'minimumGatedChoices': gameplayTargets['minimumGatedChoices'],
+          'personalityCompanionRoutes':
+              (story['personalityCompanionRoutes'] as List? ?? const []).length,
+          'matchedPersonalityCompanionRoutes':
+              ((story['personalityCompanionRoutes'] as List? ?? const [])
+                  .where((route) => (route as Map)['matched'] == true)
+                  .length),
           'qualityScoreTarget': qualityScoreTarget,
         },
         'evidence': [

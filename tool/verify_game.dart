@@ -94,6 +94,9 @@ void main() {
   final activities = (story['activities'] as List).cast<Map<String, dynamic>>();
   final people = (story['personalities'] as List).cast<Map<String, dynamic>>();
   final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
+  final personalityCompanionRoutes =
+      (story['personalityCompanionRoutes'] as List? ?? const [])
+          .cast<Map<String, dynamic>>();
   final characterArchive = (story['characterArchive'] as List? ?? const [])
       .cast<Map<String, dynamic>>();
   final locations = (story['locations'] as List).cast<Map<String, dynamic>>();
@@ -309,6 +312,26 @@ void main() {
     fail('personality ids are not unique');
   if ({...companions.map((e) => e['id'])}.length != companions.length)
     fail('companion ids are not unique');
+  final expectedRouteIds = {
+    for (final person in people)
+      for (final companion in companions) '${person['id']}:${companion['id']}'
+  };
+  final routeIds =
+      personalityCompanionRoutes.map((route) => '${route['id']}').toSet();
+  if (personalityCompanionRoutes.length != expectedRouteIds.length ||
+      routeIds.length != expectedRouteIds.length ||
+      !routeIds.containsAll(expectedRouteIds) ||
+      personalityCompanionRoutes
+              .where((route) => route['matched'] == true)
+              .length !=
+          people.length ||
+      personalityCompanionRoutes.any((route) =>
+          route['bondBonus'] is! int ||
+          (route['matched'] == true && route['bondBonus'] < 1) ||
+          (route['matched'] != true && route['bondBonus'] != 0))) {
+    fail(
+        'personality-companion route matrix must cover matched and neutral pairs');
+  }
   if (people.any((e) =>
       e['focusStat'] is! String ||
       e['focusBonus'] is! int ||
@@ -936,5 +959,5 @@ void main() {
           .round();
   if (score < 99) fail('completeness score below 99%: $score%');
   stdout.writeln(
-      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} fateThreads=${fateThreads.length} questStages=$companionQuestStages codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
+      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} companions=${companions.length} personalityCompanionRoutes=${personalityCompanionRoutes.length} events=${events.length} endings=${endings.length} fateThreads=${fateThreads.length} questStages=$companionQuestStages codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
 }

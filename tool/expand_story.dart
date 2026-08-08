@@ -309,6 +309,9 @@ void refreshHashes(Map<String, dynamic> story) {
     'tool/generate_engine_decision.dart#ssot-engine-decision-generator',
     'test/engine_decision_test.dart#deterministic Flutter Canvas engine selection',
     'test/personality_resonance_test.dart#personality focus talent closes the route loop',
+    'lib/game_core.dart#resolvePersonalityCompanionRoute',
+    'test/personality_companion_route_test.dart#personality-companion matrix and resonance',
+    'lib/relationship_archive_painter.dart#personality-companion resonance card',
     'tool/verify_content_depth.dart#content-depth-gate',
     'test/content_depth_test.dart#SSOT exposes depth targets and all non-binary scene mechanics',
     'tool/generate_event_storm.dart#event-storm-generator',
@@ -649,6 +652,24 @@ void materializeCharacterContracts(Map<String, dynamic> story,
     }
   }
   story['characters'] = characters;
+}
+
+void materializePersonalityCompanionRoutes(Map<String, dynamic> story) {
+  final people = (story['personalities'] as List).cast<Map<String, dynamic>>(),
+      companions = (story['companions'] as List).cast<Map<String, dynamic>>();
+  story['personalityCompanionRoutes'] = [
+    for (final person in people)
+      for (final companion in companions)
+        {
+          'id': '${person['id']}:${companion['id']}',
+          'personaId': person['id'],
+          'companionId': companion['id'],
+          'companionPersonality': companion['personality'],
+          'matched': person['id'] == companion['personality'],
+          'bondBonus': person['id'] == companion['personality'] ? 1 : 0,
+          'evidence': 'lib/game_core.dart#resolvePersonalityCompanionRoute',
+        }
+  ];
 }
 
 void materializeChapterScenes(Map<String, dynamic> story,
@@ -4682,6 +4703,8 @@ void main() {
     'ui.relationshipArchive.followup': '상태별 후속 기록',
     'ui.relationshipArchive.bond': '유대',
     'ui.relationshipArchive.quest': '퀘스트',
+    'ui.relationshipArchive.resonance.matched': '성격 공명 · 유대 +1',
+    'ui.relationshipArchive.resonance.neutral': '서로 다른 결 · 기본 유대',
     'ui.relationshipArchive.back': '← 운명 기록',
     'ui.characterArt.title': '루멘 사람들',
     'ui.characterArt.lead': '선택으로 가까워진 루멘 사람들의 하루를 만나 보세요.',
@@ -4831,6 +4854,9 @@ void main() {
     'ui.relationshipArchive.followup': 'State follow-up',
     'ui.relationshipArchive.bond': 'Bond',
     'ui.relationshipArchive.quest': 'Quest',
+    'ui.relationshipArchive.resonance.matched':
+        'Personality resonance · Bond +1',
+    'ui.relationshipArchive.resonance.neutral': 'Different grain · Base bond',
     'ui.relationshipArchive.back': '← Fate ledger',
     'ui.characterArt.title': 'People of Lumen',
     'ui.characterArt.lead':
@@ -5072,6 +5098,7 @@ void main() {
       .expand(
           (scene) => (scene['choices'] as List).cast<Map<String, dynamic>>())
       .toList();
+  materializePersonalityCompanionRoutes(story);
   final choices = [...mainChoices, ...sideChoices];
   final authoredScenes = [
     ...(story['events'] as List).cast<Map<String, dynamic>>(),
@@ -5139,6 +5166,12 @@ void main() {
       'divergentEvents': divergentEvents,
       'eventDivergenceRate': divergentEvents / authoredScenes.length,
       'gatedChoices': gatedChoices,
+      'personalityCompanionRoutes':
+          (story['personalityCompanionRoutes'] as List).length,
+      'matchedPersonalityCompanionRoutes':
+          (story['personalityCompanionRoutes'] as List)
+              .where((route) => (route as Map)['matched'] == true)
+              .length,
     },
     'definitions': {
       'choiceImpactRate': 'effectful authored choices / authored choices',
@@ -5149,6 +5182,8 @@ void main() {
       'tradeoffRate':
           'choices with at least one positive and one negative numeric axis / choices',
       'feedbackGolden': 'authored result banner is fixed by Canvas Golden',
+      'personalityCompanionResonance':
+          'matching personality and companion add one deterministic bond point',
     },
     'evidence': [
       'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',

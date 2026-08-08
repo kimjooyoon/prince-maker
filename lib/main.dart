@@ -1200,6 +1200,7 @@ class Scene extends CustomPainter {
         bonds: bonds,
         flags: flags,
         portraitSheet: personaImage,
+        persona: persona,
         locale: activeLocale,
       ).paint(c);
 
