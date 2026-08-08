@@ -6,7 +6,7 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "b5e4833d4154ac83a23a4763bd784d343fef6a4c9641940d17050aa4768014b1"
+      "sha256": "a29da041fa28183e079055072647468ab3d39a60d66057f239e90a48948757a1"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
@@ -180,7 +180,7 @@
         "id": "presentation",
         "name": "장면 결산",
         "target": "도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다",
-        "current": "26 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / outing choice / relationship, memory and legacy gates / three companion epilogues",
+        "current": "27 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / three companion epilogues",
         "evidence": "test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence"
       },
       {

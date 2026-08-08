@@ -490,7 +490,7 @@ class Scene extends CustomPainter {
   final String locale;
   final Map<String, Map<String, String>> locales;
   void txt(Canvas c, String v, Offset p, double z, Color color,
-      {bool bold = false}) {
+      {bool bold = false, double maxWidth = 330}) {
     final t = TextPainter(
         text: TextSpan(
             text: v,
@@ -500,7 +500,7 @@ class Scene extends CustomPainter {
                 color: color,
                 fontWeight: bold ? FontWeight.w800 : FontWeight.w400)),
         textDirection: TextDirection.ltr)
-      ..layout(maxWidth: 330);
+      ..layout(maxWidth: maxWidth);
     t.paint(c, p);
   }
 
@@ -777,7 +777,8 @@ class Scene extends CustomPainter {
     txt(c, locationName, const Offset(25, 66), 11, teal, bold: true);
     txt(c, e['title'], const Offset(25, 84), 16, teal);
     box(c, const Rect.fromLTWH(24, 120, 712, 110), ink, radius: 22);
-    txt(c, e['body'], const Offset(48, 158), 22, Colors.white, bold: true);
+    txt(c, e['body'], const Offset(48, 158), 22, Colors.white,
+        bold: true, maxWidth: 640);
     for (var i = 0; i < 2; i++) {
       final x = 24 + i * 356.0,
           ch = e['choices'][i],
