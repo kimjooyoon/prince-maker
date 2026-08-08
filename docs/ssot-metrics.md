@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 7da011f786f4b688e9e09e1cbd586f49dcd2705022dadb4895d95c18dd34eb22 -->
+<!-- ssot-sha256: 0c9107f3ce59ff6e40e410b4138785a363c4f97c76c91842ecbe9f5d25f4e3ea -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
