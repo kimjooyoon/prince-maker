@@ -34,6 +34,7 @@ void verifyTrilemmaContract(String storyHash,
       (complete['companionQuestStages'] as int? ?? 0) < 9 ||
       (complete['activityForecastGoldens'] as int? ?? 0) < 1 ||
       (complete['activityReflectionGoldens'] as int? ?? 0) < 1 ||
+      (complete['activityJournalGoldens'] as int? ?? 0) < 1 ||
       complete['goldens'] < 20 ||
       complete['localeKeys'] < 118 ||
       complete['qualityScoreTarget'] != qualityScoreTarget ||
@@ -56,6 +57,8 @@ void verifyTrilemmaContract(String storyHash,
       purity['activityForecastDeterminism'] != true ||
       (purity['activityReflectionGoldens'] as int? ?? 0) < 1 ||
       purity['activityReflectionDeterminism'] != true ||
+      (purity['activityJournalGoldens'] as int? ?? 0) < 1 ||
+      purity['activityJournalDeterminism'] != true ||
       purity['qualityScoreTarget'] != qualityScoreTarget ||
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] != 5000 * (endingWeek - 1 + eventCount) ||
@@ -802,6 +805,10 @@ void main() {
       File('test/activity_reflection_golden_test.dart').existsSync()
           ? File('test/activity_reflection_golden_test.dart').readAsStringSync()
           : '';
+  final activityJournalGoldenEvidence =
+      File('test/activity_journal_golden_test.dart').existsSync()
+          ? File('test/activity_journal_golden_test.dart').readAsStringSync()
+          : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
           ? File('tool/verify_scenario_variants.dart').readAsStringSync()
@@ -851,6 +858,7 @@ void main() {
     'personality-bold.png',
     'activity-forecast.png',
     'activity-reflection-en.png',
+    'activity-journal-en.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -951,6 +959,10 @@ void main() {
             'event shows localized activity reflection after day spend') &&
         activityReflectionGoldenEvidence
             .contains("goldens/activity-reflection-en.png") &&
+        activityJournalGoldenEvidence.contains(
+            'activity journal renders deterministic reflection pages') &&
+        activityJournalGoldenEvidence
+            .contains("goldens/activity-journal-en.png") &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(

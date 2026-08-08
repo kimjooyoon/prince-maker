@@ -1051,3 +1051,11 @@
 {"type":"entry","key":"ui.home.forecast.none","value":"변화 없음"}
 {"type":"entry","key":"ui.home.fatigueDelta","value":"피로 {delta}"}
 {"type":"entry","key":"ui.event.activityReflection","value":"활동의 잔향 · {title}"}
+{"type":"entry","key":"ui.home.journal","value":"활동 회고"}
+{"type":"entry","key":"ui.journal.title","value":"활동 회고 일지"}
+{"type":"entry","key":"ui.journal.subtitle","value":"오늘의 선택은 사라지지 않고 다음 시선이 됩니다."}
+{"type":"entry","key":"ui.journal.count","value":"발견 {found}/{total}"}
+{"type":"entry","key":"ui.journal.hiddenTitle","value":"아직 쓰이지 않은 페이지"}
+{"type":"entry","key":"ui.journal.hidden","value":"계속 걸으면 이 페이지가 열립니다."}
+{"type":"entry","key":"ui.journal.lock","value":"다음 하루가 이곳에 한 줄을 남깁니다."}
+{"type":"entry","key":"ui.journal.back","value":"← 홈으로"}

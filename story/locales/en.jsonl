@@ -1051,3 +1051,11 @@
 {"type":"entry","key":"ui.home.forecast.none","value":"No numeric change"}
 {"type":"entry","key":"ui.home.fatigueDelta","value":"Fatigue {delta}"}
 {"type":"entry","key":"ui.event.activityReflection","value":"Activity reflection · {title}"}
+{"type":"entry","key":"ui.home.journal","value":"Reflection journal"}
+{"type":"entry","key":"ui.journal.title","value":"Activity reflection journal"}
+{"type":"entry","key":"ui.journal.subtitle","value":"Today’s choice does not vanish; it becomes the next way of seeing."}
+{"type":"entry","key":"ui.journal.count","value":"Found {found}/{total}"}
+{"type":"entry","key":"ui.journal.hiddenTitle","value":"An unwritten page"}
+{"type":"entry","key":"ui.journal.hidden","value":"Keep walking to open this page."}
+{"type":"entry","key":"ui.journal.lock","value":"A future day will leave a line here."}
+{"type":"entry","key":"ui.journal.back","value":"← Back to home"}
