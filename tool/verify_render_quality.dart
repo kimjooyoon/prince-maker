@@ -138,6 +138,7 @@ void main() {
     'goldens/legacy-picker.png',
     'goldens/legacy-picker-en.png',
     'goldens/legacy-picker-selected.png',
+    'goldens/legacy-home.png',
   ]) {
     requireText('test/golden_test.dart', goldenTest, name);
   }

@@ -652,6 +652,7 @@ class _Game extends State<Game> {
                           activities,
                           collectionEntries,
                           selectedLegacyId,
+                          session.legacyId,
                           locale,
                           widget.locales),
                       size: viewport),
@@ -693,6 +694,7 @@ class Scene extends CustomPainter {
       this.activities,
       this.collectionEntries,
       this.selectedLegacyId,
+      this.legacyId,
       this.locale,
       this.locales) {
     repaintKey = canvasSceneFingerprint([
@@ -732,6 +734,7 @@ class Scene extends CustomPainter {
           .toList(),
       collectionEntries,
       selectedLegacyId,
+      legacyId,
       locale,
       locales.hashCode,
     ]);
@@ -759,6 +762,7 @@ class Scene extends CustomPainter {
   final List<Activity> activities;
   final List<Map<String, dynamic>> collectionEntries;
   final String? selectedLegacyId;
+  final String? legacyId;
   final String locale;
   final Map<String, Map<String, String>> locales;
   late final String repaintKey;
@@ -784,6 +788,16 @@ class Scene extends CustomPainter {
     for (final entry in values.entries)
       value = value.replaceAll('{${entry.key}}', '${entry.value}');
     return value;
+  }
+
+  Map<String, dynamic>? legacyProfile() {
+    if (legacyId == null) return null;
+    final profile = (s['legacyProfiles'] as List? ?? const [])
+        .whereType<Map>()
+        .map((item) => item.cast<String, dynamic>())
+        .firstWhere((item) => '${item['id']}' == legacyId,
+            orElse: () => <String, dynamic>{});
+    return profile.isEmpty ? null : profile;
   }
 
   String readableHistory(String entry) {
@@ -1286,7 +1300,8 @@ class Scene extends CustomPainter {
         people = (s['personalities'] as List? ?? const []),
         talent =
             people.isEmpty ? null : people[persona.clamp(0, people.length - 1)],
-        relation = relationshipState;
+        relation = relationshipState,
+        lineage = legacyProfile();
     txt(c, localized('ui.home.title', '${s['title']}'), const Offset(24, 24),
         30, ink,
         bold: true);
@@ -1301,6 +1316,21 @@ class Scene extends CustomPainter {
         radius: 22, shadow: true);
     box(c, const Rect.fromLTWH(44, 125, 76, 76), sun, radius: 18);
     portrait(c, const Rect.fromLTWH(45, 122, 74, 80), persona);
+    if (lineage != null)
+      txt(
+          c,
+          formatUi('ui.home.legacy', 'Inherited · {title} · {stat} +{bonus}', {
+            'title': localized('${lineage['titleKey']}',
+                '${lineage['title'] ?? lineage['id']}'),
+            'stat': localizedStat('${lineage['stat']}'),
+            'bonus': lineage['bonus'] ?? 0,
+          }),
+          const Offset(140, 109),
+          9,
+          sun,
+          bold: true,
+          maxWidth: 560,
+          maxLines: 1);
     txt(
         c,
         formatUi('ui.home.week', '{hero} · week {week}', {

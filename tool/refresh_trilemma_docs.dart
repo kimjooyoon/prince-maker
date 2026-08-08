@@ -46,6 +46,10 @@ String render(String source) {
     output = output.replaceAll('collection-driven legacy unlock',
         'collection-driven legacy unlock with explicit ending picker');
   }
+  if (!output.contains('next-run home lineage feedback')) {
+    output = output.replaceAll('explicit ending picker',
+        'explicit ending picker with next-run home lineage feedback');
+  }
   output = output
       .replaceAll('Canvas UI 다섯 상태 행렬·활동 forecast·활동 회고 일지·실제',
           'Canvas UI 다섯 상태 행렬·활동 forecast·활동 회고 일지(ko/en)·실제')

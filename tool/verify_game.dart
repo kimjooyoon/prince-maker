@@ -296,8 +296,10 @@ void main() {
       legacySelection['maximumVisibleProfiles'] != 3 ||
       legacySelection['defaultWhenUntouched'] is! String ||
       legacySelection['effect'] is! String ||
+      legacySelection['homeFeedback'] is! String ||
       !legacySelectionEvidence
           .contains('lib/legacy_profile_catalog.dart#unlockedLegacyProfiles') ||
+      !legacySelectionEvidence.contains('lib/main.dart#legacyProfile') ||
       !legacySelectionEvidence.contains('lib/main.dart#legacyPicker') ||
       !legacySelectionEvidence.contains(
           'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order') ||
@@ -858,6 +860,7 @@ void main() {
     'legacy-picker.png',
     'legacy-picker-en.png',
     'legacy-picker-selected.png',
+    'legacy-home.png',
     'companion-epilogue.png',
     'companion-stargazer.png',
     'companion-gardener.png',
@@ -944,6 +947,7 @@ void main() {
         uiEvidence.contains("goldens/legacy-picker.png") &&
         uiEvidence.contains("goldens/legacy-picker-en.png") &&
         uiEvidence.contains("goldens/legacy-picker-selected.png") &&
+        uiEvidence.contains("goldens/legacy-home.png") &&
         uiEvidence
             .contains("matchesGoldenFile('goldens/companion-epilogue.png')") &&
         uiEvidence.contains(
