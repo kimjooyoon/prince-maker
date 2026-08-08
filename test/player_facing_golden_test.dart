@@ -21,6 +21,55 @@ Future<Map<String, Map<String, String>>> loadLocales() async => {
 const emptyStats = {'지혜': 4, '공감': 5, '용기': 3};
 
 void main() {
+  String currentCanvasKey(WidgetTester tester) =>
+      (tester.widget<CustomPaint>(find.byType(CustomPaint)).key!
+              as ValueKey<String>)
+          .value;
+
+  testWidgets('English core loop reaches the ninth-week chapter closure',
+      (tester) async {
+    final source = await loadStory(), catalog = await loadLocales();
+    await tester.pumpWidget(Game(source,
+        locales: catalog,
+        initialSnapshot: const GameSnapshot(
+          week: 1,
+          coins: 12,
+          fatigue: 0,
+          selected: 0,
+          persona: 0,
+          page: 1,
+          eventIndex: 0,
+          stats: emptyStats,
+          history: [],
+        )));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(650, 50));
+    await tester.pump();
+    await tester.tapAt(const Offset(600, 560));
+    await tester.pump();
+
+    var reachedNinthClosure = false;
+    for (var i = 0; i < 9; i++) {
+      expect(currentCanvasKey(tester).endsWith('-en'), isTrue);
+      await tester.tapAt(const Offset(510, 270));
+      await tester.tapAt(const Offset(650, 550));
+      await tester.pump();
+      var key = currentCanvasKey(tester);
+      if (key.startsWith('3-')) {
+        await tester.tapAt(const Offset(200, 350));
+        await tester.pump();
+        key = currentCanvasKey(tester);
+      }
+      if (key.startsWith('6-')) {
+        reachedNinthClosure |= key.startsWith('6-9-');
+        await tester.tapAt(const Offset(500, 540));
+        await tester.pump();
+      }
+    }
+    expect(reachedNinthClosure, isTrue);
+    expect(currentCanvasKey(tester).endsWith('-en'), isTrue);
+  });
+
   testWidgets('English home is a player-facing core-loop Golden',
       (tester) async {
     await tester.pumpWidget(Game(await loadStory(),

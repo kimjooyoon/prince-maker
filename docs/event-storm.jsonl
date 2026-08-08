@@ -1,6 +1,6 @@
 {"type":"header","schema":"lumen-document-jsonl-v1","document":"docs/event-storm.jsonl"}
 {"type":"field","key":"schema","value":"lumen-event-storm-v1"}
-{"type":"field","key":"source","value":{"ref":"story/story.jsonl#root","sha256":"52fb864273908273b604c2a914530c66fe3dae9b30dfa0dd64917412852a402e"}}
+{"type":"field","key":"source","value":{"ref":"story/story.jsonl#root","sha256":"d8ac2f3e05128bf2a431391d2713c3f687530f3d6dc8940aee5b5c0f3944210c"}}
 {"type":"field","key":"responsibility","value":{"owner":"Lumen Ledger System","mode":"system-adjudicated","failureMode":"fail-closed","humanApprovalRequired":false,"approvalEvidence":["tool/verify_event_storm.dart#event-storm-gate","tool/ci_gate.dart#system-verdict"]}}
 {"type":"item","section":"loop","index":0,"id":"0","value":"trigger"}
 {"type":"item","section":"loop","index":1,"id":"1","value":"command"}

@@ -326,6 +326,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/player_input_contract_test.dart#visible illustration back label returns home',
     'test/player_facing_golden_test.dart#English home is a player-facing core-loop Golden',
     'test/player_facing_golden_test.dart#save archive hides raw trace and renders localized summaries',
+    'test/player_facing_golden_test.dart#English core loop reaches the ninth-week chapter closure',
     'lib/environment_catalog.dart#environmentsFromStory',
     'lib/design_tokens.dart#DesignTokens',
     'lib/canvas_ui_kit.dart#CanvasUiKit',

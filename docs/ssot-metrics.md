@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 52fb864273908273b604c2a914530c66fe3dae9b30dfa0dd64917412852a402e -->
+<!-- ssot-sha256: d8ac2f3e05128bf2a431391d2713c3f687530f3d6dc8940aee5b5c0f3944210c -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -35,7 +35,7 @@
 | 교환 선택 | 72/166 (0.43373493975903615) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |
 | 엔딩 | 6 | `endings.length` |
 | Canvas Golden | 76 | `test/goldens/*.png` |
-| 코드 ref | 73 | `codeRefs.length` |
+| 코드 ref | 74 | `codeRefs.length` |
 | 이미지 ref | 21 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
