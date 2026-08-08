@@ -19,7 +19,7 @@ import 'game_core.dart';
 import 'character_roster.dart';
 import 'environment_catalog.dart';
 import 'canvas_ui_kit.dart';
-import 'choice_impact.dart';
+import 'canvas_choice_impact.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -1742,7 +1742,6 @@ class Scene extends CustomPainter {
                   .replaceAll('{stat}', '${legacyBonus['stat']}')
                   .replaceAll('{delta}', '${legacyBonus['delta']}')
               : '',
-          tradeoff = ChoiceImpact.from(ch).hasTradeoff,
           relation = rival == null
               ? ''
               : ' · $rival 유대 ${rivalDelta >= 0 ? '+' : ''}$rivalDelta';
@@ -1766,15 +1765,7 @@ class Scene extends CustomPainter {
           maxWidth: 190);
       dialoguePortrait(c, Rect.fromLTWH(x + 230, 300, 82, 102), ch);
       drawChoiceEcho(c, ch, Offset(x + 22, 435));
-      txt(
-          c,
-          localized(tradeoff ? 'ui.event.tradeoff' : 'ui.event.commitment',
-              tradeoff ? '교환이 있는 선택' : '축을 쌓는 선택'),
-          Offset(x + 22, 420),
-          10,
-          tradeoff ? sun : teal,
-          bold: true,
-          maxWidth: 190);
+      drawChoiceImpact(c, Rect.fromLTWH(x + 22, 420, 190, 8), ch);
     }
     txt(
         c,

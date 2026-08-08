@@ -110,6 +110,7 @@ void main() {
     'docs/design-system.md',
     'lib/canvas_ui_kit.dart',
     'lib/choice_impact.dart',
+    'lib/canvas_choice_impact.dart',
     'test/canvas_ui_kit_test.dart',
     'test/choice_impact_test.dart',
     'test/ui_design_contract_test.dart',

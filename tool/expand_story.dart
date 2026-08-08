@@ -316,6 +316,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/design_tokens.dart#DesignTokens',
     'lib/canvas_ui_kit.dart#CanvasUiKit',
     'lib/choice_impact.dart#ChoiceImpact',
+    'lib/canvas_choice_impact.dart#drawChoiceImpact',
     'lib/ui_state_gallery.dart#CanvasUiStateGalleryPainter',
     'test/canvas_ui_kit_test.dart#Canvas UI primitives paint every required state',
     'test/choice_impact_test.dart#shared projection distinguishes a meaningful trade-off',

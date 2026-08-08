@@ -1,7 +1,7 @@
 {"type":"header","schema":"lumen-document-jsonl-v1","document":"docs/decision-proof-contract.jsonl"}
 {"type":"field","key":"schema","value":"lumen-decision-proof-v1"}
 {"type":"field","key":"version","value":1}
-{"type":"field","key":"source","value":{"ref":"story/story.jsonl#decisionSystem","sha256":"6f42f47d83a2dc1d884142364e5e6b2814897c6ea91eef979177169cdd748ca6"}}
+{"type":"field","key":"source","value":{"ref":"story/story.jsonl#decisionSystem","sha256":"1f34c44383e7cfea22f907a85e6309856c500863325acea7e202cf13ab1500ff"}}
 {"type":"item","section":"preconditionFields","index":0,"id":"0","value":"kind"}
 {"type":"item","section":"preconditionFields","index":1,"id":"1","value":"subject"}
 {"type":"item","section":"preconditionFields","index":2,"id":"2","value":"week"}
