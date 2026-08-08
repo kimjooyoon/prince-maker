@@ -82,6 +82,9 @@ void main() {
       'goldens/chapter-closure-\$id.png');
   requireText('lib/main.dart', main, 'chapterClosure(c)');
   requireText('lib/main.dart', main, 'page == 6');
+  requireText('lib/main.dart', main, "ui.closure.scene");
+  requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
+      'relationship scene must bind a speaker');
   final goldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()

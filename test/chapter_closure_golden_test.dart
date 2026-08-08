@@ -65,9 +65,18 @@ void main() {
           snapshot = closureSnapshot(source, week);
       expect(snapshot.milestones.containsKey(chapter['milestoneId']), true,
           reason: '$id week=$week milestone=${chapter['milestoneId']}');
+      final scene = (chapter['relationshipScene'] as Map?) ?? const {};
+      expect(scene['speakerId'], isNotNull,
+          reason: '$id relationship scene must bind a speaker');
+      expect(scene['lineKey'], isA<String>(),
+          reason: '$id relationship scene must bind locale text');
       await tester.pumpWidget(
           Game(source, initialSnapshot: snapshot, key: ValueKey(id)));
-      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pumpAndSettle();
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 100)),
+      );
+      await tester.pump();
       expect(find.byKey(ValueKey('6-${snapshot.week}-0-0')), findsOneWidget);
       await expectLater(find.byType(Game),
           matchesGoldenFile('goldens/chapter-closure-$id.png'));

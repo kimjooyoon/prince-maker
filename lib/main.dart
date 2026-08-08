@@ -1040,7 +1040,8 @@ class Scene extends CustomPainter {
         passed = milestones[milestoneId] == true,
         title = localized('${chapter['titleKey']}', '${chapter['title']}'),
         result = localized('${passed ? goal['passKey'] : goal['failKey']}',
-            '${passed ? goal['pass'] : goal['fail']}');
+            '${passed ? goal['pass'] : goal['fail']}'),
+        scene = (chapter['relationshipScene'] as Map? ?? const {}).cast();
     txt(
         c,
         localized(passed ? 'ui.closure.recorded' : 'ui.closure.next',
@@ -1087,8 +1088,22 @@ class Scene extends CustomPainter {
         17, Colors.white,
         bold: true);
     txt(c, localized('ui.closure.link', '결과는 시스템 영수증과 다음 선택에 연결됩니다.'),
-        const Offset(340, 595), 11, teal,
+        const Offset(340, 680), 10, teal,
         maxWidth: 360);
+    if (scene.isNotEmpty) {
+      txt(c, localized('ui.closure.scene', '동행의 한마디'), const Offset(340, 590),
+          10, teal,
+          bold: true);
+      box(c, const Rect.fromLTWH(340, 606, 360, 64), Colors.white,
+          radius: 14, stroke: teal, shadow: true);
+      dialoguePortrait(c, const Rect.fromLTWH(350, 612, 44, 52), scene);
+      txt(c, localized('${scene['titleKey']}', '${scene['title']}'),
+          const Offset(410, 612), 10, ink,
+          bold: true, maxWidth: 270);
+      txt(c, localized('${scene['lineKey']}', '${scene['line']}'),
+          const Offset(410, 633), 10, ink.withValues(alpha: .65),
+          maxWidth: 270);
+    }
   }
 
   void illustration(Canvas c) {

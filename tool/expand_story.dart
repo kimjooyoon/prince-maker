@@ -249,6 +249,158 @@ void materializeCharacterContracts(Map<String, dynamic> story,
   story['characters'] = characters;
 }
 
+void materializeChapterScenes(Map<String, dynamic> story,
+    Map<String, dynamic> ko, Map<String, dynamic> en) {
+  const speakers = {
+    'arrival': 'lumi',
+    'crossing': 'taro',
+    'reply': 'bora',
+    'threshold': 'lumi',
+    'frost': 'bora',
+    'return': 'taro',
+    'constellation': 'lumi',
+    'horizon': 'bora',
+    'seedReturn': 'taro',
+    'fairShare': 'bora',
+    'memoryHouse': 'lumi',
+    'farShore': 'taro',
+    'blankMap': 'lumi',
+    'commons': 'bora',
+    'returningGarden': 'bora',
+    'handoff': 'taro',
+  };
+  const beats = <String, List<String>>{
+    'arrival': [
+      '편지의 첫 가장자리',
+      '모르는 이름을 서둘러 채우지 말자. 빈칸도 함께 읽으면 길이 돼.',
+      'The First Edge of a Letter',
+      'Do not fill an unknown name too quickly. A blank can become a road when we read it together.'
+    ],
+    'crossing': [
+      '부서진 다리의 박자',
+      '한 번에 건너려 하지 마. 서로 다른 발걸음이 맞는 자리를 먼저 찾자.',
+      'The Rhythm of a Broken Bridge',
+      'Do not cross in one leap. Find the place where different footsteps can meet.'
+    ],
+    'reply': [
+      '답장을 접는 손',
+      '마음은 크게 약속할수록 무거워져. 오늘 지킬 만큼만 따뜻하게 접자.',
+      'Hands Folding a Reply',
+      'A promise grows heavy when it grows too large. Fold it warmly to the size we can keep today.'
+    ],
+    'threshold': [
+      '첫 장부의 여백',
+      '숫자와 목소리 사이에 여백을 남기면, 다음 사람이 물을 수 있어.',
+      'The Margin of the First Ledger',
+      'Leave a margin between numbers and voices, so the next person can still ask.'
+    ],
+    'frost': [
+      '멈춘 계절의 온기',
+      '자라지 않는 날도 돌봄의 날이야. 우리는 멈춤을 잊지 말자.',
+      'Warmth in a Stopped Season',
+      'A day without growth can still be a day of care. Let us not forget how to pause.'
+    ],
+    'return': [
+      '돌아온 바람',
+      '길이 돌아왔다고 처음으로 돌아간 건 아니야. 발자국이 방향을 고쳤으니까.',
+      'The Wind That Returned',
+      'A returning road is not the beginning again. The footsteps have corrected its direction.'
+    ],
+    'constellation': [
+      '서로 다른 별자리',
+      '같은 하늘 아래 이유가 다르면, 별을 잇는 선도 여러 개여야 해.',
+      'Different Constellations',
+      'When reasons differ beneath one sky, there must be more than one line between the stars.'
+    ],
+    'horizon': [
+      '먼 영지의 목소리',
+      '도움의 이름을 먼저 정하지 말고, 그곳의 목소리가 무엇을 필요로 하는지 들어보자.',
+      'The Far Province Speaks',
+      'Do not name help before listening to what the voices there actually need.'
+    ],
+    'seedReturn': [
+      '빈 터의 첫 물길',
+      '물을 나누는 건 소유를 잃는 일이 아니야. 다시 흐를 자리를 만드는 일이야.',
+      'The First Waterway in the Empty Field',
+      'Sharing water is not losing ownership. It is making a place where it can flow again.'
+    ],
+    'fairShare': [
+      '공정한 하루',
+      '빠른 사람의 속도를 기준으로 삼으면 돌봄은 늘 늦은 것으로 남아.',
+      'A Fair Day',
+      'If the fastest pace is the measure, care will always be left behind.'
+    ],
+    'memoryHouse': [
+      '기억의 문턱',
+      '기억을 모두 잠그지 말자. 다시 찾을 수 있는 표식 하나면 충분해.',
+      'The Threshold of Memory',
+      'Let us not lock every memory. One marker that can be found again is enough.'
+    ],
+    'farShore': [
+      '건너온 답',
+      '좋은 의도가 먼 곳에서 다른 힘이 될 수 있어. 돌아온 말을 먼저 고치자.',
+      'The Answer That Crossed',
+      'A good intention can become another force far away. First, repair the words that returned.'
+    ],
+    'blankMap': [
+      '빈 지도 옆의 등불',
+      '모른다는 말을 지우지 않으면, 같이 확인할 약속을 세울 수 있어.',
+      'A Lamp Beside the Blank Map',
+      'If we keep the words “we do not know,” we can promise to check together.'
+    ],
+    'commons': [
+      '작은 목소리의 자리',
+      '합의가 조용해질수록, 아직 들리지 않은 사람을 먼저 살펴야 해.',
+      'A Place for the Small Voice',
+      'The quieter an agreement becomes, the more we must look for someone not yet heard.'
+    ],
+    'returningGarden': [
+      '떠남과 머묾의 정원',
+      '꽃이 피는 자리만 고르지 말고, 떠나는 발걸음도 다치지 않을 자리를 남겨줘.',
+      'A Garden for Leaving and Staying',
+      'Do not choose only where flowers bloom. Leave a place where departing feet will not be hurt.'
+    ],
+    'handoff': [
+      '다음 사람의 손',
+      '마지막 장은 닫는 덮개가 아니야. 다음 사람이 다시 펼칠 손잡이야.',
+      'The Next Person’s Hand',
+      'The last page is not a cover that closes. It is a handle for the next person to open again.'
+    ],
+  };
+  final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
+  for (final chapter
+      in (story['progression'] as List).cast<Map<String, dynamic>>()) {
+    final id = '${chapter['id']}', speakerId = speakers[id]!, beat = beats[id]!;
+    final companion = companions.firstWhere((item) => item['id'] == speakerId);
+    final prefix = 'chapter.$id.scene';
+    chapter['relationshipScene'] = {
+      'id': '$id-relationship',
+      'speakerId': speakerId,
+      'speakerNameKey': companion['nameKey'],
+      'speakerPortraitAsset': companion['portraitAsset'],
+      'speakerPortraitFrame': companion['portraitFrame'],
+      'title': beat[0],
+      'titleKey': '$prefix.title',
+      'titleEn': beat[2],
+      'line': beat[1],
+      'lineKey': '$prefix.line',
+      'lineEn': beat[3],
+    };
+    ko['$prefix.title'] = beat[0];
+    ko['$prefix.line'] = beat[1];
+    en['$prefix.title'] = beat[2];
+    en['$prefix.line'] = beat[3];
+  }
+  story['chapterSceneContract'] = {
+    'schema': 'lumen-chapter-scene-v1',
+    'count': speakers.length,
+    'purpose':
+        'mid-chapter relationship beat rendered at deterministic closure',
+    'evidence':
+        'test/chapter_closure_golden_test.dart#relationship-scene-binding',
+  };
+}
+
 void main() {
   final storyFile = File('story/story.json');
   final koFile = File('story/locales/ko.json');
@@ -1689,20 +1841,22 @@ void main() {
   story['contentBudget'] = {
     'schema': 'lumen-playtime-v1',
     'minimumMinutes': 120,
-    'estimatedFirstPlaythroughMinutes': 129,
+    'estimatedFirstPlaythroughMinutes': 137,
     'benchmarkMaxMillis': 24000,
     'campaignWeeks': 48,
     'terminalWeek': 49,
     'authoredEvents': 47,
     'authoredChoices': 94,
     'chapterClosures': 16,
+    'chapterSceneBeats': 16,
     'pacingSeconds': {
       'activityReflection': 75,
       'storyChoice': 75,
       'chapterClosure': 30,
+      'chapterSceneBeat': 30,
     },
     'formula':
-        '48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s = 7,755s = 129m; contract reports a conservative 129m first-playthrough estimate.',
+        '48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s + 16 relationship scene beats × 30s = 8,235s = 137m; contract reports a conservative 137m first-playthrough estimate.',
   };
   story['fateThreads'] = [
     {
@@ -1860,6 +2014,7 @@ void main() {
     'ui.closure.goalCleared': '목표 달성',
     'ui.closure.keepGrowing': '다음에 이어가기',
     'ui.closure.question': '이번 장의 질문',
+    'ui.closure.scene': '동행의 한마디',
     'ui.closure.nextPage': '다음 장으로 →',
     'ui.closure.link': '결과는 시스템 영수증과 다음 선택에 연결됩니다.',
   });
@@ -1886,6 +2041,7 @@ void main() {
     'ui.closure.goalCleared': 'GOAL CLEARED',
     'ui.closure.keepGrowing': 'KEEP GROWING',
     'ui.closure.question': 'This chapter\'s question',
+    'ui.closure.scene': 'A companion\'s line',
     'ui.closure.nextPage': 'Next chapter →',
     'ui.closure.link':
         'The result is linked to the system receipt and next choice.',
@@ -1971,12 +2127,12 @@ void main() {
   };
   story['dialogueMetrics'] = {
     'locales': 'ko,en',
-    'minimumLocaleKeys': 451,
-    'minimumVisibleDialogueLines': 47,
-    'minimumVisibleNarrativeUnits': 160,
-    'authoredDialogueLines': 184,
+    'minimumLocaleKeys': 488,
+    'minimumVisibleDialogueLines': 63,
+    'minimumVisibleNarrativeUnits': 176,
+    'authoredDialogueLines': 216,
     'formula':
-        'catalog 451 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32; one 48-week route exposes at least 47 authored choice lines and 160 narrative units',
+        'catalog 488 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units',
   };
   final choices = (story['events'] as List)
       .cast<Map<String, dynamic>>()
@@ -2064,20 +2220,29 @@ void main() {
       '16 chapters / 47 events / 4 locations / 16 milestones / 16 chapter contracts / terminal week 49';
   byId['agency']!['current'] =
       '94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible';
+  byId['relationship']!['current'] =
+      '3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats';
   byId['feedback']!['current'] =
       'stats, coins, fatigue, 16 milestones and 6 endings';
   byId['gating']!['current'] =
       '16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings';
   byId['presentation']!['current'] =
-      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
+      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;
 
   materializeCharacterContracts(story, ko, en);
-  story['dialogueMetrics']['minimumLocaleKeys'] = 455;
+  materializeChapterScenes(story, ko, en);
+  story['narrativeLoop']['chapterSceneCount'] =
+      (story['progression'] as List).length;
+  story['dialogueMetrics']['minimumLocaleKeys'] = 488;
+  story['dialogueMetrics']['minimumVisibleDialogueLines'] =
+      (story['events'] as List).length + (story['progression'] as List).length;
+  story['dialogueMetrics']['minimumVisibleNarrativeUnits'] = 176;
+  story['dialogueMetrics']['authoredDialogueLines'] = 216;
   story['dialogueMetrics']['formula'] =
-      'catalog 455 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4; one 48-week route exposes at least 47 authored choice lines and 160 narrative units';
+      'catalog 488 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units';
 
   refreshHashes(story);
   final encoder = const JsonEncoder.withIndent('  ');

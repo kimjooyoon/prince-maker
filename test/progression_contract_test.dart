@@ -38,7 +38,7 @@ void main() {
     }
     expect(story['dialogueMetrics'], isA<Map>());
     expect((story['dialogueMetrics'] as Map)['minimumVisibleDialogueLines'],
-        events.length);
+        events.length + chapters.length);
     expect((story['dialogueMetrics'] as Map)['minimumVisibleNarrativeUnits'],
         greaterThanOrEqualTo(160));
   });
