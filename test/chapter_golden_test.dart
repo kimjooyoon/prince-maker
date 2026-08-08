@@ -65,7 +65,10 @@ void main() {
       final snapshot = chapterSnapshot(source, week);
       await tester.pumpWidget(
           Game(source, initialSnapshot: snapshot, key: ValueKey(id)));
-      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pumpAndSettle();
+      await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 100)));
+      await tester.pump();
       expect(find.byKey(ValueKey('3-$week-0-${snapshot.eventIndex}')),
           findsOneWidget);
       await expectLater(

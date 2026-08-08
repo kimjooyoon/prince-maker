@@ -23,6 +23,7 @@
 | 회차 계승 | authored 엔딩 계열 3개가 다음 회차 시작 스탯·flag·trace와 2주차 선택 보정으로 전달 | 3 |
 | 리스크 축 | 피로 0–12, 휴식/과로/성장 페널티 | 1 |
 | 성격 대화 | 독립 성격 3개 + 성장축 재능 보너스 | 3 + 3 |
+| 캐릭터 대화 자산 | 노아·3명 동료 registry + 사건 authored choice 94개의 speaker key/frame binding | 4 characters + 94 bindings |
 | 동료 관계 | 루미·보라·타로 유대 0–100 + 임계 에필로그 | 3 + 3 |
 | 나비효과·동료 퀘스트 | authored memory flag 6개 + 동료별 3단계 퀘스트 9개 + route atlas | 6 + 9 |
 | 나비효과 기록 | authored memory flag를 다음 장 단서·엔딩 회고로 투영 | 6 |
@@ -42,7 +43,7 @@
 | personality campaign 경로 | 지혜·공감·용기 각 성격의 숙련 엔딩 재현 | 3 |
 | 글리프 안정성 | 번들 Noto Sans KR + Canvas 벡터 활동 아이콘 | 1 |
 | i18n 대사 | `key → locale catalog → Canvas` 한국어/English 대사·엔딩·동료·장소 결산 경로 | 2 locale |
-| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 451키 이상 및 엔딩·운명 기록·chapter closure UI 키 검사 | 1 |
+| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 455키 이상 및 character speaker·엔딩·운명 기록·chapter closure UI 키 검사 | 1 |
 | 스토리 진행도 | 1–3부터 46–48주까지 16막, 47개 사건·막 목표 연결 | 16 chapters |
 | 순수성 분기 | 동일 일정 예산의 지혜·공감 경로 + 5개 SSOT 일정 정책 + 동료 8 route set + 6개 fate thread·9개 퀘스트 stage가 서로 다른 authored 엔딩·유대·목표 서명을 생성 | 2,048 vectors + 8 route sets + 6/9 narrative |
 | 자동 게이트 | SSOT 검사·시나리오 vector 열거·해시 매니페스트·정적 분석·Flutter test·Golden·코어 benchmark·Wasm | 8 |

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 import 'design_tokens.dart';
 
 class LocaleCatalog {
@@ -20,6 +21,25 @@ void setActiveFlags(Map<String, bool> flags) => activeFlags = flags;
 
 String localized(String key, String fallback) =>
     activeCatalog.text(activeLocale, key, fallback: fallback);
+
+String localizedSpeaker(Map story, Map choice) {
+  final id = '${choice['speakerId'] ?? choice['bondId'] ?? ''}';
+  final people = (story['companions'] as List? ?? const []).cast<Map>();
+  final person = people.firstWhere((item) => '${item['id']}' == id,
+      orElse: () => <String, dynamic>{});
+  final key = choice['speakerNameKey'] as String? ?? 'companion.$id.name';
+  return localized(key, '${person['name'] ?? id}');
+}
+
+int speakerPortraitFrame(Map story, Map choice) {
+  final id = '${choice['speakerId'] ?? choice['bondId'] ?? ''}';
+  final people = (story['companions'] as List? ?? const []).cast<Map>();
+  final person = people.firstWhere((item) => '${item['id']}' == id,
+      orElse: () => <String, dynamic>{});
+  return (choice['speakerPortraitFrame'] as int?) ??
+      (person['portraitFrame'] as int?) ??
+      0;
+}
 
 void _text(Canvas c, String value, Offset offset, double size, Color color,
     {bool bold = false, double width = 680}) {
@@ -62,7 +82,7 @@ void drawLocalizedIllustration(
 
 void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
     Map<String, int> stats, Map<String, int> bonds,
-    [Map<String, bool>? flags]) {
+    [Map<String, bool>? flags, ui.Image? portraitSheet]) {
   if (activeLocale == 'ko') return;
   final memoryFlags = flags ?? activeFlags;
   final event = story['events'][eventIndex] as Map;
@@ -129,6 +149,14 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
         locked ? ink.withValues(alpha: .45) : ink,
         bold: true,
         width: 280);
+    final sheet = portraitSheet;
+    if (sheet != null) {
+      final frame = speakerPortraitFrame(story, choice), w = sheet.width / 3.0;
+      c.drawImageRect(sheet, Rect.fromLTWH(frame * w, 0, w, sheet.height * .9),
+          Rect.fromLTWH(x + 230, 300, 82, 102), Paint());
+    }
+    _text(c, localizedSpeaker(story, choice), Offset(x + 230, 406), 9, teal,
+        bold: true, width: 82);
     if (legacyBonus is Map)
       _text(
           c,

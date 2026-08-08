@@ -112,6 +112,9 @@ void main() {
       ]
     }));
     await tester.pumpAndSettle();
+    await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 100)));
+    await tester.pump();
     await tester.tapAt(const Offset(200, 550));
     await tester.pump();
     await tester.tapAt(const Offset(200, 550));

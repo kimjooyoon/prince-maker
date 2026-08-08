@@ -457,5 +457,9 @@
   "ui.closure.keepGrowing": "다음에 이어가기",
   "ui.closure.question": "이번 장의 질문",
   "ui.closure.nextPage": "다음 장으로 →",
-  "ui.closure.link": "결과는 시스템 영수증과 다음 선택에 연결됩니다."
+  "ui.closure.link": "결과는 시스템 영수증과 다음 선택에 연결됩니다.",
+  "hero.name": "노아",
+  "companion.lumi.name": "루미",
+  "companion.bora.name": "보라",
+  "companion.taro.name": "타로"
 }

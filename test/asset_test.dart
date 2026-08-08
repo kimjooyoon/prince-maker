@@ -42,4 +42,25 @@ void main() {
           design['silhouette'] is String;
     }), isTrue);
   });
+
+  test('SSOT binds every dialogue choice to a reusable upper-body speaker',
+      () async {
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
+        as Map<String, dynamic>;
+    final characters = (source['characters'] as List).cast<Map>();
+    final choices = (source['events'] as List)
+        .cast<Map>()
+        .expand((event) => (event['choices'] as List).cast<Map>());
+    expect(characters.map((c) => c['id']),
+        containsAll(<String>['noa', 'lumi', 'bora', 'taro']));
+    expect(
+        choices,
+        everyElement(predicate<Map>((choice) =>
+            choice['speakerId'] is String &&
+            choice['speakerNameKey'] is String &&
+            choice['speakerPortraitAsset'] ==
+                'assets/lumen-personality-sheet.png' &&
+            choice['speakerPortraitFrame'] is int)));
+  });
 }

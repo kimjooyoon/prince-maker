@@ -3,7 +3,7 @@
   "version": 1,
   "source": {
     "ref": "story/story.json#decisionSystem",
-    "sha256": "17c5acb0e30e92747a654f95fa499984f36c90e705ff9ad474f6d19f007b5a7e"
+    "sha256": "ab22f68dcb015e04b048cf918325fc341ecaf79a4d1b85984b00ba99a0cb98ac"
   },
   "preconditionFields": [
     "kind",

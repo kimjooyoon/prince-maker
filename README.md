@@ -26,6 +26,7 @@ git config core.hooksPath .githooks
 ![골든 기준 화면](test/goldens/home.png)
 ![계절 목표가 보이는 계획 화면](test/goldens/milestone.png)
 ![사건 선택 Golden](test/goldens/event.png)
+![대화 상대 상반신이 연결된 사건 Golden](test/goldens/chapter-arrival.png)
 ![성격별 상반신 일러스트 페이지](test/goldens/illustration.png)
 ![48주 엔딩 화면](test/goldens/ending.png)
 ![엔딩 원인 회고 보드](test/goldens/ending.png)
@@ -66,7 +67,7 @@ git config core.hooksPath .githooks
 
 게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 94/94 effectful choice, 47/47 divergent event, 94/94 multi-axis choice, 28 gated choice이며, 결과 피드백 Golden까지 purity 축의 fail-closed 게이트로 연결됩니다. 상세 계약은 story/story.json의 gameplayKpis와 tool/verify_gameplay_fun.dart에 있습니다.
 
-스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, `assets/lumen-personality-sheet.png`는 고요·다정·용감 성격의 3프레임 상반신 시트입니다. 두 PNG는 SSOT의 `assetRefs`와 각 personality의 `portraitAsset`/`portraitFrame`으로 연결되어 Canvas 일러스트 페이지에서 표시됩니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
+스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `characters`는 노아와 세 동료의 역할·이름 key·portrait asset/frame을 선언하며, 94개 사건 선택은 `speakerId → locale key → portrait frame`으로 같은 상반신 대화 컴포넌트를 재사용합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, `assets/lumen-personality-sheet.png`는 고요·다정·용감 성격의 3프레임 상반신 시트입니다. 두 PNG는 SSOT의 `assetRefs`와 각 personality/character의 `portraitAsset`/`portraitFrame`으로 연결되어 Canvas 일러스트와 사건 대화에서 표시됩니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
 캐릭터의 독자 조형 규칙과 자산 provenance는 [`docs/art-provenance.md`](docs/art-provenance.md)에 기록하고, SSOT verifier가 PNG 매핑·성격별 색상·모티프·실루엣 필드를 강제합니다.
 
@@ -80,7 +81,7 @@ git config core.hooksPath .githooks
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 11개 authored 분기 축의 2,048개 실제 scenario vector(최소 2,000), 활동·성격·계승 컨텍스트까지 포함한 122,880개 route input, 5개 활동 정책 × 48주, 5개 SSOT 일정 정책 실험에서 distinct ending/signature 3개 이상, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 3개 성격 대화, 3명 동료 유대도·rival bond·관계 충돌·중재 기억·4개 장소 발견·동행 관계 목표·복수 에필로그, 6개 나비효과 기록·동료별 3단계 퀘스트 9개·홈 route atlas, 3개 엔딩 계열별 회차 계승 프로필(다음 회차 시작 스탯 +2·계승 flag·trace·2주차 프로필별 성장 보정·profile route signature·target master ending·target companion epilogue), 16개 막 목표·보상, 47개 고정 사건(각 2선택, 스탯·유대·기억·계승 조건 잠금 포함), 6개 core 엔딩과 최대 48개 terminal route card·94개 사건 선택의 도달성 계약 테스트, 한국어 fixture 8개·English locale 3개·canonical SSOT 홈·4주차 사건·48주차 handoff 사건·canonical SSOT 48주 엔딩·운명 기록 보관소·시스템 승인·거절 영수증·엔딩 도감·관계 route 도감·사건 피드백·관계 긴장·관계 중재·장소 발견·외출·유대 게이트·기억 게이트·계승 게이트 피드백의 62개 골든 화면(16막 canonical 사건·실제 16막 chapter-closure Canvas 화면 포함), `story/locales/ko.json`·`en.json` 키 기반 459키 대사, 모든 SSOT `*Key`와 엔딩·closure UI의 locale 계약 테스트, 성격 화면 언어 토글, 세 성격 숙련 엔딩 campaign 3종, 목표·유대에 따른 결정론적 1–3성 루멘 기록 등급, 재시작 후에도 누적되는 엔딩·관계 도감과 계승 해금, 피로 기반 성장 페널티, 사건 대사·기억·legacy replay, 엔딩 상반신 카드의 달성 관계 목표명·복수 에필로그·회고 보드의 최대 3개 원인 사건·막 목표별 달성/미달 상태·미달 목표 다음 회차 단서, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 기억 플래그와 시스템 결정 영수증을 포함한 `lumen-save-v7` trace, 48주 이후 추가 입력을 차단하는 fail-closed terminal 상태 불변식입니다.
+현재 지표: 11개 authored 분기 축의 2,048개 실제 scenario vector(최소 2,000), 활동·성격·계승 컨텍스트까지 포함한 122,880개 route input, 5개 활동 정책 × 48주, 5개 SSOT 일정 정책 실험에서 distinct ending/signature 3개 이상, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 노아+3명 동료 character registry, 94개 사건 선택의 상반신 speaker binding, 3개 성격 대화, 3명 동료 유대도·rival bond·관계 충돌·중재 기억·4개 장소 발견·동행 관계 목표·복수 에필로그, 6개 나비효과 기록·동료별 3단계 퀘스트 9개·홈 route atlas, 3개 엔딩 계열별 회차 계승 프로필(다음 회차 시작 스탯 +2·계승 flag·trace·2주차 프로필별 성장 보정·profile route signature·target master ending·target companion epilogue), 16개 막 목표·보상, 47개 고정 사건(각 2선택, 스탯·유대·기억·계승 조건 잠금 포함), 6개 core 엔딩과 최대 48개 terminal route card·94개 사건 선택의 도달성 계약 테스트, 한국어 fixture 8개·English locale 3개·canonical SSOT 홈·4주차 사건·48주차 handoff 사건·canonical SSOT 48주 엔딩·운명 기록 보관소·시스템 승인·거절 영수증·엔딩 도감·관계 route 도감·사건 피드백·관계 긴장·관계 중재·장소 발견·외출·유대 게이트·기억 게이트·계승 게이트 피드백의 62개 골든 화면(16막 canonical 사건·실제 16막 chapter-closure Canvas 화면 포함), `story/locales/ko.json`·`en.json` 키 기반 463키 대사(SSOT minimum 455), 모든 SSOT `*Key`와 character speaker/엔딩·closure UI의 locale 계약 테스트, 성격 화면 언어 토글, 세 성격 숙련 엔딩 campaign 3종, 목표·유대에 따른 결정론적 1–3성 루멘 기록 등급, 재시작 후에도 누적되는 엔딩·관계 도감과 계승 해금, 피로 기반 성장 페널티, 사건 대사·기억·legacy replay, 엔딩 상반신 카드의 달성 관계 목표명·복수 에필로그·회고 보드의 최대 3개 원인 사건·막 목표별 달성/미달 상태·미달 목표 다음 회차 단서, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 기억 플래그와 시스템 결정 영수증을 포함한 `lumen-save-v7` trace, 48주 이후 추가 입력을 차단하는 fail-closed terminal 상태 불변식입니다.
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다.
 
