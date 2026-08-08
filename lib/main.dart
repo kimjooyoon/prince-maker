@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
@@ -18,11 +19,14 @@ import 'game_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final s = decodeJsonl(await rootBundle.loadString('story/story.jsonl'));
+  final s = decodeJsonl(utf8.decode(
+      (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
   final locales = <String, Map<String, String>>{};
   for (final locale in ['ko', 'en']) {
-    locales[locale] = decodeJsonlCatalog(
-        await rootBundle.loadString('story/locales/$locale.jsonl'));
+    locales[locale] = decodeJsonlCatalog(utf8.decode((await rootBundle
+            .load('story/locales/$locale.jsonl'))
+        .buffer
+        .asUint8List()));
   }
   runApp(Game(s, locales: locales));
 }

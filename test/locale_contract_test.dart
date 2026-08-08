@@ -19,9 +19,10 @@ Set<String> authoredKeys(dynamic node) {
 }
 
 Future<Map<String, String>> loadCatalog(String locale) async {
-  final raw =
-      decodeJsonl(await rootBundle.loadString('story/locales/$locale.jsonl'))
-          as Map;
+  final raw = decodeJsonl(utf8.decode((await rootBundle
+          .load('story/locales/$locale.jsonl'))
+      .buffer
+      .asUint8List())) as Map;
   return raw.map((key, value) => MapEntry('$key', '$value'));
 }
 

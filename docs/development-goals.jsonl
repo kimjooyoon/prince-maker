@@ -1,10 +1,10 @@
 {"type":"header","schema":"lumen-document-jsonl-v1","document":"docs/development-goals.jsonl"}
 {"type":"field","key":"schema","value":"lumen-development-goals-v1"}
 {"type":"field","key":"version","value":1}
-{"type":"item","section":"source","index":0,"id":"story/story.jsonl#root","value":{"ref":"story/story.jsonl#root","sha256":"5fd4f9870355cf5159f35f102e176704aaba1949eda8a119bf204fbf226992c2"}}
-{"type":"item","section":"source","index":1,"id":"docs/trilemma-contract.jsonl#axes","value":{"ref":"docs/trilemma-contract.jsonl#axes","sha256":"086a0f598d7c7ac7d0ec4b2dfaba774e23d5bee9218dd4dacfdc6766280f573f"}}
+{"type":"item","section":"source","index":0,"id":"story/story.jsonl#root","value":{"ref":"story/story.jsonl#root","sha256":"c418c8c1d83368829d97fe41a385e6cda2a9cf98ba2ae5c3335d7cd2277431f7"}}
+{"type":"item","section":"source","index":1,"id":"docs/trilemma-contract.jsonl#axes","value":{"ref":"docs/trilemma-contract.jsonl#axes","sha256":"46effa15c0a274540db07bfad7ad40e934cfb2cf30ca26d6cf271421329e4377"}}
 {"type":"item","section":"source","index":2,"id":"docs/render-quality-contract.jsonl#preconditions","value":{"ref":"docs/render-quality-contract.jsonl#preconditions","sha256":"74ba654bc5102848bcb4fd6100254f01819e140415f7ae32308aa46254179626"}}
-{"type":"item","section":"source","index":3,"id":"docs/decision-proof-contract.jsonl#preconditionFields","value":{"ref":"docs/decision-proof-contract.jsonl#preconditionFields","sha256":"67f8b9aca2dba82bf6c71abb0f9fef800f16c19b58dae586b27a1de4abfa9957"}}
+{"type":"item","section":"source","index":3,"id":"docs/decision-proof-contract.jsonl#preconditionFields","value":{"ref":"docs/decision-proof-contract.jsonl#preconditionFields","sha256":"356e5e1740274e131b3c51f5517342374c5060431e39772f611b0be3ae0169d1"}}
 {"type":"field","key":"decision","value":{"owner":"Lumen Development Goal Gate","mode":"system-adjudicated","humanApprovalRequired":false,"failureMode":"fail-closed","onlyBlockingCondition":"missing or failed quantitative evidence"}}
 {"type":"field","key":"measurementModel","value":{"principle":"각 단위는 같은 종류끼리만 합산하고, 품질 score와 작업량 index를 혼합하지 않는다.","gapFormula":"max(target - current, 0)","statusRule":"정적 계약 충족과 런타임 증명을 분리하며, 최종 승인에는 CI verdict가 필요하다."}}
 {"type":"item","section":"effortLedger","index":0,"id":"authored-content-units","value":{"id":"authored-content-units","unit":"content-unit","value":227,"formula":"48 weeks + 16 chapters + 47 events + 94 choices + 16 milestones + 6 endings","scope":"authored campaign content and closure work"}}

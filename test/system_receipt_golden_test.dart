@@ -12,9 +12,10 @@ Future<Map<String, dynamic>> story() async => decodeJsonl(utf8
 Future<Map<String, Map<String, String>>> locales() async {
   final result = <String, Map<String, String>>{};
   for (final locale in ['ko', 'en']) {
-    final raw =
-        decodeJsonl(await rootBundle.loadString('story/locales/$locale.jsonl'))
-            as Map;
+    final raw = decodeJsonl(utf8.decode((await rootBundle
+            .load('story/locales/$locale.jsonl'))
+        .buffer
+        .asUint8List())) as Map;
     result[locale] = raw.map((key, value) => MapEntry('$key', '$value'));
   }
   return result;

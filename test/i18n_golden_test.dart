@@ -8,9 +8,10 @@ import 'package:prince_maker/jsonl.dart';
 Future<Map<String, Map<String, String>>> loadLocales() async {
   final locales = <String, Map<String, String>>{};
   for (final locale in ['ko', 'en']) {
-    final raw =
-        decodeJsonl(await rootBundle.loadString('story/locales/$locale.jsonl'))
-            as Map;
+    final raw = decodeJsonl(utf8.decode((await rootBundle
+            .load('story/locales/$locale.jsonl'))
+        .buffer
+        .asUint8List())) as Map;
     locales[locale] = raw.map((key, value) => MapEntry('$key', '$value'));
   }
   return locales;
