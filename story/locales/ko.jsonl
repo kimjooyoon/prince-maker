@@ -1047,3 +1047,6 @@
 {"type":"entry","key":"ui.sideScene.mechanic.handoff-cairn","value":"넘김 돌무더기"}
 {"type":"entry","key":"ui.relationshipArchive.resonance.matched","value":"성격 공명 · 유대 +1"}
 {"type":"entry","key":"ui.relationshipArchive.resonance.neutral","value":"서로 다른 결 · 기본 유대"}
+{"type":"entry","key":"ui.home.forecast","value":"예상 · {effects}"}
+{"type":"entry","key":"ui.home.forecast.none","value":"변화 없음"}
+{"type":"entry","key":"ui.home.fatigueDelta","value":"피로 {delta}"}

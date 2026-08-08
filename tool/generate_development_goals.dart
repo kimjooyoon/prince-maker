@@ -26,6 +26,11 @@ int dartTestCount() => Directory('test')
     .where((file) => file.path.endsWith('_test.dart'))
     .length;
 
+int ciCheckCount() {
+  final source = File('tool/ci_gate.dart').readAsStringSync();
+  return RegExp(r'const GateCheck\(').allMatches(source).length - 1;
+}
+
 Map<String, dynamic> buildDocument() {
   final story = readJson('story/story.jsonl'),
       trilemma = readJson('docs/trilemma-contract.jsonl'),
@@ -65,7 +70,10 @@ Map<String, dynamic> buildDocument() {
       proofs = maps(render['proofs']);
   final decisionProofFields =
       (decisionProof['preconditionFields'] as List).length;
-  final goldens = pngCount(), testFiles = dartTestCount();
+  final goldens = pngCount(),
+      testFiles = dartTestCount(),
+      ciChecks = ciCheckCount(),
+      localCiChecks = ciChecks - 1;
   final questStages = companionQuests.fold<int>(
       0, (sum, quest) => sum + (quest['stages'] as List).length);
   final authoredContentUnits = storyWeeks +
@@ -157,7 +165,7 @@ Map<String, dynamic> buildDocument() {
       'unit': 'proof-unit',
       'value': verificationUnits,
       'formula':
-          '19 local CI checks + 1 Wasm CI check + $testFiles Dart test files + ${preconditions.length} render preconditions + ${proofs.length} render proofs + $decisionProofFields decision precondition fields',
+          '$localCiChecks local CI checks + 1 Wasm CI check + $testFiles Dart test files + ${preconditions.length} render preconditions + ${proofs.length} render proofs + $decisionProofFields decision precondition fields',
       'scope': 'repeatable automated proof and release readiness',
     },
   ];
@@ -349,14 +357,14 @@ Map<String, dynamic> buildDocument() {
       'priority': 'P0',
       'title': '책임 추적 가능한 납품',
       'target': {
-        'ciChecks': 19,
+        'ciChecks': ciChecks,
         'codeRefs': 24,
         'decisionProofFields': 14,
         'unit': 'delivery-proof-units',
       },
       'currentContract': {
-        'ciChecks': 19,
-        'localCiChecks': 19,
+        'ciChecks': ciChecks,
+        'localCiChecks': localCiChecks,
         'wasmCiChecks': 1,
         'codeRefs': codeRefs.length,
         'decisionProofFields': decisionProofFields,

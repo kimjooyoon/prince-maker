@@ -150,6 +150,13 @@ void main() {
   }
   requireEqual(benchmark['checksum'], benchmark['replayChecksum'],
       'benchmark replay checksum drift');
+  requireEqual(
+      benchmark['forecastChecksum'],
+      benchmark['replayForecastChecksum'],
+      'activity forecast replay checksum drift');
+  if ((benchmark['forecastChecksum'] as int? ?? 0) <= 0) {
+    fail('activity forecast benchmark did not execute');
+  }
   if ((benchmark['signatures'] as int) < 3 ||
       (benchmark['endings'] as int) < 3 ||
       (benchmark['locations'] as int) < 4) {

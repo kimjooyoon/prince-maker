@@ -32,6 +32,7 @@ void verifyTrilemmaContract(String storyHash,
       (complete['scenarioRouteInputs'] as int? ?? 0) < 2000 ||
       (complete['narrativeFateThreads'] as int? ?? 0) < 6 ||
       (complete['companionQuestStages'] as int? ?? 0) < 9 ||
+      (complete['activityForecastGoldens'] as int? ?? 0) < 1 ||
       complete['goldens'] < 20 ||
       complete['localeKeys'] < 118 ||
       complete['qualityScoreTarget'] != qualityScoreTarget ||
@@ -50,6 +51,8 @@ void verifyTrilemmaContract(String storyHash,
       (purity['eventDivergenceRate'] as num? ?? 0) < 1.0 ||
       (purity['multiAxisImpactRate'] as num? ?? 0) < 0.9 ||
       (purity['minimumGatedChoices'] as int? ?? 0) < 20 ||
+      (purity['activityForecastGoldens'] as int? ?? 0) < 1 ||
+      purity['activityForecastDeterminism'] != true ||
       purity['qualityScoreTarget'] != qualityScoreTarget ||
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] != 5000 * (endingWeek - 1 + eventCount) ||
@@ -58,6 +61,7 @@ void verifyTrilemmaContract(String storyHash,
       performance['lineageTargetEndings'] < 3 ||
       performance['lineageTargetCompanions'] < 3 ||
       performance['checksumReplayMustMatch'] != true ||
+      performance['activityForecastDeterminism'] != true ||
       performance['qualityScoreTarget'] != qualityScoreTarget ||
       performance['systemApproval'] != true ||
       performance['failClosed'] != true) {
@@ -787,6 +791,10 @@ void main() {
       File('test/player_facing_golden_test.dart').existsSync()
           ? File('test/player_facing_golden_test.dart').readAsStringSync()
           : '';
+  final activityForecastGoldenEvidence =
+      File('test/activity_forecast_golden_test.dart').existsSync()
+          ? File('test/activity_forecast_golden_test.dart').readAsStringSync()
+          : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
           ? File('tool/verify_scenario_variants.dart').readAsStringSync()
@@ -834,6 +842,7 @@ void main() {
     'personality-quiet.png',
     'personality-kind.png',
     'personality-bold.png',
+    'activity-forecast.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -926,6 +935,10 @@ void main() {
         playerFacingGoldenEvidence.contains("goldens/personality-quiet.png") &&
         playerFacingGoldenEvidence.contains("goldens/personality-kind.png") &&
         playerFacingGoldenEvidence.contains("goldens/personality-bold.png") &&
+        activityForecastGoldenEvidence
+            .contains('home shows deterministic activity forecasts') &&
+        activityForecastGoldenEvidence
+            .contains("goldens/activity-forecast.png") &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(
