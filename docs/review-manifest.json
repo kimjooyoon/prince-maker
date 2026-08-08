@@ -210,7 +210,7 @@
     {
       "path": "docs/trilemma.md",
       "ref": "docs/trilemma.md#closed-loop",
-      "sha256": "80b0715d60ef56939a308b539356dd94601cfceb228db614185b4f68beb10fc7"
+      "sha256": "72eeedabca86adcf5c24c9d2534a49f74db5d4f53b5632e7a2e511f3689e7762"
     },
     {
       "path": "docs/trilemma-contract.json",
@@ -325,7 +325,7 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "a605aca65a176bc7f773a3460000f79a2839a74b17ee568f832ea6e5f6704ed1"
+      "sha256": "f17f895fc6efd5c2b5a9c002139b412612b57e39a63829f97d07375e146cc0bb"
     },
     {
       "path": "test/locale_contract_test.dart",
