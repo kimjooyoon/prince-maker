@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/game_core.dart';
+import 'package:prince_maker/jsonl.dart';
 
-Future<Map<String, dynamic>> loadStory() async => jsonDecode(utf8
-    .decode((await rootBundle.load('story/story.json')).buffer.asUint8List()));
+Future<Map<String, dynamic>> loadStory() async => decodeJsonl(utf8
+    .decode((await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

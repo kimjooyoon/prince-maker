@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'jsonl.dart';
 import 'design_tokens.dart';
 import 'canvas_surface.dart';
 import 'canvas_scene_fingerprint.dart';
@@ -18,13 +19,14 @@ import 'game_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final s = jsonDecode(await rootBundle.loadString('story/story.json'));
+  final s = decodeJsonl(utf8.decode(
+      (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
   final locales = <String, Map<String, String>>{};
   for (final locale in ['ko', 'en']) {
-    final raw =
-        jsonDecode(await rootBundle.loadString('story/locales/$locale.json'))
-            as Map;
-    locales[locale] = raw.map((key, value) => MapEntry('$key', '$value'));
+    locales[locale] = decodeJsonlCatalog(utf8.decode((await rootBundle
+            .load('story/locales/$locale.jsonl'))
+        .buffer
+        .asUint8List()));
   }
   runApp(Game(s, locales: locales));
 }

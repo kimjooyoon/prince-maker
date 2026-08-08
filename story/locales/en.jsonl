@@ -1,0 +1,514 @@
+{"type":"header","schema":"lumen-locale-jsonl-v1","document":"en"}
+{"type":"entry","key":"ui.locale.toggle","value":"한국어"}
+{"type":"entry","key":"ui.locale.current","value":"English"}
+{"type":"entry","key":"ui.ending.title","value":"The End of 48 Weeks"}
+{"type":"entry","key":"ui.ending.subtitle","value":"Lumen remembers the direction Noa chose."}
+{"type":"entry","key":"ui.ending.record","value":"Lumen record"}
+{"type":"entry","key":"ui.ending.retrospective","value":"Record review"}
+{"type":"entry","key":"ui.ending.noEvents","value":"No authored events recorded."}
+{"type":"entry","key":"ui.ending.goalCause","value":"Goals completed"}
+{"type":"entry","key":"ui.ending.nextGoal","value":"Next-run clue"}
+{"type":"entry","key":"ui.ending.allGoals","value":"Every goal was seen."}
+{"type":"entry","key":"ui.ending.seasonLedger","value":"Season goals"}
+{"type":"entry","key":"ui.ending.relationshipGoals","value":"Bond routes"}
+{"type":"entry","key":"ui.ending.restart","value":"Return to Lumen"}
+{"type":"entry","key":"ui.event.legacy","value":"A legacy record has opened a new choice."}
+{"type":"entry","key":"ui.event.legacyBonus","value":"Legacy {stat} +{delta}"}
+{"type":"entry","key":"milestone.spring.title","value":"Spring Star Seed"}
+{"type":"entry","key":"milestone.summer.title","value":"Summer Bridge"}
+{"type":"entry","key":"milestone.autumn.title","value":"Autumn Letter"}
+{"type":"entry","key":"milestone.winter.title","value":"Winter Door"}
+{"type":"entry","key":"milestone.frost.title","value":"Seed Beneath the Frost"}
+{"type":"entry","key":"milestone.return.title","value":"The Returning Waterway"}
+{"type":"entry","key":"milestone.constellation.title","value":"Different Constellations"}
+{"type":"entry","key":"milestone.horizon.title","value":"The Unnamed Horizon"}
+{"type":"entry","key":"companion.lumi.routeTitle","value":"Star-chart companion"}
+{"type":"entry","key":"companion.bora.routeTitle","value":"Greenhouse promise"}
+{"type":"entry","key":"companion.taro.routeTitle","value":"Wind-road companion"}
+{"type":"entry","key":"location.archive.name","value":"Star Archive"}
+{"type":"entry","key":"location.greenhouse.name","value":"Lumen Greenhouse"}
+{"type":"entry","key":"location.market.name","value":"Moonlit Market"}
+{"type":"entry","key":"location.riverRoad.name","value":"Wind Road Beyond the River"}
+{"type":"entry","key":"legacy.stargazer.title","value":"Legacy of the Stargazer"}
+{"type":"entry","key":"legacy.gardener.title","value":"Legacy of the Gardener"}
+{"type":"entry","key":"legacy.pathfinder.title","value":"Legacy of the Pathfinder"}
+{"type":"entry","key":"personality.quiet.name","value":"Quiet Observer"}
+{"type":"entry","key":"personality.quiet.voice","value":"They speak briefly and carefully."}
+{"type":"entry","key":"personality.kind.name","value":"Kind Connector"}
+{"type":"entry","key":"personality.kind.voice","value":"They notice another heart first."}
+{"type":"entry","key":"personality.bold.name","value":"Brave Pathfinder"}
+{"type":"entry","key":"personality.bold.voice","value":"They move first, even after a mistake."}
+{"type":"entry","key":"personality.quiet.line","value":"Stars do not hurry. Today, I will look slowly too."}
+{"type":"entry","key":"personality.kind.line","value":"When you smile, even the garden seems a little brighter."}
+{"type":"entry","key":"personality.bold.line","value":"If there is no road, we can make one with today's step!"}
+{"type":"entry","key":"event.mail.title","value":"The Dawn Mailbox"}
+{"type":"entry","key":"event.mail.body","value":"Before sunrise, a letter from nowhere arrived. Who should read it first?"}
+{"type":"entry","key":"event.mail.lumi.label","value":"Ask Lumi for the star's name"}
+{"type":"entry","key":"event.mail.lumi.line","value":"Naming the unknown brings it a little closer."}
+{"type":"entry","key":"event.mail.bora.label","value":"Share the news on the village board"}
+{"type":"entry","key":"event.mail.bora.line","value":"Good news lasts longer when it is shared."}
+{"type":"entry","key":"event.rain.title","value":"The Night of Rain"}
+{"type":"entry","key":"event.rain.body","value":"The village lamps went dark. Whose hand will Noa reach for first?"}
+{"type":"entry","key":"event.rain.bora.label","value":"Share lantern light with the children"}
+{"type":"entry","key":"event.rain.bora.line","value":"Even a small light becomes a path when shared."}
+{"type":"entry","key":"event.rain.lumi.label","value":"Read the stars and find the way"}
+{"type":"entry","key":"event.rain.lumi.line","value":"The sky has not hidden its direction yet."}
+{"type":"entry","key":"event.bridge.title","value":"How to Cross the River"}
+{"type":"entry","key":"event.bridge.body","value":"The old bridge trembles. With what heart will we cross today?"}
+{"type":"entry","key":"event.bridge.taro.label","value":"Take the first step"}
+{"type":"entry","key":"event.bridge.taro.line","value":"Even if I tremble, this step is mine."}
+{"type":"entry","key":"event.bridge.bora.label","value":"Match everyone's pace"}
+{"type":"entry","key":"event.bridge.bora.line","value":"A river feels less frightening at one shared pace."}
+{"type":"entry","key":"event.windmill.title","value":"The Afternoon the Wind Stopped"}
+{"type":"entry","key":"event.windmill.body","value":"The windmill stopped and the greenhouse window would not close. Who will help?"}
+{"type":"entry","key":"event.windmill.taro.label","value":"Repair the windmill with Taro"}
+{"type":"entry","key":"event.windmill.taro.line","value":"Even still wind can move again when hands reach it."}
+{"type":"entry","key":"event.windmill.bora.label","value":"Listen to Bora and Taro together"}
+{"type":"entry","key":"event.windmill.bora.line","value":"When we hear each other's wind, we can build the road again."}
+{"type":"entry","key":"event.letter.title","value":"A Letter on the Wind"}
+{"type":"entry","key":"event.letter.body","value":"A distant province asks for help. What answer will Noa send?"}
+{"type":"entry","key":"event.letter.lumi.label","value":"Record a careful reply"}
+{"type":"entry","key":"event.letter.lumi.line","value":"Precise words can become a road across distance."}
+{"type":"entry","key":"event.letter.taro.label","value":"Promise to go there in person"}
+{"type":"entry","key":"event.letter.taro.line","value":"I will not make you wait. I will go."}
+{"type":"entry","key":"event.festival.title","value":"The Eve of the Festival"}
+{"type":"entry","key":"event.festival.body","value":"One last preparation remains. What will Noa care for first?"}
+{"type":"entry","key":"event.festival.bora.label","value":"Make a place for everyone to rest"}
+{"type":"entry","key":"event.festival.bora.line","value":"A joyful day still needs a place to rest."}
+{"type":"entry","key":"event.festival.taro.label","value":"Build a new stage by hand"}
+{"type":"entry","key":"event.festival.taro.line","value":"It may lean a little, but we will build it ourselves."}
+{"type":"entry","key":"event.greenhouse.title","value":"A Small Crack in the Greenhouse"}
+{"type":"entry","key":"event.greenhouse.body","value":"A small crack appeared in the greenhouse roof. Whose way will protect spring?"}
+{"type":"entry","key":"event.greenhouse.lumi.label","value":"Ask Lumi about the starlight angle"}
+{"type":"entry","key":"event.greenhouse.lumi.line","value":"If we know where light rests, even a crack can become a path."}
+{"type":"entry","key":"event.greenhouse.bora.label","value":"Patch it with Bora"}
+{"type":"entry","key":"event.greenhouse.bora.line","value":"A place we mend together will hold for a long time."}
+{"type":"entry","key":"event.outing.market.title","value":"A Walk Through the Moonlit Market"}
+{"type":"entry","key":"event.outing.market.body","value":"A short holiday opens up. Who will Noa meet beyond Lumen after spending a few coins?"}
+{"type":"entry","key":"event.outing.market.lumi.label","value":"Find an old map with Lumi"}
+{"type":"entry","key":"event.outing.market.lumi.line","value":"Even a map's edge holds a clue to the next road."}
+{"type":"entry","key":"event.outing.market.bora.label","value":"Browse the seed stalls with Bora"}
+{"type":"entry","key":"event.outing.market.bora.line","value":"If we choose the same seeds, tomorrow's garden may grow alike."}
+{"type":"entry","key":"event.outing.hill.title","value":"A Promise on the Wind Hill"}
+{"type":"entry","key":"event.outing.hill.body","value":"The last holiday before the ending arrives. Whose walking time will shape the next season?"}
+{"type":"entry","key":"event.outing.hill.taro.label","value":"Walk the unnamed road with Taro"}
+{"type":"entry","key":"event.outing.hill.taro.line","value":"It is not too late to name a road after we walk it."}
+{"type":"entry","key":"event.outing.hill.lumi.label","value":"Leave a starlight marker with Lumi"}
+{"type":"entry","key":"event.outing.hill.lumi.line","value":"A marker home means we can go far without losing the way."}
+{"type":"entry","key":"event.bell.title","value":"A Bell Beyond the Map"}
+{"type":"entry","key":"event.bell.body","value":"Every evening, a bell rings beyond the map. Where will Noa listen?"}
+{"type":"entry","key":"event.bell.lumi.label","value":"Record the bell's intervals with Lumi"}
+{"type":"entry","key":"event.bell.lumi.line","value":"Record the intervals, and an unseen road may appear."}
+{"type":"entry","key":"event.bell.taro.label","value":"Find the bell with Taro"}
+{"type":"entry","key":"event.bell.taro.line","value":"Let's walk all the way to where we hear it!"}
+{"type":"entry","key":"event.firstLedger.title","value":"The First Ledger Night"}
+{"type":"entry","key":"event.firstLedger.body","value":"The first twelve weeks are bound into one ledger. Will Noa keep only the numbers, or the voices that made them?"}
+{"type":"entry","key":"event.firstLedger.lumi.label","value":"Record the order of evidence with Lumi"}
+{"type":"entry","key":"event.firstLedger.lumi.line","value":"Do not record only the result; record the footsteps that reached it."}
+{"type":"entry","key":"event.firstLedger.bora.label","value":"Leave everyone's voice in the ledger with Bora"}
+{"type":"entry","key":"event.firstLedger.bora.line","value":"When names enter the record, no one has to carry the decision alone."}
+{"type":"entry","key":"event.frostWindow.title","value":"The Greenhouse Beneath Frost"}
+{"type":"entry","key":"event.frostWindow.body","value":"Overnight frost turns the greenhouse glass white. The seeds inside teach that waiting can come before light."}
+{"type":"entry","key":"event.frostWindow.bora.label","value":"Protect the seeds by lowering the heat with Bora"}
+{"type":"entry","key":"event.frostWindow.bora.line","value":"Care sometimes needs the courage not to force growth."}
+{"type":"entry","key":"event.frostWindow.taro.label","value":"Repair the ice frame with Taro"}
+{"type":"entry","key":"event.frostWindow.taro.line","value":"A stopped mechanism can move again when we inspect it piece by piece."}
+{"type":"entry","key":"event.winterMarket.title","value":"The Empty Chair at the Winter Market"}
+{"type":"entry","key":"event.winterMarket.body","value":"An empty chair stands in the middle of the market. No one knows whether it waits for someone who left or someone who will arrive."}
+{"type":"entry","key":"event.winterMarket.taro.label","value":"Look for the chair's owner with Taro"}
+{"type":"entry","key":"event.winterMarket.taro.line","value":"Do not fear an empty place; ask who it belongs to."}
+{"type":"entry","key":"event.winterMarket.lumi.label","value":"Record the time of waiting with Lumi"}
+{"type":"entry","key":"event.winterMarket.lumi.line","value":"Waiting is also a map that lets someone return."}
+{"type":"entry","key":"event.seedVault.title","value":"The Seed Vault Door"}
+{"type":"entry","key":"event.seedVault.body","value":"No seal marks the door to the storehouse across the river. Before opening it, Noa must find a reason everyone can share."}
+{"type":"entry","key":"event.seedVault.lumi.label","value":"Write public conditions with Lumi"}
+{"type":"entry","key":"event.seedVault.lumi.line","value":"Before a key, let us make conditions anyone can check."}
+{"type":"entry","key":"event.seedVault.bora.label","value":"Share the vault's seeds with Bora"}
+{"type":"entry","key":"event.seedVault.bora.line","value":"When the rule for sharing is shared, the seeds belong to no single person."}
+{"type":"entry","key":"event.returningWater.title","value":"The Back of the Returned Letter"}
+{"type":"entry","key":"event.returningWater.body","value":"A reply arrives from the distant province. Behind its thanks is news that Lumen's choice reached more people than expected."}
+{"type":"entry","key":"event.returningWater.bora.label","value":"List the help we received with Bora"}
+{"type":"entry","key":"event.returningWater.bora.line","value":"Remembering who helped us makes the next help fairer."}
+{"type":"entry","key":"event.returningWater.taro.label","value":"Walk the letter's road with Taro"}
+{"type":"entry","key":"event.returningWater.taro.line","value":"If a letter arrived, we can walk that road again."}
+{"type":"entry","key":"event.sharedRepair.title","value":"A Door Lifted by Two Hands"}
+{"type":"entry","key":"event.sharedRepair.body","value":"The new greenhouse door is too heavy for one person. Can people who repaired it differently hold the same handle?"}
+{"type":"entry","key":"event.sharedRepair.taro.label","value":"Align the hinges again with Taro"}
+{"type":"entry","key":"event.sharedRepair.taro.line","value":"Remove the wrong screw and align it again."}
+{"type":"entry","key":"event.sharedRepair.lumi.label","value":"Record the difference between designs with Lumi"}
+{"type":"entry","key":"event.sharedRepair.lumi.line","value":"A different design can be evidence for the next choice, not an error."}
+{"type":"entry","key":"event.riverCouncil.title","value":"The Shared Well Promise"}
+{"type":"entry","key":"event.riverCouncil.body","value":"The market argues over who should receive the shared well's water first. The rule-maker and the person drawing water both need a voice."}
+{"type":"entry","key":"event.riverCouncil.lumi.label","value":"Publish the distribution order with Lumi"}
+{"type":"entry","key":"event.riverCouncil.lumi.line","value":"When everyone can see the order, waiting becomes a promise."}
+{"type":"entry","key":"event.riverCouncil.bora.label","value":"Check the most thirsty homes with Bora"}
+{"type":"entry","key":"event.riverCouncil.bora.line","value":"A shared rule must still see who is thirsty now."}
+{"type":"entry","key":"event.openRecord.title","value":"The Open Record Day"}
+{"type":"entry","key":"event.openRecord.body","value":"The first ledger is shown to everyone. Each reader finds a different blank, and Noa must choose whether to hide it or leave it as a question."}
+{"type":"entry","key":"event.openRecord.bora.label","value":"Hold a meeting to fill the blanks with Bora"}
+{"type":"entry","key":"event.openRecord.bora.line","value":"A record stays alive when people can say what they do not know together."}
+{"type":"entry","key":"event.openRecord.taro.label","value":"Publish a map that marks every blank with Taro"}
+{"type":"entry","key":"event.openRecord.taro.line","value":"When everyone sees the blank, no one has to find the next road alone."}
+{"type":"entry","key":"event.threeMaps.title","value":"Three Maps"}
+{"type":"entry","key":"event.threeMaps.body","value":"Lumi's star map, Bora's seed map, and Taro's wind map lie on one table. The lines that disagree must be read together instead of erased."}
+{"type":"entry","key":"event.threeMaps.taro.label","value":"Check the road markers with Taro"}
+{"type":"entry","key":"event.threeMaps.taro.line","value":"A map becomes a road when it meets the stones underfoot."}
+{"type":"entry","key":"event.threeMaps.lumi.label","value":"Find common lines with Lumi"}
+{"type":"entry","key":"event.threeMaps.lumi.line","value":"Where different lines meet, there is a reason to verify together."}
+{"type":"entry","key":"event.disagreement.title","value":"The Night of Different Constellations"}
+{"type":"entry","key":"event.disagreement.body","value":"Three judgments split inside the ledger once believed complete. Instead of choosing whose answer is right, Noa studies where each answer began."}
+{"type":"entry","key":"event.disagreement.lumi.label","value":"Place the evidence side by side with Lumi"}
+{"type":"entry","key":"event.disagreement.lumi.line","value":"Before an answer, let us check whether we are looking at the same star."}
+{"type":"entry","key":"event.disagreement.bora.label","value":"Test the smallest agreement with Bora"}
+{"type":"entry","key":"event.disagreement.bora.line","value":"A large promise grows when small agreements continue safely."}
+{"type":"entry","key":"event.horizonMarket.title","value":"The Horizon Market"}
+{"type":"entry","key":"event.horizonMarket.body","value":"A market opens at Lumen's edge to launch a new route. Those who leave and those who stay must be able to read the same price tag."}
+{"type":"entry","key":"event.horizonMarket.bora.label","value":"Make a safe place for those who stay with Bora"}
+{"type":"entry","key":"event.horizonMarket.bora.line","value":"Leaving is possible only when the place left behind is safe."}
+{"type":"entry","key":"event.horizonMarket.taro.label","value":"Raise the first marker of the new route with Taro"}
+{"type":"entry","key":"event.horizonMarket.taro.line","value":"A first marker is a promise that the road can be found again, not a destination."}
+{"type":"entry","key":"event.lastMarker.title","value":"The Last Marker"}
+{"type":"entry","key":"event.lastMarker.body","value":"On the last night before the ending, only one marker can remain on the wind road. Noa chooses a rule the next person can check over a name of their own."}
+{"type":"entry","key":"event.lastMarker.taro.label","value":"Raise a marker anyone can see with Taro"}
+{"type":"entry","key":"event.lastMarker.taro.line","value":"The road must be findable even when I am gone."}
+{"type":"entry","key":"event.lastMarker.lumi.label","value":"Leave the last evidence as a constellation with Lumi"}
+{"type":"entry","key":"event.lastMarker.lumi.line","value":"A final record is not closure; it is the start of the next verification."}
+{"type":"entry","key":"companion.lumi.greeting","value":"A record helps the heart find its way again."}
+{"type":"entry","key":"companion.lumi.epilogue","value":"Lumi left a tiny star beside the first page of Noa's record."}
+{"type":"entry","key":"companion.bora.greeting","value":"Time we grow together does not wither easily."}
+{"type":"entry","key":"companion.bora.epilogue","value":"Bora and Noa planted new seeds at the turning of every season."}
+{"type":"entry","key":"companion.taro.greeting","value":"Even a broken road can join again when we reach for it!"}
+{"type":"entry","key":"companion.taro.epilogue","value":"Taro took Noa down a road that still had no name on any map."}
+{"type":"entry","key":"ending.stargazer.title","value":"Lumen's Stargazer"}
+{"type":"entry","key":"ending.stargazer.body","value":"Noa read the grain of the night sky and lit the province's routes."}
+{"type":"entry","key":"ending.stargazer-master.title","value":"Navigator Who Counts the Dawn"}
+{"type":"entry","key":"ending.stargazer-master.body","value":"Noa recorded the cycles of stars and wind for 48 weeks, leaving a map whose judgments everyone could verify."}
+{"type":"entry","key":"ending.gardener.title","value":"Gardener of Hearts"}
+{"type":"entry","key":"ending.gardener.body","value":"Noa made a garden where different hearts could bloom together."}
+{"type":"entry","key":"ending.gardener-master.title","value":"Keeper of the Village Warmth"}
+{"type":"entry","key":"ending.gardener-master.body","value":"Noa opened a square where stories could meet before quarrels began and every judgment's evidence could be read together."}
+{"type":"entry","key":"ending.pathfinder.title","value":"Pathfinder of New Roads"}
+{"type":"entry","key":"ending.pathfinder.body","value":"Noa left the first footprint on a road without a name."}
+{"type":"entry","key":"ending.pathfinder-master.title","value":"Vanguard Beyond the Border"}
+{"type":"entry","key":"ending.pathfinder-master.body","value":"Noa showed that one can move forward without erasing fear, leaving markers that let the next person replay the road."}
+{"type":"entry","key":"chapter.arrival.title","value":"The Starseed Arrives"}
+{"type":"entry","key":"chapter.arrival.premise","value":"A strange record and a first letter disturb Lumen's quiet."}
+{"type":"entry","key":"chapter.arrival.payoff","value":"Noa decides whose voice to trust first."}
+{"type":"entry","key":"chapter.crossing.title","value":"The Trembling Bridge"}
+{"type":"entry","key":"chapter.crossing.premise","value":"A growing heart learns that crossing together matters more than being first."}
+{"type":"entry","key":"chapter.crossing.payoff","value":"Noa chooses today's balance between speed and courage."}
+{"type":"entry","key":"chapter.reply.title","value":"A Reply from Afar"}
+{"type":"entry","key":"chapter.reply.premise","value":"A request beyond Lumen calls Noa away from a safe routine."}
+{"type":"entry","key":"chapter.reply.payoff","value":"Noa accepts the cost of recording the truth or leaving to meet it."}
+{"type":"entry","key":"chapter.threshold.title","value":"At Winter's Threshold"}
+{"type":"entry","key":"chapter.threshold.premise","value":"Under festival lights, past choices gather into one direction."}
+{"type":"entry","key":"chapter.threshold.payoff","value":"Noa opens a door toward a chosen tomorrow, not a throne."}
+{"type":"entry","key":"chapter.frost.title","value":"The Seed Beneath Frost"}
+{"type":"entry","key":"chapter.frost.premise","value":"After the first ledger, unfinished promises still sleep beneath Lumen's ground."}
+{"type":"entry","key":"chapter.frost.payoff","value":"Noa decides whether to call stillness failure or prepare the next bloom."}
+{"type":"entry","key":"chapter.return.title","value":"The Returning Waterway"}
+{"type":"entry","key":"chapter.return.premise","value":"A distant reply returns, and Noa's choices are written on the faces of Lumen's people."}
+{"type":"entry","key":"chapter.return.payoff","value":"Noa learns to receive help and return it in the same motion."}
+{"type":"entry","key":"chapter.constellation.title","value":"Different Constellations"}
+{"type":"entry","key":"chapter.constellation.premise","value":"On a night of clashing directions, even the shared map gains a blank space."}
+{"type":"entry","key":"chapter.constellation.payoff","value":"Noa chooses whether to own the answer or return its evidence to everyone."}
+{"type":"entry","key":"chapter.horizon.title","value":"The Unnamed Horizon"}
+{"type":"entry","key":"chapter.horizon.premise","value":"The last horizon asks not who was right, but which rule will remain."}
+{"type":"entry","key":"chapter.horizon.payoff","value":"Noa leaves a road that the next person can verify instead of leaving only an answer."}
+{"type":"entry","key":"event.firstHorizon.title","value":"Marker of the First Horizon"}
+{"type":"entry","key":"event.firstHorizon.body","value":"At the first ledger close, Noa leaves a marker for the next season."}
+{"type":"entry","key":"event.firstHorizon.lumi.label","value":"Etch the evidence constellation with Lumi"}
+{"type":"entry","key":"event.firstHorizon.lumi.line","value":"The first horizon should be a direction that can be read again."}
+{"type":"entry","key":"event.firstHorizon.taro.label","value":"Raise a crossing marker with Taro"}
+{"type":"entry","key":"event.firstHorizon.taro.line","value":"Let us promise where the next traveller can place a foot."}
+{"type":"entry","key":"event.seedReturn.title","value":"A Reply Turned Seed"}
+{"type":"entry","key":"event.seedReturn.body","value":"The distant reply holds seeds instead of thanks. Is it a debt, or a promise?"}
+{"type":"entry","key":"event.seedReturn.lumi.label","value":"Record the reply conditions with Lumi"}
+{"type":"entry","key":"event.seedReturn.lumi.line","value":"Even a gift needs its conditions read to last."}
+{"type":"entry","key":"event.seedReturn.bora.label","value":"Share the seeds with Bora"}
+{"type":"entry","key":"event.seedReturn.bora.line","value":"When we share what we received, debt becomes a promise we carry together."}
+{"type":"entry","key":"event.emptyField.title","value":"The Empty Field Across the River"}
+{"type":"entry","key":"event.emptyField.body","value":"Only old stakes remain in the field across the river. Who will begin again?"}
+{"type":"entry","key":"event.emptyField.taro.label","value":"Test a new waterway with Taro"}
+{"type":"entry","key":"event.emptyField.taro.line","value":"An empty field is not a failure; it is an untested place."}
+{"type":"entry","key":"event.emptyField.bora.label","value":"Ask who will stay with Bora"}
+{"type":"entry","key":"event.emptyField.bora.line","value":"Before the land, we need to hear the people who will live here."}
+{"type":"entry","key":"event.witness.title","value":"Witness to a Sprout"}
+{"type":"entry","key":"event.witness.body","value":"The first seed sprouts, but everyone remembers whose hands made it happen differently."}
+{"type":"entry","key":"event.witness.lumi.label","value":"Record the order of hands with Lumi"}
+{"type":"entry","key":"event.witness.lumi.line","value":"Let us record the hands that carried the work, not one person’s credit."}
+{"type":"entry","key":"event.witness.bora.label","value":"Share the first harvest with Bora"}
+{"type":"entry","key":"event.witness.bora.line","value":"Even when memories differ, a shared taste can become the next promise."}
+{"type":"entry","key":"event.receipt.title","value":"The Workshop Receipt"}
+{"type":"entry","key":"event.receipt.body","value":"Three missing blocks of time appear in the workshop ledger. Does unrecorded labour remain a debt?"}
+{"type":"entry","key":"event.receipt.lumi.label","value":"Make the missing time public with Lumi"}
+{"type":"entry","key":"event.receipt.lumi.line","value":"The empty blocks must be visible for the next calculation to be honest."}
+{"type":"entry","key":"event.receipt.taro.label","value":"Measure the work again with Taro"}
+{"type":"entry","key":"event.receipt.taro.line","value":"A wrong calculation can be checked again by hand."}
+{"type":"entry","key":"event.emptyCart.title","value":"The Empty Cart"}
+{"type":"entry","key":"event.emptyCart.body","value":"A cart arrives empty. Everyone names a need, but there is only one coin left."}
+{"type":"entry","key":"event.emptyCart.bora.label","value":"Find the most urgent household with Bora"}
+{"type":"entry","key":"event.emptyCart.bora.line","value":"Equal portions and equal care are not always the same."}
+{"type":"entry","key":"event.emptyCart.taro.label","value":"Call the next cart with Taro"}
+{"type":"entry","key":"event.emptyCart.taro.line","value":"If this was not enough, let us make the next road now."}
+{"type":"entry","key":"event.sharedLabor.title","value":"The Labour of Care"}
+{"type":"entry","key":"event.sharedLabor.body","value":"At the greenhouse’s latest hour, someone’s hands tire first. Whose schedule records care?"}
+{"type":"entry","key":"event.sharedLabor.bora.label","value":"Put care time on the schedule with Bora"}
+{"type":"entry","key":"event.sharedLabor.bora.line","value":"If unseen work changes the day, it deserves a place in the record."}
+{"type":"entry","key":"event.sharedLabor.lumi.label","value":"Find the pattern of late hands with Lumi"}
+{"type":"entry","key":"event.sharedLabor.lumi.line","value":"Repeated fatigue may reveal a rule, not a person’s weakness."}
+{"type":"entry","key":"event.memoryHouse.title","value":"The House of Memory"}
+{"type":"entry","key":"event.memoryHouse.body","value":"A room opens behind the archive. Nameless boxes wait with Lumen’s past."}
+{"type":"entry","key":"event.memoryHouse.lumi.label","value":"Date each box with Lumi"}
+{"type":"entry","key":"event.memoryHouse.lumi.line","value":"Memory need not be perfect, but it needs a marker to be found again."}
+{"type":"entry","key":"event.memoryHouse.bora.label","value":"Wait for the owners with Bora"}
+{"type":"entry","key":"event.memoryHouse.bora.line","value":"Not deciding a name for someone is also a way to care for memory."}
+{"type":"entry","key":"event.lostName.title","value":"The Erased Name"}
+{"type":"entry","key":"event.lostName.body","value":"A crossing marker has lost only its name. The reasons of the eraser and the erased differ."}
+{"type":"entry","key":"event.lostName.taro.label","value":"Ask for a new name with Taro"}
+{"type":"entry","key":"event.lostName.taro.line","value":"Let us ask before writing our name over an erased place."}
+{"type":"entry","key":"event.lostName.bora.label","value":"Preserve the blank marker with Bora"}
+{"type":"entry","key":"event.lostName.bora.line","value":"Let the blank remain a place someone can return to."}
+{"type":"entry","key":"event.archiveLantern.title","value":"The Archive Lantern"}
+{"type":"entry","key":"event.archiveLantern.body","value":"When the lantern goes out, the same ledger reads differently. Noa must decide who carries the light."}
+{"type":"entry","key":"event.archiveLantern.lumi.label","value":"Set public reading hours with Lumi"}
+{"type":"entry","key":"event.archiveLantern.lumi.line","value":"When light is not owned, judgements can be checked together."}
+{"type":"entry","key":"event.archiveLantern.taro.label","value":"Place lanterns in many places with Taro"}
+{"type":"entry","key":"event.archiveLantern.taro.line","value":"Let one dark lantern not darken the whole road."}
+{"type":"entry","key":"event.shadowLetter.title","value":"Shadow from the Distant Province"}
+{"type":"entry","key":"event.shadowLetter.body","value":"The second letter asks for nothing. It says Lumen’s choice has become another village’s rule."}
+{"type":"entry","key":"event.shadowLetter.taro.label","value":"Check the site with Taro"}
+{"type":"entry","key":"event.shadowLetter.taro.line","value":"We must see who our rule pushed aside."}
+{"type":"entry","key":"event.shadowLetter.lumi.label","value":"Trace the rule’s path with Lumi"}
+{"type":"entry","key":"event.shadowLetter.lumi.line","value":"Good intentions can become something else while travelling."}
+{"type":"entry","key":"event.tideCrossing.title","value":"Where Two Currents Meet"}
+{"type":"entry","key":"event.tideCrossing.body","value":"Where the new current meets the old, neither can fill the village alone."}
+{"type":"entry","key":"event.tideCrossing.bora.label","value":"Set the sharing order with Bora"}
+{"type":"entry","key":"event.tideCrossing.bora.line","value":"Where currents meet, we must decide together who drinks first."}
+{"type":"entry","key":"event.tideCrossing.taro.label","value":"Redesign the sluice with Taro"}
+{"type":"entry","key":"event.tideCrossing.taro.line","value":"To change a flow, we must find the blockage by hand."}
+{"type":"entry","key":"event.returningSeed.title","value":"The Seed Comes Home"}
+{"type":"entry","key":"event.returningSeed.body","value":"Part of the first seed returns to Lumen. The harvest becomes proof of a cycle, not ownership."}
+{"type":"entry","key":"event.returningSeed.bora.label","value":"Plant the returning seed with Bora"}
+{"type":"entry","key":"event.returningSeed.bora.line","value":"What returns is not finished; it is someone else’s beginning."}
+{"type":"entry","key":"event.returningSeed.lumi.label","value":"Map the seed’s journey with Lumi"}
+{"type":"entry","key":"event.returningSeed.lumi.line","value":"When the cycle is visible, the next promise can be checked again."}
+{"type":"entry","key":"event.blankMap.title","value":"The Incomplete Map"}
+{"type":"entry","key":"event.blankMap.body","value":"All three maps share the same blank. Noa must choose how to read it without erasing it."}
+{"type":"entry","key":"event.blankMap.lumi.label","value":"Leave the blank as a measurement with Lumi"}
+{"type":"entry","key":"event.blankMap.lumi.line","value":"A mark of not knowing is an exact starting point for the next judgement."}
+{"type":"entry","key":"event.blankMap.taro.label","value":"Walk the blank with Taro"}
+{"type":"entry","key":"event.blankMap.taro.line","value":"A road may begin where the map ends."}
+{"type":"entry","key":"event.northGate.title","value":"The Northern Gatekeeper"}
+{"type":"entry","key":"event.northGate.body","value":"At the new route’s gate, the gatekeeper asks not for a destination but a way back."}
+{"type":"entry","key":"event.northGate.taro.label","value":"Raise a return marker with Taro"}
+{"type":"entry","key":"event.northGate.taro.line","value":"The courage to leave needs a promise to return and check."}
+{"type":"entry","key":"event.northGate.bora.label","value":"Open the gate for those who stay with Bora"}
+{"type":"entry","key":"event.northGate.bora.line","value":"If not everyone can leave, staying must also be a road."}
+{"type":"entry","key":"event.sharedCompass.title","value":"The Compass Meeting"}
+{"type":"entry","key":"event.sharedCompass.body","value":"Three compasses point to different norths. Can their standards be shared instead of choosing one?"}
+{"type":"entry","key":"event.sharedCompass.lumi.label","value":"Publish the measurement standard with Lumi"}
+{"type":"entry","key":"event.sharedCompass.lumi.line","value":"Before the compass, let us show everyone how to read it."}
+{"type":"entry","key":"event.sharedCompass.bora.label","value":"Listen to each different north with Bora"}
+{"type":"entry","key":"event.sharedCompass.bora.line","value":"We can stand together without looking at the same place."}
+{"type":"entry","key":"event.councilNight.title","value":"The Council of Choices"}
+{"type":"entry","key":"event.councilNight.body","value":"People ask Noa to decide for them. Noa opens a scene for deciding together instead."}
+{"type":"entry","key":"event.councilNight.bora.label","value":"Test the smallest agreement with Bora"}
+{"type":"entry","key":"event.councilNight.bora.line","value":"Before pleasing everyone, let us find one sentence we can keep together."}
+{"type":"entry","key":"event.councilNight.taro.label","value":"Distribute the right to decide with Taro"}
+{"type":"entry","key":"event.councilNight.taro.line","value":"To share responsibility, we must share the place of judgement."}
+{"type":"entry","key":"event.minorityVoice.title","value":"The Smallest Voice"}
+{"type":"entry","key":"event.minorityVoice.body","value":"One person could not speak before the meeting ended. Noa must see if agreement counts silence."}
+{"type":"entry","key":"event.minorityVoice.bora.label","value":"Wait with Bora for the unheard person"}
+{"type":"entry","key":"event.minorityVoice.bora.line","value":"Let time without an answer be part of the rule of care."}
+{"type":"entry","key":"event.minorityVoice.lumi.label","value":"Record when silence appeared with Lumi"}
+{"type":"entry","key":"event.minorityVoice.lumi.line","value":"Without its cause, the number of an agreement cannot be trusted."}
+{"type":"entry","key":"event.publicRule.title","value":"The Day of a Shared Rule"}
+{"type":"entry","key":"event.publicRule.body","value":"The new rule goes on the wall. The stronger a rule is, the shorter and more readable it should be."}
+{"type":"entry","key":"event.publicRule.lumi.label","value":"Write the verification step in one line with Lumi"}
+{"type":"entry","key":"event.publicRule.lumi.line","value":"A rule outlives people only when anyone can verify it again."}
+{"type":"entry","key":"event.publicRule.taro.label","value":"Test the rule in the field with Taro"}
+{"type":"entry","key":"event.publicRule.taro.line","value":"A sentence on a wall becomes real when it meets stones underfoot."}
+{"type":"entry","key":"event.seedFestival.title","value":"The Star Seed Returns"}
+{"type":"entry","key":"event.seedFestival.body","value":"The first seeds finally flower in the same greenhouse. The meaning of the beginning changes."}
+{"type":"entry","key":"event.seedFestival.bora.label","value":"Name the flowers for everyone with Bora"}
+{"type":"entry","key":"event.seedFestival.bora.line","value":"The best way to remember a beginning is to name the next people too."}
+{"type":"entry","key":"event.seedFestival.lumi.label","value":"Publish the sprouting conditions with Lumi"}
+{"type":"entry","key":"event.seedFestival.lumi.line","value":"What looks like a miracle can happen again when its conditions are shared."}
+{"type":"entry","key":"event.farewellMarket.title","value":"The Departure Market"}
+{"type":"entry","key":"event.farewellMarket.body","value":"A market opens for those leaving by the new route. Departure still needs what is left behind."}
+{"type":"entry","key":"event.farewellMarket.taro.label","value":"Set a standard for travel packs with Taro"}
+{"type":"entry","key":"event.farewellMarket.taro.line","value":"Leaving lightly and leaving safely must be calculated together."}
+{"type":"entry","key":"event.farewellMarket.bora.label","value":"Find new owners for what remains with Bora"}
+{"type":"entry","key":"event.farewellMarket.bora.line","value":"Let the place someone leaves remain a place another can live."}
+{"type":"entry","key":"event.gardenOfNames.title","value":"The Day Names Are Planted Again"}
+{"type":"entry","key":"event.gardenOfNames.body","value":"Names returned from the memory house become small greenhouse signs. A name becomes an invitation, not ownership."}
+{"type":"entry","key":"event.gardenOfNames.bora.label","value":"Ask the owners of the names first with Bora"}
+{"type":"entry","key":"event.gardenOfNames.bora.line","value":"Calling a name becomes warmer when it waits for permission."}
+{"type":"entry","key":"event.gardenOfNames.lumi.label","value":"Record the changed names with Lumi"}
+{"type":"entry","key":"event.gardenOfNames.lumi.line","value":"Recording changed names keeps a person from one frozen shape."}
+{"type":"entry","key":"event.nextTraveller.title","value":"The Next Traveller’s Pack"}
+{"type":"entry","key":"event.nextTraveller.body","value":"A younger traveller reads the road markers. Noa learns not to choose someone else’s answer."}
+{"type":"entry","key":"event.nextTraveller.taro.label","value":"Hide none of the road’s risks with Taro"}
+{"type":"entry","key":"event.nextTraveller.taro.line","value":"A safe road is not risk-free; it is a road whose risks are shared."}
+{"type":"entry","key":"event.nextTraveller.lumi.label","value":"Give only the reading order with Lumi"}
+{"type":"entry","key":"event.nextTraveller.lumi.line","value":"Instead of giving an answer, give the order for judging again."}
+{"type":"entry","key":"event.handoffLedger.title","value":"The Ledger Passed On"}
+{"type":"entry","key":"event.handoffLedger.body","value":"The ledger passes to the next keeper. The first page must be read again, not only the last."}
+{"type":"entry","key":"event.handoffLedger.lumi.label","value":"Pass the wrong records too with Lumi"}
+{"type":"entry","key":"event.handoffLedger.lumi.line","value":"For the next person to check again, they need where we were wrong."}
+{"type":"entry","key":"event.handoffLedger.bora.label","value":"Invite readers to the ledger with Bora"}
+{"type":"entry","key":"event.handoffLedger.bora.line","value":"Let us leave readers with the ledger so it never closes alone."}
+{"type":"entry","key":"event.finalHorizon.title","value":"The Next Person’s First Step"}
+{"type":"entry","key":"event.finalHorizon.body","value":"The last week’s river wind arrives. Noa leaves not an answer, but a first step that can begin again."}
+{"type":"entry","key":"event.finalHorizon.taro.label","value":"Raise a first-step marker with Taro"}
+{"type":"entry","key":"event.finalHorizon.taro.line","value":"If it can be found without me, this road does not end."}
+{"type":"entry","key":"event.finalHorizon.lumi.label","value":"Leave the first question with Lumi"}
+{"type":"entry","key":"event.finalHorizon.lumi.line","value":"A good record keeps the next question alive longer than the last answer."}
+{"type":"entry","key":"chapter.seedReturn.title","value":"The Seed Returns"}
+{"type":"entry","key":"chapter.seedReturn.premise","value":"The first ledger’s seed travels between Lumen and the distant province, asking the difference between debt and promise."}
+{"type":"entry","key":"chapter.seedReturn.payoff","value":"Decide with whom and under what conditions to return what was received."}
+{"type":"entry","key":"chapter.fairShare.title","value":"The Time of a Fair Share"}
+{"type":"entry","key":"chapter.fairShare.premise","value":"Invisible labour in the workshop and greenhouse shakes the empty spaces in the ledger."}
+{"type":"entry","key":"chapter.fairShare.payoff","value":"Calculate who is tiring, not only how fast growth happens."}
+{"type":"entry","key":"chapter.memoryHouse.title","value":"The House of Memory"}
+{"type":"entry","key":"chapter.memoryHouse.premise","value":"Nameless boxes and erased markers ask who owns a record."}
+{"type":"entry","key":"chapter.memoryHouse.payoff","value":"Choose what to preserve and what to leave blank."}
+{"type":"entry","key":"chapter.farShore.title","value":"The Shadow of the Far Shore"}
+{"type":"entry","key":"chapter.farShore.premise","value":"Lumen’s choice becomes another village’s rule, splitting intention from result."}
+{"type":"entry","key":"chapter.farShore.payoff","value":"Check whom the promise to help pushed aside."}
+{"type":"entry","key":"chapter.blankMap.title","value":"The Incomplete Map"}
+{"type":"entry","key":"chapter.blankMap.premise","value":"Three maps hold the same blank while pointing to different norths."}
+{"type":"entry","key":"chapter.blankMap.payoff","value":"Create a shared standard without hiding what is unknown."}
+{"type":"entry","key":"chapter.commons.title","value":"The Council of Choices"}
+{"type":"entry","key":"chapter.commons.premise","value":"People hand responsibility to Noa, but Lumen must learn how to decide together."}
+{"type":"entry","key":"chapter.commons.payoff","value":"Leave even unheard voices inside the rule."}
+{"type":"entry","key":"chapter.returningGarden.title","value":"The Star Seed Returns"}
+{"type":"entry","key":"chapter.returningGarden.premise","value":"The first seed returns as a flower, changing the meaning of beginning and ownership."}
+{"type":"entry","key":"chapter.returningGarden.payoff","value":"Give both those leaving and those staying a place in the next season."}
+{"type":"entry","key":"chapter.handoff.title","value":"The Next Person’s First Step"}
+{"type":"entry","key":"chapter.handoff.premise","value":"Noa’s record becomes a first page for the next person to verify, not a final page."}
+{"type":"entry","key":"chapter.handoff.payoff","value":"Leave a question and a marker that can begin again, not an answer."}
+{"type":"entry","key":"milestone.waterline.title","value":"Promise of the First Waterway"}
+{"type":"entry","key":"milestone.fair-share.title","value":"Time of a Fair Share"}
+{"type":"entry","key":"milestone.memory-house.title","value":"The Open Room of Memory"}
+{"type":"entry","key":"milestone.far-shore.title","value":"The Answer That Crossed"}
+{"type":"entry","key":"milestone.blank-map.title","value":"Map of the Blank"}
+{"type":"entry","key":"milestone.commons.title","value":"The Shared Rule"}
+{"type":"entry","key":"milestone.returning-garden.title","value":"The Returning Garden"}
+{"type":"entry","key":"milestone.handoff.title","value":"The Horizon Passed On"}
+{"type":"entry","key":"fate.ledger-echo.detail","value":"A choice about the ledger returns as the next chapter's rule."}
+{"type":"entry","key":"fate.windmill-echo.detail","value":"A mediation choice softens a later relationship conflict."}
+{"type":"entry","key":"fate.seed-echo.detail","value":"A choice to share changes what the returning seed means."}
+{"type":"entry","key":"fate.memory-echo.detail","value":"Opening the memory house becomes a cause in the ending review."}
+{"type":"entry","key":"fate.rule-echo.detail","value":"A public rule becomes the next traveller's starting point."}
+{"type":"entry","key":"fate.question-echo.detail","value":"The final question becomes the next run's first clue."}
+{"type":"entry","key":"ui.ledger.button","value":"Fate ledger"}
+{"type":"entry","key":"ui.ledger.title","value":"Fate Ledger Archive"}
+{"type":"entry","key":"ui.ledger.subtitle","value":"Choices become memories; companions open the next page."}
+{"type":"entry","key":"ui.ledger.system","value":"Lumen rule engine · auto-adjudicated · replayable"}
+{"type":"entry","key":"ui.ledger.discovered","value":"Seen"}
+{"type":"entry","key":"ui.ledger.hidden","value":"Not reached yet"}
+{"type":"entry","key":"ui.ledger.quest","value":"Companion quests"}
+{"type":"entry","key":"ui.ledger.back","value":"← Home"}
+{"type":"entry","key":"ui.ledger.complete","value":"COMPLETE"}
+{"type":"entry","key":"ui.ledger.progress","value":"IN PROGRESS"}
+{"type":"entry","key":"ui.ledger.receipts","value":"System decision receipts"}
+{"type":"entry","key":"ui.ledger.receipt.approved","value":"approved"}
+{"type":"entry","key":"ui.ledger.receipt.rejected","value":"rejected"}
+{"type":"entry","key":"ui.ledger.receipt.activity","value":"activity"}
+{"type":"entry","key":"ui.ledger.receipt.story-choice","value":"story choice"}
+{"type":"entry","key":"milestone.spring.pass","value":"The first star seed sprouted."}
+{"type":"entry","key":"milestone.spring.fail","value":"The star seed is still asleep."}
+{"type":"entry","key":"milestone.summer.pass","value":"Different paces became one bridge."}
+{"type":"entry","key":"milestone.summer.fail","value":"The bridge still shakes, but it can be crossed again."}
+{"type":"entry","key":"milestone.autumn.pass","value":"The courage to send the reply has grown."}
+{"type":"entry","key":"milestone.autumn.fail","value":"The letter waits in the drawer for the next season."}
+{"type":"entry","key":"milestone.winter.pass","value":"Noa opened the first ledger's door."}
+{"type":"entry","key":"milestone.winter.fail","value":"The door stayed closed, but left the next key."}
+{"type":"entry","key":"milestone.frost.pass","value":"A care record remained even in the stopped season."}
+{"type":"entry","key":"milestone.frost.fail","value":"The seed still waits beneath cold soil."}
+{"type":"entry","key":"milestone.return.pass","value":"A sent feeling returned as a shared promise."}
+{"type":"entry","key":"milestone.return.fail","value":"The reply still waits for the next wave."}
+{"type":"entry","key":"milestone.constellation.pass","value":"Different reasons became one public map."}
+{"type":"entry","key":"milestone.constellation.fail","value":"The map still holds blank spaces that have not faded."}
+{"type":"entry","key":"milestone.horizon.pass","value":"Noa left a horizon the next person can verify."}
+{"type":"entry","key":"milestone.horizon.fail","value":"The horizon stayed open as a question for the next run."}
+{"type":"entry","key":"milestone.waterline.pass","value":"The first waterway reached the empty field."}
+{"type":"entry","key":"milestone.waterline.fail","value":"The waterway still waits for the next pair of hands."}
+{"type":"entry","key":"milestone.fair-share.pass","value":"Invisible labour became part of the day."}
+{"type":"entry","key":"milestone.fair-share.fail","value":"A blank in the ledger still waits for someone."}
+{"type":"entry","key":"milestone.memory-house.pass","value":"Memory became a path to find again, not a closed box."}
+{"type":"entry","key":"milestone.memory-house.fail","value":"The nameless box still waits for light."}
+{"type":"entry","key":"milestone.far-shore.pass","value":"The far shore's answer changed Lumen's rule again."}
+{"type":"entry","key":"milestone.far-shore.fail","value":"The two waterways are still learning each other's pace."}
+{"type":"entry","key":"milestone.blank-map.pass","value":"The mark for unknown became a starting point to walk together."}
+{"type":"entry","key":"milestone.blank-map.fail","value":"The map still has a blank that must be crossed alone."}
+{"type":"entry","key":"milestone.commons.pass","value":"Even the smallest voice entered the rule."}
+{"type":"entry","key":"milestone.commons.fail","value":"A voice outside the agreement still knocks."}
+{"type":"entry","key":"milestone.returning-garden.pass","value":"The first seed became the next person's flower."}
+{"type":"entry","key":"milestone.returning-garden.fail","value":"The garden is still choosing a place for leaving and staying."}
+{"type":"entry","key":"milestone.handoff.pass","value":"Noa left the first step for the next person's beginning."}
+{"type":"entry","key":"milestone.handoff.fail","value":"The horizon remains open and waits for the next record."}
+{"type":"entry","key":"ui.closure.recorded","value":"Chapter closure · recorded"}
+{"type":"entry","key":"ui.closure.next","value":"Chapter closure · next chance"}
+{"type":"entry","key":"ui.closure.week","value":" weeks"}
+{"type":"entry","key":"ui.closure.goalCleared","value":"GOAL CLEARED"}
+{"type":"entry","key":"ui.closure.keepGrowing","value":"KEEP GROWING"}
+{"type":"entry","key":"ui.closure.question","value":"This chapter's question"}
+{"type":"entry","key":"ui.closure.nextPage","value":"Next chapter →"}
+{"type":"entry","key":"ui.closure.link","value":"The result is linked to the system receipt and next choice."}
+{"type":"entry","key":"hero.name","value":"Noa"}
+{"type":"entry","key":"companion.lumi.name","value":"Lumi"}
+{"type":"entry","key":"companion.bora.name","value":"Bora"}
+{"type":"entry","key":"companion.taro.name","value":"Taro"}
+{"type":"entry","key":"ui.closure.scene","value":"A companion's line"}
+{"type":"entry","key":"chapter.arrival.scene.title","value":"The First Edge of a Letter"}
+{"type":"entry","key":"chapter.arrival.scene.line","value":"Do not fill an unknown name too quickly. A blank can become a road when we read it together."}
+{"type":"entry","key":"chapter.crossing.scene.title","value":"The Rhythm of a Broken Bridge"}
+{"type":"entry","key":"chapter.crossing.scene.line","value":"Do not cross in one leap. Find the place where different footsteps can meet."}
+{"type":"entry","key":"chapter.reply.scene.title","value":"Hands Folding a Reply"}
+{"type":"entry","key":"chapter.reply.scene.line","value":"A promise grows heavy when it grows too large. Fold it warmly to the size we can keep today."}
+{"type":"entry","key":"chapter.threshold.scene.title","value":"The Margin of the First Ledger"}
+{"type":"entry","key":"chapter.threshold.scene.line","value":"Leave a margin between numbers and voices, so the next person can still ask."}
+{"type":"entry","key":"chapter.frost.scene.title","value":"Warmth in a Stopped Season"}
+{"type":"entry","key":"chapter.frost.scene.line","value":"A day without growth can still be a day of care. Let us not forget how to pause."}
+{"type":"entry","key":"chapter.return.scene.title","value":"The Wind That Returned"}
+{"type":"entry","key":"chapter.return.scene.line","value":"A returning road is not the beginning again. The footsteps have corrected its direction."}
+{"type":"entry","key":"chapter.constellation.scene.title","value":"Different Constellations"}
+{"type":"entry","key":"chapter.constellation.scene.line","value":"When reasons differ beneath one sky, there must be more than one line between the stars."}
+{"type":"entry","key":"chapter.horizon.scene.title","value":"The Far Province Speaks"}
+{"type":"entry","key":"chapter.horizon.scene.line","value":"Do not name help before listening to what the voices there actually need."}
+{"type":"entry","key":"chapter.seedReturn.scene.title","value":"The First Waterway in the Empty Field"}
+{"type":"entry","key":"chapter.seedReturn.scene.line","value":"Sharing water is not losing ownership. It is making a place where it can flow again."}
+{"type":"entry","key":"chapter.fairShare.scene.title","value":"A Fair Day"}
+{"type":"entry","key":"chapter.fairShare.scene.line","value":"If the fastest pace is the measure, care will always be left behind."}
+{"type":"entry","key":"chapter.memoryHouse.scene.title","value":"The Threshold of Memory"}
+{"type":"entry","key":"chapter.memoryHouse.scene.line","value":"Let us not lock every memory. One marker that can be found again is enough."}
+{"type":"entry","key":"chapter.farShore.scene.title","value":"The Answer That Crossed"}
+{"type":"entry","key":"chapter.farShore.scene.line","value":"A good intention can become another force far away. First, repair the words that returned."}
+{"type":"entry","key":"chapter.blankMap.scene.title","value":"A Lamp Beside the Blank Map"}
+{"type":"entry","key":"chapter.blankMap.scene.line","value":"If we keep the words “we do not know,” we can promise to check together."}
+{"type":"entry","key":"chapter.commons.scene.title","value":"A Place for the Small Voice"}
+{"type":"entry","key":"chapter.commons.scene.line","value":"The quieter an agreement becomes, the more we must look for someone not yet heard."}
+{"type":"entry","key":"chapter.returningGarden.scene.title","value":"A Garden for Leaving and Staying"}
+{"type":"entry","key":"chapter.returningGarden.scene.line","value":"Do not choose only where flowers bloom. Leave a place where departing feet will not be hurt."}
+{"type":"entry","key":"chapter.handoff.scene.title","value":"The Next Person’s Hand"}
+{"type":"entry","key":"chapter.handoff.scene.line","value":"The last page is not a cover that closes. It is a handle for the next person to open again."}
+{"type":"entry","key":"ui.relationship.label","value":"Relationship state"}
+{"type":"entry","key":"ui.relationship.state.unformed","value":"Not yet woven"}
+{"type":"entry","key":"ui.relationship.state.balanced","value":"Side-by-side"}
+{"type":"entry","key":"ui.relationship.state.tension","value":"Tension"}
+{"type":"entry","key":"ui.relationship.state.estranged","value":"Estranged"}
+{"type":"entry","key":"ui.relationship.state.truce","value":"Truce"}
+{"type":"entry","key":"ui.relationship.followup","value":"State follow-up"}
+{"type":"entry","key":"ui.relationship.followup.unformed.title","value":"A Promise in the Blank"}
+{"type":"entry","key":"ui.relationship.followup.unformed.line","value":"No path has been chosen yet, so leave the next record open as we walk."}
+{"type":"entry","key":"ui.relationship.followup.balanced.title","value":"A Mark of Equal Pace"}
+{"type":"entry","key":"ui.relationship.followup.balanced.line","value":"We do not need to count who leads; the path remembers walking side by side."}
+{"type":"entry","key":"ui.relationship.followup.tension.title","value":"The Cracked Greenhouse"}
+{"type":"entry","key":"ui.relationship.followup.tension.line","value":"Do not cover the split in our hearts; leave a gap for the next words to reach."}
+{"type":"entry","key":"ui.relationship.followup.estranged.title","value":"A Late Reply"}
+{"type":"entry","key":"ui.relationship.followup.estranged.line","value":"Distance is not the name of failure. Let us keep a place for an answer."}
+{"type":"entry","key":"ui.relationship.followup.truce.title","value":"Wind Tied Again"}
+{"type":"entry","key":"ui.relationship.followup.truce.line","value":"Only after returning each share can we ride the same wind again."}

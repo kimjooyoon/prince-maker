@@ -1,5 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
+import 'package:prince_maker/jsonl.dart';
 
 Never fail(String message) {
   stderr.writeln('RENDER_QUALITY_GATE_FAIL: $message');
@@ -17,8 +17,7 @@ void requireText(String path, String source, String phrase) {
 }
 
 void main() {
-  final contract = jsonDecode(read('docs/render-quality-contract.json'))
-      as Map<String, dynamic>;
+  final contract = decodeJsonl(read('docs/render-quality-contract.jsonl'));
   if (contract['schema'] != 'lumen-render-quality-v1' ||
       contract['version'] != 1) {
     fail('unsupported render quality contract');

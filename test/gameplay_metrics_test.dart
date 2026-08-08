@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/game_core.dart';
+import 'package:prince_maker/jsonl.dart';
 
 Map<String, dynamic> play(StoryPort story, Map<String, dynamic> activity,
     {String? legacyId}) {
@@ -74,9 +75,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   test('five SSOT schedule policies produce measurable route variety',
       () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final story = JsonStoryAdapter(source),
         activities =
             (source['activities'] as List).cast<Map<String, dynamic>>();
@@ -96,9 +96,8 @@ void main() {
   });
   test('three legacy profiles produce distinct deterministic route signatures',
       () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final story = JsonStoryAdapter(source),
         activities =
             (source['activities'] as List).cast<Map<String, dynamic>>();

@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/game_core.dart';
+import 'package:prince_maker/jsonl.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   test('scenario completeness specimen covers every authored closure',
       () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final model = source['scenarioCompleteness'] as Map<String, dynamic>;
     final dimensions =
         (model['dimensions'] as List).cast<Map<String, dynamic>>();
@@ -75,9 +75,8 @@ void main() {
   });
 
   test('2,000-case route budget and ending matrix are executable', () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final budget = source['scenarioVariantBudget'] as Map<String, dynamic>;
     final branchWeeks = (budget['branchWeeks'] as List).cast<int>();
     final branchVectors = 1 << branchWeeks.length;
@@ -107,9 +106,8 @@ void main() {
 
   test('butterfly ledger and companion quests replay from authored flags',
       () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final story = JsonStoryAdapter(source);
     final flags = <String, bool>{
       'first-ledger': true,

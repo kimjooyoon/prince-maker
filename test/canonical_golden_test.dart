@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/game_core.dart';
+import 'package:prince_maker/jsonl.dart';
 import 'package:prince_maker/main.dart';
 import 'package:prince_maker/save_state.dart';
 
@@ -62,8 +63,8 @@ void main() {
   testWidgets(
       'canonical SSOT renders a stable Canvas ending after the authored event',
       (tester) async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
+    final source = decodeJsonl(utf8.decode(
+            (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()))
         as Map;
     final eventSnapshot = routeSnapshot(Map<String, dynamic>.from(source),
         targetWeek: 4, page: 3);

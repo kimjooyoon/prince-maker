@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/game_core.dart';
+import 'package:prince_maker/jsonl.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   Future<Map<String, dynamic>> play(String stat, int persona) async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final story = JsonStoryAdapter(source),
         session = GameSession(story, MemorySaveAdapter());
     session.world.progress[0]!.persona = persona;
@@ -56,9 +56,8 @@ void main() {
   }
 
   test('canonical SSOT completes a deterministic 48-week route', () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final story = JsonStoryAdapter(source),
         session = GameSession(story, MemorySaveAdapter());
     while (session.world.progress[0]!.week < story.endingWeek) {
@@ -123,9 +122,8 @@ void main() {
   });
   test('every authored ending and event choice is reachable under its contract',
       () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final story = JsonStoryAdapter(source);
     for (final ending in story.endings) {
       final stats = {'지혜': 1, '공감': 1, '용기': 1};

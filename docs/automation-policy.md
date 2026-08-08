@@ -26,19 +26,19 @@ tool/ci_gate.dart
 SYSTEM_APPROVAL: APPROVE | REJECT
 ```
 
-렌더링 변경은 [`docs/render-quality-contract.json`](render-quality-contract.json)의
+렌더링 변경은 [`docs/render-quality-contract.jsonl`](render-quality-contract.jsonl)의
 선행조건을 먼저 만족해야 한다. `tool/verify_render_quality.dart`는 viewport 기하,
 입력 역변환, 단일 렌더 경로가 `CanvasViewport`를 공유하는지와 Canvas 단위 테스트·Golden·정적
 분석 증적이 선언되어 있는지를 계산한다. 이 게이트의 유일한 거절 조건은 결정론적 증적의
 누락 또는 실패이며, 사람의 추론이나 승인 체크를 판정 입력으로 사용하지 않는다.
 
-게임 규칙 변경은 [`docs/decision-proof-contract.json`](decision-proof-contract.json)의
+게임 규칙 변경은 [`docs/decision-proof-contract.jsonl`](decision-proof-contract.jsonl)의
 precondition 필드와 parent chain을 먼저 통과해야 한다. `SystemDecisionPolicy`는 같은 SSOT,
 현재 상태, 직전 영수증 hash에서 `preconditionHash`와 `decisionHash`를 만들고, replay 입력이
 달라지면 다른 증명을 만든다. `tool/verify_decision_proof.dart`가 이 구조와 source ref를
 검증하며, 누락·불일치만을 거절 조건으로 삼는다.
 
-정량 개발목표는 [`docs/development-goals.json`](development-goals.json)과
+정량 개발목표는 [`docs/development-goals.jsonl`](development-goals.jsonl)과
 [`docs/development-goals.md`](development-goals.md)에 SSOT에서 자동 생성된다. 각 목표는
 target/current/gap/산식/투입 원장/선행조건/evidence를 가져야 하며,
 `tool/verify_development_goals.dart`는 benchmark 실측 verdict까지 확인한다. 목표 원장이나
@@ -58,4 +58,4 @@ GitHub 저장소의 기본 브랜치 ruleset에는 다음 상태 검사를 requi
 
 ## 게임 독창성 변경 규칙
 
-외부 게임은 캐릭터·문구·아트가 아니라 공개된 규칙 단위를 비교하는 참고 자료로만 기록한다. 새 요소는 [`originality-contract.json`](originality-contract.json)에 규칙, 외부 원리, 루멘에서의 차이, 실제 코드·테스트 증거를 함께 남겨야 한다.
+외부 게임은 캐릭터·문구·아트가 아니라 공개된 규칙 단위를 비교하는 참고 자료로만 기록한다. 새 요소는 [`originality-contract.json`](originality-contract.jsonl)에 규칙, 외부 원리, 루멘에서의 차이, 실제 코드·테스트 증거를 함께 남겨야 한다.

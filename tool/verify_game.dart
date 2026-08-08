@@ -1,18 +1,18 @@
-import 'dart:convert';
 import 'dart:io';
+import 'package:prince_maker/jsonl.dart';
 import 'package:crypto/crypto.dart';
 
 void verifyTrilemmaContract(String storyHash,
     {required int endingWeek, required int eventCount}) {
-  final file = File('docs/trilemma-contract.json');
+  final file = File('docs/trilemma-contract.jsonl');
   if (!file.existsSync()) fail('missing trilemma contract');
-  final contract = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+  final contract = decodeJsonl(file.readAsStringSync());
   final source = (contract['source'] as Map).cast<String, dynamic>();
   final axes =
       (contract['axes'] as List? ?? const []).cast<Map<String, dynamic>>();
   const ids = {'completeness', 'purity', 'performance'};
   if (contract['schema'] != 'prince-maker-trilemma-v1' ||
-      source['ref'] != 'story/story.json#root' ||
+      source['ref'] != 'story/story.jsonl#root' ||
       source['sha256'] != storyHash ||
       axes.length != ids.length ||
       axes.map((axis) => axis['id']).toSet().length != axes.length ||
@@ -82,10 +82,9 @@ Never fail(String message) {
 }
 
 void main() {
-  final story = jsonDecode(File('story/story.json').readAsStringSync())
-      as Map<String, dynamic>;
+  final story = decodeJsonl(File('story/story.jsonl').readAsStringSync());
   verifyTrilemmaContract(
-      sha256.convert(File('story/story.json').readAsBytesSync()).toString(),
+      sha256.convert(File('story/story.jsonl').readAsBytesSync()).toString(),
       endingWeek: story['endingWeek'] as int,
       eventCount: (story['events'] as List).length);
   final activities = (story['activities'] as List).cast<Map<String, dynamic>>();
@@ -466,8 +465,7 @@ void main() {
     if (!File(path).existsSync()) fail('missing locale ref $path');
     final actual = sha256.convert(File(path).readAsBytesSync()).toString();
     if (actual != ref['sha256']) fail('locale ref hash drift: $path');
-    final catalog = (jsonDecode(File(path).readAsStringSync()) as Map)
-        .map((key, value) => MapEntry('$key', '$value'));
+    final catalog = decodeJsonlCatalog(File(path).readAsStringSync());
     final missing = requiredLocaleKeys
         .where(
             (key) => !catalog.containsKey(key) || catalog[key]!.trim().isEmpty)
@@ -627,9 +625,8 @@ void main() {
         .map((stage) => '${stage['eventRef']}')),
   };
   for (final ref in localeRefs) {
-    final catalog = (jsonDecode(File((ref['ref'] as String).split('#').first)
-            .readAsStringSync()) as Map)
-        .map((key, value) => MapEntry('$key', '$value'));
+    final catalog = decodeJsonlCatalog(
+        File((ref['ref'] as String).split('#').first).readAsStringSync());
     if (trackedLocaleKeys.any((key) => !catalog.containsKey(key)))
       fail('butterfly/companion locale ref missing in ${ref['ref']}');
   }
@@ -786,8 +783,8 @@ void main() {
             .contains("matchesGoldenFile('goldens/narrative-ledger-en.png')") &&
         receiptGoldenEvidence
             .contains("matchesGoldenFile('goldens/system-receipt.png')") &&
-        File('story/locales/ko.json').existsSync() &&
-        File('story/locales/en.json').existsSync(),
+        File('story/locales/ko.jsonl').existsSync() &&
+        File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(
             'all SSOT dialogue keys exist and are non-empty in every locale') &&
         localeRefs.length >= 2,
@@ -799,7 +796,7 @@ void main() {
         dialogueMetrics['minimumVisibleNarrativeUnits'] >= 160,
     'assets': assetRefs.length >= 4 && fontRefs.isNotEmpty,
     'traceability': refs.length >= 3 &&
-        File('docs/review-manifest.json').existsSync() &&
+        File('docs/review-manifest.jsonl').existsSync() &&
         File('docs/ssot-metrics.md').existsSync(),
     'delivery': File('.github/workflows/verify.yml').existsSync() &&
         File('.githooks/pre-commit').existsSync(),

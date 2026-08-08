@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
+import 'package:prince_maker/jsonl.dart';
 
 Map<String, dynamic> choice({
   required String eventId,
@@ -182,9 +183,13 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/main.dart#relationshipFollowup',
     'lib/game_core.dart#resolveRelationshipFollowup',
     'test/relationship_dynamics_test.dart#deterministic relationship states',
+    'lib/jsonl.dart#decodeJsonl',
+    'tool/verify_jsonl.dart#jsonl-contract',
+    'tool/refresh_ssot_contract_hashes.dart#storyHash',
+    'test/jsonl_contract_test.dart#story JSONL is canonical and reconstructs authored collections',
   ];
   refs.removeWhere((entry) =>
-      entry['ref'] == 'docs/decision-proof-contract.json#preconditionFields');
+      entry['ref'] == 'docs/decision-proof-contract.jsonl#preconditionFields');
   for (final ref in requiredRefs) {
     if (!refs.any((entry) => entry['ref'] == ref)) {
       refs.add({'ref': ref, 'sha256': ''});
@@ -406,13 +411,12 @@ void materializeChapterScenes(Map<String, dynamic> story,
 }
 
 void main() {
-  final storyFile = File('story/story.json');
-  final koFile = File('story/locales/ko.json');
-  final enFile = File('story/locales/en.json');
-  final story =
-      jsonDecode(storyFile.readAsStringSync()) as Map<String, dynamic>;
-  final ko = jsonDecode(koFile.readAsStringSync()) as Map<String, dynamic>;
-  final en = jsonDecode(enFile.readAsStringSync()) as Map<String, dynamic>;
+  final storyFile = File('story/story.jsonl');
+  final koFile = File('story/locales/ko.jsonl');
+  final enFile = File('story/locales/en.jsonl');
+  final story = decodeJsonl(storyFile.readAsStringSync());
+  final ko = decodeJsonl(koFile.readAsStringSync());
+  final en = decodeJsonl(enFile.readAsStringSync());
 
   final newEvents = <Map<String, dynamic>>[];
   void add(Map<String, dynamic> e, String titleEn, String bodyEn) {
@@ -2351,7 +2355,7 @@ void main() {
           .length;
   story['gameplayKpis'] = {
     'schema': 'lumen-gameplay-kpi-v1',
-    'source': 'story/story.json#events',
+    'source': 'story/story.jsonl#events',
     'targets': {
       'choiceImpactRate': 1.0,
       'eventDivergenceRate': 1.0,
@@ -2414,11 +2418,15 @@ void main() {
   story['dialogueMetrics']['formula'] =
       'catalog 505 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6 + relationship follow-up UI 11; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units';
 
-  final encoder = const JsonEncoder.withIndent('  ');
-  koFile.writeAsStringSync('${encoder.convert(ko)}\n');
-  enFile.writeAsStringSync('${encoder.convert(en)}\n');
+  koFile.writeAsStringSync(encodeJsonlCatalog(
+      ko.map((key, value) => MapEntry(key, '$value')),
+      locale: 'ko'));
+  enFile.writeAsStringSync(encodeJsonlCatalog(
+      en.map((key, value) => MapEntry(key, '$value')),
+      locale: 'en'));
   refreshHashes(story);
-  storyFile.writeAsStringSync('${encoder.convert(story)}\n');
+  storyFile.writeAsStringSync(encodeJsonl(story,
+      schema: 'lumen-story-ssot-jsonl-v1', document: 'story/story.jsonl'));
   stdout.writeln(
       'STORY_EXPANSION_OK: weeks=48 terminal=49 events=${(story['events'] as List).length} choices=94 chapters=${chapters.length} milestones=${milestones.length} koKeys=${ko.length} enKeys=${en.length}');
 }

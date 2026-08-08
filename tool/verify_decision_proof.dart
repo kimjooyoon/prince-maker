@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
+import 'package:prince_maker/jsonl.dart';
 
 Never fail(String message) {
   stderr.writeln('DECISION_PROOF_GATE_FAIL: $message');
@@ -8,19 +9,19 @@ Never fail(String message) {
 }
 
 Map<String, dynamic> json(String path) =>
-    jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
+    decodeJsonl(File(path).readAsStringSync());
 
 String sha(String path) =>
     sha256.convert(File(path).readAsBytesSync()).toString();
 
 void main() {
-  const contractPath = 'docs/decision-proof-contract.json';
-  final contract = json(contractPath), story = json('story/story.json');
+  const contractPath = 'docs/decision-proof-contract.jsonl';
+  final contract = json(contractPath), story = json('story/story.jsonl');
   if (contract['schema'] != 'lumen-decision-proof-v1' ||
       contract['version'] != 1) fail('contract schema/version drift');
   final source = (contract['source'] as Map).cast<String, dynamic>();
-  if (source['ref'] != 'story/story.json#decisionSystem' ||
-      source['sha256'] != sha('story/story.json')) {
+  if (source['ref'] != 'story/story.jsonl#decisionSystem' ||
+      source['sha256'] != sha('story/story.jsonl')) {
     fail('decision proof contract is detached from story SSOT');
   }
   final fields = (contract['preconditionFields'] as List).cast<String>();

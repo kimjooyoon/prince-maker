@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
+import 'package:prince_maker/jsonl.dart';
 
 String sha(String path) =>
     sha256.convert(File(path).readAsBytesSync()).toString();
@@ -28,7 +28,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
   return {
     'schema': 'prince-maker-trilemma-v1',
-    'source': {'ref': 'story/story.json#root', 'sha256': hash},
+    'source': {'ref': 'story/story.jsonl#root', 'sha256': hash},
     'axes': [
       {
         'id': 'completeness',
@@ -118,13 +118,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
 }
 
 void main(List<String> args) {
-  const input = 'story/story.json';
-  final source =
-      jsonDecode(File(input).readAsStringSync()) as Map<String, dynamic>;
-  final output = const JsonEncoder.withIndent('  ')
-          .convert(buildContract(source, sha(input))) +
-      '\n';
-  const path = 'docs/trilemma-contract.json';
+  const input = 'story/story.jsonl';
+  final source = decodeJsonl(File(input).readAsStringSync());
+  final output = encodeJsonl(buildContract(source, sha(input)),
+      schema: 'lumen-document-jsonl-v1',
+      document: 'docs/trilemma-contract.jsonl');
+  const path = 'docs/trilemma-contract.jsonl';
   if (args.contains('--check')) {
     if (!File(path).existsSync() || File(path).readAsStringSync() != output) {
       stderr.writeln('TRILEMMA_CONTRACT_FAIL: regenerate $path');

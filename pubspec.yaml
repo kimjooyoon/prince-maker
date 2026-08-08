@@ -16,9 +16,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - story/story.json
-    - story/locales/ko.json
-    - story/locales/en.json
+    - story/story.jsonl
+    - story/locales/ko.jsonl
+    - story/locales/en.jsonl
     - assets/noa-sprite-sheet.png
     - assets/lumen-personality-sheet.png
   fonts:

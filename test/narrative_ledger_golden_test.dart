@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/main.dart';
+import 'package:prince_maker/jsonl.dart';
 import 'package:prince_maker/save_state.dart';
 
-Future<Map<String, dynamic>> story() async => jsonDecode(utf8
-    .decode((await rootBundle.load('story/story.json')).buffer.asUint8List()));
+Future<Map<String, dynamic>> story() async => decodeJsonl(utf8
+    .decode((await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
 
 Future<Map<String, Map<String, String>>> locales() async {
   final result = <String, Map<String, String>>{};
   for (final locale in ['ko', 'en']) {
-    final raw =
-        jsonDecode(await rootBundle.loadString('story/locales/$locale.json'))
-            as Map;
+    final raw = decodeJsonl(utf8.decode((await rootBundle
+            .load('story/locales/$locale.jsonl'))
+        .buffer
+        .asUint8List())) as Map;
     result[locale] = raw.map((key, value) => MapEntry('$key', '$value'));
   }
   return result;

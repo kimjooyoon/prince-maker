@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/game_core.dart';
+import 'package:prince_maker/jsonl.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   test('ending matrix materializes all eight companion route sets', () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final story = JsonStoryAdapter(source),
         ids = story.companions.map((c) => '${c['id']}').toList(),
         observed = <String>{};

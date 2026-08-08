@@ -28,12 +28,12 @@
 | `locale_toggle` | locale catalog 전환 | 일러스트·사건 화면 |
 | `vector_activity_icon` | 활동별 별·꽃·나침반·달·보석 마크 | 선택 카드 |
 
-런타임 토큰은 [`lib/design_tokens.dart`](../lib/design_tokens.dart), 사람이 읽는 토큰 원본은 [`design/tokens.json`](../design/tokens.json)입니다. 새 화면은 색상·간격을 직접 하드코딩하지 않고 이 두 파일의 기준으로 설계합니다.
+런타임 토큰은 [`lib/design_tokens.dart`](../lib/design_tokens.dart), 사람이 읽는 토큰 원본은 [`design/tokens.jsonl`](../design/tokens.jsonl)입니다. 새 화면은 색상·간격을 직접 하드코딩하지 않고 이 두 파일의 기준으로 설계합니다.
 
 ## 다음 설계 단계
 
 1. 이벤트 카드와 대화 선택지를 `choice_card` 변형으로 정의
 2. 저장 슬롯/리플레이 화면을 `stat_panel`과 `ending_panel` 조합으로 정의
 3. 48주 플레이 지표(선택 분포·엔딩 분포·재시작률·막별 분량)를 SSOT와 골든에 추가
-4. `story/locales/<locale>.json`와 동일한 locale coverage Golden을 언어별로 추가
+4. `story/locales/<locale>.jsonll`와 동일한 locale coverage Golden을 언어별로 추가
 5. `relationship_scene_panel`을 동료 긴장·중재·소원함 장면의 공통 변형으로 확장

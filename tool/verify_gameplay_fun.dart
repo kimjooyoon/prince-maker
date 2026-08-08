@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:prince_maker/jsonl.dart';
 
 Never fail(String message) {
   stderr.writeln('GAMEPLAY_FUN_GATE_FAIL: $message');
@@ -7,8 +8,7 @@ Never fail(String message) {
 }
 
 void main() {
-  final story = jsonDecode(File('story/story.json').readAsStringSync())
-      as Map<String, dynamic>;
+  final story = decodeJsonl(File('story/story.jsonl').readAsStringSync());
   final events = (story['events'] as List).cast<Map<String, dynamic>>(),
       choices = events
           .expand((event) =>
@@ -78,7 +78,7 @@ void main() {
   final report = {
     'schema': 'lumen-gameplay-fun-verdict-v1',
     'decision': approved ? 'approve' : 'reject',
-    'source': 'story/story.json#gameplayKpis',
+    'source': 'story/story.jsonl#gameplayKpis',
     'metrics': metrics,
     'targets': contract['targets'],
     'system': {

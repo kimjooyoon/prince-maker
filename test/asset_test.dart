@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:prince_maker/jsonl.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +27,8 @@ void main() {
   });
   test('SSOT maps three original personality designs to unique PNG frames',
       () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final people =
         (source['personalities'] as List).cast<Map<String, dynamic>>();
     expect(people.length, 3);
@@ -45,9 +45,8 @@ void main() {
 
   test('SSOT binds every dialogue choice to a reusable upper-body speaker',
       () async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final characters = (source['characters'] as List).cast<Map>();
     final choices = (source['events'] as List)
         .cast<Map>()
