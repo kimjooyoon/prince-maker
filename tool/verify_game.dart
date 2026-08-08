@@ -778,6 +778,11 @@ void main() {
       File('test/side_scene_golden_test.dart').existsSync()
           ? File('test/side_scene_golden_test.dart').readAsStringSync()
           : '';
+  final relationshipArchiveGoldenEvidence =
+      File('test/relationship_archive_golden_test.dart').existsSync()
+          ? File('test/relationship_archive_golden_test.dart')
+              .readAsStringSync()
+          : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
           ? File('tool/verify_scenario_variants.dart').readAsStringSync()
@@ -818,6 +823,10 @@ void main() {
     'environment-atlas-en.png',
     'side-scene.png',
     'side-scene-en.png',
+    'relationship-archive.png',
+    'relationship-archive-en.png',
+    'relationship-archive-kind.png',
+    'relationship-archive-bold.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -899,6 +908,12 @@ void main() {
             .contains("goldens/environment-atlas-en.png") &&
         sideSceneGoldenEvidence.contains("goldens/side-scene.png") &&
         sideSceneGoldenEvidence.contains("goldens/side-scene-en.png") &&
+        relationshipArchiveGoldenEvidence.contains(
+            'relationship archive renders all personality resonance states') &&
+        relationshipArchiveGoldenEvidence
+            .contains("goldens/relationship-archive-kind.png") &&
+        relationshipArchiveGoldenEvidence
+            .contains("goldens/relationship-archive-bold.png") &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(

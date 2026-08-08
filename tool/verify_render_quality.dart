@@ -75,6 +75,8 @@ void main() {
       'goldens/chapter-\$id.png');
   final chapterClosureGoldenTest =
       read('test/chapter_closure_golden_test.dart');
+  final relationshipArchiveGoldenTest =
+      read('test/relationship_archive_golden_test.dart');
   final characterRosterGoldenTest =
       read('test/character_roster_golden_test.dart');
   final environmentAtlasGoldenTest = read('test/environment_golden_test.dart');
@@ -95,6 +97,14 @@ void main() {
       'goldens/environment-atlas.png');
   requireText('test/environment_golden_test.dart', environmentAtlasGoldenTest,
       'goldens/environment-atlas-en.png');
+  for (final name in [
+    'goldens/relationship-archive.png',
+    'goldens/relationship-archive-kind.png',
+    'goldens/relationship-archive-bold.png',
+  ]) {
+    requireText('test/relationship_archive_golden_test.dart',
+        relationshipArchiveGoldenTest, name);
+  }
   final goldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()

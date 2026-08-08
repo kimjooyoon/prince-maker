@@ -148,6 +148,8 @@ void main() {
     'test/relationship_archive_golden_test.dart',
     'test/goldens/relationship-archive.png',
     'test/goldens/relationship-archive-en.png',
+    'test/goldens/relationship-archive-kind.png',
+    'test/goldens/relationship-archive-bold.png',
     'design/tokens.jsonl',
     'docs/design-system.md',
     'lib/canvas_ui_kit.dart',
