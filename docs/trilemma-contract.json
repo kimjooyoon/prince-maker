@@ -2,7 +2,7 @@
   "schema": "prince-maker-trilemma-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "0a424f9036755d882c37fbfaae3ed19ff2d744974d3dc0802589b3ac6f7a155c"
+    "sha256": "40ca769e2189b24dcf3541f56a755faff9b2257cd91638a4d60c302d5d7a4072"
   },
   "axes": [
     {
@@ -12,6 +12,8 @@
       "guardrails": {
         "scenarioDimensions": 8,
         "authoredBranches": 100,
+        "scenarioCases": 2000,
+        "scenarioRouteInputs": 122880,
         "goldens": 27,
         "localeKeys": 398
       },
@@ -30,6 +32,8 @@
         "schedulePolicies": 5,
         "minDistinctEndings": 3,
         "minDistinctSignatures": 3,
+        "scenarioCases": 2000,
+        "minScenarioSignatures": 2000,
         "minLegacyProfiles": 3,
         "minLegacyTargetEndings": 3,
         "minLegacyTargetCompanions": 3,

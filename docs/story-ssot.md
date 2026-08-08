@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 0a424f9036755d882c37fbfaae3ed19ff2d744974d3dc0802589b3ac6f7a155c -->
+<!-- ssot-sha256: 40ca769e2189b24dcf3541f56a755faff9b2257cd91638a4d60c302d5d7a4072 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -58,6 +58,17 @@
 
 - 최소 보장: **120분** · 보수적 1회차 추정: **129분**
 - 근거: 48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s = 7,755s = 129m; contract reports a conservative 129m first-playthrough estimate.
+
+## 시나리오 경우의 수 계약
+
+- 최소 보장: **2000개** · 실제 재생 검증: **2048개** · 전체 route input: **122880개**
+- 분기 주차: 3, 4, 5, 8, 12, 13, 14, 15, 16, 17, 18주
+- 산식: 2^11 unconditional authored branch vectors × 5 activity policies × 3 personality routes × 4 legacy contexts = 122,880 route inputs; the CI enumerator replays all 2,048 branch vectors and requires at least 2,000 distinct deterministic scenario traces.
+
+## 엔딩 설계 행렬
+
+해결 순서: winner-growth-axis → highest-eligible-authored-tier → record-rank → companion-route-set → retrospective-cause-board
+- 핵심 엔딩군: stargazer, gardener, pathfinder · 동료 route set 최대 8개 · terminal route card 최대 48개
 
 ## 시나리오 완전성 표본
 

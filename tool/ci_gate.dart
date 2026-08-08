@@ -44,6 +44,8 @@ Future<void> main(List<String> args) async {
   final checks = <GateCheck>[
     const GateCheck('ci-policy', 'dart', ['run', 'tool/verify_ci_policy.dart']),
     const GateCheck('story-contract', 'dart', ['run', 'tool/verify_game.dart']),
+    const GateCheck('scenario-variants', 'dart',
+        ['run', 'tool/verify_scenario_variants.dart']),
     const GateCheck(
         'campaign-benchmark', 'dart', ['run', 'tool/benchmark_game.dart']),
     const GateCheck('generated-trilemma-contract', 'dart',

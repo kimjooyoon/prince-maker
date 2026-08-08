@@ -159,6 +159,15 @@ void addEventLocale(
 }
 
 void refreshHashes(Map<String, dynamic> story) {
+  final refs = (story['codeRefs'] as List).cast<Map<String, dynamic>>();
+  final requiredRefs = [
+    'tool/verify_scenario_variants.dart#scenario-case-enumerator',
+  ];
+  for (final ref in requiredRefs) {
+    if (!refs.any((entry) => entry['ref'] == ref)) {
+      refs.add({'ref': ref, 'sha256': ''});
+    }
+  }
   for (final ref in (story['codeRefs'] as List).cast<Map<String, dynamic>>()) {
     final path = (ref['ref'] as String).split('#').first;
     ref['sha256'] = sha256.convert(File(path).readAsBytesSync()).toString();
@@ -1546,6 +1555,74 @@ void main() {
     },
     'formula':
         '48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s = 7,755s = 129m; contract reports a conservative 129m first-playthrough estimate.',
+  };
+  story['scenarioVariantBudget'] = {
+    'schema': 'lumen-scenario-cases-v1',
+    'minimumCases': 2000,
+    'branchWeeks': [3, 4, 5, 8, 12, 13, 14, 15, 16, 17, 18],
+    'branchChoicesPerWeek': 2,
+    'authoredBranchVectors': 2048,
+    'activityPolicies': 5,
+    'personalityRoutes': 3,
+    'legacyContexts': 4,
+    'routeInputCases': 122880,
+    'verifiedReachableCases': 2048,
+    'signature':
+        'replay trace + core ending + stats + bonds + milestones + memory flags',
+    'formula':
+        '2^11 unconditional authored branch vectors × 5 activity policies × 3 personality routes × 4 legacy contexts = 122,880 route inputs; the CI enumerator replays all 2,048 branch vectors and requires at least 2,000 distinct deterministic scenario traces.',
+    'evidence': 'tool/verify_scenario_variants.dart#scenario-case-enumerator',
+  };
+  story['endingDesign'] = {
+    'schema': 'lumen-ending-matrix-v1',
+    'resolutionOrder': [
+      'winner-growth-axis',
+      'highest-eligible-authored-tier',
+      'record-rank',
+      'companion-route-set',
+      'retrospective-cause-board',
+    ],
+    'coreFamilies': [
+      {
+        'id': 'stargazer',
+        'stat': '지혜',
+        'tiers': ['seed', 'master'],
+        'masterRequires': ['spring', 'winter'],
+      },
+      {
+        'id': 'gardener',
+        'stat': '공감',
+        'tiers': ['seed', 'master'],
+        'masterRequires': ['summer', 'return'],
+      },
+      {
+        'id': 'pathfinder',
+        'stat': '용기',
+        'tiers': ['seed', 'master'],
+        'masterRequires': ['autumn', 'constellation'],
+      },
+    ],
+    'companionRouteModifiers': [
+      {
+        'id': 'solo',
+        'condition': 'no companion reaches bond threshold',
+        'epilogueCount': 0,
+      },
+      {
+        'id': 'single-companion',
+        'condition': 'exactly one companion reaches bond threshold',
+        'epilogueCount': 1,
+      },
+      {
+        'id': 'ensemble',
+        'condition': 'two or more companions reach bond threshold',
+        'epilogueCount': 2,
+      },
+    ],
+    'maximumCompanionRouteSets': 8,
+    'maximumTerminalRouteCards': 48,
+    'minimumCoreEndings': 6,
+    'evidence': 'lib/game_core.dart#resolveEnding',
   };
   story['dialogueMetrics'] = {
     'locales': 'ko,en',
