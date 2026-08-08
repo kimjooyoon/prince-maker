@@ -16,21 +16,73 @@
 
 | 단위 | 용도 | 현재 사용처 |
 | --- | --- | --- |
+| `app_shell` | 760×700 Canvas 배경·locale·화면 전환의 공통 외피 | 전체 화면 |
+| `status_hud` | 주차·성장축·은화·피로·관계의 한눈 요약 | 홈 |
 | `stat_panel` | 주인공·스탯·은화 요약 | 홈 화면 |
+| `stat_pill` | 성장축 이름과 현재 값을 빠르게 비교 | 홈 HUD |
+| `fatigue_meter` | 피로 0–12와 위험 threshold를 색으로 전달 | 홈 HUD·엔딩 |
+| `goal_callout` | 다음 막 목표·달성 여부·다음 단서 표시 | 홈·막 결산·엔딩 |
+| `progress_tracker` | 주차 진행과 나비효과·동료 퀘스트 누적량 표시 | 홈·저장·막 결산 |
+| `activity_card` | 성장·은화·피로 tradeoff를 선택 가능한 카드로 표시 | 홈 일정 선택 |
+| `primary_action` | 현재 화면에서 가장 중요한 진행 행동 | 하루 보내기·다음 장·재시작 |
+| `secondary_action` | 보관소·일러스트·홈·이전/다음 등 보조 이동 | 홈·저장·사이드 장면 |
+| `feedback_banner` | 직전 행동의 효과·대사·조건 부족을 즉시 반환 | 홈·사건 |
 | `choice_card` | 일정 선택과 상태 강조 | 주간 계획 |
+| `requirement_badge` | 스탯·유대·기억·계승 조건의 충족/잠금 상태 | 사건·사이드 장면 |
+| `speaker_portrait` | 선택지와 막 장면의 화자·역할·portrait frame 연결 | 사건·막 결산 |
+| `dialogue_panel` | 장소·화자·대사를 하나의 읽기 순서로 묶음 | 사건·성격·막 결산 |
 | `portrait_page` | 성격 탭과 상반신 대화 | 노아의 기록 |
 | `personality_portrait` | SSOT `portraitAsset` + `portraitFrame`을 읽는 캐릭터 프레임 | 고요·다정·용감 3종 |
+| `route_atlas` | 장소 발견 flag와 다음 탐험 경로를 노드로 표시 | 홈 |
+| `side_scene_card` | 탐험·위기·자원·미니게임·동료 조합 사건의 상태와 선택 | 사이드 장면 기록 |
+| `chapter_closure_scene` | 막 목표 결과와 관계 장면·다음 장 이동을 한 화면에 고정 | 막 결산 |
 | `ending_panel` | 성장 결과와 재시작 | 48주 엔딩 |
+| `retrospective_panel` | 원인 사건·목표 달성·다음 회차 단서를 요약 | 엔딩 |
+| `save_code_panel` | replay trace·도감·복사·복원을 한 보관 단위로 표시 | 기록 보관소 |
+| `ledger_thread_card` | 나비효과의 발견 전/후 상태를 구분 | 운명 기록 |
+| `quest_progress_card` | 동료 퀘스트 단계와 완료 상태를 표시 | 운명 기록 |
+| `receipt_row` | 승인/거절·규칙·hash를 짧은 판정 행으로 표시 | 운명 기록 |
+| `character_card` | portrait sheet·이름·역할·모티프를 고정 | 캐릭터 도감 |
+| `empty_state` | 기록/사이드 장면이 없을 때 다음 행동을 안내 | 기록·사이드 장면 |
 | `relationship_scene_panel` | SSOT speaker·portrait·title·line을 한 패널에 고정 | 16막 chapter closure |
 | `relationship_state_badge` | bond gap·기억 flag에서 나온 관계 상태를 Canvas/replay와 동일하게 표시 | 홈·막 결산·관계 Golden |
 | `relationship_followup_panel` | resolved state에 대응하는 exclusive speaker·portrait·title·line을 동일 카드에 표시 | 막 결산·관계 후속 Golden |
 | `environment_card` | 장소의 색·모티프·날씨·플레이 affordance를 한 카드에 표시 | 환경 아틀라스 6종 |
 | `environment_surface` | 장소별 규칙을 작은 Canvas 풍경으로 압축 | 기록관·온실·시장·바람길·관측소·채석장 |
-| `feedback_banner` | 마지막 행동 결과와 조건 피드백 | 홈 화면 |
 | `locale_toggle` | locale catalog 전환 | 일러스트·사건 화면 |
+| `navigation_footer` | 홈·뒤로·이전·다음의 넓은 탭 영역과 방향성 | 전체 보관/아카이브 화면 |
 | `vector_activity_icon` | 활동별 별·꽃·나침반·달·보석 마크 | 선택 카드 |
 
-런타임 토큰은 [`lib/design_tokens.dart`](../lib/design_tokens.dart), 사람이 읽는 토큰 원본은 [`design/tokens.jsonl`](../design/tokens.jsonl)입니다. 새 화면은 색상·간격을 직접 하드코딩하지 않고 이 두 파일의 기준으로 설계합니다.
+`CanvasUiStateGalleryPainter`의 상태 행렬은 [`test/goldens/ui-state-matrix.png`](../test/goldens/ui-state-matrix.png)으로 고정한다. 새 공통 surface는 다섯 상태를 모두 선언하고 이 Golden을 갱신해야 한다.
+
+런타임 토큰은 [`lib/design_tokens.dart`](../lib/design_tokens.dart), 사람이 읽는 토큰 원본은 [`design/tokens.jsonl`](../design/tokens.jsonl)입니다. 공통 Canvas surface는 [`lib/canvas_ui_kit.dart`](../lib/canvas_ui_kit.dart)가 `idle / selected / disabled / success / danger` 상태의 fill·stroke·text를 일관되게 계산합니다. 새 화면은 색상·간격·컨트롤 높이를 직접 하드코딩하지 않고 이 두 토큰 파일과 UI Kit의 기준으로 설계합니다.
+
+## UI 상태 계약
+
+| 상태 | 시각 규칙 | 의미 |
+| --- | --- | --- |
+| `idle` | paper fill + teal/ink stroke | 선택 가능한 기본 상태 |
+| `selected` | teal fill + white text | 현재 일정·탭·주요 선택 |
+| `disabled` | paper/mist + 낮은 대비 | 조건 부족, 아직 잠긴 선택 |
+| `success` | teal tint + teal stroke | 목표 달성, 저장 성공, 발견됨 |
+| `danger` | warm red tint + red stroke | 조건 부족, 거절, 오류 |
+
+모든 화면은 `loading`을 별도 애니메이션으로 만들지 않고 앱 초기 asset load 전에는 빈 Canvas를 노출하지 않습니다. 저장 복원 오류처럼 사용자 행동으로 발생하는 오류는 `danger` feedback banner 또는 SnackBar로만 표시하며, 진행 상태를 조용히 잃지 않습니다. 빈 목록은 `empty_state`로 다음 행동을 안내해야 합니다.
+
+## 화면별 조합
+
+| 페이지 | 조합 | 필수 상호작용 |
+| --- | --- | --- |
+| 홈 `0` | `status_hud` + `goal_callout` + `activity_card` + `feedback_banner` + `route_atlas` + `navigation_footer` | 일정 선택, 하루 보내기, 보관소/일러스트/도감/환경 이동 |
+| 성격 `1` | `portrait_page` + `personality_portrait` + `locale_toggle` | 성격 선택, 언어 전환, 홈 복귀 |
+| 엔딩 `2` | `ending_panel` + `retrospective_panel` + `primary_action` | 기록 확인, 다음 회차 시작 |
+| 사건 `3` | `dialogue_panel` + `choice_card` + `requirement_badge` + `speaker_portrait` | 효과가 있는 선택, 잠금 조건 확인 |
+| 저장 `4` | `save_code_panel` + `secondary_action` | 코드 복사, 코드 복원, 오류 피드백 |
+| 운명 기록 `5` | `ledger_thread_card` + `quest_progress_card` + `receipt_row` | 발견/퀘스트/판정 기록 확인 |
+| 막 결산 `6` | `chapter_closure_scene` + `relationship_followup_panel` | 목표 결과와 관계 장면 확인 |
+| 캐릭터 도감 `7` | `character_card` + `navigation_footer` | 20종 주민 확인, 언어 전환 |
+| 환경 아틀라스 `8` | `environment_card` + `environment_surface` | 장소 규칙 확인, 사이드 장면 진입 |
+| 사이드 장면 `9` | `side_scene_card` + `requirement_badge` + `navigation_footer` | 이전/다음 장면, 선택/잠금 확인 |
 
 ## 환경 게임디자인 시스템
 
@@ -50,6 +102,6 @@
 1. 이벤트 카드와 대화 선택지를 `choice_card` 변형으로 정의
 2. 저장 슬롯/리플레이 화면을 `stat_panel`과 `ending_panel` 조합으로 정의
 3. 48주 플레이 지표(선택 분포·엔딩 분포·재시작률·막별 분량)를 SSOT와 골든에 추가
-4. `story/locales/<locale>.jsonll`와 동일한 locale coverage Golden을 언어별로 추가
+4. `story/locales/<locale>.jsonl`와 동일한 locale coverage Golden을 언어별로 추가
 5. `relationship_scene_panel`을 동료 긴장·중재·소원함 장면의 공통 변형으로 확장
 6. 새 장소를 추가할 때 `locations`·환경 surface·affordance·발견 flag·Golden을 한 묶음으로 추가

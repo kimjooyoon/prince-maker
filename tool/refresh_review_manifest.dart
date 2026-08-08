@@ -105,7 +105,15 @@ void main() {
     'tool/verify_decision_proof.dart',
     'test/decision_proof_test.dart',
     'test/relationship_dynamics_test.dart',
-    'test/relationship_followup_golden_test.dart'
+    'test/relationship_followup_golden_test.dart',
+    'design/tokens.jsonl',
+    'docs/design-system.md',
+    'lib/canvas_ui_kit.dart',
+    'test/canvas_ui_kit_test.dart',
+    'test/ui_design_contract_test.dart',
+    'lib/ui_state_gallery.dart',
+    'test/ui_state_golden_test.dart',
+    'test/goldens/ui-state-matrix.png'
   ]) {
     if (!known.containsKey(path)) {
       entries
