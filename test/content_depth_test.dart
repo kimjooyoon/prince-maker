@@ -25,6 +25,28 @@ void main() {
         containsAll(
             {'exploration', 'resource-crisis', 'mini-game', 'companion-pair'}));
     expect((story['locations'] as List), hasLength(6));
+    final locations = (story['locations'] as List).cast<Map<String, dynamic>>();
+    for (final location in locations) {
+      final scenes = sideScenes
+          .where((scene) => scene['locationId'] == location['id'])
+          .toList();
+      expect(scenes.any((scene) => scene['sceneType'] == 'exploration'), true,
+          reason: '${location['id']} needs exploration evidence');
+      expect(
+          scenes.any((scene) => (scene['choices'] as List)
+              .cast<Map<String, dynamic>>()
+              .any((choice) => ((choice['coins'] as num?) ?? 0) > 0)),
+          true,
+          reason: '${location['id']} needs reward evidence');
+      expect(
+          scenes.any((scene) => (scene['choices'] as List)
+              .cast<Map<String, dynamic>>()
+              .any((choice) =>
+                  choice['bondId'] is String &&
+                  ((choice['bondDelta'] as num?) ?? 0) > 0)),
+          true,
+          reason: '${location['id']} needs relationship evidence');
+    }
     expect((story['companionScenes'] as List), hasLength(18));
     expect((story['activityScenes'] as List), hasLength(10));
     expect((story['endingVariants'] as List), hasLength(18));

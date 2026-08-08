@@ -756,8 +756,6 @@ class GameSession {
       final reflection =
           reflections[world.progress[0]!.week % reflections.length];
       activityReflection = reflection;
-      world.dispatch(ActivityReflectionResolved('${reflection['id']}',
-          '${reflection['title']}', '${reflection['line']}'));
     }
     world.dispatch(const WeekAdvanced());
     if (!story.events.any((e) => e['week'] == world.progress[0]!.week))
@@ -783,19 +781,22 @@ class GameSession {
         ? '${story.campaignWeeks}주 기록이 완성되었습니다 · 새 기록을 시작하세요.'
         : !world.stats[0]!.values.containsKey(e.stat)
             ? '시스템 판정 · 등록되지 않은 성장축'
-            : e.requiresStat != null &&
-                    (world.stats[0]!.values[e.requiresStat] ?? 0) <
-                        e.requiresMin
-                ? '조건 부족 · ${e.requiresStat} ${e.requiresMin} 필요'
-                : e.requiresBondId != null &&
-                        (p.bonds[e.requiresBondId] ?? 0) < e.requiresBondMin
-                    ? '관계 조건 부족 · ${e.requiresBondId} 유대 ${e.requiresBondMin} 필요'
-                    : e.requiresFlag != null && p.flags[e.requiresFlag] != true
-                        ? '기억 조건 부족 · ${e.requiresFlag} 필요'
-                        : e.requiredCompanions
-                                .any((id) => (p.bonds[id] ?? 0) <= 0)
-                            ? '동료 조건 부족 · ${e.requiredCompanions.join(',')} 유대 필요'
-                            : null;
+            : e.sourceId != null && p.flags['side-scene:${e.sourceId}'] == true
+                ? '사이드 장면은 이미 완료되었습니다 · 새로운 장면을 선택하세요.'
+                : e.requiresStat != null &&
+                        (world.stats[0]!.values[e.requiresStat] ?? 0) <
+                            e.requiresMin
+                    ? '조건 부족 · ${e.requiresStat} ${e.requiresMin} 필요'
+                    : e.requiresBondId != null &&
+                            (p.bonds[e.requiresBondId] ?? 0) < e.requiresBondMin
+                        ? '관계 조건 부족 · ${e.requiresBondId} 유대 ${e.requiresBondMin} 필요'
+                        : e.requiresFlag != null &&
+                                p.flags[e.requiresFlag] != true
+                            ? '기억 조건 부족 · ${e.requiresFlag} 필요'
+                            : e.requiredCompanions
+                                    .any((id) => (p.bonds[id] ?? 0) <= 0)
+                                ? '동료 조건 부족 · ${e.requiredCompanions.join(',')} 유대 필요'
+                                : null;
     final receipt =
         _decision('story-choice', e.label, conditions: message == null);
     if (!receipt.approved) {
@@ -879,10 +880,17 @@ class GameSession {
     final raw = save.read();
     if (raw == null) return null;
     final snapshot = GameSnapshot.decode(raw);
+    restoreSnapshot(snapshot);
+    return snapshot;
+  }
+
+  /// Restores imported state and immediately makes it the durable browser
+  /// snapshot. This keeps paste/import recovery equivalent to a reload.
+  void restoreSnapshot(GameSnapshot snapshot) {
     world.restore(snapshot);
     _lastDecisionHash =
         SystemDecisionPolicy.parentHash(world.progress[0]!.trace);
-    return snapshot;
+    persist(page: snapshot.page);
   }
 
   GameSnapshot snapshot({int page = 0}) => world.snapshot(page: page);

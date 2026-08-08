@@ -556,6 +556,76 @@ void main() {
     expect(restored.stats['공감'], 6);
     expect(restored.replayTrace, contains('event:등불'));
   });
+  test('activity reflection is recorded once in the replay trace', () {
+    final story = JsonStoryAdapter({
+      'personalities': [],
+      'companions': [],
+      'milestones': [],
+      'events': [],
+      'endings': [],
+      'activityScenes': [
+        {
+          'id': 'observe-reflection',
+          'activityId': 'observe',
+          'title': '관측의 메모',
+          'line': '별은 기록할 때 다음 선택이 된다.'
+        }
+      ]
+    });
+    final session = GameSession(story, MemorySaveAdapter());
+    session.choose(const ActivityChosen('지혜', 1, 0, 0,
+        label: '별 관측', activityId: 'observe'));
+    expect(
+        session.world.progress[0]!.trace
+            .where((entry) => entry == 'activity-scene:observe-reflection')
+            .length,
+        1);
+    expect(session.world.progress[0]!.lastLine, '별은 기록할 때 다음 선택이 된다.');
+  });
+  test('completed side scenes reject repeat rewards through the decision chain',
+      () {
+    final story = JsonStoryAdapter({
+      'personalities': [],
+      'companions': [],
+      'milestones': [],
+      'events': [],
+      'endings': [],
+      'sideScenes': [
+        {
+          'id': 'one-time-scene',
+          'requiresCompanions': [],
+          'choices': [
+            {'stat': '지혜', 'delta': 2, 'coins': 1, 'label': '한 번의 기록'}
+          ]
+        }
+      ]
+    });
+    final session = GameSession(story, MemorySaveAdapter());
+    session.chooseSideScene('one-time-scene', 0);
+    session.chooseSideScene('one-time-scene', 0);
+    final trace = session.world.progress[0]!.trace;
+    expect(session.world.stats[0]!.values['지혜'], 6);
+    expect(session.world.progress[0]!.coins, 13);
+    expect(trace.where((entry) => entry.startsWith('event:')).length, 1);
+    expect(trace.last, startsWith('approval:rejected'));
+    expect(session.world.progress[0]!.lastResult, contains('이미 완료'));
+  });
+  test('imported snapshots are durable after restoreSnapshot', () {
+    final save = MemorySaveAdapter();
+    final session = GameSession(JsonStoryAdapter({'events': []}), save);
+    const snapshot = GameSnapshot(
+        week: 8,
+        coins: 17,
+        fatigue: 4,
+        selected: 2,
+        persona: 1,
+        page: 4,
+        eventIndex: 1,
+        stats: {'지혜': 9, '공감': 7, '용기': 8},
+        history: ['activity:지혜+2']);
+    session.restoreSnapshot(snapshot);
+    expect(GameSnapshot.decode(save.read()!).toJson(), snapshot.toJson());
+  });
   test('batch replay can disable persistence without changing the trace', () {
     final story = JsonStoryAdapter({'events': []});
     final save = MemorySaveAdapter();

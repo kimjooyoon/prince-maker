@@ -46,9 +46,26 @@ void main() {
     'companion-pair'
   };
   final locationCounts = <String, int>{};
+  final locationEvidence = <String, Map<String, bool>>{};
   for (final scene in sideScenes) {
     final location = '${scene['locationId']}';
     locationCounts[location] = (locationCounts[location] ?? 0) + 1;
+    final evidence = locationEvidence.putIfAbsent(
+        location,
+        () => {
+              'exploration': false,
+              'reward': false,
+              'relationship': false,
+            });
+    evidence['exploration'] =
+        evidence['exploration'] == true || scene['sceneType'] == 'exploration';
+    final choices = (scene['choices'] as List).cast<Map<String, dynamic>>();
+    evidence['reward'] = evidence['reward'] == true ||
+        choices.any((choice) => ((choice['coins'] as num?) ?? 0) > 0);
+    evidence['relationship'] = evidence['relationship'] == true ||
+        choices.any((choice) =>
+            choice['bondId'] is String &&
+            ((choice['bondDelta'] as num?) ?? 0) > 0);
   }
   final companionCounts = <String, int>{};
   for (final scene in companionScenes) {
@@ -107,6 +124,12 @@ void main() {
   require(
       locations.every((location) => (locationCounts[location['id']] ?? 0) >= 4),
       'every location must have at least four side scenes');
+  require(locations.every((location) {
+    final evidence = locationEvidence[location['id']] ?? const {};
+    return evidence['exploration'] == true &&
+        evidence['reward'] == true &&
+        evidence['relationship'] == true;
+  }), 'every location must expose exploration, reward and relationship evidence');
   require(
       companions.length == 3 &&
           companions.every(
@@ -160,6 +183,7 @@ void main() {
       'ssotClaim': dialogue['authoredDialogueLines'],
     },
     'locationSideSceneCounts': locationCounts,
+    'locationEvidence': locationEvidence,
     'companionSceneCounts': companionCounts,
     'activitySceneCounts': activityCounts,
     'endingVariantCounts': variantCounts,
@@ -174,6 +198,7 @@ void main() {
       'totalAuthoredScenes': '70..90',
       'sideSceneChoices': 72,
       'locations': '6..8',
+      'locationSignals': 'exploration + reward + relationship per location',
       'companionScenesPerCompanion': 5,
       'activityMiniEventsPerActivity': 2,
       'endingVariantsPerCoreEnding': 3,

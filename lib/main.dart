@@ -288,7 +288,7 @@ class _Game extends State<Game> {
   GameSnapshot snapshot() => session.snapshot(page: page);
   void restore(GameSnapshot s) {
     setState(() {
-      session.world.restore(s);
+      session.restoreSnapshot(s);
       sync();
       page = s.page;
     });
@@ -1473,9 +1473,11 @@ class Scene extends CustomPainter {
         requirements =
             (scene['requiresCompanions'] as List? ?? const []).cast<String>(),
         companionReady = requirements.every((id) => (bonds[id] ?? 0) > 0),
+        completed = flags['side-scene:${scene['id']}'] == true,
         unlocked = scene.isNotEmpty &&
             (scene['unlockWeek'] as int? ?? 1) <= week &&
-            companionReady;
+            companionReady &&
+            !completed;
     txt(c, activeLocale == 'ko' ? '사이드 장면 기록' : 'Side scene archive',
         const Offset(24, 22), 28, ink,
         bold: true, maxWidth: 540);
@@ -1523,7 +1525,8 @@ class Scene extends CustomPainter {
           bondReq = choice['requiresBondId'] as String?,
           bondMin = choice['requiresBondMin'] as int? ?? 0,
           flagReq = choice['requiresFlag'] as String?,
-          locked = !unlocked ||
+          locked = completed ||
+              !unlocked ||
               (req != null && (stats[req] ?? 0) < min) ||
               (bondReq != null && (bonds[bondReq] ?? 0) < bondMin) ||
               (flagReq != null && flags[flagReq] != true),
@@ -1540,13 +1543,15 @@ class Scene extends CustomPainter {
       txt(
           c,
           locked
-              ? (requirements.isNotEmpty && !companionReady
-                  ? '동료 유대 필요'
-                  : flagReq != null
-                      ? '$flagReq 필요'
-                      : req != null
-                          ? '$req $min 필요'
-                          : '잠김')
+              ? completed
+                  ? '이미 완료'
+                  : requirements.isNotEmpty && !companionReady
+                      ? '동료 유대 필요'
+                      : flagReq != null
+                          ? '$flagReq 필요'
+                          : req != null
+                              ? '$req $min 필요'
+                              : '잠김'
               : '${choice['stat']} +${choice['delta']} · 은화 ${choice['coins']} · 유대 +${choice['bondDelta'] ?? 0}',
           Offset(x + 18, 405),
           10,
