@@ -12,10 +12,11 @@
 
 ## 현재 증적 지표
 
-개발 작업의 정량 목표·gap·투입 단위는 생성 원장인 [`docs/development-goals.md`](development-goals.md)와 [`docs/development-goals.json`](development-goals.json)이 관리한다. authored content 227단위, narrative/relationship 25단위, replay exploration 604,928단위, presentation 899단위, proof 57단위로 종류를 분리하며, 이 숫자들을 품질 score로 임의 합산하지 않는다. `tool/verify_development_goals.dart`는 benchmark·결정 chain 실측과 6개 목표의 선행조건·증거를 함께 확인한다.
+개발 작업의 정량 목표·gap·투입 단위는 생성 원장인 [`docs/development-goals.md`](development-goals.md)와 [`docs/development-goals.json`](development-goals.json)이 관리한다. authored content 227단위, narrative/relationship 25단위, replay exploration 604,928단위, presentation 934단위, proof 60단위로 종류를 분리하며, 이 숫자들을 품질 score로 임의 합산하지 않는다. `tool/verify_development_goals.dart`는 benchmark·결정 chain 실측과 6개 목표의 선행조건·증거를 함께 확인한다.
 
 | 지표 | 기준 | 현재 |
 | --- | --- | ---: |
+| 게임성 KPI | effectful choice·사건별 결과 분기·다축 선택·조건부 선택·Canvas 결과 피드백을 동시에 판정 | 94/94 · 47/47 · 94/94 · 28 · Golden |
 | 활동 조합 공간 | 활동 5개 × 48주 | 240 |
 | 성장 축 | 지혜·공감·용기 | 3 |
 | 중반 공간 | 별자리 기록관·루멘 온실·달빛 시장·강 건너 바람길의 최초 발견 flag/trace | 4 |

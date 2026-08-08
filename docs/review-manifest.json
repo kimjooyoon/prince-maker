@@ -5,7 +5,7 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "693baad92e3a98212c376544b7671963be989cb21305ee7b4cd7d2f05a1cf7a3"
+      "sha256": "9aeb82a76dfc40a767cc1df827b2853a96c092bc8e258550dd6baf73b551f106"
     },
     {
       "path": "lib/main.dart",
@@ -210,17 +210,17 @@
     {
       "path": "docs/game-completeness.md",
       "ref": "docs/game-completeness.md#metrics",
-      "sha256": "05a742d12bbacb9f8259cacef4a28cf93f9fd1f40208b0fc570607d39836d38f"
+      "sha256": "f2775211d42c79aea344a19c1ad49fabab25894729da1e95213568f40af19fa5"
     },
     {
       "path": "docs/trilemma.md",
       "ref": "docs/trilemma.md#closed-loop",
-      "sha256": "c1699d71280ab1907e1f699b69599aecf8d7c818ae97577da451dd96c1f80599"
+      "sha256": "1821a9f8e38df1e6b22013cde3c81d6e1c9318c6469a58ce4b6dec2a3214d722"
     },
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "706f928280f2a091b322b3dc9125a71a49b1ee999341085595a634ee5f9bbc55"
+      "sha256": "1f58c23afd2cdb5f56722f7af79ffb6bbc6de6ffe51b919ab8eb6798e5983c58"
     },
     {
       "path": "docs/scenario-completeness.md",
@@ -235,7 +235,7 @@
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "767ceef47b250c9f329372f3867f2c6b843b8db8208d1b8f419ecec52b612b78"
+      "sha256": "dfd82f18cb1c73250715c703f77c510791a9402b69db4c51cfd35549706b99f1"
     },
     {
       "path": "docs/design-system.md",
@@ -315,12 +315,12 @@
     {
       "path": "tool/generate_trilemma_contract.dart",
       "ref": "tool/generate_trilemma_contract.dart#buildContract",
-      "sha256": "d6f8ffb88293f1a4b93e4b1e611ec9d84c6c6fb0896cd398e1c3a6e4d9a6760c"
+      "sha256": "389e8cc34caca736d48bcdbb26aa6d2e3bb15dc384ba14fbfa7eda4311a4e86a"
     },
     {
       "path": "tool/verify_game.dart",
       "ref": "tool/verify_game.dart#trilemma-contract-assetRefs-localeRefs-progression-scenario",
-      "sha256": "3de679fbbbde15934dfc5a73cafb769e9f70003fa40105967afca1381f364c62"
+      "sha256": "52c9c57d14e7c99b8fa6d7a638db0bb90d7dc534668cacdf6bf17bb2a7897ae6"
     },
     {
       "path": "tool/benchmark_game.dart",
@@ -330,7 +330,7 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "88162a9f4fe0ccfddfe5a0b1665e3dece537ae3f87cd0fb91563d4252569f502"
+      "sha256": "9d1e839fd2f06f03cfb8318cd82d557ffe8d5af6e9d9aae45eb9c3133e96013a"
     },
     {
       "path": "test/locale_contract_test.dart",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "bf91945b8c739c7c95601a377a6208c60f9139c21ae3b984d849e9327dedd390"
+      "sha256": "c5709d686e2f293e1e000af726d36af9919a39c9aa2938a707c9b773ddfb5f80"
     },
     {
       "path": "design/tokens.json",
@@ -380,7 +380,7 @@
     {
       "path": ".github/workflows/verify.yml",
       "ref": ".github/workflows/verify.yml#system-approval",
-      "sha256": "c11439721352092270d4131c4785c70fd327582c2d600c3a87d3ab4b78ce8e4e"
+      "sha256": "f54b982c85e01ddf15433c2adad5a0e0f5c6a0c988839746f50a3af09324e240"
     },
     {
       "path": "docs/automation-policy.md",
@@ -390,12 +390,12 @@
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "4561f8ea1a474aab43abac3552c323c4cc79d527014f1de3b5dc14d02a3d9494"
+      "sha256": "81072fec6d6c0e1d9a59765039ada3d03e90d7a08a1143481cd3a7d70c0affa6"
     },
     {
       "path": "tool/ci_gate.dart",
       "ref": "tool/ci_gate.dart#system-verdict",
-      "sha256": "697f3336828134979f19a0f7555bf46dde530ba367f62b1a6a43daedcfab5144"
+      "sha256": "383d117fd61ac4a6d1f87dfd59f1895f8348ff486714a69b32fb7a0e47669fa1"
     },
     {
       "path": "tool/verify_ci_policy.dart",
@@ -405,12 +405,12 @@
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "3b4e4ceda7d188215fcc37321dc1b8c4163f4e5338870a1b0b19896206b1c923"
+      "sha256": "f6e45bc12d26c786165ad66f8711180c27e8bb90ec53fc386d64da698d15ff5d"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
       "ref": "tool/refresh_review_manifest.dart#reviewed",
-      "sha256": "0e4ee667cb72b8c6656670645796eb63ecb09f7856c81f466916af633975ca9f"
+      "sha256": "ae92b38c0a8c9128ccdbb4bcb8e157de9abcc40ed7ffa471614baf7d61fd4299"
     },
     {
       "path": "tool/verify_scenario_variants.dart",
@@ -445,7 +445,7 @@
     {
       "path": "tool/trilemma_verdict.dart",
       "ref": "tool/trilemma_verdict.dart#reviewed",
-      "sha256": "416d62530eb3bef7c0d71b1f9be38d5ed0ba65749c4edc6f78b70fb8a4acca6f"
+      "sha256": "9dd2274b02de630e07611eab973ef44835b64cec09d38cab89c739fd24730c7d"
     },
     {
       "path": "test/trilemma_verdict_test.dart",
@@ -510,17 +510,17 @@
     {
       "path": "docs/development-goals.json",
       "ref": "docs/development-goals.json#reviewed",
-      "sha256": "5867879f0f8c8b0ca0bbf1cc969483126ef743cfb06009a2daec7daef49a218a"
+      "sha256": "ceb640f42574cdfd545d659b6fc210ce7f453f11a95acbebb3154b26dea51b4f"
     },
     {
       "path": "docs/development-goals.md",
       "ref": "docs/development-goals.md#reviewed",
-      "sha256": "76a570532ac680ed92f0b1451364de381c142303e28399206d8f60e283c7168e"
+      "sha256": "ab996d06a5a5f822b30842dfd3976470946a7aa6eda22cc94e3083b5c7805011"
     },
     {
       "path": "tool/generate_development_goals.dart",
       "ref": "tool/generate_development_goals.dart#reviewed",
-      "sha256": "47023e04db33ac98e5daa1cb4edc0cd52ec54529845ddce1ac38e35a6fbcf93f"
+      "sha256": "e0be548cd5dc0e3ec05dc40051149ea6737cbea3dc1ca6a1847289a5b87891b6"
     },
     {
       "path": "tool/verify_development_goals.dart",
@@ -535,7 +535,7 @@
     {
       "path": "docs/decision-proof-contract.json",
       "ref": "docs/decision-proof-contract.json#reviewed",
-      "sha256": "133b8eeebb404d178784b2760b18ab62914a768abc41eccdb1cd9a3afa3e163f"
+      "sha256": "68ebfa85b0e9310a063e7ce9d23ce5d449591df9b4796e4b6dc62f2396c730c2"
     },
     {
       "path": "tool/verify_decision_proof.dart",
@@ -716,6 +716,11 @@
       "path": "test/goldens/chapter-closure-threshold.png",
       "ref": "test/goldens/chapter-closure-threshold.png#reviewed",
       "sha256": "e0bf481df80471286f55ccc51221de8d982d7a9a717d39c6e64ba304a9955005"
+    },
+    {
+      "path": "tool/verify_gameplay_fun.dart",
+      "ref": "tool/verify_gameplay_fun.dart#reviewed",
+      "sha256": "1254e1a50b9c41598870d4dd4c54249d00220b2bf2f038650a3278addfdda62b"
     }
   ]
 }

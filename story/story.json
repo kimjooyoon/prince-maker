@@ -58,11 +58,11 @@
     },
     {
       "ref": "tool/ci_gate.dart#system-verdict",
-      "sha256": "697f3336828134979f19a0f7555bf46dde530ba367f62b1a6a43daedcfab5144"
+      "sha256": "383d117fd61ac4a6d1f87dfd59f1895f8348ff486714a69b32fb7a0e47669fa1"
     },
     {
       "ref": "tool/trilemma_verdict.dart#axis-verdict",
-      "sha256": "416d62530eb3bef7c0d71b1f9be38d5ed0ba65749c4edc6f78b70fb8a4acca6f"
+      "sha256": "9dd2274b02de630e07611eab973ef44835b64cec09d38cab89c739fd24730c7d"
     },
     {
       "ref": "lib/canvas_surface.dart#CanvasViewport",
@@ -74,7 +74,7 @@
     },
     {
       "ref": "tool/verify_game.dart#visual-golden-contract",
-      "sha256": "3de679fbbbde15934dfc5a73cafb769e9f70003fa40105967afca1381f364c62"
+      "sha256": "52c9c57d14e7c99b8fa6d7a638db0bb90d7dc534668cacdf6bf17bb2a7897ae6"
     },
     {
       "ref": "lib/canvas_scene_fingerprint.dart#canvasSceneFingerprint",
@@ -90,7 +90,7 @@
     },
     {
       "ref": "tool/generate_development_goals.dart#buildDocument",
-      "sha256": "47023e04db33ac98e5daa1cb4edc0cd52ec54529845ddce1ac38e35a6fbcf93f"
+      "sha256": "e0be548cd5dc0e3ec05dc40051149ea6737cbea3dc1ca6a1847289a5b87891b6"
     },
     {
       "ref": "tool/verify_development_goals.dart#quantitative-evidence-gate",
@@ -115,6 +115,10 @@
     {
       "ref": "test/chapter_closure_golden_test.dart#all sixteen SSOT chapter closures have deterministic goal Goldens",
       "sha256": "4c898108451fa09e47c475e0df22d3cff7565108ca59773d31f65ff7539d3a7f"
+    },
+    {
+      "ref": "tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate",
+      "sha256": "1254e1a50b9c41598870d4dd4c54249d00220b2bf2f038650a3278addfdda62b"
     }
   ],
   "assetRefs": [
@@ -3225,5 +3229,37 @@
     "resolver": "lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests",
     "systemOwner": "lumen-rule-engine",
     "evidence": "test/narrative_ledger_test.dart#deterministic-projection"
+  },
+  "gameplayKpis": {
+    "schema": "lumen-gameplay-kpi-v1",
+    "source": "story/story.json#events",
+    "targets": {
+      "choiceImpactRate": 1.0,
+      "eventDivergenceRate": 1.0,
+      "multiAxisImpactRate": 0.9,
+      "minimumGatedChoices": 20
+    },
+    "current": {
+      "authoredChoices": 94,
+      "effectfulChoices": 94,
+      "choiceImpactRate": 1.0,
+      "multiAxisChoices": 94,
+      "multiAxisImpactRate": 1.0,
+      "divergentEvents": 47,
+      "eventDivergenceRate": 1.0,
+      "gatedChoices": 28
+    },
+    "definitions": {
+      "choiceImpactRate": "effectful authored choices / authored choices",
+      "eventDivergenceRate": "events with at least two distinct effect vectors / events",
+      "multiAxisImpactRate": "choices changing at least two numeric axes / choices",
+      "feedbackGolden": "authored result banner is fixed by Canvas Golden"
+    },
+    "evidence": [
+      "tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate",
+      "test/gameplay_metrics_test.dart#route-variety",
+      "test/purity_integration_test.dart#same-schedule-budget-outcomes",
+      "test/golden_test.dart#event choice shows a separated result banner"
+    ]
   }
 }

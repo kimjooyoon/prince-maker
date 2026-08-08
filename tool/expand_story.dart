@@ -171,6 +171,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'tool/verify_render_quality.dart#render-quality-preconditions',
     'test/chapter_golden_test.dart#all sixteen SSOT chapters have deterministic event Goldens',
     'test/chapter_closure_golden_test.dart#all sixteen SSOT chapter closures have deterministic goal Goldens',
+    'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
     'tool/generate_development_goals.dart#buildDocument',
     'tool/verify_development_goals.dart#quantitative-evidence-gate',
     'lib/decision_receipt.dart#DecisionReceipt',
@@ -1829,6 +1830,85 @@ void main() {
     'authoredDialogueLines': 184,
     'formula':
         'catalog 419 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15; one 48-week route exposes at least 47 authored choice lines and 160 narrative units',
+  };
+  final choices = (story['events'] as List)
+      .cast<Map<String, dynamic>>()
+      .expand(
+          (event) => (event['choices'] as List).cast<Map<String, dynamic>>())
+      .toList();
+  const numericAxes = ['delta', 'coins', 'bondDelta', 'rivalDelta'];
+  int axes(Map<String, dynamic> choice) =>
+      numericAxes.where((key) => ((choice[key] as num?) ?? 0) != 0).length;
+  String effect(Map<String, dynamic> choice) => jsonEncode({
+        for (final key in [
+          'stat',
+          'delta',
+          'coins',
+          'bondId',
+          'bondDelta',
+          'rivalId',
+          'rivalDelta',
+          'setsFlag',
+          'legacyBonuses'
+        ])
+          key: choice[key]
+      });
+  final impactful = choices
+          .where((choice) =>
+              axes(choice) > 0 ||
+              choice['setsFlag'] != null ||
+              choice['legacyBonuses'] != null)
+          .length,
+      multiAxis = choices.where((choice) => axes(choice) >= 2).length,
+      divergentEvents = (story['events'] as List)
+          .cast<Map<String, dynamic>>()
+          .where((event) =>
+              (event['choices'] as List)
+                  .cast<Map<String, dynamic>>()
+                  .map(effect)
+                  .toSet()
+                  .length >=
+              2)
+          .length,
+      gatedChoices = choices
+          .where((choice) =>
+              choice['requiresStat'] != null ||
+              choice['requiresBondId'] != null ||
+              choice['requiresFlag'] != null)
+          .length;
+  story['gameplayKpis'] = {
+    'schema': 'lumen-gameplay-kpi-v1',
+    'source': 'story/story.json#events',
+    'targets': {
+      'choiceImpactRate': 1.0,
+      'eventDivergenceRate': 1.0,
+      'multiAxisImpactRate': 0.9,
+      'minimumGatedChoices': 20,
+    },
+    'current': {
+      'authoredChoices': choices.length,
+      'effectfulChoices': impactful,
+      'choiceImpactRate': impactful / choices.length,
+      'multiAxisChoices': multiAxis,
+      'multiAxisImpactRate': multiAxis / choices.length,
+      'divergentEvents': divergentEvents,
+      'eventDivergenceRate': divergentEvents / (story['events'] as List).length,
+      'gatedChoices': gatedChoices,
+    },
+    'definitions': {
+      'choiceImpactRate': 'effectful authored choices / authored choices',
+      'eventDivergenceRate':
+          'events with at least two distinct effect vectors / events',
+      'multiAxisImpactRate':
+          'choices changing at least two numeric axes / choices',
+      'feedbackGolden': 'authored result banner is fixed by Canvas Golden',
+    },
+    'evidence': [
+      'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
+      'test/gameplay_metrics_test.dart#route-variety',
+      'test/purity_integration_test.dart#same-schedule-budget-outcomes',
+      'test/golden_test.dart#event choice shows a separated result banner',
+    ],
   };
   final dimensions = (story['scenarioCompleteness']['dimensions'] as List)
       .cast<Map<String, dynamic>>();

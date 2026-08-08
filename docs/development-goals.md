@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_development_goals.dart -->
-<!-- source-sha256: 693baad92e3a98212c376544b7671963be989cb21305ee7b4cd7d2f05a1cf7a3|706f928280f2a091b322b3dc9125a71a49b1ee999341085595a634ee5f9bbc55|b7994be8155baaf773edb1038809b54727af2bbf34f0ca69f8d941d142db5c76|133b8eeebb404d178784b2760b18ab62914a768abc41eccdb1cd9a3afa3e163f -->
+<!-- source-sha256: 9aeb82a76dfc40a767cc1df827b2853a96c092bc8e258550dd6baf73b551f106|1f58c23afd2cdb5f56722f7af79ffb6bbc6de6ffe51b919ab8eb6798e5983c58|b7994be8155baaf773edb1038809b54727af2bbf34f0ca69f8d941d142db5c76|68ebfa85b0e9310a063e7ce9d23ce5d449591df9b4796e4b6dc62f2396c730c2 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 정량 개발목표 원장
@@ -20,7 +20,7 @@
 | `G3-narrative-depth` | completeness | P1 | 관계·기억·계승 서사 깊이 · `{"fateThreads":6,"companionQuestStages":9,"endings":6,"legacyProfiles":3,"unit":"authored-narrative-units"}` | `{"fateThreads":6,"companionQuestStages":9,"endings":6,"legacyProfiles":3}` | `{fateThreads: 0, companionQuestStages: 0, endings: 0, legacyProfiles: 0}` | contract-satisfied; runtime-proof-required |
 | `G4-presentation` | completeness | P1 | 시각·locale 품질 증적 · `{"goldens":30,"locales":2,"keysPerLocale":419,"renderPreconditions":3,"renderProofs":3,"unit":"presentation-proof-units"}` | `{"goldens":62,"locales":2,"keysPerLocale":419,"renderPreconditions":3,"renderProofs":3}` | `{goldens: 0, locales: 0, keysPerLocale: 0, renderPreconditions: 0, renderProofs: 0}` | contract-satisfied; runtime-proof-required |
 | `G5-deterministic-throughput` | performance | P0 | 결정론적 처리량과 replay · `{"campaigns":5000,"transitions":475000,"maxMillis":24000,"unit":"benchmark-contract"}` | `{"campaigns":5000,"transitions":475000,"maxMillis":24000,"checksumReplayMustMatch":true,"formula":"campaigns × (endingWeek − 1 + events) and replay checksum equality"}` | `{campaigns: 0, transitions: 0, maxMillis: 0}` | runtime-measured-by-benchmark |
-| `G6-accountable-delivery` | performance | P0 | 책임 추적 가능한 납품 · `{"ciChecks":14,"codeRefs":24,"decisionProofFields":14,"unit":"delivery-proof-units"}` | `{"ciChecks":14,"codeRefs":28,"decisionProofFields":14,"assetRefs":4,"fontRefs":1,"localeRefs":2,"systemAdjudicated":true,"failClosed":true}` | `{ciChecks: 0, codeRefs: 0, decisionProofFields: 0}` | contract-satisfied; runtime-proof-required |
+| `G6-accountable-delivery` | performance | P0 | 책임 추적 가능한 납품 · `{"ciChecks":15,"codeRefs":24,"decisionProofFields":14,"unit":"delivery-proof-units"}` | `{"ciChecks":15,"codeRefs":29,"decisionProofFields":14,"assetRefs":4,"fontRefs":1,"localeRefs":2,"systemAdjudicated":true,"failClosed":true}` | `{ciChecks: 0, codeRefs: 0, decisionProofFields: 0}` | contract-satisfied; runtime-proof-required |
 
 ## 투입·증적 원장
 
@@ -29,8 +29,8 @@
 | `authored-content-units` | content-unit | **227** | 48 weeks + 16 chapters + 47 events + 94 choices + 16 milestones + 6 endings | authored campaign content and closure work |
 | `narrative-relationship-units` | narrative-unit | **25** | 3 companions + 6 fate threads + 9 quest stages + 4 locations + 3 legacy profiles | relationship, memory, discovery and replay depth |
 | `exploration-units` | replay-unit | **604928** | 2048 branch vectors + 122880 route inputs + 5,000 campaigns + 475000 transitions | branch enumeration, route variety and deterministic throughput |
-| `visual-locale-units` | presentation-unit | **933** | 62 Goldens + 2 locales × 419 keys + 28 code refs + 4 asset refs + 1 font refs | visual regression, localization and traceable production assets |
-| `verification-units` | proof-unit | **59** | 14 CI checks + 25 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
+| `visual-locale-units` | presentation-unit | **934** | 62 Goldens + 2 locales × 419 keys + 29 code refs + 4 asset refs + 1 font refs | visual regression, localization and traceable production assets |
+| `verification-units` | proof-unit | **60** | 15 CI checks + 25 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
 
 ## 선행조건과 증거
 
@@ -59,7 +59,7 @@
 
 - 선행조건: `render-quality-preconditions` · `static-analysis` · `tests-and-goldens`
 - 증거: `docs/render-quality-contract.json#preconditions` · `tool/verify_render_quality.dart#render-quality-preconditions` · `test/golden_test.dart#all` · `test/locale_contract_test.dart#ssot-dialogue-contract`
-- 승인 조건: Canvas 좌표·입력 역변환·30개 Golden·ko/en locale 계약이 전부 통과한다.
+- 승인 조건: Canvas 좌표·입력 역변환·62개 Golden·ko/en locale 계약이 전부 통과한다.
 - 사용 원장: `visual-locale-units` · `verification-units`
 
 ### `G5-deterministic-throughput` · 결정론적 처리량과 replay

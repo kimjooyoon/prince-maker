@@ -64,6 +64,8 @@ git config core.hooksPath .githooks
 
 ## SSOT와 게임성 지표
 
+게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 94/94 effectful choice, 47/47 divergent event, 94/94 multi-axis choice, 28 gated choice이며, 결과 피드백 Golden까지 purity 축의 fail-closed 게이트로 연결됩니다. 상세 계약은 story/story.json의 gameplayKpis와 tool/verify_gameplay_fun.dart에 있습니다.
+
 스토리와 활동 정의의 단일 원천은 [`story/story.json`](story/story.json)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, `assets/lumen-personality-sheet.png`는 고요·다정·용감 성격의 3프레임 상반신 시트입니다. 두 PNG는 SSOT의 `assetRefs`와 각 personality의 `portraitAsset`/`portraitFrame`으로 연결되어 Canvas 일러스트 페이지에서 표시됩니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
 캐릭터의 독자 조형 규칙과 자산 provenance는 [`docs/art-provenance.md`](docs/art-provenance.md)에 기록하고, SSOT verifier가 PNG 매핑·성격별 색상·모티프·실루엣 필드를 강제합니다.

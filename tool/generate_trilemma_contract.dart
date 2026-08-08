@@ -19,6 +19,10 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       (story['scenarioVariantBudget'] as Map).cast<String, dynamic>();
   final narrative =
       (story['narrativeLoop'] as Map? ?? {}).cast<String, dynamic>();
+  final gameplay =
+      (story['gameplayKpis'] as Map? ?? {}).cast<String, dynamic>();
+  final gameplayTargets =
+      (gameplay['targets'] as Map? ?? {}).cast<String, dynamic>();
   final quests = (story['companionQuests'] as List? ?? const []).cast<Map>();
   final questStages = quests.fold<int>(
       0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
@@ -68,10 +72,16 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'minLegacyTargetCompanions':
               (story['legacyProfiles'] as List? ?? []).length,
           'deterministicReplay': true,
+          'choiceImpactRate': gameplayTargets['choiceImpactRate'],
+          'eventDivergenceRate': gameplayTargets['eventDivergenceRate'],
+          'multiAxisImpactRate': gameplayTargets['multiAxisImpactRate'],
+          'minimumGatedChoices': gameplayTargets['minimumGatedChoices'],
         },
         'evidence': [
           'test/gameplay_metrics_test.dart#route-variety',
           'test/purity_integration_test.dart#same-schedule-budget-outcomes',
+          'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
+          'test/golden_test.dart#event choice shows a separated result banner',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/trilemma_verdict.dart#axis-verdict',
         ],
