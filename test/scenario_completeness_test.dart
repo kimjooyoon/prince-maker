@@ -6,7 +6,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   test('scenario completeness specimen covers every authored closure',
       () async {
-    final source = jsonDecode(await rootBundle.loadString('story/story.json'))
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
         as Map<String, dynamic>;
     final model = source['scenarioCompleteness'] as Map<String, dynamic>;
     final dimensions =
@@ -24,7 +25,7 @@ void main() {
     final chapters =
         (source['progression'] as List).cast<Map<String, dynamic>>();
     final events = (source['events'] as List).cast<Map<String, dynamic>>();
-    expect(chapters.length, 8);
+    expect(chapters.length, source['campaignWeeks'] ~/ 3);
     expect(
         chapters.every((chapter) =>
             (chapter['eventWeeks'] as List).isNotEmpty &&
@@ -53,7 +54,7 @@ void main() {
         .expand(
             (event) => (event['choices'] as List).cast<Map<String, dynamic>>())
         .toList();
-    expect(choices.length, 44);
+    expect(choices.length, events.length * 2);
     expect(
         choices.every((choice) =>
             choice['stat'] is String &&

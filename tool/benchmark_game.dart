@@ -19,6 +19,9 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
       lineageSignatures = <String, Set<String>>{},
       lineageCompanions = <String, Set<String>>{};
   final story = JsonStoryAdapter(source);
+  final eventsByWeek = <int, Map<String, dynamic>>{
+    for (final event in story.events) event['week'] as int: event,
+  };
   final legacyIds = story.legacyProfiles.map((p) => '${p['id']}').toList();
   for (var i = 0; i < campaigns; i++) {
     final legacyId = i.isEven && legacyIds.isNotEmpty
@@ -34,9 +37,7 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
       final stat = legacyProfile?['stat'] as String? ??
           switch ((i + week) % 3) { 0 => '지혜', 1 => '공감', _ => '용기' };
       session.choose(ActivityChosen(stat, 2, 1, 1, label: 'benchmark:$stat'));
-      final event = story.events
-          .where((e) => e['week'] == session.world.progress[0]!.week)
-          .firstOrNull;
+      final event = eventsByWeek[session.world.progress[0]!.week];
       if (event != null) {
         final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
         final available = choices
@@ -154,7 +155,7 @@ void main() {
       }).join(',');
   stdout.writeln(
       'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
-  if (millis > 8000 ||
+  if (millis > 24000 ||
       first.checksum <= campaigns ||
       replay.checksum != first.checksum ||
       replay.endings.length != first.endings.length ||

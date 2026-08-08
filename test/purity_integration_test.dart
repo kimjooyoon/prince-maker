@@ -6,21 +6,57 @@ import 'package:prince_maker/game_core.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   Future<Map<String, dynamic>> play(String stat, int delta) async {
-    final source = jsonDecode(await rootBundle.loadString('story/story.json')) as Map<String, dynamic>;
-    final story = JsonStoryAdapter(source), session = GameSession(story, MemorySaveAdapter());
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
+        as Map<String, dynamic>;
+    final story = JsonStoryAdapter(source),
+        session = GameSession(story, MemorySaveAdapter());
     while (session.world.progress[0]!.week < story.endingWeek) {
       session.choose(ActivityChosen(stat, delta, 0, 1, label: '$stat 집중'));
-      final event = story.events.where((e) => e['week'] == session.world.progress[0]!.week).firstOrNull;
+      final event = story.events
+          .where((e) => e['week'] == session.world.progress[0]!.week)
+          .firstOrNull;
       if (event != null) {
         final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
-        final available = choices.where((c) => (c['requiresStat'] == null || (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >= (c['requiresMin'] as int? ?? 0)) && (c['requiresBondId'] == null || (session.world.progress[0]!.bonds[c['requiresBondId']] ?? 0) >= (c['requiresBondMin'] as int? ?? 0)) && (c['requiresFlag'] == null || session.world.progress[0]!.flags[c['requiresFlag']] == true)).toList();
-        final choice = available.firstWhere((c) => c['stat'] == stat, orElse: () => available.first);
-        session.chooseEvent(StoryChoiceMade(choice['stat'], choice['delta'], choice['coins'], choice['label'], bondId: choice['bondId'], bondDelta: choice['bondDelta'], rivalId: choice['rivalId'], rivalDelta: choice['rivalDelta'] ?? 0, requiresStat: choice['requiresStat'], requiresMin: choice['requiresMin'] ?? 0, requiresBondId: choice['requiresBondId'], requiresBondMin: choice['requiresBondMin'] ?? 0, requiresFlag: choice['requiresFlag'], setsFlag: choice['setsFlag'], line: choice['line']));
+        final available = choices
+            .where((c) =>
+                (c['requiresStat'] == null ||
+                    (session.world.stats[0]!.values[c['requiresStat']] ?? 0) >=
+                        (c['requiresMin'] as int? ?? 0)) &&
+                (c['requiresBondId'] == null ||
+                    (session.world.progress[0]!.bonds[c['requiresBondId']] ??
+                            0) >=
+                        (c['requiresBondMin'] as int? ?? 0)) &&
+                (c['requiresFlag'] == null ||
+                    session.world.progress[0]!.flags[c['requiresFlag']] ==
+                        true))
+            .toList();
+        final choice = available.firstWhere((c) => c['stat'] == stat,
+            orElse: () => available.first);
+        session.chooseEvent(StoryChoiceMade(
+            choice['stat'], choice['delta'], choice['coins'], choice['label'],
+            bondId: choice['bondId'],
+            bondDelta: choice['bondDelta'],
+            rivalId: choice['rivalId'],
+            rivalDelta: choice['rivalDelta'] ?? 0,
+            requiresStat: choice['requiresStat'],
+            requiresMin: choice['requiresMin'] ?? 0,
+            requiresBondId: choice['requiresBondId'],
+            requiresBondMin: choice['requiresBondMin'] ?? 0,
+            requiresFlag: choice['requiresFlag'],
+            setsFlag: choice['setsFlag'],
+            line: choice['line']));
       }
     }
     final p = session.world.progress[0]!;
-    final ending = resolveEnding(story, session.world.stats[0]!.values, bonds: p.bonds, milestones: p.milestones);
-    return {'ending': ending['id'], 'stats': Map.of(session.world.stats[0]!.values), 'bonds': Map.of(p.bonds), 'trace': List.of(p.trace)};
+    final ending = resolveEnding(story, session.world.stats[0]!.values,
+        bonds: p.bonds, milestones: p.milestones);
+    return {
+      'ending': ending['id'],
+      'stats': Map.of(session.world.stats[0]!.values),
+      'bonds': Map.of(p.bonds),
+      'trace': List.of(p.trace)
+    };
   }
 
   test('same schedule budget yields distinct authored outcomes', () async {

@@ -1,6 +1,8 @@
 # 프린스 메이커
 
-독자 세계관 ‘루멘’에서 24주 동안 노아의 방향을 함께 고르는 결정론적 육성 시뮬레이션입니다. 원작의 캐릭터·문구·화면을 사용하지 않고, **일정 선택 → 수치 변화 → 서사 판정**이라는 장르의 구조만 새 규칙과 시각 언어로 재구성했습니다.
+독자 세계관 ‘루멘’에서 48주 동안 노아의 방향을 함께 고르는 결정론적 육성 시뮬레이션입니다. 한 회차는 48회 일정, 47개 사건, 16막 결산으로 구성되어 보수적 페이싱 기준 최소 120분의 서사 분량을 목표로 합니다. 원작의 캐릭터·문구·화면을 사용하지 않고, **일정 선택 → 수치 변화 → 서사 판정**이라는 장르의 구조만 새 규칙과 시각 언어로 재구성했습니다.
+
+장편 분량의 권위 있는 기준은 `story/story.json#contentBudget`이며, `tool/verify_game.dart`가 최소 120분·사건/선택지/막 결산 수를 함께 판정합니다.
 
 화면은 Flutter 위젯 카드가 아니라 `CustomPaint`/`Canvas`를 기준으로 그립니다. 입력은 얇은 `GestureDetector`가 좌표를 게임 상태 전이로 바꾸고, 상태·도형·텍스트는 한 개의 painter에서 결정론적으로 렌더링합니다.
 
@@ -25,7 +27,7 @@ git config core.hooksPath .githooks
 ![계절 목표가 보이는 계획 화면](test/goldens/milestone.png)
 ![사건 선택 Golden](test/goldens/event.png)
 ![성격별 상반신 일러스트 페이지](test/goldens/illustration.png)
-![24주 엔딩 화면](test/goldens/ending.png)
+![48주 엔딩 화면](test/goldens/ending.png)
 ![엔딩 원인 회고 보드](test/goldens/ending.png)
 ![계승 동행 에필로그가 보이는 엔딩 Canvas](test/goldens/companion-epilogue.png)
 ![별읽기 계승 동행 Golden](test/goldens/companion-stargazer.png)
@@ -36,7 +38,7 @@ git config core.hooksPath .githooks
 ![SSOT에서 직접 렌더링한 canonical 홈](test/goldens/canonical-home.png)
 ![SSOT 4주차 온실 사건](test/goldens/canonical-event.png)
 ![엔딩 도감이 보이는 replay 보관소](test/goldens/collection.png)
-![실제 SSOT 24주 경로의 canonical 엔딩](test/goldens/canonical-ending.png)
+![실제 SSOT 48주 경로의 canonical 엔딩](test/goldens/canonical-ending.png)
 ![사건 선택 결과 피드백 배너](test/goldens/feedback.png)
 ![관계 긴장 선택 결과 피드백](test/goldens/relationship-tension.png)
 ![관계 중재 선택 결과 피드백](test/goldens/mediation.png)
@@ -65,7 +67,7 @@ git config core.hooksPath .githooks
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 5개 활동 × 24주 = 120개의 계획 조합, 5개 SSOT 일정 정책 실험에서 distinct ending/signature 3개 이상, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 3개 성격 대화, 3명 동료 유대도·rival bond·관계 충돌·중재 기억·4개 장소 발견·동행 관계 목표·복수 에필로그, 3개 엔딩 계열별 회차 계승 프로필(다음 회차 시작 스탯 +2·계승 flag·trace·2주차 프로필별 성장 보정·profile route signature·target master ending·target companion epilogue), 8개 막 목표·보상, 22개 고정 사건(5·11주차 외출 포함, 각 2선택, 스탯·유대·기억·계승 조건 잠금 포함), 6개 엔딩·44개 사건 선택의 50/50 도달성 계약 테스트, 한국어 fixture 8개·English locale 3개·canonical SSOT 홈·4주차 사건·canonical SSOT 24주 엔딩·엔딩 도감·관계 route 도감·사건 피드백·관계 긴장·관계 중재·장소 발견·외출·유대 게이트·기억 게이트·계승 게이트 피드백의 26개 골든 화면, `story/locales/ko.json`·`en.json` 키 기반 216키 대사, 모든 SSOT `*Key`와 엔딩 UI의 locale 계약 테스트, 성격 화면 언어 토글, 세 성격 숙련 엔딩 campaign 3종, 목표·유대에 따른 결정론적 1–3성 루멘 기록 등급, 재시작 후에도 누적되는 엔딩·관계 도감과 계승 해금, 피로 기반 성장 페널티, 사건 대사·기억·legacy replay, 엔딩 상반신 카드의 달성 관계 목표명·복수 에필로그·회고 보드의 최대 3개 원인 사건·막 목표별 달성/미달 상태·미달 목표 다음 회차 단서, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 기억 플래그와 시스템 결정 영수증을 포함한 `lumen-save-v7` trace, 24주 이후 추가 입력을 차단하는 fail-closed terminal 상태 불변식입니다.
+현재 지표: 5개 활동 × 48주 = 240개의 계획 조합, 5개 SSOT 일정 정책 실험에서 distinct ending/signature 3개 이상, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 3개 성격 대화, 3명 동료 유대도·rival bond·관계 충돌·중재 기억·4개 장소 발견·동행 관계 목표·복수 에필로그, 3개 엔딩 계열별 회차 계승 프로필(다음 회차 시작 스탯 +2·계승 flag·trace·2주차 프로필별 성장 보정·profile route signature·target master ending·target companion epilogue), 16개 막 목표·보상, 47개 고정 사건(각 2선택, 스탯·유대·기억·계승 조건 잠금 포함), 6개 엔딩·94개 사건 선택의 도달성 계약 테스트, 한국어 fixture 8개·English locale 3개·canonical SSOT 홈·4주차 사건·canonical SSOT 48주 엔딩·엔딩 도감·관계 route 도감·사건 피드백·관계 긴장·관계 중재·장소 발견·외출·유대 게이트·기억 게이트·계승 게이트 피드백의 26개 골든 화면, `story/locales/ko.json`·`en.json` 키 기반 398키 대사, 모든 SSOT `*Key`와 엔딩 UI의 locale 계약 테스트, 성격 화면 언어 토글, 세 성격 숙련 엔딩 campaign 3종, 목표·유대에 따른 결정론적 1–3성 루멘 기록 등급, 재시작 후에도 누적되는 엔딩·관계 도감과 계승 해금, 피로 기반 성장 페널티, 사건 대사·기억·legacy replay, 엔딩 상반신 카드의 달성 관계 목표명·복수 에필로그·회고 보드의 최대 3개 원인 사건·막 목표별 달성/미달 상태·미달 목표 다음 회차 단서, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 기억 플래그와 시스템 결정 영수증을 포함한 `lumen-save-v7` trace, 48주 이후 추가 입력을 차단하는 fail-closed terminal 상태 불변식입니다.
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다.
 
