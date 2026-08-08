@@ -6,6 +6,7 @@
 Canvas adapter
     ↓ commands
 GameSession (application port)
+    ↓ SystemDecisionPolicy → receipt
     ↓ ordered events
 GameWorld (ECS/DOD components + systems)
     ↙              ↘
@@ -20,10 +21,16 @@ JsonStoryAdapter BrowserSaveAdapter / MemorySaveAdapter / GameSnapshot
 - `GameWorld.dispatch`는 FIFO 큐를 drain하며 한 번에 하나의 시스템 전이만 적용한다.
 - 같은 이벤트 배열과 같은 SSOT를 주면 같은 `GameSnapshot`과 `replayTrace`가 나온다.
 - 같은 목표·유대 상태를 주면 같은 엔딩과 1–3성 `rank` 결산이 나온다.
+- `SystemDecisionPolicy`가 활동·사건 명령을 fail-closed로 판정하고, 승인·거절 모두 `decisionHash`가 포함된 `SystemDecisionReceipt`를 먼저 trace에 남긴다. 사람의 체크 표시나 런타임 네트워크가 판정 경로에 들어오지 않는다.
 - 진행 `SavePort`와 캠페인 간 `CollectionPort`는 분리된다. 전자는 `lumen-save-v7`, 후자는 WASM `localStorage`의 `lumen-collection-v1` 키를 사용한다.
 
 ## EDA와 Hexagonal 경계
 
 UI는 `GameSession`의 명령만 호출하고 JSON 파일이나 저장 구현을 직접 알지 않는다. 스토리는 `StoryPort`와 결정론적 `resolveEnding`, 저장은 `SavePort`로 분리해 향후 IndexedDB·파일 저장·서버 동기화 어댑터를 교체할 수 있다. WASM 웹 런타임은 `BrowserSaveAdapter`로 `window.localStorage`에 저장하고, VM Golden 테스트는 조건부 `MemorySaveAdapter` fallback을 사용한다. 활동·사건 명령이 끝날 때마다 최신 상태를 자동 snapshot하며, 브라우저 새로고침 뒤에도 진행과 저장 당시 화면(page)을 복원하고, 새 캠페인 시작 시 이전 snapshot을 명시적으로 지운다. 엔딩 도감이 비어 있지 않은 새 캠페인은 `legacy-star`를 초기 seed해 2주차 authored choice 공간을 결정론적으로 넓힌다. export/import는 동료 유대·계절 목표·기억 플래그·마지막 행동 피드백·사건 대사까지 포함한 versioned `lumen-save-v7` JSON snapshot으로 제공한다. v3/v4/v5/v6 입력도 읽어 기존 기록을 폐기하지 않는다.
+UI는 `GameSession`의 명령만 호출하고 JSON 파일이나 저장 구현을 직접 알지 않는다. 스토리는 `StoryPort`와 결정론적 `resolveEnding`, 저장은 `SavePort`로 분리해 향후 IndexedDB·파일 저장·서버 동기화 어댑터를 교체할 수 있다. WASM 웹 런타임은 `BrowserSaveAdapter`로 `window.localStorage`에 저장하고, VM Golden 테스트는 조건부 `MemorySaveAdapter` fallback을 사용한다. 활동·사건 명령이 끝날 때마다 최신 상태를 자동 snapshot하며, 브라우저 새로고침 뒤에도 진행과 저장 당시 화면(page)을 복원하고, 새 캠페인 시작 시 이전 snapshot을 명시적으로 지운다. 엔딩 도감이 비어 있지 않은 새 캠페인은 `legacy-star`를 초기 seed해 2주차 authored choice 공간을 결정론적으로 넓힌다. export/import는 동료 유대·계절 목표·기억 플래그·마지막 행동 피드백·사건 대사까지 포함한 versioned `lumen-save-v7` JSON snapshot으로 제공한다. v3/v4/v5/v6 입력도 읽어 기존 기록을 폐기하지 않는다.
+
+## 시스템 책임 경계
+
+`story/story.json#decisionSystem`이 승인 주체·규칙·실패 모드·영수증 필드를 선언한다. `GameSession`은 이 포트를 읽어 `SystemDecisionPolicy`를 호출하고, 승인된 `SystemDecisionApproved` 이벤트를 ECS 큐에 넣는다. 조건 미충족·미등록 성장축·terminal 입력은 같은 정책으로 거절되며 상태 전이를 만들지 않는다. 게임 규칙의 책임은 “누가 버튼을 눌렀는가”가 아니라 “어떤 SSOT 규칙과 입력 해시가 이 상태를 만들었는가”로 정의하고, CI에서는 `tool/ci_gate.dart`가 동일한 원칙으로 Golden·benchmark·Wasm을 승인한다.
 
 스토리 영향 코드의 연결은 [`story/story.json#codeRefs`](../story/story.json)에서 파일 ref와 SHA-256으로 선언하고, `verify_game.dart`가 drift를 거부한다. 문서 생성 결과와 에이전트 검토 해시는 [`docs/review-manifest.json`](review-manifest.json)이 관리한다.

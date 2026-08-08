@@ -62,7 +62,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         'unit': 'campaign-throughput',
         'guardrails': {
           'campaigns': 5000,
-          'transitionBudget': 105000,
+          'transitionBudget':
+              5000 * ((story['endingWeek'] as int) - 1 + events.length),
+          'systemApproval':
+              (story['decisionSystem'] as Map?)?['mode'] == 'system-adjudicated',
+          'failClosed':
+              (story['decisionSystem'] as Map?)?['failureMode'] == 'fail-closed',
           'maxMillis': 5000,
           'minSignatures': 3,
           'lineageProfiles': (story['legacyProfiles'] as List? ?? []).length,

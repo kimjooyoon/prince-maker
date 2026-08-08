@@ -54,7 +54,7 @@ void main() {
         bonds: p.bonds, milestones: p.milestones);
   }
 
-  test('canonical SSOT completes a deterministic 12-week route', () async {
+  test('canonical SSOT completes a deterministic 24-week route', () async {
     final source = jsonDecode(await rootBundle.loadString('story/story.json'))
         as Map<String, dynamic>;
     final story = JsonStoryAdapter(source),
@@ -92,9 +92,9 @@ void main() {
     final progress = session.world.progress[0]!,
         ending = resolveEnding(story, session.world.stats[0]!.values,
             bonds: progress.bonds, milestones: progress.milestones);
-    expect(progress.week, 12);
-    expect(progress.milestones.length, 4);
-    expect(progress.bonds['bora'], 11);
+    expect(progress.week, 24);
+    expect(progress.milestones.length, 8);
+    expect(progress.bonds['bora'], 22);
     expect(
         progress.flags.keys.where((key) => key.startsWith('place:')).toSet(), {
       'place:archive',
@@ -107,7 +107,9 @@ void main() {
         4);
     expect(ending['id'], 'stargazer-master');
     expect(ending['epilogue'], isNotNull);
-    expect(progress.trace.where((e) => e.startsWith('milestone:')).length, 4);
+    expect(progress.trace.where((e) => e.startsWith('milestone:')).length, 8);
+    expect(progress.trace.where((e) => e.startsWith('approval:approved')).length,
+        greaterThanOrEqualTo(23 + 22));
   });
   test('all three personality routes reach their authored master ending',
       () async {

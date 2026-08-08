@@ -1,12 +1,20 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 879aa5cbdb139c9c4de13651961757f45a7d28ba035ea0ca9f92ccb3872e4b0e -->
+<!-- ssot-sha256: c16303d779935b8c03d6dc2bc9a578c9086f9298c437502ddd1b27e996e1abf8 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
 
-바람과 별빛이 공존하는 작은 영지 루멘에서 노아는 12주 동안 스스로 선택한 내일을 걷는다.
+바람과 별빛이 공존하는 작은 영지 루멘에서 노아는 24주 동안 스스로 선택한 내일을 걷는다.
 
-## 12주 진행도
+## 시스템 판정과 책임 추적
+
+판정 주체: **Lumen Ledger System** · 모드 `system-adjudicated` · 사람 승인 필요 여부 `false` · 실패 모드 `fail-closed`
+책임 증적: 모든 승인·거절을 규칙·입력·결정 영수증으로 추적하고 replay에서 같은 판정을 재현한다.
+- `terminal-window` · activity|story-choice · endingWeek 이후 입력은 거절
+- `input-contract` · activity|story-choice · 미등록 성장축·조건 미충족 입력은 거절
+- `replay-receipt` · accepted decision · 승인 영수증을 immutable trace에 추가
+
+## 24주 진행도
 
 - **별씨앗의 도착** (`arrival`): 1–3주 · 낯선 기록과 첫 편지가 루멘의 평온을 흔든다. → 누구의 목소리를 먼저 믿을지 정한다. · 사건 2, 3주 · 목표 `spring`
   - 막 계약: 공개 별씨앗 기록과 첫 동료의 목소리를 공개한다. · 압력 stat·coins·bond · 선택 2, 3주 · 결산 `spring`
@@ -14,13 +22,21 @@
   - 막 계약: 공개 온실과 강 건너의 협력 규칙을 공개한다. · 압력 stat·coins·bond · 선택 4, 5, 6주 · 결산 `summer`
 - **먼 곳의 답장** (`reply`): 7–9주 · 루멘 밖에서 온 부탁이 노아의 안전한 일상을 부른다. → 기록할지 떠날지, 선택의 대가를 감당한다. · 사건 7, 8, 9주 · 목표 `autumn`
   - 막 계약: 공개 지도 밖의 신호와 먼 영지의 요청을 공개한다. · 압력 stat·coins·bond · 선택 7, 8, 9주 · 결산 `autumn`
-- **겨울의 문턱** (`threshold`): 10–12주 · 축제의 빛 아래에서 지난 선택들이 하나의 방향으로 모인다. → 왕좌 대신 스스로 고른 내일의 문을 연다. · 사건 10, 11주 · 목표 `winter`
-  - 막 계약: 공개 축제와 마지막 진로의 무대를 공개한다. · 압력 stat·coins·bond · 선택 10, 11주 · 결산 `winter`
+- **겨울의 문턱** (`threshold`): 10–12주 · 축제의 빛 아래에서 지난 선택들이 하나의 방향으로 모인다. → 왕좌 대신 스스로 고른 내일의 문을 연다. · 사건 10, 11, 12주 · 목표 `winter`
+  - 막 계약: 공개 축제·귀환·첫 결산의 무대를 공개한다. · 압력 stat·coins·bond · 선택 10, 11, 12주 · 결산 `winter`
+- **얼음 아래의 씨앗** (`frost`): 13–15주 · 첫 결산 뒤에도 루멘의 땅속에는 아직 끝나지 않은 약속이 잠들어 있다. → 멈춤을 실패로 부를지, 다음 발아를 준비할지 정한다. · 사건 13, 14, 15주 · 목표 `frost`
+  - 막 계약: 공개 겨울 저장고와 오래된 약속의 비용을 공개한다. · 압력 stat·coins·fatigue·bond · 선택 13, 14, 15주 · 결산 `frost`
+- **돌아오는 물길** (`return`): 16–18주 · 멀리 보낸 답장이 돌아오며, 노아의 선택은 루멘 사람들의 얼굴에 새겨진다. → 도움을 받는 법과 돌려주는 법을 함께 배운다. · 사건 16, 17, 18주 · 목표 `return`
+  - 막 계약: 공개 답장의 후속 약속과 공동 책임의 범위를 공개한다. · 압력 stat·coins·bond · 선택 16, 17, 18주 · 결산 `return`
+- **서로 다른 별자리** (`constellation`): 19–21주 · 각자의 방향이 충돌하는 밤, 함께 만든 지도에도 빈칸이 생긴다. → 정답을 독점할지, 판단의 근거를 모두에게 돌려줄지 선택한다. · 사건 19, 20, 21주 · 목표 `constellation`
+  - 막 계약: 공개 공개 기록·공동 판단·이견의 비용을 공개한다. · 압력 stat·coins·bond · 선택 19, 20, 21주 · 결산 `constellation`
+- **이름 붙일 수 없는 지평** (`horizon`): 22–24주 · 마지막 지평은 누가 옳았는지가 아니라 어떤 규칙을 남길지 묻는다. → 노아는 자신의 답보다 다음 사람도 다시 검증할 수 있는 길을 남긴다. · 사건 22, 23주 · 목표 `horizon`
+  - 막 계약: 공개 새로운 항로와 시스템 기록의 마지막 책임을 공개한다. · 압력 stat·coins·bond · 선택 22, 23주 · 결산 `horizon`
 
 ## 대사 구성 기준
 
-- locale 최소 키: **128** · 한 캠페인 최소 대사 줄: **7** · 최소 노출 서사 단위: **27** · 전체 authored 대사 줄: **29**
-- 산식: catalog 128 = UI 15 + personality name/voice/line 9 + event title/body 20 + choice label/line 40 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 12 + milestone titles 4; one route exposes at least 7 dialogue lines and 27 narrative units
+- locale 최소 키: **216** · 한 캠페인 최소 대사 줄: **23** · 최소 노출 서사 단위: **64** · 전체 authored 대사 줄: **77**
+- 산식: catalog 216 = UI 15 + personality name/voice/line 9 + event title/body 44 + choice label/line 88 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 24 + milestone titles 8; one 24-week route exposes at least 23 authored choice lines and 64 narrative units
 
 ## 시나리오 완전성 표본
 
@@ -28,14 +44,14 @@
 
 | 차원 | 목표 | 현재 증적 | 검증 ref |
 | --- | --- | --- | --- |
-| 장기 아크 | 도입·성장·전환·결산의 4막이 시간축을 덮고 각 막에 사건과 목표가 있다 | 4 chapters / 10 events / 4 locations / 4 milestones / 4 chapter contracts / ending week 12 | `story/story.json#progression.contract` |
-| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 20 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
+| 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 8 chapters / 22 events / 4 locations / 8 milestones / 8 chapter contracts / ending week 24 | `story/story.json#progression.contract` |
+| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 44 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions | `story/story.json#companions` |
-| 상태 피드백 | 일정의 결과가 다음 선택·계절 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 4 milestones and 6 endings | `test/game_core_test.dart#rules` |
-| 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 6 locked choices including bond, memory and legacy gates / 4 chapter contracts / 4 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
+| 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 8 milestones and 6 endings | `test/game_core_test.dart#rules` |
+| 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 8 locked choices including stat, bond, memory and legacy gates / 8 chapter contracts / 8 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues | `test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 23 Goldens / ko+en catalogs / canonical week-4 event / outing choice / rival loss and mediation recovery / bond, memory, legacy gates / lineage resonance choice / ending retrospective board / companion epilogues | `test/golden_test.dart#lineage-companion-epilogue-is-visible-in-the-ending-Canvas` |
-| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / save v7 with memory flags / collection / deterministic event-cause retrospective / ending-based lineage bonus / authored lineage choice bonus / target companion epilogues / SSOT campaign benchmark | `test/golden_test.dart#twelve-week-loop-resolves-to-an-ending` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 26 Goldens / ko+en catalogs / canonical week-4 event / outing choice / rival loss and mediation recovery / bond, memory, legacy gates / lineage resonance choice / ending retrospective board / three companion epilogues | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
+| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / system decision receipts / save v7 with memory flags / collection / deterministic event-cause retrospective / ending-based lineage bonus / authored lineage choice bonus / target companion epilogues / SSOT campaign benchmark | `test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending` |
 
 ## 생성 이미지 자산
 
@@ -50,8 +66,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `c28612464df302bbe694fb54edecbd41d18b1acca3e74eca720cfadfdddfec64`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `b1123b7653f91e2fdfd0123e1012f194c346f0e0f4baca4c1eb17f6bb972cff9`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `27dc32a4def3e168310982630e61ce52553674155e6f3c5e1482661a70b3e7ed`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `2516594ec47e5da21a831392bc0dc6d8a9a6d15f0bb3964582c1ea4f6b96ee0f`
 
 ## 성격
 
@@ -84,7 +100,11 @@
 - **봄의 별씨앗** (`spring`): 3주차 · 지혜 ≥ 8 · 성공 보상 은화 3 · “첫 별씨앗이 싹텄다.” / “별씨앗은 아직 잠들어 있다.”
 - **여름의 다리** (`summer`): 6주차 · 공감 ≥ 12 · 성공 보상 은화 4 · “서로의 속도가 하나의 다리가 되었다.” / “다리는 아직 흔들리지만 다시 건널 수 있다.”
 - **가을의 편지** (`autumn`): 9주차 · 용기 ≥ 16 · 성공 보상 은화 5 · “답장을 바람에 맡길 용기가 생겼다.” / “편지는 아직 서랍 안에서 다음 계절을 기다린다.”
-- **겨울의 문** (`winter`): 12주차 · 지혜 ≥ 20 · 성공 보상 은화 8 · “노아는 루멘의 다음 문을 열었다.” / “문은 닫혔지만 다음 열쇠를 남겼다.”
+- **겨울의 문** (`winter`): 12주차 · 지혜 ≥ 24 · 성공 보상 은화 8 · “노아는 첫 결산의 문을 열었다.” / “문은 닫혔지만 다음 열쇠를 남겼다.”
+- **얼음 아래의 씨앗** (`frost`): 15주차 · 공감 ≥ 30 · 성공 보상 은화 5 · “멈춘 계절에도 돌봄의 기록이 남았다.” / “씨앗은 아직 차가운 흙 아래에서 기다린다.”
+- **돌아온 물길** (`return`): 18주차 · 공감 ≥ 36 · 성공 보상 은화 6 · “보낸 마음이 공동의 약속으로 돌아왔다.” / “답장은 아직 다음 물결을 기다린다.”
+- **서로 다른 별자리** (`constellation`): 21주차 · 용기 ≥ 42 · 성공 보상 은화 7 · “서로 다른 근거가 하나의 공개 지도가 되었다.” / “지도에는 아직 지워지지 않은 빈칸이 남았다.”
+- **이름 붙일 수 없는 지평** (`horizon`): 24주차 · 용기 ≥ 48 · 성공 보상 은화 10 · “노아는 다음 사람이 다시 검증할 지평을 남겼다.” / “지평은 닫히지 않았고 다음 회차의 질문이 되었다.”
 
 ## 사건
 
@@ -138,12 +158,72 @@
 엔딩 전 마지막 휴일이다. 누구와 걸은 시간이 다음 계절의 방향이 될까?
 - 타로와 이름 없는 길을 걷는다: 용기 +1, 은화 -2, taro 유대 +3, 관계 taro 유대 ≥ 2 · “길의 이름은 걸은 뒤에 붙여도 늦지 않아.”
 - 루미와 별빛 표식을 남긴다: 지혜 +1, 은화 -2, lumi 유대 +3 · “돌아올 표식이 있으면 멀리 가도 길을 잃지 않아.”
+### 12주차 · 첫 결산의 밤
+
+첫 열두 주의 기록이 한 장의 장부로 묶였다. 숫자만 남길지, 그 숫자를 만든 목소리까지 남길지 결정해야 한다.
+- 루미와 근거의 순서를 기록한다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 first-ledger 기록 · “결과만 적지 말고, 그 결과에 닿은 발걸음도 적자.”
+- 보라와 모두의 목소리를 장부에 남긴다: 공감 +2, 은화 0, bora 유대 +3, 기억 first-ledger 기록 · “기록에 이름을 올리면 누구도 혼자 책임지지 않아도 돼.”
+### 13주차 · 얼음 아래의 온실
+
+밤새 내린 서리가 온실의 유리를 희게 만들었다. 안쪽의 씨앗은 빛보다 먼저 기다리는 법을 가르친다.
+- 보라와 온도를 낮춰 씨앗을 지킨다: 공감 +2, 은화 -1, bora 유대 +3 · “살리는 일에는 때로 자라지 않게 기다리는 용기도 필요해.”
+- 타로와 얼음 틀을 고친다: 용기 +2, 은화 1, taro 유대 +3 · “멈춘 장치도 한 조각씩 보면 다시 움직일 수 있어.”
+### 14주차 · 겨울 시장의 빈 의자
+
+시장 한가운데 빈 의자가 놓였다. 떠난 사람을 기다리는 자리인지, 새로 올 사람을 위한 자리인지 아직 아무도 모른다.
+- 타로와 의자의 주인을 찾아 나선다: 용기 +2, 은화 -2, taro 유대 +3 · “빈자리를 두려워하지 말고 먼저 물어보자.”
+- 루미와 기다림의 시간을 기록한다: 지혜 +2, 은화 1, lumi 유대 +3 · “기다린 시간도 누군가 돌아올 수 있게 하는 지도야.”
+### 15주차 · 씨앗 저장고의 문
+
+강 건너 저장고의 문에는 누구의 도장도 찍혀 있지 않다. 노아는 문을 열기보다 먼저, 열어도 되는 이유를 함께 찾아야 한다.
+- 루미와 공개 조건을 적어 둔다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 seed-vault 기록 · “열쇠보다 먼저, 누구나 확인할 수 있는 조건을 만들자.”
+- 보라와 저장고의 씨앗을 나눈다: 공감 +2, 은화 -1, bora 유대 +3, 기억 seed-vault 기록 · “나눌 기준을 함께 정하면 씨앗은 한 사람의 것이 아니야.”
+### 16주차 · 돌아온 편지의 뒷면
+
+먼 영지에서 답장이 돌아왔다. 고맙다는 인사 뒤에는 루멘의 선택이 예상보다 많은 사람에게 닿았다는 소식이 적혀 있다.
+- 보라와 받은 도움을 목록으로 만든다: 공감 +2, 은화 1, bora 유대 +3 · “도움을 받은 이름을 기억해야 다음 도움도 공평해져.”
+- 타로와 답장의 길을 직접 확인한다: 용기 +2, 은화 -1, taro 유대 +3 · “편지가 도착했다면 그 길도 다시 걸을 수 있어.”
+### 17주차 · 두 손으로 드는 문
+
+온실의 새 문은 혼자 들기에는 무겁다. 서로 다른 방식으로 고친 사람들이 같은 손잡이를 잡을 수 있을까?
+- 타로와 경첩을 다시 맞춘다: 용기 +2, 은화 1, taro 유대 +3 · “잘못 맞춘 나사는 빼고, 다시 맞추면 돼.”
+- 루미와 두 설계의 차이를 남긴다: 지혜 +2, 은화 0, lumi 유대 +3 · “다른 설계는 오류가 아니라 다음 선택의 근거가 될 수 있어.”
+### 18주차 · 공동 우물의 약속
+
+시장은 공동 우물의 물을 누구에게 먼저 줄지로 술렁인다. 규칙을 정하는 사람과 물을 길어 올리는 사람의 목소리가 모두 필요하다.
+- 루미와 배분 순서를 공개한다: 지혜 +2, 은화 1, lumi 유대 +3 · “순서를 모두가 볼 수 있으면 기다림도 약속이 돼.”
+- 보라와 가장 급한 집부터 살핀다: 공감 +2, 은화 -1, bora 유대 +3 · “같은 규칙도 지금 가장 목마른 사람을 볼 수 있어야 해.”
+### 19주차 · 열린 기록의 날
+
+첫 결산 장부를 모두에게 보여 주는 날이 왔다. 기록을 읽는 사람마다 다른 빈칸을 발견하고, 노아는 그 빈칸을 숨길지 질문으로 남길지 선택한다.
+- 보라와 빈칸을 함께 채울 모임을 연다: 공감 +2, 은화 -1, bora 유대 +3, 기억 first-ledger 필요 · “모르는 것을 함께 말할 수 있어야 기록이 살아 있어.”
+- 타로와 빈칸까지 표시한 지도를 배포한다: 용기 +2, 은화 0, taro 유대 +3, 기억 first-ledger 필요 · “모두가 빈칸을 보면 다음 길은 혼자 찾지 않아도 돼.”
+### 20주차 · 세 장의 지도
+
+루미의 별지도, 보라의 씨앗지도, 타로의 바람지도가 한 테이블 위에 놓였다. 서로 맞지 않는 선을 지우지 않고 겹쳐 읽어야 한다.
+- 타로와 실제 길의 표식을 확인한다: 용기 +2, 은화 -1, taro 유대 +3 · “지도는 발밑의 돌과 만날 때 비로소 길이 돼.”
+- 루미와 겹친 선의 공통점을 찾는다: 지혜 +2, 은화 1, lumi 유대 +3 · “다른 선이 만나는 곳에는 함께 확인할 이유가 있어.”
+### 21주차 · 서로 다른 별자리의 밤
+
+완성된 지도라고 믿었던 장부에서 세 사람의 판단이 갈라진다. 누구의 답을 고르는 대신, 각 답이 어디서 시작됐는지 살펴야 한다.
+- 루미와 판단의 근거를 나란히 놓는다: 지혜 +2, 은화 1, lumi 유대 +3 · “정답보다 먼저, 서로 같은 별을 보고 있는지 확인하자.”
+- 보라와 가장 작은 합의를 실험한다: 공감 +2, 은화 -1, bora 유대 +3 · “큰 약속은 작은 합의가 안전하게 이어질 때 자라나.”
+### 22주차 · 지평선 시장
+
+루멘의 가장자리에서 새 항로를 여는 장터가 열린다. 떠나는 사람과 남는 사람이 같은 가격표를 읽을 수 있어야 한다.
+- 보라와 남는 사람의 자리를 마련한다: 공감 +2, 은화 -1, bora 유대 +3 · “떠남이 가능하려면 남아 있는 자리도 안전해야 해.”
+- 타로와 새 항로의 첫 표식을 세운다: 용기 +2, 은화 0, taro 유대 +3 · “첫 표식은 목적지가 아니라 다시 찾을 수 있다는 약속이야.”
+### 23주차 · 마지막 표식
+
+엔딩 전 마지막 밤, 강 건너 바람길에 표식을 하나만 남길 수 있다. 노아는 자신의 이름보다 다음 사람이 확인할 규칙을 선택한다.
+- 타로와 누구나 볼 수 있는 표식을 세운다: 용기 +2, 은화 -1, taro 유대 +3, 기억 horizon-mark 기록 · “내가 없어도 다시 찾을 수 있는 길이어야 해.”
+- 루미와 마지막 근거를 별자리로 남긴다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 horizon-mark 기록 · “마지막 기록은 끝맺음이 아니라 다음 검증의 시작이야.”
 
 ## 엔딩
 
 - **루멘의 별읽기꾼** (`stargazer`): 지혜 ≥ 12 · 노아는 밤하늘의 결을 읽어 영지의 항로를 밝히는 사람이 되었다.
-- **새벽을 계산하는 항해사** (`stargazer-master`): 지혜 ≥ 24 · 목표 spring, winter · 노아는 별과 바람의 주기를 기록해 누구나 길을 찾는 지도를 남겼다.
+- **새벽을 계산하는 항해사** (`stargazer-master`): 지혜 ≥ 48 · 목표 spring, winter · 노아는 별과 바람의 주기를 24주 동안 기록해 누구나 판단을 다시 검증할 수 있는 지도를 남겼다.
 - **마음의 정원사** (`gardener`): 공감 ≥ 12 · 노아는 서로 다른 마음이 함께 피어나는 정원을 만들었다.
-- **마을의 온기를 잇는 사람** (`gardener-master`): 공감 ≥ 24 · 목표 summer · 노아는 다툼이 시작되기 전에 서로의 이야기를 건네는 광장을 열었다.
+- **마을의 온기를 잇는 사람** (`gardener-master`): 공감 ≥ 48 · 목표 summer, return · 노아는 다툼이 시작되기 전에 서로의 이야기를 건네고, 모든 판정의 근거를 함께 읽는 광장을 열었다.
 - **새 길의 개척자** (`pathfinder`): 용기 ≥ 12 · 노아는 아직 이름 없는 길에 첫 발자국을 남겼다.
-- **경계를 넘어선 선봉장** (`pathfinder-master`): 용기 ≥ 24 · 목표 autumn · 노아는 두려움을 없애지 않고도 앞으로 나아갈 수 있다는 길을 보여주었다.
+- **경계를 넘어선 선봉장** (`pathfinder-master`): 용기 ≥ 48 · 목표 autumn, constellation · 노아는 두려움을 없애지 않고도 앞으로 나아가며, 다음 사람이 같은 길을 재현할 수 있는 표식을 남겼다.
