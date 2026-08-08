@@ -69,6 +69,11 @@ void main() {
       'maps centered taps deterministically');
   final goldenTest = read('test/golden_test.dart');
   requireText('test/golden_test.dart', goldenTest, 'matchesGoldenFile');
+  final chapterGoldenTest = read('test/chapter_golden_test.dart');
+  requireText('test/chapter_golden_test.dart', chapterGoldenTest,
+      'all sixteen SSOT chapters have deterministic event Goldens');
+  requireText('test/chapter_golden_test.dart', chapterGoldenTest,
+      'goldens/chapter-\$id.png');
   final goldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
@@ -76,6 +81,15 @@ void main() {
       .length;
   if (goldens < 30)
     fail('expected at least 30 golden evidence files, found $goldens');
+  final chapterGoldens = Directory('test/goldens')
+      .listSync()
+      .whereType<File>()
+      .where((file) => file.path.endsWith('.png'))
+      .where((file) => file.uri.pathSegments.last.startsWith('chapter-'))
+      .length;
+  if (chapterGoldens != 16)
+    fail(
+        'expected exactly 16 chapter golden evidence files, found $chapterGoldens');
   stdout.writeln(
-      'RENDER_QUALITY_PRECONDITIONS_OK: preconditions=${preconditions.length} proofs=${proofs.length} goldens=$goldens');
+      'RENDER_QUALITY_PRECONDITIONS_OK: preconditions=${preconditions.length} proofs=${proofs.length} goldens=$goldens chapterGoldens=$chapterGoldens');
 }

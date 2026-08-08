@@ -86,7 +86,7 @@
     },
     {
       "ref": "tool/verify_render_quality.dart#render-quality-preconditions",
-      "sha256": "c1d8b36b1a7f7310ebded046540dae96d6fab4f77d5970f4400991eca969b445"
+      "sha256": "261aad31f15c9caad19be57d52967d7069a734208a8c0e2243b64360ac433b41"
     },
     {
       "ref": "tool/generate_development_goals.dart#buildDocument",
@@ -107,6 +107,10 @@
     {
       "ref": "test/decision_proof_test.dart#same preconditions reproduce the same chain",
       "sha256": "09d620603b94f3b1e79419320148fff30f82b248f84ab02b78d74924ccd50f01"
+    },
+    {
+      "ref": "test/chapter_golden_test.dart#all sixteen SSOT chapters have deterministic event Goldens",
+      "sha256": "e21d424be63e0aedadf99ac6f91347a94de556d20e99e94c1f4070a2018adba1"
     }
   ],
   "assetRefs": [
@@ -238,7 +242,7 @@
         "id": "presentation",
         "name": "장면 결산",
         "target": "도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다",
-        "current": "30 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
+        "current": "46 Goldens including 16 canonical chapter event views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
         "evidence": "test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence"
       },
       {
