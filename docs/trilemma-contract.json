@@ -2,7 +2,7 @@
   "schema": "prince-maker-trilemma-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "ab22f68dcb015e04b048cf918325fc341ecaf79a4d1b85984b00ba99a0cb98ac"
+    "sha256": "67b3c971661e7d3d5ad0a90c04b8fbae60c6b61c65164ed2678108617c6954a3"
   },
   "axes": [
     {
@@ -17,7 +17,7 @@
         "narrativeFateThreads": 6,
         "companionQuestStages": 9,
         "goldens": 62,
-        "localeKeys": 455
+        "localeKeys": 488
       },
       "evidence": [
         "tool/verify_game.dart#scenario-contract",

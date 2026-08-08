@@ -6,7 +6,7 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "c399d84b15a736bdd64da490702e1396bfd1ba2637357bcee4358685a84b20e7"
+      "sha256": "8403e7109fb0bb993c5c0971e1dab10220280ff7ae4ad7574663ddbc6c94b680"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
@@ -74,7 +74,7 @@
     },
     {
       "ref": "tool/verify_game.dart#visual-golden-contract",
-      "sha256": "52c9c57d14e7c99b8fa6d7a638db0bb90d7dc534668cacdf6bf17bb2a7897ae6"
+      "sha256": "7587aa949b1362b58279d9eaf559d2bf27c7e1ab738903ff7f7ed95a26aa3d29"
     },
     {
       "ref": "lib/canvas_scene_fingerprint.dart#canvasSceneFingerprint",
@@ -86,7 +86,7 @@
     },
     {
       "ref": "tool/verify_render_quality.dart#render-quality-preconditions",
-      "sha256": "c9397fbf3624c3d89d628e8209691f291d0357cf2c9c8b72d4c2bb9a3f8088b3"
+      "sha256": "3f698652f6e7864267772dd81386435254749c3ac60514ca6dcf0d29720aa9e4"
     },
     {
       "ref": "tool/generate_development_goals.dart#buildDocument",
@@ -114,7 +114,7 @@
     },
     {
       "ref": "test/chapter_closure_golden_test.dart#all sixteen SSOT chapter closures have deterministic goal Goldens",
-      "sha256": "d9442355108b525c1e99e54b130796728b919fc24438a27146e1c487c6443256"
+      "sha256": "5dc0f11bcc09466b997473fa4d6f2682d60767cd02edbdc11f80b5ab45d5f588"
     },
     {
       "ref": "tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate",
@@ -148,11 +148,11 @@
   "localeRefs": [
     {
       "ref": "story/locales/ko.json#catalog",
-      "sha256": "3570749decc051d595ddffe6ddbdcef67c7784e8d32527de225d452c28dc45c5"
+      "sha256": "7e4a411c1fa72cf367efba05d902ac2f7a2b4bf406d165ae13d5ecd29e4dfcfb"
     },
     {
       "ref": "story/locales/en.json#catalog",
-      "sha256": "bfd71932cbf4bf96ec222924f694fa841d4211f1446ef0e7eb5df52f368b0d8e"
+      "sha256": "a4bc381fb608be87360b14ced9b46bb84fa3053774d126e05dddbbf2d23a9f4f"
     }
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 48주를 걷는다. 기록은 사람이 승인하지 않고 루멘의 규칙 엔진이 승인한다.",
@@ -194,11 +194,11 @@
   },
   "dialogueMetrics": {
     "locales": "ko,en",
-    "minimumLocaleKeys": 455,
-    "minimumVisibleDialogueLines": 47,
-    "minimumVisibleNarrativeUnits": 160,
-    "authoredDialogueLines": 184,
-    "formula": "catalog 455 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4; one 48-week route exposes at least 47 authored choice lines and 160 narrative units"
+    "minimumLocaleKeys": 488,
+    "minimumVisibleDialogueLines": 63,
+    "minimumVisibleNarrativeUnits": 176,
+    "authoredDialogueLines": 216,
+    "formula": "catalog 488 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units"
   },
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
@@ -222,7 +222,7 @@
         "id": "relationship",
         "name": "관계 아크",
         "target": "등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다",
-        "current": "3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions",
+        "current": "3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats",
         "evidence": "story/story.json#companions"
       },
       {
@@ -250,7 +250,7 @@
         "id": "presentation",
         "name": "장면 결산",
         "target": "도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다",
-        "current": "62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
+        "current": "62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
         "evidence": "test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence"
       },
       {
@@ -290,6 +290,19 @@
           3
         ],
         "closureMilestone": "spring"
+      },
+      "relationshipScene": {
+        "id": "arrival-relationship",
+        "speakerId": "lumi",
+        "speakerNameKey": "companion.lumi.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 0,
+        "title": "편지의 첫 가장자리",
+        "titleKey": "chapter.arrival.scene.title",
+        "titleEn": "The First Edge of a Letter",
+        "line": "모르는 이름을 서둘러 채우지 말자. 빈칸도 함께 읽으면 길이 돼.",
+        "lineKey": "chapter.arrival.scene.line",
+        "lineEn": "Do not fill an unknown name too quickly. A blank can become a road when we read it together."
       }
     },
     {
@@ -321,6 +334,19 @@
           6
         ],
         "closureMilestone": "summer"
+      },
+      "relationshipScene": {
+        "id": "crossing-relationship",
+        "speakerId": "taro",
+        "speakerNameKey": "companion.taro.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 2,
+        "title": "부서진 다리의 박자",
+        "titleKey": "chapter.crossing.scene.title",
+        "titleEn": "The Rhythm of a Broken Bridge",
+        "line": "한 번에 건너려 하지 마. 서로 다른 발걸음이 맞는 자리를 먼저 찾자.",
+        "lineKey": "chapter.crossing.scene.line",
+        "lineEn": "Do not cross in one leap. Find the place where different footsteps can meet."
       }
     },
     {
@@ -352,6 +378,19 @@
           9
         ],
         "closureMilestone": "autumn"
+      },
+      "relationshipScene": {
+        "id": "reply-relationship",
+        "speakerId": "bora",
+        "speakerNameKey": "companion.bora.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 1,
+        "title": "답장을 접는 손",
+        "titleKey": "chapter.reply.scene.title",
+        "titleEn": "Hands Folding a Reply",
+        "line": "마음은 크게 약속할수록 무거워져. 오늘 지킬 만큼만 따뜻하게 접자.",
+        "lineKey": "chapter.reply.scene.line",
+        "lineEn": "A promise grows heavy when it grows too large. Fold it warmly to the size we can keep today."
       }
     },
     {
@@ -383,6 +422,19 @@
           12
         ],
         "closureMilestone": "winter"
+      },
+      "relationshipScene": {
+        "id": "threshold-relationship",
+        "speakerId": "lumi",
+        "speakerNameKey": "companion.lumi.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 0,
+        "title": "첫 장부의 여백",
+        "titleKey": "chapter.threshold.scene.title",
+        "titleEn": "The Margin of the First Ledger",
+        "line": "숫자와 목소리 사이에 여백을 남기면, 다음 사람이 물을 수 있어.",
+        "lineKey": "chapter.threshold.scene.line",
+        "lineEn": "Leave a margin between numbers and voices, so the next person can still ask."
       }
     },
     {
@@ -415,6 +467,19 @@
           15
         ],
         "closureMilestone": "frost"
+      },
+      "relationshipScene": {
+        "id": "frost-relationship",
+        "speakerId": "bora",
+        "speakerNameKey": "companion.bora.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 1,
+        "title": "멈춘 계절의 온기",
+        "titleKey": "chapter.frost.scene.title",
+        "titleEn": "Warmth in a Stopped Season",
+        "line": "자라지 않는 날도 돌봄의 날이야. 우리는 멈춤을 잊지 말자.",
+        "lineKey": "chapter.frost.scene.line",
+        "lineEn": "A day without growth can still be a day of care. Let us not forget how to pause."
       }
     },
     {
@@ -446,6 +511,19 @@
           18
         ],
         "closureMilestone": "return"
+      },
+      "relationshipScene": {
+        "id": "return-relationship",
+        "speakerId": "taro",
+        "speakerNameKey": "companion.taro.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 2,
+        "title": "돌아온 바람",
+        "titleKey": "chapter.return.scene.title",
+        "titleEn": "The Wind That Returned",
+        "line": "길이 돌아왔다고 처음으로 돌아간 건 아니야. 발자국이 방향을 고쳤으니까.",
+        "lineKey": "chapter.return.scene.line",
+        "lineEn": "A returning road is not the beginning again. The footsteps have corrected its direction."
       }
     },
     {
@@ -477,6 +555,19 @@
           21
         ],
         "closureMilestone": "constellation"
+      },
+      "relationshipScene": {
+        "id": "constellation-relationship",
+        "speakerId": "lumi",
+        "speakerNameKey": "companion.lumi.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 0,
+        "title": "서로 다른 별자리",
+        "titleKey": "chapter.constellation.scene.title",
+        "titleEn": "Different Constellations",
+        "line": "같은 하늘 아래 이유가 다르면, 별을 잇는 선도 여러 개여야 해.",
+        "lineKey": "chapter.constellation.scene.line",
+        "lineEn": "When reasons differ beneath one sky, there must be more than one line between the stars."
       }
     },
     {
@@ -506,6 +597,19 @@
           23
         ],
         "closureMilestone": "horizon"
+      },
+      "relationshipScene": {
+        "id": "horizon-relationship",
+        "speakerId": "bora",
+        "speakerNameKey": "companion.bora.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 1,
+        "title": "먼 영지의 목소리",
+        "titleKey": "chapter.horizon.scene.title",
+        "titleEn": "The Far Province Speaks",
+        "line": "도움의 이름을 먼저 정하지 말고, 그곳의 목소리가 무엇을 필요로 하는지 들어보자.",
+        "lineKey": "chapter.horizon.scene.line",
+        "lineEn": "Do not name help before listening to what the voices there actually need."
       }
     },
     {
@@ -540,6 +644,19 @@
           27
         ],
         "closureMilestone": "waterline"
+      },
+      "relationshipScene": {
+        "id": "seedReturn-relationship",
+        "speakerId": "taro",
+        "speakerNameKey": "companion.taro.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 2,
+        "title": "빈 터의 첫 물길",
+        "titleKey": "chapter.seedReturn.scene.title",
+        "titleEn": "The First Waterway in the Empty Field",
+        "line": "물을 나누는 건 소유를 잃는 일이 아니야. 다시 흐를 자리를 만드는 일이야.",
+        "lineKey": "chapter.seedReturn.scene.line",
+        "lineEn": "Sharing water is not losing ownership. It is making a place where it can flow again."
       }
     },
     {
@@ -575,6 +692,19 @@
           30
         ],
         "closureMilestone": "fair-share"
+      },
+      "relationshipScene": {
+        "id": "fairShare-relationship",
+        "speakerId": "bora",
+        "speakerNameKey": "companion.bora.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 1,
+        "title": "공정한 하루",
+        "titleKey": "chapter.fairShare.scene.title",
+        "titleEn": "A Fair Day",
+        "line": "빠른 사람의 속도를 기준으로 삼으면 돌봄은 늘 늦은 것으로 남아.",
+        "lineKey": "chapter.fairShare.scene.line",
+        "lineEn": "If the fastest pace is the measure, care will always be left behind."
       }
     },
     {
@@ -609,6 +739,19 @@
           33
         ],
         "closureMilestone": "memory-house"
+      },
+      "relationshipScene": {
+        "id": "memoryHouse-relationship",
+        "speakerId": "lumi",
+        "speakerNameKey": "companion.lumi.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 0,
+        "title": "기억의 문턱",
+        "titleKey": "chapter.memoryHouse.scene.title",
+        "titleEn": "The Threshold of Memory",
+        "line": "기억을 모두 잠그지 말자. 다시 찾을 수 있는 표식 하나면 충분해.",
+        "lineKey": "chapter.memoryHouse.scene.line",
+        "lineEn": "Let us not lock every memory. One marker that can be found again is enough."
       }
     },
     {
@@ -643,6 +786,19 @@
           36
         ],
         "closureMilestone": "far-shore"
+      },
+      "relationshipScene": {
+        "id": "farShore-relationship",
+        "speakerId": "taro",
+        "speakerNameKey": "companion.taro.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 2,
+        "title": "건너온 답",
+        "titleKey": "chapter.farShore.scene.title",
+        "titleEn": "The Answer That Crossed",
+        "line": "좋은 의도가 먼 곳에서 다른 힘이 될 수 있어. 돌아온 말을 먼저 고치자.",
+        "lineKey": "chapter.farShore.scene.line",
+        "lineEn": "A good intention can become another force far away. First, repair the words that returned."
       }
     },
     {
@@ -678,6 +834,19 @@
           39
         ],
         "closureMilestone": "blank-map"
+      },
+      "relationshipScene": {
+        "id": "blankMap-relationship",
+        "speakerId": "lumi",
+        "speakerNameKey": "companion.lumi.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 0,
+        "title": "빈 지도 옆의 등불",
+        "titleKey": "chapter.blankMap.scene.title",
+        "titleEn": "A Lamp Beside the Blank Map",
+        "line": "모른다는 말을 지우지 않으면, 같이 확인할 약속을 세울 수 있어.",
+        "lineKey": "chapter.blankMap.scene.line",
+        "lineEn": "If we keep the words “we do not know,” we can promise to check together."
       }
     },
     {
@@ -712,6 +881,19 @@
           42
         ],
         "closureMilestone": "commons"
+      },
+      "relationshipScene": {
+        "id": "commons-relationship",
+        "speakerId": "bora",
+        "speakerNameKey": "companion.bora.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 1,
+        "title": "작은 목소리의 자리",
+        "titleKey": "chapter.commons.scene.title",
+        "titleEn": "A Place for the Small Voice",
+        "line": "합의가 조용해질수록, 아직 들리지 않은 사람을 먼저 살펴야 해.",
+        "lineKey": "chapter.commons.scene.line",
+        "lineEn": "The quieter an agreement becomes, the more we must look for someone not yet heard."
       }
     },
     {
@@ -746,6 +928,19 @@
           45
         ],
         "closureMilestone": "returning-garden"
+      },
+      "relationshipScene": {
+        "id": "returningGarden-relationship",
+        "speakerId": "bora",
+        "speakerNameKey": "companion.bora.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 1,
+        "title": "떠남과 머묾의 정원",
+        "titleKey": "chapter.returningGarden.scene.title",
+        "titleEn": "A Garden for Leaving and Staying",
+        "line": "꽃이 피는 자리만 고르지 말고, 떠나는 발걸음도 다치지 않을 자리를 남겨줘.",
+        "lineKey": "chapter.returningGarden.scene.line",
+        "lineEn": "Do not choose only where flowers bloom. Leave a place where departing feet will not be hurt."
       }
     },
     {
@@ -780,6 +975,19 @@
           48
         ],
         "closureMilestone": "handoff"
+      },
+      "relationshipScene": {
+        "id": "handoff-relationship",
+        "speakerId": "taro",
+        "speakerNameKey": "companion.taro.name",
+        "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+        "speakerPortraitFrame": 2,
+        "title": "다음 사람의 손",
+        "titleKey": "chapter.handoff.scene.title",
+        "titleEn": "The Next Person’s Hand",
+        "line": "마지막 장은 닫는 덮개가 아니야. 다음 사람이 다시 펼칠 손잡이야.",
+        "lineKey": "chapter.handoff.scene.line",
+        "lineEn": "The last page is not a cover that closes. It is a handle for the next person to open again."
       }
     }
   ],
@@ -3429,19 +3637,21 @@
   "contentBudget": {
     "schema": "lumen-playtime-v1",
     "minimumMinutes": 120,
-    "estimatedFirstPlaythroughMinutes": 129,
+    "estimatedFirstPlaythroughMinutes": 137,
     "benchmarkMaxMillis": 24000,
     "campaignWeeks": 48,
     "terminalWeek": 49,
     "authoredEvents": 47,
     "authoredChoices": 94,
     "chapterClosures": 16,
+    "chapterSceneBeats": 16,
     "pacingSeconds": {
       "activityReflection": 75,
       "storyChoice": 75,
-      "chapterClosure": 30
+      "chapterClosure": 30,
+      "chapterSceneBeat": 30
     },
-    "formula": "48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s = 7,755s = 129m; contract reports a conservative 129m first-playthrough estimate."
+    "formula": "48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s + 16 relationship scene beats × 30s = 8,235s = 137m; contract reports a conservative 137m first-playthrough estimate."
   },
   "scenarioVariantBudget": {
     "schema": "lumen-scenario-cases-v1",
@@ -3674,7 +3884,8 @@
     "derivedFrom": "event choice flags + deterministic companion bonds",
     "resolver": "lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests",
     "systemOwner": "lumen-rule-engine",
-    "evidence": "test/narrative_ledger_test.dart#deterministic-projection"
+    "evidence": "test/narrative_ledger_test.dart#deterministic-projection",
+    "chapterSceneCount": 16
   },
   "gameplayKpis": {
     "schema": "lumen-gameplay-kpi-v1",
@@ -3747,5 +3958,11 @@
       "portraitAsset": "assets/lumen-personality-sheet.png",
       "portraitFrame": 2
     }
-  ]
+  ],
+  "chapterSceneContract": {
+    "schema": "lumen-chapter-scene-v1",
+    "count": 16,
+    "purpose": "mid-chapter relationship beat rendered at deterministic closure",
+    "evidence": "test/chapter_closure_golden_test.dart#relationship-scene-binding"
+  }
 }

@@ -121,6 +121,8 @@ void main() {
       (story['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
   final narrativeLoop =
       (story['narrativeLoop'] as Map? ?? {}).cast<String, dynamic>();
+  final chapterSceneContract =
+      (story['chapterSceneContract'] as Map? ?? {}).cast<String, dynamic>();
   final fateThreads =
       (story['fateThreads'] as List? ?? []).cast<Map<String, dynamic>>();
   final companionQuests =
@@ -137,10 +139,13 @@ void main() {
       contentBudget['authoredEvents'] != events.length ||
       contentBudget['authoredChoices'] != events.length * 2 ||
       contentBudget['chapterClosures'] != progression.length ||
+      contentBudget['chapterSceneBeats'] != progression.length ||
       (contentBudget['pacingSeconds'] as Map? ?? {})['activityReflection']
           is! int ||
       (contentBudget['pacingSeconds'] as Map? ?? {})['storyChoice'] is! int ||
       (contentBudget['pacingSeconds'] as Map? ?? {})['chapterClosure']
+          is! int ||
+      (contentBudget['pacingSeconds'] as Map? ?? {})['chapterSceneBeat']
           is! int) {
     fail('content budget must prove the minimum 120-minute campaign');
   }
@@ -149,7 +154,8 @@ void main() {
   final estimatedSeconds =
       campaignWeeks * (pacing['activityReflection'] as int) +
           events.length * (pacing['storyChoice'] as int) +
-          progression.length * (pacing['chapterClosure'] as int);
+          progression.length * (pacing['chapterClosure'] as int) +
+          progression.length * (pacing['chapterSceneBeat'] as int);
   if (estimatedSeconds < (contentBudget['minimumMinutes'] as int) * 60)
     fail('content budget pacing is below the minimum playtime');
   final branchWeeks =
@@ -313,6 +319,9 @@ void main() {
       c['titleKey'] is! String ||
       c['premiseKey'] is! String ||
       c['payoffKey'] is! String ||
+      ((c['relationshipScene'] as Map? ?? {})['speakerId'] is! String) ||
+      ((c['relationshipScene'] as Map? ?? {})['titleKey'] is! String) ||
+      ((c['relationshipScene'] as Map? ?? {})['lineKey'] is! String) ||
       (c['eventWeeks'] as List? ?? [])
           .any((week) => !eventWeeks.contains(week))))
     fail('chapter progression contract invalid');
@@ -363,6 +372,11 @@ void main() {
   if (!chapterContractsValid)
     fail(
         'each chapter needs reveal, two pressure axes, authored choices and a closing milestone');
+  if (chapterSceneContract['schema'] != 'lumen-chapter-scene-v1' ||
+      chapterSceneContract['count'] != progression.length ||
+      narrativeLoop['chapterSceneCount'] != progression.length) {
+    fail('every chapter must expose one deterministic relationship scene beat');
+  }
   for (final ref in refs) {
     final path = (ref['ref'] as String).split('#').first;
     if (!File(path).existsSync()) fail('missing code ref $path');
@@ -727,7 +741,8 @@ void main() {
     'progression': progressionEvidence.contains(
             'sixteen SSOT chapters cover the complete 48-week progression') &&
         progression.length == campaignWeeks ~/ 3 &&
-        dialogueMetrics['minimumVisibleDialogueLines'] == events.length &&
+        dialogueMetrics['minimumVisibleDialogueLines'] ==
+            events.length + progression.length &&
         dialogueMetrics['minimumVisibleNarrativeUnits'] >= 160,
     'assets': assetRefs.length >= 4 && fontRefs.isNotEmpty,
     'traceability': refs.length >= 3 &&

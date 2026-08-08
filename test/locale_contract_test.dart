@@ -77,6 +77,7 @@ void main() {
       'ui.closure.goalCleared',
       'ui.closure.keepGrowing',
       'ui.closure.question',
+      'ui.closure.scene',
       'ui.closure.nextPage',
       'ui.closure.link',
     ];
