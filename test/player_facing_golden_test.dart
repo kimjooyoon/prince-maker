@@ -20,6 +20,31 @@ Future<Map<String, Map<String, String>>> loadLocales() async => {
 
 const emptyStats = {'지혜': 4, '공감': 5, '용기': 3};
 
+Future<void> pumpPersonalityIllustration(
+    WidgetTester tester, int persona, String goldenPath) async {
+  await tester.pumpWidget(Game(await loadStory(),
+      locales: await loadLocales(),
+      key: ValueKey('personality-illustration-$persona'),
+      initialSnapshot: GameSnapshot(
+        week: 1,
+        coins: 12,
+        fatigue: 0,
+        selected: 0,
+        persona: persona,
+        page: 1,
+        eventIndex: 0,
+        stats: emptyStats,
+        history: const [],
+      )));
+  await tester.pumpAndSettle();
+  await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 250)));
+  await tester.pump();
+  expect(find.byKey(ValueKey('1-1-$persona-0')), findsOneWidget);
+  await expectLater(
+      find.byType(Game), matchesGoldenFile(goldenPath));
+}
+
 void main() {
   String currentCanvasKey(WidgetTester tester) =>
       (tester.widget<CustomPaint>(find.byType(CustomPaint)).key!
@@ -93,6 +118,17 @@ void main() {
     expect(find.byKey(const ValueKey('0-1-0-0-en')), findsOneWidget);
     await expectLater(
         find.byType(Game), matchesGoldenFile('goldens/player-home-en.png'));
+  });
+
+  testWidgets('all personality illustration pages render deterministic portraits',
+      (tester) async {
+    for (final entry in const [
+      (0, 'goldens/personality-quiet.png'),
+      (1, 'goldens/personality-kind.png'),
+      (2, 'goldens/personality-bold.png'),
+    ]) {
+      await pumpPersonalityIllustration(tester, entry.$1, entry.$2);
+    }
   });
 
   testWidgets('save archive hides raw trace and renders localized summaries',

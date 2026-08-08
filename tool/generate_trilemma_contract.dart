@@ -57,6 +57,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'companionQuestStages': questStages,
           'personalityCompanionRoutes':
               (story['personalityCompanionRoutes'] as List? ?? const []).length,
+          'personalityIllustrationGoldens':
+              (story['personalities'] as List? ?? const []).length,
           'goldens': goldens,
           'localeKeys': dialogue['minimumLocaleKeys'],
           'qualityScoreTarget': qualityScoreTarget,
@@ -68,6 +70,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/event_storm_test.dart#event storm covers every authored unit',
           'test/scenario_completeness_test.dart#scenario-closure',
           'test/golden_test.dart#all',
+          'test/player_facing_golden_test.dart#all personality illustration pages render deterministic portraits',
           'test/locale_contract_test.dart#ssot-dialogue-contract',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/verify_quality_score.dart#quality-score-99',
@@ -102,6 +105,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'minimumGatedChoices': gameplayTargets['minimumGatedChoices'],
           'personalityCompanionRoutes':
               (story['personalityCompanionRoutes'] as List? ?? const []).length,
+          'personalityIllustrationGoldens':
+              (story['personalities'] as List? ?? const []).length,
           'matchedPersonalityCompanionRoutes':
               ((story['personalityCompanionRoutes'] as List? ?? const [])
                   .where((route) => (route as Map)['matched'] == true)
@@ -114,6 +119,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
           'tool/verify_quality_score.dart#quality-score-99',
           'test/golden_test.dart#event choice shows a separated result banner',
+          'test/player_facing_golden_test.dart#all personality illustration pages render deterministic portraits',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/trilemma_verdict.dart#axis-verdict',
           'tool/trilemma_verdict.dart#closed-loop-receipt',

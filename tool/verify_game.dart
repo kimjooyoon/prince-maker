@@ -783,6 +783,10 @@ void main() {
           ? File('test/relationship_archive_golden_test.dart')
               .readAsStringSync()
           : '';
+  final playerFacingGoldenEvidence =
+      File('test/player_facing_golden_test.dart').existsSync()
+          ? File('test/player_facing_golden_test.dart').readAsStringSync()
+          : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
           ? File('tool/verify_scenario_variants.dart').readAsStringSync()
@@ -827,6 +831,9 @@ void main() {
     'relationship-archive-en.png',
     'relationship-archive-kind.png',
     'relationship-archive-bold.png',
+    'personality-quiet.png',
+    'personality-kind.png',
+    'personality-bold.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -914,6 +921,11 @@ void main() {
             .contains("goldens/relationship-archive-kind.png") &&
         relationshipArchiveGoldenEvidence
             .contains("goldens/relationship-archive-bold.png") &&
+        playerFacingGoldenEvidence.contains(
+            'all personality illustration pages render deterministic portraits') &&
+        playerFacingGoldenEvidence.contains("goldens/personality-quiet.png") &&
+        playerFacingGoldenEvidence.contains("goldens/personality-kind.png") &&
+        playerFacingGoldenEvidence.contains("goldens/personality-bold.png") &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(

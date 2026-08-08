@@ -16,6 +16,8 @@ void main() {
     entry['sha256'] = hash(path);
   }
   for (final path in [
+    'docs/trilemma.md',
+    'tool/refresh_trilemma_docs.dart',
     'tool/expand_story.dart',
     'tool/generate_engine_decision.dart',
     'tool/refresh_review_manifest.dart',
@@ -98,6 +100,9 @@ void main() {
     'test/player_input_contract_test.dart',
     'test/player_facing_golden_test.dart',
     'test/goldens/player-home-en.png',
+    'test/goldens/personality-quiet.png',
+    'test/goldens/personality-kind.png',
+    'test/goldens/personality-bold.png',
     'test/goldens/player-save.png',
     'test/goldens/player-save-en.png',
     'test/chapter_golden_test.dart',
