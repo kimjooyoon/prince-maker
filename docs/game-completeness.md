@@ -25,7 +25,7 @@
 | 엔딩 콘텐츠 | 스탯별 SSOT 엔딩 6개(기본/숙련) | 6 |
 | 엔딩 결산 | 달성 계절 목표·임계 동료 유대를 합산한 결정론적 루멘 기록 등급 1–3성 | 3 |
 | 분기 사건 | 47개 사건 × 선택 2개 | 47 × 2 |
-| 분기 도달성 | SSOT의 6개 엔딩·94개 사건 선택 계약 테스트 | 100/100 |
+| 분기 도달성 | SSOT의 6개 엔딩·94개 사건 선택 계약 테스트 + 11개 authored branch 축 전수 열거 | 100/100 + 2,048 vectors |
 | 조건부 선택 | 용기 성장 4개 + 동료 유대 1개 + 이전 선택 기억 1개 + 계승 1개 잠금 선택지 | 6 |
 | 시각 회귀 | 한국어 fixture 8개·English locale 3개·사건 피드백·관계 긴장·관계 중재·외출·유대 게이트·기억 게이트·계승 게이트·계승 프로필 보정 피드백 + canonical SSOT 홈·4주차 사건·48주 handoff 사건·엔딩·원인 회고·엔딩 도감 Golden | 27 |
 | canonical 통합 경로 | 실제 `story/story.json` 48주 완주·사건 47개·목표 16개·에필로그·승인 영수증·48주 handoff Golden | 1 |
@@ -37,10 +37,10 @@
 | i18n 대사 | `key → locale catalog → Canvas` 한국어/English 대사·엔딩·동료·장소 결산 경로 | 2 locale |
 | locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 398키 및 엔딩 UI 키 검사 | 1 |
 | 스토리 진행도 | 1–3부터 46–48주까지 16막, 47개 사건·막 목표 연결 | 16 chapters |
-| 순수성 분기 | 동일 일정 예산의 지혜·공감 경로 + 5개 SSOT 일정 정책이 서로 다른 authored 엔딩·유대·목표 서명을 생성 | 3 |
-| 자동 게이트 | SSOT 검사·해시 매니페스트·정적 분석·Flutter test·Golden·코어 benchmark·Wasm | 7 |
+| 순수성 분기 | 동일 일정 예산의 지혜·공감 경로 + 5개 SSOT 일정 정책 + 동료 8 route set이 서로 다른 authored 엔딩·유대·목표 서명을 생성 | 2,048 vectors + 8 route sets |
+| 자동 게이트 | SSOT 검사·시나리오 vector 열거·해시 매니페스트·정적 분석·Flutter test·Golden·코어 benchmark·Wasm | 8 |
 | 상태 안전성 | 저장 화면 복원·종료 후 활동/사건 입력 차단 | 2 |
 | 저장/replay | 행동·사건 후 자동 `lumen-save-v7` snapshot + WASM `localStorage` 새로고침 복원 + trace round trip | 1 |
 | 엔딩 컬렉션 | 캠페인 종료 시 별도 컬렉션 키에 엔딩 id·최고 등급·관계 route id를 기록하고 재시작 후 도감에 표시 | 6 + 3 routes |
 
-검증 스크립트는 [`tool/verify_game.dart`](../tool/verify_game.dart)이며, 콘텐츠·분기·결정론·시각 회귀·locale 계약·스토리 진행도·자산·추적성·배포·입력 계약·저장 연속성·종료 안전성·순수성·시나리오 완전성·최소 플레이타임 계약을 실제 파일과 SSOT에서 계산하고 95% 미만이면 실패한다. 세 축의 목표·가드레일은 [`docs/trilemma-contract.json`](trilemma-contract.json)에 SSOT 해시와 함께 생성되며 `verify_game.dart`가 먼저 계약 드리프트를 차단한다. 상세 표본은 [`docs/scenario-completeness.md`](scenario-completeness.md)와 `story/story.json#scenarioCompleteness`에 있다. 저장 코드는 [`lib/save_state.dart`](../lib/save_state.dart)의 `lumen-save-v7` 형식으로 복사/복원되고 v3/v4/v5/v6 입력도 호환하며, `history` trace·동료 유대·막 목표·기억 플래그·마지막 행동 결과·사건 대사가 동일하게 보존된다. 피로 8 이상에서는 활동 성장량이 1 감소하고 휴식은 피로를 낮추며, 은화는 코어에서 0–999 범위로 제한된다. 성격 선택은 대응 성장축에 +1 재능을 주고 선택 카드에도 표시하며, 사건 선택은 동료 유대를 최대 100까지 올려 위험-보상·관계·피드백 루프를 만든다. 이전 사건 선택은 기억 플래그를 기록하고 이후 사건의 authored choice를 열어 재플레이 결과를 바꾼다. 동일한 일정 예산으로도 성장축을 바꾸면 authored 엔딩·유대·replay 결과가 달라지는 순수성 경로를 통합 테스트한다. 조건부 사건 선택은 UI와 `GameSession` 코어 양쪽에서 스탯·관계·기억 잠금을 검증한다. 막 목표는 사건 선택 후 판정되어 성공 보상 또는 실패 문구를 남기며, 숙련 엔딩은 SSOT에 선언된 목표를 모두 달성해야 선택되고 미달 시 기본 엔딩으로 결정론적으로 내려간다. 임계 유대에 도달하면 엔딩에 동료 에필로그가 결정론적으로 붙고, 달성한 동료별 관계 목표명이 엔딩 상반신 카드에 표시되며, 48주 이후 코어는 활동·사건 입력을 모두 거부한다. `SystemDecisionPolicy`는 사람 승인 없이 fail-closed로 입력을 승인하고 `decisionHash` 영수증을 trace에 추가해 규칙·입력·결과의 계산 가능한 책임을 남긴다. 엔딩 회고는 `history`의 authored 사건을 최대 3개와 달성 목표 수로 요약하고, 미달 목표 최대 2개를 locale-aware 다음 회차 단서로 표시해 결말 원인과 재플레이 방향을 같은 입력에서 재현한다. Canvas Golden 회귀에는 성격 탭 선택과 일러스트 화면의 홈 복귀 입력도 포함되며, 비교기는 Linux/로컬 Canvas 안티앨리어싱 차이에 한해 2% 이하의 bounded tolerance를 허용한다.
+검증 스크립트는 [`tool/verify_game.dart`](../tool/verify_game.dart)와 [`tool/verify_scenario_variants.dart`](../tool/verify_scenario_variants.dart)이며, 콘텐츠·분기·결정론·시각 회귀·locale 계약·스토리 진행도·자산·추적성·배포·입력 계약·저장 연속성·종료 안전성·순수성·시나리오 완전성·최소 플레이타임 계약을 실제 파일과 SSOT에서 계산하고 95% 미만 또는 2,000 vector 미만이면 실패한다. 세 축의 목표·가드레일은 [`docs/trilemma-contract.json`](trilemma-contract.json)에 SSOT 해시와 함께 생성되며 `verify_game.dart`가 먼저 계약 드리프트를 차단한다. 상세 표본은 [`docs/scenario-completeness.md`](scenario-completeness.md)와 `story/story.json#scenarioCompleteness`에 있다. 저장 코드는 [`lib/save_state.dart`](../lib/save_state.dart)의 `lumen-save-v7` 형식으로 복사/복원되고 v3/v4/v5/v6 입력도 호환하며, `history` trace·동료 유대·막 목표·기억 플래그·마지막 행동 결과·사건 대사가 동일하게 보존된다. 피로 8 이상에서는 활동 성장량이 1 감소하고 휴식은 피로를 낮추며, 은화는 코어에서 0–999 범위로 제한된다. 성격 선택은 대응 성장축에 +1 재능을 주고 선택 카드에도 표시하며, 사건 선택은 동료 유대를 최대 100까지 올려 위험-보상·관계·피드백 루프를 만든다. 이전 사건 선택은 기억 플래그를 기록하고 이후 사건의 authored choice를 열어 재플레이 결과를 바꾼다. 동일한 일정 예산으로도 성장축을 바꾸면 authored 엔딩·유대·replay 결과가 달라지는 순수성 경로를 통합 테스트한다. 조건부 사건 선택은 UI와 `GameSession` 코어 양쪽에서 스탯·관계·기억 잠금을 검증한다. 막 목표는 사건 선택 후 판정되어 성공 보상 또는 실패 문구를 남기며, 숙련 엔딩은 SSOT에 선언된 목표를 모두 달성해야 선택되고 미달 시 기본 엔딩으로 결정론적으로 내려간다. 임계 유대에 도달하면 엔딩에 동료 에필로그가 결정론적으로 붙고, 달성한 동료별 관계 목표명이 엔딩 상반신 카드에 표시되며, 48주 이후 코어는 활동·사건 입력을 모두 거부한다. `SystemDecisionPolicy`는 사람 승인 없이 fail-closed로 입력을 승인하고 `decisionHash` 영수증을 trace에 추가해 규칙·입력·결과의 계산 가능한 책임을 남긴다. 엔딩 회고는 `history`의 authored 사건을 최대 3개와 달성 목표 수로 요약하고, 미달 목표 최대 2개를 locale-aware 다음 회차 단서로 표시해 결말 원인과 재플레이 방향을 같은 입력에서 재현한다. Canvas Golden 회귀에는 성격 탭 선택과 일러스트 화면의 홈 복귀 입력도 포함되며, 비교기는 Linux/로컬 Canvas 안티앨리어싱 차이에 한해 2% 이하의 bounded tolerance를 허용한다.

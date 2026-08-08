@@ -15,6 +15,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       .where((file) => file.path.endsWith('.png'))
       .length;
   final dialogue = (story['dialogueMetrics'] as Map).cast<String, dynamic>();
+  final scenarioCases =
+      (story['scenarioVariantBudget'] as Map).cast<String, dynamic>();
   return {
     'schema': 'prince-maker-trilemma-v1',
     'source': {'ref': 'story/story.json#root', 'sha256': hash},
@@ -26,6 +28,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         'guardrails': {
           'scenarioDimensions': 8,
           'authoredBranches': choices + (story['endings'] as List).length,
+          'scenarioCases': scenarioCases['minimumCases'],
+          'scenarioRouteInputs': scenarioCases['routeInputCases'],
           'goldens': goldens,
           'localeKeys': dialogue['minimumLocaleKeys'],
         },
@@ -44,6 +48,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'schedulePolicies': (story['activities'] as List).length,
           'minDistinctEndings': 3,
           'minDistinctSignatures': 3,
+          'scenarioCases': scenarioCases['minimumCases'],
+          'minScenarioSignatures': scenarioCases['minimumCases'],
           'minLegacyProfiles': (story['legacyProfiles'] as List? ?? []).length,
           'minLegacyTargetEndings':
               (story['legacyProfiles'] as List? ?? []).length,
@@ -64,10 +70,10 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'campaigns': 5000,
           'transitionBudget':
               5000 * ((story['endingWeek'] as int) - 1 + events.length),
-          'systemApproval':
-              (story['decisionSystem'] as Map?)?['mode'] == 'system-adjudicated',
-          'failClosed':
-              (story['decisionSystem'] as Map?)?['failureMode'] == 'fail-closed',
+          'systemApproval': (story['decisionSystem'] as Map?)?['mode'] ==
+              'system-adjudicated',
+          'failClosed': (story['decisionSystem'] as Map?)?['failureMode'] ==
+              'fail-closed',
           'maxMillis': 24000,
           'minSignatures': 3,
           'lineageProfiles': (story['legacyProfiles'] as List? ?? []).length,

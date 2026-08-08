@@ -27,10 +27,14 @@ void verifyTrilemmaContract(String storyHash,
       (byId['performance']!['guardrails'] as Map).cast<String, dynamic>();
   if ((byId['completeness']!['targetScore'] as num) < 0.95 ||
       complete['scenarioDimensions'] != 8 ||
+      (complete['scenarioCases'] as int? ?? 0) < 2000 ||
+      (complete['scenarioRouteInputs'] as int? ?? 0) < 2000 ||
       complete['goldens'] < 20 ||
       complete['localeKeys'] < 118 ||
       purity['minDistinctEndings'] < 3 ||
       purity['minDistinctSignatures'] < 3 ||
+      (purity['scenarioCases'] as int? ?? 0) < 2000 ||
+      (purity['minScenarioSignatures'] as int? ?? 0) < 2000 ||
       purity['minLegacyProfiles'] < 3 ||
       purity['minLegacyTargetEndings'] < 3 ||
       purity['minLegacyTargetCompanions'] < 3 ||
@@ -102,6 +106,10 @@ void main() {
       ((story['endingWeek'] as int) - 1).clamp(1, 999).toInt();
   final contentBudget =
       (story['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
+  final scenarioVariantBudget =
+      (story['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
+  final endingDesign =
+      (story['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
   if (campaignWeeks < 48 || story['endingWeek'] != campaignWeeks + 1)
     fail('campaign must expose a 48-week route and one terminal week');
   if (contentBudget['schema'] != 'lumen-playtime-v1' ||
@@ -127,6 +135,65 @@ void main() {
           progression.length * (pacing['chapterClosure'] as int);
   if (estimatedSeconds < (contentBudget['minimumMinutes'] as int) * 60)
     fail('content budget pacing is below the minimum playtime');
+  final branchWeeks =
+      (scenarioVariantBudget['branchWeeks'] as List? ?? const []).cast<int>();
+  final branchEvents =
+      events.where((event) => branchWeeks.contains(event['week'])).toList();
+  final branchVectors = branchWeeks.isEmpty ? 0 : 1 << branchWeeks.length;
+  final routeInputCases = activities.length *
+      people.length *
+      (legacyProfiles.length + 1) *
+      branchVectors;
+  if (scenarioVariantBudget['schema'] != 'lumen-scenario-cases-v1' ||
+      (scenarioVariantBudget['minimumCases'] as int? ?? 0) < 2000 ||
+      branchWeeks.length < 11 ||
+      branchWeeks.toSet().length != branchWeeks.length ||
+      branchEvents.length != branchWeeks.length ||
+      branchEvents.any((event) =>
+          (event['choices'] as List).length != 2 ||
+          (event['choices'] as List).cast<Map<String, dynamic>>().any(
+              (choice) =>
+                  choice['requiresStat'] != null ||
+                  choice['requiresBondId'] != null ||
+                  choice['requiresFlag'] != null)) ||
+      scenarioVariantBudget['branchChoicesPerWeek'] != 2 ||
+      scenarioVariantBudget['authoredBranchVectors'] != branchVectors ||
+      scenarioVariantBudget['activityPolicies'] != activities.length ||
+      scenarioVariantBudget['personalityRoutes'] != people.length ||
+      scenarioVariantBudget['legacyContexts'] != legacyProfiles.length + 1 ||
+      scenarioVariantBudget['routeInputCases'] != routeInputCases ||
+      (scenarioVariantBudget['verifiedReachableCases'] as int? ?? 0) <
+          (scenarioVariantBudget['minimumCases'] as int) ||
+      scenarioVariantBudget['evidence'] !=
+          'tool/verify_scenario_variants.dart#scenario-case-enumerator') {
+    fail(
+        'scenario variant budget must define and exceed 2,000 reachable cases');
+  }
+  final resolutionOrder =
+      (endingDesign['resolutionOrder'] as List? ?? const []).cast<String>();
+  final coreFamilies = (endingDesign['coreFamilies'] as List? ?? const [])
+      .cast<Map<String, dynamic>>();
+  final companionRouteModifiers =
+      (endingDesign['companionRouteModifiers'] as List? ?? const [])
+          .cast<Map<String, dynamic>>();
+  final growthAxes = activities.map((activity) => activity['stat']).toSet();
+  if (endingDesign['schema'] != 'lumen-ending-matrix-v1' ||
+      !resolutionOrder.contains('winner-growth-axis') ||
+      !resolutionOrder.contains('highest-eligible-authored-tier') ||
+      !resolutionOrder.contains('companion-route-set') ||
+      coreFamilies.length != growthAxes.length ||
+      coreFamilies.any((family) =>
+          !growthAxes.contains(family['stat']) ||
+          (family['tiers'] as List? ?? const []).length < 2 ||
+          (family['masterRequires'] as List? ?? const []).isEmpty) ||
+      companionRouteModifiers.length != companions.length ||
+      (endingDesign['maximumCompanionRouteSets'] as int? ?? 0) < 8 ||
+      (endingDesign['maximumTerminalRouteCards'] as int? ?? 0) < 48 ||
+      (endingDesign['minimumCoreEndings'] as int? ?? 0) < 6 ||
+      endingDesign['evidence'] != 'lib/game_core.dart#resolveEnding') {
+    fail(
+        'ending matrix must define authored tiers and companion route modifiers');
+  }
   if (decisionSystem['schema'] != 'lumen-ledger-v1' ||
       decisionSystem['mode'] != 'system-adjudicated' ||
       decisionSystem['humanApprovalRequired'] != false ||
@@ -450,6 +517,13 @@ void main() {
   final gameplayEvidence = File('test/gameplay_metrics_test.dart').existsSync()
       ? File('test/gameplay_metrics_test.dart').readAsStringSync()
       : '';
+  final endingMatrixEvidence = File('test/ending_matrix_test.dart').existsSync()
+      ? File('test/ending_matrix_test.dart').readAsStringSync()
+      : '';
+  final scenarioVariantEvidence =
+      File('tool/verify_scenario_variants.dart').existsSync()
+          ? File('tool/verify_scenario_variants.dart').readAsStringSync()
+          : '';
   final readmeEvidence = File('README.md').existsSync()
       ? File('README.md').readAsStringSync()
       : '';
@@ -574,6 +648,9 @@ void main() {
             'five SSOT schedule policies produce measurable route variety') &&
         gameplayEvidence.contains(
             'three legacy profiles produce distinct deterministic route signatures') &&
+        endingMatrixEvidence.contains(
+            'ending matrix materializes all eight companion route sets') &&
+        scenarioVariantEvidence.contains('SCENARIO_VARIANTS_OK') &&
         gameplayEvidence.contains('endings.length, greaterThanOrEqualTo(3)') &&
         File('test/collection_test.dart').existsSync() &&
         uiEvidence.contains('ending collection survives a restart') &&
@@ -593,5 +670,5 @@ void main() {
           .round();
   if (score < 95) fail('completeness score below 95%: $score%');
   stdout.writeln(
-      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} combinations=${activities.length * campaignWeeks} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
+      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
 }

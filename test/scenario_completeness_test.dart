@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:prince_maker/game_core.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -71,5 +72,36 @@ void main() {
     expect(rivalDeltas, contains(1));
     expect(choices.any((choice) => choice['setsFlag'] == 'windmill-truce'),
         isTrue);
+  });
+
+  test('2,000-case route budget and ending matrix are executable', () async {
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
+        as Map<String, dynamic>;
+    final budget = source['scenarioVariantBudget'] as Map<String, dynamic>;
+    final branchWeeks = (budget['branchWeeks'] as List).cast<int>();
+    final branchVectors = 1 << branchWeeks.length;
+    expect(budget['minimumCases'], greaterThanOrEqualTo(2000));
+    expect(budget['authoredBranchVectors'], branchVectors);
+    expect(
+        budget['routeInputCases'],
+        branchVectors *
+            (source['activities'] as List).length *
+            (source['personalities'] as List).length *
+            ((source['legacyProfiles'] as List).length + 1));
+    expect(budget['verifiedReachableCases'], greaterThanOrEqualTo(2000));
+
+    final story = JsonStoryAdapter(source);
+    final ending = resolveEnding(
+      story,
+      {'지혜': 60, '공감': 10, '용기': 10},
+      bonds: {'lumi': 8, 'bora': 8, 'taro': 8},
+      milestones: {'spring': true, 'winter': true},
+    );
+    expect(ending['id'], 'stargazer-master');
+    expect(ending['endingFamily'], 'stargazer');
+    expect(ending['endingTier'], 'master');
+    expect(ending['routeId'], 'stargazer-master::lumi+bora+taro');
+    expect(ending['companionRouteIds'], ['lumi', 'bora', 'taro']);
   });
 }

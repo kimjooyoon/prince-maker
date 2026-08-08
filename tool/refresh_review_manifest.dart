@@ -17,7 +17,9 @@ void main() {
   }
   for (final path in [
     'tool/expand_story.dart',
-    'tool/refresh_review_manifest.dart'
+    'tool/refresh_review_manifest.dart',
+    'tool/verify_scenario_variants.dart',
+    'test/ending_matrix_test.dart'
   ]) {
     if (!known.containsKey(path)) {
       entries

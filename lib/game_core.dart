@@ -10,6 +10,8 @@ abstract interface class StoryPort {
   List<Map<String, dynamic>> get legacyProfiles;
   List<Map<String, dynamic>> get milestones;
   Map<String, dynamic> get decisionSystem;
+  Map<String, dynamic> get endingDesign;
+  Map<String, dynamic> get scenarioVariantBudget;
   int get endingWeek;
   int get campaignWeeks;
 }
@@ -44,6 +46,12 @@ class JsonStoryAdapter implements StoryPort {
   @override
   Map<String, dynamic> get decisionSystem =>
       (source['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
+  @override
+  Map<String, dynamic> get endingDesign =>
+      (source['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
+  @override
+  Map<String, dynamic> get scenarioVariantBudget =>
+      (source['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
   @override
   int get endingWeek => source['endingWeek'] as int? ?? 12;
   @override
@@ -155,6 +163,15 @@ Map<String, dynamic> resolveEnding(StoryPort story, Map<String, int> stats,
           .toList();
     }
   }
+  final routeIds = ((result['epilogues'] as List?) ?? const [])
+      .cast<Map>()
+      .map((route) => '${route['id']}')
+      .toList();
+  result['endingFamily'] = '${result['id']}'.split('-').first;
+  result['endingTier'] = '${result['id']}'.endsWith('-master') ? 'master' : 'seed';
+  result['companionRouteIds'] = routeIds;
+  result['routeId'] =
+      '${result['id']}::${routeIds.isEmpty ? 'solo' : routeIds.join('+')}';
   return result;
 }
 

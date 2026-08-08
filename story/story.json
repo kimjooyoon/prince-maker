@@ -10,11 +10,11 @@
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
-      "sha256": "fefc3ed8a8f135d6d4579944863132bf1f86f2169be78c3b51db31101ea01197"
+      "sha256": "b244a8ca9e5197a4d34d6391a84fe8e47c701dfd4135eec49ae7fecd22a1dc2a"
     },
     {
       "ref": "lib/game_core.dart#SystemDecisionPolicy",
-      "sha256": "fefc3ed8a8f135d6d4579944863132bf1f86f2169be78c3b51db31101ea01197"
+      "sha256": "b244a8ca9e5197a4d34d6391a84fe8e47c701dfd4135eec49ae7fecd22a1dc2a"
     },
     {
       "ref": "lib/save_adapter.dart#conditional-platform-boundary",
@@ -51,6 +51,10 @@
     {
       "ref": "lib/i18n.dart#LocaleCatalog/drawLocalizedEnding",
       "sha256": "4699a20dbd65864e53afcd7633ccfeab3133624d61ada4ee8c3c262fb5c65313"
+    },
+    {
+      "ref": "tool/verify_scenario_variants.dart#scenario-case-enumerator",
+      "sha256": "1b372fc0bf75c97a489e5a246cd12452e7207afd2adaf48b57dd0fcdb08b26a9"
     }
   ],
   "assetRefs": [
@@ -2926,5 +2930,101 @@
       "chapterClosure": 30
     },
     "formula": "48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s = 7,755s = 129m; contract reports a conservative 129m first-playthrough estimate."
+  },
+  "scenarioVariantBudget": {
+    "schema": "lumen-scenario-cases-v1",
+    "minimumCases": 2000,
+    "branchWeeks": [
+      3,
+      4,
+      5,
+      8,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "branchChoicesPerWeek": 2,
+    "authoredBranchVectors": 2048,
+    "activityPolicies": 5,
+    "personalityRoutes": 3,
+    "legacyContexts": 4,
+    "routeInputCases": 122880,
+    "verifiedReachableCases": 2048,
+    "signature": "replay trace + core ending + stats + bonds + milestones + memory flags",
+    "formula": "2^11 unconditional authored branch vectors × 5 activity policies × 3 personality routes × 4 legacy contexts = 122,880 route inputs; the CI enumerator replays all 2,048 branch vectors and requires at least 2,000 distinct deterministic scenario traces.",
+    "evidence": "tool/verify_scenario_variants.dart#scenario-case-enumerator"
+  },
+  "endingDesign": {
+    "schema": "lumen-ending-matrix-v1",
+    "resolutionOrder": [
+      "winner-growth-axis",
+      "highest-eligible-authored-tier",
+      "record-rank",
+      "companion-route-set",
+      "retrospective-cause-board"
+    ],
+    "coreFamilies": [
+      {
+        "id": "stargazer",
+        "stat": "지혜",
+        "tiers": [
+          "seed",
+          "master"
+        ],
+        "masterRequires": [
+          "spring",
+          "winter"
+        ]
+      },
+      {
+        "id": "gardener",
+        "stat": "공감",
+        "tiers": [
+          "seed",
+          "master"
+        ],
+        "masterRequires": [
+          "summer",
+          "return"
+        ]
+      },
+      {
+        "id": "pathfinder",
+        "stat": "용기",
+        "tiers": [
+          "seed",
+          "master"
+        ],
+        "masterRequires": [
+          "autumn",
+          "constellation"
+        ]
+      }
+    ],
+    "companionRouteModifiers": [
+      {
+        "id": "solo",
+        "condition": "no companion reaches bond threshold",
+        "epilogueCount": 0
+      },
+      {
+        "id": "single-companion",
+        "condition": "exactly one companion reaches bond threshold",
+        "epilogueCount": 1
+      },
+      {
+        "id": "ensemble",
+        "condition": "two or more companions reach bond threshold",
+        "epilogueCount": 2
+      }
+    ],
+    "maximumCompanionRouteSets": 8,
+    "maximumTerminalRouteCards": 48,
+    "minimumCoreEndings": 6,
+    "evidence": "lib/game_core.dart#resolveEnding"
   }
 }

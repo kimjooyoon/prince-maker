@@ -27,6 +27,10 @@ String render(Map<String, dynamic> s, String hash) {
   final campaignWeeks =
       (s['campaignWeeks'] as int?) ?? ((s['endingWeek'] as int) - 1);
   final budget = (s['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
+  final scenarioVariants =
+      (s['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
+  final endingDesign =
+      (s['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
   final b = StringBuffer(
       '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
   b.writeln(
@@ -49,6 +53,16 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln(
       '- 최소 보장: **${budget['minimumMinutes']}분** · 보수적 1회차 추정: **${budget['estimatedFirstPlaythroughMinutes']}분**');
   b.writeln('- 근거: ${budget['formula']}');
+  b.writeln('\n## 시나리오 경우의 수 계약\n');
+  b.writeln(
+      '- 최소 보장: **${scenarioVariants['minimumCases']}개** · 실제 재생 검증: **${scenarioVariants['verifiedReachableCases']}개** · 전체 route input: **${scenarioVariants['routeInputCases']}개**');
+  b.writeln('- 분기 주차: ${(scenarioVariants['branchWeeks'] as List? ?? const []).join(', ')}주');
+  b.writeln('- 산식: ${scenarioVariants['formula']}');
+  b.writeln('\n## 엔딩 설계 행렬\n');
+  b.writeln(
+      '해결 순서: ${(endingDesign['resolutionOrder'] as List? ?? const []).join(' → ')}');
+  b.writeln(
+      '- 핵심 엔딩군: ${(endingDesign['coreFamilies'] as List? ?? const []).map((family) => family['id']).join(', ')} · 동료 route set 최대 ${endingDesign['maximumCompanionRouteSets']}개 · terminal route card 최대 ${endingDesign['maximumTerminalRouteCards']}개');
   b.writeln('\n## 시나리오 완전성 표본\n');
   b.writeln(
       '참조 모델: **${scenario['referenceModel']}** (`${scenario['schema']}`)\n');
@@ -127,6 +141,8 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       dialogue = (s['dialogueMetrics'] as Map? ?? {}),
       scenario = (s['scenarioCompleteness'] as Map? ?? {}),
       budget = (s['contentBudget'] as Map? ?? {}),
+      scenarioVariants = (s['scenarioVariantBudget'] as Map? ?? {}),
+      endingDesign = (s['endingDesign'] as Map? ?? {}),
       campaignWeeks =
           (s['campaignWeeks'] as int?) ?? ((s['endingWeek'] as int) - 1),
       ranges = (s['progression'] as List? ?? const [])
@@ -143,6 +159,12 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       '| 최소 플레이타임 | ${budget['minimumMinutes']}분 | `contentBudget.minimumMinutes` |');
   b.writeln(
       '| 1회차 추정 | ${budget['estimatedFirstPlaythroughMinutes']}분 | `contentBudget.estimatedFirstPlaythroughMinutes` |');
+  b.writeln(
+      '| 시나리오 경우의 수 | ${scenarioVariants['verifiedReachableCases']}개 검증 / ${scenarioVariants['minimumCases']}개 최소 | `scenarioVariantBudget` · CI branch-vector enumeration |');
+  b.writeln(
+      '| 전체 route input | ${scenarioVariants['routeInputCases']}개 | 활동 × 성격 × 계승 컨텍스트 × authored branch vector |');
+  b.writeln(
+      '| 엔딩 route card | ${endingDesign['maximumTerminalRouteCards']}개까지 | 핵심 엔딩 × 동료 route set |');
   b.writeln(
       '| 시스템 판정 | ${(s['decisionSystem'] as Map?)?['id'] ?? 'none'} | SSOT `decisionSystem` · fail-closed receipt |');
   b.writeln('| 활동 | $acts | `activities.length` |');

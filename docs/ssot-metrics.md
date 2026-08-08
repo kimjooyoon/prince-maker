@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 0a424f9036755d882c37fbfaae3ed19ff2d744974d3dc0802589b3ac6f7a155c -->
+<!-- ssot-sha256: 40ca769e2189b24dcf3541f56a755faff9b2257cd91638a4d60c302d5d7a4072 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -11,6 +11,9 @@
 | 캠페인 길이 | 48주 + terminal week | `campaignWeeks`, `endingWeek` |
 | 최소 플레이타임 | 120분 | `contentBudget.minimumMinutes` |
 | 1회차 추정 | 129분 | `contentBudget.estimatedFirstPlaythroughMinutes` |
+| 시나리오 경우의 수 | 2048개 검증 / 2000개 최소 | `scenarioVariantBudget` · CI branch-vector enumeration |
+| 전체 route input | 122880개 | 활동 × 성격 × 계승 컨텍스트 × authored branch vector |
+| 엔딩 route card | 48개까지 | 핵심 엔딩 × 동료 route set |
 | 시스템 판정 | lumen-ledger | SSOT `decisionSystem` · fail-closed receipt |
 | 활동 | 5 | `activities.length` |
 | 성격 | 3 | `personalities.length` |
@@ -21,7 +24,7 @@
 | 사건 선택 | 94 | 모든 사건 choices 합계 |
 | 엔딩 | 6 | `endings.length` |
 | Canvas Golden | 27 | `test/goldens/*.png` |
-| 코드 ref | 12 | `codeRefs.length` |
+| 코드 ref | 13 | `codeRefs.length` |
 | 이미지 ref | 4 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |

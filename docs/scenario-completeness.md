@@ -32,6 +32,12 @@
 
 현재 48주 campaign은 16막, 47사건, 16개 막 목표로 이 계약을 고정한다. 열여섯 막 모두 공개·압력 2축 이상·authored 선택·막 종료 목표를 통과하며, 각 사건 선택은 `stat`, `coins`, `bondDelta`, `line`을 가지고 `GameSession`과 replay trace를 통해 검증한다. 12주차 첫 결산 이후에도 씨앗의 귀환·기억의 집·먼 영지·선택의 의회·다음 사람의 첫걸음으로 서사 압력을 장편으로 이어간다.
 
+### 2,000개 이상 시나리오 경우의 수
+
+`scenarioVariantBudget`는 3·4·5·8·12·13·14·15·16·17·18주차를 독립 authored 분기 축으로 선언한다. 각 주차의 두 선택지는 조건 없이 열려 있으므로 CI가 모든 `2^11 = 2,048` 벡터를 실제 `GameSession`에 주입해 서로 다른 사건 replay trace를 확인할 수 있다. 여기에 5개 활동 정책·3개 성격·4개 계승 컨텍스트를 곱한 전체 route input은 `2,048 × 5 × 3 × 4 = 122,880개`다. 경우의 수는 입력 벡터만 세지 않고 core ending, 동료 route set, 스탯, 유대, 막 목표, 기억 flag까지 포함한 결정론적 signature로 기록한다.
+
+엔딩 행렬은 `winner-growth-axis → highest-eligible-authored-tier → record-rank → companion-route-set → retrospective-cause-board` 순서로 닫힌다. 지혜·공감·용기 각각의 seed/master 2단계가 6개 core ending을 이루고, 동료 3명의 부분집합 8개가 solo·single-companion·ensemble route modifier로 합성되어 최대 48개 terminal route card를 만든다. 따라서 2,000개 시나리오가 같은 화면으로 뭉개지지 않고, 선택 trace와 관계·기억 회고가 다른 엔딩 결과로 남는다.
+
 ### 시스템 승인과 책임 추적
 
 사람이 선택을 승인하거나 결과의 책임을 수동 체크하는 구조를 사용하지 않는다. SSOT의 `decisionSystem`이 `system-adjudicated`·`fail-closed` 계약을 선언하고, `SystemDecisionPolicy`가 각 활동·사건 입력을 결정론적으로 승인하거나 거절한다. 승인된 입력은 `kind`, `subject`, `week`, `rule`, `contract`, `decisionHash`, `owner`를 가진 immutable replay trace 영수증으로 먼저 기록된 뒤 ECS 이벤트로 전파된다. 거절된 입력도 같은 영수증과 이유를 남기므로, 시스템이 어떤 규칙으로 결정을 내렸는지 재현 가능하다. 이는 법적 책임을 자동화한다는 주장이 아니라 게임 규칙·CI 품질의 계산 가능한 책임 소재를 고정하는 장치다.
@@ -46,7 +52,7 @@
 | 상태 피드백 | 성장 3축·피로·은화·계절 목표가 다음 사건과 엔딩에 되돌아옴 | `test/game_core_test.dart` 규칙·trace |
 | 관계 아크 | 3명 동료, rival bond 손실·상호 중재, 임계 유대 에필로그, 관계 게이트 | `relationship-gate.png`·`relationship-tension.png`·`mediation.png` |
 | 감정/기억 | 이전 사건의 `setsFlag`가 후속 선택을 열고 회고 보드에 원인으로 남음 | `memory-gate.png`·`ending.png` |
-| 장기 재플레이 | 6개 authored 엔딩, 엔딩 도감, 엔딩 계열별 3개 회차 계승 프로필이 다음 회차 성장·기억·선택 보정을 해금 | `legacy-gate.png`·collection Golden·legacy trace |
+| 장기 재플레이 | 2,048개 실제 분기 벡터, 122,880개 route input, 6개 authored core 엔딩, 최대 48개 terminal route card, 엔딩 도감, 엔딩 계열별 3개 회차 계승 프로필이 다음 회차 성장·기억·선택 보정을 해금 | `tool/verify_scenario_variants.dart`·`legacy-gate.png`·collection Golden·legacy trace |
 | 장면 결산 | 결말명만이 아니라 최대 3개 사건과 달성 목표 수를 결정론적으로 표시 | `ending.png`·`canonical-ending.png` |
 
 따라서 현재 표본의 시나리오 완전성 최소 단위는 `계획 → 상태 변화 → 조건 공개 → 관계/기억 결과 → authored ending → 원인 회고 → 다음 회차 해금`의 7단 연결이다. 각 연결은 SSOT, 코어 trace, Canvas Golden, benchmark 중 둘 이상으로 교차 증명하며, 회고 보드는 마지막 연결을 시각 증거로 고정한다.
@@ -56,12 +62,12 @@
 | 축 | 최소 표본 | 현재 증거 | 다음 확장 기준 |
 | --- | ---: | --- | --- |
 | 시간/막 | 16막, 막당 사건 2개 이상 | `progression.contract` 16/16 · 47개 사건 · 공개·압력·선택·결산 100% | 막마다 canonical event Golden 추가 |
-| 성장축 | 3축, 축당 기본/숙련 엔딩 | 지혜·공감·용기 6엔딩 | 축 간 상쇄 또는 혼합 엔딩 추가 |
+| 성장축 | 3축, 축당 기본/숙련 엔딩 | 지혜·공감·용기 6 core 엔딩 + 동료 route set 최대 8개 | 축 간 상쇄 또는 혼합 엔딩 추가 |
 | 관계 | 동료 3명, 인사→유대→긴장→중재/기억→동행 목표→에필로그 | 3 companion, rival loss and reciprocal mediation, truce flag, 3 route goals, epilogue, 3 lineage target companions | 관계 충돌/소원함/상호 배타 선택 추가 |
 | 자원 | 능력·은화·피로 중 2개 이상이 선택에 영향 | 세 자원과 계절 목표 | 외출·아이템·시간 예산을 별도 phase로 확장 |
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
 | 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock, 3 lineage profiles, week-2 authored bonus, profile별 route signature·target ending·target companion epilogue | 계승 unlock이 다음 회차의 성장축·선택 공간과 profile target ending·관계 회고 분포를 넓히는지 측정 |
-| 장면 | 도입·중반 사건·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·계승 프로필·엔딩 Golden | 26 Golden, canonical 4주차 사건, 4 location discovery flags/traces, rival loss/mediation, outing/bond/memory/legacy feedback, 3 companion epilogue endings | 16막의 서사 사건과 120분 분량 계약으로 확장 |
+| 장면 | 도입·중반 사건·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·계승 프로필·엔딩 Golden | 27 Golden, canonical 4주차·48주차 handoff 사건, 4 location discovery flags/traces, rival loss/mediation, outing/bond/memory/legacy feedback, 3 companion epilogue endings | 16막의 서사 사건과 120분 분량 계약으로 확장 |
 | 종결 | terminal·저장·컬렉션·재시작·원인 회고·다음 회차 가이드 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 + 미달 목표 2개 회고 | 동료별 관계 변화와 상호 배타 목표의 회고 문구 추가 |
 
 ### 정량 게이트
