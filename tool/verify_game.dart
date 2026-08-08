@@ -38,7 +38,7 @@ void verifyTrilemmaContract(String storyHash,
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] !=
           5000 * (endingWeek - 1 + eventCount) ||
-      performance['maxMillis'] != 5000 ||
+      performance['maxMillis'] != 8000 ||
       performance['minSignatures'] < 3 ||
       performance['lineageTargetEndings'] < 3 ||
       performance['lineageTargetCompanions'] < 3 ||

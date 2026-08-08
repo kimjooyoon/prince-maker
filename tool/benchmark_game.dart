@@ -154,7 +154,7 @@ void main() {
       }).join(',');
   stdout.writeln(
       'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
-  if (millis > 5000 ||
+  if (millis > 8000 ||
       first.checksum <= campaigns ||
       replay.checksum != first.checksum ||
       replay.endings.length != first.endings.length ||

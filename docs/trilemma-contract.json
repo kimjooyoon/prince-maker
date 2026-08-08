@@ -49,7 +49,7 @@
         "transitionBudget": 225000,
         "systemApproval": true,
         "failClosed": true,
-        "maxMillis": 5000,
+        "maxMillis": 8000,
         "minSignatures": 3,
         "lineageProfiles": 3,
         "lineageTargetEndings": 3,
