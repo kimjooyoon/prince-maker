@@ -45,7 +45,7 @@
 | personality campaign 경로 | 지혜·공감·용기 각 성격의 숙련 엔딩 재현 | 3 |
 | 글리프 안정성 | 번들 Noto Sans KR + Canvas 벡터 활동 아이콘 | 1 |
 | i18n 대사 | `key → locale catalog → Canvas` 한국어/English 대사·엔딩·동료·장소 결산 경로 | 2 locale |
-| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 800키 이상(실제 1051) 및 character speaker·엔딩·사이드 장면·activity reflection·relationship state/follow-up UI 키 검사 | 1 |
+| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 800키 이상(실제 1052) 및 character speaker·엔딩·사이드 장면·activity reflection·relationship state/follow-up UI 키 검사 | 1 |
 | 스토리 진행도 | 1–3부터 46–48주까지 16막, 47개 사건·막 목표 연결 | 16 chapters |
 | 순수성 분기 | 동일 일정 예산의 지혜·공감 경로 + 5개 SSOT 일정 정책 + 동료 8 route set + 6개 fate thread·9개 퀘스트 stage가 서로 다른 authored 엔딩·유대·목표 서명을 생성 | 2,048 vectors + 8 route sets + 6/9 narrative |
 | 자동 게이트 | SSOT 검사·시나리오 vector 열거·해시 매니페스트·정적 분석·Flutter test·Golden·코어 benchmark·Wasm | 8 |

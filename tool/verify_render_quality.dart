@@ -80,6 +80,8 @@ void main() {
   final playerFacingGoldenTest = read('test/player_facing_golden_test.dart');
   final activityForecastGoldenTest =
       read('test/activity_forecast_golden_test.dart');
+  final activityReflectionGoldenTest =
+      read('test/activity_reflection_golden_test.dart');
   final characterRosterGoldenTest =
       read('test/character_roster_golden_test.dart');
   final environmentAtlasGoldenTest = read('test/environment_golden_test.dart');
@@ -114,6 +116,12 @@ void main() {
       'home shows deterministic activity forecasts');
   requireText('test/activity_forecast_golden_test.dart',
       activityForecastGoldenTest, 'goldens/activity-forecast.png');
+  requireText(
+      'test/activity_reflection_golden_test.dart',
+      activityReflectionGoldenTest,
+      'event shows localized activity reflection after day spend');
+  requireText('test/activity_reflection_golden_test.dart',
+      activityReflectionGoldenTest, 'goldens/activity-reflection-en.png');
   requireText('test/player_facing_golden_test.dart', playerFacingGoldenTest,
       'all personality illustration pages render deterministic portraits');
   for (final name in [

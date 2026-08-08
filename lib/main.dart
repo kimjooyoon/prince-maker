@@ -9,6 +9,7 @@ import 'canvas_surface.dart';
 import 'canvas_scene_fingerprint.dart';
 import 'activity_catalog.dart';
 import 'activity_forecast.dart';
+import 'activity_localization.dart';
 import 'feedback_banner.dart';
 import 'i18n.dart';
 import 'decision_receipt.dart';
@@ -394,7 +395,9 @@ class _Game extends State<Game> {
     final logical = CanvasViewport.logicalTap(position, viewport),
         x = logical.dx,
         y = logical.dy;
-    if (page == 1) {
+    if (page == 0 && y < 100 && x > 590) {
+      toggleLocale();
+    } else if (page == 1) {
       if (y < 100 && x > 590)
         toggleLocale();
       else if (y >= 620 && x >= 560)
@@ -816,6 +819,8 @@ class Scene extends CustomPainter {
 
   String localizedResult() {
     if (activeLocale == 'ko' || lastResult.isEmpty) return lastResult;
+    final activity = localizedActivityResultFromStory(s, lastResult);
+    if (activity != lastResult) return activity;
     for (final event in [
       ...(s['events'] as List? ?? const []),
       ...(s['sideScenes'] as List? ?? const []),
@@ -832,6 +837,8 @@ class Scene extends CustomPainter {
 
   String localizedLine() {
     if (activeLocale == 'ko' || lastLine.isEmpty) return lastLine;
+    final activity = localizedActivityLineFromStory(s, lastLine);
+    if (activity != lastLine) return activity;
     for (final event in [
       ...(s['events'] as List? ?? const []),
       ...(s['sideScenes'] as List? ?? const []),
@@ -1180,6 +1187,7 @@ class Scene extends CustomPainter {
       return;
     }
     home(c);
+    drawLocaleToggle(c, activeLocale, activeCatalog);
     drawFeedbackBanner(c, localizedResult(), localizedLine(),
         emptyLabel: localized(
             'ui.home.prompt', 'Choose an activity to spend the day.'));
@@ -2196,24 +2204,50 @@ class Scene extends CustomPainter {
       drawChoiceEcho(c, ch, Offset(x + 22, choiceTop + 170));
       drawChoiceImpact(c, Rect.fromLTWH(x + 22, choiceTop + 188, 198, 8), ch);
     }
-    txt(
-        c,
-        flags['legacy-star'] == true
-            ? localized('ui.event.legacy', '계승의 기록이 새로운 선택을 열었습니다.')
-            : lastResult.startsWith('조건') ||
-                    lastResult.startsWith('관계 조건') ||
-                    lastResult.startsWith('기억 조건')
-                ? lastResult
-                : localized('ui.event.continue',
-                    'Choose one path to continue the story.'),
-        const Offset(24, 570),
-        14,
-        flags['legacy-star'] == true ||
-                lastResult.startsWith('조건') ||
-                lastResult.startsWith('관계 조건') ||
-                lastResult.startsWith('기억 조건')
-            ? const Color(0xffa84f3c)
-            : ink.withValues(alpha: .55));
+    final reflection = activityReflectionForLine(
+        (s['activityScenes'] as List? ?? const [])
+            .whereType<Map>()
+            .map((item) => item.cast<String, dynamic>())
+            .toList(),
+        lastLine);
+    if (reflection != null) {
+      box(c, const Rect.fromLTWH(24, 548, 712, 72), Colors.white,
+          radius: 16, stroke: teal.withValues(alpha: .3), shadow: true);
+      txt(
+          c,
+          localized('ui.event.activityReflection',
+                  'Activity reflection · {title}')
+              .replaceFirst(
+                  '{title}',
+                  localized(
+                      '${reflection['titleKey']}', '${reflection['title']}')),
+          const Offset(42, 560),
+          11,
+          teal,
+          bold: true,
+          maxWidth: 670);
+      txt(c, localizedLine(), const Offset(42, 582), 11, ink,
+          maxWidth: 670, maxLines: 2);
+    } else {
+      txt(
+          c,
+          flags['legacy-star'] == true
+              ? localized('ui.event.legacy', '계승의 기록이 새로운 선택을 열었습니다.')
+              : lastResult.startsWith('조건') ||
+                      lastResult.startsWith('관계 조건') ||
+                      lastResult.startsWith('기억 조건')
+                  ? lastResult
+                  : localized('ui.event.continue',
+                      'Choose one path to continue the story.'),
+          const Offset(24, 570),
+          14,
+          flags['legacy-star'] == true ||
+                  lastResult.startsWith('조건') ||
+                  lastResult.startsWith('관계 조건') ||
+                  lastResult.startsWith('기억 조건')
+              ? const Color(0xffa84f3c)
+              : ink.withValues(alpha: .55));
+    }
   }
 
   void savePage(Canvas c) {

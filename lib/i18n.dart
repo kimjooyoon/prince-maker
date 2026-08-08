@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'design_tokens.dart';
 import 'canvas_choice_impact.dart';
 import 'activity_forecast.dart';
+import 'activity_localization.dart';
 
 class LocaleCatalog {
   const LocaleCatalog(this.bundles);
@@ -62,6 +63,33 @@ String localizedActivityForecast(ActivityForecast forecast) {
   return _replace(localized('ui.home.forecast', 'Forecast · {effects}'),
       {'effects': effects});
 }
+
+String localizedActivityResultFromStory(
+        Map<String, dynamic> story, String raw) =>
+    localizedActivityResult(
+      raw: raw,
+      activities: (story['activities'] as List? ?? const [])
+          .whereType<Map>()
+          .map((item) => item.cast<String, dynamic>())
+          .toList(),
+      scenes: (story['activityScenes'] as List? ?? const [])
+          .whereType<Map>()
+          .map((item) => item.cast<String, dynamic>())
+          .toList(),
+      stats: const ['지혜', '공감', '용기'],
+      text: localized,
+      statText: localizedStat,
+    );
+
+String localizedActivityLineFromStory(Map<String, dynamic> story, String raw) =>
+    localizedActivityLine(
+      scenes: (story['activityScenes'] as List? ?? const [])
+          .whereType<Map>()
+          .map((item) => item.cast<String, dynamic>())
+          .toList(),
+      rawLine: raw,
+      text: localized,
+    );
 
 String localizedChoiceEffect(Map choice) {
   final parts = <String>[];
