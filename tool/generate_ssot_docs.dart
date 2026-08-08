@@ -38,6 +38,7 @@ String render(Map<String, dynamic> s, String hash) {
   final scenario =
       (s['scenarioCompleteness'] as Map? ?? {}).cast<String, dynamic>();
   final decision = (s['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
+  final engine = (s['engineDecision'] as Map? ?? {}).cast<String, dynamic>();
   final campaignWeeks =
       (s['campaignWeeks'] as int?) ?? ((s['endingWeek'] as int) - 1);
   final budget = (s['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
@@ -62,6 +63,10 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln('책임 증적: ${decision['responsibility']}');
   for (final rule in (decision['rules'] as List? ?? const []))
     b.writeln('- `${rule['id']}` · ${rule['scope']} · ${rule['effect']}');
+  b.writeln('\n## 렌더러 결정 계약\n');
+  b.writeln(
+      '선택: **`${engine['selectedOption']}`** · `${engine['decisionRule']}` · [결정 매트릭스](engine-decision.md)');
+  b.writeln('점수 의미: ${engine['scoreMeaning']}');
   b.writeln('\n## ${campaignWeeks}주 진행도\n');
   for (final c in progression)
     b.writeln(
@@ -269,6 +274,8 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       '| 동료 퀘스트 | $companionQuests개 / $companionQuestStages stages | `companionQuests` · 동료별 3단계 |');
   b.writeln(
       '| 시스템 판정 | ${(s['decisionSystem'] as Map?)?['id'] ?? 'none'} | SSOT `decisionSystem` · fail-closed receipt |');
+  b.writeln(
+      '| 렌더러 결정 | `${(s['engineDecision'] as Map?)?['selectedOption'] ?? 'none'}` | SSOT `engineDecision` · Golden/WASM 적합도 계약 |');
   b.writeln('| 활동 | $acts | `activities.length` |');
   b.writeln('| 성격 | $people | `personalities.length` |');
   b.writeln(

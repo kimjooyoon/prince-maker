@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 4b37d58cb97f04773469e4379914204345d197641055e63b4a8bde0cc9f980b5 -->
+<!-- ssot-sha256: 3fd94ad05c49755f8caff07dbebd6073f79536af7eae11aae888d72fbf0aa1ba -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -17,6 +17,7 @@
 | 나비효과 기록 | 6 | `fateThreads.length` · authored memory flag 기반 |
 | 동료 퀘스트 | 3개 / 9 stages | `companionQuests` · 동료별 3단계 |
 | 시스템 판정 | lumen-ledger | SSOT `decisionSystem` · fail-closed receipt |
+| 렌더러 결정 | `flutter-canvas-wasm` | SSOT `engineDecision` · Golden/WASM 적합도 계약 |
 | 활동 | 5 | `activities.length` |
 | 성격 | 3 | `personalities.length` |
 | 캐릭터 아카이브 | 20 | `characterArchive.length` · PNG sheetIndex |
@@ -35,7 +36,7 @@
 | 교환 선택 | 72/166 (0.43373493975903615) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |
 | 엔딩 | 6 | `endings.length` |
 | Canvas Golden | 81 | `test/goldens/*.png` |
-| 코드 ref | 83 | `codeRefs.length` |
+| 코드 ref | 86 | `codeRefs.length` |
 | 이미지 ref | 78 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
