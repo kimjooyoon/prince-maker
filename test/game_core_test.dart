@@ -553,6 +553,14 @@ void main() {
     expect(restored.stats['공감'], 6);
     expect(restored.replayTrace, contains('event:등불'));
   });
+  test('batch replay can disable persistence without changing the trace', () {
+    final story = JsonStoryAdapter({'events': []});
+    final save = MemorySaveAdapter();
+    final session = GameSession(story, save, autoPersist: false);
+    session.choose(const ActivityChosen('지혜', 2, 1, 1));
+    expect(save.value, isNull);
+    expect(session.world.progress[0]!.trace, isNotEmpty);
+  });
   test('restore returns the saved page for reload continuity', () {
     final save = MemorySaveAdapter();
     final story = JsonStoryAdapter({

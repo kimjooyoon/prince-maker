@@ -426,7 +426,7 @@ class GameWorld {
 /// Application port: UI sends commands; adapters handle story and saves.
 class GameSession {
   GameSession(this.story, this.save,
-      {this.legacyUnlocked = false, this.legacyId}) {
+      {this.legacyUnlocked = false, this.legacyId, this.autoPersist = true}) {
     if (legacyUnlocked) {
       world.progress[0]!.flags['legacy-star'] = true;
       final profile =
@@ -447,6 +447,9 @@ class GameSession {
   final world = GameWorld();
   final bool legacyUnlocked;
   final String? legacyId;
+
+  /// Batch/replay ports may disable persistence without changing game rules.
+  final bool autoPersist;
   SystemDecisionReceipt _decision(String kind, String subject,
       {required bool conditions}) {
     final model = story.decisionSystem,
@@ -574,8 +577,10 @@ class GameSession {
           m['coins'], m['pass'], m['fail']));
   }
 
-  void persist({int page = 0}) =>
-      save.write(world.snapshot(page: page).encode());
+  void persist({int page = 0}) {
+    if (autoPersist) save.write(world.snapshot(page: page).encode());
+  }
+
   GameSnapshot? restore() {
     final raw = save.read();
     if (raw == null) return null;

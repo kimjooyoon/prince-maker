@@ -4,11 +4,11 @@
   "source": [
     {
       "ref": "story/story.json#root",
-      "sha256": "0587ff35d1ac904e808a3a7140e693816a2ae88a2d2eb465212f5281564a4ef2"
+      "sha256": "8c5508d2caf1c3ce5bdeae01ad3bc75a98a379848e1f7ffd9d95977305cad9d1"
     },
     {
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "d6ad4a494a0bcfc3b884c9e48ac593bbb6121f3c43471719fa7c2e982e05328a"
+      "sha256": "1457cd5eaa0575ede9abbcc0191201c1bad39ffd6025cace4b08045f5ebe4176"
     },
     {
       "ref": "docs/render-quality-contract.json#preconditions",
@@ -16,7 +16,7 @@
     },
     {
       "ref": "docs/decision-proof-contract.json#preconditionFields",
-      "sha256": "3c169e2f0f645901cc1765c1a0488f34288d2d9b11466e8305085cd3ce2997a2"
+      "sha256": "68a651c4ffbeac09cddb5f4c92b4be224e4a6796dba875477e1e294394d81add"
     }
   ],
   "decision": {

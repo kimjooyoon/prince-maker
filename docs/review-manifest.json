@@ -5,7 +5,7 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "0587ff35d1ac904e808a3a7140e693816a2ae88a2d2eb465212f5281564a4ef2"
+      "sha256": "8c5508d2caf1c3ce5bdeae01ad3bc75a98a379848e1f7ffd9d95977305cad9d1"
     },
     {
       "path": "lib/main.dart",
@@ -30,7 +30,7 @@
     {
       "path": "lib/game_core.dart",
       "ref": "lib/game_core.dart#GameWorld+GameSession+resolveEnding",
-      "sha256": "20b13ed5320dd6677ce1e19c5bc41c8c03de5a9e30dbf703a1402ed08b5447d8"
+      "sha256": "3dbc7871c37932958bd022af9b4c95db31fb907b6c5dd98d184659a178b1107f"
     },
     {
       "path": "lib/save_adapter.dart",
@@ -220,7 +220,7 @@
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "d6ad4a494a0bcfc3b884c9e48ac593bbb6121f3c43471719fa7c2e982e05328a"
+      "sha256": "1457cd5eaa0575ede9abbcc0191201c1bad39ffd6025cace4b08045f5ebe4176"
     },
     {
       "path": "docs/scenario-completeness.md",
@@ -235,7 +235,7 @@
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "6f962714d6908b34e9292798d15fddba95f7d64304e48a58f9b85536b538b751"
+      "sha256": "8315260549f0137502c076a490ddab4009cf688a4095ca2ac9277dd0446d536d"
     },
     {
       "path": "docs/design-system.md",
@@ -250,7 +250,7 @@
     {
       "path": "test/game_core_test.dart",
       "ref": "test/game_core_test.dart#rules",
-      "sha256": "f88d9623e107777f13026923bdfd847cba1437469320a0adca4aeff2663d92bd"
+      "sha256": "3abbe930d45b29c0aaf41f9b8e8b79d8e37f0094b227eaba00f1148df151c28e"
     },
     {
       "path": "test/save_state_test.dart",
@@ -325,7 +325,7 @@
     {
       "path": "tool/benchmark_game.dart",
       "ref": "tool/benchmark_game.dart#ssot-campaign-throughput-signatures",
-      "sha256": "57f198c20307fe3feaee3f0c205d6cd387804e0f0b8141cebb9e97d0c6528be8"
+      "sha256": "bfb562925a100784621623e0fd48084b4f5537cd353079646b0b2b3c8bda3330"
     },
     {
       "path": "README.md",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "25eafb06c12fcf95ba1455340e3d3c12c4c7752ada7829d61b80ce6287c6ce87"
+      "sha256": "55a308e5b789adfba1ebc893c66c7936a4e3dcbecb0ce5111ff3632782a39350"
     },
     {
       "path": "design/tokens.json",
@@ -390,7 +390,7 @@
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "b64ff3a086d23f6bd61471ff5aa5228570ff874856335d5aefa4c427ccfa86bf"
+      "sha256": "dadd5dad4aca7da7a62368127c0f5b66b95cd5169833cb178894a98ca3116cc8"
     },
     {
       "path": "tool/ci_gate.dart",
@@ -510,12 +510,12 @@
     {
       "path": "docs/development-goals.json",
       "ref": "docs/development-goals.json#reviewed",
-      "sha256": "71040a3dcd932c67fdc095b910f7c7af24b7a1db31a493b174a474186e487953"
+      "sha256": "5388a667bb1402e35a5bd7eb12bfc99371ee14f7491a0b265ecbee3111a39a97"
     },
     {
       "path": "docs/development-goals.md",
       "ref": "docs/development-goals.md#reviewed",
-      "sha256": "62b848a1c9593fc88b4de7587a50168b5622b183e49843e7f7d20832877f2065"
+      "sha256": "c5c015f05d8af9159f51fffd79b14927f778afa5f412a864addbb206a55f0f53"
     },
     {
       "path": "tool/generate_development_goals.dart",
@@ -535,7 +535,7 @@
     {
       "path": "docs/decision-proof-contract.json",
       "ref": "docs/decision-proof-contract.json#reviewed",
-      "sha256": "3c169e2f0f645901cc1765c1a0488f34288d2d9b11466e8305085cd3ce2997a2"
+      "sha256": "68a651c4ffbeac09cddb5f4c92b4be224e4a6796dba875477e1e294394d81add"
     },
     {
       "path": "tool/verify_decision_proof.dart",

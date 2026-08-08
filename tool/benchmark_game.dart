@@ -28,7 +28,7 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
         ? legacyIds[i % legacyIds.length]
         : null;
     final session = GameSession(story, MemorySaveAdapter(),
-        legacyUnlocked: i.isEven, legacyId: legacyId);
+        legacyUnlocked: i.isEven, legacyId: legacyId, autoPersist: false);
     final legacyProfile = legacyId == null
         ? null
         : story.legacyProfiles.firstWhere((p) => p['id'] == legacyId);

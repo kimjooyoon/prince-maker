@@ -10,11 +10,11 @@
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
-      "sha256": "20b13ed5320dd6677ce1e19c5bc41c8c03de5a9e30dbf703a1402ed08b5447d8"
+      "sha256": "3dbc7871c37932958bd022af9b4c95db31fb907b6c5dd98d184659a178b1107f"
     },
     {
       "ref": "lib/game_core.dart#SystemDecisionPolicy",
-      "sha256": "20b13ed5320dd6677ce1e19c5bc41c8c03de5a9e30dbf703a1402ed08b5447d8"
+      "sha256": "3dbc7871c37932958bd022af9b4c95db31fb907b6c5dd98d184659a178b1107f"
     },
     {
       "ref": "lib/save_adapter.dart#conditional-platform-boundary",
