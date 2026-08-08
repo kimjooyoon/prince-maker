@@ -1,6 +1,6 @@
 # 프린스 메이커
 
-독자 세계관 ‘루멘’에서 48주 동안 노아의 방향을 함께 고르는 결정론적 육성 시뮬레이션입니다. 한 회차는 48회 일정, 47개 사건, 16막 결산, 16개 막 관계 장면으로 구성되어 보수적 페이싱 기준 137분의 서사 분량을 계산합니다. 원작의 캐릭터·문구·화면을 사용하지 않고, **일정 선택 → 수치 변화 → 서사 판정**이라는 장르의 구조만 새 규칙과 시각 언어로 재구성했습니다.
+독자 세계관 ‘루멘’에서 48주 동안 노아의 방향을 함께 고르는 결정론적 육성 시뮬레이션입니다. 한 회차는 48회 일정, 47개 본편 사건과 24개 사이드 장면, 16막 결산, 16개 막 관계 장면으로 구성되어 보수적 페이싱 기준 156분의 서사 분량을 계산합니다. 원작의 캐릭터·문구·화면을 사용하지 않고, **일정 선택 → 수치 변화 → 서사 판정**이라는 장르의 구조만 새 규칙과 시각 언어로 재구성했습니다.
 
 장편 분량의 권위 있는 기준은 `story/story.jsonl#contentBudget`이며, `tool/verify_game.dart`가 최소 120분·사건/선택지/막 결산 수를 함께 판정합니다.
 
@@ -38,6 +38,10 @@ git config core.hooksPath .githooks
 ![나비효과·동료 퀘스트 운명 기록 보관소](test/goldens/narrative-ledger.png)
 ![English fate ledger Golden](test/goldens/narrative-ledger-en.png)
 ![시스템 승인·거절 영수증 Golden](test/goldens/system-receipt.png)
+![루멘 캐릭터 도감 Golden](test/goldens/character-roster.png)
+![Lumen character archive Golden](test/goldens/character-roster-en.png)
+![루멘 환경 아틀라스 Golden](test/goldens/environment-atlas.png)
+![Lumen environment atlas Golden](test/goldens/environment-atlas-en.png)
 
 16막의 첫 canonical 사건 화면도 SSOT에서 결정론적으로 재생해 Golden으로 고정합니다.
 
@@ -68,11 +72,20 @@ git config core.hooksPath .githooks
 
 ## SSOT와 게임성 지표
 
-게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 94/94 effectful choice, 47/47 divergent event, 94/94 multi-axis choice, 28 gated choice이며, 결과 피드백 Golden·5-state 관계 resolver/replay trace·상태별 상호 배타 후속 대화까지 purity 축의 fail-closed 게이트로 연결됩니다. 상세 계약은 story/story.jsonl의 gameplayKpis·relationshipDesign와 tool/verify_gameplay_fun.dart에 있습니다.
+게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 166/166 effectful choice, 71/71 divergent scene, 166/166 multi-axis choice, 29 gated choice이며, 결과 피드백 Golden·5-state 관계 resolver/replay trace·상태별 상호 배타 후속 대화까지 purity 축의 fail-closed 게이트로 연결됩니다. 상세 계약은 story/story.jsonl의 gameplayKpis·relationshipDesign와 tool/verify_gameplay_fun.dart에 있습니다.
 
 스토리와 활동 정의의 단일 원천은 [`story/story.jsonl`](story/story.jsonl)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `characters`는 노아와 세 동료의 역할·이름 key·portrait asset/frame을 선언하며, 94개 사건 선택은 `speakerId → locale key → portrait frame`으로 같은 상반신 대화 컴포넌트를 재사용합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, `assets/lumen-personality-sheet.png`는 고요·다정·용감 성격의 3프레임 상반신 시트입니다. 두 PNG는 SSOT의 `assetRefs`와 각 personality/character의 `portraitAsset`/`portraitFrame`으로 연결되어 Canvas 일러스트와 사건 대화에서 표시됩니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
 캐릭터의 독자 조형 규칙과 자산 provenance는 [`docs/art-provenance.md`](docs/art-provenance.md)에 기록하고, SSOT verifier가 PNG 매핑·성격별 색상·모티프·실루엣 필드를 강제합니다.
+
+### 루멘 캐릭터 도감
+
+홈 화면 하단의 `캐릭터 도감`에서 루멘 주민 20종을 한 번에 확인할 수 있습니다. 도감은 [`story/story.jsonl`](story/story.jsonl)의 `characterArchive`를 [`lib/character_roster.dart`](lib/character_roster.dart)가 읽고, [`assets/lumen-character-roster.png`](assets/lumen-character-roster.png)의 5×4 독자 캐릭터 시트를 같은 `sheetIndex`로 연결해 기존 twilight / mist / sun / paper Canvas 언어 안에서 카드 그리드로 렌더링합니다. 노아·3명 동료의 서사 registry는 그대로 유지하고, 20종은 세계관 확장용 아카이브 캐릭터 디자인 레이어로 분리했습니다.
+
+홈 하단의 `환경 아틀라스`는 6개 장소를 기록관(기억/지혜), 온실(돌봄/공감), 시장(교환/은화), 바람길(횡단/용기), 관측소(발견/지혜), 채석장(자원/용기)으로 설명합니다. 각 환경은 `surface → affordance → memory`를 함께 가지며, 장소 발견 flag와 사건 선택의 의미를 같은 UI 카드와 Canvas 풍경으로 연결합니다. 상세 규칙은 [`docs/design-system.md`](docs/design-system.md)의 환경 게임디자인 시스템을 기준으로 합니다.
+한국어·English 도감 화면은 [`test/goldens/character-roster.png`](test/goldens/character-roster.png)와 [`test/goldens/character-roster-en.png`](test/goldens/character-roster-en.png)으로 고정되어 전체 Golden 증적은 67장입니다.
+
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. 이 화면을 포함한 전체 Golden 증적은 67장입니다.
 
 ### 성격 유형 캐릭터 시트
 
@@ -84,7 +97,7 @@ git config core.hooksPath .githooks
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 11개 authored 분기 축의 2,048개 실제 scenario vector(최소 2,000), 활동·성격·계승 컨텍스트까지 포함한 122,880개 route input, 5개 활동 정책 × 48주, 5개 SSOT 일정 정책 실험에서 distinct ending/signature 3개 이상, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 노아+3명 동료 character registry, 94개 사건 선택의 상반신 speaker binding, 16개 막 관계 장면의 speaker/title/line binding, bond gap·windmill-truce flag 기반 `unformed/balanced/tension/estranged/truce` 5-state 관계 판정과 ECS replay trace, 상태별 5개 상호 배타 후속 대화와 `relationship-followup:<id>` trace, 3개 성격 대화, 3명 동료 유대도·rival bond·관계 충돌·중재 기억·4개 장소 발견·동행 관계 목표·복수 에필로그, 6개 나비효과 기록·동료별 3단계 퀘스트 9개·홈 route atlas, 3개 엔딩 계열별 회차 계승 프로필(다음 회차 시작 스탯 +2·계승 flag·trace·2주차 프로필별 성장 보정·profile route signature·target master ending·target companion epilogue), 16개 막 목표·보상, 47개 고정 사건(각 2선택, 스탯·유대·기억·계승 조건 잠금 포함), 6개 core 엔딩과 최대 48개 terminal route card·94개 사건 선택의 도달성 계약 테스트, 한국어 fixture 8개·English locale 3개·canonical SSOT 홈·4주차 사건·48주차 handoff 사건·canonical SSOT 48주 엔딩·운명 기록 보관소·시스템 승인·거절 영수증·엔딩 도감·관계 route 도감·사건 피드백·관계 긴장·관계 중재·관계 후속 대화·장소 발견·외출·유대 게이트·기억 게이트·계승 게이트 피드백의 63개 골든 화면(16막 canonical 사건·실제 16막 chapter-closure Canvas와 관계 장면 패널 포함), `story/locales/ko.jsonl`·`en.jsonl` 키 기반 513키 대사(SSOT minimum 505), 모든 SSOT `*Key`와 character speaker/엔딩·closure·relationship state/follow-up UI의 locale 계약 테스트, 성격 화면 언어 토글, 세 성격 숙련 엔딩 campaign 3종, 목표·유대에 따른 결정론적 1–3성 루멘 기록 등급, 재시작 후에도 누적되는 엔딩·관계 도감과 계승 해금, 피로 기반 성장 페널티, 사건 대사·기억·legacy replay, 엔딩 상반신 카드의 달성 관계 목표명·복수 에필로그·회고 보드의 최대 3개 원인 사건·막 목표별 달성/미달 상태·미달 목표 다음 회차 단서, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 기억 플래그와 시스템 결정 영수증을 포함한 `lumen-save-v7` trace, 48주 이후 추가 입력을 차단하는 fail-closed terminal 상태 불변식입니다.
+현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 authored 대사 612줄, ko/en locale 911키, 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다.
 

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:prince_maker/jsonl.dart';
+import 'package:prince_maker/quality_score.dart';
 
 String sha256File(String path) =>
     sha256.convert(File(path).readAsBytesSync()).toString();
@@ -32,6 +33,10 @@ Map<String, dynamic> buildDocument() {
       decisionProof = readJson('docs/decision-proof-contract.jsonl');
   final trilemmaAxes = maps(trilemma['axes']);
   final events = maps(story['events']),
+      sideScenes = maps(story['sideScenes']),
+      activityScenes = maps(story['activityScenes']),
+      companionScenes = maps(story['companionScenes']),
+      endingVariants = maps(story['endingVariants']),
       progression = maps(story['progression']),
       milestones = maps(story['milestones']),
       companions = maps(story['companions']),
@@ -47,6 +52,8 @@ Map<String, dynamic> buildDocument() {
       localeRefs = maps(story['localeRefs']);
   final choices = events.fold<int>(
       0, (sum, event) => sum + (event['choices'] as List).length);
+  final sideChoices = sideScenes.fold<int>(
+      0, (sum, scene) => sum + (scene['choices'] as List).length);
   final storyWeeks =
       (story['campaignWeeks'] as int?) ?? ((story['endingWeek'] as int) - 1);
   final dialogue = (story['dialogueMetrics'] as Map).cast<String, dynamic>();
@@ -64,7 +71,12 @@ Map<String, dynamic> buildDocument() {
   final authoredContentUnits = storyWeeks +
       progression.length +
       events.length +
+      sideScenes.length +
+      activityScenes.length +
+      companionScenes.length +
+      endingVariants.length +
       choices +
+      sideChoices +
       milestones.length +
       (story['endings'] as List).length;
   final narrativeRelationshipUnits = companions.length +
@@ -83,7 +95,7 @@ Map<String, dynamic> buildDocument() {
       codeRefs.length +
       assetRefs.length +
       fontRefs.length;
-  final verificationUnits = 15 +
+  final verificationUnits = 17 +
       testFiles +
       preconditions.length +
       proofs.length +
@@ -112,7 +124,7 @@ Map<String, dynamic> buildDocument() {
       'unit': 'content-unit',
       'value': authoredContentUnits,
       'formula':
-          '$storyWeeks weeks + ${progression.length} chapters + ${events.length} events + $choices choices + ${milestones.length} milestones + ${(story['endings'] as List).length} endings',
+          '$storyWeeks weeks + ${progression.length} chapters + ${events.length} main events + ${sideScenes.length} side scenes + $choices main choices + $sideChoices side choices + ${activityScenes.length} activity mini-events + ${companionScenes.length} companion scenes + ${endingVariants.length} ending variants + ${milestones.length} milestones + ${(story['endings'] as List).length} core endings',
       'scope': 'authored campaign content and closure work',
     },
     {
@@ -145,7 +157,7 @@ Map<String, dynamic> buildDocument() {
       'unit': 'proof-unit',
       'value': verificationUnits,
       'formula':
-          '15 CI checks + $testFiles Dart test files + ${preconditions.length} render preconditions + ${proofs.length} render proofs + $decisionProofFields decision precondition fields',
+          '17 local CI checks + 1 Wasm CI check + $testFiles Dart test files + ${preconditions.length} render preconditions + ${proofs.length} render proofs + $decisionProofFields decision precondition fields',
       'scope': 'repeatable automated proof and release readiness',
     },
   ];
@@ -155,7 +167,11 @@ Map<String, dynamic> buildDocument() {
       'axis': 'completeness',
       'priority': 'P0',
       'title': '장편 캠페인 완전성',
-      'target': {'value': 0.95, 'unit': 'gate-score', 'display': '≥95%'},
+      'target': {
+        'value': qualityScoreTarget,
+        'unit': 'gate-score',
+        'display': '≥99%'
+      },
       'currentContract': {
         'value': dimensions.isEmpty ? 0 : 1.0,
         'unit': 'gate-score',
@@ -167,13 +183,17 @@ Map<String, dynamic> buildDocument() {
       'effort': ['authored-content-units', 'verification-units'],
       'preconditions': [
         'story-contract',
+        'content-depth',
         'scenario-variants',
+        'quality-score',
         'generated-ssot-docs',
         'review-manifest',
       ],
       'evidence': [
         'story/story.jsonl#scenarioCompleteness',
         'tool/verify_game.dart#scenario-contract',
+        'tool/verify_content_depth.dart#content-depth-gate',
+        'tool/verify_quality_score.dart#quality-score-99',
         'test/scenario_completeness_test.dart#scenario-closure',
       ],
       'acceptance': '8개 시나리오 차원과 콘텐츠·분기·locale·Golden 증적이 모두 CI에서 통과한다.',
@@ -285,7 +305,8 @@ Map<String, dynamic> buildDocument() {
         'test/golden_test.dart#all',
         'test/locale_contract_test.dart#ssot-dialogue-contract',
       ],
-      'acceptance': 'Canvas 좌표·입력 역변환·63개 Golden·ko/en locale 계약이 전부 통과한다.',
+      'acceptance':
+          'Canvas 좌표·입력 역변환·${goldens}개 Golden·ko/en locale 계약이 전부 통과한다.',
     },
     {
       'id': 'G5-deterministic-throughput',
@@ -328,13 +349,15 @@ Map<String, dynamic> buildDocument() {
       'priority': 'P0',
       'title': '책임 추적 가능한 납품',
       'target': {
-        'ciChecks': 15,
+        'ciChecks': 17,
         'codeRefs': 24,
         'decisionProofFields': 14,
         'unit': 'delivery-proof-units',
       },
       'currentContract': {
-        'ciChecks': 15,
+        'ciChecks': 17,
+        'localCiChecks': 17,
+        'wasmCiChecks': 1,
         'codeRefs': codeRefs.length,
         'decisionProofFields': decisionProofFields,
         'assetRefs': assetRefs.length,
@@ -352,6 +375,8 @@ Map<String, dynamic> buildDocument() {
       'status': 'contract-satisfied; runtime-proof-required',
       'effort': ['verification-units', 'visual-locale-units'],
       'preconditions': [
+        'jsonl-contract',
+        'quality-score',
         'ci-policy',
         'generated-ssot-docs',
         'review-manifest',
@@ -363,6 +388,9 @@ Map<String, dynamic> buildDocument() {
         'tool/verify_decision_proof.dart#decision-proof-preconditions',
         'docs/review-manifest.jsonl#entries',
         'tool/ci_gate.dart#system-verdict',
+        'tool/verify_quality_score.dart#quality-score-99',
+        'tool/trilemma_verdict.dart#closed-loop-receipt',
+        'test/trilemma_verdict_test.dart#closed-loop-receipt',
         'lib/decision_proof.dart#SystemDecisionPolicy',
         'lib/decision_receipt.dart#DecisionReceipt',
       ],
@@ -386,16 +414,21 @@ Map<String, dynamic> buildDocument() {
       'gapFormula': 'max(target - current, 0)',
       'statusRule': '정적 계약 충족과 런타임 증명을 분리하며, 최종 승인에는 CI verdict가 필요하다.',
     },
+    'qualityModel': qualityScoreModel(),
     'effortLedger': effortLedger,
     'goals': goals,
     'evidencePlan': {
       'ciModeChecks': [
+        'jsonl-contract',
         'ci-policy',
         'decision-proof-preconditions',
         'render-quality-preconditions',
         'story-contract',
+        'content-depth',
+        'gameplay-fun',
         'scenario-variants',
         'campaign-benchmark',
+        'quality-score',
         'generated-trilemma-contract',
         'generated-ssot-docs',
         'review-manifest',
@@ -408,6 +441,7 @@ Map<String, dynamic> buildDocument() {
       'artifacts': [
         'build/decision-proof-verdict.json',
         'build/benchmark-verdict.json',
+        'build/quality-score-verdict.json',
         'build/development-goal-verdict.json',
         'build/ci-verdict.json',
         'build/trilemma-verdict.json',
@@ -436,6 +470,19 @@ String renderMarkdown(Map<String, dynamic> document) {
         '- 판정 주체: **Lumen Development Goal Gate** · 사람 승인 필요: `false` · 실패 모드: `fail-closed`')
     ..writeln(
         '- gap 산식: `max(target - current, 0)` · 정적 계약 충족과 실제 실행 증명은 분리한다.')
+    ..writeln()
+    ..writeln('## 99% 품질 점수')
+    ..writeln()
+    ..writeln(
+        '품질 점수는 `sum(component.score × component.weight)`로 계산하며, 목표는 `${qualityScoreTarget}`(99%)다. 각 component는 실제 SSOT·검증 산출물에서 재계산되고 0.99 미만이면 fail-closed로 거절된다.')
+    ..writeln()
+    ..writeln('| Component | 가중치 | 목표 | 산식 | 증거 |')
+    ..writeln('| --- | ---: | ---: | --- | --- |');
+  for (final component in qualityScoreComponents) {
+    b.writeln(
+        '| `${component.id}` | ${component.weight} | ${component.target} | ${component.formula} | `${component.evidence}` |');
+  }
+  b
     ..writeln()
     ..writeln('## 개발 목표')
     ..writeln()

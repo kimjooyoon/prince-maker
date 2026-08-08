@@ -512,3 +512,401 @@
 {"type":"entry","key":"ui.relationship.followup.estranged.line","value":"Distance is not the name of failure. Let us keep a place for an answer."}
 {"type":"entry","key":"ui.relationship.followup.truce.title","value":"Wind Tied Again"}
 {"type":"entry","key":"ui.relationship.followup.truce.line","value":"Only after returning each share can we ride the same wind again."}
+{"type":"entry","key":"event.sideArchiveLantern.title","value":"Index of the Unlit Lantern"}
+{"type":"entry","key":"event.sideArchiveLantern.body","value":"Three lanterns behind the archive went dark in different colours. Before lighting them, decide who gets to read what."}
+{"type":"entry","key":"event.sideArchiveLantern.prompt","value":"Sort the clues by colour, time, or the people who carried them."}
+{"type":"entry","key":"event.sideArchiveLantern.consequence","value":"The sorting method remains as a reading routine for later records."}
+{"type":"entry","key":"event.sideArchiveLantern.lumi.label","value":"Order them by time with Lumi"}
+{"type":"entry","key":"event.sideArchiveLantern.lumi.line","value":"When we show before and after, the missing hands can be seen again."}
+{"type":"entry","key":"event.sideArchiveLantern.bora.label","value":"Order them by people with Bora"}
+{"type":"entry","key":"event.sideArchiveLantern.bora.line","value":"Before colour, let us not lose who was waiting."}
+{"type":"entry","key":"event.sideArchiveLantern.taro.label","value":"Move the flame by hand with Taro"}
+{"type":"entry","key":"event.sideArchiveLantern.taro.line","value":"Before explaining the dark, let us raise one lantern again."}
+{"type":"entry","key":"event.sideArchiveIndex.title","value":"The Empty Drawer"}
+{"type":"entry","key":"event.sideArchiveIndex.body","value":"Only one drawer remains for a new record. You can preserve either old paper or today’s evidence first."}
+{"type":"entry","key":"event.sideArchiveIndex.prompt","value":"Calculate coins and preservation space together."}
+{"type":"entry","key":"event.sideArchiveIndex.consequence","value":"What you preserved first is marked as a gap in the record."}
+{"type":"entry","key":"event.sideArchiveIndex.lumi.label","value":"Bind the old papers first"}
+{"type":"entry","key":"event.sideArchiveIndex.lumi.line","value":"Today’s judgement needs to show where it came from."}
+{"type":"entry","key":"event.sideArchiveIndex.bora.label","value":"Keep the record of who waited today"}
+{"type":"entry","key":"event.sideArchiveIndex.bora.line","value":"Leave proof that waiting was also someone’s day."}
+{"type":"entry","key":"event.sideArchiveIndex.taro.label","value":"Repair the drawer and make one more"}
+{"type":"entry","key":"event.sideArchiveIndex.taro.line","value":"If there is no room, take responsibility for making room."}
+{"type":"entry","key":"event.sideArchiveNight.title","value":"Margin Between Two Voices"}
+{"type":"entry","key":"event.sideArchiveNight.body","value":"Lumi and Bora read the same record at different speeds. Decide whether silence is an error or room to think."}
+{"type":"entry","key":"event.sideArchiveNight.prompt","value":"Leave both companions’ interpretations without collapsing them."}
+{"type":"entry","key":"event.sideArchiveNight.consequence","value":"Two reasons attach to one sentence and become a condition for a later event."}
+{"type":"entry","key":"event.sideArchiveNight.lumi.label","value":"Measure Lumi’s margin"}
+{"type":"entry","key":"event.sideArchiveNight.lumi.line","value":"Let what was not said become visible as part of the record."}
+{"type":"entry","key":"event.sideArchiveNight.bora.label","value":"Wait through Bora’s silence"}
+{"type":"entry","key":"event.sideArchiveNight.bora.line","value":"Time that does not hurry an answer can protect both people."}
+{"type":"entry","key":"event.sideArchiveNight.taro.label","value":"Give Taro the reading rule"}
+{"type":"entry","key":"event.sideArchiveNight.taro.line","value":"Test whether the reason remains when the reader changes."}
+{"type":"entry","key":"event.sideArchiveWitness.title","value":"The Witness Seat"}
+{"type":"entry","key":"event.sideArchiveWitness.body","value":"The final seat in an old testimony is empty. Should the remembering person or the recording person take it?"}
+{"type":"entry","key":"event.sideArchiveWitness.prompt","value":"Check the order of testimony with three witnesses again."}
+{"type":"entry","key":"event.sideArchiveWitness.consequence","value":"The witness order becomes an exploration rule for finding omissions."}
+{"type":"entry","key":"event.sideArchiveWitness.lumi.label","value":"Let Lumi hold the testimony order"}
+{"type":"entry","key":"event.sideArchiveWitness.lumi.line","value":"Trust memory, but leave steps for checking it again."}
+{"type":"entry","key":"event.sideArchiveWitness.bora.label","value":"Guard the empty seat with Bora"}
+{"type":"entry","key":"event.sideArchiveWitness.bora.line","value":"Care can also be testimony when it does not fill in a name."}
+{"type":"entry","key":"event.sideArchiveWitness.taro.label","value":"Find the field marker with Taro"}
+{"type":"entry","key":"event.sideArchiveWitness.taro.line","value":"Let us check the trace outside the paper at least once."}
+{"type":"entry","key":"event.sideGreenhouseRain.title","value":"The Greenhouse Where Rain Is Late"}
+{"type":"entry","key":"event.sideGreenhouseRain.body","value":"On a dry day, a sprout and an old tree look at the same bucket. Is equal water fair to both?"}
+{"type":"entry","key":"event.sideGreenhouseRain.prompt","value":"Compare waiting time and recovery potential, not only the amount of water."}
+{"type":"entry","key":"event.sideGreenhouseRain.consequence","value":"The water plan becomes a reusable rule for resource crises."}
+{"type":"entry","key":"event.sideGreenhouseRain.bora.label","value":"Share by waiting order"}
+{"type":"entry","key":"event.sideGreenhouseRain.bora.line","value":"Give recovery water first to those who have waited longest."}
+{"type":"entry","key":"event.sideGreenhouseRain.lumi.label","value":"Calculate recovery potential"}
+{"type":"entry","key":"event.sideGreenhouseRain.lumi.line","value":"Look at the chance to live again, not only equal portions."}
+{"type":"entry","key":"event.sideGreenhouseRain.taro.label","value":"Build a barrel for the next rain"}
+{"type":"entry","key":"event.sideGreenhouseRain.taro.line","value":"Before fixing the table, make a place to catch the next rain."}
+{"type":"entry","key":"event.sideGreenhouseSeed.title","value":"Match the Seed Names"}
+{"type":"entry","key":"event.sideGreenhouseSeed.body","value":"Rain blurred four seed labels. Choose two clues from shape, season, and memory."}
+{"type":"entry","key":"event.sideGreenhouseSeed.prompt","value":"Use only two clues to match seeds with their places."}
+{"type":"entry","key":"event.sideGreenhouseSeed.consequence","value":"The clues you matched remain in the harvest name and reward."}
+{"type":"entry","key":"event.sideGreenhouseSeed.bora.label","value":"Choose the season memory"}
+{"type":"entry","key":"event.sideGreenhouseSeed.bora.line","value":"If we remember the flowering day, the seed need not be hurried."}
+{"type":"entry","key":"event.sideGreenhouseSeed.lumi.label","value":"Choose the shape clue"}
+{"type":"entry","key":"event.sideGreenhouseSeed.lumi.line","value":"Leave visible differences so the next person can match them again."}
+{"type":"entry","key":"event.sideGreenhouseSeed.taro.label","value":"Plant a test row"}
+{"type":"entry","key":"event.sideGreenhouseSeed.taro.line","value":"Instead of waiting for every answer, plant one row and check."}
+{"type":"entry","key":"event.sideGreenhouseCompost.title","value":"Letter Beneath the Soil"}
+{"type":"entry","key":"event.sideGreenhouseCompost.body","value":"A folded letter appears while turning the compost. It may be discarded words or a promise buried on purpose."}
+{"type":"entry","key":"event.sideGreenhouseCompost.prompt","value":"Investigate the soil layers and the direction of the fold together."}
+{"type":"entry","key":"event.sideGreenhouseCompost.consequence","value":"The letter’s source remains an investigable clue, not a memory."}
+{"type":"entry","key":"event.sideGreenhouseCompost.lumi.label","value":"Record the paper layers"}
+{"type":"entry","key":"event.sideGreenhouseCompost.lumi.line","value":"Before reading the letter, read when it was buried."}
+{"type":"entry","key":"event.sideGreenhouseCompost.bora.label","value":"Wait for the envelope"}
+{"type":"entry","key":"event.sideGreenhouseCompost.bora.line","value":"Care can mean not opening someone’s words for them."}
+{"type":"entry","key":"event.sideGreenhouseCompost.taro.label","value":"Retrace the buried place"}
+{"type":"entry","key":"event.sideGreenhouseCompost.taro.line","value":"Find who came here before the footprints disappear."}
+{"type":"entry","key":"event.sideGreenhouseBell.title","value":"Order of the Dawn Bell"}
+{"type":"entry","key":"event.sideGreenhouseBell.body","value":"Each time the greenhouse bell rings, one person wakes first. Make care a duty, or a promise to rotate."}
+{"type":"entry","key":"event.sideGreenhouseBell.prompt","value":"Match waking order and recovery time on a small table."}
+{"type":"entry","key":"event.sideGreenhouseBell.consequence","value":"The care rotation becomes an independent record of the companion pair."}
+{"type":"entry","key":"event.sideGreenhouseBell.bora.label","value":"Alternate the order"}
+{"type":"entry","key":"event.sideGreenhouseBell.bora.line","value":"Do not make care one person’s nature; make it changeable."}
+{"type":"entry","key":"event.sideGreenhouseBell.taro.label","value":"Lower the bell"}
+{"type":"entry","key":"event.sideGreenhouseBell.taro.line","value":"We need a signal that allows rest, not a sound that wakes everyone."}
+{"type":"entry","key":"event.sideGreenhouseBell.lumi.label","value":"Leave blanks in the table"}
+{"type":"entry","key":"event.sideGreenhouseBell.lumi.line","value":"The blank spaces will tell us whose turn is missing."}
+{"type":"entry","key":"event.sideMarketToken.title","value":"The One-Coin Marker"}
+{"type":"entry","key":"event.sideMarketToken.body","value":"Only one coin remains in the market’s shared purse. Which meal, seed, or record tool keeps next week steadier?"}
+{"type":"entry","key":"event.sideMarketToken.prompt","value":"Calculate next week’s choice space, not only today’s satisfaction."}
+{"type":"entry","key":"event.sideMarketToken.consequence","value":"Where the last coin went becomes the baseline for resource-management scenes."}
+{"type":"entry","key":"event.sideMarketToken.bora.label","value":"Buy food to share today"}
+{"type":"entry","key":"event.sideMarketToken.bora.line","value":"Do not hide today’s hunger for the sake of next week."}
+{"type":"entry","key":"event.sideMarketToken.lumi.label","value":"Buy record ink"}
+{"type":"entry","key":"event.sideMarketToken.lumi.line","value":"Without evidence to calculate, the remaining coin is lost again."}
+{"type":"entry","key":"event.sideMarketToken.taro.label","value":"Reserve the next seed"}
+{"type":"entry","key":"event.sideMarketToken.taro.line","value":"Even with uncertainty, leave room to buy the next beginning."}
+{"type":"entry","key":"event.sideMarketScale.title","value":"Three Notches on the Scale"}
+{"type":"entry","key":"event.sideMarketScale.body","value":"The merchants’ scale marks differ slightly. Match them quickly, or expose each error first."}
+{"type":"entry","key":"event.sideMarketScale.prompt","value":"Find the shared standard in at least two of three measurements."}
+{"type":"entry","key":"event.sideMarketScale.consequence","value":"The measurement standard changes both market prices and trust."}
+{"type":"entry","key":"event.sideMarketScale.lumi.label","value":"Publish the errors first"}
+{"type":"entry","key":"event.sideMarketScale.lumi.line","value":"Show the possible error range along with the right number."}
+{"type":"entry","key":"event.sideMarketScale.bora.label","value":"Measure the least advantaged first"}
+{"type":"entry","key":"event.sideMarketScale.bora.line","value":"First check whom the scale tilted toward."}
+{"type":"entry","key":"event.sideMarketScale.taro.label","value":"Set a new mark"}
+{"type":"entry","key":"event.sideMarketScale.taro.line","value":"If the old mark is wrong, take responsibility for changing it today."}
+{"type":"entry","key":"event.sideMarketQuiet.title","value":"Where a Rumour Passed"}
+{"type":"entry","key":"event.sideMarketQuiet.body","value":"The same rumour spread in three directions. Find the spaces it emptied before finding its source."}
+{"type":"entry","key":"event.sideMarketQuiet.prompt","value":"Split the rumour into belief, harm, and requests for verification."}
+{"type":"entry","key":"event.sideMarketQuiet.consequence","value":"The rumour markers become the entrance to a later public council."}
+{"type":"entry","key":"event.sideMarketQuiet.bora.label","value":"Find the emptied spaces"}
+{"type":"entry","key":"event.sideMarketQuiet.bora.line","value":"Before speaking facts, see whom the words pushed away."}
+{"type":"entry","key":"event.sideMarketQuiet.lumi.label","value":"Map the source path"}
+{"type":"entry","key":"event.sideMarketQuiet.lumi.line","value":"A rumour is a path through many hands, not one point."}
+{"type":"entry","key":"event.sideMarketQuiet.taro.label","value":"Publish a verification request"}
+{"type":"entry","key":"event.sideMarketQuiet.taro.line","value":"Instead of staying quiet for fear of being wrong, open a door to check."}
+{"type":"entry","key":"event.sideMarketReturn.title","value":"Contract at the Market’s Edge"}
+{"type":"entry","key":"event.sideMarketReturn.body","value":"At the last market, Lumi and Taro offer different contracts. What disappears if they become one?"}
+{"type":"entry","key":"event.sideMarketReturn.prompt","value":"Separate shared clauses from clauses neither side can surrender."}
+{"type":"entry","key":"event.sideMarketReturn.consequence","value":"Clauses that cannot merge remain the next person’s negotiation record."}
+{"type":"entry","key":"event.sideMarketReturn.lumi.label","value":"Build shared clauses"}
+{"type":"entry","key":"event.sideMarketReturn.lumi.line","value":"Instead of shortening the contract, show what remains shared."}
+{"type":"entry","key":"event.sideMarketReturn.taro.label","value":"Draw the non-negotiable line"}
+{"type":"entry","key":"event.sideMarketReturn.taro.line","value":"A good agreement does not hide the line it must not cross."}
+{"type":"entry","key":"event.sideMarketReturn.bora.label","value":"Ask about the missing clause"}
+{"type":"entry","key":"event.sideMarketReturn.bora.line","value":"Ask whose cost is carried by the silence after signing."}
+{"type":"entry","key":"event.sideRiverRope.title","value":"Map of the Broken Rope"}
+{"type":"entry","key":"event.sideRiverRope.body","value":"The river rope is worn at three places. Which knot you fix first changes the route you can explore."}
+{"type":"entry","key":"event.sideRiverRope.prompt","value":"Remember current, distance, and a marker for the return."}
+{"type":"entry","key":"event.sideRiverRope.consequence","value":"The knot you choose becomes the first reference point for crossing."}
+{"type":"entry","key":"event.sideRiverRope.taro.label","value":"Fix the strongest current"}
+{"type":"entry","key":"event.sideRiverRope.taro.line","value":"We must know the most dangerous place first to leave a way back."}
+{"type":"entry","key":"event.sideRiverRope.lumi.label","value":"Calculate a return marker"}
+{"type":"entry","key":"event.sideRiverRope.lumi.line","value":"A reason to return matters as much as courage to cross."}
+{"type":"entry","key":"event.sideRiverRope.bora.label","value":"Make a waiting place"}
+{"type":"entry","key":"event.sideRiverRope.bora.line","value":"The people waiting are part of the route too."}
+{"type":"entry","key":"event.sideRiverTide.title","value":"Three Beats of the Current"}
+{"type":"entry","key":"event.sideRiverTide.body","value":"The river pauses for three breaths before speeding up. Match Taro’s steps, or cross alone by the markers."}
+{"type":"entry","key":"event.sideRiverTide.prompt","value":"Remember the beats of pause, crossing, and return."}
+{"type":"entry","key":"event.sideRiverTide.consequence","value":"The matched rhythm lowers fatigue costs in a later crisis."}
+{"type":"entry","key":"event.sideRiverTide.taro.label","value":"Follow the three beats"}
+{"type":"entry","key":"event.sideRiverTide.taro.line","value":"Instead of being fast alone, let us wait for the same moment."}
+{"type":"entry","key":"event.sideRiverTide.lumi.label","value":"Cross by the markers"}
+{"type":"entry","key":"event.sideRiverTide.lumi.line","value":"Even if the rhythm is forgotten, a marker can be read again."}
+{"type":"entry","key":"event.sideRiverTide.bora.label","value":"Stay by the river"}
+{"type":"entry","key":"event.sideRiverTide.bora.line","value":"Choosing not to cross can also be a choice to protect together."}
+{"type":"entry","key":"event.sideRiverMarker.title","value":"Material for a Marker"}
+{"type":"entry","key":"event.sideRiverMarker.body","value":"There is enough of only stone, cloth, or ink. Durable and easy-to-find markers cost different things."}
+{"type":"entry","key":"event.sideRiverMarker.prompt","value":"Compare coins and exploration access at once."}
+{"type":"entry","key":"event.sideRiverMarker.consequence","value":"The material choice returns as the way the map reveals its blank."}
+{"type":"entry","key":"event.sideRiverMarker.taro.label","value":"Make it last with stone"}
+{"type":"entry","key":"event.sideRiverMarker.taro.line","value":"Someone must be able to find it after the next storm."}
+{"type":"entry","key":"event.sideRiverMarker.bora.label","value":"Make it visible with cloth"}
+{"type":"entry","key":"event.sideRiverMarker.bora.line","value":"Before lasting, it must be visible to the person returning now."}
+{"type":"entry","key":"event.sideRiverMarker.lumi.label","value":"Leave the reason in ink"}
+{"type":"entry","key":"event.sideRiverMarker.lumi.line","value":"The reason for the marker must be readable, not only the marker."}
+{"type":"entry","key":"event.sideRiverQuestion.title","value":"First Question Across the River"}
+{"type":"entry","key":"event.sideRiverQuestion.body","value":"At the final crossing, Bora and Taro choose a question for the next traveller. Its direction makes the road, not its answer."}
+{"type":"entry","key":"event.sideRiverQuestion.prompt","value":"Write a sentence the returning traveller can ask again."}
+{"type":"entry","key":"event.sideRiverQuestion.consequence","value":"The first question remains as an independent epilogue of the passed horizon."}
+{"type":"entry","key":"event.sideRiverQuestion.bora.label","value":"Ask who is still waiting"}
+{"type":"entry","key":"event.sideRiverQuestion.bora.line","value":"Before the road’s end, look again at the hearts left beside it."}
+{"type":"entry","key":"event.sideRiverQuestion.taro.label","value":"Ask where to begin again"}
+{"type":"entry","key":"event.sideRiverQuestion.taro.line","value":"Instead of explaining the end, leave where the next foot can land."}
+{"type":"entry","key":"event.sideRiverQuestion.lumi.label","value":"Ask what remains unknown"}
+{"type":"entry","key":"event.sideRiverQuestion.lumi.line","value":"The question that hides no blank survives the longest."}
+{"type":"entry","key":"event.sideObservatoryCloud.title","value":"Small Star Behind the Cloud"}
+{"type":"entry","key":"event.sideObservatoryCloud.body","value":"On a night when clouds hide one star, three observatory windows point in different directions. What comes first?"}
+{"type":"entry","key":"event.sideObservatoryCloud.prompt","value":"Mark the visible and invisible on the same map."}
+{"type":"entry","key":"event.sideObservatoryCloud.consequence","value":"Leave the rule that a hidden star is still an observable subject."}
+{"type":"entry","key":"event.sideObservatoryCloud.lumi.label","value":"Measure the empty sky"}
+{"type":"entry","key":"event.sideObservatoryCloud.lumi.line","value":"Measuring what cannot be seen becomes a standard for the next night."}
+{"type":"entry","key":"event.sideObservatoryCloud.taro.label","value":"Climb the roof"}
+{"type":"entry","key":"event.sideObservatoryCloud.taro.line","value":"Before trusting the windows, go where the view changes."}
+{"type":"entry","key":"event.sideObservatoryCloud.bora.label","value":"Wait for the cloud"}
+{"type":"entry","key":"event.sideObservatoryCloud.bora.line","value":"Spending unseen time together is also observation."}
+{"type":"entry","key":"event.sideObservatoryLens.title","value":"The Cracked Lens"}
+{"type":"entry","key":"event.sideObservatoryLens.body","value":"One lens has cracked. Stop to repair it, or record today’s sky through the damaged view."}
+{"type":"entry","key":"event.sideObservatoryLens.prompt","value":"Compare accuracy and continuity of the record as resources."}
+{"type":"entry","key":"event.sideObservatoryLens.consequence","value":"The damaged view’s limit is shown on the decision receipt."}
+{"type":"entry","key":"event.sideObservatoryLens.lumi.label","value":"Repair the lens first"}
+{"type":"entry","key":"event.sideObservatoryLens.lumi.line","value":"A continuous record is lost if it cannot be verified again."}
+{"type":"entry","key":"event.sideObservatoryLens.taro.label","value":"Record the cracked sky too"}
+{"type":"entry","key":"event.sideObservatoryLens.taro.line","value":"Today’s unhidden flaw is also evidence for the next judgement."}
+{"type":"entry","key":"event.sideObservatoryLens.bora.label","value":"Tell waiting people first"}
+{"type":"entry","key":"event.sideObservatoryLens.bora.line","value":"Before a precise answer, give waiting people the fact they need."}
+{"type":"entry","key":"event.sideObservatorySignal.title","value":"The Signal That Rang Twice"}
+{"type":"entry","key":"event.sideObservatorySignal.body","value":"A distant signal rang twice. Lumi reads coordinates; Taro reads route safety. Can both become one starting point?"}
+{"type":"entry","key":"event.sideObservatorySignal.prompt","value":"Match the signal order with the order of actual footsteps."}
+{"type":"entry","key":"event.sideObservatorySignal.consequence","value":"The paired signal becomes a branch condition for later exploration."}
+{"type":"entry","key":"event.sideObservatorySignal.lumi.label","value":"Fix the coordinates first"}
+{"type":"entry","key":"event.sideObservatorySignal.lumi.line","value":"We need a destination fixed before safety can be recalculated."}
+{"type":"entry","key":"event.sideObservatorySignal.taro.label","value":"Check safe footholds first"}
+{"type":"entry","key":"event.sideObservatorySignal.taro.line","value":"Even a correct coordinate cannot be reached without a foothold."}
+{"type":"entry","key":"event.sideObservatorySignal.bora.label","value":"Ask who waited for the signal"}
+{"type":"entry","key":"event.sideObservatorySignal.bora.line","value":"The sender’s day must be on the map too."}
+{"type":"entry","key":"event.sideObservatoryDawn.title","value":"Connect the Dawn Constellation"}
+{"type":"entry","key":"event.sideObservatoryDawn.body","value":"Dawn erases the lines between three stars. Redraw one constellation from remaining points and remembered direction."}
+{"type":"entry","key":"event.sideObservatoryDawn.prompt","value":"Choose reasons for two points and leave the last point open."}
+{"type":"entry","key":"event.sideObservatoryDawn.consequence","value":"One unfinished point becomes an invitation for the next explorer."}
+{"type":"entry","key":"event.sideObservatoryDawn.lumi.label","value":"Record reasons for two points"}
+{"type":"entry","key":"event.sideObservatoryDawn.lumi.line","value":"We can leave reasons to redraw without closing every line."}
+{"type":"entry","key":"event.sideObservatoryDawn.taro.label","value":"Follow the erased line by hand"}
+{"type":"entry","key":"event.sideObservatoryDawn.taro.line","value":"A vanished road can be continued when checked by foot."}
+{"type":"entry","key":"event.sideObservatoryDawn.bora.label","value":"Leave the blank point for the next person"}
+{"type":"entry","key":"event.sideObservatoryDawn.bora.line","value":"A constellation can be a promise to wait together at an unfinished place."}
+{"type":"entry","key":"event.sideQuarryEcho.title","value":"Echo in the Quarry"}
+{"type":"entry","key":"event.sideQuarryEcho.body","value":"The same song returns three times inside the quarry. Find whether its direction is a hidden route or an empty wall."}
+{"type":"entry","key":"event.sideQuarryEcho.prompt","value":"Overlay the gaps between sounds with the positions of footsteps."}
+{"type":"entry","key":"event.sideQuarryEcho.consequence","value":"The echo interval becomes a new scale on the exploration map."}
+{"type":"entry","key":"event.sideQuarryEcho.taro.label","value":"Open the loudest wall"}
+{"type":"entry","key":"event.sideQuarryEcho.taro.line","value":"Knock once on a wall that might be a road."}
+{"type":"entry","key":"event.sideQuarryEcho.lumi.label","value":"Measure the intervals"}
+{"type":"entry","key":"event.sideQuarryEcho.lumi.line","value":"An echo becomes a recordable pattern when it repeats."}
+{"type":"entry","key":"event.sideQuarryEcho.bora.label","value":"Wait for the song"}
+{"type":"entry","key":"event.sideQuarryEcho.bora.line","value":"If someone sang it, we must hear the time it takes to return."}
+{"type":"entry","key":"event.sideQuarryLift.title","value":"One Heavy Stone"}
+{"type":"entry","key":"event.sideQuarryLift.body","value":"Everyone’s strength is needed to move one stone blocking the route. Lift quickly, or make a rest order first."}
+{"type":"entry","key":"event.sideQuarryLift.prompt","value":"Allocate strength, fatigue, and resources for the return together."}
+{"type":"entry","key":"event.sideQuarryLift.consequence","value":"The lifting order remains as the companion pair’s crisis response record."}
+{"type":"entry","key":"event.sideQuarryLift.taro.label","value":"Gather strength first"}
+{"type":"entry","key":"event.sideQuarryLift.taro.line","value":"Even if it does not move at once, leave proof we can lift together."}
+{"type":"entry","key":"event.sideQuarryLift.bora.label","value":"Make a rest order"}
+{"type":"entry","key":"event.sideQuarryLift.bora.line","value":"People must be able to return before the stone does."}
+{"type":"entry","key":"event.sideQuarryLift.lumi.label","value":"Measure the weight again"}
+{"type":"entry","key":"event.sideQuarryLift.lumi.line","value":"Turning heaviness into a number changes the next calculation."}
+{"type":"entry","key":"event.sideQuarryLedger.title","value":"Read the Stone Pattern"}
+{"type":"entry","key":"event.sideQuarryLedger.body","value":"Each stone has a different crack direction. Match two of three patterns to choose a safe passage."}
+{"type":"entry","key":"event.sideQuarryLedger.prompt","value":"Choose two clues from pattern, sound, and light."}
+{"type":"entry","key":"event.sideQuarryLedger.consequence","value":"The chosen clues become the public standard for the quarry exit route."}
+{"type":"entry","key":"event.sideQuarryLedger.lumi.label","value":"Match pattern and light"}
+{"type":"entry","key":"event.sideQuarryLedger.lumi.line","value":"Find where visible lines meet hidden cracks."}
+{"type":"entry","key":"event.sideQuarryLedger.taro.label","value":"Check by tapping the sound"}
+{"type":"entry","key":"event.sideQuarryLedger.taro.line","value":"Take responsibility for checking the route with our fingertips."}
+{"type":"entry","key":"event.sideQuarryLedger.bora.label","value":"Ask who will walk it first"}
+{"type":"entry","key":"event.sideQuarryLedger.bora.line","value":"A route’s safety must be read with the people’s bodies."}
+{"type":"entry","key":"event.sideQuarryExit.title","value":"Cairn Made by Three Hands"}
+{"type":"entry","key":"event.sideQuarryExit.body","value":"Each of the three companions chooses a different stone. The cairn must guide the next road, not become a monument."}
+{"type":"entry","key":"event.sideQuarryExit.prompt","value":"Record the three stones’ positions, names, and return direction together."}
+{"type":"entry","key":"event.sideQuarryExit.consequence","value":"The three-handed cairn becomes the final exploration evidence linking six places."}
+{"type":"entry","key":"event.sideQuarryExit.lumi.label","value":"Leave all three coordinates"}
+{"type":"entry","key":"event.sideQuarryExit.lumi.line","value":"Coordinates that can be found again last longer than a monument."}
+{"type":"entry","key":"event.sideQuarryExit.bora.label","value":"Read each stone’s name aloud"}
+{"type":"entry","key":"event.sideQuarryExit.bora.line","value":"A single route needs us to call each stone together."}
+{"type":"entry","key":"event.sideQuarryExit.taro.label","value":"Set out from the cairn"}
+{"type":"entry","key":"event.sideQuarryExit.taro.line","value":"A marker does not only say stop; it also says go again."}
+{"type":"entry","key":"location.observatory.name","value":"Dawn Observatory"}
+{"type":"entry","key":"location.quarry.name","value":"Star-seed Quarry"}
+{"type":"entry","key":"activityScene.observatory-mist.title","value":"First Star in the Mist"}
+{"type":"entry","key":"activityScene.observatory-mist.moment","value":"The observatory roof sank into mist."}
+{"type":"entry","key":"activityScene.observatory-mist.line","value":"Record the unseen day as part of the sky."}
+{"type":"entry","key":"activityScene.observatory-late.title","value":"A Late Constellation"}
+{"type":"entry","key":"activityScene.observatory-late.moment","value":"One star appeared later than expected."}
+{"type":"entry","key":"activityScene.observatory-late.line","value":"Being late does not mean being wrong."}
+{"type":"entry","key":"activityScene.garden-thin-leaf.title","value":"Direction of a Thin Leaf"}
+{"type":"entry","key":"activityScene.garden-thin-leaf.moment","value":"A thin leaf grew against the wind."}
+{"type":"entry","key":"activityScene.garden-thin-leaf.line","value":"A fragile direction becomes memorable when it continues."}
+{"type":"entry","key":"activityScene.garden-shared-water.title","value":"A Bucket Carried Together"}
+{"type":"entry","key":"activityScene.garden-shared-water.moment","value":"Two people held the bucket handle together."}
+{"type":"entry","key":"activityScene.garden-shared-water.line","value":"The weight need not halve for no one to carry it alone."}
+{"type":"entry","key":"activityScene.workshop-loose-nail.title","value":"The Loose Nail"}
+{"type":"entry","key":"activityScene.workshop-loose-nail.moment","value":"One small nail kept shaking loose."}
+{"type":"entry","key":"activityScene.workshop-loose-nail.line","value":"Fixing a small shake keeps the next failure smaller."}
+{"type":"entry","key":"activityScene.workshop-scrap.title","value":"The Remaining Piece"}
+{"type":"entry","key":"activityScene.workshop-scrap.moment","value":"A matching edge was found in the scrap pile."}
+{"type":"entry","key":"activityScene.workshop-scrap.line","value":"What remains can be a clue for the next design, not waste."}
+{"type":"entry","key":"activityScene.rest-window.title","value":"Comma by the Window"}
+{"type":"entry","key":"activityScene.rest-window.moment","value":"Window light slowed the day’s pace."}
+{"type":"entry","key":"activityScene.rest-window.line","value":"Rest is an activity that lets the next choice stay visible."}
+{"type":"entry","key":"activityScene.rest-unread.title","value":"The Unread Page"}
+{"type":"entry","key":"activityScene.rest-unread.moment","value":"The book closed with one page unread."}
+{"type":"entry","key":"activityScene.rest-unread.line","value":"The record continues even when every blank is not filled today."}
+{"type":"entry","key":"activityScene.market-small-change.title","value":"Small Change"}
+{"type":"entry","key":"activityScene.market-small-change.moment","value":"A merchant counted the change one more time."}
+{"type":"entry","key":"activityScene.market-small-change.line","value":"The habit of counting again lasts longer than the coin."}
+{"type":"entry","key":"activityScene.market-warm-bread.title","value":"Direction of Warm Bread"}
+{"type":"entry","key":"activityScene.market-warm-bread.moment","value":"A loaf went first to the person who arrived last."}
+{"type":"entry","key":"activityScene.market-warm-bread.line","value":"A small kindness that changes order can become a market rule."}
+{"type":"entry","key":"endingVariant.stargazer.failure.title","value":"Record Beneath Clouded Stars"}
+{"type":"entry","key":"endingVariant.stargazer.failure.body","value":"The stars were not fully read, but where they blurred was recorded."}
+{"type":"entry","key":"endingVariant.stargazer.neutral.title","value":"A Constellation to Revisit"}
+{"type":"entry","key":"endingVariant.stargazer.neutral.body","value":"Noa left a standard for the next observation rather than a final answer."}
+{"type":"entry","key":"endingVariant.stargazer.relationship.title","value":"Dawn Read Together"}
+{"type":"entry","key":"endingVariant.stargazer.relationship.body","value":"Lumi and Noa continued the record, reading one sky from different reasons."}
+{"type":"entry","key":"endingVariant.stargazer-master.failure.title","value":"Dawn Outside the Calculation"}
+{"type":"entry","key":"endingVariant.stargazer-master.failure.body","value":"The map stayed unfinished and left blanks for the next person to repair."}
+{"type":"entry","key":"endingVariant.stargazer-master.neutral.title","value":"An Open Course"}
+{"type":"entry","key":"endingVariant.stargazer-master.neutral.body","value":"The cycles of stars and wind became a course anyone could verify again."}
+{"type":"entry","key":"endingVariant.stargazer-master.relationship.title","value":"Lumi’s Star Mark"}
+{"type":"entry","key":"endingVariant.stargazer-master.relationship.body","value":"Lumi left a star mark to reread with Noa on the final page."}
+{"type":"entry","key":"endingVariant.gardener.failure.title","value":"Soil Not Yet Dry"}
+{"type":"entry","key":"endingVariant.gardener.failure.body","value":"The garden did not bloom, but the names of dry days remained."}
+{"type":"entry","key":"endingVariant.gardener.neutral.title","value":"A Garden That Rests Together"}
+{"type":"entry","key":"endingVariant.gardener.neutral.body","value":"Noa planted time to recover together rather than a faster growth rate."}
+{"type":"entry","key":"endingVariant.gardener.relationship.title","value":"Bora’s Season Table"}
+{"type":"entry","key":"endingVariant.gardener.relationship.body","value":"Bora and Noa made a garden that rereads the order of care each season."}
+{"type":"entry","key":"endingVariant.gardener-master.failure.title","value":"Light in the Closed Greenhouse"}
+{"type":"entry","key":"endingVariant.gardener-master.failure.body","value":"The commons did not open, but who waited remains in the next chapter."}
+{"type":"entry","key":"endingVariant.gardener-master.neutral.title","value":"Shared Warmth"}
+{"type":"entry","key":"endingVariant.gardener-master.neutral.body","value":"Different paces became a rule that lets everyone rest together."}
+{"type":"entry","key":"endingVariant.gardener-master.relationship.title","value":"The Open Gate with Bora"}
+{"type":"entry","key":"endingVariant.gardener-master.relationship.body","value":"Bora and Noa recorded together when to close and when to leave the gate open."}
+{"type":"entry","key":"endingVariant.pathfinder.failure.title","value":"A Pause Before the Road"}
+{"type":"entry","key":"endingVariant.pathfinder.failure.body","value":"The first step was late, but the reason to pause became a marker."}
+{"type":"entry","key":"endingVariant.pathfinder.neutral.title","value":"The Unnamed Road"}
+{"type":"entry","key":"endingVariant.pathfinder.neutral.body","value":"Noa left ways to find the road again without naming every road."}
+{"type":"entry","key":"endingVariant.pathfinder.relationship.title","value":"The Next Foothold with Taro"}
+{"type":"entry","key":"endingVariant.pathfinder.relationship.body","value":"Taro and Noa made footholds they could check even beyond the map."}
+{"type":"entry","key":"endingVariant.pathfinder-master.failure.title","value":"The Boundary Not Yet Crossed"}
+{"type":"entry","key":"endingVariant.pathfinder-master.failure.body","value":"The boundary was not crossed, but dangers and returns were marked."}
+{"type":"entry","key":"endingVariant.pathfinder-master.neutral.title","value":"Marker for Crossing Again"}
+{"type":"entry","key":"endingVariant.pathfinder-master.neutral.body","value":"Even with fear intact, the next person can reproduce the route."}
+{"type":"entry","key":"endingVariant.pathfinder-master.relationship.title","value":"Taro’s Direction"}
+{"type":"entry","key":"endingVariant.pathfinder-master.relationship.body","value":"Taro and Noa passed the final marker on as the next traveller’s start."}
+{"type":"entry","key":"companionScene.lumi-first-margin.title","value":"How to Fold the First Margin"}
+{"type":"entry","key":"companionScene.lumi-first-margin.body","value":"Lumi and Noa folds the corner without erasing the blank."}
+{"type":"entry","key":"companionScene.lumi-first-margin.prompt","value":"Choose the next question together without deciding Lumi’s judgement for them."}
+{"type":"entry","key":"companionScene.lumi-first-margin.line","value":"A blank tells the next person where to look."}
+{"type":"entry","key":"companionScene.lumi-first-margin.closing","value":"Lumi’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.lumi-slow-star.title","value":"Name of a Slow Star"}
+{"type":"entry","key":"companionScene.lumi-slow-star.body","value":"Lumi and Noa watches a star rise later than predicted."}
+{"type":"entry","key":"companionScene.lumi-slow-star.prompt","value":"Choose the next question together without deciding Lumi’s judgement for them."}
+{"type":"entry","key":"companionScene.lumi-slow-star.line","value":"A late-arriving fact can still have a place among facts."}
+{"type":"entry","key":"companionScene.lumi-slow-star.closing","value":"Lumi’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.lumi-open-ledger.title","value":"First Line of an Open Ledger"}
+{"type":"entry","key":"companionScene.lumi-open-ledger.body","value":"Lumi and Noa leaves the first line of a public ledger open."}
+{"type":"entry","key":"companionScene.lumi-open-ledger.prompt","value":"Choose the next question together without deciding Lumi’s judgement for them."}
+{"type":"entry","key":"companionScene.lumi-open-ledger.line","value":"Openness leaves a place where someone can ask again."}
+{"type":"entry","key":"companionScene.lumi-open-ledger.closing","value":"Lumi’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.title","value":"Measurement of a Cloud"}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.body","value":"Lumi and Noa marks the limit of a cloud that resists numbers."}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.prompt","value":"Choose the next question together without deciding Lumi’s judgement for them."}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.line","value":"Showing a measurement limit is part of accuracy."}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.closing","value":"Lumi’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.lumi-two-signals.title","value":"The Twice-Rung Signal"}
+{"type":"entry","key":"companionScene.lumi-two-signals.body","value":"Lumi and Noa leaves the interval between two signals on the map."}
+{"type":"entry","key":"companionScene.lumi-two-signals.prompt","value":"Choose the next question together without deciding Lumi’s judgement for them."}
+{"type":"entry","key":"companionScene.lumi-two-signals.line","value":"A deleted beginning can still cause the next judgement."}
+{"type":"entry","key":"companionScene.lumi-two-signals.closing","value":"Lumi’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.lumi-first-question.title","value":"The Next Person’s Question"}
+{"type":"entry","key":"companionScene.lumi-first-question.body","value":"Lumi and Noa leaves one question instead of an answer on the last page."}
+{"type":"entry","key":"companionScene.lumi-first-question.prompt","value":"Choose the next question together without deciding Lumi’s judgement for them."}
+{"type":"entry","key":"companionScene.lumi-first-question.line","value":"A good record does not close the answer; it invites the next hand."}
+{"type":"entry","key":"companionScene.lumi-first-question.closing","value":"Lumi’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.bora-shared-water.title","value":"The Shared Water Bucket"}
+{"type":"entry","key":"companionScene.bora-shared-water.body","value":"Bora and Noa repairs the handle so two people can carry one bucket."}
+{"type":"entry","key":"companionScene.bora-shared-water.prompt","value":"Choose the next question together without deciding Bora’s judgement for them."}
+{"type":"entry","key":"companionScene.bora-shared-water.line","value":"The weight may not shrink, but no one has to carry it alone."}
+{"type":"entry","key":"companionScene.bora-shared-water.closing","value":"Bora’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.bora-waiting-seat.title","value":"A Place to Wait"}
+{"type":"entry","key":"companionScene.bora-waiting-seat.body","value":"Bora and Noa places a chair for the late arrival by the greenhouse gate."}
+{"type":"entry","key":"companionScene.bora-waiting-seat.prompt","value":"Choose the next question together without deciding Bora’s judgement for them."}
+{"type":"entry","key":"companionScene.bora-waiting-seat.line","value":"Waiting time is part of the day we make together."}
+{"type":"entry","key":"companionScene.bora-waiting-seat.closing","value":"Bora’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.bora-first-harvest.title","value":"Share of the First Harvest"}
+{"type":"entry","key":"companionScene.bora-first-harvest.body","value":"Bora and Noa pauses over who receives the small first harvest."}
+{"type":"entry","key":"companionScene.bora-first-harvest.prompt","value":"Choose the next question together without deciding Bora’s judgement for them."}
+{"type":"entry","key":"companionScene.bora-first-harvest.line","value":"Fairness is reading the standard together, not giving everyone the same piece."}
+{"type":"entry","key":"companionScene.bora-first-harvest.closing","value":"Bora’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.bora-care-ledger.title","value":"Receipt for Care"}
+{"type":"entry","key":"companionScene.bora-care-ledger.body","value":"Bora and Noa pulls invisible care time out of the ledger’s blank."}
+{"type":"entry","key":"companionScene.bora-care-ledger.prompt","value":"Choose the next question together without deciding Bora’s judgement for them."}
+{"type":"entry","key":"companionScene.bora-care-ledger.line","value":"Unrecorded effort is easily treated as if it never happened."}
+{"type":"entry","key":"companionScene.bora-care-ledger.closing","value":"Bora’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.bora-rain-queue.title","value":"Order of Waiting for Rain"}
+{"type":"entry","key":"companionScene.bora-rain-queue.body","value":"Bora and Noa calls the waiting order again in the late-rain greenhouse."}
+{"type":"entry","key":"companionScene.bora-rain-queue.prompt","value":"Choose the next question together without deciding Bora’s judgement for them."}
+{"type":"entry","key":"companionScene.bora-rain-queue.line","value":"Order must be reread when it meets a person’s condition."}
+{"type":"entry","key":"companionScene.bora-rain-queue.closing","value":"Bora’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.bora-open-garden.title","value":"Gate of the Open Garden"}
+{"type":"entry","key":"companionScene.bora-open-garden.body","value":"Bora and Noa marks the garden for all to see instead of locking its gate."}
+{"type":"entry","key":"companionScene.bora-open-garden.prompt","value":"Choose the next question together without deciding Bora’s judgement for them."}
+{"type":"entry","key":"companionScene.bora-open-garden.line","value":"Openness still needs a rule for closing again."}
+{"type":"entry","key":"companionScene.bora-open-garden.closing","value":"Bora’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.taro-broken-rope.title","value":"Knot in the Broken Rope"}
+{"type":"entry","key":"companionScene.taro-broken-rope.body","value":"Taro and Noa grabs the most worn knot on the river rope first."}
+{"type":"entry","key":"companionScene.taro-broken-rope.prompt","value":"Choose the next question together without deciding Taro’s judgement for them."}
+{"type":"entry","key":"companionScene.taro-broken-rope.line","value":"The first repair becomes a foothold the next person can trust."}
+{"type":"entry","key":"companionScene.taro-broken-rope.closing","value":"Taro’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.taro-first-workshop.title","value":"The Workshop’s First Nail"}
+{"type":"entry","key":"companionScene.taro-first-workshop.body","value":"Taro and Noa resets one loose nail instead of throwing it away."}
+{"type":"entry","key":"companionScene.taro-first-workshop.prompt","value":"Choose the next question together without deciding Taro’s judgement for them."}
+{"type":"entry","key":"companionScene.taro-first-workshop.line","value":"Count repair time as part of making."}
+{"type":"entry","key":"companionScene.taro-first-workshop.closing","value":"Taro’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.taro-roof-line.title","value":"Line on the Roof"}
+{"type":"entry","key":"companionScene.taro-roof-line.body","value":"Taro and Noa draws a line on the roof to see the star behind clouds."}
+{"type":"entry","key":"companionScene.taro-roof-line.prompt","value":"Choose the next question together without deciding Taro’s judgement for them."}
+{"type":"entry","key":"companionScene.taro-roof-line.line","value":"A boundary can stop us and tell us where to start again."}
+{"type":"entry","key":"companionScene.taro-roof-line.closing","value":"Taro’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.taro-field-marker.title","value":"Marker in the Empty Field"}
+{"type":"entry","key":"companionScene.taro-field-marker.body","value":"Taro and Noa stacks stones at the height of someone returning."}
+{"type":"entry","key":"companionScene.taro-field-marker.prompt","value":"Choose the next question together without deciding Taro’s judgement for them."}
+{"type":"entry","key":"companionScene.taro-field-marker.line","value":"A marker must think first of the returning body, not its maker."}
+{"type":"entry","key":"companionScene.taro-field-marker.closing","value":"Taro’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.taro-quarry-weight.title","value":"Divide the Stone’s Weight"}
+{"type":"entry","key":"companionScene.taro-quarry-weight.body","value":"Taro and Noa calls for another hand while trying to lift a quarry stone alone."}
+{"type":"entry","key":"companionScene.taro-quarry-weight.prompt","value":"Choose the next question together without deciding Taro’s judgement for them."}
+{"type":"entry","key":"companionScene.taro-quarry-weight.line","value":"Courage is also the strength to call for another hand."}
+{"type":"entry","key":"companionScene.taro-quarry-weight.closing","value":"Taro’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"companionScene.taro-next-foothold.title","value":"The Next Foothold"}
+{"type":"entry","key":"companionScene.taro-next-foothold.body","value":"Taro and Noa marks where a foot can land instead of leaving an answer."}
+{"type":"entry","key":"companionScene.taro-next-foothold.prompt","value":"Choose the next question together without deciding Taro’s judgement for them."}
+{"type":"entry","key":"companionScene.taro-next-foothold.line","value":"A finished road can begin again when the next foot lands."}
+{"type":"entry","key":"companionScene.taro-next-foothold.closing","value":"Taro’s independent scene was recorded as a condition for the next chapter."}

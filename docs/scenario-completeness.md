@@ -59,7 +59,7 @@
 
 ### 나비효과·동료 퀘스트·발견 경로
 
-조사한 선택형 서사의 재미 요소를 루멘 고유 규칙으로 압축한다. 사건 선택이 남긴 6개의 authored memory flag는 `resolveFateThreads`가 나비효과 기록으로 투영하고, 같은 flag가 후속 조건·회고·저장 trace에서 다시 읽힌다. 세 동료는 각각 `bondMin`이 올라가는 3단계 개인 퀘스트를 가지며, 총 9개 단계의 완료 여부는 유대 수치와 사건 flag의 교집합으로 시스템이 판정한다. 네 장소의 `place:<id>` 발견 flag는 홈의 route atlas에 이어져, 플레이어가 이미 열린 경로와 아직 닿지 않은 경로를 한눈에 볼 수 있다.
+조사한 선택형 서사의 재미 요소를 루멘 고유 규칙으로 압축한다. 사건 선택이 남긴 6개의 authored memory flag는 `resolveFateThreads`가 나비효과 기록으로 투영하고, 같은 flag가 후속 조건·회고·저장 trace에서 다시 읽힌다. 세 동료는 각각 `bondMin`이 올라가는 3단계 개인 퀘스트와 6개 독립 장면을 가지며, 총 9개 퀘스트 단계의 완료 여부는 유대 수치와 사건 flag의 교집합으로 시스템이 판정한다. 여섯 장소의 `place:<id>` 발견 flag는 홈의 route atlas에 이어져, 플레이어가 이미 열린 경로와 아직 닿지 않은 경로를 한눈에 볼 수 있다.
 
 이 요소들은 특정 외부 게임의 캐릭터·생존 규칙·여행 맵을 복제하지 않는다. `story/story.jsonl#narrativeLoop`가 원천과 판정 주체를 선언하고, `lib/game_core.dart#resolveFateThreads`·`resolveCompanionQuests`가 동일한 입력에서 동일한 결과를 만들며, `test/narrative_ledger_test.dart`와 `test/narrative_ledger_golden_test.dart`가 결정론적 projection과 화면 증거를 고정한다. 따라서 플레이어에게는 선택이 “다음 장에 남는 기록”으로 보이고, CI에는 사람의 해석 없이 재현 가능한 상태 계약으로 남는다.
 
@@ -73,7 +73,7 @@
 | 자원 | 능력·은화·피로 중 2개 이상이 선택에 영향 | 세 자원과 계절 목표 | 외출·아이템·시간 예산을 별도 phase로 확장 |
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
 | 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock, 3 lineage profiles, week-2 authored bonus, profile별 route signature·target ending·target companion epilogue | 계승 unlock이 다음 회차의 성장축·선택 공간과 profile target ending·관계 회고 분포를 넓히는지 측정 |
-| 장면 | 도입·중반 사건·막 관계 장면·관계 상태·상태별 후속 대화·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·계승 프로필·엔딩 Golden | 63 Golden, 그중 16막 canonical 사건 16/16·결산 16/16·관계 장면 16/16, home/closure relationship state/follow-up rendering, canonical 4주차·48주차 handoff 사건, 4 location discovery flags/traces, rival loss/mediation, outing/bond/memory/legacy feedback, 3 companion epilogue endings | 후속 대화가 다음 선택의 bond/flag 조건을 여는 Golden 확장 |
+| 장면 | 도입·중반 사건·사이드 장면·막 관계 장면·관계 상태·상태별 후속 대화·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·계승 프로필·엔딩 Golden | 67 Golden, 그중 16막 canonical 사건 16/16·결산 16/16·관계 장면 16/16, home/closure relationship state/follow-up rendering, canonical 4주차·48주차 handoff 사건, 6 location discovery flags/traces, 24 side-scene records·10 activity mini-events·18 companion scenes·18 ending variants, rival loss/mediation, outing/bond/memory/legacy feedback, 3 companion epilogue endings | 후속 대화가 다음 선택의 bond/flag 조건을 여는 Golden 확장 |
 | 종결 | terminal·저장·컬렉션·재시작·원인 회고·다음 회차 가이드 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 + 미달 목표 2개 회고 | 동료별 관계 변화와 상호 배타 목표의 회고 문구 추가 |
 
 ### 정량 게이트
@@ -85,8 +85,8 @@ chapterClosureRate = 공개·압력·선택·결산을 모두 가진 막 / 전�
 replaySignatureCount = (ending, stats, bonds, goals) 고유 서명 수
 ```
 
-현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 94/94 사건 선택 도달성, 6/6 엔딩 도달성, 4/4 장소 발견 trace, 3/3 회차 계승 프로필, 3/3 프로필별 2주차 authored 보정, 3/3 profile route signature, 3/3 profile target ending, 3/3 profile target companion epilogue, `choiceConsequenceRate = 100%`, `chapterClosureRate = 100%`, `chapterSceneBindingRate = 100%`, 5-state relationship resolver·5 exclusive follow-up과 ECS replay trace, `replaySignatureCount ≥ 3`, 최소 플레이타임 137분(하한 120분) 계약, 시스템 승인 영수증의 replay 보존을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum·replayChecksum·profile별 signature·target ending·target companion 집합을 비교한다.
+현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 94/94 본편 선택과 72/72 사이드 선택 도달성, 6/6 엔딩 도달성, 6/6 장소 발견 trace, 3/3 회차 계승 프로필, 3/3 프로필별 2주차 authored 보정, 3/3 profile route signature, 3/3 profile target ending, 3/3 profile target companion epilogue, `choiceConsequenceRate = 100%`, `chapterClosureRate = 100%`, `chapterSceneBindingRate = 100%`, 5-state relationship resolver·5 exclusive follow-up과 ECS replay trace, `replaySignatureCount ≥ 3`, 최소 플레이타임 156분(하한 120분) 계약, 시스템 승인 영수증의 replay 보존을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum·replayChecksum·profile별 signature·target ending·target companion 집합을 비교한다.
 
 ## 3. 의도적인 차이와 확장 순서
 
-프린세스 메이커 5의 장기(8년)·다층 일정·외출·모험 규모를 그대로 따라가지 않는다. 현재 게임은 48주 16막으로 확장해 한 회차의 원인과 결과를 Golden과 replay trace로 읽을 수 있게 만든다. 48회 활동 선택과 47개 사건 선택은 각 주차의 성장·관계·기억을 갱신하고, 각 막 결산에는 SSOT가 지정한 동료의 상반신과 2줄 관계 scene beat가 함께 닫히며, 16개 막 결산이 다음 아크의 질문을 연다. 외출·관계·기억 선택은 초반 표본을 넘어 먼 영지·기억의 집·선택의 의회까지 이어지며, 장편 콘텐츠가 숫자만 늘어나지 않고 책임 추적 규칙을 플레이 선택으로 되돌려준다. 중반 공간은 4개 장소를 사건 진입 시 최초 발견하고 `place:<id>` flag/trace로 저장한다. 회차 계승은 도감의 authored 엔딩을 `stargazer/gardener/pathfinder` 3개 프로필로 정규화해 다음 회차 시작 스탯 +2, `legacy:<id>` flag, trace를 함께 생성하고, 2주차 게시판 선택에 프로필별 추가 성장축 +1을 적용한다. 다음 확장은 이 계승 프로필이 막별 선택 공간과 엔딩 분포를 어떻게 바꾸는지 Golden·replay·benchmark로 측정한다.
+프린세스 메이커 5의 장기(8년)·다층 일정·외출·모험 규모를 그대로 따라가지 않는다. 현재 게임은 48주 16막으로 확장해 한 회차의 원인과 결과를 Golden과 replay trace로 읽을 수 있게 만든다. 48회 활동 선택과 47개 본편 사건 선택, 24개 사이드 장면은 각 주차의 성장·관계·기억을 갱신하고, 각 막 결산에는 SSOT가 지정한 동료의 상반신과 2줄 관계 scene beat가 함께 닫히며, 16개 막 결산이 다음 아크의 질문을 연다. 외출·관계·기억 선택은 초반 표본을 넘어 먼 영지·기억의 집·선택의 의회·새벽 관측소·별씨앗 채석장까지 이어지며, 장편 콘텐츠가 숫자만 늘어나지 않고 책임 추적 규칙을 플레이 선택으로 되돌려준다. 중반 공간은 6개 장소를 사건 진입 시 최초 발견하고 `place:<id>` flag/trace로 저장한다. 회차 계승은 도감의 authored 엔딩을 `stargazer/gardener/pathfinder` 3개 프로필로 정규화해 다음 회차 시작 스탯 +2, `legacy:<id>` flag, trace를 함께 생성하고, 2주차 게시판 선택에 프로필별 추가 성장축 +1을 적용한다. 다음 확장은 이 계승 프로필이 막별 선택 공간과 엔딩 분포를 어떻게 바꾸는지 Golden·replay·benchmark로 측정한다.

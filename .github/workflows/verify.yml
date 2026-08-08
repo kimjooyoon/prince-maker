@@ -32,6 +32,7 @@ jobs:
             build/decision-proof-verdict.json
             build/benchmark-verdict.json
             build/gameplay-fun-verdict.json
+            build/quality-score-verdict.json
             build/development-goal-verdict.json
             build/ci-verdict.json
             build/trilemma-verdict.json

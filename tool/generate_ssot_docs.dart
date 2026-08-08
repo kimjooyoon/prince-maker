@@ -12,6 +12,14 @@ String render(Map<String, dynamic> s, String hash) {
       (s['legacyProfiles'] as List? ?? []).cast<Map<String, dynamic>>();
   final acts = (s['activities'] as List).cast<Map<String, dynamic>>();
   final events = (s['events'] as List).cast<Map<String, dynamic>>();
+  final sideScenes =
+      (s['sideScenes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final companionScenes =
+      (s['companionScenes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final activityScenes =
+      (s['activityScenes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final endingVariants =
+      (s['endingVariants'] as List? ?? const []).cast<Map<String, dynamic>>();
   final endings = (s['endings'] as List).cast<Map<String, dynamic>>();
   final milestones =
       (s['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
@@ -129,6 +137,25 @@ String render(Map<String, dynamic> s, String hash) {
       b.writeln(
           '- ${c['label']}: ${c['stat']} +${c['delta']}, 은화 ${c['coins']}, ${c['bondId']} 유대 +${c['bondDelta']}${c['requiresStat'] == null ? '' : ', 조건 ${c['requiresStat']} ≥ ${c['requiresMin']}'}${c['requiresBondId'] == null ? '' : ', 관계 ${c['requiresBondId']} 유대 ≥ ${c['requiresBondMin']}'}${c['requiresFlag'] == null ? '' : ', 기억 ${c['requiresFlag']} 필요'}${c['setsFlag'] == null ? '' : ', 기억 ${c['setsFlag']} 기록'} · “${c['line']}”');
   }
+  b.writeln('\n## 사이드 장면·활동 미니 이벤트·동료 독립 장면\n');
+  b.writeln(
+      '본편 ${events.length}개와 사이드 장면 ${sideScenes.length}개를 합쳐 ${events.length + sideScenes.length}개의 authored scene을 보유한다. 사이드 장면은 본편 주차를 덮어쓰지 않고 독립 선택·기억 trace로 연결된다.');
+  for (final scene in sideScenes) {
+    b.writeln(
+        '- **${scene['title']}** (`${scene['id']}`) · ${scene['locationId']} · ${scene['sceneType']} / `${scene['mechanic']}` · ${scene['prompt']} · ${scene['consequence']}');
+  }
+  b.writeln('\n활동 미니 이벤트 ${activityScenes.length}개:');
+  for (final scene in activityScenes)
+    b.writeln(
+        '- **${scene['title']}** (`${scene['activityId']}`): ${scene['moment']} · “${scene['line']}”');
+  b.writeln('\n동료 독립 장면 ${companionScenes.length}개:');
+  for (final scene in companionScenes)
+    b.writeln(
+        '- **${scene['title']}** (`${scene['companionId']}`): ${scene['body']} · “${scene['line']}”');
+  b.writeln('\n엔딩 변형 ${endingVariants.length}개:');
+  for (final variant in endingVariants)
+    b.writeln(
+        '- **${variant['title']}** (`${variant['coreEndingId']}.${variant['variant']}`): ${variant['body']}');
   b.writeln('\n## 엔딩\n');
   for (final e in endings)
     b.writeln(
@@ -143,6 +170,10 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       legacyProfiles = (s['legacyProfiles'] as List? ?? []).length,
       milestones = (s['milestones'] as List? ?? []).length,
       events = (s['events'] as List).cast<Map<String, dynamic>>(),
+      sideScenes = (s['sideScenes'] as List? ?? const []).length,
+      companionScenes = (s['companionScenes'] as List? ?? const []).length,
+      activityScenes = (s['activityScenes'] as List? ?? const []).length,
+      endingVariants = (s['endingVariants'] as List? ?? const []).length,
       endings = (s['endings'] as List).length,
       choices =
           events.fold<int>(0, (sum, e) => sum + (e['choices'] as List).length),
@@ -202,6 +233,16 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   b.writeln('| 회차 계승 프로필 | $legacyProfiles | `legacyProfiles.length` |');
   b.writeln('| 계절 목표 | $milestones | `milestones.length` |');
   b.writeln('| 사건 | ${events.length} | `events.length` |');
+  b.writeln(
+      '| 전체 authored scene | ${events.length + sideScenes} | `events.length + sideScenes.length` |');
+  b.writeln(
+      '| 사이드 장면 | $sideScenes | `sideScenes.length` · 탐험/위기/자원/미니게임/동료 조합 |');
+  b.writeln(
+      '| 활동 미니 이벤트 | $activityScenes | `activityScenes.length` · 활동별 2개 |');
+  b.writeln(
+      '| 동료 독립 장면 | $companionScenes | `companionScenes.length` · 3명×6개 |');
+  b.writeln(
+      '| 엔딩 변형 | $endingVariants | `endingVariants.length` · 핵심 엔딩별 실패/중립/관계 |');
   b.writeln('| 사건 선택 | $choices | 모든 사건 choices 합계 |');
   b.writeln('| 엔딩 | $endings | `endings.length` |');
   b.writeln('| Canvas Golden | $goldens | `test/goldens/*.png` |');

@@ -75,6 +75,9 @@ void main() {
       'goldens/chapter-\$id.png');
   final chapterClosureGoldenTest =
       read('test/chapter_closure_golden_test.dart');
+  final characterRosterGoldenTest =
+      read('test/character_roster_golden_test.dart');
+  final environmentAtlasGoldenTest = read('test/environment_golden_test.dart');
   requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
       'all sixteen SSOT chapter closures have deterministic goal Goldens');
   requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
@@ -84,6 +87,14 @@ void main() {
   requireText('lib/main.dart', main, "ui.closure.scene");
   requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
       'relationship scene must bind a speaker');
+  requireText('test/character_roster_golden_test.dart',
+      characterRosterGoldenTest, 'goldens/character-roster.png');
+  requireText('test/character_roster_golden_test.dart',
+      characterRosterGoldenTest, 'goldens/character-roster-en.png');
+  requireText('test/environment_golden_test.dart', environmentAtlasGoldenTest,
+      'goldens/environment-atlas.png');
+  requireText('test/environment_golden_test.dart', environmentAtlasGoldenTest,
+      'goldens/environment-atlas-en.png');
   final goldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()

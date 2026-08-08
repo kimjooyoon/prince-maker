@@ -16,6 +16,8 @@ import 'save_adapter.dart';
 import 'collection_adapter.dart';
 import 'collection_platform.dart';
 import 'game_core.dart';
+import 'character_roster.dart';
+import 'environment_catalog.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,10 +25,10 @@ Future<void> main() async {
       (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
   final locales = <String, Map<String, String>>{};
   for (final locale in ['ko', 'en']) {
-    locales[locale] = decodeJsonlCatalog(utf8.decode((await rootBundle
-            .load('story/locales/$locale.jsonl'))
-        .buffer
-        .asUint8List()));
+    locales[locale] = decodeJsonlCatalog(utf8.decode(
+        (await rootBundle.load('story/locales/$locale.jsonl'))
+            .buffer
+            .asUint8List()));
   }
   runApp(Game(s, locales: locales));
 }
@@ -54,7 +56,8 @@ class _Game extends State<Game> {
       selected = 0,
       page = 0,
       persona = 0,
-      eventIndex = 0;
+      eventIndex = 0,
+      sideSceneCursor = 0;
   String locale = 'ko';
   bool finished = false;
   final history = <String>[];
@@ -64,6 +67,7 @@ class _Game extends State<Game> {
   final collectionEntries = <Map<String, dynamic>>[];
   String lastResult = '', lastLine = '';
   ui.Image? image, personaImage;
+  ui.Image? rosterImage;
   late GameSession session;
   late CollectionPort collection;
   LocaleCatalog get catalog => LocaleCatalog(widget.locales);
@@ -86,6 +90,38 @@ class _Game extends State<Game> {
         setActiveLocale(locale, catalog);
       });
   List<Activity> get activities => activitiesFromStory(widget.story);
+  List<Map<String, dynamic>> get sideScenes => session.story.sideScenes;
+  Map<String, dynamic>? get activeSideScene => sideScenes.isEmpty
+      ? null
+      : sideScenes[sideSceneCursor.clamp(0, sideScenes.length - 1)];
+
+  void openSideScenes() {
+    final firstAvailable = sideScenes.indexWhere((scene) =>
+        (scene['unlockWeek'] as int? ?? 1) <= week &&
+        flags['side-scene:${scene['id']}'] != true);
+    setState(() {
+      sideSceneCursor = firstAvailable < 0 ? 0 : firstAvailable;
+      page = 9;
+    });
+  }
+
+  void chooseSideScene(int choice) {
+    final scene = activeSideScene;
+    if (scene == null) return;
+    final choices = (scene['choices'] as List).cast<Map<String, dynamic>>();
+    if (choice < 0 ||
+        choice >= choices.length ||
+        !choiceAvailable(choices[choice])) {
+      setState(() => lastResult = '조건 부족 · 사이드 장면의 준비 조건을 확인하세요.');
+      return;
+    }
+    setState(() {
+      session.chooseSideScene('${scene['id']}', choice);
+      sync();
+      page = 0;
+      session.persist(page: page);
+    });
+  }
 
   @override
   void initState() {
@@ -127,6 +163,13 @@ class _Game extends State<Game> {
         .then((f) {
       if (mounted) setState(() => personaImage = f.image);
     });
+    rootBundle
+        .load('assets/lumen-character-roster.png')
+        .then((b) => ui.instantiateImageCodec(b.buffer.asUint8List()))
+        .then((c) => c.getNextFrame())
+        .then((f) {
+      if (mounted) setState(() => rosterImage = f.image);
+    });
   }
 
   void sync() {
@@ -162,8 +205,8 @@ class _Game extends State<Game> {
     final a = activities[selected.clamp(0, activities.length - 1)];
     final milestoneCount = milestones.length;
     setState(() {
-      session.choose(
-          ActivityChosen(a.stat, a.delta, a.coins, a.fatigue, label: a.label));
+      session.choose(ActivityChosen(a.stat, a.delta, a.coins, a.fatigue,
+          label: a.label, activityId: a.id));
       sync();
       if (week >= session.story.endingWeek) {
         finished = true;
@@ -303,6 +346,38 @@ class _Game extends State<Game> {
           page = 0;
           session.persist(page: page);
         });
+    } else if (page == 7) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
+      } else if (y > 640) {
+        setState(() => page = 0);
+      }
+    } else if (page == 8) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
+      } else if (y > 610 && x >= 400 && x < 600) {
+        openSideScenes();
+      } else if (y > 640) {
+        setState(() => page = 0);
+      }
+    } else if (page == 9) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
+      } else if (y > 260 && y < 510) {
+        chooseSideScene((x ~/ 253).clamp(0, 2));
+      } else if (y > 575 && x < 210) {
+        setState(() => sideSceneCursor =
+            (sideSceneCursor - 1).clamp(0, sideScenes.length - 1));
+      } else if (y > 575 && x > 550) {
+        setState(() => sideSceneCursor =
+            (sideSceneCursor + 1).clamp(0, sideScenes.length - 1));
+      } else if (y > 620) {
+        setState(() => page = 0);
+      }
+    } else if (y > 655 && x >= 200 && x < 410) {
+      setState(() => page = 7);
+    } else if (y > 655 && x >= 410 && x < 590) {
+      setState(() => page = 8);
     } else if (y > 500 && x >= 590) {
       next();
     } else if (y > 500 && x >= 430) {
@@ -395,33 +470,39 @@ class _Game extends State<Game> {
             return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTapUp: (d) => handleTap(d.localPosition, viewport),
-                child: CustomPaint(
-                    key: ValueKey(
-                        '$page-$week-$persona-$eventIndex${locale == 'ko' ? '' : '-$locale'}'),
-                    painter: Scene(
-                        widget.story,
-                        week,
-                        coins,
-                        fatigue,
-                        selected,
-                        stats,
-                        bonds,
-                        milestones,
-                        flags,
-                        lastResult,
-                        lastLine,
-                        page,
-                        persona,
-                        image,
-                        personaImage,
-                        history,
-                        eventIndex,
-                        snapshot().encode(),
-                        activities,
-                        collectionEntries,
-                        locale,
-                        widget.locales),
-                    size: viewport));
+                child: Stack(children: [
+                  CustomPaint(
+                      key: ValueKey(
+                          '$page-$week-$persona-$eventIndex${locale == 'ko' ? '' : '-$locale'}'),
+                      painter: Scene(
+                          widget.story,
+                          week,
+                          coins,
+                          fatigue,
+                          selected,
+                          stats,
+                          bonds,
+                          milestones,
+                          flags,
+                          lastResult,
+                          lastLine,
+                          page,
+                          persona,
+                          image,
+                          personaImage,
+                          rosterImage,
+                          history,
+                          eventIndex,
+                          sideSceneCursor,
+                          snapshot().encode(),
+                          activities,
+                          collectionEntries,
+                          locale,
+                          widget.locales),
+                      size: viewport),
+                  if (rosterImage != null)
+                    const SizedBox(key: ValueKey('roster-ready')),
+                ]));
           }))));
 }
 
@@ -442,8 +523,10 @@ class Scene extends CustomPainter {
       this.persona,
       this.image,
       this.personaImage,
+      this.rosterImage,
       this.history,
       this.eventIndex,
+      this.sideSceneCursor,
       this.saveCode,
       this.activities,
       this.collectionEntries,
@@ -458,6 +541,7 @@ class Scene extends CustomPainter {
       page,
       persona,
       eventIndex,
+      sideSceneCursor,
       stats,
       bonds,
       milestones,
@@ -466,6 +550,7 @@ class Scene extends CustomPainter {
       lastLine,
       image?.hashCode,
       personaImage?.hashCode,
+      rosterImage?.hashCode,
       history,
       saveCode,
       activities
@@ -477,11 +562,18 @@ class Scene extends CustomPainter {
     ]);
   }
   final Map<String, dynamic> s;
-  final int week, coins, fatigue, selected, page, persona, eventIndex;
+  final int week,
+      coins,
+      fatigue,
+      selected,
+      page,
+      persona,
+      eventIndex,
+      sideSceneCursor;
   final Map<String, int> stats, bonds;
   final Map<String, bool> milestones, flags;
   final String lastResult, lastLine;
-  final ui.Image? image, personaImage;
+  final ui.Image? image, personaImage, rosterImage;
   final List<String> history;
   final String saveCode;
   final List<Activity> activities;
@@ -623,17 +715,20 @@ class Scene extends CustomPainter {
   void routeAtlas(Canvas c, {required Offset origin}) {
     final locations = (s['locations'] as List? ?? const [])
         .cast<Map<String, dynamic>>()
-        .take(4)
+        .take(6)
         .toList();
     txt(c, activeLocale == 'ko' ? '발견 경로' : 'Route atlas', origin, 10, teal,
         bold: true);
-    final startX = origin.dx + 18.0, step = 170.0, nodeY = origin.dy + 28;
+    final startX = origin.dx + 18.0, step = 170.0;
     for (var i = 0; i < locations.length; i++) {
       final location = locations[i],
-          x = startX + i * step,
+          row = i ~/ 3,
+          col = i % 3,
+          x = startX + col * step,
+          nodeY = origin.dy + 28 + row * 34,
           found = flags['place:${location['id']}'] == true,
           color = found ? teal : ink.withValues(alpha: .18);
-      if (i < locations.length - 1) {
+      if (col < 2 && i < locations.length - 1) {
         c.drawLine(
             Offset(x + 9, nodeY),
             Offset(x + step - 9, nodeY),
@@ -810,6 +905,24 @@ class Scene extends CustomPainter {
       c.restore();
       return;
     }
+    if (page == 7) {
+      characterArchive(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
+    if (page == 8) {
+      environmentArchive(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
+    if (page == 9) {
+      sideScene(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
     home(c);
     drawFeedbackBanner(c, lastResult, lastLine);
     seasonProgress(c);
@@ -927,6 +1040,16 @@ class Scene extends CustomPainter {
     txt(c, localized('ui.ledger.button', '운명 기록'), const Offset(62, 668), 12,
         teal,
         bold: true);
+    box(c, const Rect.fromLTWH(210, 660, 180, 30), Colors.white,
+        radius: 12, stroke: teal);
+    txt(c, activeLocale == 'ko' ? '캐릭터 도감' : 'Character archive',
+        const Offset(238, 668), 12, teal,
+        bold: true, maxWidth: 130);
+    box(c, const Rect.fromLTWH(410, 660, 180, 30), Colors.white,
+        radius: 12, stroke: teal);
+    txt(c, activeLocale == 'ko' ? '환경 아틀라스' : 'Environment atlas',
+        const Offset(438, 668), 12, teal,
+        bold: true, maxWidth: 130);
   }
 
   void ledger(Canvas c) {
@@ -1038,6 +1161,409 @@ class Scene extends CustomPainter {
     txt(c, localized('ui.ledger.back', '← 홈으로'),
         Offset(24, receipts.isEmpty ? 570 : 650), 14, teal,
         bold: true);
+  }
+
+  void characterArchive(Canvas c) {
+    final characters = archiveCharacters(s);
+    txt(c, activeLocale == 'ko' ? '루멘 캐릭터 도감' : 'Lumen character archive',
+        const Offset(24, 22), 28, ink,
+        bold: true, maxWidth: 520);
+    txt(
+        c,
+        activeLocale == 'ko'
+            ? '서로 다른 하루를 살아가는 20명의 루멘 주민'
+            : 'Twenty Lumen residents, each carrying a different kind of day',
+        const Offset(25, 60),
+        13,
+        teal,
+        maxWidth: 540);
+    txt(c, '${characters.length} / 20 · twilight / mist / sun / paper',
+        const Offset(25, 84), 10, ink.withValues(alpha: .55),
+        bold: true);
+
+    final sheet = rosterImage,
+        sourceWidth = sheet == null ? 1.0 : sheet.width / 5.0,
+        sourceHeight = sheet == null ? 1.0 : sheet.height / 4.0;
+    for (var i = 0; i < characters.length; i++) {
+      final character = characters[i],
+          col = i % 5,
+          row = i ~/ 5,
+          x = 20.0 + col * 144.0,
+          y = 106.0 + row * 134.0,
+          accent = Color(character.accent),
+          card = Rect.fromLTWH(x, y, 136, 126);
+      box(c, card, Colors.white,
+          radius: 16, stroke: accent.withValues(alpha: .52), shadow: true);
+      c.drawRRect(
+          RRect.fromRectAndRadius(
+              Rect.fromLTWH(x + 10, y + 6, 116, 3), const Radius.circular(2)),
+          Paint()..color = accent);
+      if (sheet != null) {
+        final source = Rect.fromLTWH(
+            (character.sheetIndex % 5) * sourceWidth,
+            (character.sheetIndex ~/ 5) * sourceHeight,
+            sourceWidth,
+            sourceHeight);
+        c.drawImageRect(
+            sheet, source, Rect.fromLTWH(x + 10, y + 9, 116, 88), Paint());
+      } else {
+        chibi(c, Rect.fromLTWH(x + 28, y + 15, 80, 76), i % 3);
+      }
+      txt(c, character.title(activeLocale), Offset(x + 12, y + 98), 11, ink,
+          bold: true, maxWidth: 112);
+      txt(c, character.subtitle(activeLocale), Offset(x + 12, y + 113), 8.5,
+          accent,
+          bold: true, maxWidth: 112);
+    }
+    txt(c, activeLocale == 'ko' ? '← 홈으로' : '← Back to home',
+        const Offset(24, 665), 13, teal,
+        bold: true);
+  }
+
+  void environmentSurface(Canvas c, Rect rect, LumenEnvironment environment) {
+    c.save();
+    c.clipRRect(RRect.fromRectAndRadius(rect, const Radius.circular(16)));
+    c.drawRect(
+        rect,
+        Paint()
+          ..shader = ui.Gradient.linear(rect.topLeft, rect.bottomRight, [
+            environment.primary,
+            environment.secondary.withValues(alpha: .72)
+          ]));
+    final horizon = rect.top + rect.height * .68,
+        inkPaint = Paint()..color = ink.withValues(alpha: .78),
+        pale = Paint()..color = paper.withValues(alpha: .82);
+    if (environment.id == 'archive') {
+      c.drawCircle(Offset(rect.right - 42, rect.top + 30), 20, pale);
+      for (final star in [
+        Offset(rect.left + 42, rect.top + 27),
+        Offset(rect.left + 86, rect.top + 49),
+        Offset(rect.right - 92, rect.top + 22),
+      ]) {
+        c.drawCircle(star, 3, Paint()..color = sun);
+      }
+      for (var i = 0; i < 4; i++) {
+        final y = horizon - i * 13.0;
+        c.drawLine(
+            Offset(rect.left + 24, y),
+            Offset(rect.right - 22, y),
+            Paint()
+              ..color = paper.withValues(alpha: .55)
+              ..strokeWidth = 3);
+      }
+      c.drawRRect(
+          RRect.fromRectAndRadius(
+              Rect.fromLTWH(rect.left + 54, horizon - 44, 72, 44),
+              const Radius.circular(6)),
+          Paint()..color = ink.withValues(alpha: .32));
+      c.drawRRect(
+          RRect.fromRectAndRadius(
+              Rect.fromLTWH(rect.left + 142, horizon - 31, 58, 31),
+              const Radius.circular(5)),
+          Paint()..color = ink.withValues(alpha: .26));
+    } else if (environment.id == 'greenhouse') {
+      final glass = Paint()
+        ..color = paper.withValues(alpha: .54)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 4;
+      final house = Path()
+        ..moveTo(rect.left + 44, horizon)
+        ..lineTo(rect.left + 64, rect.top + 31)
+        ..lineTo(rect.right - 60, rect.top + 31)
+        ..lineTo(rect.right - 40, horizon)
+        ..close();
+      c.drawPath(house, glass);
+      c.drawLine(Offset(rect.center.dx, rect.top + 31),
+          Offset(rect.center.dx, horizon), glass);
+      for (final x in [rect.left + 90, rect.left + 150, rect.left + 216]) {
+        c.drawLine(Offset(x, horizon), Offset(x, horizon - 30), glass);
+        c.drawCircle(Offset(x - 7, horizon - 30), 8,
+            Paint()..color = const Color(0xffd7efb4).withValues(alpha: .8));
+        c.drawCircle(Offset(x + 7, horizon - 24), 7,
+            Paint()..color = const Color(0xffc0df9f).withValues(alpha: .8));
+      }
+      c.drawLine(Offset(rect.left + 28, horizon + 2),
+          Offset(rect.right - 24, horizon + 2), inkPaint);
+    } else if (environment.id == 'market') {
+      final awning = Paint()..color = paper.withValues(alpha: .78);
+      for (var i = 0; i < 4; i++) {
+        c.drawRect(
+            Rect.fromLTWH(rect.left + 18 + i * 64, rect.top + 30, 54, 18),
+            Paint()..color = i.isEven ? awning.color : environment.primary);
+      }
+      for (final x in [rect.left + 44, rect.left + 146, rect.left + 250]) {
+        c.drawLine(Offset(x, rect.top + 48), Offset(x, horizon), inkPaint);
+        c.drawCircle(Offset(x, rect.top + 22), 9,
+            Paint()..color = sun.withValues(alpha: .9));
+      }
+      c.drawRect(Rect.fromLTWH(rect.left + 30, horizon, rect.width - 60, 8),
+          Paint()..color = ink.withValues(alpha: .3));
+      for (final x in [rect.left + 90, rect.left + 170, rect.left + 238]) {
+        c.drawCircle(Offset(x, horizon + 24), 10,
+            Paint()..color = sun.withValues(alpha: .9));
+        c.drawCircle(
+            Offset(x, horizon + 24),
+            10,
+            Paint()
+              ..color = ink.withValues(alpha: .34)
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 2);
+      }
+    } else if (environment.id == 'observatory') {
+      final telescope = Paint()
+        ..color = paper.withValues(alpha: .82)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 5;
+      c.drawCircle(Offset(rect.center.dx, horizon - 12), 18, telescope);
+      c.drawLine(Offset(rect.center.dx - 12, horizon - 24),
+          Offset(rect.center.dx + 42, rect.top + 22), telescope);
+      c.drawLine(Offset(rect.center.dx + 12, horizon + 2),
+          Offset(rect.center.dx - 24, rect.bottom - 6), telescope);
+      c.drawLine(Offset(rect.center.dx + 12, horizon + 2),
+          Offset(rect.center.dx + 42, rect.bottom - 6), telescope);
+      for (final star in [
+        Offset(rect.left + 42, rect.top + 20),
+        Offset(rect.right - 54, rect.top + 18),
+        Offset(rect.right - 94, rect.top + 42),
+      ]) {
+        c.drawCircle(star, 3, Paint()..color = sun);
+      }
+      c.drawLine(Offset(rect.left + 20, rect.bottom - 12),
+          Offset(rect.right - 20, rect.bottom - 12), telescope);
+    } else if (environment.id == 'quarry') {
+      final rock = Paint()..color = paper.withValues(alpha: .58);
+      for (var i = 0; i < 4; i++) {
+        final x = rect.left + 36.0 + i * 78;
+        c.drawPath(
+          Path()
+            ..moveTo(x - 26, rect.bottom - 10)
+            ..lineTo(x - 18, horizon - 16 - (i.isEven ? 5 : 0))
+            ..lineTo(x + 10, horizon - 28)
+            ..lineTo(x + 30, rect.bottom - 10)
+            ..close(),
+          rock,
+        );
+      }
+      final pick = Paint()
+        ..color = ink.withValues(alpha: .72)
+        ..strokeWidth = 5;
+      c.drawLine(Offset(rect.right - 86, rect.top + 18),
+          Offset(rect.right - 38, rect.bottom - 10), pick);
+      c.drawLine(Offset(rect.right - 101, rect.top + 30),
+          Offset(rect.right - 70, rect.top + 12), pick);
+    } else {
+      final water = Paint()
+        ..color = const Color(0xffb9d5db).withValues(alpha: .65)
+        ..strokeWidth = 5
+        ..style = PaintingStyle.stroke;
+      for (var i = 0; i < 3; i++) {
+        final path = Path()..moveTo(rect.left, horizon + 16 + i * 15);
+        for (var x = rect.left; x < rect.right; x += 32) {
+          path.quadraticBezierTo(
+              x + 8, horizon + 8 + i * 15, x + 16, horizon + 16 + i * 15);
+        }
+        c.drawPath(path, water);
+      }
+      final bridge = Paint()
+        ..color = ink.withValues(alpha: .62)
+        ..strokeWidth = 7;
+      c.drawLine(Offset(rect.left + 30, horizon - 20),
+          Offset(rect.right - 32, horizon - 20), bridge);
+      for (final x in [
+        rect.left + 64,
+        rect.left + 132,
+        rect.left + 202,
+        rect.right - 68
+      ]) {
+        c.drawLine(Offset(x, horizon - 20), Offset(x, horizon + 5), bridge);
+      }
+      c.drawLine(
+          Offset(rect.right - 58, rect.top + 24),
+          Offset(rect.right - 40, rect.top + 48),
+          Paint()
+            ..color = sun.withValues(alpha: .8)
+            ..strokeWidth = 3);
+      c.drawCircle(
+          Offset(rect.right - 58, rect.top + 24), 5, Paint()..color = sun);
+    }
+    c.restore();
+  }
+
+  void environmentArchive(Canvas c) {
+    final environments = environmentsFromStory(s);
+    txt(c, activeLocale == 'ko' ? '루멘 환경 아틀라스' : 'Lumen environment atlas',
+        const Offset(24, 22), 28, ink,
+        bold: true, maxWidth: 560);
+    txt(
+        c,
+        activeLocale == 'ko'
+            ? '장소는 배경이 아니라, 선택이 작동하는 방식입니다.'
+            : 'A place is not a backdrop; it is how a choice works.',
+        const Offset(25, 60),
+        13,
+        teal,
+        maxWidth: 570);
+    txt(c, '6 environments · surface / affordance / memory',
+        const Offset(25, 84), 10, ink.withValues(alpha: .55),
+        bold: true);
+
+    for (var i = 0; i < environments.length && i < 6; i++) {
+      final environment = environments[i],
+          col = i % 2,
+          row = i ~/ 2,
+          x = 24.0 + col * 356.0,
+          y = 106.0 + row * 188.0,
+          card = Rect.fromLTWH(x, y, DesignTokens.environmentCardWidth,
+              DesignTokens.environmentCardHeight),
+          title = localized(environment.nameKey, environment.name);
+      box(c, card, Colors.white,
+          radius: 20,
+          stroke: environment.primary.withValues(alpha: .5),
+          shadow: true);
+      environmentSurface(
+          c,
+          Rect.fromLTWH(x + 16, y + 16, DesignTokens.environmentCardWidth - 32,
+              DesignTokens.environmentSurfaceHeight),
+          environment);
+      txt(c, title, Offset(x + 18, y + 82), 14, ink, bold: true, maxWidth: 292);
+      txt(c, environment.kindLabel(activeLocale), Offset(x + 18, y + 101), 8.5,
+          environment.primary,
+          bold: true, maxWidth: 292);
+      txt(c, environment.motifLabel(activeLocale), Offset(x + 18, y + 116), 7.5,
+          ink.withValues(alpha: .58),
+          maxWidth: 292);
+      txt(c, environment.affordanceLabel(activeLocale), Offset(x + 18, y + 131),
+          8.5, ink,
+          bold: true, maxWidth: 292);
+      box(c, Rect.fromLTWH(x + 18, y + 148, 178, 16),
+          environment.primary.withValues(alpha: .12),
+          radius: 9);
+      txt(
+          c,
+          '${environment.statLabel(activeLocale)} · ${environment.activityLabel(activeLocale)}',
+          Offset(x + 26, y + 151),
+          7,
+          environment.primary,
+          bold: true,
+          maxWidth: 160);
+    }
+    box(c, const Rect.fromLTWH(430, 610, 220, 38), Colors.white,
+        radius: 14, stroke: teal, shadow: true);
+    txt(c, activeLocale == 'ko' ? '사이드 장면 열기 →' : 'Open side scenes →',
+        const Offset(470, 621), 12, teal,
+        bold: true, maxWidth: 160);
+    txt(c, activeLocale == 'ko' ? '← 홈으로' : '← Back to home',
+        const Offset(24, 665), 13, teal,
+        bold: true);
+  }
+
+  void sideScene(Canvas c) {
+    final scenes = (s['sideScenes'] as List? ?? const []).cast<Map>(),
+        scene = scenes.isEmpty
+            ? <String, dynamic>{}
+            : scenes[sideSceneCursor.clamp(0, scenes.length - 1)],
+        choices = (scene['choices'] as List? ?? const []).cast<Map>(),
+        locations = (s['locations'] as List? ?? const []).cast<Map>(),
+        location = locations.firstWhere(
+            (item) => item['id'] == scene['locationId'],
+            orElse: () => {'name': scene['locationId']}),
+        requirements =
+            (scene['requiresCompanions'] as List? ?? const []).cast<String>(),
+        companionReady = requirements.every((id) => (bonds[id] ?? 0) > 0),
+        unlocked = scene.isNotEmpty &&
+            (scene['unlockWeek'] as int? ?? 1) <= week &&
+            companionReady;
+    txt(c, activeLocale == 'ko' ? '사이드 장면 기록' : 'Side scene archive',
+        const Offset(24, 22), 28, ink,
+        bold: true, maxWidth: 540);
+    txt(
+        c,
+        activeLocale == 'ko'
+            ? '탐험·위기·자원·미니게임·동료 조합 사건은 선택의 흔적을 남깁니다.'
+            : 'Exploration, crisis, resource, mini-game and companion-pair scenes leave traces.',
+        const Offset(25, 60),
+        12,
+        teal,
+        maxWidth: 670);
+    if (scene.isEmpty) {
+      txt(c, activeLocale == 'ko' ? '아직 사이드 장면이 없습니다.' : 'No side scenes yet.',
+          const Offset(48, 180), 18, ink,
+          bold: true);
+      return;
+    }
+    final title = localized('${scene['titleKey']}', '${scene['title']}'),
+        body = localized('${scene['bodyKey']}', '${scene['body']}'),
+        prompt = localized('${scene['promptKey']}', '${scene['prompt']}'),
+        consequence =
+            localized('${scene['consequenceKey']}', '${scene['consequence']}'),
+        locationName =
+            localized('${location['nameKey']}', '${location['name']}'),
+        state = flags['side-scene:${scene['id']}'] == true
+            ? (activeLocale == 'ko' ? '완료' : 'COMPLETED')
+            : unlocked
+                ? (activeLocale == 'ko' ? '선택 가능' : 'AVAILABLE')
+                : (activeLocale == 'ko' ? '잠김' : 'LOCKED');
+    txt(c, '$locationName · ${scene['sceneType']} · $state',
+        const Offset(25, 88), 10, unlocked ? teal : ink.withValues(alpha: .45),
+        bold: true);
+    txt(c, title, const Offset(25, 112), 20, ink, bold: true, maxWidth: 650);
+    box(c, const Rect.fromLTWH(24, 145, 712, 94), ink, radius: 20);
+    txt(c, body, const Offset(46, 166), 15, Colors.white,
+        bold: true, maxWidth: 665);
+    txt(c, '$prompt · $consequence', const Offset(25, 248), 10,
+        ink.withValues(alpha: .6),
+        maxWidth: 700);
+    for (var i = 0; i < choices.length && i < 3; i++) {
+      final choice = choices[i],
+          req = choice['requiresStat'] as String?,
+          min = choice['requiresMin'] as int? ?? 0,
+          bondReq = choice['requiresBondId'] as String?,
+          bondMin = choice['requiresBondMin'] as int? ?? 0,
+          flagReq = choice['requiresFlag'] as String?,
+          locked = !unlocked ||
+              (req != null && (stats[req] ?? 0) < min) ||
+              (bondReq != null && (bonds[bondReq] ?? 0) < bondMin) ||
+              (flagReq != null && flags[flagReq] != true),
+          x = 24 + i * 242.0;
+      box(c, Rect.fromLTWH(x, 275, 226, 228), locked ? paper : Colors.white,
+          radius: 18,
+          stroke: locked ? ink.withValues(alpha: .16) : teal,
+          shadow: !locked);
+      txt(c, '${i + 1}', Offset(x + 18, 292), 12,
+          locked ? ink.withValues(alpha: .35) : teal,
+          bold: true);
+      txt(c, localized('${choice['labelKey']}', '${choice['label']}'),
+          Offset(x + 18, 320), 13, locked ? ink.withValues(alpha: .42) : ink,
+          bold: true, maxWidth: 188);
+      txt(
+          c,
+          locked
+              ? (requirements.isNotEmpty && !companionReady
+                  ? '동료 유대 필요'
+                  : flagReq != null
+                      ? '$flagReq 필요'
+                      : req != null
+                          ? '$req $min 필요'
+                          : '잠김')
+              : '${choice['stat']} +${choice['delta']} · 은화 ${choice['coins']} · 유대 +${choice['bondDelta'] ?? 0}',
+          Offset(x + 18, 405),
+          10,
+          locked ? ink.withValues(alpha: .4) : teal,
+          maxWidth: 185);
+      txt(c, localized('${choice['lineKey']}', '${choice['line']}'),
+          Offset(x + 18, 438), 9, locked ? ink.withValues(alpha: .35) : ink,
+          maxWidth: 185);
+    }
+    box(c, const Rect.fromLTWH(24, 570, 180, 42), Colors.white,
+        radius: 14, stroke: teal);
+    txt(c, '← 이전 장면', const Offset(62, 584), 12, teal, bold: true);
+    txt(c, '${sideSceneCursor + 1}/${scenes.length}', const Offset(350, 584),
+        12, teal,
+        bold: true);
+    box(c, const Rect.fromLTWH(550, 570, 186, 42), Colors.white,
+        radius: 14, stroke: teal);
+    txt(c, '다음 장면 →', const Offset(594, 584), 12, teal, bold: true);
+    txt(c, '← 홈으로', const Offset(24, 665), 13, teal, bold: true);
   }
 
   void chapterClosure(Canvas c) {
@@ -1364,20 +1890,24 @@ class Scene extends CustomPainter {
     portrait(c, const Rect.fromLTWH(55, 145, 228, 330), persona);
     txt(c, d['title'], const Offset(365, 145), 26, ink, bold: true);
     txt(c, d['body'], const Offset(365, 200), 16, ink);
+    if (d['variantTitle'] != null)
+      txt(c, '${d['variantTitle']} · ${d['variantBody']}',
+          const Offset(365, 245), 11, teal,
+          maxWidth: 300);
     txt(c, '지혜 ${stats['지혜']}   공감 ${stats['공감']}   용기 ${stats['용기']}',
-        const Offset(365, 285), 15, teal);
+        const Offset(365, 305), 15, teal);
     txt(
         c,
         '은화 $coins · 피로 $fatigue · 목표 $goalCount/${(s['milestones'] as List? ?? const []).length} · 유대 ${bonds.values.reduce((a, b) => a + b)}',
-        const Offset(365, 320),
+        const Offset(365, 340),
         15,
         ink);
     txt(c, '루멘 기록 등급 · ${List.filled(rank, '★').join()}',
-        const Offset(365, 350), 15, teal,
+        const Offset(365, 370), 15, teal,
         bold: true);
     if (epilogues.isNotEmpty || d['epilogue'] != null)
       txt(c, epilogues.isEmpty ? '${d['epilogue']}' : epilogues,
-          const Offset(365, 378), 11, teal);
+          const Offset(365, 398), 11, teal);
     if (companions.isNotEmpty) {
       txt(
           c,

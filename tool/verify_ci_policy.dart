@@ -66,6 +66,13 @@ void main() {
           .contains("'jsonl-contract'")) {
     fail('CI must force JSONL and decision proof precondition gates');
   }
+  final trilemmaSource = File('tool/trilemma_verdict.dart').readAsStringSync();
+  if (!trilemmaSource.contains("'gameplay-fun'") ||
+      !trilemmaSource.contains('verifyTrilemmaReceipt') ||
+      !trilemmaSource.contains('decisionHash') ||
+      !trilemmaSource.contains('checksDigest')) {
+    fail('trilemma axes must bind gameplay KPI and a closed-loop receipt');
+  }
   for (final phrase in [
     'SYSTEM_APPROVAL: APPROVE',
     'required status check',

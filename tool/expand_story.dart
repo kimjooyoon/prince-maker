@@ -74,6 +74,125 @@ Map<String, dynamic> event({
       'choices': choices,
     };
 
+Map<String, dynamic> sideScene({
+  required String id,
+  required int unlockWeek,
+  required String locationId,
+  required String sceneType,
+  required String mechanic,
+  required String titleKo,
+  required String titleEn,
+  required String bodyKo,
+  required String bodyEn,
+  required String promptKo,
+  required String promptEn,
+  required String consequenceKo,
+  required String consequenceEn,
+  required List<Map<String, dynamic>> choices,
+  List<String> requiresCompanions = const [],
+}) =>
+    {
+      'id': id,
+      'unlockWeek': unlockWeek,
+      'locationId': locationId,
+      'sceneType': sceneType,
+      'mechanic': mechanic,
+      'title': titleKo,
+      'titleKey': 'event.$id.title',
+      'titleEn': titleEn,
+      'body': bodyKo,
+      'bodyKey': 'event.$id.body',
+      'bodyEn': bodyEn,
+      'prompt': promptKo,
+      'promptKey': 'event.$id.prompt',
+      'promptEn': promptEn,
+      'consequence': consequenceKo,
+      'consequenceKey': 'event.$id.consequence',
+      'consequenceEn': consequenceEn,
+      'choices': choices,
+      'requiresCompanions': requiresCompanions,
+    };
+
+Map<String, dynamic> companionScene({
+  required String id,
+  required String companionId,
+  required int chapter,
+  required String titleKo,
+  required String titleEn,
+  required String bodyKo,
+  required String bodyEn,
+  required String promptKo,
+  required String promptEn,
+  required String lineKo,
+  required String lineEn,
+  required String closingKo,
+  required String closingEn,
+}) =>
+    {
+      'id': id,
+      'companionId': companionId,
+      'chapter': chapter,
+      'title': titleKo,
+      'titleKey': 'companionScene.$id.title',
+      'body': bodyKo,
+      'bodyKey': 'companionScene.$id.body',
+      'prompt': promptKo,
+      'promptKey': 'companionScene.$id.prompt',
+      'line': lineKo,
+      'lineKey': 'companionScene.$id.line',
+      'closing': closingKo,
+      'closingKey': 'companionScene.$id.closing',
+      'titleEn': titleEn,
+      'bodyEn': bodyEn,
+      'promptEn': promptEn,
+      'lineEn': lineEn,
+      'closingEn': closingEn,
+    };
+
+Map<String, dynamic> activityScene({
+  required String id,
+  required String activityId,
+  required String titleKo,
+  required String titleEn,
+  required String momentKo,
+  required String momentEn,
+  required String lineKo,
+  required String lineEn,
+}) =>
+    {
+      'id': id,
+      'activityId': activityId,
+      'title': titleKo,
+      'titleKey': 'activityScene.$id.title',
+      'moment': momentKo,
+      'momentKey': 'activityScene.$id.moment',
+      'line': lineKo,
+      'lineKey': 'activityScene.$id.line',
+      'titleEn': titleEn,
+      'momentEn': momentEn,
+      'lineEn': lineEn,
+    };
+
+Map<String, dynamic> endingVariant({
+  required String coreEndingId,
+  required String variant,
+  required String titleKo,
+  required String titleEn,
+  required String bodyKo,
+  required String bodyEn,
+}) =>
+    {
+      'id': '$coreEndingId.$variant',
+      'coreEndingId': coreEndingId,
+      'variant': variant,
+      'title': titleKo,
+      'titleKey': 'endingVariant.$coreEndingId.$variant.title',
+      'body': bodyKo,
+      'bodyKey': 'endingVariant.$coreEndingId.$variant.body',
+      'titleEn': titleEn,
+      'bodyEn': bodyEn,
+    };
+
 Map<String, dynamic> chapter({
   required String id,
   required int start,
@@ -144,11 +263,23 @@ void addEventLocale(
     String titleEn,
     String bodyKo,
     String bodyEn,
-    List<Map<String, dynamic>> choices) {
+    List<Map<String, dynamic>> choices,
+    {String? promptKo,
+    String? promptEn,
+    String? consequenceKo,
+    String? consequenceEn}) {
   ko['event.$id.title'] = titleKo;
   en['event.$id.title'] = titleEn;
   ko['event.$id.body'] = bodyKo;
   en['event.$id.body'] = bodyEn;
+  if (promptKo != null && promptEn != null) {
+    ko['event.$id.prompt'] = promptKo;
+    en['event.$id.prompt'] = promptEn;
+  }
+  if (consequenceKo != null && consequenceEn != null) {
+    ko['event.$id.consequence'] = consequenceKo;
+    en['event.$id.consequence'] = consequenceEn;
+  }
   for (final c in choices) {
     final key = c['labelKey'] as String;
     final lineKey = c['lineKey'] as String;
@@ -165,6 +296,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'tool/verify_scenario_variants.dart#scenario-case-enumerator',
     'tool/ci_gate.dart#system-verdict',
     'tool/trilemma_verdict.dart#axis-verdict',
+    'tool/trilemma_verdict.dart#closed-loop-receipt',
     'tool/verify_game.dart#visual-golden-contract',
     'lib/canvas_surface.dart#CanvasViewport',
     'lib/canvas_scene_fingerprint.dart#canvasSceneFingerprint',
@@ -173,6 +305,16 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/chapter_golden_test.dart#all sixteen SSOT chapters have deterministic event Goldens',
     'test/chapter_closure_golden_test.dart#all sixteen SSOT chapter closures have deterministic goal Goldens',
     'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
+    'tool/verify_content_depth.dart#content-depth-gate',
+    'test/content_depth_test.dart#SSOT exposes depth targets and all non-binary scene mechanics',
+    'tool/verify_quality_score.dart#quality-score-99',
+    'lib/character_roster.dart#archiveCharacters',
+    'test/character_roster_test.dart#SSOT character archive binding',
+    'test/character_roster_golden_test.dart#home opens the twenty-character archive',
+    'lib/environment_catalog.dart#environmentsFromStory',
+    'lib/design_tokens.dart#DesignTokens',
+    'test/environment_catalog_test.dart#six locations expose a complete environment design contract',
+    'test/environment_golden_test.dart#environment atlas renders the six gameplay surfaces',
     'tool/generate_development_goals.dart#buildDocument',
     'tool/verify_development_goals.dart#quantitative-evidence-gate',
     'lib/decision_receipt.dart#DecisionReceipt',
@@ -184,12 +326,19 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/game_core.dart#resolveRelationshipFollowup',
     'test/relationship_dynamics_test.dart#deterministic relationship states',
     'lib/jsonl.dart#decodeJsonl',
+    'lib/quality_score.dart#qualityScoreModel',
     'tool/verify_jsonl.dart#jsonl-contract',
     'tool/refresh_ssot_contract_hashes.dart#storyHash',
     'test/jsonl_contract_test.dart#story JSONL is canonical and reconstructs authored collections',
+    'test/quality_score_test.dart#quality score weights are a deterministic closed sum',
+    'test/trilemma_verdict_test.dart#closed-loop-receipt',
   ];
   refs.removeWhere((entry) =>
-      entry['ref'] == 'docs/decision-proof-contract.jsonl#preconditionFields');
+      entry['ref'] == 'docs/decision-proof-contract.jsonl#preconditionFields' ||
+      entry['ref'] ==
+          'test/environment_catalog_test.dart#four locations expose a complete environment design contract' ||
+      entry['ref'] ==
+          'test/environment_golden_test.dart#environment atlas renders the four gameplay surfaces');
   for (final ref in requiredRefs) {
     if (!refs.any((entry) => entry['ref'] == ref)) {
       refs.add({'ref': ref, 'sha256': ''});
@@ -245,7 +394,11 @@ void materializeCharacterContracts(Map<String, dynamic> story,
       'portraitFrame': frame,
     });
   }
-  for (final event in (story['events'] as List).cast<Map<String, dynamic>>()) {
+  final authoredScenes = [
+    ...(story['events'] as List).cast<Map<String, dynamic>>(),
+    ...(story['sideScenes'] as List? ?? const []).cast<Map<String, dynamic>>(),
+  ];
+  for (final event in authoredScenes) {
     for (final choice
         in (event['choices'] as List).cast<Map<String, dynamic>>()) {
       final id = '${choice['bondId']}';
@@ -424,6 +577,1519 @@ void main() {
     addEventLocale(ko, en, e['titleKey'].toString().split('.')[1], e['title'],
         titleEn, e['body'], bodyEn, (e['choices'] as List).cast());
   }
+
+  final newSideScenes = <Map<String, dynamic>>[];
+  void addSide(Map<String, dynamic> scene) {
+    newSideScenes.add(scene);
+    final id = '${scene['id']}';
+    addEventLocale(
+      ko,
+      en,
+      id,
+      '${scene['title']}',
+      '${scene['titleEn']}',
+      '${scene['body']}',
+      '${scene['bodyEn']}',
+      (scene['choices'] as List).cast<Map<String, dynamic>>(),
+      promptKo: '${scene['prompt']}',
+      promptEn: '${scene['promptEn']}',
+      consequenceKo: '${scene['consequence']}',
+      consequenceEn: '${scene['consequenceEn']}',
+    );
+  }
+
+  Map<String, dynamic> sideChoice(String eventId, Map<String, dynamic> raw) =>
+      choice(
+        eventId: eventId,
+        id: '${raw['id']}',
+        stat: '${raw['stat']}',
+        delta: raw['delta'] as int,
+        coins: raw['coins'] as int,
+        bondId: '${raw['bondId']}',
+        bondDelta: raw['bondDelta'] as int,
+        labelKo: '${raw['labelKo']}',
+        labelEn: '${raw['labelEn']}',
+        lineKo: '${raw['lineKo']}',
+        lineEn: '${raw['lineEn']}',
+        rivalId: raw['rivalId'] as String?,
+        rivalDelta: (raw['rivalDelta'] as int?) ?? 0,
+        requiresStat: raw['requiresStat'] as String?,
+        requiresMin: (raw['requiresMin'] as int?) ?? 0,
+        requiresBondId: raw['requiresBondId'] as String?,
+        requiresBondMin: (raw['requiresBondMin'] as int?) ?? 0,
+        requiresFlag: raw['requiresFlag'] as String?,
+        setsFlag: raw['setsFlag'] as String?,
+      );
+  Map<String, dynamic> seedSide(Map<String, dynamic> raw) {
+    final id = '${raw['id']}',
+        choices = (raw['choices'] as List)
+            .cast<Map<String, dynamic>>()
+            .map((c) => sideChoice(id, c))
+            .toList();
+    final scene = sideScene(
+      id: id,
+      unlockWeek: raw['unlockWeek'] as int,
+      locationId: '${raw['locationId']}',
+      sceneType: '${raw['sceneType']}',
+      mechanic: '${raw['mechanic']}',
+      titleKo: '${raw['titleKo']}',
+      titleEn: '${raw['titleEn']}',
+      bodyKo: '${raw['bodyKo']}',
+      bodyEn: '${raw['bodyEn']}',
+      promptKo: '${raw['promptKo']}',
+      promptEn: '${raw['promptEn']}',
+      consequenceKo: '${raw['consequenceKo']}',
+      consequenceEn: '${raw['consequenceEn']}',
+      choices: choices,
+      requiresCompanions:
+          (raw['requiresCompanions'] as List? ?? const []).cast<String>(),
+    );
+    scene['titleEn'] = raw['titleEn'];
+    scene['bodyEn'] = raw['bodyEn'];
+    scene['promptEn'] = raw['promptEn'];
+    scene['consequenceEn'] = raw['consequenceEn'];
+    return scene;
+  }
+
+  Map<String, dynamic> sideRawChoice({
+    required String id,
+    required String stat,
+    required int delta,
+    required int coins,
+    required String bondId,
+    required int bondDelta,
+    required String labelKo,
+    required String labelEn,
+    required String lineKo,
+    required String lineEn,
+    String? flag,
+    String? requiresStat,
+    int requiresMin = 0,
+  }) =>
+      {
+        'id': id,
+        'stat': stat,
+        'delta': delta,
+        'coins': coins,
+        'bondId': bondId,
+        'bondDelta': bondDelta,
+        'labelKo': labelKo,
+        'labelEn': labelEn,
+        'lineKo': lineKo,
+        'lineEn': lineEn,
+        if (flag != null) 'setsFlag': flag,
+        if (requiresStat != null) 'requiresStat': requiresStat,
+        if (requiresStat != null) 'requiresMin': requiresMin,
+      };
+  Map<String, dynamic> sideRaw({
+    required String id,
+    required int unlockWeek,
+    required String locationId,
+    required String sceneType,
+    required String mechanic,
+    required String titleKo,
+    required String titleEn,
+    required String bodyKo,
+    required String bodyEn,
+    required String promptKo,
+    required String promptEn,
+    required String consequenceKo,
+    required String consequenceEn,
+    required List<Map<String, dynamic>> choices,
+    List<String> requiresCompanions = const [],
+  }) =>
+      {
+        'id': id,
+        'unlockWeek': unlockWeek,
+        'locationId': locationId,
+        'sceneType': sceneType,
+        'mechanic': mechanic,
+        'titleKo': titleKo,
+        'titleEn': titleEn,
+        'bodyKo': bodyKo,
+        'bodyEn': bodyEn,
+        'promptKo': promptKo,
+        'promptEn': promptEn,
+        'consequenceKo': consequenceKo,
+        'consequenceEn': consequenceEn,
+        'choices': choices,
+        'requiresCompanions': requiresCompanions,
+      };
+  final sideSeeds = <Map<String, dynamic>>[
+    sideRaw(
+      id: 'sideArchiveLantern',
+      unlockWeek: 2,
+      locationId: 'archive',
+      sceneType: 'exploration',
+      mechanic: 'clue-sort',
+      titleKo: '꺼진 등불의 색인',
+      titleEn: 'Index of the Unlit Lantern',
+      bodyKo: '기록관 뒤편의 등불 세 개가 서로 다른 색으로 꺼졌다. 불을 켜기 전에 누가 무엇을 읽을지 정해야 한다.',
+      bodyEn:
+          'Three lanterns behind the archive went dark in different colours. Before lighting them, decide who gets to read what.',
+      promptKo: '단서를 색·시간·사람 중 하나의 순서로 정렬한다.',
+      promptEn:
+          'Sort the clues by colour, time, or the people who carried them.',
+      consequenceKo: '정렬 방식은 이후 기록을 읽는 루틴으로 남는다.',
+      consequenceEn:
+          'The sorting method remains as a reading routine for later records.',
+      choices: [
+        sideRawChoice(
+            id: 'lumi',
+            stat: '지혜',
+            delta: 1,
+            coins: 0,
+            bondId: 'lumi',
+            bondDelta: 2,
+            labelKo: '루미와 시간순으로 맞춘다',
+            labelEn: 'Order them by time with Lumi',
+            lineKo: '먼저와 나중을 보이면 사라진 손도 다시 보일 거야.',
+            lineEn:
+                'When we show before and after, the missing hands can be seen again.',
+            flag: 'side-archive-time'),
+        sideRawChoice(
+            id: 'bora',
+            stat: '공감',
+            delta: 1,
+            coins: -1,
+            bondId: 'bora',
+            bondDelta: 2,
+            labelKo: '보라와 사람순으로 맞춘다',
+            labelEn: 'Order them by people with Bora',
+            lineKo: '색보다 먼저 누가 기다렸는지를 놓치지 말자.',
+            lineEn: 'Before colour, let us not lose who was waiting.',
+            flag: 'side-archive-people'),
+        sideRawChoice(
+            id: 'taro',
+            stat: '용기',
+            delta: 2,
+            coins: -1,
+            bondId: 'taro',
+            bondDelta: 2,
+            labelKo: '타로와 직접 불을 옮긴다',
+            labelEn: 'Move the flame by hand with Taro',
+            lineKo: '어둠을 설명하기 전에 한 등불부터 다시 세워 보자.',
+            lineEn:
+                'Before explaining the dark, let us raise one lantern again.',
+            flag: 'side-archive-flame'),
+      ],
+    ),
+    sideRaw(
+      id: 'sideArchiveIndex',
+      unlockWeek: 8,
+      locationId: 'archive',
+      sceneType: 'resource-crisis',
+      mechanic: 'resource-draft',
+      titleKo: '비어 있는 서랍',
+      titleEn: 'The Empty Drawer',
+      bodyKo: '새 기록을 넣을 서랍이 하나뿐이다. 오래된 종이와 오늘의 증거 중 하나만 먼저 보존할 수 있다.',
+      bodyEn:
+          'Only one drawer remains for a new record. You can preserve either old paper or today’s evidence first.',
+      promptKo: '은화와 보존 공간을 함께 계산해야 한다.',
+      promptEn: 'Calculate coins and preservation space together.',
+      consequenceKo: '무엇을 먼저 보존했는지가 기록의 빈칸으로 표시된다.',
+      consequenceEn:
+          'What you preserved first is marked as a gap in the record.',
+      choices: [
+        sideRawChoice(
+            id: 'lumi',
+            stat: '지혜',
+            delta: 2,
+            coins: -2,
+            bondId: 'lumi',
+            bondDelta: 2,
+            labelKo: '오래된 종이를 먼저 묶는다',
+            labelEn: 'Bind the old papers first',
+            lineKo: '과거를 지켜야 오늘의 판단도 어디서 왔는지 보이지.',
+            lineEn: 'Today’s judgement needs to show where it came from.',
+            flag: 'side-archive-past',
+            requiresStat: '지혜',
+            requiresMin: 8),
+        sideRawChoice(
+            id: 'bora',
+            stat: '공감',
+            delta: 1,
+            coins: -1,
+            bondId: 'bora',
+            bondDelta: 3,
+            labelKo: '오늘 기다린 사람의 기록을 넣는다',
+            labelEn: 'Keep the record of who waited today',
+            lineKo: '기다린 시간도 한 사람의 하루였다는 걸 남기자.',
+            lineEn: 'Leave proof that waiting was also someone’s day.',
+            flag: 'side-archive-wait'),
+        sideRawChoice(
+            id: 'taro',
+            stat: '용기',
+            delta: 2,
+            coins: 0,
+            bondId: 'taro',
+            bondDelta: 2,
+            labelKo: '서랍을 고쳐 하나 더 만든다',
+            labelEn: 'Repair the drawer and make one more',
+            lineKo: '공간이 없다면 공간을 만드는 일부터 책임지자.',
+            lineEn: 'If there is no room, take responsibility for making room.',
+            flag: 'side-archive-space'),
+      ],
+    ),
+    sideRaw(
+      id: 'sideArchiveNight',
+      unlockWeek: 16,
+      locationId: 'archive',
+      sceneType: 'companion-pair',
+      mechanic: 'paired-reading',
+      requiresCompanions: ['lumi', 'bora'],
+      titleKo: '두 목소리의 여백',
+      titleEn: 'Margin Between Two Voices',
+      bodyKo: '루미와 보라가 같은 기록을 서로 다른 속도로 읽는다. 침묵을 오류로 볼지, 생각할 자리로 둘지 정해야 한다.',
+      bodyEn:
+          'Lumi and Bora read the same record at different speeds. Decide whether silence is an error or room to think.',
+      promptKo: '두 동료의 해석을 겹치지 않게 남긴다.',
+      promptEn:
+          'Leave both companions’ interpretations without collapsing them.',
+      consequenceKo: '한 문장에 두 개의 근거가 붙어 다음 사건의 조건이 된다.',
+      consequenceEn:
+          'Two reasons attach to one sentence and become a condition for a later event.',
+      choices: [
+        sideRawChoice(
+            id: 'lumi',
+            stat: '지혜',
+            delta: 2,
+            coins: 0,
+            bondId: 'lumi',
+            bondDelta: 3,
+            labelKo: '루미의 여백을 측정한다',
+            labelEn: 'Measure Lumi’s margin',
+            lineKo: '말하지 않은 부분도 기록의 일부로 보이게 하자.',
+            lineEn:
+                'Let what was not said become visible as part of the record.',
+            flag: 'side-paired-margin'),
+        sideRawChoice(
+            id: 'bora',
+            stat: '공감',
+            delta: 2,
+            coins: -1,
+            bondId: 'bora',
+            bondDelta: 3,
+            labelKo: '보라의 침묵을 기다린다',
+            labelEn: 'Wait through Bora’s silence',
+            lineKo: '대답을 재촉하지 않는 시간이 두 사람을 지켜 줘.',
+            lineEn:
+                'Time that does not hurry an answer can protect both people.',
+            flag: 'side-paired-wait'),
+        sideRawChoice(
+            id: 'taro',
+            stat: '용기',
+            delta: 1,
+            coins: 1,
+            bondId: 'taro',
+            bondDelta: 1,
+            labelKo: '타로에게 읽는 규칙을 맡긴다',
+            labelEn: 'Give Taro the reading rule',
+            lineKo: '누가 읽을지 바뀌어도 근거가 남는지 시험해 보자.',
+            lineEn: 'Test whether the reason remains when the reader changes.',
+            flag: 'side-paired-rule'),
+      ],
+    ),
+    sideRaw(
+      id: 'sideArchiveWitness',
+      unlockWeek: 30,
+      locationId: 'archive',
+      sceneType: 'exploration',
+      mechanic: 'witness-chain',
+      titleKo: '증인의 자리',
+      titleEn: 'The Witness Seat',
+      bodyKo: '오래된 증언의 마지막 칸이 비어 있다. 기억하는 사람과 기록하는 사람 중 누가 그 자리를 맡을까?',
+      bodyEn:
+          'The final seat in an old testimony is empty. Should the remembering person or the recording person take it?',
+      promptKo: '증언의 순서를 세 명의 증인에게 다시 확인한다.',
+      promptEn: 'Check the order of testimony with three witnesses again.',
+      consequenceKo: '증인의 순서가 누락을 찾는 탐험 규칙이 된다.',
+      consequenceEn:
+          'The witness order becomes an exploration rule for finding omissions.',
+      choices: [
+        sideRawChoice(
+            id: 'lumi',
+            stat: '지혜',
+            delta: 2,
+            coins: 1,
+            bondId: 'lumi',
+            bondDelta: 2,
+            labelKo: '루미에게 증언의 순서를 맡긴다',
+            labelEn: 'Let Lumi hold the testimony order',
+            lineKo: '기억을 믿되, 다시 확인할 계단도 남겨야 해.',
+            lineEn: 'Trust memory, but leave steps for checking it again.',
+            flag: 'side-witness-order'),
+        sideRawChoice(
+            id: 'bora',
+            stat: '공감',
+            delta: 2,
+            coins: -1,
+            bondId: 'bora',
+            bondDelta: 2,
+            labelKo: '보라와 빈 자리를 함께 지킨다',
+            labelEn: 'Guard the empty seat with Bora',
+            lineKo: '대신 이름을 채우지 않는 돌봄도 증언이 될 수 있어.',
+            lineEn:
+                'Care can also be testimony when it does not fill in a name.',
+            flag: 'side-witness-empty'),
+        sideRawChoice(
+            id: 'taro',
+            stat: '용기',
+            delta: 2,
+            coins: 0,
+            bondId: 'taro',
+            bondDelta: 2,
+            labelKo: '타로와 현장 표식을 찾는다',
+            labelEn: 'Find the field marker with Taro',
+            lineKo: '종이 밖에 남은 흔적도 한 번은 직접 확인하자.',
+            lineEn: 'Let us check the trace outside the paper at least once.',
+            flag: 'side-witness-field'),
+      ],
+    ),
+  ];
+  sideSeeds.addAll([
+    sideRaw(
+        id: 'sideGreenhouseRain',
+        unlockWeek: 4,
+        locationId: 'greenhouse',
+        sceneType: 'resource-crisis',
+        mechanic: 'water-ration',
+        titleKo: '비가 늦은 온실',
+        titleEn: 'The Greenhouse Where Rain Is Late',
+        bodyKo: '물이 모자란 날, 새싹과 오래된 나무가 같은 물통을 바라본다. 모두에게 같은 양이 공정할까?',
+        bodyEn:
+            'On a dry day, a sprout and an old tree look at the same bucket. Is equal water fair to both?',
+        promptKo: '물의 양보다 기다린 시간과 회복 가능성을 비교한다.',
+        promptEn:
+            'Compare waiting time and recovery potential, not only the amount of water.',
+        consequenceKo: '물 배분표가 자원 위기에서 다시 쓸 수 있는 규칙이 된다.',
+        consequenceEn:
+            'The water plan becomes a reusable rule for resource crises.',
+        choices: [
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 2,
+              coins: -1,
+              bondId: 'bora',
+              bondDelta: 3,
+              labelKo: '기다린 순서대로 나눈다',
+              labelEn: 'Share by waiting order',
+              lineKo: '오래 기다린 마음부터 회복할 물을 건네자.',
+              lineEn:
+                  'Give recovery water first to those who have waited longest.',
+              flag: 'side-rain-queue'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '회복 가능성을 계산한다',
+              labelEn: 'Calculate recovery potential',
+              lineKo: '같은 양이 아니라 다시 살아날 가능성을 같이 보자.',
+              lineEn:
+                  'Look at the chance to live again, not only equal portions.',
+              flag: 'side-rain-recovery'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 1,
+              coins: 1,
+              bondId: 'taro',
+              bondDelta: 2,
+              labelKo: '다음 비를 받을 통을 만든다',
+              labelEn: 'Build a barrel for the next rain',
+              lineKo: '분배표를 고치기 전에 다음 비를 받을 곳을 만들자.',
+              lineEn:
+                  'Before fixing the table, make a place to catch the next rain.',
+              flag: 'side-rain-barrel'),
+        ]),
+    sideRaw(
+        id: 'sideGreenhouseSeed',
+        unlockWeek: 12,
+        locationId: 'greenhouse',
+        sceneType: 'mini-game',
+        mechanic: 'seed-match',
+        titleKo: '씨앗 이름 맞추기',
+        titleEn: 'Match the Seed Names',
+        bodyKo: '라벨이 젖어 네 봉지의 이름이 번졌다. 생김새·계절·기억 중 두 단서를 골라야 한다.',
+        bodyEn:
+            'Rain blurred four seed labels. Choose two clues from shape, season, and memory.',
+        promptKo: '단서 두 개만 사용해 씨앗과 자리를 맞춘다.',
+        promptEn: 'Use only two clues to match seeds with their places.',
+        consequenceKo: '맞춘 단서가 이후 수확의 이름과 보상에 남는다.',
+        consequenceEn:
+            'The clues you matched remain in the harvest name and reward.',
+        choices: [
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 2,
+              coins: 1,
+              bondId: 'bora',
+              bondDelta: 3,
+              labelKo: '계절 기억을 고른다',
+              labelEn: 'Choose the season memory',
+              lineKo: '꽃이 핀 날을 기억하면 씨앗도 서두르지 않을 거야.',
+              lineEn:
+                  'If we remember the flowering day, the seed need not be hurried.',
+              flag: 'side-seed-season'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 3,
+              labelKo: '생김새 단서를 고른다',
+              labelEn: 'Choose the shape clue',
+              lineKo: '보이는 차이를 남기면 다음 사람도 다시 맞출 수 있어.',
+              lineEn:
+                  'Leave visible differences so the next person can match them again.',
+              flag: 'side-seed-shape'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 2,
+              labelKo: '시험 줄을 직접 심는다',
+              labelEn: 'Plant a test row',
+              lineKo: '모든 답을 기다리기보다 한 줄을 심어 확인하자.',
+              lineEn:
+                  'Instead of waiting for every answer, plant one row and check.',
+              flag: 'side-seed-test'),
+        ]),
+    sideRaw(
+        id: 'sideGreenhouseCompost',
+        unlockWeek: 22,
+        locationId: 'greenhouse',
+        sceneType: 'exploration',
+        mechanic: 'soil-layer',
+        titleKo: '흙 아래의 편지',
+        titleEn: 'Letter Beneath the Soil',
+        bodyKo: '퇴비를 뒤집다 접힌 편지 한 장이 나온다. 누군가 버린 말인지, 일부러 묻은 약속인지 알 수 없다.',
+        bodyEn:
+            'A folded letter appears while turning the compost. It may be discarded words or a promise buried on purpose.',
+        promptKo: '흙의 층과 편지의 접힌 방향을 함께 조사한다.',
+        promptEn:
+            'Investigate the soil layers and the direction of the fold together.',
+        consequenceKo: '편지의 출처는 기억이 아니라 조사 가능한 단서로 남는다.',
+        consequenceEn:
+            'The letter’s source remains an investigable clue, not a memory.',
+        choices: [
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '종이의 층을 기록한다',
+              labelEn: 'Record the paper layers',
+              lineKo: '편지보다 먼저 그것이 묻힌 시간을 읽어 보자.',
+              lineEn: 'Before reading the letter, read when it was buried.',
+              flag: 'side-compost-layer'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: -1,
+              bondId: 'bora',
+              bondDelta: 3,
+              labelKo: '봉투를 기다린다',
+              labelEn: 'Wait for the envelope',
+              lineKo: '누군가의 말을 대신 열어 버리지 않는 것도 돌봄이야.',
+              lineEn: 'Care can mean not opening someone’s words for them.',
+              flag: 'side-compost-wait'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: 1,
+              bondId: 'taro',
+              bondDelta: 2,
+              labelKo: '묻힌 자리를 되짚는다',
+              labelEn: 'Retrace the buried place',
+              lineKo: '발자국이 사라지기 전에 누가 여기 왔는지 찾아 보자.',
+              lineEn: 'Find who came here before the footprints disappear.',
+              flag: 'side-compost-trace'),
+        ]),
+    sideRaw(
+        id: 'sideGreenhouseBell',
+        unlockWeek: 38,
+        locationId: 'greenhouse',
+        sceneType: 'companion-pair',
+        mechanic: 'care-rotation',
+        requiresCompanions: ['bora', 'taro'],
+        titleKo: '새벽 종의 순서',
+        titleEn: 'Order of the Dawn Bell',
+        bodyKo: '온실 종이 울릴 때마다 한 사람이 먼저 일어난다. 돌봄을 의무로 만들지, 서로 바꿀 약속으로 만들지 선택한다.',
+        bodyEn:
+            'Each time the greenhouse bell rings, one person wakes first. Make care a duty, or a promise to rotate.',
+        promptKo: '일어나는 순서와 회복 시간을 작은 표로 맞춘다.',
+        promptEn: 'Match waking order and recovery time on a small table.',
+        consequenceKo: '돌봄의 순환표가 동료 조합의 독립 기록이 된다.',
+        consequenceEn:
+            'The care rotation becomes an independent record of the companion pair.',
+        choices: [
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 2,
+              coins: -1,
+              bondId: 'bora',
+              bondDelta: 4,
+              labelKo: '순서를 번갈아 적는다',
+              labelEn: 'Alternate the order',
+              lineKo: '돌봄을 한 사람의 성격으로 남기지 말고 바꿀 수 있게 하자.',
+              lineEn:
+                  'Do not make care one person’s nature; make it changeable.',
+              flag: 'side-care-rotation'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: 0,
+              bondId: 'taro',
+              bondDelta: 4,
+              labelKo: '종을 낮춘다',
+              labelEn: 'Lower the bell',
+              lineKo: '모두를 깨우는 소리보다 쉬어도 되는 신호가 필요해.',
+              lineEn:
+                  'We need a signal that allows rest, not a sound that wakes everyone.',
+              flag: 'side-care-rest'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 1,
+              coins: 1,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '표의 빈칸을 남긴다',
+              labelEn: 'Leave blanks in the table',
+              lineKo: '비어 있는 칸이 누구의 차례인지 말해 줄 거야.',
+              lineEn: 'The blank spaces will tell us whose turn is missing.',
+              flag: 'side-care-gap'),
+        ]),
+    sideRaw(
+        id: 'sideMarketToken',
+        unlockWeek: 6,
+        locationId: 'market',
+        sceneType: 'resource-crisis',
+        mechanic: 'token-budget',
+        titleKo: '한 닢의 표식',
+        titleEn: 'The One-Coin Marker',
+        bodyKo: '장터의 공동 지갑에 은화 한 닢만 남았다. 식사·씨앗·기록 도구 중 어디에 쓰면 다음 주가 덜 흔들릴까?',
+        bodyEn:
+            'Only one coin remains in the market’s shared purse. Which meal, seed, or record tool keeps next week steadier?',
+        promptKo: '지금의 만족보다 다음 주의 선택 가능성을 계산한다.',
+        promptEn:
+            'Calculate next week’s choice space, not only today’s satisfaction.',
+        consequenceKo: '마지막 한 닢을 쓴 방향이 자원관리 사건의 기준선이 된다.',
+        consequenceEn:
+            'Where the last coin went becomes the baseline for resource-management scenes.',
+        choices: [
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: 0,
+              bondId: 'bora',
+              bondDelta: 3,
+              labelKo: '오늘 함께 먹을 것을 산다',
+              labelEn: 'Buy food to share today',
+              lineKo: '다음 주를 위해 오늘의 배고픔을 숨기지는 말자.',
+              lineEn: 'Do not hide today’s hunger for the sake of next week.',
+              flag: 'side-market-meal'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '기록 잉크를 산다',
+              labelEn: 'Buy record ink',
+              lineKo: '계산할 근거가 없으면 남은 닢도 다시 잃게 돼.',
+              lineEn:
+                  'Without evidence to calculate, the remaining coin is lost again.',
+              flag: 'side-market-ink'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: 0,
+              bondId: 'taro',
+              bondDelta: 2,
+              labelKo: '다음 씨앗을 예약한다',
+              labelEn: 'Reserve the next seed',
+              lineKo: '불확실해도 다음 시작을 살 자리는 남겨 두자.',
+              lineEn:
+                  'Even with uncertainty, leave room to buy the next beginning.',
+              flag: 'side-market-seed'),
+        ]),
+    sideRaw(
+        id: 'sideMarketScale',
+        unlockWeek: 14,
+        locationId: 'market',
+        sceneType: 'mini-game',
+        mechanic: 'fair-scale',
+        titleKo: '저울의 세 칸',
+        titleEn: 'Three Notches on the Scale',
+        bodyKo: '상인들의 저울 눈금이 조금씩 다르다. 빠르게 맞출지, 서로의 오차를 먼저 보일지 선택한다.',
+        bodyEn:
+            'The merchants’ scale marks differ slightly. Match them quickly, or expose each error first.',
+        promptKo: '세 번의 측정 중 두 번 이상 같은 기준을 찾아야 한다.',
+        promptEn:
+            'Find the shared standard in at least two of three measurements.',
+        consequenceKo: '측정 기준은 장터의 가격과 신뢰를 함께 바꾼다.',
+        consequenceEn:
+            'The measurement standard changes both market prices and trust.',
+        choices: [
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 1,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '오차를 먼저 공개한다',
+              labelEn: 'Publish the errors first',
+              lineKo: '맞는 숫자보다 틀릴 수 있는 폭을 같이 보여 주자.',
+              lineEn:
+                  'Show the possible error range along with the right number.',
+              flag: 'side-scale-error'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: 1,
+              bondId: 'bora',
+              bondDelta: 3,
+              labelKo: '불리한 사람부터 잰다',
+              labelEn: 'Measure the least advantaged first',
+              lineKo: '저울이 누구에게 먼저 기울었는지부터 확인하자.',
+              lineEn: 'First check whom the scale tilted toward.',
+              flag: 'side-scale-care'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 2,
+              labelKo: '새 눈금을 박는다',
+              labelEn: 'Set a new mark',
+              lineKo: '오래된 눈금이 틀렸다면 오늘 바꾸는 책임을 지자.',
+              lineEn:
+                  'If the old mark is wrong, take responsibility for changing it today.',
+              flag: 'side-scale-new'),
+        ]),
+    sideRaw(
+        id: 'sideMarketQuiet',
+        unlockWeek: 26,
+        locationId: 'market',
+        sceneType: 'exploration',
+        mechanic: 'rumour-map',
+        titleKo: '소문이 지나간 자리',
+        titleEn: 'Where a Rumour Passed',
+        bodyKo: '장터에 같은 소문이 세 방향으로 번졌다. 말의 출발점보다, 그 말 때문에 비어 버린 자리를 먼저 찾는다.',
+        bodyEn:
+            'The same rumour spread in three directions. Find the spaces it emptied before finding its source.',
+        promptKo: '소문을 믿음·피해·확인 요청의 세 표식으로 나눈다.',
+        promptEn:
+            'Split the rumour into belief, harm, and requests for verification.',
+        consequenceKo: '소문을 다루는 표식이 이후 공개 회의의 입구가 된다.',
+        consequenceEn:
+            'The rumour markers become the entrance to a later public council.',
+        choices: [
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 2,
+              coins: -1,
+              bondId: 'bora',
+              bondDelta: 3,
+              labelKo: '비어 버린 자리를 찾는다',
+              labelEn: 'Find the emptied spaces',
+              lineKo: '사실을 말하기 전에 그 말이 밀어낸 사람을 보자.',
+              lineEn: 'Before speaking facts, see whom the words pushed away.',
+              flag: 'side-rumour-harm'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '출처의 경로를 그린다',
+              labelEn: 'Map the source path',
+              lineKo: '소문은 한 점이 아니라 여러 손을 거쳐 온 경로야.',
+              lineEn: 'A rumour is a path through many hands, not one point.',
+              flag: 'side-rumour-path'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 1,
+              coins: 1,
+              bondId: 'taro',
+              bondDelta: 2,
+              labelKo: '확인 요청을 공개한다',
+              labelEn: 'Publish a verification request',
+              lineKo: '틀릴까 봐 조용히 있기보다 확인할 문을 열자.',
+              lineEn:
+                  'Instead of staying quiet for fear of being wrong, open a door to check.',
+              flag: 'side-rumour-ask'),
+        ]),
+    sideRaw(
+        id: 'sideMarketReturn',
+        unlockWeek: 42,
+        locationId: 'market',
+        sceneType: 'companion-pair',
+        mechanic: 'shared-contract',
+        requiresCompanions: ['lumi', 'taro'],
+        titleKo: '시장 끝의 계약서',
+        titleEn: 'Contract at the Market’s Edge',
+        bodyKo: '마지막 장터에서 루미와 타로가 서로 다른 계약서를 내민다. 한 장으로 합치면 무엇이 사라질까?',
+        bodyEn:
+            'At the last market, Lumi and Taro offer different contracts. What disappears if they become one?',
+        promptKo: '계약의 공통 조항과 서로 양보할 수 없는 조항을 분리한다.',
+        promptEn:
+            'Separate shared clauses from clauses neither side can surrender.',
+        consequenceKo: '합쳐지지 않은 조항도 다음 사람의 협상 기록으로 남는다.',
+        consequenceEn:
+            'Clauses that cannot merge remain the next person’s negotiation record.',
+        choices: [
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 1,
+              bondId: 'lumi',
+              bondDelta: 4,
+              labelKo: '공통 조항을 세운다',
+              labelEn: 'Build shared clauses',
+              lineKo: '계약을 짧게 만들기보다 무엇이 함께 남는지 보이자.',
+              lineEn:
+                  'Instead of shortening the contract, show what remains shared.',
+              flag: 'side-contract-common'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 4,
+              labelKo: '양보할 수 없는 선을 긋는다',
+              labelEn: 'Draw the non-negotiable line',
+              lineKo: '좋은 합의는 넘지 말아야 할 선도 숨기지 않아.',
+              lineEn:
+                  'A good agreement does not hide the line it must not cross.',
+              flag: 'side-contract-line'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: 0,
+              bondId: 'bora',
+              bondDelta: 2,
+              labelKo: '사라진 조항을 묻는다',
+              labelEn: 'Ask about the missing clause',
+              lineKo: '서명 뒤에 남은 침묵이 누구의 비용인지 물어야 해.',
+              lineEn: 'Ask whose cost is carried by the silence after signing.',
+              flag: 'side-contract-silence'),
+        ]),
+  ]);
+  sideSeeds.addAll([
+    sideRaw(
+        id: 'sideRiverRope',
+        unlockWeek: 10,
+        locationId: 'river-road',
+        sceneType: 'exploration',
+        mechanic: 'route-memory',
+        titleKo: '끊어진 밧줄의 지도',
+        titleEn: 'Map of the Broken Rope',
+        bodyKo: '강을 건너는 밧줄이 세 곳에서 닳았다. 어느 매듭을 먼저 고칠지에 따라 탐험 가능한 길이 달라진다.',
+        bodyEn:
+            'The river rope is worn at three places. Which knot you fix first changes the route you can explore.',
+        promptKo: '물살·거리·돌아올 표식을 함께 기억해야 한다.',
+        promptEn: 'Remember current, distance, and a marker for the return.',
+        consequenceKo: '선택한 매듭이 강 건너 탐험의 첫 기준점이 된다.',
+        consequenceEn:
+            'The knot you choose becomes the first reference point for crossing.',
+        choices: [
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 3,
+              labelKo: '가장 센 물살을 고친다',
+              labelEn: 'Fix the strongest current',
+              lineKo: '가장 위험한 곳을 먼저 알아야 돌아오는 길도 남아.',
+              lineEn:
+                  'We must know the most dangerous place first to leave a way back.',
+              flag: 'side-rope-current'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '돌아올 표식을 계산한다',
+              labelEn: 'Calculate a return marker',
+              lineKo: '건너는 용기만큼 돌아올 근거도 필요해.',
+              lineEn: 'A reason to return matters as much as courage to cross.',
+              flag: 'side-rope-return'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: 1,
+              bondId: 'bora',
+              bondDelta: 2,
+              labelKo: '기다릴 자리를 만든다',
+              labelEn: 'Make a waiting place',
+              lineKo: '건너는 사람뿐 아니라 기다리는 사람도 길의 일부야.',
+              lineEn: 'The people waiting are part of the route too.',
+              flag: 'side-rope-wait'),
+        ]),
+    sideRaw(
+        id: 'sideRiverTide',
+        unlockWeek: 18,
+        locationId: 'river-road',
+        sceneType: 'mini-game',
+        mechanic: 'tide-timing',
+        requiresCompanions: ['taro'],
+        titleKo: '물결의 세 박자',
+        titleEn: 'Three Beats of the Current',
+        bodyKo: '강물은 세 번 숨을 고른 뒤 다시 빨라진다. 타로와 발을 맞출지, 표식을 보고 혼자 건널지 결정한다.',
+        bodyEn:
+            'The river pauses for three breaths before speeding up. Match Taro’s steps, or cross alone by the markers.',
+        promptKo: '멈춤·건넘·귀환의 박자를 기억하는 미니게임이다.',
+        promptEn: 'Remember the beats of pause, crossing, and return.',
+        consequenceKo: '맞춘 박자가 이후 위기 상황의 피로 비용을 낮춘다.',
+        consequenceEn:
+            'The matched rhythm lowers fatigue costs in a later crisis.',
+        choices: [
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: 0,
+              bondId: 'taro',
+              bondDelta: 4,
+              labelKo: '세 박자를 따라간다',
+              labelEn: 'Follow the three beats',
+              lineKo: '혼자 빠르기보다 서로 같은 때를 기다려 보자.',
+              lineEn:
+                  'Instead of being fast alone, let us wait for the same moment.',
+              flag: 'side-tide-rhythm'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 1,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '표식만 보고 건넌다',
+              labelEn: 'Cross by the markers',
+              lineKo: '박자를 잊어도 다시 읽을 표식이 있으면 돼.',
+              lineEn:
+                  'Even if the rhythm is forgotten, a marker can be read again.',
+              flag: 'side-tide-marker'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: -1,
+              bondId: 'bora',
+              bondDelta: 2,
+              labelKo: '강가에 남는다',
+              labelEn: 'Stay by the river',
+              lineKo: '건너지 않는 선택도 함께 지키는 선택일 수 있어.',
+              lineEn:
+                  'Choosing not to cross can also be a choice to protect together.',
+              flag: 'side-tide-stay'),
+        ]),
+    sideRaw(
+        id: 'sideRiverMarker',
+        unlockWeek: 32,
+        locationId: 'river-road',
+        sceneType: 'resource-crisis',
+        mechanic: 'marker-budget',
+        titleKo: '표식에 쓸 재료',
+        titleEn: 'Material for a Marker',
+        bodyKo: '돌·천·잉크 중 하나만 충분하다. 오래 가는 표식과 지금 찾기 쉬운 표식의 비용이 다르다.',
+        bodyEn:
+            'There is enough of only stone, cloth, or ink. Durable and easy-to-find markers cost different things.',
+        promptKo: '은화와 탐험 가능성을 한 번에 비교한다.',
+        promptEn: 'Compare coins and exploration access at once.',
+        consequenceKo: '재료 선택은 지도의 빈칸을 공개하는 방식으로 되돌아온다.',
+        consequenceEn:
+            'The material choice returns as the way the map reveals its blank.',
+        choices: [
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -2,
+              bondId: 'taro',
+              bondDelta: 3,
+              labelKo: '돌로 오래 남긴다',
+              labelEn: 'Make it last with stone',
+              lineKo: '다음 비바람 뒤에도 누군가 찾을 수 있어야 해.',
+              lineEn: 'Someone must be able to find it after the next storm.',
+              flag: 'side-marker-stone'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: -1,
+              bondId: 'bora',
+              bondDelta: 3,
+              labelKo: '천으로 멀리서 보이게 한다',
+              labelEn: 'Make it visible with cloth',
+              lineKo: '오래보다 먼저 지금 돌아올 사람이 볼 수 있어야 해.',
+              lineEn:
+                  'Before lasting, it must be visible to the person returning now.',
+              flag: 'side-marker-cloth'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '잉크로 근거를 남긴다',
+              labelEn: 'Leave the reason in ink',
+              lineKo: '표식만 아니라 왜 그곳에 세웠는지도 읽혀야 해.',
+              lineEn:
+                  'The reason for the marker must be readable, not only the marker.',
+              flag: 'side-marker-ink'),
+        ]),
+    sideRaw(
+        id: 'sideRiverQuestion',
+        unlockWeek: 46,
+        locationId: 'river-road',
+        sceneType: 'companion-pair',
+        mechanic: 'handoff-crossing',
+        requiresCompanions: ['bora', 'taro'],
+        titleKo: '강 건너 첫 질문',
+        titleEn: 'First Question Across the River',
+        bodyKo: '마지막 건넘에서 보라와 타로가 다음 여행자에게 남길 질문을 고른다. 답보다 질문의 방향이 길을 만든다.',
+        bodyEn:
+            'At the final crossing, Bora and Taro choose a question for the next traveller. Its direction makes the road, not its answer.',
+        promptKo: '돌아올 사람도 다시 물을 수 있는 문장을 만든다.',
+        promptEn: 'Write a sentence the returning traveller can ask again.',
+        consequenceKo: '첫 질문은 넘겨지는 지평의 독립 에필로그로 남는다.',
+        consequenceEn:
+            'The first question remains as an independent epilogue of the passed horizon.',
+        choices: [
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 2,
+              coins: 0,
+              bondId: 'bora',
+              bondDelta: 4,
+              labelKo: '누가 아직 기다리는지 묻는다',
+              labelEn: 'Ask who is still waiting',
+              lineKo: '길의 끝보다 길가에 남은 마음부터 다시 보자.',
+              lineEn:
+                  'Before the road’s end, look again at the hearts left beside it.',
+              flag: 'side-question-wait'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 4,
+              labelKo: '어디서 다시 시작할지 묻는다',
+              labelEn: 'Ask where to begin again',
+              lineKo: '끝을 설명하기보다 다음 발이 닿을 곳을 남기자.',
+              lineEn:
+                  'Instead of explaining the end, leave where the next foot can land.',
+              flag: 'side-question-start'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 1,
+              coins: 1,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '무엇을 모르는지 묻는다',
+              labelEn: 'Ask what remains unknown',
+              lineKo: '빈칸을 숨기지 않는 질문이 가장 오래 살아남아.',
+              lineEn: 'The question that hides no blank survives the longest.',
+              flag: 'side-question-unknown'),
+        ]),
+  ]);
+  sideSeeds.addAll([
+    sideRaw(
+        id: 'sideObservatoryCloud',
+        unlockWeek: 8,
+        locationId: 'observatory',
+        sceneType: 'exploration',
+        mechanic: 'cloud-window',
+        titleKo: '구름 뒤의 작은 별',
+        titleEn: 'Small Star Behind the Cloud',
+        bodyKo: '구름이 별 하나를 가린 밤, 관측소의 창문 세 곳이 서로 다른 방향을 가리킨다. 무엇을 먼저 확인할까?',
+        bodyEn:
+            'On a night when clouds hide one star, three observatory windows point in different directions. What comes first?',
+        promptKo: '보이는 것과 보이지 않는 것을 같은 지도에 표시한다.',
+        promptEn: 'Mark the visible and invisible on the same map.',
+        consequenceKo: '가려진 별도 관측 가능한 대상이라는 기준을 남긴다.',
+        consequenceEn:
+            'Leave the rule that a hidden star is still an observable subject.',
+        choices: [
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 3,
+              labelKo: '빈 하늘을 측정한다',
+              labelEn: 'Measure the empty sky',
+              lineKo: '안 보이는 곳도 측정하면 다음 밤의 기준이 돼.',
+              lineEn:
+                  'Measuring what cannot be seen becomes a standard for the next night.',
+              flag: 'side-cloud-blank'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 2,
+              labelKo: '지붕 위로 오른다',
+              labelEn: 'Climb the roof',
+              lineKo: '창문을 믿기 전에 시야가 바뀌는 곳까지 가 보자.',
+              lineEn: 'Before trusting the windows, go where the view changes.',
+              flag: 'side-cloud-roof'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: 1,
+              bondId: 'bora',
+              bondDelta: 2,
+              labelKo: '구름을 기다린다',
+              labelEn: 'Wait for the cloud',
+              lineKo: '보이지 않는 시간을 함께 보내는 것도 관측이야.',
+              lineEn: 'Spending unseen time together is also observation.',
+              flag: 'side-cloud-wait'),
+        ]),
+    sideRaw(
+        id: 'sideObservatoryLens',
+        unlockWeek: 20,
+        locationId: 'observatory',
+        sceneType: 'resource-crisis',
+        mechanic: 'lens-repair',
+        titleKo: '금 간 렌즈',
+        titleEn: 'The Cracked Lens',
+        bodyKo: '렌즈 하나에 금이 갔다. 관측을 멈추고 고칠지, 금 간 시야로 오늘의 하늘을 남길지 결정해야 한다.',
+        bodyEn:
+            'One lens has cracked. Stop to repair it, or record today’s sky through the damaged view.',
+        promptKo: '정확도와 기록의 연속성을 자원으로 비교한다.',
+        promptEn: 'Compare accuracy and continuity of the record as resources.',
+        consequenceKo: '금 간 시야의 한계가 판정 영수증에 표시된다.',
+        consequenceEn:
+            'The damaged view’s limit is shown on the decision receipt.',
+        choices: [
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: -2,
+              bondId: 'lumi',
+              bondDelta: 3,
+              labelKo: '렌즈를 먼저 고친다',
+              labelEn: 'Repair the lens first',
+              lineKo: '기록이 이어져도 다시 검증할 수 없다면 길을 잃어.',
+              lineEn:
+                  'A continuous record is lost if it cannot be verified again.',
+              flag: 'side-lens-repair'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: 0,
+              bondId: 'taro',
+              bondDelta: 3,
+              labelKo: '금 간 하늘도 남긴다',
+              labelEn: 'Record the cracked sky too',
+              lineKo: '흠집을 숨기지 않은 오늘도 다음 판단의 증거야.',
+              lineEn:
+                  'Today’s unhidden flaw is also evidence for the next judgement.',
+              flag: 'side-lens-flaw'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: -1,
+              bondId: 'bora',
+              bondDelta: 3,
+              labelKo: '기다릴 사람에게 먼저 알린다',
+              labelEn: 'Tell waiting people first',
+              lineKo: '정확한 답보다 기다리는 사람이 알아야 할 사실을 먼저 건네자.',
+              lineEn:
+                  'Before a precise answer, give waiting people the fact they need.',
+              flag: 'side-lens-notice'),
+        ]),
+    sideRaw(
+        id: 'sideObservatorySignal',
+        unlockWeek: 34,
+        locationId: 'observatory',
+        sceneType: 'companion-pair',
+        mechanic: 'signal-pattern',
+        requiresCompanions: ['lumi', 'taro'],
+        titleKo: '두 번 울린 신호',
+        titleEn: 'The Signal That Rang Twice',
+        bodyKo:
+            '먼 곳에서 신호가 두 번 울렸다. 루미는 좌표를, 타로는 길의 안전을 먼저 본다. 둘을 하나의 출발점으로 묶을 수 있을까?',
+        bodyEn:
+            'A distant signal rang twice. Lumi reads coordinates; Taro reads route safety. Can both become one starting point?',
+        promptKo: '신호의 순서와 실제 발걸음의 순서를 맞춘다.',
+        promptEn: 'Match the signal order with the order of actual footsteps.',
+        consequenceKo: '짝을 이룬 신호는 후반 탐험의 분기 조건이 된다.',
+        consequenceEn:
+            'The paired signal becomes a branch condition for later exploration.',
+        choices: [
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 1,
+              bondId: 'lumi',
+              bondDelta: 4,
+              labelKo: '좌표를 먼저 고정한다',
+              labelEn: 'Fix the coordinates first',
+              lineKo: '갈 곳을 잃지 않아야 안전을 다시 계산할 수 있어.',
+              lineEn:
+                  'We need a destination fixed before safety can be recalculated.',
+              flag: 'side-signal-coordinate'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 4,
+              labelKo: '안전한 발판부터 확인한다',
+              labelEn: 'Check safe footholds first',
+              lineKo: '좌표가 맞아도 발을 놓을 곳이 없다면 못 가.',
+              lineEn:
+                  'Even a correct coordinate cannot be reached without a foothold.',
+              flag: 'side-signal-foothold'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: 0,
+              bondId: 'bora',
+              bondDelta: 2,
+              labelKo: '신호를 기다린 사람을 묻는다',
+              labelEn: 'Ask who waited for the signal',
+              lineKo: '신호를 보낸 사람의 하루도 지도에 같이 있어야 해.',
+              lineEn: 'The sender’s day must be on the map too.',
+              flag: 'side-signal-sender'),
+        ]),
+    sideRaw(
+        id: 'sideObservatoryDawn',
+        unlockWeek: 44,
+        locationId: 'observatory',
+        sceneType: 'mini-game',
+        mechanic: 'constellation-trace',
+        titleKo: '새벽의 별자리 잇기',
+        titleEn: 'Connect the Dawn Constellation',
+        bodyKo: '새벽빛이 별 세 개의 선을 지운다. 남은 점과 기억한 방향으로 하나의 별자리를 다시 그려야 한다.',
+        bodyEn:
+            'Dawn erases the lines between three stars. Redraw one constellation from remaining points and remembered direction.',
+        promptKo: '세 점 중 두 점의 근거를 선택하고 마지막 점은 열어 둔다.',
+        promptEn:
+            'Choose reasons for two points and leave the last point open.',
+        consequenceKo: '완성하지 않은 점 하나가 다음 사람의 탐험 초대가 된다.',
+        consequenceEn:
+            'One unfinished point becomes an invitation for the next explorer.',
+        choices: [
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 1,
+              bondId: 'lumi',
+              bondDelta: 4,
+              labelKo: '두 점의 근거를 기록한다',
+              labelEn: 'Record reasons for two points',
+              lineKo: '모든 선을 닫지 않아도 다시 그릴 근거는 남길 수 있어.',
+              lineEn:
+                  'We can leave reasons to redraw without closing every line.',
+              flag: 'side-dawn-reason'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: 0,
+              bondId: 'taro',
+              bondDelta: 4,
+              labelKo: '지워진 선을 직접 따라간다',
+              labelEn: 'Follow the erased line by hand',
+              lineKo: '사라진 길도 발로 확인하면 다음 손이 이어갈 수 있어.',
+              lineEn: 'A vanished road can be continued when checked by foot.',
+              flag: 'side-dawn-walk'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: -1,
+              bondId: 'bora',
+              bondDelta: 3,
+              labelKo: '빈 점을 다음 사람에게 남긴다',
+              labelEn: 'Leave the blank point for the next person',
+              lineKo: '완성되지 않은 곳을 함께 기다리는 약속도 별자리야.',
+              lineEn:
+                  'A constellation can be a promise to wait together at an unfinished place.',
+              flag: 'side-dawn-open'),
+        ]),
+  ]);
+  sideSeeds.addAll([
+    sideRaw(
+        id: 'sideQuarryEcho',
+        unlockWeek: 12,
+        locationId: 'quarry',
+        sceneType: 'exploration',
+        mechanic: 'echo-map',
+        titleKo: '채석장의 메아리',
+        titleEn: 'Echo in the Quarry',
+        bodyKo: '돌벽 안쪽에서 같은 노래가 세 번 돌아온다. 메아리의 방향이 숨은 길인지, 빈 벽인지 찾아야 한다.',
+        bodyEn:
+            'The same song returns three times inside the quarry. Find whether its direction is a hidden route or an empty wall.',
+        promptKo: '소리의 간격과 발걸음의 위치를 겹쳐 본다.',
+        promptEn:
+            'Overlay the gaps between sounds with the positions of footsteps.',
+        consequenceKo: '메아리의 간격이 탐험 지도의 새로운 눈금이 된다.',
+        consequenceEn:
+            'The echo interval becomes a new scale on the exploration map.',
+        choices: [
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 3,
+              labelKo: '소리가 큰 벽을 연다',
+              labelEn: 'Open the loudest wall',
+              lineKo: '길일 수도 있는 벽을 한 번은 직접 두드려 보자.',
+              lineEn: 'Knock once on a wall that might be a road.',
+              flag: 'side-echo-wall'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '메아리 간격을 잰다',
+              labelEn: 'Measure the intervals',
+              lineKo: '메아리도 반복되면 기록 가능한 패턴이 돼.',
+              lineEn: 'An echo becomes a recordable pattern when it repeats.',
+              flag: 'side-echo-pattern'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: 1,
+              bondId: 'bora',
+              bondDelta: 2,
+              labelKo: '노래를 기다린다',
+              labelEn: 'Wait for the song',
+              lineKo: '누군가 부른 노래라면 돌아올 시간도 함께 들어야 해.',
+              lineEn:
+                  'If someone sang it, we must hear the time it takes to return.',
+              flag: 'side-echo-song'),
+        ]),
+    sideRaw(
+        id: 'sideQuarryLift',
+        unlockWeek: 24,
+        locationId: 'quarry',
+        sceneType: 'resource-crisis',
+        mechanic: 'load-balance',
+        requiresCompanions: ['bora', 'taro'],
+        titleKo: '무거운 돌 하나',
+        titleEn: 'One Heavy Stone',
+        bodyKo: '길을 막은 돌 하나를 옮기려면 모두의 힘을 빌려야 한다. 빠르게 들지, 쉬는 순서를 먼저 만들지 결정한다.',
+        bodyEn:
+            'Everyone’s strength is needed to move one stone blocking the route. Lift quickly, or make a rest order first.',
+        promptKo: '힘·피로·돌아올 자원을 함께 배분한다.',
+        promptEn:
+            'Allocate strength, fatigue, and resources for the return together.',
+        consequenceKo: '돌을 옮긴 순서가 동료 조합의 위기 대응 기록으로 남는다.',
+        consequenceEn:
+            'The lifting order remains as the companion pair’s crisis response record.',
+        choices: [
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: 0,
+              bondId: 'taro',
+              bondDelta: 4,
+              labelKo: '먼저 힘을 모은다',
+              labelEn: 'Gather strength first',
+              lineKo: '한 번에 옮기지 못해도 같이 들 수 있다는 걸 남기자.',
+              lineEn:
+                  'Even if it does not move at once, leave proof we can lift together.',
+              flag: 'side-lift-strength'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 2,
+              coins: -1,
+              bondId: 'bora',
+              bondDelta: 4,
+              labelKo: '쉬는 순서를 만든다',
+              labelEn: 'Make a rest order',
+              lineKo: '돌보다 사람이 먼저 돌아올 수 있어야 해.',
+              lineEn: 'People must be able to return before the stone does.',
+              flag: 'side-lift-rest'),
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 1,
+              coins: 1,
+              bondId: 'lumi',
+              bondDelta: 2,
+              labelKo: '무게를 다시 잰다',
+              labelEn: 'Measure the weight again',
+              lineKo: '무거움의 감각을 숫자로 바꾸면 다음 계산이 달라져.',
+              lineEn:
+                  'Turning heaviness into a number changes the next calculation.',
+              flag: 'side-lift-measure'),
+        ]),
+    sideRaw(
+        id: 'sideQuarryLedger',
+        unlockWeek: 36,
+        locationId: 'quarry',
+        sceneType: 'mini-game',
+        mechanic: 'stone-pattern',
+        titleKo: '돌의 무늬 읽기',
+        titleEn: 'Read the Stone Pattern',
+        bodyKo: '돌마다 금의 방향이 다르다. 세 조각 중 둘의 무늬를 맞춰야 안전한 통로를 고를 수 있다.',
+        bodyEn:
+            'Each stone has a different crack direction. Match two of three patterns to choose a safe passage.',
+        promptKo: '무늬·소리·빛 중 두 단서를 선택한다.',
+        promptEn: 'Choose two clues from pattern, sound, and light.',
+        consequenceKo: '고른 단서가 채석장 탈출 경로의 공개 기준이 된다.',
+        consequenceEn:
+            'The chosen clues become the public standard for the quarry exit route.',
+        choices: [
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 0,
+              bondId: 'lumi',
+              bondDelta: 3,
+              labelKo: '무늬와 빛을 맞춘다',
+              labelEn: 'Match pattern and light',
+              lineKo: '보이는 선과 숨은 균열이 만나는 지점을 찾자.',
+              lineEn: 'Find where visible lines meet hidden cracks.',
+              flag: 'side-stone-light'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 3,
+              labelKo: '소리를 두드려 확인한다',
+              labelEn: 'Check by tapping the sound',
+              lineKo: '안전한 길인지 손끝으로 확인하는 책임을 지자.',
+              lineEn:
+                  'Take responsibility for checking the route with our fingertips.',
+              flag: 'side-stone-sound'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 1,
+              coins: 1,
+              bondId: 'bora',
+              bondDelta: 2,
+              labelKo: '누가 걸을지 먼저 묻는다',
+              labelEn: 'Ask who will walk it first',
+              lineKo: '길의 안전은 사람의 몸과 함께 읽어야 해.',
+              lineEn: 'A route’s safety must be read with the people’s bodies.',
+              flag: 'side-stone-body'),
+        ]),
+    sideRaw(
+        id: 'sideQuarryExit',
+        unlockWeek: 48,
+        locationId: 'quarry',
+        sceneType: 'companion-pair',
+        mechanic: 'handoff-cairn',
+        requiresCompanions: ['lumi', 'bora', 'taro'],
+        titleKo: '세 손의 돌무더기',
+        titleEn: 'Cairn Made by Three Hands',
+        bodyKo: '세 동료가 각자 다른 돌을 하나씩 고른다. 돌무더기는 기념비가 아니라 다음 길을 찾는 장치가 되어야 한다.',
+        bodyEn:
+            'Each of the three companions chooses a different stone. The cairn must guide the next road, not become a monument.',
+        promptKo: '세 돌의 위치·이름·돌아올 방향을 함께 기록한다.',
+        promptEn:
+            'Record the three stones’ positions, names, and return direction together.',
+        consequenceKo: '세 손의 돌무더기가 여섯 장소를 잇는 마지막 탐험 증거가 된다.',
+        consequenceEn:
+            'The three-handed cairn becomes the final exploration evidence linking six places.',
+        choices: [
+          sideRawChoice(
+              id: 'lumi',
+              stat: '지혜',
+              delta: 2,
+              coins: 1,
+              bondId: 'lumi',
+              bondDelta: 4,
+              labelKo: '세 돌의 좌표를 남긴다',
+              labelEn: 'Leave all three coordinates',
+              lineKo: '기념보다 다시 찾을 수 있는 좌표가 오래 남아.',
+              lineEn:
+                  'Coordinates that can be found again last longer than a monument.',
+              flag: 'side-cairn-coordinates'),
+          sideRawChoice(
+              id: 'bora',
+              stat: '공감',
+              delta: 2,
+              coins: 0,
+              bondId: 'bora',
+              bondDelta: 4,
+              labelKo: '세 돌의 이름을 서로 읽는다',
+              labelEn: 'Read each stone’s name aloud',
+              lineKo: '각자의 돌을 함께 불러야 한 길이 되지 않아.',
+              lineEn: 'A single route needs us to call each stone together.',
+              flag: 'side-cairn-names'),
+          sideRawChoice(
+              id: 'taro',
+              stat: '용기',
+              delta: 2,
+              coins: -1,
+              bondId: 'taro',
+              bondDelta: 4,
+              labelKo: '돌무더기에서 다음 길로 나선다',
+              labelEn: 'Set out from the cairn',
+              lineKo: '표식은 멈추라고만 있는 게 아니라 다시 가라고 있는 거야.',
+              lineEn: 'A marker does not only say stop; it also says go again.',
+              flag: 'side-cairn-departure'),
+        ]),
+  ]);
+  for (final raw in sideSeeds) addSide(seedSide(raw));
 
   add(
       event(
@@ -1523,6 +3189,537 @@ void main() {
   story['events'] = byWeek.values.toList()
     ..sort((a, b) => (a['week'] as int).compareTo(b['week'] as int));
 
+  final locations = (story['locations'] as List).cast<Map<String, dynamic>>();
+  final extraLocations = [
+    {
+      'id': 'observatory',
+      'name': '새벽 관측소',
+      'nameKey': 'location.observatory.name',
+      'kind': 'observation',
+    },
+    {
+      'id': 'quarry',
+      'name': '별씨앗 채석장',
+      'nameKey': 'location.quarry.name',
+      'kind': 'resource',
+    },
+  ];
+  for (final location in extraLocations) {
+    locations.removeWhere((item) => item['id'] == location['id']);
+    locations.add(location);
+    ko['${location['nameKey']}'] = '${location['name']}';
+    en['${location['nameKey']}'] = location['id'] == 'observatory'
+        ? 'Dawn Observatory'
+        : 'Star-seed Quarry';
+  }
+  story['locations'] = locations;
+  final existingSideScenes =
+      (story['sideScenes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final sideById = <String, Map<String, dynamic>>{
+    for (final scene in existingSideScenes) '${scene['id']}': scene,
+  };
+  for (final scene in newSideScenes) sideById['${scene['id']}'] = scene;
+  story['sideScenes'] = sideById.values.toList()
+    ..sort(
+        (a, b) => (a['unlockWeek'] as int).compareTo(b['unlockWeek'] as int));
+
+  final activities = (story['activities'] as List).cast<Map<String, dynamic>>();
+  const activityIds = ['observatory', 'garden', 'workshop', 'rest', 'market'];
+  for (var i = 0; i < activities.length && i < activityIds.length; i++) {
+    activities[i]['id'] ??= activityIds[i];
+  }
+  final activityScenes = [
+    activityScene(
+        id: 'observatory-mist',
+        activityId: 'observatory',
+        titleKo: '안개 속 첫 별',
+        titleEn: 'First Star in the Mist',
+        momentKo: '관측소의 지붕이 안개에 잠겼다.',
+        momentEn: 'The observatory roof sank into mist.',
+        lineKo: '보이지 않는 날도 하늘의 일부로 적어 두자.',
+        lineEn: 'Record the unseen day as part of the sky.'),
+    activityScene(
+        id: 'observatory-late',
+        activityId: 'observatory',
+        titleKo: '늦은 별자리',
+        titleEn: 'A Late Constellation',
+        momentKo: '별 하나가 예상보다 늦게 나타났다.',
+        momentEn: 'One star appeared later than expected.',
+        lineKo: '늦었다는 사실이 틀렸다는 뜻은 아니야.',
+        lineEn: 'Being late does not mean being wrong.'),
+    activityScene(
+        id: 'garden-thin-leaf',
+        activityId: 'garden',
+        titleKo: '얇은 잎의 방향',
+        titleEn: 'Direction of a Thin Leaf',
+        momentKo: '얇은 잎 하나가 바람을 거슬러 자랐다.',
+        momentEn: 'A thin leaf grew against the wind.',
+        lineKo: '약한 방향도 계속되면 정원이 기억해.',
+        lineEn: 'A fragile direction becomes memorable when it continues.'),
+    activityScene(
+        id: 'garden-shared-water',
+        activityId: 'garden',
+        titleKo: '함께 든 물통',
+        titleEn: 'A Bucket Carried Together',
+        momentKo: '물통의 손잡이를 두 사람이 함께 잡았다.',
+        momentEn: 'Two people held the bucket handle together.',
+        lineKo: '무게가 반으로 줄지 않아도 혼자 들지 않을 수 있어.',
+        lineEn: 'The weight need not halve for no one to carry it alone.'),
+    activityScene(
+        id: 'workshop-loose-nail',
+        activityId: 'workshop',
+        titleKo: '느슨한 못',
+        titleEn: 'The Loose Nail',
+        momentKo: '작은 못 하나가 계속 흔들렸다.',
+        momentEn: 'One small nail kept shaking loose.',
+        lineKo: '작은 흔들림을 고치면 다음 실패가 덜 커져.',
+        lineEn: 'Fixing a small shake keeps the next failure smaller.'),
+    activityScene(
+        id: 'workshop-scrap',
+        activityId: 'workshop',
+        titleKo: '남은 조각',
+        titleEn: 'The Remaining Piece',
+        momentKo: '버려질 조각에서 맞는 모서리를 찾았다.',
+        momentEn: 'A matching edge was found in the scrap pile.',
+        lineKo: '남은 것은 낭비가 아니라 다음 설계의 단서가 될 수 있어.',
+        lineEn: 'What remains can be a clue for the next design, not waste.'),
+    activityScene(
+        id: 'rest-window',
+        activityId: 'rest',
+        titleKo: '창가의 쉼표',
+        titleEn: 'Comma by the Window',
+        momentKo: '창가의 빛이 하루의 속도를 늦췄다.',
+        momentEn: 'Window light slowed the day’s pace.',
+        lineKo: '멈춤도 다음 선택을 오래 보게 하는 활동이야.',
+        lineEn: 'Rest is an activity that lets the next choice stay visible.'),
+    activityScene(
+        id: 'rest-unread',
+        activityId: 'rest',
+        titleKo: '읽지 않은 쪽',
+        titleEn: 'The Unread Page',
+        momentKo: '읽지 않은 쪽을 남겨 둔 채 책을 덮었다.',
+        momentEn: 'The book closed with one page unread.',
+        lineKo: '모든 빈칸을 오늘 채우지 않아도 기록은 이어져.',
+        lineEn:
+            'The record continues even when every blank is not filled today.'),
+    activityScene(
+        id: 'market-small-change',
+        activityId: 'market',
+        titleKo: '작은 거스름돈',
+        titleEn: 'Small Change',
+        momentKo: '상인이 거스름돈을 한 번 더 세었다.',
+        momentEn: 'A merchant counted the change one more time.',
+        lineKo: '다시 세는 습관이 은화보다 오래 남아.',
+        lineEn: 'The habit of counting again lasts longer than the coin.'),
+    activityScene(
+        id: 'market-warm-bread',
+        activityId: 'market',
+        titleKo: '따뜻한 빵의 방향',
+        titleEn: 'Direction of Warm Bread',
+        momentKo: '빵 하나가 가장 늦게 온 사람에게 먼저 갔다.',
+        momentEn: 'A loaf went first to the person who arrived last.',
+        lineKo: '순서를 바꾸는 작은 친절도 장터의 규칙이 돼.',
+        lineEn:
+            'A small kindness that changes order can become a market rule.'),
+  ];
+  story['activityScenes'] = activityScenes;
+  for (final scene in activityScenes) {
+    for (final field in ['title', 'moment', 'line']) {
+      ko['${scene['${field}Key']}'] = '${scene[field]}';
+      en['${scene['${field}Key']}'] = '${scene['${field}En']}';
+    }
+  }
+
+  final endingVariants = [
+    endingVariant(
+        coreEndingId: 'stargazer',
+        variant: 'failure',
+        titleKo: '흐린 별의 기록',
+        titleEn: 'Record Beneath Clouded Stars',
+        bodyKo: '별을 다 읽지는 못했지만, 어디가 흐렸는지는 남겼다.',
+        bodyEn:
+            'The stars were not fully read, but where they blurred was recorded.'),
+    endingVariant(
+        coreEndingId: 'stargazer',
+        variant: 'neutral',
+        titleKo: '다시 보는 별자리',
+        titleEn: 'A Constellation to Revisit',
+        bodyKo: '노아는 해답보다 다음 관측의 기준을 남겼다.',
+        bodyEn:
+            'Noa left a standard for the next observation rather than a final answer.'),
+    endingVariant(
+        coreEndingId: 'stargazer',
+        variant: 'relationship',
+        titleKo: '둘이 읽은 새벽',
+        titleEn: 'Dawn Read Together',
+        bodyKo: '루미와 노아는 같은 하늘을 다른 근거로 읽으며 기록을 이어 갔다.',
+        bodyEn:
+            'Lumi and Noa continued the record, reading one sky from different reasons.'),
+    endingVariant(
+        coreEndingId: 'stargazer-master',
+        variant: 'failure',
+        titleKo: '계산 밖의 새벽',
+        titleEn: 'Dawn Outside the Calculation',
+        bodyKo: '지도는 완성되지 않았고, 다음 사람이 고칠 빈칸을 남겼다.',
+        bodyEn:
+            'The map stayed unfinished and left blanks for the next person to repair.'),
+    endingVariant(
+        coreEndingId: 'stargazer-master',
+        variant: 'neutral',
+        titleKo: '열린 항로',
+        titleEn: 'An Open Course',
+        bodyKo: '별과 바람의 주기는 누구나 다시 검증할 수 있는 길이 되었다.',
+        bodyEn:
+            'The cycles of stars and wind became a course anyone could verify again.'),
+    endingVariant(
+        coreEndingId: 'stargazer-master',
+        variant: 'relationship',
+        titleKo: '루미의 별표',
+        titleEn: 'Lumi’s Star Mark',
+        bodyKo: '루미는 마지막 장에 노아와 함께 다시 읽을 별표를 남겼다.',
+        bodyEn: 'Lumi left a star mark to reread with Noa on the final page.'),
+    endingVariant(
+        coreEndingId: 'gardener',
+        variant: 'failure',
+        titleKo: '아직 마르지 않은 흙',
+        titleEn: 'Soil Not Yet Dry',
+        bodyKo: '정원은 피지 않았지만, 물이 부족했던 날의 이름은 남았다.',
+        bodyEn:
+            'The garden did not bloom, but the names of dry days remained.'),
+    endingVariant(
+        coreEndingId: 'gardener',
+        variant: 'neutral',
+        titleKo: '함께 쉬는 정원',
+        titleEn: 'A Garden That Rests Together',
+        bodyKo: '노아는 성장 속도보다 서로 회복할 시간을 정원에 심었다.',
+        bodyEn:
+            'Noa planted time to recover together rather than a faster growth rate.'),
+    endingVariant(
+        coreEndingId: 'gardener',
+        variant: 'relationship',
+        titleKo: '보라의 계절표',
+        titleEn: 'Bora’s Season Table',
+        bodyKo: '보라와 노아는 매 계절 돌봄의 순서를 다시 읽는 정원을 만들었다.',
+        bodyEn:
+            'Bora and Noa made a garden that rereads the order of care each season.'),
+    endingVariant(
+        coreEndingId: 'gardener-master',
+        variant: 'failure',
+        titleKo: '닫힌 온실의 불빛',
+        titleEn: 'Light in the Closed Greenhouse',
+        bodyKo: '광장은 열리지 않았지만, 누구를 기다렸는지는 다음 장에 남았다.',
+        bodyEn:
+            'The commons did not open, but who waited remains in the next chapter.'),
+    endingVariant(
+        coreEndingId: 'gardener-master',
+        variant: 'neutral',
+        titleKo: '공동의 온기',
+        titleEn: 'Shared Warmth',
+        bodyKo: '서로 다른 속도가 함께 쉴 수 있는 규칙이 되었다.',
+        bodyEn:
+            'Different paces became a rule that lets everyone rest together.'),
+    endingVariant(
+        coreEndingId: 'gardener-master',
+        variant: 'relationship',
+        titleKo: '보라와 열린 문',
+        titleEn: 'The Open Gate with Bora',
+        bodyKo: '보라와 노아는 닫아야 할 때와 열어 둘 때를 함께 기록했다.',
+        bodyEn:
+            'Bora and Noa recorded together when to close and when to leave the gate open.'),
+    endingVariant(
+        coreEndingId: 'pathfinder',
+        variant: 'failure',
+        titleKo: '길 앞의 멈춤',
+        titleEn: 'A Pause Before the Road',
+        bodyKo: '첫 발은 늦었지만, 멈춰야 했던 이유가 표식으로 남았다.',
+        bodyEn:
+            'The first step was late, but the reason to pause became a marker.'),
+    endingVariant(
+        coreEndingId: 'pathfinder',
+        variant: 'neutral',
+        titleKo: '이름 없는 길',
+        titleEn: 'The Unnamed Road',
+        bodyKo: '노아는 모든 길에 이름을 붙이지 않고 다시 찾을 기준을 남겼다.',
+        bodyEn:
+            'Noa left ways to find the road again without naming every road.'),
+    endingVariant(
+        coreEndingId: 'pathfinder',
+        variant: 'relationship',
+        titleKo: '타로와 다음 발판',
+        titleEn: 'The Next Foothold with Taro',
+        bodyKo: '타로와 노아는 지도 밖에서도 서로 확인할 발판을 만들었다.',
+        bodyEn:
+            'Taro and Noa made footholds they could check even beyond the map.'),
+    endingVariant(
+        coreEndingId: 'pathfinder-master',
+        variant: 'failure',
+        titleKo: '아직 건너지 않은 경계',
+        titleEn: 'The Boundary Not Yet Crossed',
+        bodyKo: '경계를 넘지 못했지만, 위험한 곳과 돌아올 곳은 표시했다.',
+        bodyEn:
+            'The boundary was not crossed, but dangers and returns were marked.'),
+    endingVariant(
+        coreEndingId: 'pathfinder-master',
+        variant: 'neutral',
+        titleKo: '다시 건널 표식',
+        titleEn: 'Marker for Crossing Again',
+        bodyKo: '두려움이 사라지지 않아도 다음 사람이 길을 재현할 수 있게 되었다.',
+        bodyEn:
+            'Even with fear intact, the next person can reproduce the route.'),
+    endingVariant(
+        coreEndingId: 'pathfinder-master',
+        variant: 'relationship',
+        titleKo: '타로가 남긴 방향',
+        titleEn: 'Taro’s Direction',
+        bodyKo: '타로와 노아는 마지막 표식을 다음 여행자의 출발점으로 넘겼다.',
+        bodyEn:
+            'Taro and Noa passed the final marker on as the next traveller’s start.'),
+  ];
+  story['endingVariants'] = endingVariants;
+  for (final variant in endingVariants) {
+    ko['${variant['titleKey']}'] = '${variant['title']}';
+    en['${variant['titleKey']}'] = '${variant['titleEn']}';
+    ko['${variant['bodyKey']}'] = '${variant['body']}';
+    en['${variant['bodyKey']}'] = '${variant['bodyEn']}';
+  }
+
+  final companionSceneSeeds = <Map<String, dynamic>>[
+    {
+      'id': 'lumi-first-margin',
+      'companionId': 'lumi',
+      'chapter': 1,
+      'titleKo': '첫 여백을 접는 법',
+      'titleEn': 'How to Fold the First Margin',
+      'themeKo': '빈칸을 지우지 않고 모서리를 접는다.',
+      'themeEn': 'folds the corner without erasing the blank.',
+      'lineKo': '빈칸이 있어야 다음 사람이 어디를 봐야 하는지 알 수 있어.',
+      'lineEn': 'A blank tells the next person where to look.'
+    },
+    {
+      'id': 'lumi-slow-star',
+      'companionId': 'lumi',
+      'chapter': 3,
+      'titleKo': '느린 별의 이름',
+      'titleEn': 'Name of a Slow Star',
+      'themeKo': '예측보다 늦게 뜬 별을 오래 바라본다.',
+      'themeEn': 'watches a star rise later than predicted.',
+      'lineKo': '늦게 도착한 사실도 사실의 자리를 가질 수 있어.',
+      'lineEn': 'A late-arriving fact can still have a place among facts.'
+    },
+    {
+      'id': 'lumi-open-ledger',
+      'companionId': 'lumi',
+      'chapter': 5,
+      'titleKo': '열린 장부의 첫 줄',
+      'titleEn': 'First Line of an Open Ledger',
+      'themeKo': '누구나 읽을 수 있는 장부의 첫 줄을 비워 둔다.',
+      'themeEn': 'leaves the first line of a public ledger open.',
+      'lineKo': '공개는 다 보여 주는 일이 아니라 다시 물을 자리를 남기는 일이야.',
+      'lineEn': 'Openness leaves a place where someone can ask again.'
+    },
+    {
+      'id': 'lumi-cloud-measure',
+      'companionId': 'lumi',
+      'chapter': 7,
+      'titleKo': '구름의 측정값',
+      'titleEn': 'Measurement of a Cloud',
+      'themeKo': '숫자로 잡히지 않는 구름의 한계를 표시한다.',
+      'themeEn': 'marks the limit of a cloud that resists numbers.',
+      'lineKo': '측정 한계를 보이는 것도 정확함의 일부야.',
+      'lineEn': 'Showing a measurement limit is part of accuracy.'
+    },
+    {
+      'id': 'lumi-two-signals',
+      'companionId': 'lumi',
+      'chapter': 11,
+      'titleKo': '두 번 울린 신호',
+      'titleEn': 'The Twice-Rung Signal',
+      'themeKo': '두 신호 사이의 간격을 지도에 남긴다.',
+      'themeEn': 'leaves the interval between two signals on the map.',
+      'lineKo': '삭제된 시작도 다음 판단의 원인이 될 수 있어.',
+      'lineEn': 'A deleted beginning can still cause the next judgement.'
+    },
+    {
+      'id': 'lumi-first-question',
+      'companionId': 'lumi',
+      'chapter': 16,
+      'titleKo': '다음 사람의 질문',
+      'titleEn': 'The Next Person’s Question',
+      'themeKo': '마지막 장에 답 대신 질문 하나를 남긴다.',
+      'themeEn': 'leaves one question instead of an answer on the last page.',
+      'lineKo': '좋은 기록은 답을 닫지 않고 다음 손을 초대해.',
+      'lineEn':
+          'A good record does not close the answer; it invites the next hand.'
+    },
+    {
+      'id': 'bora-shared-water',
+      'companionId': 'bora',
+      'chapter': 2,
+      'titleKo': '같이 든 물통',
+      'titleEn': 'The Shared Water Bucket',
+      'themeKo': '같은 물통을 두 사람이 들 수 있도록 손잡이를 고친다.',
+      'themeEn': 'repairs the handle so two people can carry one bucket.',
+      'lineKo': '무게가 줄지 않아도 혼자 들지 않게 만들 수 있어.',
+      'lineEn': 'The weight may not shrink, but no one has to carry it alone.'
+    },
+    {
+      'id': 'bora-waiting-seat',
+      'companionId': 'bora',
+      'chapter': 4,
+      'titleKo': '기다리는 자리',
+      'titleEn': 'A Place to Wait',
+      'themeKo': '늦게 오는 사람이 앉을 의자를 온실 문 앞에 둔다.',
+      'themeEn': 'places a chair for the late arrival by the greenhouse gate.',
+      'lineKo': '기다리는 시간도 함께 만든 하루의 일부야.',
+      'lineEn': 'Waiting time is part of the day we make together.'
+    },
+    {
+      'id': 'bora-first-harvest',
+      'companionId': 'bora',
+      'chapter': 6,
+      'titleKo': '첫 수확의 몫',
+      'titleEn': 'Share of the First Harvest',
+      'themeKo': '작은 첫 수확을 누구에게 먼저 건넬지 멈춰 선다.',
+      'themeEn': 'pauses over who receives the small first harvest.',
+      'lineKo': '공정함은 모두에게 같은 조각이 아니라 기준을 함께 읽는 일이야.',
+      'lineEn':
+          'Fairness is reading the standard together, not giving everyone the same piece.'
+    },
+    {
+      'id': 'bora-care-ledger',
+      'companionId': 'bora',
+      'chapter': 8,
+      'titleKo': '돌봄의 영수증',
+      'titleEn': 'Receipt for Care',
+      'themeKo': '보이지 않는 돌봄 시간을 장부의 빈칸에서 꺼낸다.',
+      'themeEn': 'pulls invisible care time out of the ledger’s blank.',
+      'lineKo': '기록되지 않은 수고는 없는 일이 되기 쉬워.',
+      'lineEn': 'Unrecorded effort is easily treated as if it never happened.'
+    },
+    {
+      'id': 'bora-rain-queue',
+      'companionId': 'bora',
+      'chapter': 12,
+      'titleKo': '비를 기다리는 순서',
+      'titleEn': 'Order of Waiting for Rain',
+      'themeKo': '비가 늦어진 온실에서 기다린 순서를 다시 부른다.',
+      'themeEn': 'calls the waiting order again in the late-rain greenhouse.',
+      'lineKo': '순서도 사람의 상태를 만날 때 다시 읽어야 해.',
+      'lineEn': 'Order must be reread when it meets a person’s condition.'
+    },
+    {
+      'id': 'bora-open-garden',
+      'companionId': 'bora',
+      'chapter': 15,
+      'titleKo': '열린 정원의 문',
+      'titleEn': 'Gate of the Open Garden',
+      'themeKo': '정원의 문을 잠그는 대신 누구나 볼 표식을 단다.',
+      'themeEn': 'marks the garden for all to see instead of locking its gate.',
+      'lineKo': '열어 두는 일에도 다시 닫을 수 있는 기준이 필요해.',
+      'lineEn': 'Openness still needs a rule for closing again.'
+    },
+    {
+      'id': 'taro-broken-rope',
+      'companionId': 'taro',
+      'chapter': 1,
+      'titleKo': '끊어진 밧줄의 매듭',
+      'titleEn': 'Knot in the Broken Rope',
+      'themeKo': '강 건너 밧줄의 가장 닳은 매듭을 먼저 잡는다.',
+      'themeEn': 'grabs the most worn knot on the river rope first.',
+      'lineKo': '먼저 고친 곳이 다음 사람이 믿을 발판이 돼.',
+      'lineEn': 'The first repair becomes a foothold the next person can trust.'
+    },
+    {
+      'id': 'taro-first-workshop',
+      'companionId': 'taro',
+      'chapter': 3,
+      'titleKo': '공방의 첫 못',
+      'titleEn': 'The Workshop’s First Nail',
+      'themeKo': '느슨한 못 하나를 버리지 않고 다시 박는다.',
+      'themeEn': 'resets one loose nail instead of throwing it away.',
+      'lineKo': '고치는 시간도 만드는 시간의 일부로 세어 줘.',
+      'lineEn': 'Count repair time as part of making.'
+    },
+    {
+      'id': 'taro-roof-line',
+      'companionId': 'taro',
+      'chapter': 6,
+      'titleKo': '지붕 위의 선',
+      'titleEn': 'Line on the Roof',
+      'themeKo': '구름 뒤의 별을 보기 위해 지붕 위에 선을 긋는다.',
+      'themeEn': 'draws a line on the roof to see the star behind clouds.',
+      'lineKo': '경계는 멈추게도 하지만 어디서 다시 시작할지도 알려 줘.',
+      'lineEn': 'A boundary can stop us and tell us where to start again.'
+    },
+    {
+      'id': 'taro-field-marker',
+      'companionId': 'taro',
+      'chapter': 9,
+      'titleKo': '빈 터의 표식',
+      'titleEn': 'Marker in the Empty Field',
+      'themeKo': '누군가 돌아올 높이로 빈 터에 돌을 쌓는다.',
+      'themeEn': 'stacks stones at the height of someone returning.',
+      'lineKo': '표식은 만드는 사람보다 돌아오는 사람의 몸을 먼저 생각해야 해.',
+      'lineEn':
+          'A marker must think first of the returning body, not its maker.'
+    },
+    {
+      'id': 'taro-quarry-weight',
+      'companionId': 'taro',
+      'chapter': 13,
+      'titleKo': '돌의 무게를 나누기',
+      'titleEn': 'Divide the Stone’s Weight',
+      'themeKo': '채석장의 돌을 혼자 들려다 다른 손을 부른다.',
+      'themeEn':
+          'calls for another hand while trying to lift a quarry stone alone.',
+      'lineKo': '용기는 혼자 버티는 힘이 아니라 손을 부르는 힘이기도 해.',
+      'lineEn': 'Courage is also the strength to call for another hand.'
+    },
+    {
+      'id': 'taro-next-foothold',
+      'companionId': 'taro',
+      'chapter': 16,
+      'titleKo': '다음 발판',
+      'titleEn': 'The Next Foothold',
+      'themeKo': '마지막 길에 답 대신 발을 놓을 곳을 표시한다.',
+      'themeEn': 'marks where a foot can land instead of leaving an answer.',
+      'lineKo': '끝난 길도 다음 발이 닿으면 다시 시작할 수 있어.',
+      'lineEn': 'A finished road can begin again when the next foot lands.'
+    },
+  ];
+  final companionNames = {'lumi': '루미', 'bora': '보라', 'taro': '타로'},
+      companionNamesEn = {'lumi': 'Lumi', 'bora': 'Bora', 'taro': 'Taro'};
+  final companionScenes = companionSceneSeeds.map((raw) {
+    final id = '${raw['id']}',
+        companionId = '${raw['companionId']}',
+        nameKo = companionNames[companionId]!,
+        nameEn = companionNamesEn[companionId]!;
+    return companionScene(
+      id: id,
+      companionId: companionId,
+      chapter: raw['chapter'] as int,
+      titleKo: '${raw['titleKo']}',
+      titleEn: '${raw['titleEn']}',
+      bodyKo: '$nameKo와 노아는 ${raw['themeKo']}',
+      bodyEn: '$nameEn and Noa ${raw['themeEn']}',
+      promptKo: '$nameKo의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다.',
+      promptEn:
+          'Choose the next question together without deciding ${nameEn}’s judgement for them.',
+      lineKo: '${raw['lineKo']}',
+      lineEn: '${raw['lineEn']}',
+      closingKo: '$nameKo의 독립 장면은 다음 막의 조건으로 기록되었다.',
+      closingEn:
+          '$nameEn’s independent scene was recorded as a condition for the next chapter.',
+    );
+  }).toList();
+  story['companionScenes'] = companionScenes;
+  for (final scene in companionScenes) {
+    for (final field in ['title', 'body', 'prompt', 'line', 'closing']) {
+      ko['${scene['${field}Key']}'] = '${scene[field]}';
+      en['${scene['${field}Key']}'] = '${scene['${field}En']}';
+    }
+  }
+
   final newChapters = [
     chapter(
         id: 'seedReturn',
@@ -1849,22 +4046,31 @@ void main() {
   story['contentBudget'] = {
     'schema': 'lumen-playtime-v1',
     'minimumMinutes': 120,
-    'estimatedFirstPlaythroughMinutes': 137,
+    'estimatedFirstPlaythroughMinutes': 156,
     'benchmarkMaxMillis': 24000,
     'campaignWeeks': 48,
     'terminalWeek': 49,
     'authoredEvents': 47,
     'authoredChoices': 94,
+    'sideScenes': 24,
+    'sideSceneChoices': 72,
+    'authoredScenes': 71,
+    'activityMiniEvents': 10,
+    'companionScenes': 18,
+    'endingVariants': 18,
+    'locations': 6,
     'chapterClosures': 16,
     'chapterSceneBeats': 16,
     'pacingSeconds': {
       'activityReflection': 75,
       'storyChoice': 75,
+      'sideScene': 45,
       'chapterClosure': 30,
       'chapterSceneBeat': 30,
+      'activityMiniEvent': 20,
     },
     'formula':
-        '48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s + 16 relationship scene beats × 30s = 8,235s = 137m; contract reports a conservative 137m first-playthrough estimate.',
+        '48 activity reflections × 75s + 47 story choices × 75s + 24 side scenes × 45s + 16 chapter closures × 30s + 16 relationship beats × 30s + 10 activity mini-events × 20s = 9,365s = 156m; optional side content is counted separately from the mandatory 48-week route.',
   };
   story['fateThreads'] = [
     {
@@ -2301,18 +4507,33 @@ void main() {
   };
   story['dialogueMetrics'] = {
     'locales': 'ko,en',
-    'minimumLocaleKeys': 494,
+    'minimumLocaleKeys': ko.length,
     'minimumVisibleDialogueLines': 63,
-    'minimumVisibleNarrativeUnits': 176,
-    'authoredDialogueLines': 216,
+    'minimumVisibleNarrativeUnits': 240,
+    'authoredDialogueLines': 612,
+    'baseAuthoredDialogueLines': 216,
+    'sideSceneDialogueLines': 240,
+    'companionSceneDialogueLines': 90,
+    'activityMiniEventDialogueLines': 30,
+    'endingVariantDialogueLines': 36,
     'formula':
-        'catalog 494 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units',
+        'authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines (title/body/prompt/consequence + 3 choice labels + 3 response lines) + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units',
   };
-  final choices = (story['events'] as List)
+  final mainChoices = (story['events'] as List)
       .cast<Map<String, dynamic>>()
       .expand(
           (event) => (event['choices'] as List).cast<Map<String, dynamic>>())
       .toList();
+  final sideChoices = (story['sideScenes'] as List)
+      .cast<Map<String, dynamic>>()
+      .expand(
+          (scene) => (scene['choices'] as List).cast<Map<String, dynamic>>())
+      .toList();
+  final choices = [...mainChoices, ...sideChoices];
+  final authoredScenes = [
+    ...(story['events'] as List).cast<Map<String, dynamic>>(),
+    ...(story['sideScenes'] as List).cast<Map<String, dynamic>>(),
+  ];
   const numericAxes = ['delta', 'coins', 'bondDelta', 'rivalDelta'];
   int axes(Map<String, dynamic> choice) =>
       numericAxes.where((key) => ((choice[key] as num?) ?? 0) != 0).length;
@@ -2337,8 +4558,7 @@ void main() {
               choice['legacyBonuses'] != null)
           .length,
       multiAxis = choices.where((choice) => axes(choice) >= 2).length,
-      divergentEvents = (story['events'] as List)
-          .cast<Map<String, dynamic>>()
+      divergentEvents = authoredScenes
           .where((event) =>
               (event['choices'] as List)
                   .cast<Map<String, dynamic>>()
@@ -2369,7 +4589,7 @@ void main() {
       'multiAxisChoices': multiAxis,
       'multiAxisImpactRate': multiAxis / choices.length,
       'divergentEvents': divergentEvents,
-      'eventDivergenceRate': divergentEvents / (story['events'] as List).length,
+      'eventDivergenceRate': divergentEvents / authoredScenes.length,
       'gatedChoices': gatedChoices,
     },
     'definitions': {
@@ -2391,17 +4611,17 @@ void main() {
       .cast<Map<String, dynamic>>();
   final byId = {for (final d in dimensions) '${d['id']}': d};
   byId['arc']!['current'] =
-      '16 chapters / 47 events / 4 locations / 16 milestones / 16 chapter contracts / terminal week 49';
+      '16 chapters / 47 main events + 24 side scenes = 71 authored scenes / 6 locations / 16 milestones / terminal week 49';
   byId['agency']!['current'] =
-      '94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible';
+      '94 main choices + 72 side-scene choices; crisis, exploration, resource, mini-game and companion-pair mechanics; memory flags carry consequences';
   byId['relationship']!['current'] =
-      '3 companions / rival conflict / deterministic tension-estrangement-truce state / one exclusive follow-up per state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats';
+      '3 companions / 18 independent companion scenes (6 each) / rival conflict / deterministic relationship states / 3 bond-route epilogues / 16 chapter relationship beats';
   byId['feedback']!['current'] =
-      'stats, coins, fatigue, 16 milestones and 6 endings';
+      'stats, coins, fatigue, 16 milestones, 10 activity mini-events, 6 core endings and 18 ending variants';
   byId['gating']!['current'] =
       '16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings';
   byId['presentation']!['current'] =
-      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats, visible relationship states and exclusive state follow-ups / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
+      'Canvas event and closure evidence plus 6-location route atlas, 18 companion scenes, 24 side-scene records, 10 activity reflections, 18 ending variants, ko+en catalogs, speaker portrait bindings and system decision receipts';
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;
@@ -2410,13 +4630,18 @@ void main() {
   materializeChapterScenes(story, ko, en);
   story['narrativeLoop']['chapterSceneCount'] =
       (story['progression'] as List).length;
-  story['dialogueMetrics']['minimumLocaleKeys'] = 505;
+  story['dialogueMetrics']['minimumLocaleKeys'] = ko.length;
   story['dialogueMetrics']['minimumVisibleDialogueLines'] =
       (story['events'] as List).length + (story['progression'] as List).length;
-  story['dialogueMetrics']['minimumVisibleNarrativeUnits'] = 176;
-  story['dialogueMetrics']['authoredDialogueLines'] = 216;
+  story['dialogueMetrics']['minimumVisibleNarrativeUnits'] = 240;
+  story['dialogueMetrics']['authoredDialogueLines'] =
+      (story['dialogueMetrics']['baseAuthoredDialogueLines'] as int) +
+          (story['dialogueMetrics']['sideSceneDialogueLines'] as int) +
+          (story['dialogueMetrics']['companionSceneDialogueLines'] as int) +
+          (story['dialogueMetrics']['activityMiniEventDialogueLines'] as int) +
+          (story['dialogueMetrics']['endingVariantDialogueLines'] as int);
   story['dialogueMetrics']['formula'] =
-      'catalog 505 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6 + relationship follow-up UI 11; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units';
+      'authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units';
 
   koFile.writeAsStringSync(encodeJsonlCatalog(
       ko.map((key, value) => MapEntry(key, '$value')),

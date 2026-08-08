@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:prince_maker/jsonl.dart';
 import 'package:crypto/crypto.dart';
+import 'package:prince_maker/quality_score.dart';
 
 void verifyTrilemmaContract(String storyHash,
     {required int endingWeek, required int eventCount}) {
@@ -25,7 +26,7 @@ void verifyTrilemmaContract(String storyHash,
   final purity = (byId['purity']!['guardrails'] as Map).cast<String, dynamic>();
   final performance =
       (byId['performance']!['guardrails'] as Map).cast<String, dynamic>();
-  if ((byId['completeness']!['targetScore'] as num) < 0.95 ||
+  if ((byId['completeness']!['targetScore'] as num) < qualityScoreTarget ||
       complete['scenarioDimensions'] != 8 ||
       (complete['scenarioCases'] as int? ?? 0) < 2000 ||
       (complete['scenarioRouteInputs'] as int? ?? 0) < 2000 ||
@@ -33,6 +34,7 @@ void verifyTrilemmaContract(String storyHash,
       (complete['companionQuestStages'] as int? ?? 0) < 9 ||
       complete['goldens'] < 20 ||
       complete['localeKeys'] < 118 ||
+      complete['qualityScoreTarget'] != qualityScoreTarget ||
       purity['minDistinctEndings'] < 3 ||
       purity['minDistinctSignatures'] < 3 ||
       (purity['scenarioCases'] as int? ?? 0) < 2000 ||
@@ -48,6 +50,7 @@ void verifyTrilemmaContract(String storyHash,
       (purity['eventDivergenceRate'] as num? ?? 0) < 1.0 ||
       (purity['multiAxisImpactRate'] as num? ?? 0) < 0.9 ||
       (purity['minimumGatedChoices'] as int? ?? 0) < 20 ||
+      purity['qualityScoreTarget'] != qualityScoreTarget ||
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] != 5000 * (endingWeek - 1 + eventCount) ||
       performance['maxMillis'] != 24000 ||
@@ -55,6 +58,7 @@ void verifyTrilemmaContract(String storyHash,
       performance['lineageTargetEndings'] < 3 ||
       performance['lineageTargetCompanions'] < 3 ||
       performance['checksumReplayMustMatch'] != true ||
+      performance['qualityScoreTarget'] != qualityScoreTarget ||
       performance['systemApproval'] != true ||
       performance['failClosed'] != true) {
     fail('trilemma targets or guardrails are below the project contract');
@@ -114,6 +118,10 @@ void main() {
       ((story['endingWeek'] as int) - 1).clamp(1, 999).toInt();
   final contentBudget =
       (story['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
+  final sideScenes =
+      (story['sideScenes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final activityScenes = (story['activityScenes'] as List? ?? const [])
+      .cast<Map<String, dynamic>>();
   final scenarioVariantBudget =
       (story['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
   final endingDesign =
@@ -139,14 +147,19 @@ void main() {
       contentBudget['terminalWeek'] != story['endingWeek'] ||
       contentBudget['authoredEvents'] != events.length ||
       contentBudget['authoredChoices'] != events.length * 2 ||
+      contentBudget['sideScenes'] != sideScenes.length ||
+      contentBudget['activityMiniEvents'] != activityScenes.length ||
       contentBudget['chapterClosures'] != progression.length ||
       contentBudget['chapterSceneBeats'] != progression.length ||
       (contentBudget['pacingSeconds'] as Map? ?? {})['activityReflection']
           is! int ||
       (contentBudget['pacingSeconds'] as Map? ?? {})['storyChoice'] is! int ||
+      (contentBudget['pacingSeconds'] as Map? ?? {})['sideScene'] is! int ||
       (contentBudget['pacingSeconds'] as Map? ?? {})['chapterClosure']
           is! int ||
       (contentBudget['pacingSeconds'] as Map? ?? {})['chapterSceneBeat']
+          is! int ||
+      (contentBudget['pacingSeconds'] as Map? ?? {})['activityMiniEvent']
           is! int) {
     fail('content budget must prove the minimum 120-minute campaign');
   }
@@ -155,8 +168,14 @@ void main() {
   final estimatedSeconds =
       campaignWeeks * (pacing['activityReflection'] as int) +
           events.length * (pacing['storyChoice'] as int) +
+          sideScenes.length * (pacing['sideScene'] as int) +
           progression.length * (pacing['chapterClosure'] as int) +
-          progression.length * (pacing['chapterSceneBeat'] as int);
+          progression.length * (pacing['chapterSceneBeat'] as int) +
+          activityScenes.length * (pacing['activityMiniEvent'] as int);
+  if (contentBudget['estimatedFirstPlaythroughMinutes'] !=
+      estimatedSeconds ~/ 60)
+    fail(
+        'content budget estimated minutes do not match the authored pacing formula');
   if (estimatedSeconds < (contentBudget['minimumMinutes'] as int) * 60)
     fail('content budget pacing is below the minimum playtime');
   final branchWeeks =
@@ -227,11 +246,11 @@ void main() {
       (decisionSystem['rules'] as List? ?? const []).length < 3) {
     fail('decision system must be deterministic, fail-closed and auditable');
   }
-  if (locations.length != 4 ||
-      locations.map((location) => location['id']).toSet().length != 4 ||
+  if (locations.length != 6 ||
+      locations.map((location) => location['id']).toSet().length != 6 ||
       locations.any((location) =>
           location['name'] is! String || location['nameKey'] is! String)) {
-    fail('location registry must contain four localized unique places');
+    fail('location registry must contain six localized unique places');
   }
   final locationIds = locations.map((location) => location['id']).toSet();
   if (events.any((event) => !locationIds.contains(event['locationId']))) {
@@ -678,6 +697,14 @@ void main() {
       File('test/system_receipt_golden_test.dart').existsSync()
           ? File('test/system_receipt_golden_test.dart').readAsStringSync()
           : '';
+  final characterRosterGoldenEvidence =
+      File('test/character_roster_golden_test.dart').existsSync()
+          ? File('test/character_roster_golden_test.dart').readAsStringSync()
+          : '';
+  final environmentAtlasGoldenEvidence =
+      File('test/environment_golden_test.dart').existsSync()
+          ? File('test/environment_golden_test.dart').readAsStringSync()
+          : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
           ? File('tool/verify_scenario_variants.dart').readAsStringSync()
@@ -712,6 +739,10 @@ void main() {
     'narrative-ledger.png',
     'narrative-ledger-en.png',
     'system-receipt.png',
+    'character-roster.png',
+    'character-roster-en.png',
+    'environment-atlas.png',
+    'environment-atlas-en.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -746,7 +777,7 @@ void main() {
     'content': activities.length >= 5 &&
         people.length >= 3 &&
         companions.length >= 3 &&
-        locations.length == 4 &&
+        locations.length == 6 &&
         legacyProfiles.length == 3 &&
         milestones.length == progression.length,
     'branching': events.length >= 4 &&
@@ -783,6 +814,14 @@ void main() {
             .contains("matchesGoldenFile('goldens/narrative-ledger-en.png')") &&
         receiptGoldenEvidence
             .contains("matchesGoldenFile('goldens/system-receipt.png')") &&
+        characterRosterGoldenEvidence
+            .contains("goldens/character-roster.png") &&
+        characterRosterGoldenEvidence
+            .contains("goldens/character-roster-en.png") &&
+        environmentAtlasGoldenEvidence
+            .contains("goldens/environment-atlas.png") &&
+        environmentAtlasGoldenEvidence
+            .contains("goldens/environment-atlas-en.png") &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(
@@ -794,7 +833,9 @@ void main() {
         dialogueMetrics['minimumVisibleDialogueLines'] ==
             events.length + progression.length &&
         dialogueMetrics['minimumVisibleNarrativeUnits'] >= 160,
-    'assets': assetRefs.length >= 4 && fontRefs.isNotEmpty,
+    'assets': assetRefs.length >= 5 &&
+        assetPaths.contains('assets/lumen-character-roster.png') &&
+        fontRefs.isNotEmpty,
     'traceability': refs.length >= 3 &&
         File('docs/review-manifest.jsonl').existsSync() &&
         File('docs/ssot-metrics.md').existsSync(),
@@ -839,7 +880,7 @@ void main() {
   final score =
       (dimensions.values.where((v) => v).length * 100 / dimensions.length)
           .round();
-  if (score < 95) fail('completeness score below 95%: $score%');
+  if (score < 99) fail('completeness score below 99%: $score%');
   stdout.writeln(
       'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} fateThreads=${fateThreads.length} questStages=$companionQuestStages codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
 }

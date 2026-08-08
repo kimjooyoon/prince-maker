@@ -512,3 +512,401 @@
 {"type":"entry","key":"ui.relationship.followup.estranged.line","value":"멀어진 거리는 실패의 이름이 아니야. 답장이 올 자리를 지켜 보자."}
 {"type":"entry","key":"ui.relationship.followup.truce.title","value":"다시 묶은 바람"}
 {"type":"entry","key":"ui.relationship.followup.truce.line","value":"서로의 몫을 돌려준 뒤에야, 같은 바람을 다시 탈 수 있어."}
+{"type":"entry","key":"event.sideArchiveLantern.title","value":"꺼진 등불의 색인"}
+{"type":"entry","key":"event.sideArchiveLantern.body","value":"기록관 뒤편의 등불 세 개가 서로 다른 색으로 꺼졌다. 불을 켜기 전에 누가 무엇을 읽을지 정해야 한다."}
+{"type":"entry","key":"event.sideArchiveLantern.prompt","value":"단서를 색·시간·사람 중 하나의 순서로 정렬한다."}
+{"type":"entry","key":"event.sideArchiveLantern.consequence","value":"정렬 방식은 이후 기록을 읽는 루틴으로 남는다."}
+{"type":"entry","key":"event.sideArchiveLantern.lumi.label","value":"루미와 시간순으로 맞춘다"}
+{"type":"entry","key":"event.sideArchiveLantern.lumi.line","value":"먼저와 나중을 보이면 사라진 손도 다시 보일 거야."}
+{"type":"entry","key":"event.sideArchiveLantern.bora.label","value":"보라와 사람순으로 맞춘다"}
+{"type":"entry","key":"event.sideArchiveLantern.bora.line","value":"색보다 먼저 누가 기다렸는지를 놓치지 말자."}
+{"type":"entry","key":"event.sideArchiveLantern.taro.label","value":"타로와 직접 불을 옮긴다"}
+{"type":"entry","key":"event.sideArchiveLantern.taro.line","value":"어둠을 설명하기 전에 한 등불부터 다시 세워 보자."}
+{"type":"entry","key":"event.sideArchiveIndex.title","value":"비어 있는 서랍"}
+{"type":"entry","key":"event.sideArchiveIndex.body","value":"새 기록을 넣을 서랍이 하나뿐이다. 오래된 종이와 오늘의 증거 중 하나만 먼저 보존할 수 있다."}
+{"type":"entry","key":"event.sideArchiveIndex.prompt","value":"은화와 보존 공간을 함께 계산해야 한다."}
+{"type":"entry","key":"event.sideArchiveIndex.consequence","value":"무엇을 먼저 보존했는지가 기록의 빈칸으로 표시된다."}
+{"type":"entry","key":"event.sideArchiveIndex.lumi.label","value":"오래된 종이를 먼저 묶는다"}
+{"type":"entry","key":"event.sideArchiveIndex.lumi.line","value":"과거를 지켜야 오늘의 판단도 어디서 왔는지 보이지."}
+{"type":"entry","key":"event.sideArchiveIndex.bora.label","value":"오늘 기다린 사람의 기록을 넣는다"}
+{"type":"entry","key":"event.sideArchiveIndex.bora.line","value":"기다린 시간도 한 사람의 하루였다는 걸 남기자."}
+{"type":"entry","key":"event.sideArchiveIndex.taro.label","value":"서랍을 고쳐 하나 더 만든다"}
+{"type":"entry","key":"event.sideArchiveIndex.taro.line","value":"공간이 없다면 공간을 만드는 일부터 책임지자."}
+{"type":"entry","key":"event.sideArchiveNight.title","value":"두 목소리의 여백"}
+{"type":"entry","key":"event.sideArchiveNight.body","value":"루미와 보라가 같은 기록을 서로 다른 속도로 읽는다. 침묵을 오류로 볼지, 생각할 자리로 둘지 정해야 한다."}
+{"type":"entry","key":"event.sideArchiveNight.prompt","value":"두 동료의 해석을 겹치지 않게 남긴다."}
+{"type":"entry","key":"event.sideArchiveNight.consequence","value":"한 문장에 두 개의 근거가 붙어 다음 사건의 조건이 된다."}
+{"type":"entry","key":"event.sideArchiveNight.lumi.label","value":"루미의 여백을 측정한다"}
+{"type":"entry","key":"event.sideArchiveNight.lumi.line","value":"말하지 않은 부분도 기록의 일부로 보이게 하자."}
+{"type":"entry","key":"event.sideArchiveNight.bora.label","value":"보라의 침묵을 기다린다"}
+{"type":"entry","key":"event.sideArchiveNight.bora.line","value":"대답을 재촉하지 않는 시간이 두 사람을 지켜 줘."}
+{"type":"entry","key":"event.sideArchiveNight.taro.label","value":"타로에게 읽는 규칙을 맡긴다"}
+{"type":"entry","key":"event.sideArchiveNight.taro.line","value":"누가 읽을지 바뀌어도 근거가 남는지 시험해 보자."}
+{"type":"entry","key":"event.sideArchiveWitness.title","value":"증인의 자리"}
+{"type":"entry","key":"event.sideArchiveWitness.body","value":"오래된 증언의 마지막 칸이 비어 있다. 기억하는 사람과 기록하는 사람 중 누가 그 자리를 맡을까?"}
+{"type":"entry","key":"event.sideArchiveWitness.prompt","value":"증언의 순서를 세 명의 증인에게 다시 확인한다."}
+{"type":"entry","key":"event.sideArchiveWitness.consequence","value":"증인의 순서가 누락을 찾는 탐험 규칙이 된다."}
+{"type":"entry","key":"event.sideArchiveWitness.lumi.label","value":"루미에게 증언의 순서를 맡긴다"}
+{"type":"entry","key":"event.sideArchiveWitness.lumi.line","value":"기억을 믿되, 다시 확인할 계단도 남겨야 해."}
+{"type":"entry","key":"event.sideArchiveWitness.bora.label","value":"보라와 빈 자리를 함께 지킨다"}
+{"type":"entry","key":"event.sideArchiveWitness.bora.line","value":"대신 이름을 채우지 않는 돌봄도 증언이 될 수 있어."}
+{"type":"entry","key":"event.sideArchiveWitness.taro.label","value":"타로와 현장 표식을 찾는다"}
+{"type":"entry","key":"event.sideArchiveWitness.taro.line","value":"종이 밖에 남은 흔적도 한 번은 직접 확인하자."}
+{"type":"entry","key":"event.sideGreenhouseRain.title","value":"비가 늦은 온실"}
+{"type":"entry","key":"event.sideGreenhouseRain.body","value":"물이 모자란 날, 새싹과 오래된 나무가 같은 물통을 바라본다. 모두에게 같은 양이 공정할까?"}
+{"type":"entry","key":"event.sideGreenhouseRain.prompt","value":"물의 양보다 기다린 시간과 회복 가능성을 비교한다."}
+{"type":"entry","key":"event.sideGreenhouseRain.consequence","value":"물 배분표가 자원 위기에서 다시 쓸 수 있는 규칙이 된다."}
+{"type":"entry","key":"event.sideGreenhouseRain.bora.label","value":"기다린 순서대로 나눈다"}
+{"type":"entry","key":"event.sideGreenhouseRain.bora.line","value":"오래 기다린 마음부터 회복할 물을 건네자."}
+{"type":"entry","key":"event.sideGreenhouseRain.lumi.label","value":"회복 가능성을 계산한다"}
+{"type":"entry","key":"event.sideGreenhouseRain.lumi.line","value":"같은 양이 아니라 다시 살아날 가능성을 같이 보자."}
+{"type":"entry","key":"event.sideGreenhouseRain.taro.label","value":"다음 비를 받을 통을 만든다"}
+{"type":"entry","key":"event.sideGreenhouseRain.taro.line","value":"분배표를 고치기 전에 다음 비를 받을 곳을 만들자."}
+{"type":"entry","key":"event.sideGreenhouseSeed.title","value":"씨앗 이름 맞추기"}
+{"type":"entry","key":"event.sideGreenhouseSeed.body","value":"라벨이 젖어 네 봉지의 이름이 번졌다. 생김새·계절·기억 중 두 단서를 골라야 한다."}
+{"type":"entry","key":"event.sideGreenhouseSeed.prompt","value":"단서 두 개만 사용해 씨앗과 자리를 맞춘다."}
+{"type":"entry","key":"event.sideGreenhouseSeed.consequence","value":"맞춘 단서가 이후 수확의 이름과 보상에 남는다."}
+{"type":"entry","key":"event.sideGreenhouseSeed.bora.label","value":"계절 기억을 고른다"}
+{"type":"entry","key":"event.sideGreenhouseSeed.bora.line","value":"꽃이 핀 날을 기억하면 씨앗도 서두르지 않을 거야."}
+{"type":"entry","key":"event.sideGreenhouseSeed.lumi.label","value":"생김새 단서를 고른다"}
+{"type":"entry","key":"event.sideGreenhouseSeed.lumi.line","value":"보이는 차이를 남기면 다음 사람도 다시 맞출 수 있어."}
+{"type":"entry","key":"event.sideGreenhouseSeed.taro.label","value":"시험 줄을 직접 심는다"}
+{"type":"entry","key":"event.sideGreenhouseSeed.taro.line","value":"모든 답을 기다리기보다 한 줄을 심어 확인하자."}
+{"type":"entry","key":"event.sideGreenhouseCompost.title","value":"흙 아래의 편지"}
+{"type":"entry","key":"event.sideGreenhouseCompost.body","value":"퇴비를 뒤집다 접힌 편지 한 장이 나온다. 누군가 버린 말인지, 일부러 묻은 약속인지 알 수 없다."}
+{"type":"entry","key":"event.sideGreenhouseCompost.prompt","value":"흙의 층과 편지의 접힌 방향을 함께 조사한다."}
+{"type":"entry","key":"event.sideGreenhouseCompost.consequence","value":"편지의 출처는 기억이 아니라 조사 가능한 단서로 남는다."}
+{"type":"entry","key":"event.sideGreenhouseCompost.lumi.label","value":"종이의 층을 기록한다"}
+{"type":"entry","key":"event.sideGreenhouseCompost.lumi.line","value":"편지보다 먼저 그것이 묻힌 시간을 읽어 보자."}
+{"type":"entry","key":"event.sideGreenhouseCompost.bora.label","value":"봉투를 기다린다"}
+{"type":"entry","key":"event.sideGreenhouseCompost.bora.line","value":"누군가의 말을 대신 열어 버리지 않는 것도 돌봄이야."}
+{"type":"entry","key":"event.sideGreenhouseCompost.taro.label","value":"묻힌 자리를 되짚는다"}
+{"type":"entry","key":"event.sideGreenhouseCompost.taro.line","value":"발자국이 사라지기 전에 누가 여기 왔는지 찾아 보자."}
+{"type":"entry","key":"event.sideGreenhouseBell.title","value":"새벽 종의 순서"}
+{"type":"entry","key":"event.sideGreenhouseBell.body","value":"온실 종이 울릴 때마다 한 사람이 먼저 일어난다. 돌봄을 의무로 만들지, 서로 바꿀 약속으로 만들지 선택한다."}
+{"type":"entry","key":"event.sideGreenhouseBell.prompt","value":"일어나는 순서와 회복 시간을 작은 표로 맞춘다."}
+{"type":"entry","key":"event.sideGreenhouseBell.consequence","value":"돌봄의 순환표가 동료 조합의 독립 기록이 된다."}
+{"type":"entry","key":"event.sideGreenhouseBell.bora.label","value":"순서를 번갈아 적는다"}
+{"type":"entry","key":"event.sideGreenhouseBell.bora.line","value":"돌봄을 한 사람의 성격으로 남기지 말고 바꿀 수 있게 하자."}
+{"type":"entry","key":"event.sideGreenhouseBell.taro.label","value":"종을 낮춘다"}
+{"type":"entry","key":"event.sideGreenhouseBell.taro.line","value":"모두를 깨우는 소리보다 쉬어도 되는 신호가 필요해."}
+{"type":"entry","key":"event.sideGreenhouseBell.lumi.label","value":"표의 빈칸을 남긴다"}
+{"type":"entry","key":"event.sideGreenhouseBell.lumi.line","value":"비어 있는 칸이 누구의 차례인지 말해 줄 거야."}
+{"type":"entry","key":"event.sideMarketToken.title","value":"한 닢의 표식"}
+{"type":"entry","key":"event.sideMarketToken.body","value":"장터의 공동 지갑에 은화 한 닢만 남았다. 식사·씨앗·기록 도구 중 어디에 쓰면 다음 주가 덜 흔들릴까?"}
+{"type":"entry","key":"event.sideMarketToken.prompt","value":"지금의 만족보다 다음 주의 선택 가능성을 계산한다."}
+{"type":"entry","key":"event.sideMarketToken.consequence","value":"마지막 한 닢을 쓴 방향이 자원관리 사건의 기준선이 된다."}
+{"type":"entry","key":"event.sideMarketToken.bora.label","value":"오늘 함께 먹을 것을 산다"}
+{"type":"entry","key":"event.sideMarketToken.bora.line","value":"다음 주를 위해 오늘의 배고픔을 숨기지는 말자."}
+{"type":"entry","key":"event.sideMarketToken.lumi.label","value":"기록 잉크를 산다"}
+{"type":"entry","key":"event.sideMarketToken.lumi.line","value":"계산할 근거가 없으면 남은 닢도 다시 잃게 돼."}
+{"type":"entry","key":"event.sideMarketToken.taro.label","value":"다음 씨앗을 예약한다"}
+{"type":"entry","key":"event.sideMarketToken.taro.line","value":"불확실해도 다음 시작을 살 자리는 남겨 두자."}
+{"type":"entry","key":"event.sideMarketScale.title","value":"저울의 세 칸"}
+{"type":"entry","key":"event.sideMarketScale.body","value":"상인들의 저울 눈금이 조금씩 다르다. 빠르게 맞출지, 서로의 오차를 먼저 보일지 선택한다."}
+{"type":"entry","key":"event.sideMarketScale.prompt","value":"세 번의 측정 중 두 번 이상 같은 기준을 찾아야 한다."}
+{"type":"entry","key":"event.sideMarketScale.consequence","value":"측정 기준은 장터의 가격과 신뢰를 함께 바꾼다."}
+{"type":"entry","key":"event.sideMarketScale.lumi.label","value":"오차를 먼저 공개한다"}
+{"type":"entry","key":"event.sideMarketScale.lumi.line","value":"맞는 숫자보다 틀릴 수 있는 폭을 같이 보여 주자."}
+{"type":"entry","key":"event.sideMarketScale.bora.label","value":"불리한 사람부터 잰다"}
+{"type":"entry","key":"event.sideMarketScale.bora.line","value":"저울이 누구에게 먼저 기울었는지부터 확인하자."}
+{"type":"entry","key":"event.sideMarketScale.taro.label","value":"새 눈금을 박는다"}
+{"type":"entry","key":"event.sideMarketScale.taro.line","value":"오래된 눈금이 틀렸다면 오늘 바꾸는 책임을 지자."}
+{"type":"entry","key":"event.sideMarketQuiet.title","value":"소문이 지나간 자리"}
+{"type":"entry","key":"event.sideMarketQuiet.body","value":"장터에 같은 소문이 세 방향으로 번졌다. 말의 출발점보다, 그 말 때문에 비어 버린 자리를 먼저 찾는다."}
+{"type":"entry","key":"event.sideMarketQuiet.prompt","value":"소문을 믿음·피해·확인 요청의 세 표식으로 나눈다."}
+{"type":"entry","key":"event.sideMarketQuiet.consequence","value":"소문을 다루는 표식이 이후 공개 회의의 입구가 된다."}
+{"type":"entry","key":"event.sideMarketQuiet.bora.label","value":"비어 버린 자리를 찾는다"}
+{"type":"entry","key":"event.sideMarketQuiet.bora.line","value":"사실을 말하기 전에 그 말이 밀어낸 사람을 보자."}
+{"type":"entry","key":"event.sideMarketQuiet.lumi.label","value":"출처의 경로를 그린다"}
+{"type":"entry","key":"event.sideMarketQuiet.lumi.line","value":"소문은 한 점이 아니라 여러 손을 거쳐 온 경로야."}
+{"type":"entry","key":"event.sideMarketQuiet.taro.label","value":"확인 요청을 공개한다"}
+{"type":"entry","key":"event.sideMarketQuiet.taro.line","value":"틀릴까 봐 조용히 있기보다 확인할 문을 열자."}
+{"type":"entry","key":"event.sideMarketReturn.title","value":"시장 끝의 계약서"}
+{"type":"entry","key":"event.sideMarketReturn.body","value":"마지막 장터에서 루미와 타로가 서로 다른 계약서를 내민다. 한 장으로 합치면 무엇이 사라질까?"}
+{"type":"entry","key":"event.sideMarketReturn.prompt","value":"계약의 공통 조항과 서로 양보할 수 없는 조항을 분리한다."}
+{"type":"entry","key":"event.sideMarketReturn.consequence","value":"합쳐지지 않은 조항도 다음 사람의 협상 기록으로 남는다."}
+{"type":"entry","key":"event.sideMarketReturn.lumi.label","value":"공통 조항을 세운다"}
+{"type":"entry","key":"event.sideMarketReturn.lumi.line","value":"계약을 짧게 만들기보다 무엇이 함께 남는지 보이자."}
+{"type":"entry","key":"event.sideMarketReturn.taro.label","value":"양보할 수 없는 선을 긋는다"}
+{"type":"entry","key":"event.sideMarketReturn.taro.line","value":"좋은 합의는 넘지 말아야 할 선도 숨기지 않아."}
+{"type":"entry","key":"event.sideMarketReturn.bora.label","value":"사라진 조항을 묻는다"}
+{"type":"entry","key":"event.sideMarketReturn.bora.line","value":"서명 뒤에 남은 침묵이 누구의 비용인지 물어야 해."}
+{"type":"entry","key":"event.sideRiverRope.title","value":"끊어진 밧줄의 지도"}
+{"type":"entry","key":"event.sideRiverRope.body","value":"강을 건너는 밧줄이 세 곳에서 닳았다. 어느 매듭을 먼저 고칠지에 따라 탐험 가능한 길이 달라진다."}
+{"type":"entry","key":"event.sideRiverRope.prompt","value":"물살·거리·돌아올 표식을 함께 기억해야 한다."}
+{"type":"entry","key":"event.sideRiverRope.consequence","value":"선택한 매듭이 강 건너 탐험의 첫 기준점이 된다."}
+{"type":"entry","key":"event.sideRiverRope.taro.label","value":"가장 센 물살을 고친다"}
+{"type":"entry","key":"event.sideRiverRope.taro.line","value":"가장 위험한 곳을 먼저 알아야 돌아오는 길도 남아."}
+{"type":"entry","key":"event.sideRiverRope.lumi.label","value":"돌아올 표식을 계산한다"}
+{"type":"entry","key":"event.sideRiverRope.lumi.line","value":"건너는 용기만큼 돌아올 근거도 필요해."}
+{"type":"entry","key":"event.sideRiverRope.bora.label","value":"기다릴 자리를 만든다"}
+{"type":"entry","key":"event.sideRiverRope.bora.line","value":"건너는 사람뿐 아니라 기다리는 사람도 길의 일부야."}
+{"type":"entry","key":"event.sideRiverTide.title","value":"물결의 세 박자"}
+{"type":"entry","key":"event.sideRiverTide.body","value":"강물은 세 번 숨을 고른 뒤 다시 빨라진다. 타로와 발을 맞출지, 표식을 보고 혼자 건널지 결정한다."}
+{"type":"entry","key":"event.sideRiverTide.prompt","value":"멈춤·건넘·귀환의 박자를 기억하는 미니게임이다."}
+{"type":"entry","key":"event.sideRiverTide.consequence","value":"맞춘 박자가 이후 위기 상황의 피로 비용을 낮춘다."}
+{"type":"entry","key":"event.sideRiverTide.taro.label","value":"세 박자를 따라간다"}
+{"type":"entry","key":"event.sideRiverTide.taro.line","value":"혼자 빠르기보다 서로 같은 때를 기다려 보자."}
+{"type":"entry","key":"event.sideRiverTide.lumi.label","value":"표식만 보고 건넌다"}
+{"type":"entry","key":"event.sideRiverTide.lumi.line","value":"박자를 잊어도 다시 읽을 표식이 있으면 돼."}
+{"type":"entry","key":"event.sideRiverTide.bora.label","value":"강가에 남는다"}
+{"type":"entry","key":"event.sideRiverTide.bora.line","value":"건너지 않는 선택도 함께 지키는 선택일 수 있어."}
+{"type":"entry","key":"event.sideRiverMarker.title","value":"표식에 쓸 재료"}
+{"type":"entry","key":"event.sideRiverMarker.body","value":"돌·천·잉크 중 하나만 충분하다. 오래 가는 표식과 지금 찾기 쉬운 표식의 비용이 다르다."}
+{"type":"entry","key":"event.sideRiverMarker.prompt","value":"은화와 탐험 가능성을 한 번에 비교한다."}
+{"type":"entry","key":"event.sideRiverMarker.consequence","value":"재료 선택은 지도의 빈칸을 공개하는 방식으로 되돌아온다."}
+{"type":"entry","key":"event.sideRiverMarker.taro.label","value":"돌로 오래 남긴다"}
+{"type":"entry","key":"event.sideRiverMarker.taro.line","value":"다음 비바람 뒤에도 누군가 찾을 수 있어야 해."}
+{"type":"entry","key":"event.sideRiverMarker.bora.label","value":"천으로 멀리서 보이게 한다"}
+{"type":"entry","key":"event.sideRiverMarker.bora.line","value":"오래보다 먼저 지금 돌아올 사람이 볼 수 있어야 해."}
+{"type":"entry","key":"event.sideRiverMarker.lumi.label","value":"잉크로 근거를 남긴다"}
+{"type":"entry","key":"event.sideRiverMarker.lumi.line","value":"표식만 아니라 왜 그곳에 세웠는지도 읽혀야 해."}
+{"type":"entry","key":"event.sideRiverQuestion.title","value":"강 건너 첫 질문"}
+{"type":"entry","key":"event.sideRiverQuestion.body","value":"마지막 건넘에서 보라와 타로가 다음 여행자에게 남길 질문을 고른다. 답보다 질문의 방향이 길을 만든다."}
+{"type":"entry","key":"event.sideRiverQuestion.prompt","value":"돌아올 사람도 다시 물을 수 있는 문장을 만든다."}
+{"type":"entry","key":"event.sideRiverQuestion.consequence","value":"첫 질문은 넘겨지는 지평의 독립 에필로그로 남는다."}
+{"type":"entry","key":"event.sideRiverQuestion.bora.label","value":"누가 아직 기다리는지 묻는다"}
+{"type":"entry","key":"event.sideRiverQuestion.bora.line","value":"길의 끝보다 길가에 남은 마음부터 다시 보자."}
+{"type":"entry","key":"event.sideRiverQuestion.taro.label","value":"어디서 다시 시작할지 묻는다"}
+{"type":"entry","key":"event.sideRiverQuestion.taro.line","value":"끝을 설명하기보다 다음 발이 닿을 곳을 남기자."}
+{"type":"entry","key":"event.sideRiverQuestion.lumi.label","value":"무엇을 모르는지 묻는다"}
+{"type":"entry","key":"event.sideRiverQuestion.lumi.line","value":"빈칸을 숨기지 않는 질문이 가장 오래 살아남아."}
+{"type":"entry","key":"event.sideObservatoryCloud.title","value":"구름 뒤의 작은 별"}
+{"type":"entry","key":"event.sideObservatoryCloud.body","value":"구름이 별 하나를 가린 밤, 관측소의 창문 세 곳이 서로 다른 방향을 가리킨다. 무엇을 먼저 확인할까?"}
+{"type":"entry","key":"event.sideObservatoryCloud.prompt","value":"보이는 것과 보이지 않는 것을 같은 지도에 표시한다."}
+{"type":"entry","key":"event.sideObservatoryCloud.consequence","value":"가려진 별도 관측 가능한 대상이라는 기준을 남긴다."}
+{"type":"entry","key":"event.sideObservatoryCloud.lumi.label","value":"빈 하늘을 측정한다"}
+{"type":"entry","key":"event.sideObservatoryCloud.lumi.line","value":"안 보이는 곳도 측정하면 다음 밤의 기준이 돼."}
+{"type":"entry","key":"event.sideObservatoryCloud.taro.label","value":"지붕 위로 오른다"}
+{"type":"entry","key":"event.sideObservatoryCloud.taro.line","value":"창문을 믿기 전에 시야가 바뀌는 곳까지 가 보자."}
+{"type":"entry","key":"event.sideObservatoryCloud.bora.label","value":"구름을 기다린다"}
+{"type":"entry","key":"event.sideObservatoryCloud.bora.line","value":"보이지 않는 시간을 함께 보내는 것도 관측이야."}
+{"type":"entry","key":"event.sideObservatoryLens.title","value":"금 간 렌즈"}
+{"type":"entry","key":"event.sideObservatoryLens.body","value":"렌즈 하나에 금이 갔다. 관측을 멈추고 고칠지, 금 간 시야로 오늘의 하늘을 남길지 결정해야 한다."}
+{"type":"entry","key":"event.sideObservatoryLens.prompt","value":"정확도와 기록의 연속성을 자원으로 비교한다."}
+{"type":"entry","key":"event.sideObservatoryLens.consequence","value":"금 간 시야의 한계가 판정 영수증에 표시된다."}
+{"type":"entry","key":"event.sideObservatoryLens.lumi.label","value":"렌즈를 먼저 고친다"}
+{"type":"entry","key":"event.sideObservatoryLens.lumi.line","value":"기록이 이어져도 다시 검증할 수 없다면 길을 잃어."}
+{"type":"entry","key":"event.sideObservatoryLens.taro.label","value":"금 간 하늘도 남긴다"}
+{"type":"entry","key":"event.sideObservatoryLens.taro.line","value":"흠집을 숨기지 않은 오늘도 다음 판단의 증거야."}
+{"type":"entry","key":"event.sideObservatoryLens.bora.label","value":"기다릴 사람에게 먼저 알린다"}
+{"type":"entry","key":"event.sideObservatoryLens.bora.line","value":"정확한 답보다 기다리는 사람이 알아야 할 사실을 먼저 건네자."}
+{"type":"entry","key":"event.sideObservatorySignal.title","value":"두 번 울린 신호"}
+{"type":"entry","key":"event.sideObservatorySignal.body","value":"먼 곳에서 신호가 두 번 울렸다. 루미는 좌표를, 타로는 길의 안전을 먼저 본다. 둘을 하나의 출발점으로 묶을 수 있을까?"}
+{"type":"entry","key":"event.sideObservatorySignal.prompt","value":"신호의 순서와 실제 발걸음의 순서를 맞춘다."}
+{"type":"entry","key":"event.sideObservatorySignal.consequence","value":"짝을 이룬 신호는 후반 탐험의 분기 조건이 된다."}
+{"type":"entry","key":"event.sideObservatorySignal.lumi.label","value":"좌표를 먼저 고정한다"}
+{"type":"entry","key":"event.sideObservatorySignal.lumi.line","value":"갈 곳을 잃지 않아야 안전을 다시 계산할 수 있어."}
+{"type":"entry","key":"event.sideObservatorySignal.taro.label","value":"안전한 발판부터 확인한다"}
+{"type":"entry","key":"event.sideObservatorySignal.taro.line","value":"좌표가 맞아도 발을 놓을 곳이 없다면 못 가."}
+{"type":"entry","key":"event.sideObservatorySignal.bora.label","value":"신호를 기다린 사람을 묻는다"}
+{"type":"entry","key":"event.sideObservatorySignal.bora.line","value":"신호를 보낸 사람의 하루도 지도에 같이 있어야 해."}
+{"type":"entry","key":"event.sideObservatoryDawn.title","value":"새벽의 별자리 잇기"}
+{"type":"entry","key":"event.sideObservatoryDawn.body","value":"새벽빛이 별 세 개의 선을 지운다. 남은 점과 기억한 방향으로 하나의 별자리를 다시 그려야 한다."}
+{"type":"entry","key":"event.sideObservatoryDawn.prompt","value":"세 점 중 두 점의 근거를 선택하고 마지막 점은 열어 둔다."}
+{"type":"entry","key":"event.sideObservatoryDawn.consequence","value":"완성하지 않은 점 하나가 다음 사람의 탐험 초대가 된다."}
+{"type":"entry","key":"event.sideObservatoryDawn.lumi.label","value":"두 점의 근거를 기록한다"}
+{"type":"entry","key":"event.sideObservatoryDawn.lumi.line","value":"모든 선을 닫지 않아도 다시 그릴 근거는 남길 수 있어."}
+{"type":"entry","key":"event.sideObservatoryDawn.taro.label","value":"지워진 선을 직접 따라간다"}
+{"type":"entry","key":"event.sideObservatoryDawn.taro.line","value":"사라진 길도 발로 확인하면 다음 손이 이어갈 수 있어."}
+{"type":"entry","key":"event.sideObservatoryDawn.bora.label","value":"빈 점을 다음 사람에게 남긴다"}
+{"type":"entry","key":"event.sideObservatoryDawn.bora.line","value":"완성되지 않은 곳을 함께 기다리는 약속도 별자리야."}
+{"type":"entry","key":"event.sideQuarryEcho.title","value":"채석장의 메아리"}
+{"type":"entry","key":"event.sideQuarryEcho.body","value":"돌벽 안쪽에서 같은 노래가 세 번 돌아온다. 메아리의 방향이 숨은 길인지, 빈 벽인지 찾아야 한다."}
+{"type":"entry","key":"event.sideQuarryEcho.prompt","value":"소리의 간격과 발걸음의 위치를 겹쳐 본다."}
+{"type":"entry","key":"event.sideQuarryEcho.consequence","value":"메아리의 간격이 탐험 지도의 새로운 눈금이 된다."}
+{"type":"entry","key":"event.sideQuarryEcho.taro.label","value":"소리가 큰 벽을 연다"}
+{"type":"entry","key":"event.sideQuarryEcho.taro.line","value":"길일 수도 있는 벽을 한 번은 직접 두드려 보자."}
+{"type":"entry","key":"event.sideQuarryEcho.lumi.label","value":"메아리 간격을 잰다"}
+{"type":"entry","key":"event.sideQuarryEcho.lumi.line","value":"메아리도 반복되면 기록 가능한 패턴이 돼."}
+{"type":"entry","key":"event.sideQuarryEcho.bora.label","value":"노래를 기다린다"}
+{"type":"entry","key":"event.sideQuarryEcho.bora.line","value":"누군가 부른 노래라면 돌아올 시간도 함께 들어야 해."}
+{"type":"entry","key":"event.sideQuarryLift.title","value":"무거운 돌 하나"}
+{"type":"entry","key":"event.sideQuarryLift.body","value":"길을 막은 돌 하나를 옮기려면 모두의 힘을 빌려야 한다. 빠르게 들지, 쉬는 순서를 먼저 만들지 결정한다."}
+{"type":"entry","key":"event.sideQuarryLift.prompt","value":"힘·피로·돌아올 자원을 함께 배분한다."}
+{"type":"entry","key":"event.sideQuarryLift.consequence","value":"돌을 옮긴 순서가 동료 조합의 위기 대응 기록으로 남는다."}
+{"type":"entry","key":"event.sideQuarryLift.taro.label","value":"먼저 힘을 모은다"}
+{"type":"entry","key":"event.sideQuarryLift.taro.line","value":"한 번에 옮기지 못해도 같이 들 수 있다는 걸 남기자."}
+{"type":"entry","key":"event.sideQuarryLift.bora.label","value":"쉬는 순서를 만든다"}
+{"type":"entry","key":"event.sideQuarryLift.bora.line","value":"돌보다 사람이 먼저 돌아올 수 있어야 해."}
+{"type":"entry","key":"event.sideQuarryLift.lumi.label","value":"무게를 다시 잰다"}
+{"type":"entry","key":"event.sideQuarryLift.lumi.line","value":"무거움의 감각을 숫자로 바꾸면 다음 계산이 달라져."}
+{"type":"entry","key":"event.sideQuarryLedger.title","value":"돌의 무늬 읽기"}
+{"type":"entry","key":"event.sideQuarryLedger.body","value":"돌마다 금의 방향이 다르다. 세 조각 중 둘의 무늬를 맞춰야 안전한 통로를 고를 수 있다."}
+{"type":"entry","key":"event.sideQuarryLedger.prompt","value":"무늬·소리·빛 중 두 단서를 선택한다."}
+{"type":"entry","key":"event.sideQuarryLedger.consequence","value":"고른 단서가 채석장 탈출 경로의 공개 기준이 된다."}
+{"type":"entry","key":"event.sideQuarryLedger.lumi.label","value":"무늬와 빛을 맞춘다"}
+{"type":"entry","key":"event.sideQuarryLedger.lumi.line","value":"보이는 선과 숨은 균열이 만나는 지점을 찾자."}
+{"type":"entry","key":"event.sideQuarryLedger.taro.label","value":"소리를 두드려 확인한다"}
+{"type":"entry","key":"event.sideQuarryLedger.taro.line","value":"안전한 길인지 손끝으로 확인하는 책임을 지자."}
+{"type":"entry","key":"event.sideQuarryLedger.bora.label","value":"누가 걸을지 먼저 묻는다"}
+{"type":"entry","key":"event.sideQuarryLedger.bora.line","value":"길의 안전은 사람의 몸과 함께 읽어야 해."}
+{"type":"entry","key":"event.sideQuarryExit.title","value":"세 손의 돌무더기"}
+{"type":"entry","key":"event.sideQuarryExit.body","value":"세 동료가 각자 다른 돌을 하나씩 고른다. 돌무더기는 기념비가 아니라 다음 길을 찾는 장치가 되어야 한다."}
+{"type":"entry","key":"event.sideQuarryExit.prompt","value":"세 돌의 위치·이름·돌아올 방향을 함께 기록한다."}
+{"type":"entry","key":"event.sideQuarryExit.consequence","value":"세 손의 돌무더기가 여섯 장소를 잇는 마지막 탐험 증거가 된다."}
+{"type":"entry","key":"event.sideQuarryExit.lumi.label","value":"세 돌의 좌표를 남긴다"}
+{"type":"entry","key":"event.sideQuarryExit.lumi.line","value":"기념보다 다시 찾을 수 있는 좌표가 오래 남아."}
+{"type":"entry","key":"event.sideQuarryExit.bora.label","value":"세 돌의 이름을 서로 읽는다"}
+{"type":"entry","key":"event.sideQuarryExit.bora.line","value":"각자의 돌을 함께 불러야 한 길이 되지 않아."}
+{"type":"entry","key":"event.sideQuarryExit.taro.label","value":"돌무더기에서 다음 길로 나선다"}
+{"type":"entry","key":"event.sideQuarryExit.taro.line","value":"표식은 멈추라고만 있는 게 아니라 다시 가라고 있는 거야."}
+{"type":"entry","key":"location.observatory.name","value":"새벽 관측소"}
+{"type":"entry","key":"location.quarry.name","value":"별씨앗 채석장"}
+{"type":"entry","key":"activityScene.observatory-mist.title","value":"안개 속 첫 별"}
+{"type":"entry","key":"activityScene.observatory-mist.moment","value":"관측소의 지붕이 안개에 잠겼다."}
+{"type":"entry","key":"activityScene.observatory-mist.line","value":"보이지 않는 날도 하늘의 일부로 적어 두자."}
+{"type":"entry","key":"activityScene.observatory-late.title","value":"늦은 별자리"}
+{"type":"entry","key":"activityScene.observatory-late.moment","value":"별 하나가 예상보다 늦게 나타났다."}
+{"type":"entry","key":"activityScene.observatory-late.line","value":"늦었다는 사실이 틀렸다는 뜻은 아니야."}
+{"type":"entry","key":"activityScene.garden-thin-leaf.title","value":"얇은 잎의 방향"}
+{"type":"entry","key":"activityScene.garden-thin-leaf.moment","value":"얇은 잎 하나가 바람을 거슬러 자랐다."}
+{"type":"entry","key":"activityScene.garden-thin-leaf.line","value":"약한 방향도 계속되면 정원이 기억해."}
+{"type":"entry","key":"activityScene.garden-shared-water.title","value":"함께 든 물통"}
+{"type":"entry","key":"activityScene.garden-shared-water.moment","value":"물통의 손잡이를 두 사람이 함께 잡았다."}
+{"type":"entry","key":"activityScene.garden-shared-water.line","value":"무게가 반으로 줄지 않아도 혼자 들지 않을 수 있어."}
+{"type":"entry","key":"activityScene.workshop-loose-nail.title","value":"느슨한 못"}
+{"type":"entry","key":"activityScene.workshop-loose-nail.moment","value":"작은 못 하나가 계속 흔들렸다."}
+{"type":"entry","key":"activityScene.workshop-loose-nail.line","value":"작은 흔들림을 고치면 다음 실패가 덜 커져."}
+{"type":"entry","key":"activityScene.workshop-scrap.title","value":"남은 조각"}
+{"type":"entry","key":"activityScene.workshop-scrap.moment","value":"버려질 조각에서 맞는 모서리를 찾았다."}
+{"type":"entry","key":"activityScene.workshop-scrap.line","value":"남은 것은 낭비가 아니라 다음 설계의 단서가 될 수 있어."}
+{"type":"entry","key":"activityScene.rest-window.title","value":"창가의 쉼표"}
+{"type":"entry","key":"activityScene.rest-window.moment","value":"창가의 빛이 하루의 속도를 늦췄다."}
+{"type":"entry","key":"activityScene.rest-window.line","value":"멈춤도 다음 선택을 오래 보게 하는 활동이야."}
+{"type":"entry","key":"activityScene.rest-unread.title","value":"읽지 않은 쪽"}
+{"type":"entry","key":"activityScene.rest-unread.moment","value":"읽지 않은 쪽을 남겨 둔 채 책을 덮었다."}
+{"type":"entry","key":"activityScene.rest-unread.line","value":"모든 빈칸을 오늘 채우지 않아도 기록은 이어져."}
+{"type":"entry","key":"activityScene.market-small-change.title","value":"작은 거스름돈"}
+{"type":"entry","key":"activityScene.market-small-change.moment","value":"상인이 거스름돈을 한 번 더 세었다."}
+{"type":"entry","key":"activityScene.market-small-change.line","value":"다시 세는 습관이 은화보다 오래 남아."}
+{"type":"entry","key":"activityScene.market-warm-bread.title","value":"따뜻한 빵의 방향"}
+{"type":"entry","key":"activityScene.market-warm-bread.moment","value":"빵 하나가 가장 늦게 온 사람에게 먼저 갔다."}
+{"type":"entry","key":"activityScene.market-warm-bread.line","value":"순서를 바꾸는 작은 친절도 장터의 규칙이 돼."}
+{"type":"entry","key":"endingVariant.stargazer.failure.title","value":"흐린 별의 기록"}
+{"type":"entry","key":"endingVariant.stargazer.failure.body","value":"별을 다 읽지는 못했지만, 어디가 흐렸는지는 남겼다."}
+{"type":"entry","key":"endingVariant.stargazer.neutral.title","value":"다시 보는 별자리"}
+{"type":"entry","key":"endingVariant.stargazer.neutral.body","value":"노아는 해답보다 다음 관측의 기준을 남겼다."}
+{"type":"entry","key":"endingVariant.stargazer.relationship.title","value":"둘이 읽은 새벽"}
+{"type":"entry","key":"endingVariant.stargazer.relationship.body","value":"루미와 노아는 같은 하늘을 다른 근거로 읽으며 기록을 이어 갔다."}
+{"type":"entry","key":"endingVariant.stargazer-master.failure.title","value":"계산 밖의 새벽"}
+{"type":"entry","key":"endingVariant.stargazer-master.failure.body","value":"지도는 완성되지 않았고, 다음 사람이 고칠 빈칸을 남겼다."}
+{"type":"entry","key":"endingVariant.stargazer-master.neutral.title","value":"열린 항로"}
+{"type":"entry","key":"endingVariant.stargazer-master.neutral.body","value":"별과 바람의 주기는 누구나 다시 검증할 수 있는 길이 되었다."}
+{"type":"entry","key":"endingVariant.stargazer-master.relationship.title","value":"루미의 별표"}
+{"type":"entry","key":"endingVariant.stargazer-master.relationship.body","value":"루미는 마지막 장에 노아와 함께 다시 읽을 별표를 남겼다."}
+{"type":"entry","key":"endingVariant.gardener.failure.title","value":"아직 마르지 않은 흙"}
+{"type":"entry","key":"endingVariant.gardener.failure.body","value":"정원은 피지 않았지만, 물이 부족했던 날의 이름은 남았다."}
+{"type":"entry","key":"endingVariant.gardener.neutral.title","value":"함께 쉬는 정원"}
+{"type":"entry","key":"endingVariant.gardener.neutral.body","value":"노아는 성장 속도보다 서로 회복할 시간을 정원에 심었다."}
+{"type":"entry","key":"endingVariant.gardener.relationship.title","value":"보라의 계절표"}
+{"type":"entry","key":"endingVariant.gardener.relationship.body","value":"보라와 노아는 매 계절 돌봄의 순서를 다시 읽는 정원을 만들었다."}
+{"type":"entry","key":"endingVariant.gardener-master.failure.title","value":"닫힌 온실의 불빛"}
+{"type":"entry","key":"endingVariant.gardener-master.failure.body","value":"광장은 열리지 않았지만, 누구를 기다렸는지는 다음 장에 남았다."}
+{"type":"entry","key":"endingVariant.gardener-master.neutral.title","value":"공동의 온기"}
+{"type":"entry","key":"endingVariant.gardener-master.neutral.body","value":"서로 다른 속도가 함께 쉴 수 있는 규칙이 되었다."}
+{"type":"entry","key":"endingVariant.gardener-master.relationship.title","value":"보라와 열린 문"}
+{"type":"entry","key":"endingVariant.gardener-master.relationship.body","value":"보라와 노아는 닫아야 할 때와 열어 둘 때를 함께 기록했다."}
+{"type":"entry","key":"endingVariant.pathfinder.failure.title","value":"길 앞의 멈춤"}
+{"type":"entry","key":"endingVariant.pathfinder.failure.body","value":"첫 발은 늦었지만, 멈춰야 했던 이유가 표식으로 남았다."}
+{"type":"entry","key":"endingVariant.pathfinder.neutral.title","value":"이름 없는 길"}
+{"type":"entry","key":"endingVariant.pathfinder.neutral.body","value":"노아는 모든 길에 이름을 붙이지 않고 다시 찾을 기준을 남겼다."}
+{"type":"entry","key":"endingVariant.pathfinder.relationship.title","value":"타로와 다음 발판"}
+{"type":"entry","key":"endingVariant.pathfinder.relationship.body","value":"타로와 노아는 지도 밖에서도 서로 확인할 발판을 만들었다."}
+{"type":"entry","key":"endingVariant.pathfinder-master.failure.title","value":"아직 건너지 않은 경계"}
+{"type":"entry","key":"endingVariant.pathfinder-master.failure.body","value":"경계를 넘지 못했지만, 위험한 곳과 돌아올 곳은 표시했다."}
+{"type":"entry","key":"endingVariant.pathfinder-master.neutral.title","value":"다시 건널 표식"}
+{"type":"entry","key":"endingVariant.pathfinder-master.neutral.body","value":"두려움이 사라지지 않아도 다음 사람이 길을 재현할 수 있게 되었다."}
+{"type":"entry","key":"endingVariant.pathfinder-master.relationship.title","value":"타로가 남긴 방향"}
+{"type":"entry","key":"endingVariant.pathfinder-master.relationship.body","value":"타로와 노아는 마지막 표식을 다음 여행자의 출발점으로 넘겼다."}
+{"type":"entry","key":"companionScene.lumi-first-margin.title","value":"첫 여백을 접는 법"}
+{"type":"entry","key":"companionScene.lumi-first-margin.body","value":"루미와 노아는 빈칸을 지우지 않고 모서리를 접는다."}
+{"type":"entry","key":"companionScene.lumi-first-margin.prompt","value":"루미의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.lumi-first-margin.line","value":"빈칸이 있어야 다음 사람이 어디를 봐야 하는지 알 수 있어."}
+{"type":"entry","key":"companionScene.lumi-first-margin.closing","value":"루미의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.lumi-slow-star.title","value":"느린 별의 이름"}
+{"type":"entry","key":"companionScene.lumi-slow-star.body","value":"루미와 노아는 예측보다 늦게 뜬 별을 오래 바라본다."}
+{"type":"entry","key":"companionScene.lumi-slow-star.prompt","value":"루미의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.lumi-slow-star.line","value":"늦게 도착한 사실도 사실의 자리를 가질 수 있어."}
+{"type":"entry","key":"companionScene.lumi-slow-star.closing","value":"루미의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.lumi-open-ledger.title","value":"열린 장부의 첫 줄"}
+{"type":"entry","key":"companionScene.lumi-open-ledger.body","value":"루미와 노아는 누구나 읽을 수 있는 장부의 첫 줄을 비워 둔다."}
+{"type":"entry","key":"companionScene.lumi-open-ledger.prompt","value":"루미의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.lumi-open-ledger.line","value":"공개는 다 보여 주는 일이 아니라 다시 물을 자리를 남기는 일이야."}
+{"type":"entry","key":"companionScene.lumi-open-ledger.closing","value":"루미의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.title","value":"구름의 측정값"}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.body","value":"루미와 노아는 숫자로 잡히지 않는 구름의 한계를 표시한다."}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.prompt","value":"루미의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.line","value":"측정 한계를 보이는 것도 정확함의 일부야."}
+{"type":"entry","key":"companionScene.lumi-cloud-measure.closing","value":"루미의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.lumi-two-signals.title","value":"두 번 울린 신호"}
+{"type":"entry","key":"companionScene.lumi-two-signals.body","value":"루미와 노아는 두 신호 사이의 간격을 지도에 남긴다."}
+{"type":"entry","key":"companionScene.lumi-two-signals.prompt","value":"루미의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.lumi-two-signals.line","value":"삭제된 시작도 다음 판단의 원인이 될 수 있어."}
+{"type":"entry","key":"companionScene.lumi-two-signals.closing","value":"루미의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.lumi-first-question.title","value":"다음 사람의 질문"}
+{"type":"entry","key":"companionScene.lumi-first-question.body","value":"루미와 노아는 마지막 장에 답 대신 질문 하나를 남긴다."}
+{"type":"entry","key":"companionScene.lumi-first-question.prompt","value":"루미의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.lumi-first-question.line","value":"좋은 기록은 답을 닫지 않고 다음 손을 초대해."}
+{"type":"entry","key":"companionScene.lumi-first-question.closing","value":"루미의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.bora-shared-water.title","value":"같이 든 물통"}
+{"type":"entry","key":"companionScene.bora-shared-water.body","value":"보라와 노아는 같은 물통을 두 사람이 들 수 있도록 손잡이를 고친다."}
+{"type":"entry","key":"companionScene.bora-shared-water.prompt","value":"보라의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.bora-shared-water.line","value":"무게가 줄지 않아도 혼자 들지 않게 만들 수 있어."}
+{"type":"entry","key":"companionScene.bora-shared-water.closing","value":"보라의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.bora-waiting-seat.title","value":"기다리는 자리"}
+{"type":"entry","key":"companionScene.bora-waiting-seat.body","value":"보라와 노아는 늦게 오는 사람이 앉을 의자를 온실 문 앞에 둔다."}
+{"type":"entry","key":"companionScene.bora-waiting-seat.prompt","value":"보라의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.bora-waiting-seat.line","value":"기다리는 시간도 함께 만든 하루의 일부야."}
+{"type":"entry","key":"companionScene.bora-waiting-seat.closing","value":"보라의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.bora-first-harvest.title","value":"첫 수확의 몫"}
+{"type":"entry","key":"companionScene.bora-first-harvest.body","value":"보라와 노아는 작은 첫 수확을 누구에게 먼저 건넬지 멈춰 선다."}
+{"type":"entry","key":"companionScene.bora-first-harvest.prompt","value":"보라의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.bora-first-harvest.line","value":"공정함은 모두에게 같은 조각이 아니라 기준을 함께 읽는 일이야."}
+{"type":"entry","key":"companionScene.bora-first-harvest.closing","value":"보라의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.bora-care-ledger.title","value":"돌봄의 영수증"}
+{"type":"entry","key":"companionScene.bora-care-ledger.body","value":"보라와 노아는 보이지 않는 돌봄 시간을 장부의 빈칸에서 꺼낸다."}
+{"type":"entry","key":"companionScene.bora-care-ledger.prompt","value":"보라의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.bora-care-ledger.line","value":"기록되지 않은 수고는 없는 일이 되기 쉬워."}
+{"type":"entry","key":"companionScene.bora-care-ledger.closing","value":"보라의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.bora-rain-queue.title","value":"비를 기다리는 순서"}
+{"type":"entry","key":"companionScene.bora-rain-queue.body","value":"보라와 노아는 비가 늦어진 온실에서 기다린 순서를 다시 부른다."}
+{"type":"entry","key":"companionScene.bora-rain-queue.prompt","value":"보라의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.bora-rain-queue.line","value":"순서도 사람의 상태를 만날 때 다시 읽어야 해."}
+{"type":"entry","key":"companionScene.bora-rain-queue.closing","value":"보라의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.bora-open-garden.title","value":"열린 정원의 문"}
+{"type":"entry","key":"companionScene.bora-open-garden.body","value":"보라와 노아는 정원의 문을 잠그는 대신 누구나 볼 표식을 단다."}
+{"type":"entry","key":"companionScene.bora-open-garden.prompt","value":"보라의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.bora-open-garden.line","value":"열어 두는 일에도 다시 닫을 수 있는 기준이 필요해."}
+{"type":"entry","key":"companionScene.bora-open-garden.closing","value":"보라의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.taro-broken-rope.title","value":"끊어진 밧줄의 매듭"}
+{"type":"entry","key":"companionScene.taro-broken-rope.body","value":"타로와 노아는 강 건너 밧줄의 가장 닳은 매듭을 먼저 잡는다."}
+{"type":"entry","key":"companionScene.taro-broken-rope.prompt","value":"타로의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.taro-broken-rope.line","value":"먼저 고친 곳이 다음 사람이 믿을 발판이 돼."}
+{"type":"entry","key":"companionScene.taro-broken-rope.closing","value":"타로의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.taro-first-workshop.title","value":"공방의 첫 못"}
+{"type":"entry","key":"companionScene.taro-first-workshop.body","value":"타로와 노아는 느슨한 못 하나를 버리지 않고 다시 박는다."}
+{"type":"entry","key":"companionScene.taro-first-workshop.prompt","value":"타로의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.taro-first-workshop.line","value":"고치는 시간도 만드는 시간의 일부로 세어 줘."}
+{"type":"entry","key":"companionScene.taro-first-workshop.closing","value":"타로의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.taro-roof-line.title","value":"지붕 위의 선"}
+{"type":"entry","key":"companionScene.taro-roof-line.body","value":"타로와 노아는 구름 뒤의 별을 보기 위해 지붕 위에 선을 긋는다."}
+{"type":"entry","key":"companionScene.taro-roof-line.prompt","value":"타로의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.taro-roof-line.line","value":"경계는 멈추게도 하지만 어디서 다시 시작할지도 알려 줘."}
+{"type":"entry","key":"companionScene.taro-roof-line.closing","value":"타로의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.taro-field-marker.title","value":"빈 터의 표식"}
+{"type":"entry","key":"companionScene.taro-field-marker.body","value":"타로와 노아는 누군가 돌아올 높이로 빈 터에 돌을 쌓는다."}
+{"type":"entry","key":"companionScene.taro-field-marker.prompt","value":"타로의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.taro-field-marker.line","value":"표식은 만드는 사람보다 돌아오는 사람의 몸을 먼저 생각해야 해."}
+{"type":"entry","key":"companionScene.taro-field-marker.closing","value":"타로의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.taro-quarry-weight.title","value":"돌의 무게를 나누기"}
+{"type":"entry","key":"companionScene.taro-quarry-weight.body","value":"타로와 노아는 채석장의 돌을 혼자 들려다 다른 손을 부른다."}
+{"type":"entry","key":"companionScene.taro-quarry-weight.prompt","value":"타로의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.taro-quarry-weight.line","value":"용기는 혼자 버티는 힘이 아니라 손을 부르는 힘이기도 해."}
+{"type":"entry","key":"companionScene.taro-quarry-weight.closing","value":"타로의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"companionScene.taro-next-foothold.title","value":"다음 발판"}
+{"type":"entry","key":"companionScene.taro-next-foothold.body","value":"타로와 노아는 마지막 길에 답 대신 발을 놓을 곳을 표시한다."}
+{"type":"entry","key":"companionScene.taro-next-foothold.prompt","value":"타로의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
+{"type":"entry","key":"companionScene.taro-next-foothold.line","value":"끝난 길도 다음 발이 닿으면 다시 시작할 수 있어."}
+{"type":"entry","key":"companionScene.taro-next-foothold.closing","value":"타로의 독립 장면은 다음 막의 조건으로 기록되었다."}

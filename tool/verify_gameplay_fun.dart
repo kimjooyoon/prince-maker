@@ -10,7 +10,10 @@ Never fail(String message) {
 void main() {
   final story = decodeJsonl(File('story/story.jsonl').readAsStringSync());
   final events = (story['events'] as List).cast<Map<String, dynamic>>(),
-      choices = events
+      sideScenes = (story['sideScenes'] as List? ?? const [])
+          .cast<Map<String, dynamic>>(),
+      authoredScenes = [...events, ...sideScenes],
+      choices = authoredScenes
           .expand((event) =>
               (event['choices'] as List).cast<Map<String, dynamic>>())
           .toList(),
@@ -34,7 +37,7 @@ void main() {
       ]);
   final impactful = choices.where(effectful).length,
       multiAxis = choices.where((choice) => axes(choice) >= 2).length,
-      divergentEvents = events.where((event) {
+      divergentEvents = authoredScenes.where((event) {
         final variants = (event['choices'] as List)
             .cast<Map<String, dynamic>>()
             .map(effect)
@@ -54,7 +57,7 @@ void main() {
     'multiAxisChoices': multiAxis,
     'multiAxisImpactRate': multiAxis / choices.length,
     'divergentEvents': divergentEvents,
-    'eventDivergenceRate': divergentEvents / events.length,
+    'eventDivergenceRate': divergentEvents / authoredScenes.length,
     'gatedChoices': gatedChoices,
     'feedbackGolden': File('test/goldens/feedback.png').existsSync() &&
         File('test/golden_test.dart')
@@ -69,7 +72,7 @@ void main() {
       current['multiAxisImpactRate'] != metrics['multiAxisImpactRate']) {
     fail('SSOT gameplay KPI drift');
   }
-  final approved = choices.length >= 94 &&
+  final approved = choices.length >= 166 &&
       metrics['choiceImpactRate'] == 1.0 &&
       metrics['eventDivergenceRate'] == 1.0 &&
       (metrics['multiAxisImpactRate'] as double) >= 0.9 &&

@@ -44,7 +44,7 @@ target/current/gap/산식/투입 원장/선행조건/evidence를 가져야 하�
 `tool/verify_development_goals.dart`는 benchmark 실측 verdict까지 확인한다. 목표 원장이나
 실측 증거가 누락되면 `generated-development-goals` 게이트가 거절한다.
 
-`trilemma-verdict.json`은 완전성에 SSOT·분기·생성물·Golden·정적 분석, 순수성에 분기 다양성·replay·benchmark, 성능에 benchmark·테스트·CI Wasm build를 각각 필수 게이트로 묶는다. 한 축이라도 누락되거나 실패하면 전체 시스템 판정도 거절된다.
+`trilemma-verdict.json`은 완전성에 SSOT·분기·생성물·Golden·99% quality score·정적 분석, 순수성에 분기 다양성·gameplay-fun KPI·quality score·replay·benchmark, 성능에 quality score·benchmark·테스트·CI Wasm build를 각각 필수 게이트로 묶는다. 한 축이라도 누락되거나 실패하면 전체 시스템 판정도 거절된다. verdict의 `closure`는 SSOT·trilemma contract·review manifest source digest, ordered gate digest, `decisionHash`를 묶어 stale evidence를 fail-closed로 거부한다.
 
 `.githooks/pre-commit`은 `--local`, GitHub Actions의 `system-approval` job은 `--ci`를 호출한다. 두 모드의 차이는 CI에서만 Wasm release build를 추가하는 것뿐이다. 실패를 무시하는 `continue-on-error`와 `|| true`는 정책 위반이다.
 

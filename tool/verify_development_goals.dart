@@ -27,6 +27,27 @@ void requireEqual(Object? actual, Object? expected, String message) {
   if (actual != expected) fail('$message · actual=$actual expected=$expected');
 }
 
+const requiredCiModeChecks = <String>[
+  'jsonl-contract',
+  'ci-policy',
+  'decision-proof-preconditions',
+  'render-quality-preconditions',
+  'story-contract',
+  'content-depth',
+  'gameplay-fun',
+  'scenario-variants',
+  'campaign-benchmark',
+  'quality-score',
+  'generated-trilemma-contract',
+  'generated-ssot-docs',
+  'review-manifest',
+  'static-analysis',
+  'tests-and-goldens',
+  'wasm-release-build',
+  'diff-whitespace',
+  'generated-development-goals',
+];
+
 void main() {
   final expected = generator.buildDocument(),
       expectedJson = encodeJsonl(expected,
@@ -80,6 +101,18 @@ void main() {
           '${row['formula']}'.trim().isEmpty ||
           '${row['scope']}'.trim().isEmpty)) {
     fail('every effort ledger row needs a positive quantity and formula');
+  }
+  final evidencePlan =
+      (document['evidencePlan'] as Map).cast<String, dynamic>();
+  if (jsonEncode(evidencePlan['ciModeChecks']) !=
+      jsonEncode(requiredCiModeChecks)) {
+    fail('development goal CI evidence plan does not match ci_gate.dart');
+  }
+  final ciSource = File('tool/ci_gate.dart').readAsStringSync();
+  for (final check in requiredCiModeChecks) {
+    if (!ciSource.contains("'$check'")) {
+      fail('ci_gate.dart is missing the declared check $check');
+    }
   }
   for (final goal in goals) {
     for (final key in [
@@ -135,6 +168,24 @@ void main() {
     fail('decision proof chain is not rooted and replayable');
   }
 
+  final quality = readJson('build/quality-score-verdict.json');
+  requireEqual(quality['schema'], 'lumen-quality-score-verdict-v1',
+      'quality score schema drift');
+  requireEqual(quality['decision'], 'approve',
+      'quality score did not reach the 99% target');
+  if ((quality['targetScore'] as num) < 0.99 ||
+      (quality['qualityScore'] as num) < (quality['targetScore'] as num) ||
+      jsonEncode(document['qualityModel']) != jsonEncode(quality['model'])) {
+    fail('quality score model or measured score is below the 99% contract');
+  }
+  final qualityComponents =
+      (quality['components'] as List).cast<Map<String, dynamic>>();
+  if (qualityComponents.length != 10 ||
+      qualityComponents.any((component) =>
+          (component['score'] as num) < 0 || (component['score'] as num) > 1)) {
+    fail('quality score components must be complete and normalized');
+  }
+
   final render = readJson('docs/render-quality-contract.jsonl'),
       renderPreconditions = (render['preconditions'] as List).length,
       renderProofs = (render['proofs'] as List).length,
@@ -157,6 +208,7 @@ void main() {
         'measuredEvidence': {
           'decisionProof': decisionProof,
           'benchmark': benchmark,
+          'qualityScore': quality,
           'renderPreconditions': renderPreconditions,
           'renderProofs': renderProofs,
           'effortLedgerRows': ledger.length,
@@ -168,5 +220,5 @@ void main() {
   out.writeAsStringSync(
       '${const JsonEncoder.withIndent('  ').convert(goalVerdict)}\n');
   stdout.writeln(
-      'DEVELOPMENT_GOALS_OK: goals=${goals.length} ledger=${ledger.length} benchmark=${benchmark['elapsedMillis']}ms renderPreconditions=$renderPreconditions renderProofs=$renderProofs');
+      'DEVELOPMENT_GOALS_OK: goals=${goals.length} ledger=${ledger.length} benchmark=${benchmark['elapsedMillis']}ms qualityScore=${quality['qualityScore']} renderPreconditions=$renderPreconditions renderProofs=$renderProofs');
 }

@@ -11,6 +11,10 @@
 | 다정한 연결자 | 틸·크림, 꽃 모티프, 긴 땋은 머리 | `personalities[1].portraitAsset` / `portraitFrame` |
 | 용감한 개척자 | 코랄·황토, 나침반 모티프, 짧은 곱슬머리 | `personalities[2].portraitAsset` / `portraitFrame` |
 
+## 캐릭터 도감 확장
+
+서사 registry의 노아·3명 동료를 보존하면서, 세계관 확장용 독자 주민 디자인 20종을 별도 도감 레이어로 추가했다. [`story/story.jsonl`](../story/story.jsonl)의 `characterArchive`가 이름·역할·모티프·색상·시트 위치를 단일 원천으로 선언하고, [`assets/lumen-character-roster.png`](../assets/lumen-character-roster.png)는 5×4 시트로 이를 렌더링한다. [`lib/character_roster.dart`](../lib/character_roster.dart)는 이 SSOT를 Canvas 입력용 타입으로 변환한다. 각 디자인은 등불 배달부, 별 기록관, 씨앗 보관자, 비 정원사, 구름 관측가, 강의 연주자, 다리 수리공, 기억 식물학자, 제빵사, 길목 서기, 편지 주자, 빛구슬 세공사, 바람 길잡이, 지도 견습생, 동물 돌봄이, 바람종 장인, 차 조향사, 찻집 주인, 밤의 돌봄이, 시계 장인으로 역할·소품·실루엣을 분리한다. 도감은 기존 Canvas UI에서만 표시되며, 스토리 사건의 speaker binding이나 게임 규칙을 변경하지 않는다.
+
 ## 추적성과 검증
 
 - 생성된 PNG와 chroma-key 원본은 [`story/story.jsonl`](../story/story.jsonl)의 `assetRefs`에 SHA-256으로 선언한다.

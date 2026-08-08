@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: c418c8c1d83368829d97fe41a385e6cda2a9cf98ba2ae5c3335d7cd2277431f7 -->
+<!-- ssot-sha256: aa392dd7002e8012364940d194bfe9283ea66d2f4ef8c0649f66e4ab3db6ab83 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -51,13 +51,13 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **505** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **176** · 전체 authored 대사 줄: **216**
-- 산식: catalog 505 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6 + relationship follow-up UI 11; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units
+- locale 최소 키: **911** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
+- 산식: authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
 
-- 최소 보장: **120분** · 보수적 1회차 추정: **137분**
-- 근거: 48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s + 16 relationship scene beats × 30s = 8,235s = 137m; contract reports a conservative 137m first-playthrough estimate.
+- 최소 보장: **120분** · 보수적 1회차 추정: **156분**
+- 근거: 48 activity reflections × 75s + 47 story choices × 75s + 24 side scenes × 45s + 16 chapter closures × 30s + 16 relationship beats × 30s + 10 activity mini-events × 20s = 9,365s = 156m; optional side content is counted separately from the mandatory 48-week route.
 
 ## 시나리오 경우의 수 계약
 
@@ -101,13 +101,13 @@
 
 | 차원 | 목표 | 현재 증적 | 검증 ref |
 | --- | --- | --- | --- |
-| 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 16 chapters / 47 events / 4 locations / 16 milestones / 16 chapter contracts / terminal week 49 | `story/story.jsonl#progression.contract` |
-| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
-| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / deterministic tension-estrangement-truce state / one exclusive follow-up per state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats | `story/story.jsonl#companions` |
-| 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 16 milestones and 6 endings | `test/game_core_test.dart#rules` |
+| 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 16 chapters / 47 main events + 24 side scenes = 71 authored scenes / 6 locations / 16 milestones / terminal week 49 | `story/story.jsonl#progression.contract` |
+| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 94 main choices + 72 side-scene choices; crisis, exploration, resource, mini-game and companion-pair mechanics; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
+| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / 18 independent companion scenes (6 each) / rival conflict / deterministic relationship states / 3 bond-route epilogues / 16 chapter relationship beats | `story/story.jsonl#companions` |
+| 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 16 milestones, 10 activity mini-events, 6 core endings and 18 ending variants | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues | `test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats, visible relationship states and exclusive state follow-ups / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | Canvas event and closure evidence plus 6-location route atlas, 18 companion scenes, 24 side-scene records, 10 activity reflections, 18 ending variants, ko+en catalogs, speaker portrait bindings and system decision receipts | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
 | 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | 48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark | `test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending` |
 
 ## 생성 이미지 자산
@@ -116,6 +116,7 @@
 - [`assets/noa-sprite-sheet-source.png#hero-chroma-key-source`](../assets/noa-sprite-sheet-source.png) · SHA-256 `5dd8207030fb83554ed7e8b420995a4d2dc8cf8a00f9ae8f54770fef61c90dd9`
 - [`assets/lumen-personality-sheet.png#personality-frames`](../assets/lumen-personality-sheet.png) · SHA-256 `4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28`
 - [`assets/lumen-personality-sheet-source.png#chroma-key-source`](../assets/lumen-personality-sheet-source.png) · SHA-256 `0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8`
+- [`assets/lumen-character-roster.png#character-archive-sheet`](../assets/lumen-character-roster.png) · SHA-256 `5302f4560c014f619cda1c3de0cf986a8428cec4c005cf29ab6ef62ed5657356`
 
 ## 폰트
 
@@ -123,8 +124,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `e9b895cc0c5a242ea6d16cc8d62246bc4bde9847afb145ed54d046365cd37993`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `4278e0bade8d40b84772a3d72ebacdf292bb53566b69f52beae3d8624fdb77cb`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `66bd1abacaf55b8af142df108130a0672e6d9a22c0d2d458d3460a0883d15bc0`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `7d8d7b61c1e38209a0431280ca05f86755ffaf0a9cb2c218db00bc31dabda1f8`
 
 ## 성격
 
@@ -408,6 +409,86 @@
 마지막 주의 강바람이 분다. 노아가 남길 것은 정답이 아니라 다시 시작할 수 있는 첫걸음이다.
 - 타로와 첫걸음의 표식을 세운다: 용기 +2, 은화 -1, taro 유대 +4, 기억 final-marker 기록 · “내가 없어도 다시 찾을 수 있다면, 이 길은 끝나지 않아.”
 - 루미와 첫 질문을 남긴다: 지혜 +2, 은화 1, lumi 유대 +4, 기억 public-map 필요, 기억 final-question 기록 · “좋은 기록은 마지막 답보다 다음 질문을 오래 살려.”
+
+## 사이드 장면·활동 미니 이벤트·동료 독립 장면
+
+본편 47개와 사이드 장면 24개를 합쳐 71개의 authored scene을 보유한다. 사이드 장면은 본편 주차를 덮어쓰지 않고 독립 선택·기억 trace로 연결된다.
+- **꺼진 등불의 색인** (`sideArchiveLantern`) · archive · exploration / `clue-sort` · 단서를 색·시간·사람 중 하나의 순서로 정렬한다. · 정렬 방식은 이후 기록을 읽는 루틴으로 남는다.
+- **비가 늦은 온실** (`sideGreenhouseRain`) · greenhouse · resource-crisis / `water-ration` · 물의 양보다 기다린 시간과 회복 가능성을 비교한다. · 물 배분표가 자원 위기에서 다시 쓸 수 있는 규칙이 된다.
+- **한 닢의 표식** (`sideMarketToken`) · market · resource-crisis / `token-budget` · 지금의 만족보다 다음 주의 선택 가능성을 계산한다. · 마지막 한 닢을 쓴 방향이 자원관리 사건의 기준선이 된다.
+- **비어 있는 서랍** (`sideArchiveIndex`) · archive · resource-crisis / `resource-draft` · 은화와 보존 공간을 함께 계산해야 한다. · 무엇을 먼저 보존했는지가 기록의 빈칸으로 표시된다.
+- **구름 뒤의 작은 별** (`sideObservatoryCloud`) · observatory · exploration / `cloud-window` · 보이는 것과 보이지 않는 것을 같은 지도에 표시한다. · 가려진 별도 관측 가능한 대상이라는 기준을 남긴다.
+- **끊어진 밧줄의 지도** (`sideRiverRope`) · river-road · exploration / `route-memory` · 물살·거리·돌아올 표식을 함께 기억해야 한다. · 선택한 매듭이 강 건너 탐험의 첫 기준점이 된다.
+- **씨앗 이름 맞추기** (`sideGreenhouseSeed`) · greenhouse · mini-game / `seed-match` · 단서 두 개만 사용해 씨앗과 자리를 맞춘다. · 맞춘 단서가 이후 수확의 이름과 보상에 남는다.
+- **채석장의 메아리** (`sideQuarryEcho`) · quarry · exploration / `echo-map` · 소리의 간격과 발걸음의 위치를 겹쳐 본다. · 메아리의 간격이 탐험 지도의 새로운 눈금이 된다.
+- **저울의 세 칸** (`sideMarketScale`) · market · mini-game / `fair-scale` · 세 번의 측정 중 두 번 이상 같은 기준을 찾아야 한다. · 측정 기준은 장터의 가격과 신뢰를 함께 바꾼다.
+- **두 목소리의 여백** (`sideArchiveNight`) · archive · companion-pair / `paired-reading` · 두 동료의 해석을 겹치지 않게 남긴다. · 한 문장에 두 개의 근거가 붙어 다음 사건의 조건이 된다.
+- **물결의 세 박자** (`sideRiverTide`) · river-road · mini-game / `tide-timing` · 멈춤·건넘·귀환의 박자를 기억하는 미니게임이다. · 맞춘 박자가 이후 위기 상황의 피로 비용을 낮춘다.
+- **금 간 렌즈** (`sideObservatoryLens`) · observatory · resource-crisis / `lens-repair` · 정확도와 기록의 연속성을 자원으로 비교한다. · 금 간 시야의 한계가 판정 영수증에 표시된다.
+- **흙 아래의 편지** (`sideGreenhouseCompost`) · greenhouse · exploration / `soil-layer` · 흙의 층과 편지의 접힌 방향을 함께 조사한다. · 편지의 출처는 기억이 아니라 조사 가능한 단서로 남는다.
+- **무거운 돌 하나** (`sideQuarryLift`) · quarry · resource-crisis / `load-balance` · 힘·피로·돌아올 자원을 함께 배분한다. · 돌을 옮긴 순서가 동료 조합의 위기 대응 기록으로 남는다.
+- **소문이 지나간 자리** (`sideMarketQuiet`) · market · exploration / `rumour-map` · 소문을 믿음·피해·확인 요청의 세 표식으로 나눈다. · 소문을 다루는 표식이 이후 공개 회의의 입구가 된다.
+- **증인의 자리** (`sideArchiveWitness`) · archive · exploration / `witness-chain` · 증언의 순서를 세 명의 증인에게 다시 확인한다. · 증인의 순서가 누락을 찾는 탐험 규칙이 된다.
+- **표식에 쓸 재료** (`sideRiverMarker`) · river-road · resource-crisis / `marker-budget` · 은화와 탐험 가능성을 한 번에 비교한다. · 재료 선택은 지도의 빈칸을 공개하는 방식으로 되돌아온다.
+- **두 번 울린 신호** (`sideObservatorySignal`) · observatory · companion-pair / `signal-pattern` · 신호의 순서와 실제 발걸음의 순서를 맞춘다. · 짝을 이룬 신호는 후반 탐험의 분기 조건이 된다.
+- **돌의 무늬 읽기** (`sideQuarryLedger`) · quarry · mini-game / `stone-pattern` · 무늬·소리·빛 중 두 단서를 선택한다. · 고른 단서가 채석장 탈출 경로의 공개 기준이 된다.
+- **새벽 종의 순서** (`sideGreenhouseBell`) · greenhouse · companion-pair / `care-rotation` · 일어나는 순서와 회복 시간을 작은 표로 맞춘다. · 돌봄의 순환표가 동료 조합의 독립 기록이 된다.
+- **시장 끝의 계약서** (`sideMarketReturn`) · market · companion-pair / `shared-contract` · 계약의 공통 조항과 서로 양보할 수 없는 조항을 분리한다. · 합쳐지지 않은 조항도 다음 사람의 협상 기록으로 남는다.
+- **새벽의 별자리 잇기** (`sideObservatoryDawn`) · observatory · mini-game / `constellation-trace` · 세 점 중 두 점의 근거를 선택하고 마지막 점은 열어 둔다. · 완성하지 않은 점 하나가 다음 사람의 탐험 초대가 된다.
+- **강 건너 첫 질문** (`sideRiverQuestion`) · river-road · companion-pair / `handoff-crossing` · 돌아올 사람도 다시 물을 수 있는 문장을 만든다. · 첫 질문은 넘겨지는 지평의 독립 에필로그로 남는다.
+- **세 손의 돌무더기** (`sideQuarryExit`) · quarry · companion-pair / `handoff-cairn` · 세 돌의 위치·이름·돌아올 방향을 함께 기록한다. · 세 손의 돌무더기가 여섯 장소를 잇는 마지막 탐험 증거가 된다.
+
+활동 미니 이벤트 10개:
+- **안개 속 첫 별** (`observatory`): 관측소의 지붕이 안개에 잠겼다. · “보이지 않는 날도 하늘의 일부로 적어 두자.”
+- **늦은 별자리** (`observatory`): 별 하나가 예상보다 늦게 나타났다. · “늦었다는 사실이 틀렸다는 뜻은 아니야.”
+- **얇은 잎의 방향** (`garden`): 얇은 잎 하나가 바람을 거슬러 자랐다. · “약한 방향도 계속되면 정원이 기억해.”
+- **함께 든 물통** (`garden`): 물통의 손잡이를 두 사람이 함께 잡았다. · “무게가 반으로 줄지 않아도 혼자 들지 않을 수 있어.”
+- **느슨한 못** (`workshop`): 작은 못 하나가 계속 흔들렸다. · “작은 흔들림을 고치면 다음 실패가 덜 커져.”
+- **남은 조각** (`workshop`): 버려질 조각에서 맞는 모서리를 찾았다. · “남은 것은 낭비가 아니라 다음 설계의 단서가 될 수 있어.”
+- **창가의 쉼표** (`rest`): 창가의 빛이 하루의 속도를 늦췄다. · “멈춤도 다음 선택을 오래 보게 하는 활동이야.”
+- **읽지 않은 쪽** (`rest`): 읽지 않은 쪽을 남겨 둔 채 책을 덮었다. · “모든 빈칸을 오늘 채우지 않아도 기록은 이어져.”
+- **작은 거스름돈** (`market`): 상인이 거스름돈을 한 번 더 세었다. · “다시 세는 습관이 은화보다 오래 남아.”
+- **따뜻한 빵의 방향** (`market`): 빵 하나가 가장 늦게 온 사람에게 먼저 갔다. · “순서를 바꾸는 작은 친절도 장터의 규칙이 돼.”
+
+동료 독립 장면 18개:
+- **첫 여백을 접는 법** (`lumi`): 루미와 노아는 빈칸을 지우지 않고 모서리를 접는다. · “빈칸이 있어야 다음 사람이 어디를 봐야 하는지 알 수 있어.”
+- **느린 별의 이름** (`lumi`): 루미와 노아는 예측보다 늦게 뜬 별을 오래 바라본다. · “늦게 도착한 사실도 사실의 자리를 가질 수 있어.”
+- **열린 장부의 첫 줄** (`lumi`): 루미와 노아는 누구나 읽을 수 있는 장부의 첫 줄을 비워 둔다. · “공개는 다 보여 주는 일이 아니라 다시 물을 자리를 남기는 일이야.”
+- **구름의 측정값** (`lumi`): 루미와 노아는 숫자로 잡히지 않는 구름의 한계를 표시한다. · “측정 한계를 보이는 것도 정확함의 일부야.”
+- **두 번 울린 신호** (`lumi`): 루미와 노아는 두 신호 사이의 간격을 지도에 남긴다. · “삭제된 시작도 다음 판단의 원인이 될 수 있어.”
+- **다음 사람의 질문** (`lumi`): 루미와 노아는 마지막 장에 답 대신 질문 하나를 남긴다. · “좋은 기록은 답을 닫지 않고 다음 손을 초대해.”
+- **같이 든 물통** (`bora`): 보라와 노아는 같은 물통을 두 사람이 들 수 있도록 손잡이를 고친다. · “무게가 줄지 않아도 혼자 들지 않게 만들 수 있어.”
+- **기다리는 자리** (`bora`): 보라와 노아는 늦게 오는 사람이 앉을 의자를 온실 문 앞에 둔다. · “기다리는 시간도 함께 만든 하루의 일부야.”
+- **첫 수확의 몫** (`bora`): 보라와 노아는 작은 첫 수확을 누구에게 먼저 건넬지 멈춰 선다. · “공정함은 모두에게 같은 조각이 아니라 기준을 함께 읽는 일이야.”
+- **돌봄의 영수증** (`bora`): 보라와 노아는 보이지 않는 돌봄 시간을 장부의 빈칸에서 꺼낸다. · “기록되지 않은 수고는 없는 일이 되기 쉬워.”
+- **비를 기다리는 순서** (`bora`): 보라와 노아는 비가 늦어진 온실에서 기다린 순서를 다시 부른다. · “순서도 사람의 상태를 만날 때 다시 읽어야 해.”
+- **열린 정원의 문** (`bora`): 보라와 노아는 정원의 문을 잠그는 대신 누구나 볼 표식을 단다. · “열어 두는 일에도 다시 닫을 수 있는 기준이 필요해.”
+- **끊어진 밧줄의 매듭** (`taro`): 타로와 노아는 강 건너 밧줄의 가장 닳은 매듭을 먼저 잡는다. · “먼저 고친 곳이 다음 사람이 믿을 발판이 돼.”
+- **공방의 첫 못** (`taro`): 타로와 노아는 느슨한 못 하나를 버리지 않고 다시 박는다. · “고치는 시간도 만드는 시간의 일부로 세어 줘.”
+- **지붕 위의 선** (`taro`): 타로와 노아는 구름 뒤의 별을 보기 위해 지붕 위에 선을 긋는다. · “경계는 멈추게도 하지만 어디서 다시 시작할지도 알려 줘.”
+- **빈 터의 표식** (`taro`): 타로와 노아는 누군가 돌아올 높이로 빈 터에 돌을 쌓는다. · “표식은 만드는 사람보다 돌아오는 사람의 몸을 먼저 생각해야 해.”
+- **돌의 무게를 나누기** (`taro`): 타로와 노아는 채석장의 돌을 혼자 들려다 다른 손을 부른다. · “용기는 혼자 버티는 힘이 아니라 손을 부르는 힘이기도 해.”
+- **다음 발판** (`taro`): 타로와 노아는 마지막 길에 답 대신 발을 놓을 곳을 표시한다. · “끝난 길도 다음 발이 닿으면 다시 시작할 수 있어.”
+
+엔딩 변형 18개:
+- **흐린 별의 기록** (`stargazer.failure`): 별을 다 읽지는 못했지만, 어디가 흐렸는지는 남겼다.
+- **다시 보는 별자리** (`stargazer.neutral`): 노아는 해답보다 다음 관측의 기준을 남겼다.
+- **둘이 읽은 새벽** (`stargazer.relationship`): 루미와 노아는 같은 하늘을 다른 근거로 읽으며 기록을 이어 갔다.
+- **계산 밖의 새벽** (`stargazer-master.failure`): 지도는 완성되지 않았고, 다음 사람이 고칠 빈칸을 남겼다.
+- **열린 항로** (`stargazer-master.neutral`): 별과 바람의 주기는 누구나 다시 검증할 수 있는 길이 되었다.
+- **루미의 별표** (`stargazer-master.relationship`): 루미는 마지막 장에 노아와 함께 다시 읽을 별표를 남겼다.
+- **아직 마르지 않은 흙** (`gardener.failure`): 정원은 피지 않았지만, 물이 부족했던 날의 이름은 남았다.
+- **함께 쉬는 정원** (`gardener.neutral`): 노아는 성장 속도보다 서로 회복할 시간을 정원에 심었다.
+- **보라의 계절표** (`gardener.relationship`): 보라와 노아는 매 계절 돌봄의 순서를 다시 읽는 정원을 만들었다.
+- **닫힌 온실의 불빛** (`gardener-master.failure`): 광장은 열리지 않았지만, 누구를 기다렸는지는 다음 장에 남았다.
+- **공동의 온기** (`gardener-master.neutral`): 서로 다른 속도가 함께 쉴 수 있는 규칙이 되었다.
+- **보라와 열린 문** (`gardener-master.relationship`): 보라와 노아는 닫아야 할 때와 열어 둘 때를 함께 기록했다.
+- **길 앞의 멈춤** (`pathfinder.failure`): 첫 발은 늦었지만, 멈춰야 했던 이유가 표식으로 남았다.
+- **이름 없는 길** (`pathfinder.neutral`): 노아는 모든 길에 이름을 붙이지 않고 다시 찾을 기준을 남겼다.
+- **타로와 다음 발판** (`pathfinder.relationship`): 타로와 노아는 지도 밖에서도 서로 확인할 발판을 만들었다.
+- **아직 건너지 않은 경계** (`pathfinder-master.failure`): 경계를 넘지 못했지만, 위험한 곳과 돌아올 곳은 표시했다.
+- **다시 건널 표식** (`pathfinder-master.neutral`): 두려움이 사라지지 않아도 다음 사람이 길을 재현할 수 있게 되었다.
+- **타로가 남긴 방향** (`pathfinder-master.relationship`): 타로와 노아는 마지막 표식을 다음 여행자의 출발점으로 넘겼다.
 
 ## 엔딩
 

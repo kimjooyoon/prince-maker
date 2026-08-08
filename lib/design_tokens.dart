@@ -15,6 +15,9 @@ abstract final class DesignTokens {
   static const radiusCard = 18.0;
   static const radiusPanel = 22.0;
   static const radiusPortrait = 24.0;
+  static const environmentCardWidth = 332.0;
+  static const environmentCardHeight = 176.0;
+  static const environmentSurfaceHeight = 62.0;
   static const canvasWidth = 760.0;
   static const canvasHeight = 700.0;
 }

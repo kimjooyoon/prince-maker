@@ -21,6 +21,7 @@ flutter:
     - story/locales/en.jsonl
     - assets/noa-sprite-sheet.png
     - assets/lumen-personality-sheet.png
+    - assets/lumen-character-roster.png
   fonts:
     - family: NotoSansKR
       fonts:

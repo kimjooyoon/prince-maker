@@ -1,4 +1,5 @@
 typedef Activity = ({
+  String id,
   String label,
   String icon,
   String hint,
@@ -10,6 +11,7 @@ typedef Activity = ({
 
 const defaultActivities = <Activity>[
   (
+    id: 'observatory',
     label: '별 관측',
     icon: '✦',
     hint: '지혜 +3 · 피로 +1',
@@ -19,6 +21,7 @@ const defaultActivities = <Activity>[
     coins: 0
   ),
   (
+    id: 'garden',
     label: '정원 돌보기',
     icon: '❈',
     hint: '공감 +3 · 피로 +1',
@@ -28,6 +31,7 @@ const defaultActivities = <Activity>[
     coins: 0
   ),
   (
+    id: 'workshop',
     label: '공방 돕기',
     icon: '◈',
     hint: '용기 +2 · 은화 +4',
@@ -37,6 +41,7 @@ const defaultActivities = <Activity>[
     coins: 4
   ),
   (
+    id: 'rest',
     label: '달빛 아래 휴식',
     icon: '☾',
     hint: '피로 -2 · 성장 없음',
@@ -46,6 +51,7 @@ const defaultActivities = <Activity>[
     coins: 0
   ),
   (
+    id: 'market',
     label: '장터 심부름',
     icon: '◇',
     hint: '은화 +6 · 피로 +1',
@@ -62,6 +68,7 @@ List<Activity> activitiesFromStory(Map<String, dynamic> story) {
   return raw.map((entry) {
     final activity = entry as Map;
     return (
+      id: '${activity['id'] ?? activity['label']}',
       label: '${activity['label']}',
       icon: '${activity['icon']}',
       hint: '${activity['hint']}',

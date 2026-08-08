@@ -6,8 +6,14 @@ import 'decision_proof.dart';
 typedef Entity = int;
 
 abstract interface class StoryPort {
+  List<Map<String, dynamic>> get activities;
+  List<Map<String, dynamic>> get locations;
   List<Map<String, dynamic>> get characters;
   List<Map<String, dynamic>> get events;
+  List<Map<String, dynamic>> get sideScenes;
+  List<Map<String, dynamic>> get activityScenes;
+  List<Map<String, dynamic>> get companionScenes;
+  List<Map<String, dynamic>> get endingVariants;
   List<Map<String, dynamic>> get endings;
   List<Map<String, dynamic>> get personalities;
   List<Map<String, dynamic>> get companions;
@@ -32,44 +38,92 @@ abstract interface class SavePort {
 class JsonStoryAdapter implements StoryPort {
   JsonStoryAdapter(this.source);
   final Map<String, dynamic> source;
-  @override
-  List<Map<String, dynamic>> get characters =>
+
+  // Story JSON is immutable for the lifetime of a session. Cache the typed
+  // projections so a 48-week replay does not repeatedly cast the full SSOT
+  // document on every activity, event, and system receipt.
+  late final List<Map<String, dynamic>> _activities =
+      (source['activities'] as List? ?? []).cast<Map<String, dynamic>>();
+  late final List<Map<String, dynamic>> _locations =
+      (source['locations'] as List? ?? []).cast<Map<String, dynamic>>();
+  late final List<Map<String, dynamic>> _characters =
       (source['characters'] as List? ?? []).cast<Map<String, dynamic>>();
-  @override
-  List<Map<String, dynamic>> get events =>
+  late final List<Map<String, dynamic>> _events =
       (source['events'] as List? ?? []).cast<Map<String, dynamic>>();
-  @override
-  List<Map<String, dynamic>> get endings =>
+  late final List<Map<String, dynamic>> _sideScenes =
+      (source['sideScenes'] as List? ?? []).cast<Map<String, dynamic>>();
+  late final List<Map<String, dynamic>> _activityScenes =
+      (source['activityScenes'] as List? ?? []).cast<Map<String, dynamic>>();
+  late final List<Map<String, dynamic>> _companionScenes =
+      (source['companionScenes'] as List? ?? []).cast<Map<String, dynamic>>();
+  late final List<Map<String, dynamic>> _endingVariants =
+      (source['endingVariants'] as List? ?? []).cast<Map<String, dynamic>>();
+  late final List<Map<String, dynamic>> _endings =
       (source['endings'] as List? ?? []).cast<Map<String, dynamic>>();
-  @override
-  List<Map<String, dynamic>> get personalities =>
+  late final List<Map<String, dynamic>> _personalities =
       (source['personalities'] as List? ?? []).cast<Map<String, dynamic>>();
-  @override
-  List<Map<String, dynamic>> get companions =>
+  late final List<Map<String, dynamic>> _companions =
       (source['companions'] as List? ?? []).cast<Map<String, dynamic>>();
-  @override
-  List<Map<String, dynamic>> get legacyProfiles =>
+  late final List<Map<String, dynamic>> _legacyProfiles =
       (source['legacyProfiles'] as List? ?? []).cast<Map<String, dynamic>>();
-  @override
-  List<Map<String, dynamic>> get milestones =>
+  late final List<Map<String, dynamic>> _milestones =
       (source['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
-  @override
-  List<Map<String, dynamic>> get fateThreads =>
+  late final List<Map<String, dynamic>> _fateThreads =
       (source['fateThreads'] as List? ?? []).cast<Map<String, dynamic>>();
-  @override
-  List<Map<String, dynamic>> get companionQuests =>
+  late final List<Map<String, dynamic>> _companionQuests =
       (source['companionQuests'] as List? ?? []).cast<Map<String, dynamic>>();
-  @override
-  Map<String, dynamic> get decisionSystem =>
+  late final Map<String, dynamic> _decisionSystem =
       (source['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
-  @override
-  Map<String, dynamic> get endingDesign =>
+  late final Map<String, dynamic> _endingDesign =
       (source['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
-  @override
-  Map<String, dynamic> get scenarioVariantBudget =>
+  late final Map<String, dynamic> _scenarioVariantBudget =
       (source['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
+  late final Map<String, dynamic> _relationshipDesign =
+      _readRelationshipDesign();
+  late final int _endingWeek = source['endingWeek'] as int? ?? 12;
+  late final int _campaignWeeks =
+      source['campaignWeeks'] as int? ?? ((_endingWeek - 1).clamp(1, 999));
+
   @override
-  Map<String, dynamic> get relationshipDesign {
+  List<Map<String, dynamic>> get activities => _activities;
+  @override
+  List<Map<String, dynamic>> get locations => _locations;
+  @override
+  List<Map<String, dynamic>> get characters => _characters;
+  @override
+  List<Map<String, dynamic>> get events => _events;
+  @override
+  List<Map<String, dynamic>> get sideScenes => _sideScenes;
+  @override
+  List<Map<String, dynamic>> get activityScenes => _activityScenes;
+  @override
+  List<Map<String, dynamic>> get companionScenes => _companionScenes;
+  @override
+  List<Map<String, dynamic>> get endingVariants => _endingVariants;
+  @override
+  List<Map<String, dynamic>> get endings => _endings;
+  @override
+  List<Map<String, dynamic>> get personalities => _personalities;
+  @override
+  List<Map<String, dynamic>> get companions => _companions;
+  @override
+  List<Map<String, dynamic>> get legacyProfiles => _legacyProfiles;
+  @override
+  List<Map<String, dynamic>> get milestones => _milestones;
+  @override
+  List<Map<String, dynamic>> get fateThreads => _fateThreads;
+  @override
+  List<Map<String, dynamic>> get companionQuests => _companionQuests;
+  @override
+  Map<String, dynamic> get decisionSystem => _decisionSystem;
+  @override
+  Map<String, dynamic> get endingDesign => _endingDesign;
+  @override
+  Map<String, dynamic> get scenarioVariantBudget => _scenarioVariantBudget;
+  @override
+  Map<String, dynamic> get relationshipDesign => _relationshipDesign;
+
+  Map<String, dynamic> _readRelationshipDesign() {
     final raw = source['relationshipDesign'];
     if (raw is Map) return raw.cast<String, dynamic>();
     return const {
@@ -106,10 +160,9 @@ class JsonStoryAdapter implements StoryPort {
   }
 
   @override
-  int get endingWeek => source['endingWeek'] as int? ?? 12;
+  int get endingWeek => _endingWeek;
   @override
-  int get campaignWeeks =>
-      source['campaignWeeks'] as int? ?? ((endingWeek - 1).clamp(1, 999));
+  int get campaignWeeks => _campaignWeeks;
 }
 
 /// Projects authored bond opportunity-cost into one deterministic UI/replay state.
@@ -243,6 +296,21 @@ List<Map<String, dynamic>> resolveCompanionQuests(
       .toList();
 }
 
+/// Projects the independent companion scenes into a deterministic archive.
+/// A scene is unlocked by the first bond point with its companion and is
+/// marked complete by a persisted `companion-scene:<id>` memory flag.
+List<Map<String, dynamic>> resolveCompanionScenes(
+    StoryPort story, Map<String, int> bonds, Map<String, bool> flags) {
+  return story.companionScenes.map((scene) {
+    final companionId = '${scene['companionId']}', id = '${scene['id']}';
+    return {
+      ...scene,
+      'unlocked': (bonds[companionId] ?? 0) > 0,
+      'completed': flags['companion-scene:$id'] == true,
+    };
+  }).toList();
+}
+
 Map<String, dynamic> resolveEnding(StoryPort story, Map<String, int> stats,
     {Map<String, int>? bonds, Map<String, bool>? milestones}) {
   final winner = stats.entries.reduce((a, b) => a.value > b.value ? a : b);
@@ -291,6 +359,26 @@ Map<String, dynamic> resolveEnding(StoryPort story, Map<String, int> stats,
       .cast<Map>()
       .map((route) => '${route['id']}')
       .toList();
+  final variant = routeIds.isNotEmpty
+      ? 'relationship'
+      : (result['rank'] as int? ?? 1) <= 1
+          ? 'failure'
+          : 'neutral';
+  final variantData = story.endingVariants
+      .where((candidate) =>
+          candidate['coreEndingId'] == result['id'] &&
+          candidate['variant'] == variant)
+      .firstOrNull;
+  if (variantData != null) {
+    result['endingVariantId'] = variantData['id'];
+    result['endingVariant'] = variant;
+    result['variantTitle'] = variantData['title'];
+    result['variantTitleKey'] = variantData['titleKey'];
+    result['variantBody'] = variantData['body'];
+    result['variantBodyKey'] = variantData['bodyKey'];
+    result['variantTitleEn'] = variantData['titleEn'];
+    result['variantBodyEn'] = variantData['bodyEn'];
+  }
   result['endingFamily'] = '${result['id']}'.split('-').first;
   result['endingTier'] =
       '${result['id']}'.endsWith('-master') ? 'master' : 'seed';
@@ -306,8 +394,9 @@ sealed class GameEvent {
 
 class ActivityChosen extends GameEvent {
   const ActivityChosen(this.stat, this.delta, this.coins, this.fatigue,
-      {this.label = '', this.bonus = 0});
+      {this.label = '', this.activityId, this.bonus = 0});
   final String stat, label;
+  final String? activityId;
   final int delta, coins, fatigue, bonus;
 }
 
@@ -325,7 +414,9 @@ class StoryChoiceMade extends GameEvent {
       this.setsFlag,
       this.line = '',
       this.legacyBonuses,
-      this.legacyId});
+      this.legacyId,
+      this.sourceId,
+      this.requiredCompanions = const []});
   final String stat, label, line;
   final int delta, coins, bondDelta, rivalDelta, requiresMin, requiresBondMin;
   final String? bondId,
@@ -336,6 +427,13 @@ class StoryChoiceMade extends GameEvent {
       setsFlag;
   final Map<String, dynamic>? legacyBonuses;
   final String? legacyId;
+  final String? sourceId;
+  final List<String> requiredCompanions;
+}
+
+class ActivityReflectionResolved extends GameEvent {
+  const ActivityReflectionResolved(this.id, this.title, this.line);
+  final String id, title, line;
 }
 
 class SystemDecisionApproved extends GameEvent {
@@ -427,6 +525,10 @@ class GameWorld {
         p.lastLine = '';
         p.trace
             .add('activity:$stat+$growth${bonus == 0 ? '' : '|talent+$bonus'}');
+      case ActivityReflectionResolved(:final id, :final title, :final line):
+        p.lastLine = line;
+        p.lastResult = '${p.lastResult} · $title';
+        p.trace.add('activity-scene:$id');
       case StoryChoiceMade(
           :final stat,
           :final delta,
@@ -567,6 +669,7 @@ class GameSession {
   final world = GameWorld();
   final bool legacyUnlocked;
   final String? legacyId;
+  String _lastDecisionHash = 'genesis';
 
   /// Batch/replay ports may disable persistence without changing game rules.
   final bool autoPersist;
@@ -575,7 +678,7 @@ class GameSession {
     final model = story.decisionSystem,
         owner = model['owner'] as String? ?? 'Lumen Ledger System',
         contract = model['id'] as String? ?? 'lumen-ledger';
-    return SystemDecisionPolicy.evaluate(
+    final receipt = SystemDecisionPolicy.evaluate(
         kind: kind,
         subject: subject,
         week: world.progress[0]!.week,
@@ -584,16 +687,17 @@ class GameSession {
         owner: owner,
         contract: contract,
         preconditions: _preconditionState(kind, subject, conditions),
-        parentDecisionHash:
-            SystemDecisionPolicy.parentHash(world.progress[0]!.trace));
+        parentDecisionHash: _lastDecisionHash);
+    _lastDecisionHash = receipt.decisionHash;
+    return receipt;
   }
 
   String _preconditionState(String kind, String subject, bool conditions) {
     final p = world.progress[0]!, s = world.stats[0]!.values;
-    String mapState(Map<Object?, Object?> values) => (values.entries.toList()
-          ..sort((a, b) => '${a.key}'.compareTo('${b.key}')))
-        .map((entry) => '${entry.key}=${entry.value}')
-        .join(',');
+    // GameWorld builds every map in a fixed key order; retaining that order
+    // keeps the proof payload deterministic without sorting on every input.
+    String mapState(Map<Object?, Object?> values) =>
+        values.entries.map((entry) => '${entry.key}=${entry.value}').join(',');
     return [
       'kind=$kind',
       'subject=$subject',
@@ -643,7 +747,18 @@ class GameSession {
         ? (person?['focusBonus'] as int? ?? 0)
         : 0;
     world.dispatch(ActivityChosen(e.stat, e.delta, e.coins, e.fatigue,
-        label: e.label, bonus: bonus));
+        label: e.label, activityId: e.activityId, bonus: bonus));
+    final reflections = story.activityScenes
+        .where((scene) => scene['activityId'] == e.activityId)
+        .toList();
+    Map<String, dynamic>? activityReflection;
+    if (reflections.isNotEmpty) {
+      final reflection =
+          reflections[world.progress[0]!.week % reflections.length];
+      activityReflection = reflection;
+      world.dispatch(ActivityReflectionResolved('${reflection['id']}',
+          '${reflection['title']}', '${reflection['line']}'));
+    }
     world.dispatch(const WeekAdvanced());
     if (!story.events.any((e) => e['week'] == world.progress[0]!.week))
       _resolveMilestone();
@@ -654,6 +769,10 @@ class GameSession {
     if (locationId != null) {
       final name = event?['location'] as String? ?? locationId;
       world.dispatch(LocationDiscovered(locationId, name));
+    }
+    if (activityReflection != null) {
+      world.dispatch(ActivityReflectionResolved('${activityReflection['id']}',
+          '${activityReflection['title']}', '${activityReflection['line']}'));
     }
     persist();
   }
@@ -673,7 +792,10 @@ class GameSession {
                     ? '관계 조건 부족 · ${e.requiresBondId} 유대 ${e.requiresBondMin} 필요'
                     : e.requiresFlag != null && p.flags[e.requiresFlag] != true
                         ? '기억 조건 부족 · ${e.requiresFlag} 필요'
-                        : null;
+                        : e.requiredCompanions
+                                .any((id) => (p.bonds[id] ?? 0) <= 0)
+                            ? '동료 조건 부족 · ${e.requiredCompanions.join(',')} 유대 필요'
+                            : null;
     final receipt =
         _decision('story-choice', e.label, conditions: message == null);
     if (!receipt.approved) {
@@ -690,6 +812,52 @@ class GameSession {
       world.dispatch(RelationshipFollowupResolved('${followup['id']}'));
     _resolveMilestone();
     persist();
+  }
+
+  void chooseSideScene(String sceneId, int choiceIndex) {
+    final scene = story.sideScenes
+        .where((candidate) => candidate['id'] == sceneId)
+        .firstOrNull;
+    if (scene == null) return;
+    final choices = (scene['choices'] as List).cast<Map<String, dynamic>>();
+    if (choiceIndex < 0 || choiceIndex >= choices.length) return;
+    final c = choices[choiceIndex], p = world.progress[0]!;
+    final command = StoryChoiceMade(
+      c['stat'] as String,
+      c['delta'] as int,
+      c['coins'] as int,
+      c['label'] as String,
+      bondId: c['bondId'] as String?,
+      bondDelta: (c['bondDelta'] as int?) ?? 0,
+      rivalId: c['rivalId'] as String?,
+      rivalDelta: (c['rivalDelta'] as int?) ?? 0,
+      requiresStat: c['requiresStat'] as String?,
+      requiresMin: (c['requiresMin'] as int?) ?? 0,
+      requiresBondId: c['requiresBondId'] as String?,
+      requiresBondMin: (c['requiresBondMin'] as int?) ?? 0,
+      requiresFlag: c['requiresFlag'] as String?,
+      setsFlag: c['setsFlag'] as String?,
+      line: c['line'] as String? ?? '',
+      sourceId: sceneId,
+      requiredCompanions:
+          (scene['requiresCompanions'] as List? ?? const []).cast<String>(),
+    );
+    final before = p.trace.length;
+    chooseEvent(command);
+    final accepted =
+        p.trace.skip(before).any((trace) => trace.startsWith('event:'));
+    if (accepted) {
+      p.flags['side-scene:$sceneId'] = true;
+      final location = story.locations
+          .where((candidate) => candidate['id'] == scene['locationId'])
+          .firstOrNull;
+      if (location != null) {
+        world.dispatch(
+            LocationDiscovered('${location['id']}', '${location['name']}'));
+      }
+      p.trace.add('side-scene:$sceneId');
+      persist();
+    }
   }
 
   void _resolveMilestone() {
@@ -712,6 +880,8 @@ class GameSession {
     if (raw == null) return null;
     final snapshot = GameSnapshot.decode(raw);
     world.restore(snapshot);
+    _lastDecisionHash =
+        SystemDecisionPolicy.parentHash(world.progress[0]!.trace);
     return snapshot;
   }
 

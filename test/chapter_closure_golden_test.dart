@@ -11,6 +11,16 @@ import 'package:prince_maker/save_state.dart';
 Future<Map<String, dynamic>> loadStory() async => decodeJsonl(utf8
     .decode((await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
 
+Future<void> waitForRosterImage(WidgetTester tester) async {
+  const ready = ValueKey('roster-ready');
+  for (var attempt = 0; attempt < 30; attempt++) {
+    if (find.byKey(ready).evaluate().isNotEmpty) return;
+    await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 100)));
+    await tester.pump();
+  }
+}
+
 Map<String, dynamic> available(
     GameSession session, Map<String, dynamic> event) {
   final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
@@ -77,6 +87,9 @@ void main() {
         () => Future<void>.delayed(const Duration(milliseconds: 100)),
       );
       await tester.pump();
+      await waitForRosterImage(tester);
+      expect(find.byKey(const ValueKey('roster-ready')), findsOneWidget,
+          reason: '$id roster image did not finish loading');
       expect(find.byKey(ValueKey('6-${snapshot.week}-0-0')), findsOneWidget);
       await expectLater(find.byType(Game),
           matchesGoldenFile('goldens/chapter-closure-$id.png'));

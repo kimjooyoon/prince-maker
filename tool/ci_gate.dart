@@ -52,11 +52,15 @@ Future<void> main(List<String> args) async {
         ['run', 'tool/verify_render_quality.dart']),
     const GateCheck('story-contract', 'dart', ['run', 'tool/verify_game.dart']),
     const GateCheck(
+        'content-depth', 'dart', ['run', 'tool/verify_content_depth.dart']),
+    const GateCheck(
         'gameplay-fun', 'dart', ['run', 'tool/verify_gameplay_fun.dart']),
     const GateCheck('scenario-variants', 'dart',
         ['run', 'tool/verify_scenario_variants.dart']),
     const GateCheck(
         'campaign-benchmark', 'dart', ['run', 'tool/benchmark_game.dart']),
+    const GateCheck(
+        'quality-score', 'dart', ['run', 'tool/verify_quality_score.dart']),
     const GateCheck('generated-trilemma-contract', 'dart',
         ['run', 'tool/generate_trilemma_contract.dart', '--check']),
     const GateCheck('generated-ssot-docs', 'dart',
@@ -90,13 +94,16 @@ Future<void> main(List<String> args) async {
   writeVerdict(mode, results, approved: approved);
   final trilemma = writeTrilemmaVerdict(mode, results),
       trilemmaApproved = trilemma['decision'] == 'approve',
+      receiptValid = verifyTrilemmaReceipt(trilemma),
       axes = (trilemma['axes'] as Map).cast<String, dynamic>();
+  stdout.writeln('TRILEMMA_RECEIPT: ${receiptValid ? 'VALID' : 'INVALID'} · '
+      'source→contract→checks→decision');
   stdout.writeln(
       'TRILEMMA_APPROVAL: ${trilemmaApproved ? 'APPROVE' : 'REJECT'} · '
       'completeness=${axes['completeness']['status']} '
       'purity=${axes['purity']['status']} '
       'performance=${axes['performance']['status']}');
-  if (approved && trilemmaApproved) {
+  if (approved && trilemmaApproved && receiptValid) {
     stdout.writeln('SYSTEM_APPROVAL: APPROVE · build/ci-verdict.json');
   } else {
     stderr.writeln('SYSTEM_APPROVAL: REJECT · build/ci-verdict.json');

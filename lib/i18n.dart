@@ -250,6 +250,16 @@ void drawLocalizedEnding(
       16,
       ink,
       width: 350);
+  final variantId = ending['endingVariantId'] as String?;
+  if (variantId != null) {
+    _text(
+        c,
+        '${localized('${ending['variantTitleKey']}', '${ending['variantTitle']}')} · ${localized('${ending['variantBodyKey']}', '${ending['variantBody']}')}',
+        const Offset(365, 270),
+        11,
+        teal,
+        width: 350);
+  }
   _text(
       c,
       '${localized('ui.ending.record', 'Lumen record')} · ${List.filled(rank, '★').join()}',

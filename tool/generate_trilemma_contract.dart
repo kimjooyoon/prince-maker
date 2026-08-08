@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:prince_maker/jsonl.dart';
+import 'package:prince_maker/quality_score.dart';
 
 String sha(String path) =>
     sha256.convert(File(path).readAsBytesSync()).toString();
@@ -32,25 +33,36 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
     'axes': [
       {
         'id': 'completeness',
-        'targetScore': 0.95,
+        'targetScore': qualityScoreTarget,
         'unit': 'gate-score',
         'guardrails': {
           'scenarioDimensions': 8,
           'authoredBranches': choices + (story['endings'] as List).length,
           'scenarioCases': scenarioCases['minimumCases'],
           'scenarioRouteInputs': scenarioCases['routeInputCases'],
+          'authoredScenes':
+              events.length + (story['sideScenes'] as List? ?? const []).length,
+          'sideSceneChoices': (story['sideScenes'] as List? ?? const [])
+              .cast<Map>()
+              .fold<int>(
+                  0, (sum, scene) => sum + (scene['choices'] as List).length),
           'narrativeFateThreads': narrative['fateThreadCount'],
           'companionQuestStages': questStages,
           'goldens': goldens,
           'localeKeys': dialogue['minimumLocaleKeys'],
+          'qualityScoreTarget': qualityScoreTarget,
         },
         'evidence': [
           'tool/verify_game.dart#scenario-contract',
+          'tool/verify_content_depth.dart#content-depth-gate',
           'test/scenario_completeness_test.dart#scenario-closure',
           'test/golden_test.dart#all',
           'test/locale_contract_test.dart#ssot-dialogue-contract',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
+          'tool/verify_quality_score.dart#quality-score-99',
           'tool/trilemma_verdict.dart#axis-verdict',
+          'tool/trilemma_verdict.dart#closed-loop-receipt',
+          'test/trilemma_verdict_test.dart#closed-loop-receipt',
         ],
       },
       {
@@ -76,19 +88,23 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'eventDivergenceRate': gameplayTargets['eventDivergenceRate'],
           'multiAxisImpactRate': gameplayTargets['multiAxisImpactRate'],
           'minimumGatedChoices': gameplayTargets['minimumGatedChoices'],
+          'qualityScoreTarget': qualityScoreTarget,
         },
         'evidence': [
           'test/gameplay_metrics_test.dart#route-variety',
           'test/purity_integration_test.dart#same-schedule-budget-outcomes',
           'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
+          'tool/verify_quality_score.dart#quality-score-99',
           'test/golden_test.dart#event choice shows a separated result banner',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/trilemma_verdict.dart#axis-verdict',
+          'tool/trilemma_verdict.dart#closed-loop-receipt',
+          'test/trilemma_verdict_test.dart#closed-loop-receipt',
         ],
       },
       {
         'id': 'performance',
-        'targetScore': 0.95,
+        'targetScore': qualityScoreTarget,
         'unit': 'campaign-throughput',
         'guardrails': {
           'campaigns': 5000,
@@ -106,11 +122,15 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'lineageTargetCompanions':
               (story['legacyProfiles'] as List? ?? []).length,
           'checksumReplayMustMatch': true,
+          'qualityScoreTarget': qualityScoreTarget,
         },
         'evidence': [
           'tool/benchmark_game.dart#ssot-campaign-throughput-signatures',
+          'tool/verify_quality_score.dart#quality-score-99',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
-          'tool/trilemma_verdict.dart#axis-verdict'
+          'tool/trilemma_verdict.dart#axis-verdict',
+          'tool/trilemma_verdict.dart#closed-loop-receipt',
+          'test/trilemma_verdict_test.dart#closed-loop-receipt'
         ],
       },
     ],
