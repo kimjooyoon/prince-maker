@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: d8ac2f3e05128bf2a431391d2713c3f687530f3d6dc8940aee5b5c0f3944210c -->
+<!-- ssot-sha256: ad81362ced439a82793843489874db302cda9d1862b34f719c4bf0397d6b4394 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -34,9 +34,9 @@
 | 사건 선택 | 94 | 모든 사건 choices 합계 |
 | 교환 선택 | 72/166 (0.43373493975903615) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |
 | 엔딩 | 6 | `endings.length` |
-| Canvas Golden | 76 | `test/goldens/*.png` |
-| 코드 ref | 74 | `codeRefs.length` |
-| 이미지 ref | 21 | `assetRefs.length` |
+| Canvas Golden | 79 | `test/goldens/*.png` |
+| 코드 ref | 79 | `codeRefs.length` |
+| 이미지 ref | 72 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
 | 스토리 막 | 16 | `progression.length` · 1–3주 / 4–6주 / 7–9주 / 10–12주 / 13–15주 / 16–18주 / 19–21주 / 22–24주 / 25–27주 / 28–30주 / 31–33주 / 34–36주 / 37–39주 / 40–42주 / 43–45주 / 46–48주 |

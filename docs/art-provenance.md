@@ -4,7 +4,7 @@
 
 ## 일러스트 방향과 감정표현 계약
 
-각 characterArchive 항목은 illustration, silhouette, gesture의 한국어·영어 방향과 emotionNotes, emotionNotesEn 5종 배열을 함께 가진다. 선택적으로 emotionAsset을 선언하면 해당 캐릭터의 5프레임 감정 시트를 현재 표정 패널에 연결한다. 이 필드가 캐릭터별 장면 구상과 표정 큐의 SSOT이며 lib/character_art.dart가 이를 LumenCharacterArt로 읽는다. 도감 카드 탭은 page 10의 lib/character_art_painter.dart로 이동해 동일한 5×4 PNG 셀, 역할별 장면 방향, 실루엣, 대표 동작, 선택 감정 프레임을 한 화면에 보여 준다.
+각 characterArchive 항목은 illustration, silhouette, gesture의 한국어·영어 방향과 emotionNotes, emotionNotesEn 5종 배열, ID별 emotionAsset을 함께 가진다. 각 캐릭터의 5프레임 감정 시트는 현재 표정 패널에 연결되며, 이 필드가 캐릭터별 장면 구상과 표정 큐의 SSOT다. lib/character_art.dart가 이를 LumenCharacterArt로 읽고, 도감 카드 탭은 page 10의 lib/character_art_painter.dart로 이동해 동일한 5×4 PNG 셀, 역할별 장면 방향, 실루엣, 대표 동작, 선택 감정 프레임을 한 화면에 보여 준다.
 
 모든 주민이 공유하는 표정 vocabulary는 calm / joy / concern / resolve / wonder이며, 각 주민은 같은 감정 이름 안에서 눈썹·시선·입·소품의 고유 큐를 가진다. 감정 칩은 idle / selected 상태를 사용하고, 현재 표정은 대화·기억 장면에서 재사용할 수 있는 시각 기준으로 명시한다. 새 주민을 추가할 때는 20개 archive identity, 5개 한국어·영어 emotion note, 독자 일러스트 방향을 함께 채워야 한다.
 
@@ -19,12 +19,17 @@
 
 ## 캐릭터 도감 확장
 
-서사 registry의 노아·3명 동료를 보존하면서, 세계관 확장용 독자 주민 디자인 20종을 별도 도감 레이어로 추가했다. [`story/story.jsonl`](../story/story.jsonl)의 `characterArchive`가 이름·역할·모티프·색상·시트 위치를 단일 원천으로 선언하고, [`assets/lumen-character-roster.png`](../assets/lumen-character-roster.png)는 5×4 시트로 이를 렌더링한다. 16명의 감정 시트는 calm / joy / concern / resolve / wonder 5프레임을 가로로 제공하고 `emotionAsset`으로 ID별 선택 표정 패널에 연결된다. [`lib/character_roster.dart`](../lib/character_roster.dart)는 주민 SSOT를 Canvas 입력용 타입으로 변환하고, [`lib/character_art.dart`](../lib/character_art.dart)와 [`lib/character_art_painter.dart`](../lib/character_art_painter.dart)는 감정 자산이 없는 나머지 주민에게 결정론적 벡터 fallback을 유지한다. 도감은 기존 Canvas UI에서만 표시되며, 스토리 사건의 speaker binding이나 게임 규칙을 변경하지 않는다.
+서사 registry의 노아·3명 동료를 보존하면서, 세계관 확장용 독자 주민 디자인 20종을 별도 도감 레이어로 추가했다. [`story/story.jsonl`](../story/story.jsonl)의 `characterArchive`가 이름·역할·모티프·색상·시트 위치를 단일 원천으로 선언하고, [`assets/lumen-character-roster.png`](../assets/lumen-character-roster.png)는 5×4 시트로 이를 렌더링한다. 20명의 감정 시트는 calm / joy / concern / resolve / wonder 5프레임을 가로로 제공하고 `emotionAsset`으로 ID별 선택 표정 패널에 연결된다. [`lib/character_roster.dart`](../lib/character_roster.dart)는 주민 SSOT를 Canvas 입력용 타입으로 변환하고, [`lib/character_art.dart`](../lib/character_art.dart)와 [`lib/character_art_painter.dart`](../lib/character_art_painter.dart)는 감정 시트를 선택 프레임으로 표시한다. 도감은 기존 Canvas UI에서만 표시되며, 스토리 사건의 speaker binding이나 게임 규칙을 변경하지 않는다.
+
+## 이벤트 일러스트 매트릭스
+
+사용자 요청 산식은 [`design/image-design-matrix.jsonl`](../design/image-design-matrix.jsonl)에 고정한다. `5 × 20 = 100` 감정 프레임과 `4 × 47 = 188` 메인 이벤트 프레임을 합쳐 총 `288`프레임이며, 검수 가능한 PNG는 캐릭터 20장과 이벤트 47장, 총 67장이다. 이벤트 시트는 왼쪽부터 노아·루미·보라·타로의 4패널이고, `story/story.jsonl`의 각 `events[].illustrationAsset`과 `lib/event_art.dart`를 통해 이벤트 Canvas 페이지에 표시한다. 사이드씬 24개는 이번 산식에서 제외하고 별도 확장 대상으로 남긴다.
 
 ## 추적성과 검증
 
 - 생성된 PNG와 chroma-key 원본은 [`story/story.jsonl`](../story/story.jsonl)의 `assetRefs`에 SHA-256으로 선언한다.
-- 캐릭터 감정 시트는 각 `characterArchive.<id>.emotionAsset`과 동일한 경로를 사용하며, `tool/expand_story.dart`가 16개 `assetRefs` 해시를 갱신한다.
+- 캐릭터 감정 시트는 각 `characterArchive.<id>.emotionAsset`과 동일한 경로를 사용하며, `tool/expand_story.dart`가 20개 감정 시트와 47개 이벤트 시트의 `assetRefs` 해시를 갱신한다.
+- 전체 프레임 수·파일 존재·해상도·4대 주요 캐릭터 바인딩은 `test/image_design_matrix_test.dart`가 매트릭스와 Flutter asset bundle에서 재검증한다.
 - 각 성격의 `portraitAsset`과 `portraitFrame`은 Canvas 일러스트 페이지에서 읽고, `test/asset_test.dart`가 PNG 로딩을 검증한다.
 - `tool/verify_game.dart`는 주인공·성격 PNG 선언과 성격별 `palette`·`motif`·`silhouette` 설계 필드를 강제한다.
 - 원작의 화면 캡처, 캐릭터명, 대사, 로고, 복제된 실루엣은 저장소에 포함하지 않는다.

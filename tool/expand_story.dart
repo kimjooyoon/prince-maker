@@ -320,6 +320,11 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/character_roster_golden_test.dart#home opens the twenty-character archive',
     'test/character_art_test.dart#every resident has a distinct illustration and emotion contract',
     'test/character_art_golden_test.dart#archive card opens the art direction and emotion states',
+    'lib/event_art.dart#eventIllustrationAsset',
+    'test/event_art_test.dart#every main event has a deterministic illustration asset',
+    'test/event_art_golden_test.dart#ko and en event surfaces render the authored illustration',
+    'tool/generate_image_matrix.dart#image-matrix-generator',
+    'test/image_design_matrix_test.dart#image design matrix closes the requested 288-frame formula',
     'test/relationship_archive_test.dart#relationship archive reuses the pure resolver projection',
     'test/relationship_archive_golden_test.dart#relationship archive renders the resolved state and follow-up',
     'test/player_input_contract_test.dart#event locale control changes the event Canvas state',
@@ -401,6 +406,10 @@ void materializeCharacterEmotionAsset(Map<String, dynamic> story) {
     'eil': 'assets/generated/character-emotions/eil.png',
     'raon': 'assets/generated/character-emotions/raon.png',
     'morin': 'assets/generated/character-emotions/morin.png',
+    'daon': 'assets/generated/character-emotions/daon.png',
+    'biyo': 'assets/generated/character-emotions/biyo.png',
+    'luka': 'assets/generated/character-emotions/luka.png',
+    'hez': 'assets/generated/character-emotions/hez.png',
   };
   final archive = (story['characterArchive'] as List? ?? const [])
       .whereType<Map>()
@@ -422,6 +431,31 @@ void materializeCharacterEmotionAsset(Map<String, dynamic> story) {
     if (!refs.any((ref) => (ref['ref'] as String).split('#').first == asset)) {
       refs.add({
         'ref': '$asset#${entry.key}-five-emotion-sheet',
+        'sha256': '',
+      });
+    }
+  }
+  story['assetRefs'] = refs;
+}
+
+void materializeEventIllustrationAssets(Map<String, dynamic> story) {
+  final refs = (story['assetRefs'] as List? ?? const [])
+      .whereType<Map>()
+      .map((entry) => entry.cast<String, dynamic>())
+      .toList();
+  final events = (story['events'] as List? ?? const [])
+      .whereType<Map>()
+      .map((entry) => entry.cast<String, dynamic>());
+  for (final event in events) {
+    final eventId = '${event['week']}';
+    final asset = 'assets/generated/event-illustrations/event-$eventId.png';
+    if (!File(asset).existsSync()) {
+      throw StateError('missing event illustration asset: $asset');
+    }
+    event['illustrationAsset'] = asset;
+    if (!refs.any((ref) => (ref['ref'] as String).split('#').first == asset)) {
+      refs.add({
+        'ref': '$asset#event-$eventId-four-major-character-frames',
         'sha256': '',
       });
     }
@@ -4901,6 +4935,7 @@ void main() {
   story['scenarioCompleteness']['dimensions'] = dimensions;
 
   materializeCharacterEmotionAsset(story);
+  materializeEventIllustrationAssets(story);
   materializeCharacterContracts(story, ko, en);
   materializeChapterScenes(story, ko, en);
   story['narrativeLoop']['chapterSceneCount'] =

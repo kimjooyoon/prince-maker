@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_event_storm.dart -->
-<!-- source-sha256: d8ac2f3e05128bf2a431391d2713c3f687530f3d6dc8940aee5b5c0f3944210c -->
+<!-- source-sha256: ad81362ced439a82793843489874db302cda9d1862b34f719c4bf0397d6b4394 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # Lumen Event Storm

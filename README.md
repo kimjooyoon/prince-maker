@@ -100,15 +100,19 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
 ![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
 
-캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 전체 Canvas Golden 증적은 76장입니다.
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 전체 Canvas Golden 증적은 79장입니다.
+
+### 감정·이벤트 일러스트 매트릭스
+
+전체 디자인 이미지 수량은 [`design/image-design-matrix.jsonl`](design/image-design-matrix.jsonl)에 고정합니다. `5종 감정 × 20명 = 100프레임`에 `4명 주요 캐릭터 × 47개 메인 이벤트 = 188프레임`을 더해 총 `288프레임`입니다. 실제 파일은 캐릭터 감정 시트 20장과 이벤트 4패널 시트 47장으로 병합되며, 사건 화면은 [`lib/event_art.dart`](lib/event_art.dart)가 `story/story.jsonl`의 `illustrationAsset`을 읽어 해당 시트를 렌더링합니다. `test/image_design_matrix_test.dart`가 67개 PNG의 존재·규격·프레임 수와 288 산식을 검증합니다. 사이드씬 24개는 별도 확장 범위입니다.
 
 홈 하단의 `동행 기록`은 `page == 11`에서 `resolveRelationshipDynamics`·`resolveRelationshipFollowup`·`resolveCompanionQuests`를 동일 입력으로 투영합니다. 현재 관계 상태·유대 간격·상태별 후속 기록·루미/보라/타로의 상반신·퀘스트 진행을 [`lib/relationship_archive_painter.dart`](lib/relationship_archive_painter.dart)가 재사용 가능한 패널로 렌더링하고, ko/en 화면을 [`test/goldens/relationship-archive.png`](test/goldens/relationship-archive.png)·[`test/goldens/relationship-archive-en.png`](test/goldens/relationship-archive-en.png)으로 고정합니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태도 [`test/goldens/ui-state-matrix.png`](test/goldens/ui-state-matrix.png)로 고정하며, 전체 Golden 증적은 76장입니다.
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태도 [`test/goldens/ui-state-matrix.png`](test/goldens/ui-state-matrix.png)로 고정하며, 전체 Golden 증적은 79장입니다.
 
 ### 캐릭터 일러스트·감정표현 설계
 
-도감 카드를 누르면 캐릭터별 일러스트 방향·실루엣·시그니처 동작·5종 감정표현을 확인하는 상세 설계 화면으로 이동합니다. story/story.jsonl의 characterArchive가 20명 각각의 한국어·영어 장면 구상과 calm / joy / concern / resolve / wonder 표정 큐를 선언하고, 16명은 ID별 감정 PNG 시트, 나머지는 결정론적 벡터 fallback으로 lib/character_art.dart와 lib/character_art_painter.dart가 Canvas에 병합합니다. 도란 기준 한국어·영어 및 걱정 전환 화면은 test/goldens/character-art-doran.png, test/goldens/character-art-doran-concern.png, test/goldens/character-art-doran-concern-en.png으로 고정합니다.
+도감 카드를 누르면 캐릭터별 일러스트 방향·실루엣·시그니처 동작·5종 감정표현을 확인하는 상세 설계 화면으로 이동합니다. story/story.jsonl의 characterArchive가 20명 각각의 한국어·영어 장면 구상과 calm / joy / concern / resolve / wonder 표정 큐를 선언하고, 20명 전원이 ID별 감정 PNG 시트를 사용하도록 `assetRefs`와 SHA-256 계약으로 고정합니다. lib/character_art.dart와 lib/character_art_painter.dart가 이 시트를 Canvas에 병합하고, 도란·다온 기준 한국어·영어 및 걱정 전환 화면은 test/goldens/character-art-doran*.png와 test/goldens/character-art-daon.png으로 고정합니다.
 
 ### 성격 유형 캐릭터 시트
 

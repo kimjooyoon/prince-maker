@@ -23,6 +23,8 @@ flutter:
     - assets/lumen-personality-sheet.png
     - assets/lumen-character-roster.png
     - assets/generated/character-emotions/
+    - assets/generated/event-illustrations/
+    - design/image-design-matrix.jsonl
   fonts:
     - family: NotoSansKR
       fonts:

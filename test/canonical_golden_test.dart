@@ -70,9 +70,9 @@ void main() {
         targetWeek: 4, page: 3);
     await tester.pumpWidget(Game(Map<String, dynamic>.from(source),
         initialSnapshot: eventSnapshot));
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 1000));
     await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 100)));
+        () => Future<void>.delayed(const Duration(milliseconds: 1000)));
     await tester.pump();
     expect(find.byKey(const ValueKey('3-4-0-2')), findsOneWidget);
     await expectLater(
@@ -82,9 +82,9 @@ void main() {
         targetWeek: (source['campaignWeeks'] as int), page: 3);
     await tester.pumpWidget(Game(Map<String, dynamic>.from(source),
         initialSnapshot: handoffSnapshot, key: const ValueKey('handoff')));
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 1000));
     await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 100)));
+        () => Future<void>.delayed(const Duration(milliseconds: 1000)));
     await tester.pump();
     final handoffIndex = handoffSnapshot.eventIndex;
     expect(find.byKey(ValueKey('3-${source['campaignWeeks']}-0-$handoffIndex')),
