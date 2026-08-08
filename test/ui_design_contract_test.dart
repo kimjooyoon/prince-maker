@@ -50,6 +50,7 @@ void main() {
         containsAll(['idle', 'selected', 'disabled']));
     expect(components['feedback_banner']['states'],
         containsAll(['empty', 'success', 'warning', 'danger']));
-    expect(components['emotion_chip']['states'], containsAll(['idle', 'selected']));
+    expect(components['emotion_chip']['states'],
+        containsAll(['idle', 'selected']));
   });
 }
