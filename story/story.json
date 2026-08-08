@@ -55,6 +55,14 @@
     {
       "ref": "tool/verify_scenario_variants.dart#scenario-case-enumerator",
       "sha256": "1b372fc0bf75c97a489e5a246cd12452e7207afd2adaf48b57dd0fcdb08b26a9"
+    },
+    {
+      "ref": "tool/ci_gate.dart#system-verdict",
+      "sha256": "c56128285a67e00809164a6c584e45514ac452e4b27339ff018c8b6a967a78ce"
+    },
+    {
+      "ref": "tool/trilemma_verdict.dart#axis-verdict",
+      "sha256": "c4fe1a63cc1e6534dace4430b017dcca4ced65a1d0ae70402d0dfd385e4afe28"
     }
   ],
   "assetRefs": [

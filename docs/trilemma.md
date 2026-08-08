@@ -16,6 +16,8 @@ SSOT 콘텐츠 → GameWorld 전이 → Canvas/Golden 증거
   재플레이 ← 저장·replay trace ← benchmark
 ```
 
+기계 판정은 `build/trilemma-verdict.json`에 세 축을 별도로 남긴다. 완전성은 SSOT·scenario enumeration·생성 문서·review manifest·정적 분석·Golden, 순수성은 scenario·benchmark·replay, 성능은 benchmark·Flutter test와 CI Wasm build를 필수 조건으로 가진다. 로컬에서는 Wasm을 제외한 동일 규칙을 실행하고, GitHub Actions의 `--ci` 모드에서는 Wasm까지 포함한다. 어느 축이든 `fail` 또는 `missingChecks`가 있으면 `SYSTEM_APPROVAL`도 `REJECT`다.
+
 현재 장편 계약은 48주·16막·47개 사건·94개 선택지이며, 48회 일정 반영과 16회 막 결산을 포함한 보수적 콘텐츠 예산이 최소 120분을 넘도록 SSOT에서 계산된다.
 
 시나리오 경우의 수는 단순히 주차 수를 곱하지 않는다. SSOT의 11개 무조건 authored 분기 주차를 모두 재생하는 `tool/verify_scenario_variants.dart`가 `2^11 = 2,048`개의 결정론적 replay trace를 확인하고, 활동 5개·성격 3개·계승 컨텍스트 4개를 곱한 122,880개 route input 계약을 함께 판정한다. 각 경우는 사건 trace·성장축 엔딩·스탯·유대·막 목표·기억 flag를 포함한다.

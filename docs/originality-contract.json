@@ -2,7 +2,7 @@
   "schema": "lumen-originality-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "613ca1d383eafe8d483da01476382c21a33fe09e31dc99f83c640be812b25aec"
+    "sha256": "b70e1f936e46f7bb99250fab982294ac09634c10464ffaf70c1d943a966ec070"
   },
   "designIntent": "황혼 운명 기록: 주간 선택의 결과를 수치가 아니라 관계·기억·다음 회차의 기록으로 되돌려주는 독자 생활 시뮬레이션",
   "referencePrinciples": [

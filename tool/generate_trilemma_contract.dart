@@ -45,6 +45,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/scenario_completeness_test.dart#scenario-closure',
           'test/golden_test.dart#all',
           'test/locale_contract_test.dart#ssot-dialogue-contract',
+          'tool/trilemma_verdict.dart#axis-verdict',
         ],
       },
       {
@@ -70,6 +71,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         'evidence': [
           'test/gameplay_metrics_test.dart#route-variety',
           'test/purity_integration_test.dart#same-schedule-budget-outcomes',
+          'tool/trilemma_verdict.dart#axis-verdict',
         ],
       },
       {
@@ -94,7 +96,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'checksumReplayMustMatch': true,
         },
         'evidence': [
-          'tool/benchmark_game.dart#ssot-campaign-throughput-signatures'
+          'tool/benchmark_game.dart#ssot-campaign-throughput-signatures',
+          'tool/trilemma_verdict.dart#axis-verdict'
         ],
       },
     ],

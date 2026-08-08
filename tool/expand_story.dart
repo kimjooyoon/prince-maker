@@ -162,6 +162,8 @@ void refreshHashes(Map<String, dynamic> story) {
   final refs = (story['codeRefs'] as List).cast<Map<String, dynamic>>();
   final requiredRefs = [
     'tool/verify_scenario_variants.dart#scenario-case-enumerator',
+    'tool/ci_gate.dart#system-verdict',
+    'tool/trilemma_verdict.dart#axis-verdict',
   ];
   for (final ref in requiredRefs) {
     if (!refs.any((entry) => entry['ref'] == ref)) {

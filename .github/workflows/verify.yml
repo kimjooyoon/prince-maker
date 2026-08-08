@@ -28,5 +28,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ci-verdict
-          path: build/ci-verdict.json
+          path: |
+            build/ci-verdict.json
+            build/trilemma-verdict.json
           if-no-files-found: error
