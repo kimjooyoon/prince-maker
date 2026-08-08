@@ -142,6 +142,8 @@ SSOT에서 생성된 문서는 [`docs/story-ssot.md`](docs/story-ssot.md)와 [`d
 
 런타임 구조는 [architecture.md](docs/architecture.md)에 정의된 ECS/DOD + EDA + Hexagonal 경계를 따릅니다. Canvas는 어댑터이고, `GameSession`은 애플리케이션 포트이며, `GameWorld`는 결정론적 이벤트 시스템입니다.
 
+렌더러 선택 근거는 [`docs/engine-decision.md`](docs/engine-decision.md)와 [`docs/engine-decision.jsonl`](docs/engine-decision.jsonl)에 SSOT 기반으로 생성됩니다. Flutter Canvas/WASM은 현재 Golden·i18n·Canvas 콘텐츠 루프에 최적이며, Bevy ECS/WASM은 비교 대안으로 기록했습니다. 새 엔진은 동일한 Golden·WASM·benchmark 게이트를 통과해야 채택할 수 있습니다.
+
 ## 렌더러 검토: Flutter Canvas 우선
 
 | 선택지 | 장점 | 현재 판정 |

@@ -17,6 +17,7 @@ void main() {
   }
   for (final path in [
     'tool/expand_story.dart',
+    'tool/generate_engine_decision.dart',
     'tool/refresh_review_manifest.dart',
     'tool/verify_scenario_variants.dart',
     'tool/trilemma_verdict.dart',
@@ -163,6 +164,8 @@ void main() {
     'test/goldens/event-art-en.png',
     'test/side_scene_art_test.dart',
     'test/side_scene_golden_test.dart',
+    'test/engine_decision_test.dart',
+    'test/personality_resonance_test.dart',
     'test/long_copy_contract_test.dart',
     'test/goldens/side-scene.png',
     'test/goldens/side-scene-en.png',
@@ -175,6 +178,8 @@ void main() {
     'tool/generate_image_matrix.dart',
     'test/image_design_matrix_test.dart',
     'design/image-design-matrix.jsonl',
+    'docs/engine-decision.jsonl',
+    'docs/engine-decision.md',
     ...['daon', 'biyo', 'luka', 'hez']
         .map((id) => 'assets/generated/character-emotions/$id.png'),
     ...List.generate(

@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 4b37d58cb97f04773469e4379914204345d197641055e63b4a8bde0cc9f980b5 -->
+<!-- ssot-sha256: 3fd94ad05c49755f8caff07dbebd6073f79536af7eae11aae888d72fbf0aa1ba -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -13,6 +13,11 @@
 - `terminal-window` · activity|story-choice · endingWeek 이후 입력은 거절
 - `input-contract` · activity|story-choice · 미등록 성장축·조건 미충족 입력은 거절
 - `replay-receipt` · accepted decision · 승인 영수증을 immutable trace에 추가
+
+## 렌더러 결정 계약
+
+선택: **`flutter-canvas-wasm`** · `select the maximum weighted architectural-fit score` · [결정 매트릭스](engine-decision.md)
+점수 의미: normalized architectural fit for this turn-based Canvas game; not a claim of measured engine throughput
 
 ## 48주 진행도
 

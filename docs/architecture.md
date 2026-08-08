@@ -2,6 +2,12 @@
 
 프린스 메이커는 실시간 액션 게임이 아니라 주간 의사결정 시뮬레이션이므로, 렌더링 프레임보다 상태 재현성과 콘텐츠 변경 안전성을 우선한다.
 
+## Flutter Canvas 선택과 Bevy 검토
+
+렌더러 선택은 [`story/story.jsonl#engineDecision`](../story/story.jsonl)에서 생성한 결정 매트릭스와 [`docs/engine-decision.md`](engine-decision.md)로 고정한다. 현재 선택은 `flutter-canvas-wasm`이다. 이 프로젝트의 핵심 병목은 실시간 물리나 대규모 엔티티가 아니라 텍스트가 많은 2D 장면, SSOT→Dart 콘텐츠 반복, Canvas Golden, 저비용 public WASM 배포의 결합이다.
+
+Bevy는 ECS·데이터 지향·병렬화에 강하고 네이티브 실시간 게임으로 확장하기 좋은 대안이다. 다만 현재 범위에서는 기존 Flutter Golden·i18n·CustomPaint·`flutter build web --wasm` 경로를 유지하는 적합도가 더 높다. 따라서 Bevy는 폐기하지 않고 기록된 대안으로 남기며, 새 엔진을 선택하려면 현재 점수를 넘고 같은 Golden·WASM·benchmark 게이트를 통과해야 한다. 엔진 점수는 런타임 성능 측정치가 아니며, 성능 축의 사실 증적은 `benchmark_game.dart`와 CI benchmark verdict다.
+
 ```text
 Canvas adapter
     ↓ commands

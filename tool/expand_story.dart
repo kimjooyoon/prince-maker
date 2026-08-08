@@ -306,6 +306,9 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/chapter_golden_test.dart#all sixteen SSOT chapters have deterministic event Goldens',
     'test/chapter_closure_golden_test.dart#all sixteen SSOT chapter closures have deterministic goal Goldens',
     'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
+    'tool/generate_engine_decision.dart#ssot-engine-decision-generator',
+    'test/engine_decision_test.dart#deterministic Flutter Canvas engine selection',
+    'test/personality_resonance_test.dart#personality focus talent closes the route loop',
     'tool/verify_content_depth.dart#content-depth-gate',
     'test/content_depth_test.dart#SSOT exposes depth targets and all non-binary scene mechanics',
     'tool/generate_event_storm.dart#event-storm-generator',
@@ -799,6 +802,116 @@ void materializeChapterScenes(Map<String, dynamic> story,
         'test/chapter_closure_golden_test.dart#relationship-scene-binding',
   };
 }
+
+Map<String, dynamic> engineDecisionContract() => {
+      'schema': 'lumen-engine-decision-v1',
+      'selectedOption': 'flutter-canvas-wasm',
+      'decisionRule': 'select the maximum weighted architectural-fit score',
+      'scoreMeaning':
+          'normalized architectural fit for this turn-based Canvas game; not a claim of measured engine throughput',
+      'criteria': [
+        {
+          'id': 'golden-determinism',
+          'weight': 0.30,
+          'question':
+              'Can the same state render through the existing Golden contract?'
+        },
+        {
+          'id': 'wasm-public-hosting',
+          'weight': 0.25,
+          'question': 'Can the public repository ship a low-cost WASM build?'
+        },
+        {
+          'id': 'content-iteration',
+          'weight': 0.20,
+          'question':
+              'Can SSOT, locale and Canvas content iterate in one Dart loop?'
+        },
+        {
+          'id': 'ui-2d-composition',
+          'weight': 0.15,
+          'question':
+              'Does the renderer fit text-rich 2D scenes and reusable UI primitives?'
+        },
+        {
+          'id': 'native-throughput',
+          'weight': 0.10,
+          'question':
+              'Does the option leave headroom for future native real-time work?'
+        },
+      ],
+      'options': [
+        {
+          'id': 'flutter-canvas-wasm',
+          'scores': {
+            'golden-determinism': 1.0,
+            'wasm-public-hosting': 0.95,
+            'content-iteration': 0.95,
+            'ui-2d-composition': 1.0,
+            'native-throughput': 0.75,
+          },
+          'architecturalFitScore': 0.9525,
+          'evidence': [
+            {
+              'ref': 'https://docs.flutter.dev/ui/widgets/painting',
+              'claim': 'CustomPaint provides the Canvas paint surface.'
+            },
+            {
+              'ref':
+                  'https://docs.flutter.dev/platform-integration/web/building',
+              'claim': 'Flutter documents --wasm web builds.'
+            },
+            {
+              'ref': 'test/golden_test.dart#all',
+              'claim': 'The local Golden suite is the active renderer contract.'
+            },
+          ],
+        },
+        {
+          'id': 'bevy-wgpu-wasm',
+          'scores': {
+            'golden-determinism': 0.70,
+            'wasm-public-hosting': 0.75,
+            'content-iteration': 0.60,
+            'ui-2d-composition': 0.80,
+            'native-throughput': 0.95,
+          },
+          'architecturalFitScore': 0.7325,
+          'evidence': [
+            {
+              'ref': 'https://bevy.org/learn/quick-start/getting-started/ecs/',
+              'claim': 'Bevy provides an ECS-first runtime.'
+            },
+            {
+              'ref': 'https://bevy.org/learn/',
+              'claim': 'Bevy publishes web examples compiled to WASM.'
+            },
+          ],
+        },
+        {
+          'id': 'bevy-native',
+          'scores': {
+            'golden-determinism': 0.72,
+            'wasm-public-hosting': 0.25,
+            'content-iteration': 0.60,
+            'ui-2d-composition': 0.80,
+            'native-throughput': 1.0,
+          },
+          'architecturalFitScore': 0.6185,
+          'evidence': [
+            {
+              'ref': 'https://bevy.org/news/introducing-bevy/',
+              'claim': 'Bevy UI is ECS-driven and aimed at engine applications.'
+            },
+          ],
+        },
+      ],
+      'constraints': [
+        'Flutter Canvas remains the primary renderer until a new option beats the current score and passes the same Golden/WASM gates.',
+        'Bevy remains a recorded alternative; its ECS strengths do not replace the current text-rich Canvas content loop.',
+        'No engine score is accepted as runtime benchmark evidence; benchmark_game.dart remains the performance authority.',
+      ],
+    };
 
 void main() {
   final storyFile = File('story/story.jsonl');
@@ -5062,6 +5175,7 @@ void main() {
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;
+  story['engineDecision'] = engineDecisionContract();
 
   materializeCharacterEmotionAsset(story);
   materializeEventIllustrationAssets(story);
