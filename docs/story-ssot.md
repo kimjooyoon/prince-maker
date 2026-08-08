@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 40ca769e2189b24dcf3541f56a755faff9b2257cd91638a4d60c302d5d7a4072 -->
+<!-- ssot-sha256: 613ca1d383eafe8d483da01476382c21a33fe09e31dc99f83c640be812b25aec -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -51,8 +51,8 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **398** · 한 캠페인 최소 대사 줄: **47** · 최소 노출 서사 단위: **160** · 전체 authored 대사 줄: **184**
-- 산식: catalog 398 = UI 15 + personality name/voice/line 9 + event title/body 94 + choice label/line 188 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 48 + milestone titles 16; one 48-week route exposes at least 47 authored choice lines and 160 narrative units
+- locale 최소 키: **414** · 한 캠페인 최소 대사 줄: **47** · 최소 노출 서사 단위: **160** · 전체 authored 대사 줄: **184**
+- 산식: catalog 414 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 10; one 48-week route exposes at least 47 authored choice lines and 160 narrative units
 
 ## 최소 플레이타임 계약
 
@@ -70,6 +70,31 @@
 해결 순서: winner-growth-axis → highest-eligible-authored-tier → record-rank → companion-route-set → retrospective-cause-board
 - 핵심 엔딩군: stargazer, gardener, pathfinder · 동료 route set 최대 8개 · terminal route card 최대 48개
 
+## 나비효과 기록
+
+선택에서 기록된 기억 flag를 별도 상태로 복제하지 않고, 다음 장의 단서와 엔딩 회고에서 같은 SSOT flag로 재생성한다.
+- **ledger-echo** · `first-ledger` · `event.firstLedger.title` · 기록의 선택이 다음 막의 판단 방식으로 되돌아온다. / A choice about the ledger returns as the next chapter's rule.
+- **windmill-echo** · `windmill-truce` · `event.windmill.title` · 중재의 선택이 이후 관계의 긴장을 낮춘다. / A mediation choice softens a later relationship conflict.
+- **seed-echo** · `return-seed` · `event.seedReturn.title` · 나눔의 선택이 돌아온 씨앗의 의미를 바꾼다. / A choice to share changes what the returning seed means.
+- **memory-echo** · `memory-house` · `event.memoryHouse.title` · 기억을 여는 선택이 엔딩 회고의 원인으로 남는다. / Opening the memory house becomes a cause in the ending review.
+- **rule-echo** · `public-rule` · `event.publicRule.title` · 공개 규칙을 고른 선택이 다음 사람의 출발점이 된다. / A public rule becomes the next traveller's starting point.
+- **question-echo** · `final-question` · `event.finalHorizon.title` · 마지막 질문이 다음 회차의 첫 단서로 이어진다. / The final question becomes the next run's first clue.
+
+## 동료 퀘스트
+
+- **lumi-constellation** · `lumi` · `companion.lumi.routeTitle`
+  - `lumi-ledger` · `first-ledger` · 유대 2 · `event.firstLedger.title`
+  - `lumi-memory` · `memory-house` · 유대 4 · `event.memoryHouse.title`
+  - `lumi-question` · `final-question` · 유대 8 · `event.finalHorizon.title`
+- **bora-garden** · `bora` · `companion.bora.routeTitle`
+  - `bora-truce` · `windmill-truce` · 유대 2 · `event.windmill.title`
+  - `bora-witness` · `witness-garden` · 유대 4 · `event.witness.title`
+  - `bora-names` · `named-garden` · 유대 8 · `event.gardenOfNames.title`
+- **taro-frontier** · `taro` · `companion.taro.routeTitle`
+  - `taro-repair` · `windmill-repair` · 유대 2 · `event.windmill.title`
+  - `taro-waterway` · `waterway` · 유대 4 · `event.emptyField.title`
+  - `taro-marker` · `final-marker` · 유대 8 · `event.finalHorizon.title`
+
 ## 시나리오 완전성 표본
 
 참조 모델: **장기 성장·관계·선택·결산이 하나의 반복 가능한 생활 루프를 이루는 시나리오** (`life-sim-scenario-v1`)
@@ -77,13 +102,13 @@
 | 차원 | 목표 | 현재 증적 | 검증 ref |
 | --- | --- | --- | --- |
 | 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 16 chapters / 47 events / 4 locations / 16 milestones / 16 chapter contracts / terminal week 49 | `story/story.json#progression.contract` |
-| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
+| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 16 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues | `test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 27 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / three companion epilogues | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
-| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | 48-week terminal campaign / system decision receipts / save v7 with memory flags / collection / deterministic event-cause retrospective / target companion epilogues / SSOT campaign benchmark | `test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 29 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
+| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | 48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark | `test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending` |
 
 ## 생성 이미지 자산
 
@@ -98,8 +123,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `d538c13e633bf4ae69abf070753b46a063dac6f58a30286e557980bc99fafe16`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `ee292a448fa2fc01b0ee04c513e5dd4801321d69a1d622e3f3785ad26d640fe2`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `779bfe3634c1507778f091c2d8caaf4462e745c910053054f2891690ed7dd88f`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `00d7e75ac4595b4f2dba77936d2049d9e224ee8be928eadfb303c8210522fb2b`
 
 ## 성격
 

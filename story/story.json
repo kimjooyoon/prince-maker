@@ -6,15 +6,15 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "a29da041fa28183e079055072647468ab3d39a60d66057f239e90a48948757a1"
+      "sha256": "772f4db047f15fcaa8d8883bfb3db70b3b791b65cccb8072fecc5dd6d35746ad"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
-      "sha256": "b244a8ca9e5197a4d34d6391a84fe8e47c701dfd4135eec49ae7fecd22a1dc2a"
+      "sha256": "5c6e8d3f315d386709f32601b7f2a91d561d95f4f17ab02548810eb3e5d282ce"
     },
     {
       "ref": "lib/game_core.dart#SystemDecisionPolicy",
-      "sha256": "b244a8ca9e5197a4d34d6391a84fe8e47c701dfd4135eec49ae7fecd22a1dc2a"
+      "sha256": "5c6e8d3f315d386709f32601b7f2a91d561d95f4f17ab02548810eb3e5d282ce"
     },
     {
       "ref": "lib/save_adapter.dart#conditional-platform-boundary",
@@ -46,11 +46,11 @@
     },
     {
       "ref": "lib/feedback_banner.dart#drawFeedbackBanner",
-      "sha256": "7a91702170b256ce0d7008780525da9a4605b61d0449fdccd10e37135deabb9d"
+      "sha256": "ac105ab19324a0fa4eb4dc61d3d8c02a706068b8d24625e30aff15f2d9ce37c9"
     },
     {
       "ref": "lib/i18n.dart#LocaleCatalog/drawLocalizedEnding",
-      "sha256": "4699a20dbd65864e53afcd7633ccfeab3133624d61ada4ee8c3c262fb5c65313"
+      "sha256": "64ce25489ddd3e22f5886987c7cdd8aa5520b5dfc6f3405caacb6c79ec64503a"
     },
     {
       "ref": "tool/verify_scenario_variants.dart#scenario-case-enumerator",
@@ -84,11 +84,11 @@
   "localeRefs": [
     {
       "ref": "story/locales/ko.json#catalog",
-      "sha256": "d538c13e633bf4ae69abf070753b46a063dac6f58a30286e557980bc99fafe16"
+      "sha256": "779bfe3634c1507778f091c2d8caaf4462e745c910053054f2891690ed7dd88f"
     },
     {
       "ref": "story/locales/en.json#catalog",
-      "sha256": "ee292a448fa2fc01b0ee04c513e5dd4801321d69a1d622e3f3785ad26d640fe2"
+      "sha256": "00d7e75ac4595b4f2dba77936d2049d9e224ee8be928eadfb303c8210522fb2b"
     }
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 48주를 걷는다. 기록은 사람이 승인하지 않고 루멘의 규칙 엔진이 승인한다.",
@@ -128,11 +128,11 @@
   },
   "dialogueMetrics": {
     "locales": "ko,en",
-    "minimumLocaleKeys": 398,
+    "minimumLocaleKeys": 414,
     "minimumVisibleDialogueLines": 47,
     "minimumVisibleNarrativeUnits": 160,
     "authoredDialogueLines": 184,
-    "formula": "catalog 398 = UI 15 + personality name/voice/line 9 + event title/body 94 + choice label/line 188 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 48 + milestone titles 16; one 48-week route exposes at least 47 authored choice lines and 160 narrative units"
+    "formula": "catalog 414 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 10; one 48-week route exposes at least 47 authored choice lines and 160 narrative units"
   },
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
@@ -149,7 +149,7 @@
         "id": "agency",
         "name": "선택의 행위성",
         "target": "모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다",
-        "current": "94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences",
+        "current": "94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible",
         "evidence": "test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable"
       },
       {
@@ -184,14 +184,14 @@
         "id": "presentation",
         "name": "장면 결산",
         "target": "도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다",
-        "current": "27 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / three companion epilogues",
+        "current": "29 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues",
         "evidence": "test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence"
       },
       {
         "id": "closure",
         "name": "종결과 회고",
         "target": "엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다",
-        "current": "48-week terminal campaign / system decision receipts / save v7 with memory flags / collection / deterministic event-cause retrospective / target companion epilogues / SSOT campaign benchmark",
+        "current": "48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark",
         "evidence": "test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending"
       }
     ]
@@ -3026,5 +3026,142 @@
     "maximumTerminalRouteCards": 48,
     "minimumCoreEndings": 6,
     "evidence": "lib/game_core.dart#resolveEnding"
+  },
+  "fateThreads": [
+    {
+      "id": "ledger-echo",
+      "flag": "first-ledger",
+      "titleRef": "event.firstLedger.title",
+      "detailKey": "fate.ledger-echo.detail",
+      "detail": "기록의 선택이 다음 막의 판단 방식으로 되돌아온다.",
+      "detailEn": "A choice about the ledger returns as the next chapter's rule."
+    },
+    {
+      "id": "windmill-echo",
+      "flag": "windmill-truce",
+      "titleRef": "event.windmill.title",
+      "detailKey": "fate.windmill-echo.detail",
+      "detail": "중재의 선택이 이후 관계의 긴장을 낮춘다.",
+      "detailEn": "A mediation choice softens a later relationship conflict."
+    },
+    {
+      "id": "seed-echo",
+      "flag": "return-seed",
+      "titleRef": "event.seedReturn.title",
+      "detailKey": "fate.seed-echo.detail",
+      "detail": "나눔의 선택이 돌아온 씨앗의 의미를 바꾼다.",
+      "detailEn": "A choice to share changes what the returning seed means."
+    },
+    {
+      "id": "memory-echo",
+      "flag": "memory-house",
+      "titleRef": "event.memoryHouse.title",
+      "detailKey": "fate.memory-echo.detail",
+      "detail": "기억을 여는 선택이 엔딩 회고의 원인으로 남는다.",
+      "detailEn": "Opening the memory house becomes a cause in the ending review."
+    },
+    {
+      "id": "rule-echo",
+      "flag": "public-rule",
+      "titleRef": "event.publicRule.title",
+      "detailKey": "fate.rule-echo.detail",
+      "detail": "공개 규칙을 고른 선택이 다음 사람의 출발점이 된다.",
+      "detailEn": "A public rule becomes the next traveller's starting point."
+    },
+    {
+      "id": "question-echo",
+      "flag": "final-question",
+      "titleRef": "event.finalHorizon.title",
+      "detailKey": "fate.question-echo.detail",
+      "detail": "마지막 질문이 다음 회차의 첫 단서로 이어진다.",
+      "detailEn": "The final question becomes the next run's first clue."
+    }
+  ],
+  "companionQuests": [
+    {
+      "id": "lumi-constellation",
+      "companionId": "lumi",
+      "titleRef": "companion.lumi.routeTitle",
+      "stages": [
+        {
+          "id": "lumi-ledger",
+          "flag": "first-ledger",
+          "bondMin": 2,
+          "eventRef": "event.firstLedger.title"
+        },
+        {
+          "id": "lumi-memory",
+          "flag": "memory-house",
+          "bondMin": 4,
+          "eventRef": "event.memoryHouse.title"
+        },
+        {
+          "id": "lumi-question",
+          "flag": "final-question",
+          "bondMin": 8,
+          "eventRef": "event.finalHorizon.title"
+        }
+      ]
+    },
+    {
+      "id": "bora-garden",
+      "companionId": "bora",
+      "titleRef": "companion.bora.routeTitle",
+      "stages": [
+        {
+          "id": "bora-truce",
+          "flag": "windmill-truce",
+          "bondMin": 2,
+          "eventRef": "event.windmill.title"
+        },
+        {
+          "id": "bora-witness",
+          "flag": "witness-garden",
+          "bondMin": 4,
+          "eventRef": "event.witness.title"
+        },
+        {
+          "id": "bora-names",
+          "flag": "named-garden",
+          "bondMin": 8,
+          "eventRef": "event.gardenOfNames.title"
+        }
+      ]
+    },
+    {
+      "id": "taro-frontier",
+      "companionId": "taro",
+      "titleRef": "companion.taro.routeTitle",
+      "stages": [
+        {
+          "id": "taro-repair",
+          "flag": "windmill-repair",
+          "bondMin": 2,
+          "eventRef": "event.windmill.title"
+        },
+        {
+          "id": "taro-waterway",
+          "flag": "waterway",
+          "bondMin": 4,
+          "eventRef": "event.emptyField.title"
+        },
+        {
+          "id": "taro-marker",
+          "flag": "final-marker",
+          "bondMin": 8,
+          "eventRef": "event.finalHorizon.title"
+        }
+      ]
+    }
+  ],
+  "narrativeLoop": {
+    "schema": "lumen-memory-companion-loop-v1",
+    "fateThreadCount": 6,
+    "companionQuestCount": 3,
+    "stagesPerQuest": 3,
+    "derivedFrom": "event choice flags + deterministic companion bonds",
+    "resolver": "lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests",
+    "systemOwner": "lumen-rule-engine",
+    "evidence": "test/narrative_ledger_test.dart#deterministic-projection"
   }
 }

@@ -2,7 +2,7 @@
   "schema": "lumen-originality-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "40ca769e2189b24dcf3541f56a755faff9b2257cd91638a4d60c302d5d7a4072"
+    "sha256": "613ca1d383eafe8d483da01476382c21a33fe09e31dc99f83c640be812b25aec"
   },
   "designIntent": "황혼 운명 기록: 주간 선택의 결과를 수치가 아니라 관계·기억·다음 회차의 기록으로 되돌려주는 독자 생활 시뮬레이션",
   "referencePrinciples": [
@@ -74,6 +74,12 @@
       "rule": "11개 무조건 authored 사건의 이진 선택 벡터를 replay trace로 보존하고, 성장축·기록 등급·동료 route set·원인 회고를 순서대로 결산한다.",
       "difference": "경우의 수를 이름만 늘린 엔딩 목록으로 세지 않고, 선택 벡터가 실제 사건 trace와 관계·기억 상태를 바꾸는 2,048개 이상 결정론적 scenario signature로 검증한다.",
       "evidence": ["story/story.json#scenarioVariantBudget", "tool/verify_scenario_variants.dart#scenario-case-enumerator", "lib/game_core.dart#resolveEnding", "test/scenario_completeness_test.dart#2,000-case-route-budget"]
+    },
+    {
+      "id": "butterfly-companion-atlas",
+      "rule": "authored memory flag는 여섯 개의 나비효과 기록으로 보이고, 세 동료는 각자 세 단계의 개인 퀘스트와 발견 경로 지도에 연결된다.",
+      "difference": "외부 작품의 생존 판정이나 여행 구조를 복제하지 않고, 루멘의 결정론적 기록 flag·유대 임계치·장소 발견 trace를 한 화면에서 재생성한다.",
+      "evidence": ["lib/game_core.dart#resolveFateThreads", "lib/game_core.dart#resolveCompanionQuests", "story/story.json#fateThreads", "story/story.json#companionQuests", "test/scenario_completeness_test.dart#butterfly-ledger-and-companion-quests"]
     }
   ],
   "antiCopyingRules": [

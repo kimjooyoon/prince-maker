@@ -1556,6 +1556,176 @@ void main() {
     'formula':
         '48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s = 7,755s = 129m; contract reports a conservative 129m first-playthrough estimate.',
   };
+  story['fateThreads'] = [
+    {
+      'id': 'ledger-echo',
+      'flag': 'first-ledger',
+      'titleRef': 'event.firstLedger.title',
+      'detailKey': 'fate.ledger-echo.detail',
+      'detail': '기록의 선택이 다음 막의 판단 방식으로 되돌아온다.',
+      'detailEn':
+          'A choice about the ledger returns as the next chapter\'s rule.',
+    },
+    {
+      'id': 'windmill-echo',
+      'flag': 'windmill-truce',
+      'titleRef': 'event.windmill.title',
+      'detailKey': 'fate.windmill-echo.detail',
+      'detail': '중재의 선택이 이후 관계의 긴장을 낮춘다.',
+      'detailEn': 'A mediation choice softens a later relationship conflict.',
+    },
+    {
+      'id': 'seed-echo',
+      'flag': 'return-seed',
+      'titleRef': 'event.seedReturn.title',
+      'detailKey': 'fate.seed-echo.detail',
+      'detail': '나눔의 선택이 돌아온 씨앗의 의미를 바꾼다.',
+      'detailEn': 'A choice to share changes what the returning seed means.',
+    },
+    {
+      'id': 'memory-echo',
+      'flag': 'memory-house',
+      'titleRef': 'event.memoryHouse.title',
+      'detailKey': 'fate.memory-echo.detail',
+      'detail': '기억을 여는 선택이 엔딩 회고의 원인으로 남는다.',
+      'detailEn':
+          'Opening the memory house becomes a cause in the ending review.',
+    },
+    {
+      'id': 'rule-echo',
+      'flag': 'public-rule',
+      'titleRef': 'event.publicRule.title',
+      'detailKey': 'fate.rule-echo.detail',
+      'detail': '공개 규칙을 고른 선택이 다음 사람의 출발점이 된다.',
+      'detailEn': 'A public rule becomes the next traveller\'s starting point.',
+    },
+    {
+      'id': 'question-echo',
+      'flag': 'final-question',
+      'titleRef': 'event.finalHorizon.title',
+      'detailKey': 'fate.question-echo.detail',
+      'detail': '마지막 질문이 다음 회차의 첫 단서로 이어진다.',
+      'detailEn': 'The final question becomes the next run\'s first clue.',
+    },
+  ];
+  story['companionQuests'] = [
+    {
+      'id': 'lumi-constellation',
+      'companionId': 'lumi',
+      'titleRef': 'companion.lumi.routeTitle',
+      'stages': [
+        {
+          'id': 'lumi-ledger',
+          'flag': 'first-ledger',
+          'bondMin': 2,
+          'eventRef': 'event.firstLedger.title',
+        },
+        {
+          'id': 'lumi-memory',
+          'flag': 'memory-house',
+          'bondMin': 4,
+          'eventRef': 'event.memoryHouse.title',
+        },
+        {
+          'id': 'lumi-question',
+          'flag': 'final-question',
+          'bondMin': 8,
+          'eventRef': 'event.finalHorizon.title',
+        },
+      ],
+    },
+    {
+      'id': 'bora-garden',
+      'companionId': 'bora',
+      'titleRef': 'companion.bora.routeTitle',
+      'stages': [
+        {
+          'id': 'bora-truce',
+          'flag': 'windmill-truce',
+          'bondMin': 2,
+          'eventRef': 'event.windmill.title',
+        },
+        {
+          'id': 'bora-witness',
+          'flag': 'witness-garden',
+          'bondMin': 4,
+          'eventRef': 'event.witness.title',
+        },
+        {
+          'id': 'bora-names',
+          'flag': 'named-garden',
+          'bondMin': 8,
+          'eventRef': 'event.gardenOfNames.title',
+        },
+      ],
+    },
+    {
+      'id': 'taro-frontier',
+      'companionId': 'taro',
+      'titleRef': 'companion.taro.routeTitle',
+      'stages': [
+        {
+          'id': 'taro-repair',
+          'flag': 'windmill-repair',
+          'bondMin': 2,
+          'eventRef': 'event.windmill.title',
+        },
+        {
+          'id': 'taro-waterway',
+          'flag': 'waterway',
+          'bondMin': 4,
+          'eventRef': 'event.emptyField.title',
+        },
+        {
+          'id': 'taro-marker',
+          'flag': 'final-marker',
+          'bondMin': 8,
+          'eventRef': 'event.finalHorizon.title',
+        },
+      ],
+    },
+  ];
+  for (final thread
+      in (story['fateThreads'] as List).cast<Map<String, dynamic>>()) {
+    ko[thread['detailKey'] as String] = thread['detail'];
+    en[thread['detailKey'] as String] = thread['detailEn'];
+  }
+  ko.addAll({
+    'ui.ledger.button': '운명 기록',
+    'ui.ledger.title': '운명 기록 보관소',
+    'ui.ledger.subtitle': '선택은 기억이 되고, 동행은 다음 장을 연다.',
+    'ui.ledger.system': '루멘 규칙 엔진 · 자동 판정 · replay 가능',
+    'ui.ledger.discovered': '확인',
+    'ui.ledger.hidden': '아직 닿지 않음',
+    'ui.ledger.quest': '동행 퀘스트',
+    'ui.ledger.complete': '완료',
+    'ui.ledger.progress': '진행 중',
+    'ui.ledger.back': '← 홈으로',
+  });
+  en.addAll({
+    'ui.ledger.button': 'Fate ledger',
+    'ui.ledger.title': 'Fate Ledger Archive',
+    'ui.ledger.subtitle':
+        'Choices become memories; companions open the next page.',
+    'ui.ledger.system': 'Lumen rule engine · auto-adjudicated · replayable',
+    'ui.ledger.discovered': 'Seen',
+    'ui.ledger.hidden': 'Not reached yet',
+    'ui.ledger.quest': 'Companion quests',
+    'ui.ledger.complete': 'COMPLETE',
+    'ui.ledger.progress': 'IN PROGRESS',
+    'ui.ledger.back': '← Home',
+  });
+  story['narrativeLoop'] = {
+    'schema': 'lumen-memory-companion-loop-v1',
+    'fateThreadCount': (story['fateThreads'] as List).length,
+    'companionQuestCount': (story['companionQuests'] as List).length,
+    'stagesPerQuest': 3,
+    'derivedFrom': 'event choice flags + deterministic companion bonds',
+    'resolver':
+        'lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests',
+    'systemOwner': 'lumen-rule-engine',
+    'evidence': 'test/narrative_ledger_test.dart#deterministic-projection',
+  };
   story['scenarioVariantBudget'] = {
     'schema': 'lumen-scenario-cases-v1',
     'minimumCases': 2000,
@@ -1626,12 +1796,12 @@ void main() {
   };
   story['dialogueMetrics'] = {
     'locales': 'ko,en',
-    'minimumLocaleKeys': 398,
+    'minimumLocaleKeys': 414,
     'minimumVisibleDialogueLines': 47,
     'minimumVisibleNarrativeUnits': 160,
     'authoredDialogueLines': 184,
     'formula':
-        'catalog 398 = UI 15 + personality name/voice/line 9 + event title/body 94 + choice label/line 188 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 48 + milestone titles 16; one 48-week route exposes at least 47 authored choice lines and 160 narrative units',
+        'catalog 414 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 10; one 48-week route exposes at least 47 authored choice lines and 160 narrative units',
   };
   final dimensions = (story['scenarioCompleteness']['dimensions'] as List)
       .cast<Map<String, dynamic>>();
@@ -1639,15 +1809,15 @@ void main() {
   byId['arc']!['current'] =
       '16 chapters / 47 events / 4 locations / 16 milestones / 16 chapter contracts / terminal week 49';
   byId['agency']!['current'] =
-      '94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences';
+      '94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible';
   byId['feedback']!['current'] =
       'stats, coins, fatigue, 16 milestones and 6 endings';
   byId['gating']!['current'] =
       '16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings';
   byId['presentation']!['current'] =
-      '27 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / three companion epilogues';
+      '29 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues';
   byId['closure']!['current'] =
-      '48-week terminal campaign / system decision receipts / save v7 with memory flags / collection / deterministic event-cause retrospective / target companion epilogues / SSOT campaign benchmark';
+      '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;
 
   refreshHashes(story);

@@ -15,6 +15,10 @@ String render(Map<String, dynamic> s, String hash) {
   final endings = (s['endings'] as List).cast<Map<String, dynamic>>();
   final milestones =
       (s['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
+  final fateThreads =
+      (s['fateThreads'] as List? ?? []).cast<Map<String, dynamic>>();
+  final companionQuests =
+      (s['companionQuests'] as List? ?? []).cast<Map<String, dynamic>>();
   final assets = (s['assetRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final fonts = (s['fontRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final locales = (s['localeRefs'] as List? ?? []).cast<Map<String, dynamic>>();
@@ -56,13 +60,28 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln('\n## 시나리오 경우의 수 계약\n');
   b.writeln(
       '- 최소 보장: **${scenarioVariants['minimumCases']}개** · 실제 재생 검증: **${scenarioVariants['verifiedReachableCases']}개** · 전체 route input: **${scenarioVariants['routeInputCases']}개**');
-  b.writeln('- 분기 주차: ${(scenarioVariants['branchWeeks'] as List? ?? const []).join(', ')}주');
+  b.writeln(
+      '- 분기 주차: ${(scenarioVariants['branchWeeks'] as List? ?? const []).join(', ')}주');
   b.writeln('- 산식: ${scenarioVariants['formula']}');
   b.writeln('\n## 엔딩 설계 행렬\n');
   b.writeln(
       '해결 순서: ${(endingDesign['resolutionOrder'] as List? ?? const []).join(' → ')}');
   b.writeln(
       '- 핵심 엔딩군: ${(endingDesign['coreFamilies'] as List? ?? const []).map((family) => family['id']).join(', ')} · 동료 route set 최대 ${endingDesign['maximumCompanionRouteSets']}개 · terminal route card 최대 ${endingDesign['maximumTerminalRouteCards']}개');
+  b.writeln('\n## 나비효과 기록\n');
+  b.writeln(
+      '선택에서 기록된 기억 flag를 별도 상태로 복제하지 않고, 다음 장의 단서와 엔딩 회고에서 같은 SSOT flag로 재생성한다.');
+  for (final thread in fateThreads)
+    b.writeln(
+        '- **${thread['id']}** · `${thread['flag']}` · `${thread['titleRef']}` · ${thread['detail']} / ${thread['detailEn']}');
+  b.writeln('\n## 동료 퀘스트\n');
+  for (final quest in companionQuests) {
+    b.writeln(
+        '- **${quest['id']}** · `${quest['companionId']}` · `${quest['titleRef']}`');
+    for (final stage in (quest['stages'] as List).cast<Map<String, dynamic>>())
+      b.writeln(
+          '  - `${stage['id']}` · `${stage['flag']}` · 유대 ${stage['bondMin']} · `${stage['eventRef']}`');
+  }
   b.writeln('\n## 시나리오 완전성 표본\n');
   b.writeln(
       '참조 모델: **${scenario['referenceModel']}** (`${scenario['schema']}`)\n');
@@ -143,6 +162,12 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       budget = (s['contentBudget'] as Map? ?? {}),
       scenarioVariants = (s['scenarioVariantBudget'] as Map? ?? {}),
       endingDesign = (s['endingDesign'] as Map? ?? {}),
+      fateThreads = (s['fateThreads'] as List? ?? []).length,
+      companionQuests = (s['companionQuests'] as List? ?? []).length,
+      companionQuestStages = (s['companionQuests'] as List? ?? []).fold<int>(
+          0,
+          (sum, quest) =>
+              sum + ((quest as Map)['stages'] as List? ?? const []).length),
       campaignWeeks =
           (s['campaignWeeks'] as int?) ?? ((s['endingWeek'] as int) - 1),
       ranges = (s['progression'] as List? ?? const [])
@@ -165,6 +190,10 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       '| 전체 route input | ${scenarioVariants['routeInputCases']}개 | 활동 × 성격 × 계승 컨텍스트 × authored branch vector |');
   b.writeln(
       '| 엔딩 route card | ${endingDesign['maximumTerminalRouteCards']}개까지 | 핵심 엔딩 × 동료 route set |');
+  b.writeln(
+      '| 나비효과 기록 | $fateThreads | `fateThreads.length` · authored memory flag 기반 |');
+  b.writeln(
+      '| 동료 퀘스트 | $companionQuests개 / $companionQuestStages stages | `companionQuests` · 동료별 3단계 |');
   b.writeln(
       '| 시스템 판정 | ${(s['decisionSystem'] as Map?)?['id'] ?? 'none'} | SSOT `decisionSystem` · fail-closed receipt |');
   b.writeln('| 활동 | $acts | `activities.length` |');

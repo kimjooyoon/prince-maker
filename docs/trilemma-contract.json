@@ -2,7 +2,7 @@
   "schema": "prince-maker-trilemma-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "40ca769e2189b24dcf3541f56a755faff9b2257cd91638a4d60c302d5d7a4072"
+    "sha256": "613ca1d383eafe8d483da01476382c21a33fe09e31dc99f83c640be812b25aec"
   },
   "axes": [
     {
@@ -14,8 +14,10 @@
         "authoredBranches": 100,
         "scenarioCases": 2000,
         "scenarioRouteInputs": 122880,
-        "goldens": 27,
-        "localeKeys": 398
+        "narrativeFateThreads": 6,
+        "companionQuestStages": 9,
+        "goldens": 29,
+        "localeKeys": 414
       },
       "evidence": [
         "tool/verify_game.dart#scenario-contract",
@@ -34,6 +36,9 @@
         "minDistinctSignatures": 3,
         "scenarioCases": 2000,
         "minScenarioSignatures": 2000,
+        "narrativeFateThreads": 6,
+        "companionQuestStages": 9,
+        "narrativeDeterministic": true,
         "minLegacyProfiles": 3,
         "minLegacyTargetEndings": 3,
         "minLegacyTargetCompanions": 3,

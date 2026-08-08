@@ -19,7 +19,11 @@ void main() {
     'tool/expand_story.dart',
     'tool/refresh_review_manifest.dart',
     'tool/verify_scenario_variants.dart',
-    'test/ending_matrix_test.dart'
+    'test/ending_matrix_test.dart',
+    'test/narrative_ledger_test.dart',
+    'test/narrative_ledger_golden_test.dart',
+    'test/goldens/narrative-ledger.png',
+    'test/goldens/narrative-ledger-en.png'
   ]) {
     if (!known.containsKey(path)) {
       entries

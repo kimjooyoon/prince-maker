@@ -396,5 +396,21 @@
   "milestone.blank-map.title": "Map of the Blank",
   "milestone.commons.title": "The Shared Rule",
   "milestone.returning-garden.title": "The Returning Garden",
-  "milestone.handoff.title": "The Horizon Passed On"
+  "milestone.handoff.title": "The Horizon Passed On",
+  "fate.ledger-echo.detail": "A choice about the ledger returns as the next chapter's rule.",
+  "fate.windmill-echo.detail": "A mediation choice softens a later relationship conflict.",
+  "fate.seed-echo.detail": "A choice to share changes what the returning seed means.",
+  "fate.memory-echo.detail": "Opening the memory house becomes a cause in the ending review.",
+  "fate.rule-echo.detail": "A public rule becomes the next traveller's starting point.",
+  "fate.question-echo.detail": "The final question becomes the next run's first clue.",
+  "ui.ledger.button": "Fate ledger",
+  "ui.ledger.title": "Fate Ledger Archive",
+  "ui.ledger.subtitle": "Choices become memories; companions open the next page.",
+  "ui.ledger.system": "Lumen rule engine · auto-adjudicated · replayable",
+  "ui.ledger.discovered": "Seen",
+  "ui.ledger.hidden": "Not reached yet",
+  "ui.ledger.quest": "Companion quests",
+  "ui.ledger.back": "← Home",
+  "ui.ledger.complete": "COMPLETE",
+  "ui.ledger.progress": "IN PROGRESS"
 }

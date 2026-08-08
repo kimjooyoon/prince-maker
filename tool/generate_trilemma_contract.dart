@@ -17,6 +17,11 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
   final dialogue = (story['dialogueMetrics'] as Map).cast<String, dynamic>();
   final scenarioCases =
       (story['scenarioVariantBudget'] as Map).cast<String, dynamic>();
+  final narrative =
+      (story['narrativeLoop'] as Map? ?? {}).cast<String, dynamic>();
+  final quests = (story['companionQuests'] as List? ?? const []).cast<Map>();
+  final questStages = quests.fold<int>(
+      0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
   return {
     'schema': 'prince-maker-trilemma-v1',
     'source': {'ref': 'story/story.json#root', 'sha256': hash},
@@ -30,6 +35,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'authoredBranches': choices + (story['endings'] as List).length,
           'scenarioCases': scenarioCases['minimumCases'],
           'scenarioRouteInputs': scenarioCases['routeInputCases'],
+          'narrativeFateThreads': narrative['fateThreadCount'],
+          'companionQuestStages': questStages,
           'goldens': goldens,
           'localeKeys': dialogue['minimumLocaleKeys'],
         },
@@ -50,6 +57,9 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'minDistinctSignatures': 3,
           'scenarioCases': scenarioCases['minimumCases'],
           'minScenarioSignatures': scenarioCases['minimumCases'],
+          'narrativeFateThreads': narrative['fateThreadCount'],
+          'companionQuestStages': questStages,
+          'narrativeDeterministic': true,
           'minLegacyProfiles': (story['legacyProfiles'] as List? ?? []).length,
           'minLegacyTargetEndings':
               (story['legacyProfiles'] as List? ?? []).length,

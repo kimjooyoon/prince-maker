@@ -317,6 +317,71 @@ class _Game extends State<Game> {
     });
   }
 
+  void handleTap(Offset position, Size viewport) {
+    final scale = min(viewport.width / DesignTokens.canvasWidth,
+            viewport.height / DesignTokens.canvasHeight)
+        .clamp(.5, 1.0);
+    final offset = Offset(
+        (viewport.width - DesignTokens.canvasWidth * scale) / 2,
+        (viewport.height - DesignTokens.canvasHeight * scale) / 2);
+    final logical = (position - offset) / scale;
+    final x = logical.dx.clamp(0.0, DesignTokens.canvasWidth),
+        y = logical.dy.clamp(0.0, DesignTokens.canvasHeight);
+    if (page == 1) {
+      if (y < 100 && x > 590)
+        toggleLocale();
+      else if (y > 570 && x < 720)
+        setState(() {
+          persona = (x ~/ 245).clamp(0, 2);
+          session.world.progress[0]!.persona = persona;
+        });
+      else if (y > 570)
+        setState(() => page = 0);
+      else if (y > 180 && y < 290)
+        setState(() {
+          persona = (x ~/ 245).clamp(0, 2);
+          session.world.progress[0]!.persona = persona;
+        });
+    } else if (page == 2) {
+      if (y < 100 && x > 590)
+        toggleLocale();
+      else if (y > 490 && y < 680) restart();
+    } else if (page == 3) {
+      if (y > 260 && y < 470) chooseEvent((x ~/ 380).clamp(0, 1));
+    } else if (page == 4) {
+      if (y > 390 && y < 470 && x < 365) {
+        Clipboard.setData(ClipboardData(text: snapshot().encode()));
+        session.persist(page: page);
+      } else if (y > 390 && y < 470)
+        importSave();
+      else if (y > 520 && x < 200)
+        setState(() => page = 0);
+      else if (y < 100) setState(() => page = 0);
+    } else if (page == 5) {
+      if (y < 100 && x > 590)
+        toggleLocale();
+      else if (y < 100 || y > 560) setState(() => page = 0);
+    } else if (y > 500 && x >= 590) {
+      next();
+    } else if (y > 500 && x >= 430) {
+      setState(() => page = 1);
+    } else if (y > 500 && x >= 260) {
+      setState(() => page = 4);
+    } else if (y >= 620 && y < 650 && x < 220) {
+      // Preserve the generous lower-screen tap target used by compact devices.
+      next();
+    } else if (y > 640 && x < 220) {
+      setState(() => page = 5);
+    } else if (y > 260 && y < 470) {
+      final row = y < 350 ? 0 : 1,
+          col = (x ~/ 245).clamp(0, 2),
+          i = row == 0 ? col : 3 + col;
+      if (i < activities.length) select(i);
+    } else if (y > 500) {
+      next();
+    }
+  }
+
   Future<void> importSave() async {
     final c = TextEditingController();
     final raw = await showDialog<String>(
@@ -379,51 +444,8 @@ class _Game extends State<Game> {
           backgroundColor: paper,
           body: SafeArea(
               child: GestureDetector(
-                  onTapUp: (d) {
-                    final x = d.localPosition.dx, y = d.localPosition.dy;
-                    if (page == 1) {
-                      if (y < 100 && x > 590)
-                        toggleLocale();
-                      else if (y > 570 && y < 635 && x < 720)
-                        setState(() {
-                          persona = (x ~/ 245).clamp(0, 2);
-                          session.world.progress[0]!.persona = persona;
-                        });
-                      else if (y > 570)
-                        setState(() => page = 0);
-                      else if (y > 180 && y < 290)
-                        setState(() {
-                          persona = (x ~/ 245).clamp(0, 2);
-                          session.world.progress[0]!.persona = persona;
-                        });
-                    } else if (page == 2) {
-                      if (y > 490 && y < 630) restart();
-                    } else if (page == 3) {
-                      if (y > 260 && y < 470)
-                        chooseEvent((x ~/ 380).clamp(0, 1));
-                    } else if (page == 4) {
-                      if (y > 390 && y < 470 && x < 365) {
-                        Clipboard.setData(
-                            ClipboardData(text: snapshot().encode()));
-                        session.persist(page: page);
-                      } else if (y > 390 && y < 470)
-                        importSave();
-                      else if (y > 520 && x < 200)
-                        setState(() => page = 0);
-                      else if (y < 100) setState(() => page = 0);
-                    } else if (y > 500 && x >= 590)
-                      next();
-                    else if (y > 500 && x >= 430)
-                      setState(() => page = 1);
-                    else if (y > 500 && x >= 260)
-                      setState(() => page = 4);
-                    else if (y > 260 && y < 470) {
-                      final row = y < 350 ? 0 : 1,
-                          col = (x ~/ 245).clamp(0, 2),
-                          i = row == 0 ? col : 3 + col;
-                      if (i < activities.length) select(i);
-                    } else if (y > 500) next();
-                  },
+                  onTapUp: (d) =>
+                      handleTap(d.localPosition, const Size(760, 700)),
                   child: CustomPaint(
                       key: ValueKey(
                           '$page-$week-$persona-$eventIndex${locale == 'ko' ? '' : '-$locale'}'),
@@ -504,16 +526,61 @@ class Scene extends CustomPainter {
     t.paint(c, p);
   }
 
-  void box(Canvas c, Rect r, Color color, {double radius = 18, Color? stroke}) {
-    c.drawRRect(RRect.fromRectAndRadius(r, Radius.circular(radius)),
-        Paint()..color = color);
+  void box(Canvas c, Rect r, Color color,
+      {double radius = 18, Color? stroke, bool shadow = false}) {
+    final shape = RRect.fromRectAndRadius(r, Radius.circular(radius));
+    if (shadow) {
+      c.drawRRect(shape.shift(const Offset(0, 3)),
+          Paint()..color = ink.withValues(alpha: .08));
+    }
+    c.drawRRect(shape, Paint()..color = color);
     if (stroke != null)
       c.drawRRect(
-          RRect.fromRectAndRadius(r, Radius.circular(radius)),
+          shape,
           Paint()
             ..color = stroke
             ..style = PaintingStyle.stroke
             ..strokeWidth = 2);
+  }
+
+  void background(Canvas c) {
+    c.drawRect(
+        const Rect.fromLTWH(0, 0, 760, 700),
+        Paint()
+          ..shader = ui.Gradient.linear(const Offset(0, 0),
+              const Offset(760, 700), [paper, const Color(0xfff1f5ee)]));
+    c.drawCircle(
+        const Offset(700, 18),
+        170,
+        Paint()
+          ..shader = ui.Gradient.radial(const Offset(700, 18), 170,
+              [sun.withValues(alpha: .16), sun.withValues(alpha: 0)]));
+    final constellation = Paint()
+      ..color = teal.withValues(alpha: .14)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5;
+    final stars = [
+      const Offset(625, 82),
+      const Offset(680, 54),
+      const Offset(724, 102),
+      const Offset(653, 126)
+    ];
+    for (var i = 0; i < stars.length - 1; i++) {
+      c.drawLine(stars[i], stars[i + 1], constellation);
+    }
+    for (final star in stars) {
+      c.drawCircle(star, 3, Paint()..color = sun.withValues(alpha: .55));
+    }
+  }
+
+  void statPill(Canvas c, String label, int value, double x, Color accent) {
+    box(c, Rect.fromLTWH(x, 157, 104, 28), Colors.white.withValues(alpha: .08),
+        radius: 10);
+    c.drawCircle(Offset(x + 14, 171), 4, Paint()..color = accent);
+    txt(c, label, Offset(x + 25, 163), 10, Colors.white70,
+        bold: true, maxWidth: 42);
+    txt(c, '$value', Offset(x + 75, 160), 14, Colors.white,
+        bold: true, maxWidth: 24);
   }
 
   void mark(Canvas c, String icon, Offset o, Color color) {
@@ -546,6 +613,98 @@ class Scene extends CustomPainter {
     } else {
       c.drawRect(Rect.fromCenter(center: q, width: 25, height: 25), p);
     }
+  }
+
+  StoryPort get storyModel => JsonStoryAdapter(s);
+
+  List<Map<String, dynamic>> get fateProgress =>
+      resolveFateThreads(storyModel, flags);
+
+  List<Map<String, dynamic>> get questProgress =>
+      resolveCompanionQuests(storyModel, bonds, flags);
+
+  int get discoveredFateCount =>
+      fateProgress.where((thread) => thread['discovered'] == true).length;
+
+  int get completedQuestStages => questProgress.fold<int>(
+      0, (sum, quest) => sum + ((quest['completedStages'] as int?) ?? 0));
+
+  int get totalQuestStages => questProgress.fold<int>(
+      0, (sum, quest) => sum + ((quest['totalStages'] as int?) ?? 0));
+
+  String shortRouteName(Map<String, dynamic> location) => activeLocale == 'ko'
+      ? '${location['name']}'
+      : localized('${location['nameKey']}', '${location['name']}');
+
+  void routeAtlas(Canvas c, {required Offset origin}) {
+    final locations = (s['locations'] as List? ?? const [])
+        .cast<Map<String, dynamic>>()
+        .take(4)
+        .toList();
+    txt(c, activeLocale == 'ko' ? '발견 경로' : 'Route atlas', origin, 10, teal,
+        bold: true);
+    final startX = origin.dx + 18.0, step = 170.0, nodeY = origin.dy + 28;
+    for (var i = 0; i < locations.length; i++) {
+      final location = locations[i],
+          x = startX + i * step,
+          found = flags['place:${location['id']}'] == true,
+          color = found ? teal : ink.withValues(alpha: .18);
+      if (i < locations.length - 1) {
+        c.drawLine(
+            Offset(x + 9, nodeY),
+            Offset(x + step - 9, nodeY),
+            Paint()
+              ..color =
+                  found && flags['place:${locations[i + 1]['id']}'] == true
+                      ? teal
+                      : ink.withValues(alpha: .12)
+              ..strokeWidth = 2);
+      }
+      c.drawCircle(Offset(x, nodeY), 9, Paint()..color = color);
+      c.drawCircle(
+          Offset(x, nodeY),
+          9,
+          Paint()
+            ..color = paper.withValues(alpha: .0)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2);
+      txt(
+          c,
+          found ? shortRouteName(location) : '· · ·',
+          Offset(x - 42, nodeY + 14),
+          9,
+          found ? ink : ink.withValues(alpha: .35),
+          maxWidth: 84);
+    }
+  }
+
+  void trackerLine(Canvas c, Offset origin, {double maxWidth = 700}) {
+    final fateLabel = activeLocale == 'ko' ? '나비효과' : 'Butterfly effects';
+    final questLabel = activeLocale == 'ko' ? '동료 퀘스트' : 'Companion quests';
+    txt(
+        c,
+        '$fateLabel $discoveredFateCount/${fateProgress.length} · '
+        '$questLabel $completedQuestStages/$totalQuestStages',
+        origin,
+        10,
+        teal,
+        bold: true,
+        maxWidth: maxWidth);
+  }
+
+  void drawChoiceEcho(Canvas c, Map<String, dynamic> choice, Offset origin) {
+    final flag = choice['setsFlag'] as String?;
+    if (flag == null) return;
+    txt(
+        c,
+        activeLocale == 'ko'
+            ? '나비효과 · 다음 장에 남음'
+            : 'Butterfly effect · carried forward',
+        origin,
+        10,
+        teal,
+        bold: true,
+        maxWidth: 290);
   }
 
   void portrait(Canvas c, Rect d, int n) {
@@ -609,32 +768,50 @@ class Scene extends CustomPainter {
   @override
   void paint(Canvas c, Size z) {
     setActiveLocale(locale, LocaleCatalog(locales));
-    final u = (z.width / 760).clamp(.5, 1.0);
+    final u = min(z.width / DesignTokens.canvasWidth,
+            z.height / DesignTokens.canvasHeight)
+        .clamp(.5, 1.0);
+    final dx = (z.width - DesignTokens.canvasWidth * u) / 2,
+        dy = (z.height - DesignTokens.canvasHeight * u) / 2;
+    c.save();
+    c.translate(dx, dy);
     c.scale(u);
-    box(c, const Rect.fromLTWH(0, 0, 760, 700), paper, radius: 0);
+    background(c);
     if (page == 1) {
       illustration(c);
       drawLocaleToggle(c, activeLocale, activeCatalog);
       drawLocalizedIllustration(c, s, persona);
+      c.restore();
       return;
     }
     if (page == 2) {
       ending(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
       return;
     }
     if (page == 3) {
       if (activeLocale == 'ko') event(c);
       drawLocaleToggle(c, activeLocale, activeCatalog);
       drawLocalizedEvent(c, s, eventIndex, stats, bonds);
+      c.restore();
       return;
     }
     if (page == 4) {
       savePage(c);
+      c.restore();
+      return;
+    }
+    if (page == 5) {
+      ledger(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
       return;
     }
     home(c);
     drawFeedbackBanner(c, lastResult, lastLine);
     seasonProgress(c);
+    c.restore();
   }
 
   void seasonProgress(Canvas c) {
@@ -684,13 +861,15 @@ class Scene extends CustomPainter {
             people.isEmpty ? null : people[persona.clamp(0, people.length - 1)];
     txt(c, s['title'], const Offset(24, 24), 30, ink, bold: true);
     txt(c, s['setting'], const Offset(25, 65), 14, teal);
-    box(c, const Rect.fromLTWH(24, 105, 712, 120), ink, radius: 22);
+    box(c, const Rect.fromLTWH(24, 105, 712, 120), ink,
+        radius: 22, shadow: true);
     box(c, const Rect.fromLTWH(44, 125, 76, 76), sun, radius: 18);
     portrait(c, const Rect.fromLTWH(45, 122, 74, 80), persona);
     txt(c, '${s['hero']} · $week주차', const Offset(140, 128), 20, Colors.white,
         bold: true);
-    txt(c, '지혜 ${stats['지혜']}   공감 ${stats['공감']}   용기 ${stats['용기']}',
-        const Offset(140, 166), 14, Colors.white70);
+    statPill(c, '지혜', stats['지혜'] ?? 0, 140, sun);
+    statPill(c, '공감', stats['공감'] ?? 0, 252, const Color(0xff9fe0c9));
+    statPill(c, '용기', stats['용기'] ?? 0, 364, const Color(0xffff9a7a));
     txt(c, '은화 $coins · 피로 $fatigue/12 · $condition', const Offset(140, 190),
         14, fatigue > 9 ? const Color(0xffff8b6b) : sun);
     txt(c, '유대 루미 ${bonds['lumi']} · 보라 ${bonds['bora']} · 타로 ${bonds['taro']}',
@@ -698,7 +877,7 @@ class Scene extends CustomPainter {
     txt(
         c,
         goal == null
-            ? '계절 목표를 모두 확인했습니다.'
+            ? (rawGoals.isEmpty ? '이번 회차는 자유롭게 시작합니다.' : '계절 목표를 모두 확인했습니다.')
             : '다음 목표 · ${goal['title']} · ${goal['stat']} ${stats[goal['stat']]}/${goal['min']}',
         const Offset(24, 250),
         14,
@@ -715,21 +894,110 @@ class Scene extends CustomPainter {
               ? ' · 재능 +${talent['focusBonus']}'
               : '';
       box(c, Rect.fromLTWH(x, y, 220, 80), on ? teal : Colors.white,
-          stroke: on ? teal : ink.withValues(alpha: .12));
-      mark(c, a.icon, Offset(x + 16, y + 8), on ? Colors.white : teal);
+          stroke: on ? teal : ink.withValues(alpha: .12), shadow: true);
+      c.drawCircle(Offset(x + 34, y + 40), 24,
+          Paint()..color = on ? Colors.white.withValues(alpha: .16) : paper);
+      mark(c, a.icon, Offset(x + 16, y + 22), on ? Colors.white : teal);
       txt(c, a.label, Offset(x + 52, y + 12), 14, on ? Colors.white : ink,
           bold: true);
       txt(c, '${a.hint}$bonus', Offset(x + 52, y + 40), 9,
           on ? Colors.white70 : ink.withValues(alpha: .55));
     }
     box(c, const Rect.fromLTWH(260, 500, 150, 54), Colors.white,
-        radius: 15, stroke: teal);
+        radius: 15, stroke: teal, shadow: true);
     txt(c, '기록 보관소', const Offset(282, 517), 14, teal, bold: true);
     box(c, const Rect.fromLTWH(430, 500, 150, 54), Colors.white,
-        radius: 15, stroke: teal);
+        radius: 15, stroke: teal, shadow: true);
     txt(c, '일러스트', const Offset(458, 517), 16, teal, bold: true);
-    box(c, const Rect.fromLTWH(590, 500, 146, 54), teal, radius: 15);
+    box(c, const Rect.fromLTWH(590, 500, 146, 54), teal,
+        radius: 15, shadow: true);
     txt(c, '하루 보내기 →', const Offset(607, 517), 14, Colors.white, bold: true);
+    trackerLine(c, const Offset(24, 565));
+    routeAtlas(c, origin: const Offset(24, 580));
+    box(c, const Rect.fromLTWH(24, 660, 170, 30), Colors.white,
+        radius: 12, stroke: teal);
+    txt(c, localized('ui.ledger.button', '운명 기록'), const Offset(62, 668), 12,
+        teal,
+        bold: true);
+  }
+
+  void ledger(Canvas c) {
+    final threads = fateProgress,
+        quests = questProgress,
+        companions = (s['companions'] as List? ?? const []).cast<Map>();
+    txt(c, localized('ui.ledger.title', '운명 기록 보관소'), const Offset(24, 24), 30,
+        ink,
+        bold: true);
+    txt(c, localized('ui.ledger.subtitle', '선택은 기억이 되고, 동행은 다음 장을 연다.'),
+        const Offset(25, 65), 13, teal,
+        maxWidth: 560);
+    txt(c, localized('ui.ledger.system', '루멘 규칙 엔진 · 자동 판정 · replay 가능'),
+        const Offset(25, 91), 10, ink.withValues(alpha: .55));
+    for (var i = 0; i < threads.length; i++) {
+      final thread = threads[i],
+          discovered = thread['discovered'] == true,
+          x = 24 + (i % 3) * 240.0,
+          y = 120 + (i ~/ 3) * 105.0,
+          title = localized('${thread['titleRef']}', '${thread['id']}'),
+          detail = discovered
+              ? localized('${thread['detailKey']}', '${thread['detail']}')
+              : localized('ui.ledger.hidden', '아직 닿지 않음');
+      box(c, Rect.fromLTWH(x, y, 224, 88), discovered ? Colors.white : paper,
+          radius: 16,
+          stroke: discovered ? teal : ink.withValues(alpha: .12),
+          shadow: discovered);
+      mark(c, discovered ? '✦' : '◇', Offset(x + 10, y + 10),
+          discovered ? teal : ink.withValues(alpha: .35));
+      txt(c, title, Offset(x + 50, y + 12), 12, ink, bold: true, maxWidth: 130);
+      txt(c, detail, Offset(x + 18, y + 48), 9,
+          discovered ? teal : ink.withValues(alpha: .45),
+          maxWidth: 190);
+      txt(
+          c,
+          discovered ? localized('ui.ledger.discovered', '발견됨') : '·',
+          Offset(x + 184, y + 12),
+          9,
+          discovered ? teal : ink.withValues(alpha: .3),
+          bold: true,
+          maxWidth: 32);
+    }
+    txt(c, localized('ui.ledger.quest', '동행 퀘스트'), const Offset(24, 350), 16,
+        teal,
+        bold: true);
+    for (var i = 0; i < quests.length; i++) {
+      final quest = quests[i],
+          companion = companions.firstWhere(
+              (candidate) => '${candidate['id']}' == '${quest['companionId']}',
+              orElse: () => {'name': quest['companionId']}),
+          x = 24 + i * 240.0,
+          completed = quest['completedStages'] as int,
+          total = quest['totalStages'] as int,
+          title = localized('${quest['titleRef']}', '${companion['name']}'),
+          complete = quest['complete'] == true;
+      box(c, Rect.fromLTWH(x, 380, 224, 132), complete ? teal : Colors.white,
+          radius: 18, stroke: teal, shadow: true);
+      txt(c, '${companion['name']} · $title', Offset(x + 16, 400), 12,
+          complete ? Colors.white : ink,
+          bold: true, maxWidth: 190);
+      txt(
+          c,
+          '$completed/$total · ${localized(complete ? 'ui.ledger.complete' : 'ui.ledger.progress', complete ? 'COMPLETE' : 'IN PROGRESS')}',
+          Offset(x + 16, 432),
+          10,
+          complete ? sun : teal,
+          bold: true);
+      box(c, Rect.fromLTWH(x + 16, 462, 190, 6), ink.withValues(alpha: .12),
+          radius: 3);
+      box(
+          c,
+          Rect.fromLTWH(
+              x + 16, 462, 190 * (total == 0 ? 0 : completed / total), 6),
+          complete ? sun : teal,
+          radius: 3);
+    }
+    txt(c, localized('ui.ledger.back', '← 홈으로'), const Offset(24, 570), 14,
+        teal,
+        bold: true);
   }
 
   void illustration(Canvas c) {
@@ -741,7 +1009,8 @@ class Scene extends CustomPainter {
             : '재능 · ${p['focusStat']} 활동 성장 +${p['focusBonus']}';
     txt(c, '노아의 기록', const Offset(24, 24), 30, ink, bold: true);
     txt(c, '성격을 고르고, 오늘의 마음을 읽습니다.', const Offset(25, 65), 14, teal);
-    box(c, const Rect.fromLTWH(24, 100, 330, 455), ink, radius: 24);
+    box(c, const Rect.fromLTWH(24, 100, 330, 455), ink,
+        radius: 24, shadow: true);
     portrait(c, const Rect.fromLTWH(46, 125, 286, 390),
         (comp?['portraitFrame'] as int?) ?? persona);
     txt(c, p['name'], const Offset(390, 125), 24, ink, bold: true);
@@ -749,7 +1018,7 @@ class Scene extends CustomPainter {
         const Offset(390, 165), 14, teal);
     txt(c, talent, const Offset(390, 195), 13, teal);
     box(c, const Rect.fromLTWH(390, 220, 330, 150), Colors.white,
-        radius: 20, stroke: ink.withValues(alpha: .12));
+        radius: 20, stroke: ink.withValues(alpha: .12), shadow: true);
     txt(c, '“${p['line']}”', const Offset(415, 250), 20, ink, bold: true);
     txt(c, '${s['hero']}의 이번 주 기록', const Offset(390, 400), 14,
         ink.withValues(alpha: .55));
@@ -758,7 +1027,7 @@ class Scene extends CustomPainter {
           on = i == persona,
           label = cs.isEmpty ? s['personalities'][i]['name'] : cs[i]['name'];
       box(c, Rect.fromLTWH(x, 575, 220, 54), on ? teal : Colors.white,
-          radius: 15, stroke: teal);
+          radius: 15, stroke: teal, shadow: true);
       txt(c, label, Offset(x + 25, 593), 13, on ? Colors.white : teal,
           bold: true);
     }
@@ -810,7 +1079,9 @@ class Scene extends CustomPainter {
               ? ''
               : ' · $rival 유대 ${rivalDelta >= 0 ? '+' : ''}$rivalDelta';
       box(c, Rect.fromLTWH(x, 270, 332, 190), tone,
-          radius: 18, stroke: locked ? ink.withValues(alpha: .2) : teal);
+          radius: 18,
+          stroke: locked ? ink.withValues(alpha: .2) : teal,
+          shadow: !locked);
       txt(c, '선택 ${i + 1}', Offset(x + 22, 295), 14,
           locked ? ink.withValues(alpha: .45) : teal,
           bold: true);
@@ -825,6 +1096,7 @@ class Scene extends CustomPainter {
           Offset(x + 22, 400),
           13,
           locked ? ink.withValues(alpha: .45) : ink.withValues(alpha: .6));
+      drawChoiceEcho(c, ch, Offset(x + 22, 435));
     }
     txt(
         c,
@@ -871,7 +1143,7 @@ class Scene extends CustomPainter {
     txt(c, '기록 보관소', const Offset(24, 28), 32, ink, bold: true);
     txt(c, '현재 상태를 코드로 보관하고 다른 실행에서 복원합니다.', const Offset(25, 70), 14, teal);
     box(c, const Rect.fromLTWH(24, 120, 712, 240), Colors.white,
-        radius: 20, stroke: ink.withValues(alpha: .12));
+        radius: 20, stroke: ink.withValues(alpha: .12), shadow: true);
     txt(
         c,
         'replay ${history.length}회 · 목표 ${milestones.values.where((v) => v).length}/${(s['milestones'] as List? ?? const []).length}',
@@ -897,9 +1169,12 @@ class Scene extends CustomPainter {
         const Offset(48, 343),
         11,
         teal);
-    box(c, const Rect.fromLTWH(24, 390, 300, 64), teal, radius: 18);
+    trackerLine(c, const Offset(48, 368), maxWidth: 650);
+    box(c, const Rect.fromLTWH(24, 390, 300, 64), teal,
+        radius: 18, shadow: true);
     txt(c, '저장 코드 복사', const Offset(100, 412), 16, Colors.white, bold: true);
-    box(c, const Rect.fromLTWH(365, 390, 300, 64), sun, radius: 18);
+    box(c, const Rect.fromLTWH(365, 390, 300, 64), sun,
+        radius: 18, shadow: true);
     txt(c, '저장 코드 복원', const Offset(440, 412), 16, ink, bold: true);
     txt(c, '← 홈으로', const Offset(24, 570), 14, teal, bold: true);
   }
@@ -942,7 +1217,8 @@ class Scene extends CustomPainter {
         ink,
         bold: true);
     txt(c, '루멘은 노아가 고른 방향을 기억합니다.', const Offset(25, 70), 14, teal);
-    box(c, const Rect.fromLTWH(24, 110, 290, 420), ink, radius: 24);
+    box(c, const Rect.fromLTWH(24, 110, 290, 420), ink,
+        radius: 24, shadow: true);
     portrait(c, const Rect.fromLTWH(55, 145, 228, 330), persona);
     txt(c, d['title'], const Offset(365, 145), 26, ink, bold: true);
     txt(c, d['body'], const Offset(365, 200), 16, ink);
@@ -971,9 +1247,11 @@ class Scene extends CustomPainter {
       if (routeTitles.isNotEmpty)
         txt(c, routeLine, const Offset(55, 510), 10, Colors.white70);
     }
+    trackerLine(c, const Offset(55, 548), maxWidth: 250);
     drawEndingRetrospective(
         c, history, goalCount, missingGoals, allMilestones, milestones);
-    box(c, const Rect.fromLTWH(365, 535, 300, 64), sun, radius: 18);
+    box(c, const Rect.fromLTWH(365, 535, 300, 64), sun,
+        radius: 18, shadow: true);
     txt(c, '다시 루멘으로', const Offset(450, 557), 17, ink, bold: true);
     drawLocalizedEnding(c, s, d, rank, history, goalCount, missingGoals,
         allMilestones, milestones);
@@ -991,6 +1269,7 @@ class Scene extends CustomPainter {
       o.saveCode != saveCode ||
       o.lastResult != lastResult ||
       o.lastLine != lastLine ||
+      o.flags.toString() != flags.toString() ||
       o.bonds.toString() != bonds.toString() ||
       o.collectionEntries.toString() != collectionEntries.toString();
 }
