@@ -84,7 +84,10 @@ void main() {
     'tool/verify_gameplay_fun.dart',
     'tool/verify_content_depth.dart',
     'tool/verify_quality_score.dart',
+    'tool/generate_event_storm.dart',
+    'tool/verify_event_storm.dart',
     'test/content_depth_test.dart',
+    'test/event_storm_test.dart',
     'test/chapter_golden_test.dart',
     'test/chapter_closure_golden_test.dart',
     'test/goldens/chapter-arrival.png',
@@ -140,7 +143,9 @@ void main() {
     'lib/ui_state_gallery.dart',
     'test/ui_state_golden_test.dart',
     'test/goldens/ui-state-matrix.png',
-    'reviews/gameplay-review.md'
+    'reviews/gameplay-review.md',
+    'docs/event-storm.jsonl',
+    'docs/event-storm.md'
   ]) {
     if (!known.containsKey(path)) {
       entries

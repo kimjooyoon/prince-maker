@@ -27,6 +27,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
   final quests = (story['companionQuests'] as List? ?? const []).cast<Map>();
   final questStages = quests.fold<int>(
       0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
+  final eventStormNodes = events.length +
+      (story['sideScenes'] as List? ?? const []).length +
+      (story['companionScenes'] as List? ?? const []).length +
+      (story['activityScenes'] as List? ?? const []).length +
+      (story['endingVariants'] as List? ?? const []).length +
+      (story['progression'] as List? ?? const []).length;
   return {
     'schema': 'prince-maker-trilemma-v1',
     'source': {'ref': 'story/story.jsonl#root', 'sha256': hash},
@@ -42,6 +48,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'scenarioRouteInputs': scenarioCases['routeInputCases'],
           'authoredScenes':
               events.length + (story['sideScenes'] as List? ?? const []).length,
+          'eventStormNodes': eventStormNodes,
           'sideSceneChoices': (story['sideScenes'] as List? ?? const [])
               .cast<Map>()
               .fold<int>(
@@ -55,6 +62,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         'evidence': [
           'tool/verify_game.dart#scenario-contract',
           'tool/verify_content_depth.dart#content-depth-gate',
+          'tool/verify_event_storm.dart#event-storm-gate',
+          'test/event_storm_test.dart#event storm covers every authored unit',
           'test/scenario_completeness_test.dart#scenario-closure',
           'test/golden_test.dart#all',
           'test/locale_contract_test.dart#ssot-dialogue-contract',

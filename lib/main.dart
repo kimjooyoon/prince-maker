@@ -331,6 +331,8 @@ class _Game extends State<Game> {
     if (page == 1) {
       if (y < 100 && x > 590)
         toggleLocale();
+      else if (y >= 620 && x >= 560)
+        setState(() => page = 0);
       else if (y > 570 && x < 720)
         setState(() {
           persona = (x ~/ 245).clamp(0, 2);
@@ -348,7 +350,9 @@ class _Game extends State<Game> {
         toggleLocale();
       else if (y > 490 && y < 680) restart();
     } else if (page == 3) {
-      if (y > 260 && y < 470) chooseEvent((x ~/ 380).clamp(0, 1));
+      if (y < 100 && x > 590)
+        toggleLocale();
+      else if (y > 260 && y < 470) chooseEvent((x ~/ 380).clamp(0, 1));
     } else if (page == 4) {
       if (y < 100 && x > 590) {
         toggleLocale();

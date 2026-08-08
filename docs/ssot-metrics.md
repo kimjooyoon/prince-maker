@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 447c8c767d1a1f2aafe8752e97f04ab3c58bfb0ce1609c0e9f52f6bb62a6c277 -->
+<!-- ssot-sha256: 13b9244b2ba50f6259b2e10013f86440e8c46c5e41d5963c2aa90a7fdaf395af -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -30,11 +30,12 @@
 | 활동 미니 이벤트 | 10 | `activityScenes.length` · 활동별 2개 |
 | 동료 독립 장면 | 18 | `companionScenes.length` · 3명×6개 |
 | 엔딩 변형 | 18 | `endingVariants.length` · 핵심 엔딩별 실패/중립/관계 |
+| 이벤트 스토밍 노드 | 133 | 본편·사이드·동료·활동·엔딩 변형·막 결산을 합친 생성 원장 |
 | 사건 선택 | 94 | 모든 사건 choices 합계 |
 | 교환 선택 | 72/166 (0.43373493975903615) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |
 | 엔딩 | 6 | `endings.length` |
 | Canvas Golden | 73 | `test/goldens/*.png` |
-| 코드 ref | 66 | `codeRefs.length` |
+| 코드 ref | 71 | `codeRefs.length` |
 | 이미지 ref | 21 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |

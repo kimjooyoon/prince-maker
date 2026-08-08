@@ -46,6 +46,12 @@ String render(Map<String, dynamic> s, String hash) {
   final gameplay = (s['gameplayKpis'] as Map? ?? {}).cast<String, dynamic>();
   final endingDesign =
       (s['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
+  final eventStormNodes = events.length +
+      sideScenes.length +
+      companionScenes.length +
+      activityScenes.length +
+      endingVariants.length +
+      progression.length;
   final b = StringBuffer(
       '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.jsonl#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
   b.writeln(
@@ -81,6 +87,9 @@ String render(Map<String, dynamic> s, String hash) {
       '- 교환 선택 비율: **${gameplay['current']['tradeoffRate']}** · 목표 **${gameplay['targets']['minimumTradeoffRate']}** · `${gameplay['definitions']['tradeoffRate']}`');
   b.writeln(
       '- 선택 영향 ${gameplay['current']['choiceImpactRate']} · 사건 분기 ${gameplay['current']['eventDivergenceRate']} · 다축 영향 ${gameplay['current']['multiAxisImpactRate']} · 조건부 선택 ${gameplay['current']['gatedChoices']}');
+  b.writeln('\n## 이벤트 스토밍 증적\n');
+  b.writeln(
+      '전체 authored 단위는 **${eventStormNodes}개 노드**로 `Trigger → Command → Policy → Domain event → Feedback` 원장에 생성된다. 본편·사이드 선택 ${gameplay['current']['authoredChoices']}개는 효과·피드백 연결률 1.0을 만족하며, 상세 원장은 [`docs/event-storm.jsonl`](event-storm.jsonl), 기계 판정은 `tool/verify_event_storm.dart#event-storm-gate`가 담당한다.');
   b.writeln('\n## 엔딩 설계 행렬\n');
   b.writeln(
       '해결 순서: ${(endingDesign['resolutionOrder'] as List? ?? const []).join(' → ')}');
@@ -200,6 +209,12 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       companionScenes = (s['companionScenes'] as List? ?? const []).length,
       activityScenes = (s['activityScenes'] as List? ?? const []).length,
       endingVariants = (s['endingVariants'] as List? ?? const []).length,
+      eventStormNodes = events.length +
+          sideScenes +
+          companionScenes +
+          activityScenes +
+          endingVariants +
+          (s['progression'] as List? ?? const []).length,
       endings = (s['endings'] as List).length,
       choices =
           events.fold<int>(0, (sum, e) => sum + (e['choices'] as List).length),
@@ -274,6 +289,8 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       '| 동료 독립 장면 | $companionScenes | `companionScenes.length` · 3명×6개 |');
   b.writeln(
       '| 엔딩 변형 | $endingVariants | `endingVariants.length` · 핵심 엔딩별 실패/중립/관계 |');
+  b.writeln(
+      '| 이벤트 스토밍 노드 | $eventStormNodes | 본편·사이드·동료·활동·엔딩 변형·막 결산을 합친 생성 원장 |');
   b.writeln('| 사건 선택 | $choices | 모든 사건 choices 합계 |');
   b.writeln(
       '| 교환 선택 | ${gameplay['current']['tradeoffChoices']}/${gameplay['current']['authoredChoices']} (${gameplay['current']['tradeoffRate']}) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |');

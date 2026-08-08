@@ -52,6 +52,8 @@ git config core.hooksPath .githooks
 ![상태별 관계 후속 대화 Golden](test/goldens/relationship-followup.png)
 
 전체 행렬은 [`test/chapter_golden_test.dart`](test/chapter_golden_test.dart), [`test/chapter_closure_golden_test.dart`](test/chapter_closure_golden_test.dart)와 [`test/goldens/chapter-*.png`](test/goldens/)에서 확인할 수 있습니다.
+
+Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_contract_test.dart`](test/player_input_contract_test.dart)에서 page 3 사건 EN 토글과 page 1 일러스트 뒤로가기 hitbox를 직접 재생해 고정합니다.
 ![새 캠페인 재시작 화면](test/goldens/restart.png)
 ![SSOT에서 직접 렌더링한 canonical 홈](test/goldens/canonical-home.png)
 ![SSOT 4주차 온실 사건](test/goldens/canonical-event.png)

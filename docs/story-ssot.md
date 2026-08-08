@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 447c8c767d1a1f2aafe8752e97f04ab3c58bfb0ce1609c0e9f52f6bb62a6c277 -->
+<!-- ssot-sha256: 13b9244b2ba50f6259b2e10013f86440e8c46c5e41d5963c2aa90a7fdaf395af -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -70,6 +70,10 @@
 authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 선택이다.
 - 교환 선택 비율: **0.43373493975903615** · 목표 **0.4** · `choices with at least one positive and one negative numeric axis / choices`
 - 선택 영향 1.0 · 사건 분기 1.0 · 다축 영향 1.0 · 조건부 선택 29
+
+## 이벤트 스토밍 증적
+
+전체 authored 단위는 **133개 노드**로 `Trigger → Command → Policy → Domain event → Feedback` 원장에 생성된다. 본편·사이드 선택 166개는 효과·피드백 연결률 1.0을 만족하며, 상세 원장은 [`docs/event-storm.jsonl`](event-storm.jsonl), 기계 판정은 `tool/verify_event_storm.dart#event-storm-gate`가 담당한다.
 
 ## 엔딩 설계 행렬
 

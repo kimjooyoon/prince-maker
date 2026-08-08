@@ -54,6 +54,8 @@ Future<void> main(List<String> args) async {
     const GateCheck(
         'content-depth', 'dart', ['run', 'tool/verify_content_depth.dart']),
     const GateCheck(
+        'event-storm', 'dart', ['run', 'tool/verify_event_storm.dart']),
+    const GateCheck(
         'gameplay-fun', 'dart', ['run', 'tool/verify_gameplay_fun.dart']),
     const GateCheck('scenario-variants', 'dart',
         ['run', 'tool/verify_scenario_variants.dart']),
@@ -65,6 +67,8 @@ Future<void> main(List<String> args) async {
         ['run', 'tool/generate_trilemma_contract.dart', '--check']),
     const GateCheck('generated-ssot-docs', 'dart',
         ['run', 'tool/generate_ssot_docs.dart', '--check']),
+    const GateCheck('generated-event-storm', 'dart',
+        ['run', 'tool/generate_event_storm.dart', '--check']),
     const GateCheck(
         'review-manifest', 'dart', ['run', 'tool/verify_review_manifest.dart']),
     const GateCheck('static-analysis', 'flutter', ['analyze']),
