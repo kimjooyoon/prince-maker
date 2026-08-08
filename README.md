@@ -110,7 +110,7 @@ git config core.hooksPath .githooks
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 authored 대사 612줄, ko/en locale 911키, 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
+현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 authored 대사 612줄, ko/en locale 913키, 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다.
 
