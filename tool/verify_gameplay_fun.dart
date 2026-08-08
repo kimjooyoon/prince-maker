@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:prince_maker/choice_impact.dart';
 import 'package:prince_maker/jsonl.dart';
 
 Never fail(String message) {
@@ -16,12 +17,9 @@ void main() {
       choices = authoredScenes
           .expand((event) =>
               (event['choices'] as List).cast<Map<String, dynamic>>())
-          .toList(),
-      numericAxes = ['delta', 'coins', 'bondDelta', 'rivalDelta'];
-  int axes(Map<String, dynamic> choice) =>
-      numericAxes.where((key) => ((choice[key] as num?) ?? 0) != 0).length;
+          .toList();
   bool effectful(Map<String, dynamic> choice) =>
-      axes(choice) > 0 ||
+      ChoiceImpact.from(choice).effectful ||
       choice['setsFlag'] != null ||
       choice['legacyBonuses'] != null;
   String effect(Map<String, dynamic> choice) => jsonEncode([
@@ -36,7 +34,12 @@ void main() {
         choice['legacyBonuses']
       ]);
   final impactful = choices.where(effectful).length,
-      multiAxis = choices.where((choice) => axes(choice) >= 2).length,
+      multiAxis = choices
+          .where((choice) => ChoiceImpact.from(choice).axisCount >= 2)
+          .length,
+      tradeoffChoices = choices
+          .where((choice) => ChoiceImpact.from(choice).hasTradeoff)
+          .length,
       divergentEvents = authoredScenes.where((event) {
         final variants = (event['choices'] as List)
             .cast<Map<String, dynamic>>()
@@ -56,6 +59,8 @@ void main() {
     'choiceImpactRate': impactful / choices.length,
     'multiAxisChoices': multiAxis,
     'multiAxisImpactRate': multiAxis / choices.length,
+    'tradeoffChoices': tradeoffChoices,
+    'tradeoffRate': tradeoffChoices / choices.length,
     'divergentEvents': divergentEvents,
     'eventDivergenceRate': divergentEvents / authoredScenes.length,
     'gatedChoices': gatedChoices,
@@ -69,13 +74,16 @@ void main() {
   if (contract['schema'] != 'lumen-gameplay-kpi-v1' ||
       current['choiceImpactRate'] != metrics['choiceImpactRate'] ||
       current['eventDivergenceRate'] != metrics['eventDivergenceRate'] ||
-      current['multiAxisImpactRate'] != metrics['multiAxisImpactRate']) {
+      current['multiAxisImpactRate'] != metrics['multiAxisImpactRate'] ||
+      current['tradeoffRate'] != metrics['tradeoffRate']) {
     fail('SSOT gameplay KPI drift');
   }
   final approved = choices.length >= 166 &&
       metrics['choiceImpactRate'] == 1.0 &&
       metrics['eventDivergenceRate'] == 1.0 &&
       (metrics['multiAxisImpactRate'] as double) >= 0.9 &&
+      (metrics['tradeoffRate'] as double) >=
+          ((contract['targets'] as Map)['minimumTradeoffRate'] as num) &&
       gatedChoices >= 20 &&
       metrics['feedbackGolden'] == true;
   final report = {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'design_tokens.dart';
+import 'canvas_choice_impact.dart';
 
 class LocaleCatalog {
   const LocaleCatalog(this.bundles);
@@ -167,6 +168,8 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
           Offset(x + 22, 400),
           12,
           teal);
+    drawChoiceImpact(
+        c, Rect.fromLTWH(x + 22, 420, 190, 8), choice.cast<String, dynamic>());
   }
 }
 

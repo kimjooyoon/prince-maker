@@ -910,3 +910,5 @@
 {"type":"entry","key":"companionScene.taro-next-foothold.prompt","value":"타로의 판단을 대신 정하지 않고, 다음 질문을 함께 고른다."}
 {"type":"entry","key":"companionScene.taro-next-foothold.line","value":"끝난 길도 다음 발이 닿으면 다시 시작할 수 있어."}
 {"type":"entry","key":"companionScene.taro-next-foothold.closing","value":"타로의 독립 장면은 다음 막의 조건으로 기록되었다."}
+{"type":"entry","key":"ui.event.tradeoff","value":"교환이 있는 선택"}
+{"type":"entry","key":"ui.event.commitment","value":"축을 쌓는 선택"}

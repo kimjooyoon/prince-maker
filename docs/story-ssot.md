@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 0c9107f3ce59ff6e40e410b4138785a363c4f97c76c91842ecbe9f5d25f4e3ea -->
+<!-- ssot-sha256: 1f34c44383e7cfea22f907a85e6309856c500863325acea7e202cf13ab1500ff -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -51,7 +51,7 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **911** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
+- locale 최소 키: **913** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
 - 산식: authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
@@ -64,6 +64,12 @@
 - 최소 보장: **2000개** · 실제 재생 검증: **2048개** · 전체 route input: **122880개**
 - 분기 주차: 3, 4, 5, 8, 12, 13, 14, 15, 16, 17, 18주
 - 산식: 2^11 unconditional authored branch vectors × 5 activity policies × 3 personality routes × 4 legacy contexts = 122,880 route inputs; the CI enumerator replays all 2,048 branch vectors and requires at least 2,000 distinct deterministic scenario traces.
+
+## 게임성 KPI
+
+authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 선택이다.
+- 교환 선택 비율: **0.43373493975903615** · 목표 **0.4** · `choices with at least one positive and one negative numeric axis / choices`
+- 선택 영향 1.0 · 사건 분기 1.0 · 다축 영향 1.0 · 조건부 선택 29
 
 ## 엔딩 설계 행렬
 
@@ -124,8 +130,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `66bd1abacaf55b8af142df108130a0672e6d9a22c0d2d458d3460a0883d15bc0`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `7d8d7b61c1e38209a0431280ca05f86755ffaf0a9cb2c218db00bc31dabda1f8`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `d74c458593f6a15b0e486de8af1123fac600a186027031c232052c2de7dcb884`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `79af9ee5c3203b935df963ec9d69bf431c1371bba424e5aaf38cfdbc4f67a20f`
 
 ## 성격
 

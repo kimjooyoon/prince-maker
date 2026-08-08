@@ -19,6 +19,7 @@ import 'game_core.dart';
 import 'character_roster.dart';
 import 'environment_catalog.dart';
 import 'canvas_ui_kit.dart';
+import 'canvas_choice_impact.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -1764,6 +1765,7 @@ class Scene extends CustomPainter {
           maxWidth: 190);
       dialoguePortrait(c, Rect.fromLTWH(x + 230, 300, 82, 102), ch);
       drawChoiceEcho(c, ch, Offset(x + 22, 435));
+      drawChoiceImpact(c, Rect.fromLTWH(x + 22, 420, 190, 8), ch);
     }
     txt(
         c,

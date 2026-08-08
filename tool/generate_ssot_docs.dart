@@ -41,6 +41,7 @@ String render(Map<String, dynamic> s, String hash) {
   final budget = (s['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
   final scenarioVariants =
       (s['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
+  final gameplay = (s['gameplayKpis'] as Map? ?? {}).cast<String, dynamic>();
   final endingDesign =
       (s['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
   final b = StringBuffer(
@@ -71,6 +72,13 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln(
       '- 분기 주차: ${(scenarioVariants['branchWeeks'] as List? ?? const []).join(', ')}주');
   b.writeln('- 산식: ${scenarioVariants['formula']}');
+  b.writeln('\n## 게임성 KPI\n');
+  b.writeln(
+      'authored 선택 ${gameplay['current']['authoredChoices']}개 중 ${gameplay['current']['tradeoffChoices']}개가 보상과 비용을 동시에 갖는 교환 선택이다.');
+  b.writeln(
+      '- 교환 선택 비율: **${gameplay['current']['tradeoffRate']}** · 목표 **${gameplay['targets']['minimumTradeoffRate']}** · `${gameplay['definitions']['tradeoffRate']}`');
+  b.writeln(
+      '- 선택 영향 ${gameplay['current']['choiceImpactRate']} · 사건 분기 ${gameplay['current']['eventDivergenceRate']} · 다축 영향 ${gameplay['current']['multiAxisImpactRate']} · 조건부 선택 ${gameplay['current']['gatedChoices']}');
   b.writeln('\n## 엔딩 설계 행렬\n');
   b.writeln(
       '해결 순서: ${(endingDesign['resolutionOrder'] as List? ?? const []).join(' → ')}');
@@ -192,6 +200,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       scenario = (s['scenarioCompleteness'] as Map? ?? {}),
       budget = (s['contentBudget'] as Map? ?? {}),
       scenarioVariants = (s['scenarioVariantBudget'] as Map? ?? {}),
+      gameplay = (s['gameplayKpis'] as Map? ?? {}),
       endingDesign = (s['endingDesign'] as Map? ?? {}),
       fateThreads = (s['fateThreads'] as List? ?? []).length,
       companionQuests = (s['companionQuests'] as List? ?? []).length,
@@ -244,6 +253,8 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   b.writeln(
       '| 엔딩 변형 | $endingVariants | `endingVariants.length` · 핵심 엔딩별 실패/중립/관계 |');
   b.writeln('| 사건 선택 | $choices | 모든 사건 choices 합계 |');
+  b.writeln(
+      '| 교환 선택 | ${gameplay['current']['tradeoffChoices']}/${gameplay['current']['authoredChoices']} (${gameplay['current']['tradeoffRate']}) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |');
   b.writeln('| 엔딩 | $endings | `endings.length` |');
   b.writeln('| Canvas Golden | $goldens | `test/goldens/*.png` |');
   b.writeln(

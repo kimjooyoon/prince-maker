@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
+import 'package:prince_maker/choice_impact.dart';
 import 'package:prince_maker/jsonl.dart';
 
 Map<String, dynamic> choice({
@@ -314,8 +315,11 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/environment_catalog.dart#environmentsFromStory',
     'lib/design_tokens.dart#DesignTokens',
     'lib/canvas_ui_kit.dart#CanvasUiKit',
+    'lib/choice_impact.dart#ChoiceImpact',
+    'lib/canvas_choice_impact.dart#drawChoiceImpact',
     'lib/ui_state_gallery.dart#CanvasUiStateGalleryPainter',
     'test/canvas_ui_kit_test.dart#Canvas UI primitives paint every required state',
+    'test/choice_impact_test.dart#shared projection distinguishes a meaningful trade-off',
     'test/ui_design_contract_test.dart#design token catalog covers every game UI surface',
     'test/ui_state_golden_test.dart#Canvas UI state contract renders one deterministic matrix',
     'test/environment_catalog_test.dart#six locations expose a complete environment design contract',
@@ -4227,6 +4231,8 @@ void main() {
     'ui.ledger.receipt.rejected': '거절',
     'ui.ledger.receipt.activity': '활동',
     'ui.ledger.receipt.story-choice': '사건 선택',
+    'ui.event.tradeoff': '교환이 있는 선택',
+    'ui.event.commitment': '축을 쌓는 선택',
     'ui.closure.recorded': '장 결산 · 기록됨',
     'ui.closure.next': '장 결산 · 다음 기회',
     'ui.closure.week': '주차',
@@ -4274,6 +4280,8 @@ void main() {
     'ui.ledger.receipt.rejected': 'rejected',
     'ui.ledger.receipt.activity': 'activity',
     'ui.ledger.receipt.story-choice': 'story choice',
+    'ui.event.tradeoff': 'Trade-off choice',
+    'ui.event.commitment': 'Builds one axis',
     'ui.closure.recorded': 'Chapter closure · recorded',
     'ui.closure.next': 'Chapter closure · next chance',
     'ui.closure.week': ' weeks',
@@ -4539,9 +4547,6 @@ void main() {
     ...(story['events'] as List).cast<Map<String, dynamic>>(),
     ...(story['sideScenes'] as List).cast<Map<String, dynamic>>(),
   ];
-  const numericAxes = ['delta', 'coins', 'bondDelta', 'rivalDelta'];
-  int axes(Map<String, dynamic> choice) =>
-      numericAxes.where((key) => ((choice[key] as num?) ?? 0) != 0).length;
   String effect(Map<String, dynamic> choice) => jsonEncode({
         for (final key in [
           'stat',
@@ -4558,11 +4563,16 @@ void main() {
       });
   final impactful = choices
           .where((choice) =>
-              axes(choice) > 0 ||
+              ChoiceImpact.from(choice).effectful ||
               choice['setsFlag'] != null ||
               choice['legacyBonuses'] != null)
           .length,
-      multiAxis = choices.where((choice) => axes(choice) >= 2).length,
+      multiAxis = choices
+          .where((choice) => ChoiceImpact.from(choice).axisCount >= 2)
+          .length,
+      tradeoffChoices = choices
+          .where((choice) => ChoiceImpact.from(choice).hasTradeoff)
+          .length,
       divergentEvents = authoredScenes
           .where((event) =>
               (event['choices'] as List)
@@ -4585,6 +4595,7 @@ void main() {
       'choiceImpactRate': 1.0,
       'eventDivergenceRate': 1.0,
       'multiAxisImpactRate': 0.9,
+      'minimumTradeoffRate': 0.4,
       'minimumGatedChoices': 20,
     },
     'current': {
@@ -4593,6 +4604,8 @@ void main() {
       'choiceImpactRate': impactful / choices.length,
       'multiAxisChoices': multiAxis,
       'multiAxisImpactRate': multiAxis / choices.length,
+      'tradeoffChoices': tradeoffChoices,
+      'tradeoffRate': tradeoffChoices / choices.length,
       'divergentEvents': divergentEvents,
       'eventDivergenceRate': divergentEvents / authoredScenes.length,
       'gatedChoices': gatedChoices,
@@ -4603,6 +4616,8 @@ void main() {
           'events with at least two distinct effect vectors / events',
       'multiAxisImpactRate':
           'choices changing at least two numeric axes / choices',
+      'tradeoffRate':
+          'choices with at least one positive and one negative numeric axis / choices',
       'feedbackGolden': 'authored result banner is fixed by Canvas Golden',
     },
     'evidence': [
