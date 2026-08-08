@@ -19,7 +19,8 @@ void main() {
   testWidgets(
       'English locale renders original dialogue and authored ending epilogue',
       (tester) async {
-    final story = jsonDecode(await rootBundle.loadString('story/story.json'))
+    final story = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
         as Map<String, dynamic>;
     final locales = await loadLocales();
     await tester.pumpWidget(Game(story, locales: locales));

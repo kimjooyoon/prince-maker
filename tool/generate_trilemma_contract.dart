@@ -68,7 +68,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               (story['decisionSystem'] as Map?)?['mode'] == 'system-adjudicated',
           'failClosed':
               (story['decisionSystem'] as Map?)?['failureMode'] == 'fail-closed',
-          'maxMillis': 8000,
+          'maxMillis': 24000,
           'minSignatures': 3,
           'lineageProfiles': (story['legacyProfiles'] as List? ?? []).length,
           'lineageTargetEndings':

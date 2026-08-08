@@ -36,9 +36,8 @@ void verifyTrilemmaContract(String storyHash,
       purity['minLegacyTargetCompanions'] < 3 ||
       purity['deterministicReplay'] != true ||
       performance['campaigns'] != 5000 ||
-      performance['transitionBudget'] !=
-          5000 * (endingWeek - 1 + eventCount) ||
-      performance['maxMillis'] != 8000 ||
+      performance['transitionBudget'] != 5000 * (endingWeek - 1 + eventCount) ||
+      performance['maxMillis'] != 24000 ||
       performance['minSignatures'] < 3 ||
       performance['lineageTargetEndings'] < 3 ||
       performance['lineageTargetCompanions'] < 3 ||
@@ -99,7 +98,35 @@ void main() {
       (story['scenarioCompleteness'] as Map? ?? {}).cast<String, dynamic>();
   final decisionSystem =
       (story['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
-  if (story['endingWeek'] != 24) fail('endingWeek must be 24');
+  final campaignWeeks = story['campaignWeeks'] as int? ??
+      ((story['endingWeek'] as int) - 1).clamp(1, 999).toInt();
+  final contentBudget =
+      (story['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
+  if (campaignWeeks < 48 || story['endingWeek'] != campaignWeeks + 1)
+    fail('campaign must expose a 48-week route and one terminal week');
+  if (contentBudget['schema'] != 'lumen-playtime-v1' ||
+      contentBudget['minimumMinutes'] is! int ||
+      (contentBudget['minimumMinutes'] as int) < 120 ||
+      contentBudget['campaignWeeks'] != campaignWeeks ||
+      contentBudget['terminalWeek'] != story['endingWeek'] ||
+      contentBudget['authoredEvents'] != events.length ||
+      contentBudget['authoredChoices'] != events.length * 2 ||
+      contentBudget['chapterClosures'] != progression.length ||
+      (contentBudget['pacingSeconds'] as Map? ?? {})['activityReflection']
+          is! int ||
+      (contentBudget['pacingSeconds'] as Map? ?? {})['storyChoice'] is! int ||
+      (contentBudget['pacingSeconds'] as Map? ?? {})['chapterClosure']
+          is! int) {
+    fail('content budget must prove the minimum 120-minute campaign');
+  }
+  final pacing =
+      (contentBudget['pacingSeconds'] as Map).cast<String, dynamic>();
+  final estimatedSeconds =
+      campaignWeeks * (pacing['activityReflection'] as int) +
+          events.length * (pacing['storyChoice'] as int) +
+          progression.length * (pacing['chapterClosure'] as int);
+  if (estimatedSeconds < (contentBudget['minimumMinutes'] as int) * 60)
+    fail('content budget pacing is below the minimum playtime');
   if (decisionSystem['schema'] != 'lumen-ledger-v1' ||
       decisionSystem['mode'] != 'system-adjudicated' ||
       decisionSystem['humanApprovalRequired'] != false ||
@@ -180,15 +207,23 @@ void main() {
       e['epilogue'] is! String ||
       (e['epilogue'] as String).isEmpty))
     fail('companion epilogue contract invalid');
-  if (events.length != 22 ||
+  final expectedEventWeeks = [
+    for (var week = 2; week <= campaignWeeks; week++) week
+  ];
+  if (events.length != campaignWeeks - 1 ||
       events.map((e) => e['week']).toList().join(',') !=
-          '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23')
+          expectedEventWeeks.join(','))
     fail(
-        'events must occur at weeks 2 through 23 with authored outings at 5 and 11');
-  if (progression.length != 8 ||
+        'events must cover every authored week from 2 through the terminal campaign week');
+  final expectedChapterRanges = [
+    for (var start = 1; start <= campaignWeeks; start += 3)
+      '${start}-${start + 2}'
+  ];
+  if (progression.length != campaignWeeks ~/ 3 ||
       progression.map((c) => '${c['weekStart']}-${c['weekEnd']}').join(',') !=
-          '1-3,4-6,7-9,10-12,13-15,16-18,19-21,22-24')
-    fail('progression must cover eight contiguous chapters from week 1 to 24');
+          expectedChapterRanges.join(','))
+    fail(
+        'progression must cover contiguous three-week chapters through the campaign');
   final eventWeeks = events.map((e) => e['week']).toSet();
   if (progression.any((c) =>
       c['titleKey'] is! String ||
@@ -199,9 +234,13 @@ void main() {
     fail('chapter progression contract invalid');
   final milestones =
       (story['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
-  if (milestones.length != 8 ||
-      milestones.map((m) => m['week']).join(',') != '3,6,9,12,15,18,21,24')
-    fail('milestones must cover all eight chapter closures');
+  final expectedMilestoneWeeks = [
+    for (var week = 3; week <= campaignWeeks; week += 3) week
+  ];
+  if (milestones.length != expectedMilestoneWeeks.length ||
+      milestones.map((m) => m['week']).join(',') !=
+          expectedMilestoneWeeks.join(','))
+    fail('milestones must cover every chapter closure');
   if (milestones.any((m) =>
       m['id'] is! String ||
       m['title'] is! String ||
@@ -473,7 +512,7 @@ void main() {
         companions.length >= 3 &&
         locations.length == 4 &&
         legacyProfiles.length == 3 &&
-        milestones.length == 8,
+        milestones.length == progression.length,
     'branching': events.length >= 4 &&
         events.every((e) => (e['choices'] as List).length == 2) &&
         endings.length >= 6 &&
@@ -504,10 +543,10 @@ void main() {
             'all SSOT dialogue keys exist and are non-empty in every locale') &&
         localeRefs.length >= 2,
     'progression': progressionEvidence.contains(
-            'eight SSOT chapters cover the complete 24-week progression') &&
-        progression.length == 8 &&
-        dialogueMetrics['minimumVisibleDialogueLines'] == 23 &&
-        dialogueMetrics['minimumVisibleNarrativeUnits'] == 64,
+            'sixteen SSOT chapters cover the complete 48-week progression') &&
+        progression.length == campaignWeeks ~/ 3 &&
+        dialogueMetrics['minimumVisibleDialogueLines'] == events.length &&
+        dialogueMetrics['minimumVisibleNarrativeUnits'] >= 160,
     'assets': assetRefs.length >= 4 && fontRefs.isNotEmpty,
     'traceability': refs.length >= 3 &&
         File('docs/review-manifest.json').existsSync() &&
@@ -522,7 +561,7 @@ void main() {
         File('lib/save_adapter_web.dart').existsSync(),
     'terminalSafety': coreEvidence
             .contains('completed campaign rejects stale event input too') &&
-        storyEvidence.contains('24-week route') &&
+        storyEvidence.contains('48-week route') &&
         coreEvidence.contains('SystemDecisionPolicy'),
     'purity': purityEvidence.contains(
             'same schedule budget yields distinct authored outcomes') &&
@@ -551,5 +590,5 @@ void main() {
           .round();
   if (score < 95) fail('completeness score below 95%: $score%');
   stdout.writeln(
-      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} combinations=${activities.length * (story['endingWeek'] as int)} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
+      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} combinations=${activities.length * campaignWeeks} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
 }

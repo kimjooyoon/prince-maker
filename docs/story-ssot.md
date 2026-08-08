@@ -1,10 +1,10 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 45746c12bc8c03492f831647e688f321184fbbec22d128b96edda20b7c8adb9f -->
+<!-- ssot-sha256: bd163f2ee40a911de0fb3016d310d17dfd64f93421a25fb51b1136605b9cb7d6 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
 
-바람과 별빛이 공존하는 작은 영지 루멘에서 노아는 24주 동안 스스로 선택한 내일을 걷는다.
+바람과 별빛이 공존하는 작은 영지 루멘에서 노아는 48주 동안 스스로 선택한 내일을 걷는다.
 
 ## 시스템 판정과 책임 추적
 
@@ -14,7 +14,7 @@
 - `input-contract` · activity|story-choice · 미등록 성장축·조건 미충족 입력은 거절
 - `replay-receipt` · accepted decision · 승인 영수증을 immutable trace에 추가
 
-## 24주 진행도
+## 48주 진행도
 
 - **별씨앗의 도착** (`arrival`): 1–3주 · 낯선 기록과 첫 편지가 루멘의 평온을 흔든다. → 누구의 목소리를 먼저 믿을지 정한다. · 사건 2, 3주 · 목표 `spring`
   - 막 계약: 공개 별씨앗 기록과 첫 동료의 목소리를 공개한다. · 압력 stat·coins·bond · 선택 2, 3주 · 결산 `spring`
@@ -32,11 +32,32 @@
   - 막 계약: 공개 공개 기록·공동 판단·이견의 비용을 공개한다. · 압력 stat·coins·bond · 선택 19, 20, 21주 · 결산 `constellation`
 - **이름 붙일 수 없는 지평** (`horizon`): 22–24주 · 마지막 지평은 누가 옳았는지가 아니라 어떤 규칙을 남길지 묻는다. → 노아는 자신의 답보다 다음 사람도 다시 검증할 수 있는 길을 남긴다. · 사건 22, 23주 · 목표 `horizon`
   - 막 계약: 공개 새로운 항로와 시스템 기록의 마지막 책임을 공개한다. · 압력 stat·coins·bond · 선택 22, 23주 · 결산 `horizon`
+- **돌아온 씨앗** (`seedReturn`): 25–27주 · 첫 결산의 씨앗이 먼 영지와 루멘 사이를 오가며 빚과 약속의 차이를 묻는다. → 받은 것을 누구와 어떤 조건으로 돌려줄지 정한다. · 사건 25, 26, 27주 · 목표 `waterline`
+  - 막 계약: 공개 돌아온 씨앗과 강 건너 빈 터를 공개한다. · 압력 stat·coins·bond · 선택 25, 26, 27주 · 결산 `waterline`
+- **공정한 몫의 시간** (`fairShare`): 28–30주 · 공방과 온실의 보이지 않는 노동이 장부의 빈칸을 흔든다. → 성장 속도보다 누가 지치고 있는지를 함께 계산한다. · 사건 28, 29, 30주 · 목표 `fair-share`
+  - 막 계약: 공개 노동의 영수증과 돌봄의 시간을 공개한다. · 압력 stat·coins·fatigue·bond · 선택 28, 29, 30주 · 결산 `fair-share`
+- **기억의 집** (`memoryHouse`): 31–33주 · 이름 없는 상자와 지워진 표식이 기록의 주인을 다시 묻는다. → 보존할 것과 비워 둘 것을 스스로 구분한다. · 사건 31, 32, 33주 · 목표 `memory-house`
+  - 막 계약: 공개 기억의 방과 공개 열람 규칙을 공개한다. · 압력 stat·coins·bond · 선택 31, 32, 33주 · 결산 `memory-house`
+- **먼 영지의 그림자** (`farShore`): 34–36주 · 루멘의 선택이 다른 마을의 규칙이 되며 의도와 결과가 갈라진다. → 도움을 준다는 말이 누구를 밀어냈는지 확인한다. · 사건 34, 35, 36주 · 목표 `far-shore`
+  - 막 계약: 공개 먼 영지의 후속 편지와 두 물길을 공개한다. · 압력 stat·coins·bond · 선택 34, 35, 36주 · 결산 `far-shore`
+- **불완전한 지도** (`blankMap`): 37–39주 · 세 장의 지도는 같은 빈칸을 품고, 서로 다른 북쪽을 가리킨다. → 모르는 것을 숨기지 않고 함께 판단할 기준을 만든다. · 사건 37, 38, 39주 · 목표 `blank-map`
+  - 막 계약: 공개 빈 지도와 북쪽 문, 공개 나침반 회의를 공개한다. · 압력 stat·coins·fatigue·bond · 선택 37, 38, 39주 · 결산 `blank-map`
+- **선택의 의회** (`commons`): 40–42주 · 사람들은 노아에게 책임을 맡기지만, 루멘은 함께 결정하는 법을 배워야 한다. → 합의에 들어오지 못한 목소리까지 규칙의 일부로 남긴다. · 사건 40, 41, 42주 · 목표 `commons`
+  - 막 계약: 공개 공동 의회와 침묵의 기록, 공개 규칙을 공개한다. · 압력 stat·coins·bond · 선택 40, 41, 42주 · 결산 `commons`
+- **별씨앗의 귀환** (`returningGarden`): 43–45주 · 처음의 씨앗이 꽃이 되어 돌아오며 시작과 소유의 의미가 달라진다. → 떠나는 사람과 남는 사람 모두가 다음 계절의 자리를 얻는다. · 사건 43, 44, 45주 · 목표 `returning-garden`
+  - 막 계약: 공개 귀환한 꽃과 떠나는 장터, 이름의 정원을 공개한다. · 압력 stat·coins·bond · 선택 43, 44, 45주 · 결산 `returning-garden`
+- **다음 사람의 첫걸음** (`handoff`): 46–48주 · 노아의 기록은 마지막 페이지가 아니라 다음 사람이 다시 검증할 첫 장으로 넘어간다. → 정답 대신 다시 시작할 수 있는 질문과 표식을 남긴다. · 사건 46, 47, 48주 · 목표 `handoff`
+  - 막 계약: 공개 다음 여행자와 넘겨지는 장부, 첫 질문을 공개한다. · 압력 stat·coins·bond · 선택 46, 47, 48주 · 결산 `handoff`
 
 ## 대사 구성 기준
 
-- locale 최소 키: **216** · 한 캠페인 최소 대사 줄: **23** · 최소 노출 서사 단위: **64** · 전체 authored 대사 줄: **77**
-- 산식: catalog 216 = UI 15 + personality name/voice/line 9 + event title/body 44 + choice label/line 88 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 24 + milestone titles 8; one 24-week route exposes at least 23 authored choice lines and 64 narrative units
+- locale 최소 키: **398** · 한 캠페인 최소 대사 줄: **47** · 최소 노출 서사 단위: **160** · 전체 authored 대사 줄: **184**
+- 산식: catalog 398 = UI 15 + personality name/voice/line 9 + event title/body 94 + choice label/line 188 + companion greeting/epilogue 6 + companion route titles 3 + location names 4 + legacy profile titles 3 + ending title/body 12 + chapter beats 48 + milestone titles 16; one 48-week route exposes at least 47 authored choice lines and 160 narrative units
+
+## 최소 플레이타임 계약
+
+- 최소 보장: **120분** · 보수적 1회차 추정: **129분**
+- 근거: 48 activity reflections × 75s + 47 story choices × 75s + 16 chapter closures × 30s = 7,755s = 129m; contract reports a conservative 129m first-playthrough estimate.
 
 ## 시나리오 완전성 표본
 
@@ -44,14 +65,14 @@
 
 | 차원 | 목표 | 현재 증적 | 검증 ref |
 | --- | --- | --- | --- |
-| 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 8 chapters / 22 events / 4 locations / 8 milestones / 8 chapter contracts / ending week 24 | `story/story.json#progression.contract` |
-| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 44 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
+| 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 16 chapters / 47 events / 4 locations / 16 milestones / 16 chapter contracts / terminal week 49 | `story/story.json#progression.contract` |
+| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions | `story/story.json#companions` |
-| 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 8 milestones and 6 endings | `test/game_core_test.dart#rules` |
-| 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 8 locked choices including stat, bond, memory and legacy gates / 8 chapter contracts / 8 closing milestones / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
+| 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 16 milestones and 6 endings | `test/game_core_test.dart#rules` |
+| 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues | `test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 26 Goldens / ko+en catalogs / canonical week-4 event / outing choice / rival loss and mediation recovery / bond, memory, legacy gates / lineage resonance choice / ending retrospective board / three companion epilogues | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
-| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | terminal input contract / system decision receipts / save v7 with memory flags / collection / deterministic event-cause retrospective / ending-based lineage bonus / authored lineage choice bonus / target companion epilogues / SSOT campaign benchmark | `test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 26 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / outing choice / relationship, memory and legacy gates / three companion epilogues | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
+| 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | 48-week terminal campaign / system decision receipts / save v7 with memory flags / collection / deterministic event-cause retrospective / target companion epilogues / SSOT campaign benchmark | `test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending` |
 
 ## 생성 이미지 자산
 
@@ -66,8 +87,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `27dc32a4def3e168310982630e61ce52553674155e6f3c5e1482661a70b3e7ed`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `2516594ec47e5da21a831392bc0dc6d8a9a6d15f0bb3964582c1ea4f6b96ee0f`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `d538c13e633bf4ae69abf070753b46a063dac6f58a30286e557980bc99fafe16`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `ee292a448fa2fc01b0ee04c513e5dd4801321d69a1d622e3f3785ad26d640fe2`
 
 ## 성격
 
@@ -105,6 +126,14 @@
 - **돌아온 물길** (`return`): 18주차 · 공감 ≥ 36 · 성공 보상 은화 6 · “보낸 마음이 공동의 약속으로 돌아왔다.” / “답장은 아직 다음 물결을 기다린다.”
 - **서로 다른 별자리** (`constellation`): 21주차 · 용기 ≥ 42 · 성공 보상 은화 7 · “서로 다른 근거가 하나의 공개 지도가 되었다.” / “지도에는 아직 지워지지 않은 빈칸이 남았다.”
 - **이름 붙일 수 없는 지평** (`horizon`): 24주차 · 용기 ≥ 48 · 성공 보상 은화 10 · “노아는 다음 사람이 다시 검증할 지평을 남겼다.” / “지평은 닫히지 않았고 다음 회차의 질문이 되었다.”
+- **첫 물길의 약속** (`waterline`): 27주차 · 용기 ≥ 30 · 성공 보상 은화 5 · “빈 터에 첫 물길이 이어졌다.” / “물길은 아직 다음 손을 기다린다.”
+- **공정한 몫의 시간** (`fair-share`): 30주차 · 공감 ≥ 40 · 성공 보상 은화 5 · “보이지 않던 노동도 하루의 일부가 되었다.” / “장부의 빈칸이 아직 누군가를 기다린다.”
+- **열린 기억의 방** (`memory-house`): 33주차 · 지혜 ≥ 48 · 성공 보상 은화 6 · “기억은 닫힌 상자가 아니라 다시 찾을 길이 되었다.” / “이름 없는 상자는 아직 빛을 기다린다.”
+- **건너온 답** (`far-shore`): 36주차 · 용기 ≥ 56 · 성공 보상 은화 6 · “먼 영지의 답이 루멘의 규칙을 다시 고쳤다.” / “두 물길은 아직 서로의 속도를 배우는 중이다.”
+- **빈칸의 지도** (`blank-map`): 39주차 · 지혜 ≥ 64 · 성공 보상 은화 7 · “모른다는 표시가 함께 걷는 출발점이 되었다.” / “지도에는 아직 혼자 건너야 할 빈칸이 남았다.”
+- **공동의 규칙** (`commons`): 42주차 · 공감 ≥ 72 · 성공 보상 은화 7 · “가장 작은 목소리까지 규칙에 들어왔다.” / “합의 밖의 목소리가 아직 문을 두드린다.”
+- **귀환의 정원** (`returning-garden`): 45주차 · 공감 ≥ 80 · 성공 보상 은화 8 · “처음의 씨앗이 다음 사람의 꽃이 되었다.” / “정원은 아직 떠남과 머묾의 자리를 고르는 중이다.”
+- **넘겨지는 지평** (`handoff`): 48주차 · 용기 ≥ 88 · 성공 보상 은화 10 · “노아는 다음 사람이 다시 시작할 첫걸음을 남겼다.” / “지평은 닫히지 않았고 다음 기록을 기다린다.”
 
 ## 사건
 
@@ -218,11 +247,136 @@
 엔딩 전 마지막 밤, 강 건너 바람길에 표식을 하나만 남길 수 있다. 노아는 자신의 이름보다 다음 사람이 확인할 규칙을 선택한다.
 - 타로와 누구나 볼 수 있는 표식을 세운다: 용기 +2, 은화 -1, taro 유대 +3, 기억 horizon-mark 기록 · “내가 없어도 다시 찾을 수 있는 길이어야 해.”
 - 루미와 마지막 근거를 별자리로 남긴다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 horizon-mark 기록 · “마지막 기록은 끝맺음이 아니라 다음 검증의 시작이야.”
+### 24주차 · 첫 지평의 표식
+
+첫 결산의 끝에서, 노아는 다음 계절로 건너갈 표식을 남긴다.
+- 루미와 근거의 별자리를 새긴다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 first-horizon 기록 · “첫 지평은 결론이 아니라 다시 읽을 수 있는 방향이어야 해.”
+- 타로와 강 건너 표식을 세운다: 용기 +2, 은화 -1, taro 유대 +3, 기억 first-horizon 기록 · “다음 사람의 발이 닿을 곳을 먼저 약속하자.”
+### 25주차 · 씨앗이 된 답장
+
+먼 영지의 답장에는 감사 대신 씨앗 한 봉지가 들어 있다. 빚일까, 약속일까?
+- 루미와 답장의 조건을 기록한다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 first-ledger 필요, 기억 return-debt 기록 · “선물도 조건을 읽어야 오래 지킬 수 있어.”
+- 보라와 씨앗을 마을에 나눈다: 공감 +2, 은화 -1, bora 유대 +3, 기억 return-seed 기록 · “받은 것을 나누면 빚은 함께 지는 약속이 돼.”
+### 26주차 · 강 건너 빈 터
+
+강 건너의 빈 터에는 오래된 말뚝만 남았다. 누가 무엇을 다시 시작할까?
+- 타로와 새 물길을 시험한다: 용기 +2, 은화 -1, taro 유대 +3, 조건 용기 ≥ 20, 기억 waterway 기록 · “빈 터는 실패한 곳이 아니라 아직 시험하지 않은 곳이야.”
+- 보라와 먼저 머물 사람을 묻는다: 공감 +2, 은화 1, bora 유대 +3 · “땅보다 먼저, 여기서 살아갈 사람의 목소리를 들어야 해.”
+### 27주차 · 새싹의 증인
+
+첫 씨앗이 싹을 틔웠지만, 누구의 손이 이 장면을 만들었는지는 서로 다르게 기억된다.
+- 루미와 손의 순서를 기록한다: 지혜 +1, 은화 1, lumi 유대 +3, 기억 return-debt 필요, 기억 witness-ledger 기록 · “한 사람의 공이 아니라 이어진 손을 남기자.”
+- 보라와 함께 첫 수확을 나눈다: 공감 +2, 은화 0, bora 유대 +4, 기억 return-seed 필요, 기억 witness-garden 기록 · “기억이 달라도 함께 먹은 맛은 다음 약속이 될 수 있어.”
+### 28주차 · 작업장의 영수증
+
+공방의 장부에서 사라진 시간 세 칸이 발견된다. 기록하지 않은 노동도 빚으로 남을까?
+- 루미와 빈 시간을 공개한다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 first-ledger 필요, 기억 labor-audit 기록 · “비어 있는 칸도 숨기지 않아야 다음 계산이 정직해져.”
+- 타로와 직접 작업량을 다시 잰다: 용기 +2, 은화 -1, taro 유대 +3 · “틀린 계산은 손으로 다시 확인할 수 있어.”
+### 29주차 · 비어 있는 수레
+
+시장에 도착한 수레가 비어 있다. 모두가 필요한 것을 말하지만, 은화는 하나뿐이다.
+- 보라와 가장 급한 집을 먼저 찾는다: 공감 +2, 은화 -1, bora 유대 +4, 기억 need-first 기록 · “같은 양을 나누는 것과 같은 마음으로 보는 것은 다를 수 있어.”
+- 타로와 다음 수레를 직접 부른다: 용기 +2, 은화 0, taro 유대 +3, 기억 next-cart 기록 · “이번에 부족했다면 다음 길을 지금 만들자.”
+### 30주차 · 돌봄의 노동
+
+온실의 가장 늦은 시간에 누군가의 손이 먼저 지쳐 있었다. 돌봄은 누구의 일정에 적힐까?
+- 보라와 돌봄 시간을 일정에 넣는다: 공감 +2, 은화 -1, bora 유대 +4, 기억 care-counted 기록 · “보이지 않는 일도 하루를 바꾼다면 기록되어야 해.”
+- 루미와 늦은 손의 패턴을 찾는다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 labor-audit 필요 · “반복되는 피로에는 개인의 약함이 아닌 규칙이 있을 수 있어.”
+### 31주차 · 기억의 집
+
+기록관 뒤편에서 오래된 방이 열린다. 이름 없는 상자들이 루멘의 과거를 기다리고 있다.
+- 루미와 상자마다 날짜를 붙인다: 지혜 +2, 은화 0, lumi 유대 +4, 기억 memory-house 기록 · “기억은 완벽하지 않아도 다시 찾을 표식이 필요해.”
+- 보라와 상자의 주인을 기다린다: 공감 +2, 은화 -1, bora 유대 +4, 기억 memory-table 기록 · “이름을 대신 정하지 않는 것도 기억을 돌보는 일이야.”
+### 32주차 · 지워진 이름
+
+강 건너 표식 하나에서 이름만 지워져 있다. 지운 사람과 남겨진 사람의 이유가 다르다.
+- 타로와 새 이름을 묻는다: 용기 +2, 은화 -1, taro 유대 +4, 기억 memory-house 필요 · “지워진 자리에 내 이름을 덧쓰지 말고 먼저 물어보자.”
+- 보라와 빈 표식을 그대로 보존한다: 공감 +2, 은화 1, bora 유대 +3, 기억 blank-name 기록 · “빈칸도 누군가 돌아올 수 있는 자리로 남겨 두자.”
+### 33주차 · 기록관의 등불
+
+등불이 꺼지면 같은 장부도 서로 다르게 읽힌다. 노아는 빛의 책임을 정해야 한다.
+- 루미와 공개 열람 시간을 만든다: 지혜 +2, 은화 -1, lumi 유대 +4, 조건 지혜 ≥ 30, 기억 open-reading 기록 · “빛을 독점하지 않으면 판단도 서로 확인할 수 있어.”
+- 타로와 등불을 여러 곳에 나눈다: 용기 +2, 은화 1, taro 유대 +3, 기억 many-lanterns 기록 · “한 등불이 꺼져도 길 전체가 어두워지지 않게 하자.”
+### 34주차 · 먼 영지의 그림자
+
+두 번째 편지는 도움을 청하지 않는다. 루멘의 선택이 다른 마을의 규칙으로 번졌다는 소식이다.
+- 타로와 현장을 직접 확인한다: 용기 +2, 은화 -2, taro 유대 +4, 기억 waterway 필요, 기억 far-shore 기록 · “우리의 규칙이 누구를 밀어냈는지 직접 봐야 해.”
+- 루미와 규칙의 전달 경로를 추적한다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 rule-shadow 기록 · “좋은 의도도 전달되는 동안 다른 뜻이 될 수 있어.”
+### 35주차 · 두 물결의 교차
+
+새 물길과 오래된 물길이 만나는 곳에서, 어느 쪽도 혼자서는 마을을 채우지 못한다.
+- 보라와 물을 나누는 순서를 정한다: 공감 +2, 은화 -1, bora 유대 +4, 기억 shared-water 기록 · “두 물결이 만나는 곳에는 먼저 마실 사람도 함께 정해야 해.”
+- 타로와 수문을 다시 설계한다: 용기 +2, 은화 0, taro 유대 +3, 기억 sluice-plan 기록 · “흐름을 바꾸려면 막힌 곳부터 손으로 찾아야 해.”
+### 36주차 · 돌아온 씨앗
+
+첫 씨앗의 일부가 다시 루멘으로 돌아왔다. 수확은 소유가 아니라 순환의 증거가 된다.
+- 보라와 귀환한 씨앗을 심는다: 공감 +2, 은화 1, bora 유대 +4, 기억 witness-garden 필요, 기억 returning-garden 기록 · “돌아온 것은 끝난 일이 아니라 다음 사람의 시작이야.”
+- 루미와 씨앗의 이동을 지도에 남긴다: 지혜 +2, 은화 0, lumi 유대 +3, 기억 seed-route 기록 · “순환을 보이게 하면 다음 약속도 다시 확인할 수 있어.”
+### 37주차 · 불완전한 지도
+
+세 장의 지도에는 모두 같은 빈칸이 있다. 지우지 않고 함께 읽는 방법을 선택해야 한다.
+- 루미와 빈칸을 측정값으로 남긴다: 지혜 +2, 은화 1, lumi 유대 +4, 기억 first-ledger 필요, 기억 blank-map 기록 · “모른다는 표시도 다음 판단의 정확한 출발점이야.”
+- 타로와 빈칸까지 직접 걸어 본다: 용기 +2, 은화 -1, taro 유대 +3, 기억 horizon-mark 필요, 기억 blank-walk 기록 · “지도가 끝난 곳에서 길이 시작될 수도 있어.”
+### 38주차 · 북쪽 문지기
+
+새 항로의 문 앞에서 문지기는 목적지가 아니라 돌아오는 방법을 묻는다.
+- 타로와 돌아올 표식을 세운다: 용기 +2, 은화 -1, taro 유대 +4, 조건 용기 ≥ 35, 기억 return-marker 기록 · “떠나는 용기에는 돌아와 확인할 약속이 따라야 해.”
+- 보라와 남는 사람의 문을 연다: 공감 +2, 은화 1, bora 유대 +3, 기억 stay-gate 기록 · “모든 사람이 떠날 수 없다면 남는 선택도 길이어야 해.”
+### 39주차 · 나침반의 회의
+
+세 사람의 나침반이 서로 다른 북쪽을 가리킨다. 하나를 고르는 대신 기준을 공개할 수 있을까?
+- 루미와 측정 기준을 공개한다: 지혜 +2, 은화 0, lumi 유대 +3, 기억 public-map 기록 · “나침반보다 먼저, 나침반을 읽는 법을 함께 보여 주자.”
+- 보라와 서로 다른 북쪽을 들어 본다: 공감 +2, 은화 -1, bora 유대 +4 · “같은 곳을 보지 않아도 함께 서 있을 수 있어.”
+### 40주차 · 선택의 의회
+
+사람들은 노아에게 결정을 맡기려 한다. 노아는 대신 결정하는 법이 아니라 함께 결정하는 장면을 연다.
+- 보라와 가장 작은 합의를 시험한다: 공감 +2, 은화 -1, bora 유대 +4, 기억 first-ledger 필요, 기억 small-agreement 기록 · “모두를 만족시키기 전에 함께 지킬 한 문장을 찾자.”
+- 타로와 결정권을 분산한다: 용기 +2, 은화 1, taro 유대 +3, 기억 shared-rule 기록 · “책임을 나누려면 판단할 자리도 나눠야 해.”
+### 41주차 · 가장 작은 목소리
+
+회의가 끝난 뒤에도 한 사람은 말하지 못했다. 합의가 침묵을 세어 주는지 확인해야 한다.
+- 보라와 말하지 못한 사람을 기다린다: 공감 +2, 은화 0, bora 유대 +4, 기억 quiet-voice 기록 · “답을 재촉하지 않는 시간도 돌봄의 규칙에 넣자.”
+- 루미와 침묵이 생긴 순간을 기록한다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 silence-record 기록 · “침묵의 원인을 모르면 합의의 숫자도 믿을 수 없어.”
+### 42주차 · 공동 규칙의 날
+
+새 규칙을 벽에 붙이는 날이다. 규칙은 강할수록 짧아야 하고, 짧을수록 다시 읽혀야 한다.
+- 루미와 검증 절차를 한 줄로 쓴다: 지혜 +2, 은화 1, lumi 유대 +4, 기억 first-ledger 필요, 기억 public-rule 기록 · “누구나 다시 확인할 수 있어야 규칙이 사람보다 오래 살아.”
+- 타로와 규칙을 현장에서 시험한다: 용기 +2, 은화 -1, taro 유대 +4, 기억 field-rule 기록 · “벽의 문장은 발밑의 돌을 만날 때 진짜가 돼.”
+### 43주차 · 별씨앗의 귀환
+
+처음 도착했던 씨앗들이 마침내 같은 온실에서 꽃이 되었다. 시작의 의미가 바뀐다.
+- 보라와 꽃을 모두의 이름으로 부른다: 공감 +2, 은화 -1, bora 유대 +4, 기억 witness-garden 필요, 기억 flower-names 기록 · “시작을 기억하는 가장 좋은 방법은 다음 사람의 이름을 함께 부르는 거야.”
+- 루미와 발아의 조건을 공개한다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 flower-record 기록 · “기적처럼 보인 일도 조건을 나누면 다시 만날 수 있어.”
+### 44주차 · 떠나는 장터
+
+새 항로를 따라 떠날 사람들의 장터가 열린다. 떠남을 돕는 일에도 남겨진 물건이 필요하다.
+- 타로와 여행 짐의 기준을 세운다: 용기 +2, 은화 -2, taro 유대 +4, 기억 departure-pack 기록 · “가볍게 떠나는 것과 안전하게 떠나는 것은 함께 계산해야 해.”
+- 보라와 남은 물건의 새 주인을 찾는다: 공감 +2, 은화 1, bora 유대 +3, 기억 left-behind 기록 · “떠난 자리도 누군가 다시 살아갈 수 있는 자리로 남겨 두자.”
+### 45주차 · 이름을 다시 심는 날
+
+기억의 집에서 돌아온 이름들이 온실의 작은 표지판이 된다. 이름은 소유가 아니라 초대가 된다.
+- 보라와 이름의 주인에게 먼저 묻는다: 공감 +2, 은화 0, bora 유대 +4, 기억 memory-table 필요, 기억 named-garden 기록 · “불러 주는 일도 허락을 기다릴 때 더 따뜻해져.”
+- 루미와 이름이 바뀐 기록을 남긴다: 지혜 +2, 은화 1, lumi 유대 +3, 기억 name-history 기록 · “변한 이름까지 남겨야 한 사람을 한 모습에 가두지 않아.”
+### 46주차 · 다음 여행자의 짐
+
+노아보다 어린 여행자가 길의 표식을 읽고 있다. 누군가의 답을 대신 정해 주지 않는 법을 배운다.
+- 타로와 길의 위험을 숨기지 않는다: 용기 +2, 은화 -1, taro 유대 +4, 기억 horizon-mark 필요, 기억 risk-shared 기록 · “안전한 길은 위험이 없는 길이 아니라 위험을 함께 아는 길이야.”
+- 루미와 읽는 순서만 건넨다: 지혜 +2, 은화 0, lumi 유대 +3, 기억 reading-order 기록 · “답을 건네는 대신 다시 판단할 순서를 건네자.”
+### 47주차 · 넘겨지는 장부
+
+장부를 다음 기록관에게 넘기는 날이다. 마지막 페이지보다 첫 페이지를 다시 읽어야 한다.
+- 루미와 틀린 기록도 함께 넘긴다: 지혜 +2, 은화 1, lumi 유대 +4, 기억 public-rule 필요, 기억 handoff-open 기록 · “다음 사람이 다시 확인하려면 우리가 틀린 자리도 필요해.”
+- 보라와 장부를 읽을 사람을 초대한다: 공감 +2, 은화 -1, bora 유대 +4, 기억 handoff-circle 기록 · “장부가 혼자 닫히지 않도록 읽는 사람을 함께 남기자.”
+### 48주차 · 다음 사람의 첫걸음
+
+마지막 주의 강바람이 분다. 노아가 남길 것은 정답이 아니라 다시 시작할 수 있는 첫걸음이다.
+- 타로와 첫걸음의 표식을 세운다: 용기 +2, 은화 -1, taro 유대 +4, 기억 final-marker 기록 · “내가 없어도 다시 찾을 수 있다면, 이 길은 끝나지 않아.”
+- 루미와 첫 질문을 남긴다: 지혜 +2, 은화 1, lumi 유대 +4, 기억 public-map 필요, 기억 final-question 기록 · “좋은 기록은 마지막 답보다 다음 질문을 오래 살려.”
 
 ## 엔딩
 
 - **루멘의 별읽기꾼** (`stargazer`): 지혜 ≥ 12 · 노아는 밤하늘의 결을 읽어 영지의 항로를 밝히는 사람이 되었다.
-- **새벽을 계산하는 항해사** (`stargazer-master`): 지혜 ≥ 48 · 목표 spring, winter · 노아는 별과 바람의 주기를 24주 동안 기록해 누구나 판단을 다시 검증할 수 있는 지도를 남겼다.
+- **새벽을 계산하는 항해사** (`stargazer-master`): 지혜 ≥ 48 · 목표 spring, winter · 노아는 별과 바람의 주기를 48주 동안 기록해 누구나 판단을 다시 검증할 수 있는 지도를 남겼다.
 - **마음의 정원사** (`gardener`): 공감 ≥ 12 · 노아는 서로 다른 마음이 함께 피어나는 정원을 만들었다.
 - **마을의 온기를 잇는 사람** (`gardener-master`): 공감 ≥ 48 · 목표 summer, return · 노아는 다툼이 시작되기 전에 서로의 이야기를 건네고, 모든 판정의 근거를 함께 읽는 광장을 열었다.
 - **새 길의 개척자** (`pathfinder`): 용기 ≥ 12 · 노아는 아직 이름 없는 길에 첫 발자국을 남겼다.

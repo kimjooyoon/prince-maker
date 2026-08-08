@@ -2,84 +2,410 @@
   "schema": "agent-review-v1",
   "reviewedRef": "docs/game-completeness.md#deterministic-loop-v1",
   "reviewedFiles": [
-    {"path":"story/story.json","ref":"story/story.json#root","sha256":"45746c12bc8c03492f831647e688f321184fbbec22d128b96edda20b7c8adb9f"},
-    {"path":"lib/main.dart","ref":"lib/main.dart#_Game+Scene","sha256":"abb4fff3aec3afa54c7ded036ec651e40c82af1fc2465e7d137107199d2ef9e5"},
-    {"path":"lib/feedback_banner.dart","ref":"lib/feedback_banner.dart#drawFeedbackBanner","sha256":"7a91702170b256ce0d7008780525da9a4605b61d0449fdccd10e37135deabb9d"},
-    {"path":"lib/i18n.dart","ref":"lib/i18n.dart#LocaleCatalog/drawLocalizedEnding","sha256":"4699a20dbd65864e53afcd7633ccfeab3133624d61ada4ee8c3c262fb5c65313"},
-    {"path":"lib/design_tokens.dart","ref":"lib/design_tokens.dart#twilight-mist","sha256":"994664d969f1f713fe39a6c186db23fad521d6f4f7158b77e23ec6360fa5873f"},
-    {"path":"lib/game_core.dart","ref":"lib/game_core.dart#GameWorld+GameSession+resolveEnding","sha256":"3edcf4a24db07bace128c92de6085c71ff896f5bf8296d35b474052ca9c8bb81"},
-    {"path":"lib/save_adapter.dart","ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
-    {"path":"lib/save_adapter_web.dart","ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
-    {"path":"lib/save_adapter_stub.dart","ref":"lib/save_adapter_stub.dart#MemorySaveAdapter-fallback","sha256":"f14b98d51781f31f35a82a9259f9bace404e8197f813c5f5f4b0a8bc1a8b6875"},
-    {"path":"lib/save_state.dart","ref":"lib/save_state.dart#GameSnapshot","sha256":"779c472668cd37ae6845d962687b1dd8ecce05ac578b76ec5cf8877c3e6ae27e"},
-    {"path":"test/golden_test.dart","ref":"test/golden_test.dart#all","sha256":"c64d57f8ab4dd4231d2e05ecd4190fee2a7e4af863b5fd1b52099fead46f21e0"},
-    {"path":"test/canonical_golden_test.dart","ref":"test/canonical_golden_test.dart#canonical-event-and-ending","sha256":"56df521de286292957ecb881882b0808d4a7f2d37d863afa769095955f8bc4a7"},
-    {"path":"test/gameplay_metrics_test.dart","ref":"test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures","sha256":"770aad69f71c2f3baae3cab6ea0f38b9f09ca7d771bfa7ef4faf293b9e0f90ce"},
-    {"path":"test/scenario_completeness_test.dart","ref":"test/scenario_completeness_test.dart#scenario-closure","sha256":"7d0f131140be2b029afdf8071bfea52eade133550f5bfdae6e46fc37e8cf2222"},
-    {"path":"test/i18n_golden_test.dart","ref":"test/i18n_golden_test.dart#english-dialogue-and-ending","sha256":"87b9989ea59379e79eb802d391f20fe473b2c897f1ce65215447af1d8059a95b"},
-    {"path":"test/goldens/home.png","ref":"test/goldens/home.png#golden","sha256":"723bf3fe77b43fe8487f8d71726f7a5c22b321b8e9213d0e1c44ecb6e0714c96"},
-    {"path":"test/goldens/illustration.png","ref":"test/goldens/illustration.png#personality-portrait","sha256":"99ce6354dfe93848d54871cb4ce21a6ed82b7df6c3979437ee7683a0eaff6b4f"},
-    {"path":"test/goldens/ending.png","ref":"test/goldens/ending.png#golden","sha256":"de1a83c8650de39a816f5e9b7f0d52d1e3651cb212a51bd7efb18e148b0ba50a"},
-    {"path":"test/goldens/milestone.png","ref":"test/goldens/milestone.png#season-goal","sha256":"7d1daf2b95e33e5c9e44ef873ee318943c208ba60ff981eaeb2ad304c13a08b2"},
-    {"path":"test/goldens/event.png","ref":"test/goldens/event.png#event-choice","sha256":"1fed1946e3de72405f014c5d0ed956b3563f8b649756e68bb5a012b305cfd6df"},
-    {"path":"test/goldens/save.png","ref":"test/goldens/save.png#replay-archive-v7","sha256":"fb0defe23754dfda4bc48a913c67ea03c3e61b476af568e659284627d5408239"},
-    {"path":"test/goldens/collection.png","ref":"test/goldens/collection.png#ending-collection-legacy","sha256":"24803975e8b5a5811918ed992377a394229990eeb5e7a916f1051c2974ad12ab"},
-    {"path":"test/goldens/restart.png","ref":"test/goldens/restart.png#new-campaign","sha256":"64253624ce97720284852b030ef023de1c1bd4bb0917d44a01a43201e3f83ce4"},
-    {"path":"test/goldens/canonical-home.png","ref":"test/goldens/canonical-home.png#ssot-canonical-home","sha256":"95e62c01caf7b5dce1595103cfe4c25423d74ab6094f6b5cd5c7b3b48d424879"},
-    {"path":"test/goldens/canonical-event.png","ref":"test/goldens/canonical-event.png#ssot-canonical-week-4-event","sha256":"f84d305a0cda22b8041e7313092e7bb25f142064aa6a2abf0e99329943929f00"},
-    {"path":"test/goldens/canonical-ending.png","ref":"test/goldens/canonical-ending.png#ssot-canonical-ending","sha256":"680c6cdc0afdceb3fffa44d316098f3d1090ae36966a9b416a680703024980d1"},
-    {"path":"test/goldens/feedback.png","ref":"test/goldens/feedback.png#event-feedback-banner","sha256":"49d6cec9ba058ce7e47dbb4bdd03be8309e7589f566afbedc27231b206bc3432"},
-    {"path":"test/goldens/relationship-tension.png","ref":"test/goldens/relationship-tension.png#rival-bond-feedback","sha256":"41116b2ba77ff430767a2199b357be2798090c866408f79a09629e8ea7f3e043"},
-    {"path":"test/goldens/mediation.png","ref":"test/goldens/mediation.png#reciprocal-relationship-recovery","sha256":"ac364429749cb1e8b6629c9d6415494aa34e90c607758c50f9399cedcda37372"},
-    {"path":"test/goldens/outing.png","ref":"test/goldens/outing.png#outing-time-budget-tradeoff","sha256":"e90476ea41d748ffa81e16abd1e10b34bcf03c7d58283fbe276470bb214868a8"},
-    {"path":"test/goldens/relationship-gate.png","ref":"test/goldens/relationship-gate.png#relationship-bond-gate","sha256":"1a40dafa96d488a728a46b7c1a54b73a7e3e2f69177976be974c6bfa91e09c13"},
-    {"path":"test/goldens/memory-gate.png","ref":"test/goldens/memory-gate.png#relationship-memory-gate","sha256":"8781f1c871a7da36670eba807746f6d4a0a6028c33845c9744193ec4f550b52e"},
-    {"path":"test/goldens/legacy-gate.png","ref":"test/goldens/legacy-gate.png#collection-legacy-gate","sha256":"694aaa729a3332bbdc2f548dc30468876ac7f3328bc8d6874ce2ae02df30f8e9"},
-    {"path":"test/goldens/legacy-profile.png","ref":"test/goldens/legacy-profile.png#lineage-choice-bonus","sha256":"11f91d77fb302905ec58fff035bcda4fb00f5f2ab2ee09d3f88bd6b5c7d76baf"},
-    {"path":"test/goldens/companion-epilogue.png","ref":"test/goldens/companion-epilogue.png#ending-companion-epilogue","sha256":"6b464db9b81d23f72b7fb6d49742706ac30446e1410f9ffe496fa3b02d659041"},
-    {"path":"test/goldens/english-illustration.png","ref":"test/goldens/english-illustration.png#i18n-personality-dialogue","sha256":"da80009dff9f9b3fc9114c79b97a2422b0d781141b43518226582245b4ffc8f4"},
-    {"path":"test/goldens/english-event.png","ref":"test/goldens/english-event.png#i18n-event-dialogue-legacy-lock","sha256":"b64c1709100268e3e8a3ad8a2413afb1f0e2dc3b945b5a2c302e1429125a3636"},
-    {"path":"test/goldens/english-ending.png","ref":"test/goldens/english-ending.png#i18n-ending-epilogue","sha256":"c3ee053d86da16c198bfc2259dc3f4849e0578001042b41c5a819eee4f5dcc1f"},
-    {"path":"story/locales/ko.json","ref":"story/locales/ko.json#catalog","sha256":"27dc32a4def3e168310982630e61ce52553674155e6f3c5e1482661a70b3e7ed"},
-    {"path":"story/locales/en.json","ref":"story/locales/en.json#catalog","sha256":"2516594ec47e5da21a831392bc0dc6d8a9a6d15f0bb3964582c1ea4f6b96ee0f"},
-    {"path":"docs/game-completeness.md","ref":"docs/game-completeness.md#metrics","sha256":"ab7df1d159197608a52a432ee07ae2fcfd79eddcd0415447bc48c6aeed0c374e"},
-    {"path":"docs/trilemma.md","ref":"docs/trilemma.md#closed-loop","sha256":"088f8da50143902d4aa01529879971e15e5f88a3e49a4137ef05b9493c72b5a7"},
-    {"path":"docs/trilemma-contract.json","ref":"docs/trilemma-contract.json#axes","sha256":"3c46a5e05452e75250616b6fbed734ebd71a68401400ee823c5137d6b440a77a"},
-    {"path":"docs/scenario-completeness.md","ref":"docs/scenario-completeness.md#scenario-completeness","sha256":"9b124340fd017245691bc7c7e89db12bd5ebebd7d38e8e9fb0f8e5ea94b8e527"},
-    {"path":"docs/architecture.md","ref":"docs/architecture.md#runtime-architecture","sha256":"5c0a09dd66a77dd08d9936f3e333cf5a1181d650903b6d61df4d874a8b6427b9"},
-    {"path":"docs/story-ssot.md","ref":"docs/story-ssot.md#generated","sha256":"878402e8a49e195e7187ec22851b0edda7d5e8fa16f3fc0cc58248355d5ddd3b"},
-    {"path":"docs/design-system.md","ref":"docs/design-system.md#personality_portrait","sha256":"1690b86a1deca03228528c88a8b9a657279a86704696dbaf94cd2512a3744896"},
-    {"path":"docs/art-provenance.md","ref":"docs/art-provenance.md#design-contract","sha256":"f3e1406bf31171a18d1901614b4c16bfd69ed61acd283e1e621fcfae655744bd"},
-    {"path":"test/game_core_test.dart","ref":"test/game_core_test.dart#rules","sha256":"37a09b73392f0fc06546505ef3878e18afef978df60a8d2ce21171e8d7fd7995"},
-    {"path":"test/save_state_test.dart","ref":"test/save_state_test.dart#lumen-save-v7","sha256":"97b09e59de854c45cf9d4c3136872105eb8fc717fe6fdbb57f6d89999fef8fb5"},
-    {"path":"test/flutter_test_config.dart","ref":"test/flutter_test_config.dart#CanvasGoldenComparator","sha256":"3d3524871d26fc1d4c4a09f4ef953af311910689e9380ecc6aed1dde71e04182"},
-    {"path":"test/asset_test.dart","ref":"test/asset_test.dart#personality-and-hero-PNG","sha256":"f31c7890300419d40062dba348e59ac5f04f93ae4f998ccd638e54f067feee47"},
-    {"path":"test/story_integration_test.dart","ref":"test/story_integration_test.dart#canonical-24-week-route","sha256":"de545cab0dc6fe27c76a4656cfb0089c5a24e7e40b12092d1008ae848890ff4c"},
-    {"path":"test/purity_integration_test.dart","ref":"test/purity_integration_test.dart#same-schedule-budget-outcomes","sha256":"83b17118711bfa7e085b4ed058755550f455fca4294a53c97f5306ba6c628fce"},
-    {"path":"assets/lumen-personality-sheet.png","ref":"assets/lumen-personality-sheet.png#personality-frames","sha256":"4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"},
-    {"path":"assets/lumen-personality-sheet-source.png","ref":"assets/lumen-personality-sheet-source.png#chroma-key-source","sha256":"0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8"},
-    {"path":"assets/fonts/NotoSansKR-Regular.ttf","ref":"assets/fonts/NotoSansKR-Regular.ttf#font","sha256":"c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"},
-    {"path":"assets/fonts/OFL.txt","ref":"assets/fonts/OFL.txt#license","sha256":"881a6561b1010be07f884299f1beae4b6fd77e06463c905759ad7f9db997b51a"},
-    {"path":"pubspec.yaml","ref":"pubspec.yaml#assets-and-fonts","sha256":"ea20411129b8236c013ed021857ae72e6d763808cbef5ee6cab569867f854052"},
-    {"path":"pubspec.lock","ref":"pubspec.lock#resolved-dependencies","sha256":"310c9161547693da71996eb566c3c92a741c161df51f42497505f30d17b3faf6"},
-    {"path":"tool/generate_ssot_docs.dart","ref":"tool/generate_ssot_docs.dart#render-progression-dialogue-scenario","sha256":"4a85b173d611ea31bd17c1fe18cf3a2b1d9605c7b7057f1db81fed80d44d3fe2"},
-    {"path":"tool/generate_trilemma_contract.dart","ref":"tool/generate_trilemma_contract.dart#buildContract","sha256":"460b47524855a860e3c7b4c8d8c3e828329d67b4184d43bab24c8a3879e56071"},
-    {"path":"tool/verify_game.dart","ref":"tool/verify_game.dart#trilemma-contract-assetRefs-localeRefs-progression-scenario","sha256":"bb62dbb57badee7f74814a9e22adac646529cb8ad176590849868164c2288c57"},
-    {"path":"tool/benchmark_game.dart","ref":"tool/benchmark_game.dart#ssot-campaign-throughput-signatures","sha256":"44c8a76b1d5f798cd370aa7164ae6a7eb75523171f3a64c18ac77b2f6d9dac0d"},
-    {"path":"README.md","ref":"README.md#ssot-and-golden-evidence","sha256":"e09c122758f9e69391ae78d2cb870765fd5c5fc50083579a7ac48acac4227585"},
-    {"path":"test/locale_contract_test.dart","ref":"test/locale_contract_test.dart#ssot-dialogue-contract","sha256":"6153e47d1931e32706daa7b39209ca53eeb57de2b2819ff5b99601b70076735e"},
-    {"path":"test/progression_contract_test.dart","ref":"test/progression_contract_test.dart#eight-chapters","sha256":"3cec3ac162c54803ccde80037f5f4bc0703760f42ae658475c292561528d7b26"},
-    {"path":"docs/ssot-metrics.md","ref":"docs/ssot-metrics.md#generated","sha256":"2c6b2dd9717aa8609d8bd93ff4f703f6e45f743b14bfbd078ed50aefe6365df8"},
-    {"path":"design/tokens.json","ref":"design/tokens.json#twilight-mood","sha256":"f6670174905ee30c5b477afa6a24a34c65fc3f1c82bb3e87a3815716cb14bddc"},
-    {"path":"lib/collection_adapter.dart","ref":"lib/collection_adapter.dart#CollectionPort","sha256":"ee43f069fe2af6dbc6c1e6627460f86476c69068d5003b21e722c7b240c60206"},
-    {"path":"lib/collection_adapter_web.dart","ref":"lib/collection_adapter_web.dart#BrowserCollectionAdapter","sha256":"6fca4300faa3cda0967bf909ea04188f79072eaaff3cc848da17133ae3510b0a"},
-    {"path":"lib/collection_adapter_stub.dart","ref":"lib/collection_adapter_stub.dart#MemoryCollectionAdapter-fallback","sha256":"7b2b0f265eeec8362aa6b6e910d305a48f79fccf67892f202e7464fb8d03956d"},
-    {"path":"test/collection_test.dart","ref":"test/collection_test.dart#best-rank","sha256":"bb6c66307f32e3684bae621e9c925780bef7d69fd9818b6da7371aecfc564f23"},
-    {"path":".githooks/pre-commit","ref":".githooks/pre-commit#quality-gate","sha256":"abaabf2a54b254f60cad53c50a2f9da131cc7e4af13b32677b3288a912190ab9"},
-    {"path":".github/workflows/verify.yml","ref":".github/workflows/verify.yml#system-approval","sha256":"25be61ef505e394ec84733389eda57ee67fbfec791e0d64ede5ca446d7fcd5a6"},
-    {"path":"docs/automation-policy.md","ref":"docs/automation-policy.md#decision-authority","sha256":"bbf437ad8248e2010814f548a6843a2e84d38fdc613cff9de3ede384247e3647"},
-    {"path":"docs/originality-contract.json","ref":"docs/originality-contract.json#pillars","sha256":"447c8bff3032bef0272a1df143e40db737417c7ab106487d4c71ed632372eca7"},
-    {"path":"tool/ci_gate.dart","ref":"tool/ci_gate.dart#system-verdict","sha256":"4d751e19f74c850ef6f631086eea822c7584f11c04a7733d7847b4ba27de5280"},
-    {"path":"tool/verify_ci_policy.dart","ref":"tool/verify_ci_policy.dart#fail-closed-policy","sha256":"c42ab3f24f70ea34ffd26c5f9dda4f63acf56366262690f328cc92eed9b63914"}
+    {
+      "path": "story/story.json",
+      "ref": "story/story.json#root",
+      "sha256": "bd163f2ee40a911de0fb3016d310d17dfd64f93421a25fb51b1136605b9cb7d6"
+    },
+    {
+      "path": "lib/main.dart",
+      "ref": "lib/main.dart#_Game+Scene",
+      "sha256": "b5e4833d4154ac83a23a4763bd784d343fef6a4c9641940d17050aa4768014b1"
+    },
+    {
+      "path": "lib/feedback_banner.dart",
+      "ref": "lib/feedback_banner.dart#drawFeedbackBanner",
+      "sha256": "7a91702170b256ce0d7008780525da9a4605b61d0449fdccd10e37135deabb9d"
+    },
+    {
+      "path": "lib/i18n.dart",
+      "ref": "lib/i18n.dart#LocaleCatalog/drawLocalizedEnding",
+      "sha256": "4699a20dbd65864e53afcd7633ccfeab3133624d61ada4ee8c3c262fb5c65313"
+    },
+    {
+      "path": "lib/design_tokens.dart",
+      "ref": "lib/design_tokens.dart#twilight-mist",
+      "sha256": "994664d969f1f713fe39a6c186db23fad521d6f4f7158b77e23ec6360fa5873f"
+    },
+    {
+      "path": "lib/game_core.dart",
+      "ref": "lib/game_core.dart#GameWorld+GameSession+resolveEnding",
+      "sha256": "fefc3ed8a8f135d6d4579944863132bf1f86f2169be78c3b51db31101ea01197"
+    },
+    {
+      "path": "lib/save_adapter.dart",
+      "ref": "lib/save_adapter.dart#conditional-platform-boundary",
+      "sha256": "9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"
+    },
+    {
+      "path": "lib/save_adapter_web.dart",
+      "ref": "lib/save_adapter_web.dart#BrowserSaveAdapter",
+      "sha256": "27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"
+    },
+    {
+      "path": "lib/save_adapter_stub.dart",
+      "ref": "lib/save_adapter_stub.dart#MemorySaveAdapter-fallback",
+      "sha256": "f14b98d51781f31f35a82a9259f9bace404e8197f813c5f5f4b0a8bc1a8b6875"
+    },
+    {
+      "path": "lib/save_state.dart",
+      "ref": "lib/save_state.dart#GameSnapshot",
+      "sha256": "779c472668cd37ae6845d962687b1dd8ecce05ac578b76ec5cf8877c3e6ae27e"
+    },
+    {
+      "path": "test/golden_test.dart",
+      "ref": "test/golden_test.dart#all",
+      "sha256": "9ad23edd38a3bdfa139c5f270b21c4196efe6090e9e4403d6b8f5a6c8cef2a7b"
+    },
+    {
+      "path": "test/canonical_golden_test.dart",
+      "ref": "test/canonical_golden_test.dart#canonical-event-and-ending",
+      "sha256": "8ccac0ae3a2dd9d45c52728be274d75d453d1d44b0f97864cf3258fa7392dce9"
+    },
+    {
+      "path": "test/gameplay_metrics_test.dart",
+      "ref": "test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures",
+      "sha256": "2743d6b654e9cce13c288cef42943fd3d92a84d70abc5d097948c666d491e284"
+    },
+    {
+      "path": "test/scenario_completeness_test.dart",
+      "ref": "test/scenario_completeness_test.dart#scenario-closure",
+      "sha256": "a52bf663846d790a70ba0ef0c880cc47c81f52d0ba7f41a4827d4ebea299f85b"
+    },
+    {
+      "path": "test/i18n_golden_test.dart",
+      "ref": "test/i18n_golden_test.dart#english-dialogue-and-ending",
+      "sha256": "701ca985d5addb05db45946241f248dd9d4cd29492b300f4f94d26afec820049"
+    },
+    {
+      "path": "test/goldens/home.png",
+      "ref": "test/goldens/home.png#golden",
+      "sha256": "723bf3fe77b43fe8487f8d71726f7a5c22b321b8e9213d0e1c44ecb6e0714c96"
+    },
+    {
+      "path": "test/goldens/illustration.png",
+      "ref": "test/goldens/illustration.png#personality-portrait",
+      "sha256": "99ce6354dfe93848d54871cb4ce21a6ed82b7df6c3979437ee7683a0eaff6b4f"
+    },
+    {
+      "path": "test/goldens/ending.png",
+      "ref": "test/goldens/ending.png#golden",
+      "sha256": "de1a83c8650de39a816f5e9b7f0d52d1e3651cb212a51bd7efb18e148b0ba50a"
+    },
+    {
+      "path": "test/goldens/milestone.png",
+      "ref": "test/goldens/milestone.png#season-goal",
+      "sha256": "7d1daf2b95e33e5c9e44ef873ee318943c208ba60ff981eaeb2ad304c13a08b2"
+    },
+    {
+      "path": "test/goldens/event.png",
+      "ref": "test/goldens/event.png#event-choice",
+      "sha256": "1fed1946e3de72405f014c5d0ed956b3563f8b649756e68bb5a012b305cfd6df"
+    },
+    {
+      "path": "test/goldens/save.png",
+      "ref": "test/goldens/save.png#replay-archive-v7",
+      "sha256": "fb0defe23754dfda4bc48a913c67ea03c3e61b476af568e659284627d5408239"
+    },
+    {
+      "path": "test/goldens/collection.png",
+      "ref": "test/goldens/collection.png#ending-collection-legacy",
+      "sha256": "24803975e8b5a5811918ed992377a394229990eeb5e7a916f1051c2974ad12ab"
+    },
+    {
+      "path": "test/goldens/restart.png",
+      "ref": "test/goldens/restart.png#new-campaign",
+      "sha256": "64253624ce97720284852b030ef023de1c1bd4bb0917d44a01a43201e3f83ce4"
+    },
+    {
+      "path": "test/goldens/canonical-home.png",
+      "ref": "test/goldens/canonical-home.png#ssot-canonical-home",
+      "sha256": "95e62c01caf7b5dce1595103cfe4c25423d74ab6094f6b5cd5c7b3b48d424879"
+    },
+    {
+      "path": "test/goldens/canonical-event.png",
+      "ref": "test/goldens/canonical-event.png#ssot-canonical-week-4-event",
+      "sha256": "f84d305a0cda22b8041e7313092e7bb25f142064aa6a2abf0e99329943929f00"
+    },
+    {
+      "path": "test/goldens/canonical-ending.png",
+      "ref": "test/goldens/canonical-ending.png#ssot-canonical-ending",
+      "sha256": "a60e9ff953a026d51bf6c2494ce70967b12831477f247bd4f7a18ceb13c87dcf"
+    },
+    {
+      "path": "test/goldens/feedback.png",
+      "ref": "test/goldens/feedback.png#event-feedback-banner",
+      "sha256": "49d6cec9ba058ce7e47dbb4bdd03be8309e7589f566afbedc27231b206bc3432"
+    },
+    {
+      "path": "test/goldens/relationship-tension.png",
+      "ref": "test/goldens/relationship-tension.png#rival-bond-feedback",
+      "sha256": "41116b2ba77ff430767a2199b357be2798090c866408f79a09629e8ea7f3e043"
+    },
+    {
+      "path": "test/goldens/mediation.png",
+      "ref": "test/goldens/mediation.png#reciprocal-relationship-recovery",
+      "sha256": "ac364429749cb1e8b6629c9d6415494aa34e90c607758c50f9399cedcda37372"
+    },
+    {
+      "path": "test/goldens/outing.png",
+      "ref": "test/goldens/outing.png#outing-time-budget-tradeoff",
+      "sha256": "e90476ea41d748ffa81e16abd1e10b34bcf03c7d58283fbe276470bb214868a8"
+    },
+    {
+      "path": "test/goldens/relationship-gate.png",
+      "ref": "test/goldens/relationship-gate.png#relationship-bond-gate",
+      "sha256": "1a40dafa96d488a728a46b7c1a54b73a7e3e2f69177976be974c6bfa91e09c13"
+    },
+    {
+      "path": "test/goldens/memory-gate.png",
+      "ref": "test/goldens/memory-gate.png#relationship-memory-gate",
+      "sha256": "8781f1c871a7da36670eba807746f6d4a0a6028c33845c9744193ec4f550b52e"
+    },
+    {
+      "path": "test/goldens/legacy-gate.png",
+      "ref": "test/goldens/legacy-gate.png#collection-legacy-gate",
+      "sha256": "694aaa729a3332bbdc2f548dc30468876ac7f3328bc8d6874ce2ae02df30f8e9"
+    },
+    {
+      "path": "test/goldens/legacy-profile.png",
+      "ref": "test/goldens/legacy-profile.png#lineage-choice-bonus",
+      "sha256": "11f91d77fb302905ec58fff035bcda4fb00f5f2ab2ee09d3f88bd6b5c7d76baf"
+    },
+    {
+      "path": "test/goldens/companion-epilogue.png",
+      "ref": "test/goldens/companion-epilogue.png#ending-companion-epilogue",
+      "sha256": "6b464db9b81d23f72b7fb6d49742706ac30446e1410f9ffe496fa3b02d659041"
+    },
+    {
+      "path": "test/goldens/english-illustration.png",
+      "ref": "test/goldens/english-illustration.png#i18n-personality-dialogue",
+      "sha256": "da80009dff9f9b3fc9114c79b97a2422b0d781141b43518226582245b4ffc8f4"
+    },
+    {
+      "path": "test/goldens/english-event.png",
+      "ref": "test/goldens/english-event.png#i18n-event-dialogue-legacy-lock",
+      "sha256": "b64c1709100268e3e8a3ad8a2413afb1f0e2dc3b945b5a2c302e1429125a3636"
+    },
+    {
+      "path": "test/goldens/english-ending.png",
+      "ref": "test/goldens/english-ending.png#i18n-ending-epilogue",
+      "sha256": "c3ee053d86da16c198bfc2259dc3f4849e0578001042b41c5a819eee4f5dcc1f"
+    },
+    {
+      "path": "story/locales/ko.json",
+      "ref": "story/locales/ko.json#catalog",
+      "sha256": "d538c13e633bf4ae69abf070753b46a063dac6f58a30286e557980bc99fafe16"
+    },
+    {
+      "path": "story/locales/en.json",
+      "ref": "story/locales/en.json#catalog",
+      "sha256": "ee292a448fa2fc01b0ee04c513e5dd4801321d69a1d622e3f3785ad26d640fe2"
+    },
+    {
+      "path": "docs/game-completeness.md",
+      "ref": "docs/game-completeness.md#metrics",
+      "sha256": "5ba66595ad1e53ad636d020a8f8c8db5802de523ac7f8aadede7e69279e4d363"
+    },
+    {
+      "path": "docs/trilemma.md",
+      "ref": "docs/trilemma.md#closed-loop",
+      "sha256": "72eeedabca86adcf5c24c9d2534a49f74db5d4f53b5632e7a2e511f3689e7762"
+    },
+    {
+      "path": "docs/trilemma-contract.json",
+      "ref": "docs/trilemma-contract.json#axes",
+      "sha256": "15294bcbe1e967f680ba573f441b8b8a64bb714249a3eaa79d17ce49bc71c6e1"
+    },
+    {
+      "path": "docs/scenario-completeness.md",
+      "ref": "docs/scenario-completeness.md#scenario-completeness",
+      "sha256": "b077f4a146371b934a1c288d43ac753a309c6b8c76b6750a102a4d7c5d463142"
+    },
+    {
+      "path": "docs/architecture.md",
+      "ref": "docs/architecture.md#runtime-architecture",
+      "sha256": "5c0a09dd66a77dd08d9936f3e333cf5a1181d650903b6d61df4d874a8b6427b9"
+    },
+    {
+      "path": "docs/story-ssot.md",
+      "ref": "docs/story-ssot.md#generated",
+      "sha256": "b7802be2df745329d7552b2e7451d035a8181af13804f9ab085b31c38eadcd87"
+    },
+    {
+      "path": "docs/design-system.md",
+      "ref": "docs/design-system.md#personality_portrait",
+      "sha256": "05ff11b8d5f3b026f53ba77bffa1e652dc281d47cd11ffd43c971011016af470"
+    },
+    {
+      "path": "docs/art-provenance.md",
+      "ref": "docs/art-provenance.md#design-contract",
+      "sha256": "f3e1406bf31171a18d1901614b4c16bfd69ed61acd283e1e621fcfae655744bd"
+    },
+    {
+      "path": "test/game_core_test.dart",
+      "ref": "test/game_core_test.dart#rules",
+      "sha256": "37a09b73392f0fc06546505ef3878e18afef978df60a8d2ce21171e8d7fd7995"
+    },
+    {
+      "path": "test/save_state_test.dart",
+      "ref": "test/save_state_test.dart#lumen-save-v7",
+      "sha256": "97b09e59de854c45cf9d4c3136872105eb8fc717fe6fdbb57f6d89999fef8fb5"
+    },
+    {
+      "path": "test/flutter_test_config.dart",
+      "ref": "test/flutter_test_config.dart#CanvasGoldenComparator",
+      "sha256": "3d3524871d26fc1d4c4a09f4ef953af311910689e9380ecc6aed1dde71e04182"
+    },
+    {
+      "path": "test/asset_test.dart",
+      "ref": "test/asset_test.dart#personality-and-hero-PNG",
+      "sha256": "218a8c17c0bff6e42f7a60a604609ca4ed1ecf0ef2aef1a399fb4f79387f9d01"
+    },
+    {
+      "path": "test/story_integration_test.dart",
+      "ref": "test/story_integration_test.dart#canonical-24-week-route",
+      "sha256": "a5635a06d8017289f7cfa388a0a6bd586608828a971f64d8c8e3cab7dea1f17a"
+    },
+    {
+      "path": "test/purity_integration_test.dart",
+      "ref": "test/purity_integration_test.dart#same-schedule-budget-outcomes",
+      "sha256": "0f706bdab1b3ef4d403a346a838f340cbdbbb4eaa2ea921394d72c5b79c4edc3"
+    },
+    {
+      "path": "assets/lumen-personality-sheet.png",
+      "ref": "assets/lumen-personality-sheet.png#personality-frames",
+      "sha256": "4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28"
+    },
+    {
+      "path": "assets/lumen-personality-sheet-source.png",
+      "ref": "assets/lumen-personality-sheet-source.png#chroma-key-source",
+      "sha256": "0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8"
+    },
+    {
+      "path": "assets/fonts/NotoSansKR-Regular.ttf",
+      "ref": "assets/fonts/NotoSansKR-Regular.ttf#font",
+      "sha256": "c733940a7dc687142848b30a491e97138ed58dc58c4cae33c44e3ee52da411cb"
+    },
+    {
+      "path": "assets/fonts/OFL.txt",
+      "ref": "assets/fonts/OFL.txt#license",
+      "sha256": "881a6561b1010be07f884299f1beae4b6fd77e06463c905759ad7f9db997b51a"
+    },
+    {
+      "path": "pubspec.yaml",
+      "ref": "pubspec.yaml#assets-and-fonts",
+      "sha256": "ea20411129b8236c013ed021857ae72e6d763808cbef5ee6cab569867f854052"
+    },
+    {
+      "path": "pubspec.lock",
+      "ref": "pubspec.lock#resolved-dependencies",
+      "sha256": "310c9161547693da71996eb566c3c92a741c161df51f42497505f30d17b3faf6"
+    },
+    {
+      "path": "tool/generate_ssot_docs.dart",
+      "ref": "tool/generate_ssot_docs.dart#render-progression-dialogue-scenario",
+      "sha256": "028b65a5e949aefb229ff1b5449cea6b243690383d4afe7dc02db74a489537cd"
+    },
+    {
+      "path": "tool/generate_trilemma_contract.dart",
+      "ref": "tool/generate_trilemma_contract.dart#buildContract",
+      "sha256": "a3c55684b5e17c9ba08b829fe1bfb7fe1f121aa4a817dc81cab910fac2b6a064"
+    },
+    {
+      "path": "tool/verify_game.dart",
+      "ref": "tool/verify_game.dart#trilemma-contract-assetRefs-localeRefs-progression-scenario",
+      "sha256": "9c84d948428575934665a958c530325d9349159791a1fe6d380705dbac11f099"
+    },
+    {
+      "path": "tool/benchmark_game.dart",
+      "ref": "tool/benchmark_game.dart#ssot-campaign-throughput-signatures",
+      "sha256": "0c65e3fc1d5c095f6a33fd71997abb0cf2ffb07e7990422dd8b1fdc9b19f3f4a"
+    },
+    {
+      "path": "README.md",
+      "ref": "README.md#ssot-and-golden-evidence",
+      "sha256": "f17f895fc6efd5c2b5a9c002139b412612b57e39a63829f97d07375e146cc0bb"
+    },
+    {
+      "path": "test/locale_contract_test.dart",
+      "ref": "test/locale_contract_test.dart#ssot-dialogue-contract",
+      "sha256": "f2aa8501f43e10f9df25e0664605358691ed2e264c622b747e7ee445fe918911"
+    },
+    {
+      "path": "test/progression_contract_test.dart",
+      "ref": "test/progression_contract_test.dart#eight-chapters",
+      "sha256": "6cecec875413c5a2c513a221dd5a88c8c05fbb5224154844bdde7953974436f3"
+    },
+    {
+      "path": "docs/ssot-metrics.md",
+      "ref": "docs/ssot-metrics.md#generated",
+      "sha256": "31f173366ab3f497d7296734fa33d2a30f21b22ac7f4c8ab57d79d4444a27955"
+    },
+    {
+      "path": "design/tokens.json",
+      "ref": "design/tokens.json#twilight-mood",
+      "sha256": "f6670174905ee30c5b477afa6a24a34c65fc3f1c82bb3e87a3815716cb14bddc"
+    },
+    {
+      "path": "lib/collection_adapter.dart",
+      "ref": "lib/collection_adapter.dart#CollectionPort",
+      "sha256": "ee43f069fe2af6dbc6c1e6627460f86476c69068d5003b21e722c7b240c60206"
+    },
+    {
+      "path": "lib/collection_adapter_web.dart",
+      "ref": "lib/collection_adapter_web.dart#BrowserCollectionAdapter",
+      "sha256": "6fca4300faa3cda0967bf909ea04188f79072eaaff3cc848da17133ae3510b0a"
+    },
+    {
+      "path": "lib/collection_adapter_stub.dart",
+      "ref": "lib/collection_adapter_stub.dart#MemoryCollectionAdapter-fallback",
+      "sha256": "7b2b0f265eeec8362aa6b6e910d305a48f79fccf67892f202e7464fb8d03956d"
+    },
+    {
+      "path": "test/collection_test.dart",
+      "ref": "test/collection_test.dart#best-rank",
+      "sha256": "bb6c66307f32e3684bae621e9c925780bef7d69fd9818b6da7371aecfc564f23"
+    },
+    {
+      "path": ".githooks/pre-commit",
+      "ref": ".githooks/pre-commit#quality-gate",
+      "sha256": "abaabf2a54b254f60cad53c50a2f9da131cc7e4af13b32677b3288a912190ab9"
+    },
+    {
+      "path": ".github/workflows/verify.yml",
+      "ref": ".github/workflows/verify.yml#system-approval",
+      "sha256": "25be61ef505e394ec84733389eda57ee67fbfec791e0d64ede5ca446d7fcd5a6"
+    },
+    {
+      "path": "docs/automation-policy.md",
+      "ref": "docs/automation-policy.md#decision-authority",
+      "sha256": "bbf437ad8248e2010814f548a6843a2e84d38fdc613cff9de3ede384247e3647"
+    },
+    {
+      "path": "docs/originality-contract.json",
+      "ref": "docs/originality-contract.json#pillars",
+      "sha256": "7287127020ecf6656d2eafa3eef65296ee97c34fb714d8dbad092d0e92a30735"
+    },
+    {
+      "path": "tool/ci_gate.dart",
+      "ref": "tool/ci_gate.dart#system-verdict",
+      "sha256": "4d751e19f74c850ef6f631086eea822c7584f11c04a7733d7847b4ba27de5280"
+    },
+    {
+      "path": "tool/verify_ci_policy.dart",
+      "ref": "tool/verify_ci_policy.dart#fail-closed-policy",
+      "sha256": "c42ab3f24f70ea34ffd26c5f9dda4f63acf56366262690f328cc92eed9b63914"
+    },
+    {
+      "path": "tool/expand_story.dart",
+      "ref": "tool/expand_story.dart#reviewed",
+      "sha256": "df0b45b5c7a18a85b317c0633b614f42f1acaa4bdfa7cb500e41c204d2442b9f"
+    },
+    {
+      "path": "tool/refresh_review_manifest.dart",
+      "ref": "tool/refresh_review_manifest.dart#reviewed",
+      "sha256": "0185305eec10d104755d283836a67b872c975564eb9590e3b339a4808388e0c1"
+    }
   ]
 }

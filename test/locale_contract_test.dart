@@ -28,7 +28,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   test('all SSOT dialogue keys exist and are non-empty in every locale',
       () async {
-    final story = jsonDecode(await rootBundle.loadString('story/story.json'));
+    final story = jsonDecode(utf8.decode(
+        (await rootBundle.load('story/story.json')).buffer.asUint8List()));
     final required = authoredKeys(story);
     expect(required, isNotEmpty);
     final catalogs = <String, Map<String, String>>{};
@@ -63,7 +64,7 @@ void main() {
     ];
     expect(catalogs['ko']!.keys, containsAll(endingUiKeys));
     expect(catalogs['en']!.keys, containsAll(endingUiKeys));
-    expect(catalogs['ko']!.length, 216);
-    expect(catalogs['en']!.length, 216);
+    expect(catalogs['ko']!.length, 398);
+    expect(catalogs['en']!.length, 398);
   });
 }
