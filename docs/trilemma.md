@@ -18,6 +18,8 @@ SSOT 콘텐츠 → GameWorld 전이 → Canvas/Golden 증거
 
 기계 판정은 `build/trilemma-verdict.json`에 세 축을 별도로 남긴다. 완전성은 SSOT·scenario enumeration·생성 문서·review manifest·정적 분석·Golden, 순수성은 scenario·benchmark·replay, 성능은 benchmark·Flutter test와 CI Wasm build를 필수 조건으로 가진다. 로컬에서는 Wasm을 제외한 동일 규칙을 실행하고, GitHub Actions의 `--ci` 모드에서는 Wasm까지 포함한다. 어느 축이든 `fail` 또는 `missingChecks`가 있으면 `SYSTEM_APPROVAL`도 `REJECT`다.
 
+렌더링 품질도 별도 추론이 아니라 `render-quality-preconditions` 게이트로 판정한다. `docs/render-quality-contract.json`의 viewport·입력 역변환·Golden 선행조건이 누락되면 세 축 전체가 거절된다.
+
 현재 장편 계약은 48주·16막·47개 사건·94개 선택지이며, 48회 일정 반영과 16회 막 결산을 포함한 보수적 콘텐츠 예산이 최소 120분을 넘도록 SSOT에서 계산된다.
 
 현재 시각 책임 증적은 30개 Golden과 419개 locale key이며, `system-receipt.png`는 승인·거절 trace의 owner·contract·rule·decisionHash를 Canvas에서 재현한다.

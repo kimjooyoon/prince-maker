@@ -44,6 +44,8 @@ Future<void> main(List<String> args) async {
   final mode = args.contains('--ci') ? 'ci' : 'local';
   final checks = <GateCheck>[
     const GateCheck('ci-policy', 'dart', ['run', 'tool/verify_ci_policy.dart']),
+    const GateCheck('render-quality-preconditions', 'dart',
+        ['run', 'tool/verify_render_quality.dart']),
     const GateCheck('story-contract', 'dart', ['run', 'tool/verify_game.dart']),
     const GateCheck('scenario-variants', 'dart',
         ['run', 'tool/verify_scenario_variants.dart']),

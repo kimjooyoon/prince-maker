@@ -168,6 +168,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/canvas_surface.dart#CanvasViewport',
     'lib/canvas_scene_fingerprint.dart#canvasSceneFingerprint',
     'lib/activity_catalog.dart#activitiesFromStory',
+    'tool/verify_render_quality.dart#render-quality-preconditions',
     'lib/decision_receipt.dart#DecisionReceipt',
   ];
   for (final ref in requiredRefs) {

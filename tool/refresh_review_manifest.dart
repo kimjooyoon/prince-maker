@@ -35,7 +35,9 @@ void main() {
     'test/goldens/narrative-ledger-en.png',
     'test/system_receipt_golden_test.dart',
     'test/goldens/system-receipt.png',
-    'tool/verify_game.dart'
+    'tool/verify_game.dart',
+    'docs/render-quality-contract.json',
+    'tool/verify_render_quality.dart'
   ]) {
     if (!known.containsKey(path)) {
       entries
