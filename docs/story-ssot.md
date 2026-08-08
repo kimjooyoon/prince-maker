@@ -1,6 +1,6 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 03135bb3a834ba592f13a82f8219ea7fb51becd29b00fde9171e1d03059aa693 -->
-<!-- source-ref: story/story.json#root -->
+<!-- ssot-sha256: 5fd4f9870355cf5159f35f102e176704aaba1949eda8a119bf204fbf226992c2 -->
+<!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
 
@@ -101,9 +101,9 @@
 
 | 차원 | 목표 | 현재 증적 | 검증 ref |
 | --- | --- | --- | --- |
-| 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 16 chapters / 47 events / 4 locations / 16 milestones / 16 chapter contracts / terminal week 49 | `story/story.json#progression.contract` |
+| 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 16 chapters / 47 events / 4 locations / 16 milestones / 16 chapter contracts / terminal week 49 | `story/story.jsonl#progression.contract` |
 | 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
-| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / deterministic tension-estrangement-truce state / one exclusive follow-up per state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats | `story/story.json#companions` |
+| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / deterministic tension-estrangement-truce state / one exclusive follow-up per state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats | `story/story.jsonl#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 16 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues | `test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures` |
@@ -123,8 +123,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `c16f720d8d983f9057de1174f4cad6d9776c2e24e0a22787c865f534a15d3f7c`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `b9a1d8c8f7020ecda86ebeda284011072d28d6cf40f6aa216a9f9ba8b1d45e6a`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `e9b895cc0c5a242ea6d16cc8d62246bc4bde9847afb145ed54d046365cd37993`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `4278e0bade8d40b84772a3d72ebacdf292bb53566b69f52beae3d8624fdb77cb`
 
 ## 성격
 

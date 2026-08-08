@@ -43,6 +43,8 @@ void writeVerdict(String mode, List<Map<String, dynamic>> checks,
 Future<void> main(List<String> args) async {
   final mode = args.contains('--ci') ? 'ci' : 'local';
   final checks = <GateCheck>[
+    const GateCheck(
+        'jsonl-contract', 'dart', ['run', 'tool/verify_jsonl.dart']),
     const GateCheck('ci-policy', 'dart', ['run', 'tool/verify_ci_policy.dart']),
     const GateCheck('decision-proof-preconditions', 'dart',
         ['run', 'tool/verify_decision_proof.dart']),

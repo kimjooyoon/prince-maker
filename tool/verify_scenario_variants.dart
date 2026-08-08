@@ -1,5 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
+import 'package:prince_maker/jsonl.dart';
 
 import 'package:prince_maker/game_core.dart';
 
@@ -43,9 +43,8 @@ void chooseEvent(GameSession session, Map<String, dynamic> choice) {
 
 String replaySignature(GameSession session, Map<String, dynamic> ending) {
   final progress = session.world.progress[0]!;
-  final eventTrace = progress.trace
-      .where((entry) => entry.startsWith('event:'))
-      .join('||');
+  final eventTrace =
+      progress.trace.where((entry) => entry.startsWith('event:')).join('||');
   final milestones = progress.milestones.entries
       .map((entry) => '${entry.key}:${entry.value}')
       .join(',');
@@ -63,8 +62,8 @@ String replaySignature(GameSession session, Map<String, dynamic> ending) {
   ].join('|');
 }
 
-String runBranchVector(Map<String, dynamic> source, List<int> branchWeeks,
-    int mask) {
+String runBranchVector(
+    Map<String, dynamic> source, List<int> branchWeeks, int mask) {
   final story = JsonStoryAdapter(source);
   final session = GameSession(story, MemorySaveAdapter());
   var branchIndex = 0;
@@ -77,7 +76,8 @@ String runBranchVector(Map<String, dynamic> source, List<int> branchWeeks,
     final event = eventsByWeek[week];
     if (event == null) continue;
     final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
-    final usable = choices.where((choice) => available(choice, session)).toList();
+    final usable =
+        choices.where((choice) => available(choice, session)).toList();
     if (branchWeeks.contains(week)) {
       if (usable.length != 2 || choices.length != 2)
         fail('branch week $week is not an unconditional two-choice event');
@@ -100,14 +100,14 @@ String runBranchVector(Map<String, dynamic> source, List<int> branchWeeks,
 }
 
 void main() {
-  final source = jsonDecode(File('story/story.json').readAsStringSync())
-      as Map<String, dynamic>;
-  final budget = (source['scenarioVariantBudget'] as Map?)
-      ?.cast<String, dynamic>();
+  final source = decodeJsonl(File('story/story.jsonl').readAsStringSync());
+  final budget =
+      (source['scenarioVariantBudget'] as Map?)?.cast<String, dynamic>();
   if (budget == null || budget['schema'] != 'lumen-scenario-cases-v1')
     fail('missing scenario variant budget');
   final branchWeeks = (budget['branchWeeks'] as List).cast<int>();
-  if (branchWeeks.length < 11 || branchWeeks.toSet().length != branchWeeks.length)
+  if (branchWeeks.length < 11 ||
+      branchWeeks.toSet().length != branchWeeks.length)
     fail('at least eleven unique branch weeks are required');
   final eventByWeek = <int, Map<String, dynamic>>{
     for (final event in (source['events'] as List).cast<Map<String, dynamic>>())
@@ -118,7 +118,8 @@ void main() {
     if (event == null) fail('branch week $week has no authored event');
     final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
     if (choices.length != 2 ||
-        choices.any((choice) => choice['requiresStat'] != null ||
+        choices.any((choice) =>
+            choice['requiresStat'] != null ||
             choice['requiresBondId'] != null ||
             choice['requiresFlag'] != null)) {
       fail('branch week $week must expose two unconditional authored choices');
@@ -127,11 +128,13 @@ void main() {
   final branchVectors = 1 << branchWeeks.length;
   final expectedBranchVectors = budget['authoredBranchVectors'];
   if (expectedBranchVectors != branchVectors)
-    fail('branch vector formula drift: expected $branchVectors, found $expectedBranchVectors');
+    fail(
+        'branch vector formula drift: expected $branchVectors, found $expectedBranchVectors');
   final activities = (source['activities'] as List).length;
   final personalities = (source['personalities'] as List).length;
   final legacyContexts = (source['legacyProfiles'] as List).length + 1;
-  final routeInputs = branchVectors * activities * personalities * legacyContexts;
+  final routeInputs =
+      branchVectors * activities * personalities * legacyContexts;
   if (budget['routeInputCases'] != routeInputs ||
       (budget['minimumCases'] as int) < 2000)
     fail('scenario case budget is below the 2,000-case contract');
@@ -142,9 +145,11 @@ void main() {
   }
   final reachable = signatures.length;
   if (reachable < (budget['minimumCases'] as int))
-    fail('only $reachable distinct deterministic scenario signatures were reached');
+    fail(
+        'only $reachable distinct deterministic scenario signatures were reached');
   if (budget['verifiedReachableCases'] != reachable)
-    fail('verifiedReachableCases drift: expected $reachable, found ${budget['verifiedReachableCases']}');
+    fail(
+        'verifiedReachableCases drift: expected $reachable, found ${budget['verifiedReachableCases']}');
   stdout.writeln(
       'SCENARIO_VARIANTS_OK: cases=$reachable minimum=${budget['minimumCases']} branchVectors=$branchVectors routeInputs=$routeInputs branchWeeks=${branchWeeks.join(',')}');
 }

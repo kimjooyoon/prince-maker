@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:prince_maker/jsonl.dart';
 
 Set<String> authoredKeys(dynamic node) {
   final keys = <String>{};
@@ -19,7 +20,7 @@ Set<String> authoredKeys(dynamic node) {
 
 Future<Map<String, String>> loadCatalog(String locale) async {
   final raw =
-      jsonDecode(await rootBundle.loadString('story/locales/$locale.json'))
+      decodeJsonl(await rootBundle.loadString('story/locales/$locale.jsonl'))
           as Map;
   return raw.map((key, value) => MapEntry('$key', '$value'));
 }
@@ -28,8 +29,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   test('all SSOT dialogue keys exist and are non-empty in every locale',
       () async {
-    final story = jsonDecode(utf8.decode(
-        (await rootBundle.load('story/story.json')).buffer.asUint8List()));
+    final story = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final required = authoredKeys(story);
     expect(required, isNotEmpty);
     final catalogs = <String, Map<String, String>>{};

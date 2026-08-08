@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:prince_maker/jsonl.dart';
 
 String sha256File(String path) =>
     sha256.convert(File(path).readAsBytesSync()).toString();
 
 Map<String, dynamic> readJson(String path) =>
-    jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
+    decodeJsonl(File(path).readAsStringSync());
 
 List<Map<String, dynamic>> maps(dynamic value) =>
     (value as List? ?? const []).cast<Map<String, dynamic>>();
@@ -25,10 +26,10 @@ int dartTestCount() => Directory('test')
     .length;
 
 Map<String, dynamic> buildDocument() {
-  final story = readJson('story/story.json'),
-      trilemma = readJson('docs/trilemma-contract.json'),
-      render = readJson('docs/render-quality-contract.json'),
-      decisionProof = readJson('docs/decision-proof-contract.json');
+  final story = readJson('story/story.jsonl'),
+      trilemma = readJson('docs/trilemma-contract.jsonl'),
+      render = readJson('docs/render-quality-contract.jsonl'),
+      decisionProof = readJson('docs/decision-proof-contract.jsonl');
   final trilemmaAxes = maps(trilemma['axes']);
   final events = maps(story['events']),
       progression = maps(story['progression']),
@@ -89,20 +90,20 @@ Map<String, dynamic> buildDocument() {
       decisionProofFields;
   final sourceRefs = [
     {
-      'ref': 'story/story.json#root',
-      'sha256': sha256File('story/story.json'),
+      'ref': 'story/story.jsonl#root',
+      'sha256': sha256File('story/story.jsonl'),
     },
     {
-      'ref': 'docs/trilemma-contract.json#axes',
-      'sha256': sha256File('docs/trilemma-contract.json'),
+      'ref': 'docs/trilemma-contract.jsonl#axes',
+      'sha256': sha256File('docs/trilemma-contract.jsonl'),
     },
     {
-      'ref': 'docs/render-quality-contract.json#preconditions',
-      'sha256': sha256File('docs/render-quality-contract.json'),
+      'ref': 'docs/render-quality-contract.jsonl#preconditions',
+      'sha256': sha256File('docs/render-quality-contract.jsonl'),
     },
     {
-      'ref': 'docs/decision-proof-contract.json#preconditionFields',
-      'sha256': sha256File('docs/decision-proof-contract.json'),
+      'ref': 'docs/decision-proof-contract.jsonl#preconditionFields',
+      'sha256': sha256File('docs/decision-proof-contract.jsonl'),
     },
   ];
   final effortLedger = [
@@ -171,7 +172,7 @@ Map<String, dynamic> buildDocument() {
         'review-manifest',
       ],
       'evidence': [
-        'story/story.json#scenarioCompleteness',
+        'story/story.jsonl#scenarioCompleteness',
         'tool/verify_game.dart#scenario-contract',
         'test/scenario_completeness_test.dart#scenario-closure',
       ],
@@ -237,8 +238,8 @@ Map<String, dynamic> buildDocument() {
         'tests-and-goldens',
       ],
       'evidence': [
-        'story/story.json#fateThreads',
-        'story/story.json#companionQuests',
+        'story/story.jsonl#fateThreads',
+        'story/story.jsonl#companionQuests',
         'test/narrative_ledger_test.dart#deterministic-projection',
         'test/ending_matrix_test.dart#all-companion-route-sets',
       ],
@@ -279,7 +280,7 @@ Map<String, dynamic> buildDocument() {
         'tests-and-goldens',
       ],
       'evidence': [
-        'docs/render-quality-contract.json#preconditions',
+        'docs/render-quality-contract.jsonl#preconditions',
         'tool/verify_render_quality.dart#render-quality-preconditions',
         'test/golden_test.dart#all',
         'test/locale_contract_test.dart#ssot-dialogue-contract',
@@ -357,10 +358,10 @@ Map<String, dynamic> buildDocument() {
         'diff-whitespace',
       ],
       'evidence': [
-        'story/story.json#codeRefs',
-        'docs/decision-proof-contract.json#preconditionFields',
+        'story/story.jsonl#codeRefs',
+        'docs/decision-proof-contract.jsonl#preconditionFields',
         'tool/verify_decision_proof.dart#decision-proof-preconditions',
-        'docs/review-manifest.json#entries',
+        'docs/review-manifest.jsonl#entries',
         'tool/ci_gate.dart#system-verdict',
         'lib/decision_proof.dart#SystemDecisionPolicy',
         'lib/decision_receipt.dart#DecisionReceipt',
@@ -422,7 +423,7 @@ String renderMarkdown(Map<String, dynamic> document) {
     ..writeln('<!-- generated: tool/generate_development_goals.dart -->')
     ..writeln(
         '<!-- source-sha256: ${(document['source'] as List).map((entry) => entry['sha256']).join('|')} -->')
-    ..writeln('<!-- source-ref: story/story.json#root -->')
+    ..writeln('<!-- source-ref: story/story.jsonl#root -->')
     ..writeln()
     ..writeln('# 프린스 메이커 · 정량 개발목표 원장')
     ..writeln()
@@ -484,10 +485,12 @@ String renderMarkdown(Map<String, dynamic> document) {
 
 void main(List<String> args) {
   final document = buildDocument(),
-      json = '${const JsonEncoder.withIndent('  ').convert(document)}\n',
+      json = encodeJsonl(document,
+          schema: 'lumen-document-jsonl-v1',
+          document: 'docs/development-goals.jsonl'),
       markdown = renderMarkdown(document),
       outputs = {
-        'docs/development-goals.json': json,
+        'docs/development-goals.jsonl': json,
         'docs/development-goals.md': markdown,
       };
   if (args.contains('--check')) {

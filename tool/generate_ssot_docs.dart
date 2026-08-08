@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
+import 'package:prince_maker/jsonl.dart';
 
 String sha(String path) =>
     sha256.convert(File(path).readAsBytesSync()).toString();
@@ -36,7 +36,7 @@ String render(Map<String, dynamic> s, String hash) {
   final endingDesign =
       (s['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
   final b = StringBuffer(
-      '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
+      '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.jsonl#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
   b.writeln(
       '${s['setting']}에서 ${s['hero']}는 ${campaignWeeks}주 동안 스스로 선택한 내일을 걷는다.');
   b.writeln('\n## 시스템 판정과 책임 추적\n');
@@ -174,9 +174,9 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
           .map((chapter) => '${chapter['weekStart']}–${chapter['weekEnd']}주')
           .join(' / ');
   final b = StringBuffer(
-      '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · SSOT 자동 품질 지표\n\n');
+      '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.jsonl#root -->\n\n# ${s['title']} · SSOT 자동 품질 지표\n\n');
   b.writeln(
-      '이 문서는 `story/story.json`에서 자동 생성된다. 코드·Golden·CI의 수치가 SSOT 변경과 함께 갱신되는지 pre-commit에서 확인한다.\n');
+      '이 문서는 `story/story.jsonl`에서 자동 생성된다. 코드·Golden·CI의 수치가 SSOT 변경과 함께 갱신되는지 pre-commit에서 확인한다.\n');
   b.writeln('| 항목 | 현재 | 산출 기준 |\n| --- | ---: | --- |');
   b.writeln(
       '| 캠페인 길이 | ${campaignWeeks}주 + terminal week | `campaignWeeks`, `endingWeek` |');
@@ -225,15 +225,14 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   b.writeln(
       '| 캠페인 최소 서사 단위 | ${dialogue['minimumVisibleNarrativeUnits']} | 성격·사건 제목/본문·선택·엔딩 |');
   b.writeln(
-      '\n## 폐쇄루프 연결\n\nSSOT → GameWorld 전이 → Canvas/Golden → 저장·replay → benchmark → 같은 SSOT로 재검증. 기계 판정 기준은 [`docs/trilemma-contract.json`](trilemma-contract.json), 상세 설계는 [`docs/trilemma.md`](trilemma.md), 전체 지표는 [`docs/game-completeness.md`](game-completeness.md)에서 확인한다.');
+      '\n## 폐쇄루프 연결\n\nSSOT → GameWorld 전이 → Canvas/Golden → 저장·replay → benchmark → 같은 SSOT로 재검증. 기계 판정 기준은 [`docs/trilemma-contract.jsonl`](trilemma-contract.jsonl), 상세 설계는 [`docs/trilemma.md`](trilemma.md), 전체 지표는 [`docs/game-completeness.md`](game-completeness.md)에서 확인한다.');
   return b.toString();
 }
 
 void main(List<String> args) {
-  final input = 'story/story.json',
+  final input = 'story/story.jsonl',
       hash = sha(input),
-      source =
-          jsonDecode(File(input).readAsStringSync()) as Map<String, dynamic>,
+      source = decodeJsonl(File(input).readAsStringSync()),
       outputs = {
         'docs/story-ssot.md': render(source, hash),
         'docs/ssot-metrics.md': renderMetrics(source, hash)

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:prince_maker/jsonl.dart';
 import 'package:prince_maker/game_core.dart';
 
 class CampaignMetrics {
@@ -118,8 +119,7 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
 
 void main() {
   const campaigns = 5000;
-  final source = jsonDecode(File('story/story.json').readAsStringSync())
-      as Map<String, dynamic>;
+  final source = decodeJsonl(File('story/story.jsonl').readAsStringSync());
   final story = JsonStoryAdapter(source);
   final watch = Stopwatch()..start();
   final first = runCampaigns(source, campaigns);

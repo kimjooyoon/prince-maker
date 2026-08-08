@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/game_core.dart';
+import 'package:prince_maker/jsonl.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   Future<Map<String, dynamic>> play(String stat, int delta) async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final story = JsonStoryAdapter(source),
         session = GameSession(story, MemorySaveAdapter());
     while (session.world.progress[0]!.week < story.endingWeek) {

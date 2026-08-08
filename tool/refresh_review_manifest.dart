@@ -1,13 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
+import 'package:prince_maker/jsonl.dart';
 
 String hash(String path) =>
     sha256.convert(File(path).readAsBytesSync()).toString();
 
 void main() {
-  final file = File('docs/review-manifest.json');
-  final manifest = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+  final file = File('docs/review-manifest.jsonl');
+  final manifest = decodeJsonl(file.readAsStringSync());
   final entries =
       (manifest['reviewedFiles'] as List).cast<Map<String, dynamic>>();
   final known = {for (final entry in entries) entry['path'] as String: entry};
@@ -36,7 +36,13 @@ void main() {
     'test/system_receipt_golden_test.dart',
     'test/goldens/system-receipt.png',
     'tool/verify_game.dart',
-    'docs/render-quality-contract.json',
+    'tool/verify_jsonl.dart',
+    'tool/migrate_jsonl.dart',
+    'tool/refresh_ssot_contract_hashes.dart',
+    'lib/jsonl.dart',
+    'test/jsonl_contract_test.dart',
+    'test/system_receipt_golden_test.dart',
+    'docs/render-quality-contract.jsonl',
     'tool/verify_render_quality.dart',
     'tool/verify_gameplay_fun.dart',
     'test/chapter_golden_test.dart',
@@ -73,12 +79,12 @@ void main() {
     'test/goldens/chapter-closure-returningGarden.png',
     'test/goldens/chapter-closure-seedReturn.png',
     'test/goldens/chapter-closure-threshold.png',
-    'docs/development-goals.json',
+    'docs/development-goals.jsonl',
     'docs/development-goals.md',
     'tool/generate_development_goals.dart',
     'tool/verify_development_goals.dart',
     'lib/decision_proof.dart',
-    'docs/decision-proof-contract.json',
+    'docs/decision-proof-contract.jsonl',
     'tool/verify_decision_proof.dart',
     'test/decision_proof_test.dart',
     'test/relationship_dynamics_test.dart',
@@ -89,7 +95,8 @@ void main() {
           .add({'path': path, 'ref': '$path#reviewed', 'sha256': hash(path)});
     }
   }
-  file.writeAsStringSync(
-      '${const JsonEncoder.withIndent('  ').convert(manifest)}\n');
+  file.writeAsStringSync(encodeJsonl(manifest,
+      schema: 'lumen-document-jsonl-v1',
+      document: 'docs/review-manifest.jsonl'));
   stdout.writeln('REVIEW_MANIFEST_REFRESHED: ${entries.length} files');
 }

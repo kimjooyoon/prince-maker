@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/main.dart';
+import 'package:prince_maker/jsonl.dart';
 
 Future<Map<String, Map<String, String>>> loadLocales() async {
   final locales = <String, Map<String, String>>{};
   for (final locale in ['ko', 'en']) {
     final raw =
-        jsonDecode(await rootBundle.loadString('story/locales/$locale.json'))
+        decodeJsonl(await rootBundle.loadString('story/locales/$locale.jsonl'))
             as Map;
     locales[locale] = raw.map((key, value) => MapEntry('$key', '$value'));
   }
@@ -19,9 +20,8 @@ void main() {
   testWidgets(
       'English locale renders original dialogue and authored ending epilogue',
       (tester) async {
-    final story = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
-        as Map<String, dynamic>;
+    final story = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     final locales = await loadLocales();
     await tester.pumpWidget(Game(story, locales: locales));
     await tester.pumpAndSettle();

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:prince_maker/jsonl.dart';
 
 import 'generate_development_goals.dart' as generator;
 
@@ -13,7 +14,10 @@ Never fail(String message) {
 Map<String, dynamic> readJson(String path) {
   final file = File(path);
   if (!file.existsSync()) fail('missing $path');
-  return jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+  final raw = file.readAsStringSync();
+  return path.endsWith('.jsonl')
+      ? decodeJsonl(raw)
+      : jsonDecode(raw) as Map<String, dynamic>;
 }
 
 String sha256File(String path) =>
@@ -25,10 +29,11 @@ void requireEqual(Object? actual, Object? expected, String message) {
 
 void main() {
   final expected = generator.buildDocument(),
-      expectedJson =
-          '${const JsonEncoder.withIndent('  ').convert(expected)}\n',
+      expectedJson = encodeJsonl(expected,
+          schema: 'lumen-document-jsonl-v1',
+          document: 'docs/development-goals.jsonl'),
       expectedMarkdown = generator.renderMarkdown(expected),
-      jsonFile = File('docs/development-goals.json'),
+      jsonFile = File('docs/development-goals.jsonl'),
       markdownFile = File('docs/development-goals.md');
   if (!jsonFile.existsSync() || jsonFile.readAsStringSync() != expectedJson) {
     fail(
@@ -39,7 +44,7 @@ void main() {
     fail('development-goals.md is stale or not generated from current sources');
   }
 
-  final document = readJson('docs/development-goals.json');
+  final document = readJson('docs/development-goals.jsonl');
   requireEqual(
       document['schema'], 'lumen-development-goals-v1', 'schema drift');
   requireEqual(document['version'], 1, 'version drift');
@@ -130,14 +135,14 @@ void main() {
     fail('decision proof chain is not rooted and replayable');
   }
 
-  final render = readJson('docs/render-quality-contract.json'),
+  final render = readJson('docs/render-quality-contract.jsonl'),
       renderPreconditions = (render['preconditions'] as List).length,
       renderProofs = (render['proofs'] as List).length,
       goalVerdict = {
         'schema': 'lumen-development-goal-verdict-v1',
         'source': {
-          'ref': 'docs/development-goals.json#goals',
-          'sha256': sha256File('docs/development-goals.json'),
+          'ref': 'docs/development-goals.jsonl#goals',
+          'sha256': sha256File('docs/development-goals.jsonl'),
         },
         'decision': 'approve',
         'goals': [

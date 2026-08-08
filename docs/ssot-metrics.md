@@ -1,10 +1,10 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 03135bb3a834ba592f13a82f8219ea7fb51becd29b00fde9171e1d03059aa693 -->
-<!-- source-ref: story/story.json#root -->
+<!-- ssot-sha256: 5fd4f9870355cf5159f35f102e176704aaba1949eda8a119bf204fbf226992c2 -->
+<!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
 
-이 문서는 `story/story.json`에서 자동 생성된다. 코드·Golden·CI의 수치가 SSOT 변경과 함께 갱신되는지 pre-commit에서 확인한다.
+이 문서는 `story/story.jsonl`에서 자동 생성된다. 코드·Golden·CI의 수치가 SSOT 변경과 함께 갱신되는지 pre-commit에서 확인한다.
 
 | 항목 | 현재 | 산출 기준 |
 | --- | ---: | --- |
@@ -26,7 +26,7 @@
 | 사건 선택 | 94 | 모든 사건 choices 합계 |
 | 엔딩 | 6 | `endings.length` |
 | Canvas Golden | 63 | `test/goldens/*.png` |
-| 코드 ref | 33 | `codeRefs.length` |
+| 코드 ref | 37 | `codeRefs.length` |
 | 이미지 ref | 4 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
@@ -39,4 +39,4 @@
 
 ## 폐쇄루프 연결
 
-SSOT → GameWorld 전이 → Canvas/Golden → 저장·replay → benchmark → 같은 SSOT로 재검증. 기계 판정 기준은 [`docs/trilemma-contract.json`](trilemma-contract.json), 상세 설계는 [`docs/trilemma.md`](trilemma.md), 전체 지표는 [`docs/game-completeness.md`](game-completeness.md)에서 확인한다.
+SSOT → GameWorld 전이 → Canvas/Golden → 저장·replay → benchmark → 같은 SSOT로 재검증. 기계 판정 기준은 [`docs/trilemma-contract.jsonl`](trilemma-contract.jsonl), 상세 설계는 [`docs/trilemma.md`](trilemma.md), 전체 지표는 [`docs/game-completeness.md`](game-completeness.md)에서 확인한다.

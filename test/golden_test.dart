@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:prince_maker/main.dart';
+import 'package:prince_maker/jsonl.dart';
 
 Map<String, dynamic> lineageGoldenStory({
   required String id,
@@ -767,8 +768,8 @@ void main() {
         find.byType(Game), matchesGoldenFile('goldens/collection.png'));
   });
   testWidgets('canonical SSOT renders a stable Canvas home', (tester) async {
-    final source = jsonDecode(utf8.decode(
-            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
+    final source = decodeJsonl(utf8.decode(
+            (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()))
         as Map;
     await tester.pumpWidget(Game(Map<String, dynamic>.from(source)));
     await tester.pump(const Duration(milliseconds: 100));

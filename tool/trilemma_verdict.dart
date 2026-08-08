@@ -61,7 +61,7 @@ Map<String, dynamic> buildTrilemmaVerdict(
   final report = {
     'schema': 'lumen-trilemma-verdict-v1',
     'mode': mode,
-    'source': 'docs/trilemma-contract.json#axes',
+    'source': 'docs/trilemma-contract.jsonl#axes',
     'decision': approved ? 'approve' : 'reject',
     'axes': axes,
   };

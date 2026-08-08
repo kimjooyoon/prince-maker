@@ -1,5 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
+import 'package:prince_maker/jsonl.dart';
 import 'package:crypto/crypto.dart';
 
 Never fail(String message) {
@@ -18,7 +18,7 @@ void main() {
   const workflowPath = '.github/workflows/verify.yml';
   const hookPath = '.githooks/pre-commit';
   const policyPath = 'docs/automation-policy.md';
-  const originalityPath = 'docs/originality-contract.json';
+  const originalityPath = 'docs/originality-contract.jsonl';
   for (final path in [workflowPath, hookPath, policyPath, originalityPath]) {
     requireFile(path);
   }
@@ -26,8 +26,7 @@ void main() {
   final workflow = File(workflowPath).readAsStringSync();
   final hook = File(hookPath).readAsStringSync();
   final policy = File(policyPath).readAsStringSync();
-  final story = jsonDecode(File('story/story.json').readAsStringSync())
-      as Map<String, dynamic>;
+  final story = decodeJsonl(File('story/story.jsonl').readAsStringSync());
   final decision =
       (story['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
   if (!workflow.contains('pull_request:') ||
@@ -57,11 +56,15 @@ void main() {
     fail(
         'story and decision proof must declare system-owned fail-closed adjudication');
   }
-  if (!File('docs/decision-proof-contract.json').existsSync() ||
+  if (!File('docs/decision-proof-contract.jsonl').existsSync() ||
       !File('tool/ci_gate.dart')
           .readAsStringSync()
-          .contains("'decision-proof-preconditions'")) {
-    fail('CI must force the decision proof precondition gate');
+          .contains("'decision-proof-preconditions'") ||
+      !File('tool/verify_jsonl.dart').existsSync() ||
+      !File('tool/ci_gate.dart')
+          .readAsStringSync()
+          .contains("'jsonl-contract'")) {
+    fail('CI must force JSONL and decision proof precondition gates');
   }
   for (final phrase in [
     'SYSTEM_APPROVAL: APPROVE',
@@ -73,15 +76,14 @@ void main() {
       fail('automation policy is missing "$phrase"');
   }
 
-  final contract = jsonDecode(File(originalityPath).readAsStringSync())
-      as Map<String, dynamic>;
+  final contract = decodeJsonl(File(originalityPath).readAsStringSync());
   if (contract['schema'] != 'lumen-originality-v1') {
     fail('unsupported originality contract schema');
   }
   final source = (contract['source'] as Map).cast<String, dynamic>();
-  if (source['ref'] != 'story/story.json#root' ||
-      source['sha256'] != sha256File('story/story.json')) {
-    fail('originality contract is detached from story/story.json');
+  if (source['ref'] != 'story/story.jsonl#root' ||
+      source['sha256'] != sha256File('story/story.jsonl')) {
+    fail('originality contract is detached from story/story.jsonl');
   }
   final pillars =
       (contract['pillars'] as List? ?? const []).cast<Map<String, dynamic>>();

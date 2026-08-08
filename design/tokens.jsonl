@@ -1,0 +1,9 @@
+{"type":"header","schema":"lumen-document-jsonl-v1","document":"design/tokens.jsonl"}
+{"type":"field","key":"name","value":"Lumen Canvas Kit"}
+{"type":"field","key":"version","value":"0.1"}
+{"type":"field","key":"colors","value":{"ink":"#17324D","teal":"#4FA7A0","sun":"#FFC857","paper":"#F6F1E8","twilight":"#24284D","mist":"#A7B0C8"}}
+{"type":"field","key":"mood","value":{"name":"Lumen Twilight Chronicle","principles":["황혼의 긴장감","기록되는 선택","따뜻한 귀환"],"avoid":["기존 작품의 캐릭터·로고·의상·문구 복제"]}}
+{"type":"field","key":"spacing","value":{"xs":8,"sm":16,"md":24}}
+{"type":"field","key":"radius","value":{"card":18,"panel":22,"portrait":24}}
+{"type":"field","key":"canvas","value":{"width":760,"height":700}}
+{"type":"field","key":"components","value":{"stat_panel":{"surface":"ink","radius":"panel","slots":["portrait","name","stats","currency"]},"choice_card":{"surface":"paper","radius":"card","states":["idle","selected","disabled"]},"portrait_page":{"surface":"paper","radius":"portrait","slots":["upper_body","personality_tabs","dialogue"]},"ending_panel":{"surface":"ink","radius":"portrait","slots":["result","summary","restart"]}}}
