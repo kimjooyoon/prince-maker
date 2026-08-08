@@ -1059,3 +1059,4 @@
 {"type":"entry","key":"ui.journal.hidden","value":"Keep walking to open this page."}
 {"type":"entry","key":"ui.journal.lock","value":"A future day will leave a line here."}
 {"type":"entry","key":"ui.journal.back","value":"← Back to home"}
+{"type":"entry","key":"ui.ending.legacyTitle","value":"Choose a next-run legacy"}

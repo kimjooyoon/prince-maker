@@ -659,6 +659,78 @@ void main() {
     await expectLater(
         find.byType(Game), matchesGoldenFile('goldens/companion-epilogue.png'));
   });
+  testWidgets('ending exposes deterministic next-run legacy picker',
+      (tester) async {
+    final locales = <String, Map<String, String>>{};
+    for (final locale in ['ko', 'en']) {
+      locales[locale] = decodeJsonlCatalog(utf8.decode(
+          (await rootBundle.load('story/locales/$locale.jsonl'))
+              .buffer
+              .asUint8List()));
+    }
+    final story = lineageGoldenStory(
+      id: 'stargazer',
+      companionId: 'lumi',
+      companionName: '루미',
+      routeTitle: '별자리 동행',
+      epilogue: '루미는 노아의 기록 첫 장에 작은 별표를 남겼다.',
+    )
+      ..['legacySelection'] = {
+        'schema': 'lumen-legacy-selection-v1',
+      }
+      ..['legacyProfiles'] = [
+        {
+          'id': 'stargazer',
+          'endingIds': ['stargazer'],
+          'stat': '지혜',
+          'bonus': 2,
+          'companionId': 'lumi',
+          'title': '별읽기의 유산',
+          'titleKey': 'legacy.stargazer.title',
+        },
+        {
+          'id': 'gardener',
+          'endingIds': ['stargazer'],
+          'stat': '공감',
+          'bonus': 2,
+          'companionId': 'lumi',
+          'title': '정원의 유산',
+          'titleKey': 'legacy.gardener.title',
+        },
+        {
+          'id': 'pathfinder',
+          'endingIds': ['stargazer'],
+          'stat': '용기',
+          'bonus': 2,
+          'companionId': 'lumi',
+          'title': '길잡이의 유산',
+          'titleKey': 'legacy.pathfinder.title',
+        },
+      ];
+    await tester.pumpWidget(Game(story, locales: locales));
+    await tester.pumpAndSettle();
+    for (var i = 0; i < 11; i++) {
+      await tester.tapAt(const Offset(200, 550));
+      await tester.pump();
+    }
+    expect(find.byKey(const ValueKey('2-12-0-0')), findsOneWidget);
+    await expectLater(
+        find.byType(Game), matchesGoldenFile('goldens/legacy-picker.png'));
+    await tester.tapAt(const Offset(650, 50));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('2-12-0-0-en')), findsOneWidget);
+    await expectLater(
+        find.byType(Game), matchesGoldenFile('goldens/legacy-picker-en.png'));
+    await tester.tapAt(const Offset(650, 50));
+    await tester.pump();
+    await tester.tapAt(const Offset(300, 525));
+    await tester.pump();
+    await expectLater(find.byType(Game),
+        matchesGoldenFile('goldens/legacy-picker-selected.png'));
+    await tester.tapAt(const Offset(500, 480));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('0-1-0-0')), findsOneWidget);
+  });
   testWidgets('all lineage companion epilogues have distinct Canvas evidence',
       (tester) async {
     const routes = [
