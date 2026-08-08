@@ -20,6 +20,7 @@ void main() {
     'tool/refresh_review_manifest.dart',
     'tool/verify_scenario_variants.dart',
     'tool/trilemma_verdict.dart',
+    'test/canvas_surface_test.dart',
     'test/ending_matrix_test.dart',
     'test/trilemma_verdict_test.dart',
     'test/narrative_ledger_test.dart',

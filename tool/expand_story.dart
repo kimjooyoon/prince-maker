@@ -164,6 +164,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'tool/verify_scenario_variants.dart#scenario-case-enumerator',
     'tool/ci_gate.dart#system-verdict',
     'tool/trilemma_verdict.dart#axis-verdict',
+    'lib/canvas_surface.dart#CanvasViewport',
   ];
   for (final ref in requiredRefs) {
     if (!refs.any((entry) => entry['ref'] == ref)) {

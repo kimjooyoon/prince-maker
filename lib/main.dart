@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'design_tokens.dart';
+import 'canvas_surface.dart';
 import 'feedback_banner.dart';
 import 'i18n.dart';
 import 'save_state.dart';
@@ -318,15 +319,9 @@ class _Game extends State<Game> {
   }
 
   void handleTap(Offset position, Size viewport) {
-    final scale = min(viewport.width / DesignTokens.canvasWidth,
-            viewport.height / DesignTokens.canvasHeight)
-        .clamp(.5, 1.0);
-    final offset = Offset(
-        (viewport.width - DesignTokens.canvasWidth * scale) / 2,
-        (viewport.height - DesignTokens.canvasHeight * scale) / 2);
-    final logical = (position - offset) / scale;
-    final x = logical.dx.clamp(0.0, DesignTokens.canvasWidth),
-        y = logical.dy.clamp(0.0, DesignTokens.canvasHeight);
+    final logical = CanvasViewport.logicalTap(position, viewport),
+        x = logical.dx,
+        y = logical.dy;
     if (page == 1) {
       if (y < 100 && x > 590)
         toggleLocale();
@@ -445,7 +440,7 @@ class _Game extends State<Game> {
           body: SafeArea(
               child: GestureDetector(
                   onTapUp: (d) =>
-                      handleTap(d.localPosition, const Size(760, 700)),
+                      handleTap(d.localPosition, CanvasViewport.logicalSize),
                   child: CustomPaint(
                       key: ValueKey(
                           '$page-$week-$persona-$eventIndex${locale == 'ko' ? '' : '-$locale'}'),
@@ -472,7 +467,7 @@ class _Game extends State<Game> {
                           collectionEntries,
                           locale,
                           widget.locales),
-                      size: const Size(760, 700))))));
+                      size: CanvasViewport.logicalSize)))));
 }
 
 class Scene extends CustomPainter {
@@ -768,11 +763,10 @@ class Scene extends CustomPainter {
   @override
   void paint(Canvas c, Size z) {
     setActiveLocale(locale, LocaleCatalog(locales));
-    final u = min(z.width / DesignTokens.canvasWidth,
-            z.height / DesignTokens.canvasHeight)
-        .clamp(.5, 1.0);
-    final dx = (z.width - DesignTokens.canvasWidth * u) / 2,
-        dy = (z.height - DesignTokens.canvasHeight * u) / 2;
+    final frame = CanvasViewport.frame(z),
+        u = frame.scale,
+        dx = frame.offset.dx,
+        dy = frame.offset.dy;
     c.save();
     c.translate(dx, dy);
     c.scale(u);
