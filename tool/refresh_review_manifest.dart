@@ -21,12 +21,17 @@ void main() {
     'tool/verify_scenario_variants.dart',
     'tool/trilemma_verdict.dart',
     'test/canvas_surface_test.dart',
+    'lib/decision_receipt.dart',
+    'test/decision_receipt_test.dart',
     'test/ending_matrix_test.dart',
     'test/trilemma_verdict_test.dart',
     'test/narrative_ledger_test.dart',
     'test/narrative_ledger_golden_test.dart',
     'test/goldens/narrative-ledger.png',
-    'test/goldens/narrative-ledger-en.png'
+    'test/goldens/narrative-ledger-en.png',
+    'test/system_receipt_golden_test.dart',
+    'test/goldens/system-receipt.png',
+    'tool/verify_game.dart'
   ]) {
     if (!known.containsKey(path)) {
       entries

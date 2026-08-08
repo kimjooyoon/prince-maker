@@ -412,5 +412,10 @@
   "ui.ledger.quest": "동행 퀘스트",
   "ui.ledger.back": "← 홈으로",
   "ui.ledger.complete": "완료",
-  "ui.ledger.progress": "진행 중"
+  "ui.ledger.progress": "진행 중",
+  "ui.ledger.receipts": "시스템 판정 영수증",
+  "ui.ledger.receipt.approved": "승인",
+  "ui.ledger.receipt.rejected": "거절",
+  "ui.ledger.receipt.activity": "활동",
+  "ui.ledger.receipt.story-choice": "사건 선택"
 }

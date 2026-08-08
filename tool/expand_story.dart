@@ -164,7 +164,9 @@ void refreshHashes(Map<String, dynamic> story) {
     'tool/verify_scenario_variants.dart#scenario-case-enumerator',
     'tool/ci_gate.dart#system-verdict',
     'tool/trilemma_verdict.dart#axis-verdict',
+    'tool/verify_game.dart#visual-golden-contract',
     'lib/canvas_surface.dart#CanvasViewport',
+    'lib/decision_receipt.dart#DecisionReceipt',
   ];
   for (final ref in requiredRefs) {
     if (!refs.any((entry) => entry['ref'] == ref)) {
@@ -1704,6 +1706,11 @@ void main() {
     'ui.ledger.complete': '완료',
     'ui.ledger.progress': '진행 중',
     'ui.ledger.back': '← 홈으로',
+    'ui.ledger.receipts': '시스템 판정 영수증',
+    'ui.ledger.receipt.approved': '승인',
+    'ui.ledger.receipt.rejected': '거절',
+    'ui.ledger.receipt.activity': '활동',
+    'ui.ledger.receipt.story-choice': '사건 선택',
   });
   en.addAll({
     'ui.ledger.button': 'Fate ledger',
@@ -1717,6 +1724,11 @@ void main() {
     'ui.ledger.complete': 'COMPLETE',
     'ui.ledger.progress': 'IN PROGRESS',
     'ui.ledger.back': '← Home',
+    'ui.ledger.receipts': 'System decision receipts',
+    'ui.ledger.receipt.approved': 'approved',
+    'ui.ledger.receipt.rejected': 'rejected',
+    'ui.ledger.receipt.activity': 'activity',
+    'ui.ledger.receipt.story-choice': 'story choice',
   });
   story['narrativeLoop'] = {
     'schema': 'lumen-memory-companion-loop-v1',
@@ -1799,12 +1811,12 @@ void main() {
   };
   story['dialogueMetrics'] = {
     'locales': 'ko,en',
-    'minimumLocaleKeys': 414,
+    'minimumLocaleKeys': 419,
     'minimumVisibleDialogueLines': 47,
     'minimumVisibleNarrativeUnits': 160,
     'authoredDialogueLines': 184,
     'formula':
-        'catalog 414 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 10; one 48-week route exposes at least 47 authored choice lines and 160 narrative units',
+        'catalog 419 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15; one 48-week route exposes at least 47 authored choice lines and 160 narrative units',
   };
   final dimensions = (story['scenarioCompleteness']['dimensions'] as List)
       .cast<Map<String, dynamic>>();
@@ -1818,7 +1830,7 @@ void main() {
   byId['gating']!['current'] =
       '16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings';
   byId['presentation']!['current'] =
-      '29 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues';
+      '30 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;
