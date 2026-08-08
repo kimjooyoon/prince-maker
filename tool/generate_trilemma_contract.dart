@@ -87,6 +87,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'choiceImpactRate': gameplayTargets['choiceImpactRate'],
           'eventDivergenceRate': gameplayTargets['eventDivergenceRate'],
           'multiAxisImpactRate': gameplayTargets['multiAxisImpactRate'],
+          'minimumTradeoffRate': gameplayTargets['minimumTradeoffRate'],
           'minimumGatedChoices': gameplayTargets['minimumGatedChoices'],
           'qualityScoreTarget': qualityScoreTarget,
         },

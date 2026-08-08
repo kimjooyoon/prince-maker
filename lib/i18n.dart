@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'design_tokens.dart';
+import 'choice_impact.dart';
 
 class LocaleCatalog {
   const LocaleCatalog(this.bundles);
@@ -134,6 +135,8 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
         locked = (req != null && (stats[req] ?? 0) < (min ?? 0)) ||
             (bondReq != null && (bonds[bondReq] ?? 0) < (bondMin ?? 0)) ||
             (flagReq != null && memoryFlags[flagReq] != true);
+    final tradeoff =
+        ChoiceImpact.from(choice.cast<String, dynamic>()).hasTradeoff;
     c.drawRRect(
         RRect.fromRectAndRadius(
             Rect.fromLTWH(x, 270, 332, 190), const Radius.circular(18)),
@@ -167,6 +170,15 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
           Offset(x + 22, 400),
           12,
           teal);
+    _text(
+        c,
+        localized(tradeoff ? 'ui.event.tradeoff' : 'ui.event.commitment',
+            tradeoff ? 'Trade-off choice' : 'Builds one axis'),
+        Offset(x + 22, 435),
+        10,
+        tradeoff ? const Color(0xffb77a18) : teal,
+        bold: true,
+        width: 190);
   }
 }
 

@@ -910,3 +910,5 @@
 {"type":"entry","key":"companionScene.taro-next-foothold.prompt","value":"Choose the next question together without deciding Taro’s judgement for them."}
 {"type":"entry","key":"companionScene.taro-next-foothold.line","value":"A finished road can begin again when the next foot lands."}
 {"type":"entry","key":"companionScene.taro-next-foothold.closing","value":"Taro’s independent scene was recorded as a condition for the next chapter."}
+{"type":"entry","key":"ui.event.tradeoff","value":"Trade-off choice"}
+{"type":"entry","key":"ui.event.commitment","value":"Builds one axis"}
