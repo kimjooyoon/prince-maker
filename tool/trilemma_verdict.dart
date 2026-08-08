@@ -4,6 +4,7 @@ import 'dart:io';
 Map<String, List<String>> requiredAxes(String mode) => {
       'completeness': [
         'ci-policy',
+        'render-quality-preconditions',
         'story-contract',
         'scenario-variants',
         'generated-trilemma-contract',
@@ -14,6 +15,7 @@ Map<String, List<String>> requiredAxes(String mode) => {
       ],
       'purity': [
         'ci-policy',
+        'render-quality-preconditions',
         'story-contract',
         'scenario-variants',
         'campaign-benchmark',
@@ -22,6 +24,7 @@ Map<String, List<String>> requiredAxes(String mode) => {
       ],
       'performance': [
         'ci-policy',
+        'render-quality-preconditions',
         'story-contract',
         'campaign-benchmark',
         'tests-and-goldens',

@@ -369,37 +369,45 @@ class _Game extends State<Game> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           backgroundColor: paper,
-          body: SafeArea(
-              child: GestureDetector(
-                  onTapUp: (d) =>
-                      handleTap(d.localPosition, CanvasViewport.logicalSize),
-                  child: CustomPaint(
-                      key: ValueKey(
-                          '$page-$week-$persona-$eventIndex${locale == 'ko' ? '' : '-$locale'}'),
-                      painter: Scene(
-                          widget.story,
-                          week,
-                          coins,
-                          fatigue,
-                          selected,
-                          stats,
-                          bonds,
-                          milestones,
-                          flags,
-                          lastResult,
-                          lastLine,
-                          page,
-                          persona,
-                          image,
-                          personaImage,
-                          history,
-                          eventIndex,
-                          snapshot().encode(),
-                          activities,
-                          collectionEntries,
-                          locale,
-                          widget.locales),
-                      size: CanvasViewport.logicalSize)))));
+          body: SafeArea(child: LayoutBuilder(builder: (context, constraints) {
+            final viewport = Size(
+                constraints.hasBoundedWidth
+                    ? constraints.maxWidth
+                    : CanvasViewport.logicalSize.width,
+                constraints.hasBoundedHeight
+                    ? constraints.maxHeight
+                    : CanvasViewport.logicalSize.height);
+            return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTapUp: (d) => handleTap(d.localPosition, viewport),
+                child: CustomPaint(
+                    key: ValueKey(
+                        '$page-$week-$persona-$eventIndex${locale == 'ko' ? '' : '-$locale'}'),
+                    painter: Scene(
+                        widget.story,
+                        week,
+                        coins,
+                        fatigue,
+                        selected,
+                        stats,
+                        bonds,
+                        milestones,
+                        flags,
+                        lastResult,
+                        lastLine,
+                        page,
+                        persona,
+                        image,
+                        personaImage,
+                        history,
+                        eventIndex,
+                        snapshot().encode(),
+                        activities,
+                        collectionEntries,
+                        locale,
+                        widget.locales),
+                    size: viewport));
+          }))));
 }
 
 class Scene extends CustomPainter {

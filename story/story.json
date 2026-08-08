@@ -6,7 +6,7 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "aa95d41d93deb1df05e0911fbe9993d8f53a75b84af155e8906bb0982d3510d7"
+      "sha256": "7713dc436e24cde2ca62f1c860fa07fff8937a9a79cd5714071903472544e8c0"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
@@ -58,11 +58,11 @@
     },
     {
       "ref": "tool/ci_gate.dart#system-verdict",
-      "sha256": "c56128285a67e00809164a6c584e45514ac452e4b27339ff018c8b6a967a78ce"
+      "sha256": "5b23275384317e9df7f81d2c1d452f40836dece836b5301474d9888a8a47d7a2"
     },
     {
       "ref": "tool/trilemma_verdict.dart#axis-verdict",
-      "sha256": "c4fe1a63cc1e6534dace4430b017dcca4ced65a1d0ae70402d0dfd385e4afe28"
+      "sha256": "fb3c686817b9dea5b0335740d04ecf9027b2841b8f9679711767f9d4ba51b8de"
     },
     {
       "ref": "lib/canvas_surface.dart#CanvasViewport",
@@ -83,6 +83,10 @@
     {
       "ref": "lib/activity_catalog.dart#activitiesFromStory",
       "sha256": "762d80d5656ae0cc1164bc8defaa2893851b4f3107468357599cd358208f319a"
+    },
+    {
+      "ref": "tool/verify_render_quality.dart#render-quality-preconditions",
+      "sha256": "c1d8b36b1a7f7310ebded046540dae96d6fab4f77d5970f4400991eca969b445"
     }
   ],
   "assetRefs": [
