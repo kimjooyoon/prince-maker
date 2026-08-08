@@ -19,12 +19,18 @@ pre-commit / pull_request
         ↓
 tool/ci_gate.dart
         ↓
-CI 정책 → SSOT/완전성 → benchmark → 생성물 → 해시 매니페스트
+CI 정책 → 렌더 품질 선행조건 → SSOT/완전성 → benchmark → 생성물 → 해시 매니페스트
         ↓
 정적 분석 → Flutter 테스트/Golden → (CI에서) Wasm release build
         ↓
 SYSTEM_APPROVAL: APPROVE | REJECT
 ```
+
+렌더링 변경은 [`docs/render-quality-contract.json`](render-quality-contract.json)의
+선행조건을 먼저 만족해야 한다. `tool/verify_render_quality.dart`는 viewport 기하,
+입력 역변환, 단일 렌더 경로가 `CanvasViewport`를 공유하는지와 Canvas 단위 테스트·Golden·정적
+분석 증적이 선언되어 있는지를 계산한다. 이 게이트의 유일한 거절 조건은 결정론적 증적의
+누락 또는 실패이며, 사람의 추론이나 승인 체크를 판정 입력으로 사용하지 않는다.
 
 `trilemma-verdict.json`은 완전성에 SSOT·분기·생성물·Golden·정적 분석, 순수성에 분기 다양성·replay·benchmark, 성능에 benchmark·테스트·CI Wasm build를 각각 필수 게이트로 묶는다. 한 축이라도 누락되거나 실패하면 전체 시스템 판정도 거절된다.
 
