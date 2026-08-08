@@ -6,6 +6,8 @@ String sha(String path) =>
     sha256.convert(File(path).readAsBytesSync()).toString();
 String render(Map<String, dynamic> s, String hash) {
   final people = (s['personalities'] as List).cast<Map<String, dynamic>>();
+  final characterArchive =
+      (s['characterArchive'] as List? ?? const []).cast<Map<String, dynamic>>();
   final companions =
       (s['companions'] as List? ?? []).cast<Map<String, dynamic>>();
   final legacyProfiles =
@@ -123,6 +125,14 @@ String render(Map<String, dynamic> s, String hash) {
     b.writeln(
         '- **${p['name']}** (`${p['id']}`): ${p['voice']} “${p['line']}” · ${p['focusStat']} 재능 +${p['focusBonus']} · frame ${p['portraitFrame']} · `${p['portraitAsset']}` · ${d['palette']} / ${d['motif']}');
   }
+  b.writeln('\n## 캐릭터 일러스트 설계\n');
+  b.writeln(
+      '도감의 20명은 `characterArchive`의 PNG sheetIndex와 일러스트 방향·실루엣·시그니처 동작·5종 감정 키를 같은 SSOT에서 읽는다.');
+  for (final character in characterArchive) {
+    final art = (character['illustration'] ?? '미정').toString();
+    b.writeln(
+        '- **${character['name']}** (`${character['id']}`): $art · 실루엣 `${character['silhouette'] ?? '미정'}` · 동작 `${character['gesture'] ?? '미정'}` · frame ${character['sheetIndex']}');
+  }
   b.writeln('\n## 동료\n');
   for (final c in companions)
     b.writeln(
@@ -174,6 +184,14 @@ String render(Map<String, dynamic> s, String hash) {
 String renderMetrics(Map<String, dynamic> s, String hash) {
   final acts = (s['activities'] as List).length,
       people = (s['personalities'] as List).length,
+      characterArchive = (s['characterArchive'] as List? ?? const []).length,
+      characterArtContracts = (s['characterArchive'] as List? ?? const [])
+          .where((entry) =>
+              entry is Map &&
+              entry['illustration'] != null &&
+              entry['emotionNotes'] is List &&
+              (entry['emotionNotes'] as List).length == 5)
+          .length,
       companions = (s['companions'] as List? ?? []).length,
       legacyProfiles = (s['legacyProfiles'] as List? ?? []).length,
       milestones = (s['milestones'] as List? ?? []).length,
@@ -238,6 +256,10 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       '| 시스템 판정 | ${(s['decisionSystem'] as Map?)?['id'] ?? 'none'} | SSOT `decisionSystem` · fail-closed receipt |');
   b.writeln('| 활동 | $acts | `activities.length` |');
   b.writeln('| 성격 | $people | `personalities.length` |');
+  b.writeln(
+      '| 캐릭터 아카이브 | $characterArchive | `characterArchive.length` · PNG sheetIndex |');
+  b.writeln(
+      '| 캐릭터 아트 계약 | $characterArtContracts/$characterArchive | illustration·silhouette·gesture·5 emotion notes |');
   b.writeln('| 동료 | $companions | `companions.length` |');
   b.writeln('| 회차 계승 프로필 | $legacyProfiles | `legacyProfiles.length` |');
   b.writeln('| 계절 목표 | $milestones | `milestones.length` |');

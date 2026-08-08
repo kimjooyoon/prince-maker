@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: abe061e8a9f62768559735e1fd8365bb5a899c45be7d5dd384366fe33ed71dc9 -->
+<!-- ssot-sha256: 6f4a2870e981008dfde12279a2759b6db71bd35237bc45745e84095bd52e1a9a -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -19,6 +19,8 @@
 | 시스템 판정 | lumen-ledger | SSOT `decisionSystem` · fail-closed receipt |
 | 활동 | 5 | `activities.length` |
 | 성격 | 3 | `personalities.length` |
+| 캐릭터 아카이브 | 20 | `characterArchive.length` · PNG sheetIndex |
+| 캐릭터 아트 계약 | 20/20 | illustration·silhouette·gesture·5 emotion notes |
 | 동료 | 3 | `companions.length` |
 | 회차 계승 프로필 | 3 | `legacyProfiles.length` |
 | 계절 목표 | 16 | `milestones.length` |
@@ -31,8 +33,8 @@
 | 사건 선택 | 94 | 모든 사건 choices 합계 |
 | 교환 선택 | 72/166 (0.43373493975903615) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |
 | 엔딩 | 6 | `endings.length` |
-| Canvas Golden | 68 | `test/goldens/*.png` |
-| 코드 ref | 59 | `codeRefs.length` |
+| Canvas Golden | 71 | `test/goldens/*.png` |
+| 코드 ref | 63 | `codeRefs.length` |
 | 이미지 ref | 5 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |

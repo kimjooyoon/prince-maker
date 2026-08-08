@@ -81,6 +81,7 @@
 | 운명 기록 `5` | `ledger_thread_card` + `quest_progress_card` + `receipt_row` | 발견/퀘스트/판정 기록 확인 |
 | 막 결산 `6` | `chapter_closure_scene` + `relationship_followup_panel` | 목표 결과와 관계 장면 확인 |
 | 캐릭터 도감 `7` | `character_card` + `navigation_footer` | 20종 주민 확인, 언어 전환 |
+| 캐릭터 아트 `10` | `character_art_panel` + `emotion_chip` + `locale_toggle` + `navigation_footer` | 선택 주민의 일러스트 방향·실루엣·동작·5종 감정 키 확인 |
 | 환경 아틀라스 `8` | `environment_card` + `environment_surface` | 장소 규칙 확인, 사이드 장면 진입 |
 | 사이드 장면 `9` | `side_scene_card` + `requirement_badge` + `navigation_footer` | 이전/다음 장면, 선택/잠금 확인 |
 
@@ -96,6 +97,15 @@
 | `memory` | 선택 뒤 무엇이 남는가? | `place:<id>` 발견 flag와 사건/나비효과 trace |
 
 장소별 기본 축은 `archive = 지혜/기억`, `greenhouse = 공감/유대`, `market = 은화/교환`, `river-road = 용기/발견`, `observatory = 지혜/발견`, `quarry = 용기/자원`입니다. 환경 아틀라스는 이 축을 설명하는 정보 화면이며, 활동·사건 시스템은 기존 결정론적 코어와 같은 SSOT를 계속 사용합니다. 따라서 환경의 시각적 의미와 실제 선택 효과가 분리되지 않고, 새 장소를 추가할 때도 `surface`, `affordance`, `memory`를 함께 정의해야 합니다.
+
+## 캐릭터 아트 구성
+
+| surface | role | current use |
+| --- | --- | --- |
+| character_art_panel | portrait sheet·일러스트 방향·실루엣·대표 동작·표정 키 | 캐릭터 도감 상세 |
+| emotion_chip | 감정 얼굴·라벨·개별 시각 큐를 idle / selected 상태로 표시 | 캐릭터 도감 상세 |
+
+캐릭터 도감 7은 20종 character_card를 보여 주고, 카드를 누르면 캐릭터 아트 10으로 이동한다. 아트 상세는 locale_toggle, character_art_panel, emotion_chip, navigation_footer를 조합하며, 5종 감정 전환과 도감 복귀를 필수 상호작용으로 고정한다.
 
 ## 다음 설계 단계
 

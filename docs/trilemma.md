@@ -4,7 +4,7 @@
 
 | 축 | 플레이어에게 의미 | 자동 증거 |
 | --- | --- | --- |
-| 완전성 | 콘텐츠·분기·저장·화면·대사가 끝까지 이어지는가 | `verify_game.dart` 14차원 + 156분 분량 계약, 시나리오 8축, 2,048개 실제 분기 벡터(최소 2,000), 122,880개 route input 계약, Golden 68종(도입·중반·사이드 장면·48주 handoff·terminal·운명 기록 ko/en·20종 캐릭터 도감 ko/en·6개 환경 atlas ko/en·Canvas UI 다섯 상태 행렬·실제 16막 chapter closure와 관계 장면·관계 상태·상태별 후속 대화·시스템 승인/거절 영수증), 6개 장소 발견 flag/trace, 3개 회차 계승 프로필, 6개 나비효과 기록·9개 동료 퀘스트 단계, 18개 동료 독립 장면·10개 활동 미니 이벤트·18개 엔딩 변형, 노아·3명 동료 registry와 94개 본편 사건 speaker portrait binding, 16개 막 relationship scene binding, 5-state relationship resolver/ECS trace, ko/en 913 locale keys 계약, 엔딩 원인·미달 목표 회고 |
+| 완전성 | 콘텐츠·분기·저장·화면·대사가 끝까지 이어지는가 | `verify_game.dart` 14차원 + 156분 분량 계약, 시나리오 8축, 2,048개 실제 분기 벡터(최소 2,000), 122,880개 route input 계약, Golden 71종(도입·중반·사이드 장면·48주 handoff·terminal·운명 기록 ko/en·20종 캐릭터 도감 ko/en·캐릭터 아트 방향/감정 키 ko/en·6개 환경 atlas ko/en·Canvas UI 다섯 상태 행렬·실제 16막 chapter closure와 관계 장면·관계 상태·상태별 후속 대화·시스템 승인/거절 영수증), 6개 장소 발견 flag/trace, 3개 회차 계승 프로필, 6개 나비효과 기록·9개 동료 퀘스트 단계, 18개 동료 독립 장면·10개 활동 미니 이벤트·18개 엔딩 변형, 노아·3명 동료 registry와 94개 본편 사건 speaker portrait binding, 16개 막 relationship scene binding, 5-state relationship resolver/ECS trace, ko/en 913 locale keys 계약, 엔딩 원인·미달 목표 회고 |
 | 순수성 | 선택이 스탯·관계·목표·엔딩을 바꾸며 다시 플레이할 이유가 있는가 | 활동 5개, 성장축 3개, 동료 3명, 관계 rival loss·상호 중재·동행 목표 3개, 동료 route set 8개 실제 코어 재생, 6개 나비효과 기록·9개 퀘스트 단계, 2,048개 분기 signature, 122,880개 route input 계약, 6개 장소 발견, 외출 2개, 목표 16개, 본편 47개·사이드 24개 사건, 핵심 엔딩 6개·변형 18개, 3개 계승 프로필의 시작 스탯 변형·2주차 authored 보정, 1–3성 결산 등급, 누적 엔딩 도감·계승 해금, 5개 SSOT 일정 정책 중 3개 이상 distinct ending/signature, 166/166 effectful choices·71/71 divergent events·166/166 multi-axis choices·72/166 trade-off choices·29 gated choices |
 | 성능 | 같은 입력을 빠르고 재현 가능하게 처리하는가 | `benchmark_game.dart` 실제 SSOT 5,000 campaign / 475,000 application transitions, 24초 운영 예산, replay signature 3개 이상, 3개 계승 프로필별 분포 |
 
@@ -22,7 +22,7 @@ SSOT 콘텐츠 → GameWorld 전이 → Canvas/Golden 증거
 
 렌더링 품질도 별도 추론이 아니라 `render-quality-preconditions` 게이트로 판정한다. `docs/render-quality-contract.jsonl`의 viewport·입력 역변환·Golden 선행조건이 누락되면 세 축 전체가 거절된다.
 
-캐릭터 도감 20종의 ko/en 화면과 여섯 장소 환경 아틀라스의 ko/en 화면, Canvas UI 다섯 상태 행렬을 추가해 현재 Canvas Golden 증적은 68장이다. 도감은 `story/story.jsonl#characterArchive`와 5×4 PNG sheetIndex를, 환경 아틀라스는 `story/story.jsonl#locations`와 `environmentsFromStory`를, 상태 행렬은 `lib/canvas_ui_kit.dart#CanvasUiState`를 각각 같은 결정론적 렌더 경로에 연결한다.
+캐릭터 도감 20종의 ko/en 화면과 캐릭터 아트 방향/감정 키 화면, 여섯 장소 환경 아틀라스의 ko/en 화면, Canvas UI 다섯 상태 행렬을 추가해 현재 Canvas Golden 증적은 71장이다. 도감과 아트 페이지는 `story/story.jsonl#characterArchive`의 5×4 PNG sheetIndex·illustration·silhouette·gesture·5종 emotionNotes를, 환경 아틀라스는 `story/story.jsonl#locations`와 `environmentsFromStory`를, 상태 행렬은 `lib/canvas_ui_kit.dart#CanvasUiState`를 각각 같은 결정론적 렌더 경로에 연결한다.
 
 결정 증명도 별도 추론이 아니라 `decision-proof-preconditions` 게이트로 판정한다. `docs/decision-proof-contract.jsonl`이 현재 precondition 필드와 직전 결정 hash의 chain을 선언하며, `build/decision-proof-verdict.json`에 system-adjudicated 결과가 남아야 다음 게이트로 진행된다.
 
@@ -32,7 +32,7 @@ SSOT 콘텐츠 → GameWorld 전이 → Canvas/Golden 증거
 
 현재 장편 계약은 48주·16막·47개 본편 사건·24개 사이드 장면·94개 본편 선택지·72개 사이드 선택지·16개 막 관계 장면이며, 48회 일정 반영·사이드 콘텐츠·16회 막 결산 및 관계 장면을 포함한 보수적 콘텐츠 예산이 156분으로 SSOT에서 계산된다.
 
-현재 시각 책임 증적은 68개 Golden과 911개 locale catalog key이며, 20종 캐릭터 도감은 `story/story.jsonl#characterArchive`와 `assets/lumen-character-roster.png#character-archive-sheet`의 해시·sheetIndex로 재생된다. 94개 본편 사건 선택·72개 사이드 선택과 16개 막 관계 장면의 speaker portrait 및 bond-gap 관계 상태·상태별 exclusive follow-up은 character registry·asset/frame key·동일 resolver를 통해 재현된다. `relationship-tension.png`, `mediation.png`, `relationship-followup.png`는 각각 긴장·휴전·후속 대화를 Canvas에서 고정하고, `ui-state-matrix.png`는 공통 상태 surface의 fill·stroke·text·control·progress 계약을, `system-receipt.png`는 승인·거절 trace의 owner·contract·rule·decisionHash를 재현한다.
+현재 시각 책임 증적은 71개 Golden과 913개 locale catalog key이며, 20종 캐릭터 도감과 아트 방향 페이지는 `story/story.jsonl#characterArchive`와 `assets/lumen-character-roster.png#character-archive-sheet`의 해시·sheetIndex·감정 키로 재생된다. 94개 본편 사건 선택·72개 사이드 선택과 16개 막 관계 장면의 speaker portrait 및 bond-gap 관계 상태·상태별 exclusive follow-up은 character registry·asset/frame key·동일 resolver를 통해 재현된다. `relationship-tension.png`, `mediation.png`, `relationship-followup.png`는 각각 긴장·휴전·후속 대화를 Canvas에서 고정하고, `ui-state-matrix.png`는 공통 상태 surface의 fill·stroke·text·control·progress 계약을, `system-receipt.png`는 승인·거절 trace의 owner·contract·rule·decisionHash를 재현한다.
 
 게임성 KPI는 story/story.jsonl의 gameplayKpis를 원천으로 한다. choiceImpactRate는 결과를 바꾸는 authored choice 비율, eventDivergenceRate는 사건마다 최소 두 개의 효과 벡터가 있는 비율, multiAxisImpactRate는 하나의 선택이 두 개 이상의 수치 축을 움직이는 비율, tradeoffRate는 양의 수치 축과 음의 수치 축을 동시에 갖는 선택의 비율, gatedChoices는 조건부 선택 수다. `lib/choice_impact.dart#ChoiceImpact`가 UI와 CI에 같은 순수 판정을 제공하고, `tool/verify_gameplay_fun.dart`가 72/166(0.4337) trade-off 선택과 feedback.png Golden까지 확인해 purity 축에 fail-closed로 연결한다.
 

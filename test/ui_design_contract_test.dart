@@ -35,6 +35,8 @@ void main() {
           'environment_card',
           'environment_surface',
           'character_card',
+          'character_art_panel',
+          'emotion_chip',
           'ledger_thread_card',
           'quest_progress_card',
           'receipt_row',
@@ -48,5 +50,6 @@ void main() {
         containsAll(['idle', 'selected', 'disabled']));
     expect(components['feedback_banner']['states'],
         containsAll(['empty', 'success', 'warning', 'danger']));
+    expect(components['emotion_chip']['states'], containsAll(['idle', 'selected']));
   });
 }

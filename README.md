@@ -84,9 +84,21 @@ git config core.hooksPath .githooks
 홈 화면 하단의 `캐릭터 도감`에서 루멘 주민 20종을 한 번에 확인할 수 있습니다. 도감은 [`story/story.jsonl`](story/story.jsonl)의 `characterArchive`를 [`lib/character_roster.dart`](lib/character_roster.dart)가 읽고, [`assets/lumen-character-roster.png`](assets/lumen-character-roster.png)의 5×4 독자 캐릭터 시트를 같은 `sheetIndex`로 연결해 기존 twilight / mist / sun / paper Canvas 언어 안에서 카드 그리드로 렌더링합니다. 노아·3명 동료의 서사 registry는 그대로 유지하고, 20종은 세계관 확장용 아카이브 캐릭터 디자인 레이어로 분리했습니다.
 
 홈 하단의 `환경 아틀라스`는 6개 장소를 기록관(기억/지혜), 온실(돌봄/공감), 시장(교환/은화), 바람길(횡단/용기), 관측소(발견/지혜), 채석장(자원/용기)으로 설명합니다. 각 환경은 `surface → affordance → memory`를 함께 가지며, 장소 발견 flag와 사건 선택의 의미를 같은 UI 카드와 Canvas 풍경으로 연결합니다. 상세 규칙은 [`docs/design-system.md`](docs/design-system.md)의 환경 게임디자인 시스템을 기준으로 합니다.
-한국어·English 도감 화면은 [`test/goldens/character-roster.png`](test/goldens/character-roster.png)와 [`test/goldens/character-roster-en.png`](test/goldens/character-roster-en.png)으로 고정되어 전체 Golden 증적은 68장입니다.
+한국어·English 도감 화면은 [`test/goldens/character-roster.png`](test/goldens/character-roster.png)와 [`test/goldens/character-roster-en.png`](test/goldens/character-roster-en.png)으로 고정됩니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태도 [`test/goldens/ui-state-matrix.png`](test/goldens/ui-state-matrix.png)로 고정하며, 전체 Golden 증적은 68장입니다.
+도감 카드에서 주민을 선택하면 `page == 10` 캐릭터 일러스트 설계 화면으로 이동합니다. [`characterArchive`](story/story.jsonl)의 `illustration`·`silhouette`·`gesture`·5종 `emotionNotes`를 [`lib/character_art.dart`](lib/character_art.dart)가 읽고, [`lib/character_art_painter.dart`](lib/character_art_painter.dart)가 같은 PNG sheet와 재사용 가능한 감정 칩으로 렌더링합니다.
+
+![도란 캐릭터 일러스트 설계 Golden](test/goldens/character-art-doran.png)
+![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
+![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
+
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 전체 Canvas Golden 증적은 71장입니다.
+
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태도 [`test/goldens/ui-state-matrix.png`](test/goldens/ui-state-matrix.png)로 고정하며, 전체 Golden 증적은 71장입니다.
+
+### 캐릭터 일러스트·감정표현 설계
+
+도감 카드를 누르면 캐릭터별 일러스트 방향·실루엣·시그니처 동작·5종 감정표현을 확인하는 상세 설계 화면으로 이동합니다. story/story.jsonl의 characterArchive가 20명 각각의 한국어·영어 장면 구상과 calm / joy / concern / resolve / wonder 표정 큐를 선언하고, lib/character_art.dart와 lib/character_art_painter.dart가 이를 Canvas에 병합합니다. 도란 기준 한국어·영어 및 걱정 전환 화면은 test/goldens/character-art-doran.png, test/goldens/character-art-doran-concern.png, test/goldens/character-art-doran-concern-en.png으로 고정합니다.
 
 ### 성격 유형 캐릭터 시트
 

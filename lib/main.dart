@@ -17,6 +17,7 @@ import 'collection_adapter.dart';
 import 'collection_platform.dart';
 import 'game_core.dart';
 import 'character_roster.dart';
+import 'character_art_painter.dart';
 import 'environment_catalog.dart';
 import 'canvas_ui_kit.dart';
 import 'canvas_choice_impact.dart';
@@ -59,7 +60,9 @@ class _Game extends State<Game> {
       page = 0,
       persona = 0,
       eventIndex = 0,
-      sideSceneCursor = 0;
+      sideSceneCursor = 0,
+      archiveCharacterIndex = 0,
+      archiveEmotionIndex = 0;
   String locale = 'ko';
   bool finished = false;
   final history = <String>[];
@@ -355,6 +358,18 @@ class _Game extends State<Game> {
         toggleLocale();
       } else if (y > 640) {
         setState(() => page = 0);
+      } else if (y >= 106 && y < 632 && x >= 20 && x < 740) {
+        final col = ((x - 20) ~/ 144).clamp(0, 4),
+            row = ((y - 106) ~/ 134).clamp(0, 3),
+            index = row * 5 + col,
+            characters = archiveCharacters(widget.story);
+        if (index < characters.length) {
+          setState(() {
+            archiveCharacterIndex = index;
+            archiveEmotionIndex = 0;
+            page = 10;
+          });
+        }
       }
     } else if (page == 8) {
       if (y < 100 && x > 590) {
@@ -377,6 +392,15 @@ class _Game extends State<Game> {
             (sideSceneCursor + 1).clamp(0, sideScenes.length - 1));
       } else if (y > 620) {
         setState(() => page = 0);
+      }
+    } else if (page == 10) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
+      } else if (y >= 520 && y < 610 && x >= 316 && x < 716) {
+        final index = ((x - 316) ~/ 80).clamp(0, 4);
+        setState(() => archiveEmotionIndex = index);
+      } else if (y > 640) {
+        setState(() => page = 7);
       }
     } else if (y > 655 && x >= 200 && x < 410) {
       setState(() => page = 7);
@@ -498,6 +522,8 @@ class _Game extends State<Game> {
                           history,
                           eventIndex,
                           sideSceneCursor,
+                          archiveCharacterIndex,
+                          archiveEmotionIndex,
                           snapshot().encode(),
                           activities,
                           collectionEntries,
@@ -531,6 +557,8 @@ class Scene extends CustomPainter {
       this.history,
       this.eventIndex,
       this.sideSceneCursor,
+      this.archiveCharacterIndex,
+      this.archiveEmotionIndex,
       this.saveCode,
       this.activities,
       this.collectionEntries,
@@ -546,6 +574,8 @@ class Scene extends CustomPainter {
       persona,
       eventIndex,
       sideSceneCursor,
+      archiveCharacterIndex,
+      archiveEmotionIndex,
       stats,
       bonds,
       milestones,
@@ -573,7 +603,9 @@ class Scene extends CustomPainter {
       page,
       persona,
       eventIndex,
-      sideSceneCursor;
+      sideSceneCursor,
+      archiveCharacterIndex,
+      archiveEmotionIndex;
   final Map<String, int> stats, bonds;
   final Map<String, bool> milestones, flags;
   final String lastResult, lastLine;
@@ -923,11 +955,25 @@ class Scene extends CustomPainter {
       c.restore();
       return;
     }
+    if (page == 10) {
+      characterArt(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
     home(c);
     drawFeedbackBanner(c, lastResult, lastLine);
     seasonProgress(c);
     c.restore();
   }
+
+  void characterArt(Canvas c) => CharacterArtPainter(
+        story: s,
+        sheet: rosterImage,
+        characterIndex: archiveCharacterIndex,
+        emotionIndex: archiveEmotionIndex,
+        locale: activeLocale,
+      ).paint(c);
 
   void seasonProgress(Canvas c) {
     final endingWeek = (s['endingWeek'] as int? ?? 12),

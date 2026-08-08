@@ -2,6 +2,12 @@
 
 이 프로젝트의 캐릭터는 특정 작품의 캐릭터·의상·로고·대사를 재현하지 않는 독자 설계로 고정한다. “일본풍”은 장르적 조형 언어(2등신 비율, 큰 표정, 색면 중심 의상, 작은 모티프)를 뜻하며 특정 작가나 시리즈의 화풍 모사는 목표로 삼지 않는다.
 
+## 일러스트 방향과 감정표현 계약
+
+각 characterArchive 항목은 illustration, silhouette, gesture의 한국어·영어 방향과 emotionNotes, emotionNotesEn 5종 배열을 함께 가진다. 이 필드가 캐릭터별 장면 구상과 표정 큐의 SSOT이며 lib/character_art.dart가 이를 LumenCharacterArt로 읽는다. 도감 카드 탭은 page 10의 lib/character_art_painter.dart로 이동해 동일한 5×4 PNG 셀, 역할별 장면 방향, 실루엣, 대표 동작을 한 화면에 보여 준다.
+
+모든 주민이 공유하는 표정 vocabulary는 calm / joy / concern / resolve / wonder이며, 각 주민은 같은 감정 이름 안에서 눈썹·시선·입·소품의 고유 큐를 가진다. 감정 칩은 idle / selected 상태를 사용하고, 현재 표정은 대화·기억 장면에서 재사용할 수 있는 시각 기준으로 명시한다. 새 주민을 추가할 때는 20개 archive identity, 5개 한국어·영어 emotion note, 독자 일러스트 방향을 함께 채워야 한다.
+
 ## 설계 계약
 
 | 자산 | 독자 조형 규칙 | SSOT 연결 |
