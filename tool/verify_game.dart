@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 
-void verifyTrilemmaContract(String storyHash) {
+void verifyTrilemmaContract(String storyHash,
+    {required int endingWeek, required int eventCount}) {
   final file = File('docs/trilemma-contract.json');
   if (!file.existsSync()) fail('missing trilemma contract');
   final contract = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
@@ -35,12 +36,15 @@ void verifyTrilemmaContract(String storyHash) {
       purity['minLegacyTargetCompanions'] < 3 ||
       purity['deterministicReplay'] != true ||
       performance['campaigns'] != 5000 ||
-      performance['transitionBudget'] != 105000 ||
-      performance['maxMillis'] != 5000 ||
+      performance['transitionBudget'] !=
+          5000 * (endingWeek - 1 + eventCount) ||
+      performance['maxMillis'] != 8000 ||
       performance['minSignatures'] < 3 ||
       performance['lineageTargetEndings'] < 3 ||
       performance['lineageTargetCompanions'] < 3 ||
-      performance['checksumReplayMustMatch'] != true) {
+      performance['checksumReplayMustMatch'] != true ||
+      performance['systemApproval'] != true ||
+      performance['failClosed'] != true) {
     fail('trilemma targets or guardrails are below the project contract');
   }
 }
@@ -69,7 +73,9 @@ void main() {
   final story = jsonDecode(File('story/story.json').readAsStringSync())
       as Map<String, dynamic>;
   verifyTrilemmaContract(
-      sha256.convert(File('story/story.json').readAsBytesSync()).toString());
+      sha256.convert(File('story/story.json').readAsBytesSync()).toString(),
+      endingWeek: story['endingWeek'] as int,
+      eventCount: (story['events'] as List).length);
   final activities = (story['activities'] as List).cast<Map<String, dynamic>>();
   final people = (story['personalities'] as List).cast<Map<String, dynamic>>();
   final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
@@ -91,7 +97,18 @@ void main() {
       (story['dialogueMetrics'] as Map? ?? {}).cast<String, dynamic>();
   final scenario =
       (story['scenarioCompleteness'] as Map? ?? {}).cast<String, dynamic>();
-  if (story['endingWeek'] != 12) fail('endingWeek must be 12');
+  final decisionSystem =
+      (story['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
+  if (story['endingWeek'] != 24) fail('endingWeek must be 24');
+  if (decisionSystem['schema'] != 'lumen-ledger-v1' ||
+      decisionSystem['mode'] != 'system-adjudicated' ||
+      decisionSystem['humanApprovalRequired'] != false ||
+      decisionSystem['failureMode'] != 'fail-closed' ||
+      decisionSystem['owner'] is! String ||
+      (decisionSystem['receiptFields'] as List? ?? const []).length < 5 ||
+      (decisionSystem['rules'] as List? ?? const []).length < 3) {
+    fail('decision system must be deterministic, fail-closed and auditable');
+  }
   if (locations.length != 4 ||
       locations.map((location) => location['id']).toSet().length != 4 ||
       locations.any((location) =>
@@ -163,15 +180,15 @@ void main() {
       e['epilogue'] is! String ||
       (e['epilogue'] as String).isEmpty))
     fail('companion epilogue contract invalid');
-  if (events.length != 10 ||
+  if (events.length != 22 ||
       events.map((e) => e['week']).toList().join(',') !=
-          '2,3,4,5,6,7,8,9,10,11')
+          '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23')
     fail(
-        'events must occur at weeks 2 through 11 with authored outings at 5 and 11');
-  if (progression.length != 4 ||
+        'events must occur at weeks 2 through 23 with authored outings at 5 and 11');
+  if (progression.length != 8 ||
       progression.map((c) => '${c['weekStart']}-${c['weekEnd']}').join(',') !=
-          '1-3,4-6,7-9,10-12')
-    fail('progression must cover four contiguous chapters from week 1 to 12');
+          '1-3,4-6,7-9,10-12,13-15,16-18,19-21,22-24')
+    fail('progression must cover eight contiguous chapters from week 1 to 24');
   final eventWeeks = events.map((e) => e['week']).toSet();
   if (progression.any((c) =>
       c['titleKey'] is! String ||
@@ -182,9 +199,9 @@ void main() {
     fail('chapter progression contract invalid');
   final milestones =
       (story['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
-  if (milestones.length != 4 ||
-      milestones.map((m) => m['week']).join(',') != '3,6,9,12')
-    fail('milestones must cover the four seasons');
+  if (milestones.length != 8 ||
+      milestones.map((m) => m['week']).join(',') != '3,6,9,12,15,18,21,24')
+    fail('milestones must cover all eight chapter closures');
   if (milestones.any((m) =>
       m['id'] is! String ||
       m['title'] is! String ||
@@ -417,6 +434,9 @@ void main() {
     'legacy-gate.png',
     'legacy-profile.png',
     'companion-epilogue.png',
+    'companion-stargazer.png',
+    'companion-gardener.png',
+    'companion-pathfinder.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -453,7 +473,7 @@ void main() {
         companions.length >= 3 &&
         locations.length == 4 &&
         legacyProfiles.length == 3 &&
-        milestones.length == 4,
+        milestones.length == 8,
     'branching': events.length >= 4 &&
         events.every((e) => (e['choices'] as List).length == 2) &&
         endings.length >= 6 &&
@@ -474,6 +494,8 @@ void main() {
         uiEvidence.contains("matchesGoldenFile('goldens/legacy-gate.png')") &&
         uiEvidence
             .contains("matchesGoldenFile('goldens/companion-epilogue.png')") &&
+        uiEvidence.contains(
+            'all lineage companion epilogues have distinct Canvas evidence') &&
         i18nEvidence.contains(
             'English locale renders original dialogue and authored ending epilogue') &&
         File('story/locales/ko.json').existsSync() &&
@@ -482,10 +504,10 @@ void main() {
             'all SSOT dialogue keys exist and are non-empty in every locale') &&
         localeRefs.length >= 2,
     'progression': progressionEvidence.contains(
-            'four SSOT chapters cover the complete 12-week progression') &&
-        progression.length == 4 &&
-        dialogueMetrics['minimumVisibleDialogueLines'] == 7 &&
-        dialogueMetrics['minimumVisibleNarrativeUnits'] == 27,
+            'eight SSOT chapters cover the complete 24-week progression') &&
+        progression.length == 8 &&
+        dialogueMetrics['minimumVisibleDialogueLines'] == 23 &&
+        dialogueMetrics['minimumVisibleNarrativeUnits'] == 64,
     'assets': assetRefs.length >= 4 && fontRefs.isNotEmpty,
     'traceability': refs.length >= 3 &&
         File('docs/review-manifest.json').existsSync() &&
@@ -500,7 +522,8 @@ void main() {
         File('lib/save_adapter_web.dart').existsSync(),
     'terminalSafety': coreEvidence
             .contains('completed campaign rejects stale event input too') &&
-        storyEvidence.contains('12-week route'),
+        storyEvidence.contains('24-week route') &&
+        coreEvidence.contains('SystemDecisionPolicy'),
     'purity': purityEvidence.contains(
             'same schedule budget yields distinct authored outcomes') &&
         purityEvidence.contains("'stargazer-master'") &&

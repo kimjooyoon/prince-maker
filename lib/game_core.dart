@@ -9,6 +9,7 @@ abstract interface class StoryPort {
   List<Map<String, dynamic>> get companions;
   List<Map<String, dynamic>> get legacyProfiles;
   List<Map<String, dynamic>> get milestones;
+  Map<String, dynamic> get decisionSystem;
   int get endingWeek;
 }
 
@@ -40,7 +41,50 @@ class JsonStoryAdapter implements StoryPort {
   List<Map<String, dynamic>> get milestones =>
       (source['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
   @override
+  Map<String, dynamic> get decisionSystem =>
+      (source['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
+  @override
   int get endingWeek => source['endingWeek'] as int? ?? 12;
+}
+
+class SystemDecisionReceipt {
+  const SystemDecisionReceipt(this.approved, this.kind, this.subject, this.week,
+      this.rule, this.contract, this.decisionHash, this.owner);
+  final bool approved;
+  final String kind, subject, rule, contract, decisionHash, owner;
+  final int week;
+  String get trace =>
+      'approval:${approved ? 'approved' : 'rejected'}|owner:$owner|kind:$kind|subject:$subject|week:$week|rule:$rule|contract:$contract|decisionHash:$decisionHash';
+}
+
+/// Deterministic system adjudication: no human approval is part of a move.
+class SystemDecisionPolicy {
+  static SystemDecisionReceipt evaluate({
+    required String kind,
+    required String subject,
+    required int week,
+    required int endingWeek,
+    required bool conditions,
+    required String owner,
+    required String contract,
+  }) {
+    final inWindow = week < endingWeek;
+    final approved = inWindow && conditions;
+    final rule = !inWindow
+        ? 'terminal-window'
+        : conditions
+            ? 'input-contract'
+            : 'input-contract-rejected';
+    final payload =
+        '$contract|$kind|$subject|$week|${approved ? 'approve' : 'reject'}';
+    var hash = 2166136261;
+    for (final unit in payload.codeUnits) {
+      hash = ((hash ^ unit) * 16777619) & 0x7fffffff;
+    }
+    final decisionHash = hash.toRadixString(16).padLeft(8, '0');
+    return SystemDecisionReceipt(
+        approved, kind, subject, week, rule, contract, decisionHash, owner);
+  }
 }
 
 class MemorySaveAdapter implements SavePort {
@@ -148,6 +192,11 @@ class StoryChoiceMade extends GameEvent {
   final String? legacyId;
 }
 
+class SystemDecisionApproved extends GameEvent {
+  const SystemDecisionApproved(this.receipt);
+  final SystemDecisionReceipt receipt;
+}
+
 class WeekAdvanced extends GameEvent {
   const WeekAdvanced();
 }
@@ -201,6 +250,8 @@ class GameWorld {
   void _system(GameEvent e) {
     final s = stats[0]!.values, p = progress[0]!;
     switch (e) {
+      case SystemDecisionApproved(:final receipt):
+        p.trace.add(receipt.trace);
       case ActivityChosen(
           :final stat,
           :final delta,
@@ -355,13 +406,45 @@ class GameSession {
   final world = GameWorld();
   final bool legacyUnlocked;
   final String? legacyId;
+  SystemDecisionReceipt _decision(String kind, String subject,
+      {required bool conditions}) {
+    final model = story.decisionSystem,
+        owner = model['owner'] as String? ?? 'Lumen Ledger System',
+        contract = model['id'] as String? ?? 'lumen-ledger';
+    return SystemDecisionPolicy.evaluate(
+        kind: kind,
+        subject: subject,
+        week: world.progress[0]!.week,
+        endingWeek: story.endingWeek,
+        conditions: conditions,
+        owner: owner,
+        contract: contract);
+  }
+
+  void _recordRejected(SystemDecisionReceipt receipt, String message) {
+    final p = world.progress[0]!;
+    p.lastResult = message;
+    p.lastLine = '';
+    p.trace.add(receipt.trace);
+    persist();
+  }
+
   void choose(ActivityChosen e) {
     final p = world.progress[0]!;
-    if (p.week >= story.endingWeek) {
-      p.lastResult = '${story.endingWeek}주 기록이 완성되었습니다 · 새 기록을 시작하세요.';
-      persist();
+    final terminal =
+        '${story.endingWeek}주 기록이 완성되었습니다 · 새 기록을 시작하세요.';
+    final message = p.week >= story.endingWeek
+        ? terminal
+        : !world.stats[0]!.values.containsKey(e.stat)
+            ? '시스템 판정 · 등록되지 않은 성장축'
+            : null;
+    final receipt = _decision('activity', e.label.isEmpty ? e.stat : e.label,
+        conditions: message == null);
+    if (!receipt.approved) {
+      _recordRejected(receipt, message ?? '시스템 판정 · 입력 계약 위반');
       return;
     }
+    world.dispatch(SystemDecisionApproved(receipt));
     final people = story.personalities,
         person = people.isEmpty
             ? null
@@ -387,28 +470,26 @@ class GameSession {
 
   void chooseEvent(StoryChoiceMade e) {
     final p = world.progress[0]!;
-    if (p.week >= story.endingWeek) {
-      p.lastResult = '${story.endingWeek}주 기록이 완성되었습니다 · 새 기록을 시작하세요.';
-      persist();
+    final message = p.week >= story.endingWeek
+        ? '${story.endingWeek}주 기록이 완성되었습니다 · 새 기록을 시작하세요.'
+        : !world.stats[0]!.values.containsKey(e.stat)
+            ? '시스템 판정 · 등록되지 않은 성장축'
+            : e.requiresStat != null &&
+                    (world.stats[0]!.values[e.requiresStat] ?? 0) < e.requiresMin
+                ? '조건 부족 · ${e.requiresStat} ${e.requiresMin} 필요'
+                : e.requiresBondId != null &&
+                        (p.bonds[e.requiresBondId] ?? 0) < e.requiresBondMin
+                    ? '관계 조건 부족 · ${e.requiresBondId} 유대 ${e.requiresBondMin} 필요'
+                    : e.requiresFlag != null && p.flags[e.requiresFlag] != true
+                        ? '기억 조건 부족 · ${e.requiresFlag} 필요'
+                        : null;
+    final receipt = _decision('story-choice', e.label,
+        conditions: message == null);
+    if (!receipt.approved) {
+      _recordRejected(receipt, message ?? '시스템 판정 · 입력 계약 위반');
       return;
     }
-    if (e.requiresStat != null &&
-        (world.stats[0]!.values[e.requiresStat] ?? 0) < e.requiresMin) {
-      p.lastResult = '조건 부족 · ${e.requiresStat} $e.requiresMin 필요';
-      persist();
-      return;
-    }
-    if (e.requiresBondId != null &&
-        (p.bonds[e.requiresBondId] ?? 0) < e.requiresBondMin) {
-      p.lastResult = '관계 조건 부족 · ${e.requiresBondId} 유대 $e.requiresBondMin 필요';
-      persist();
-      return;
-    }
-    if (e.requiresFlag != null && p.flags[e.requiresFlag] != true) {
-      p.lastResult = '기억 조건 부족 · ${e.requiresFlag} 필요';
-      persist();
-      return;
-    }
+    world.dispatch(SystemDecisionApproved(receipt));
     world.dispatch(e);
     _resolveMilestone();
     persist();

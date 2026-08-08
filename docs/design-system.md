@@ -20,7 +20,7 @@
 | `choice_card` | 일정 선택과 상태 강조 | 주간 계획 |
 | `portrait_page` | 성격 탭과 상반신 대화 | 노아의 기록 |
 | `personality_portrait` | SSOT `portraitAsset` + `portraitFrame`을 읽는 캐릭터 프레임 | 고요·다정·용감 3종 |
-| `ending_panel` | 성장 결과와 재시작 | 12주 엔딩 |
+| `ending_panel` | 성장 결과와 재시작 | 24주 엔딩 |
 | `feedback_banner` | 마지막 행동 결과와 조건 피드백 | 홈 화면 |
 | `locale_toggle` | locale catalog 전환 | 일러스트·사건 화면 |
 | `vector_activity_icon` | 활동별 별·꽃·나침반·달·보석 마크 | 선택 카드 |
@@ -31,5 +31,5 @@
 
 1. 이벤트 카드와 대화 선택지를 `choice_card` 변형으로 정의
 2. 저장 슬롯/리플레이 화면을 `stat_panel`과 `ending_panel` 조합으로 정의
-3. 12주 플레이 지표(선택 분포·엔딩 분포·재시작률)를 SSOT와 골든에 추가
+3. 24주 플레이 지표(선택 분포·엔딩 분포·재시작률)를 SSOT와 골든에 추가
 4. `story/locales/<locale>.json`와 동일한 locale coverage Golden을 언어별로 추가

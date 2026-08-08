@@ -637,8 +637,11 @@ class Scene extends CustomPainter {
                 ? '여름'
                 : week <= 9
                     ? '가을'
-                    : '겨울',
-        progress = (week - 1) / 11,
+                    : week <= 12
+                        ? '겨울'
+                        : '다음 계절',
+        endingWeek = (s['endingWeek'] as int? ?? 12),
+        progress = ((week - 1) / (endingWeek - 1)).clamp(0.0, 1.0),
         people = (s['personalities'] as List? ?? const []),
         person =
             people.isEmpty ? null : people[persona.clamp(0, people.length - 1)],
@@ -648,10 +651,11 @@ class Scene extends CustomPainter {
                 (chapter['weekStart'] as int) <= week &&
                 (chapter['weekEnd'] as int) >= week,
             orElse: () => {}),
+        chapterIndex = chapters.cast<Map>().indexOf(chapter),
         chapterTitle = chapter.isEmpty
             ? ''
             : activeLocale == 'ko'
-                ? '${chapter['title']}'
+                ? '${endingWeek > 12 ? '${chapterIndex + 1}막 · ' : ''}${chapter['title']}'
                 : localized('${chapter['titleKey']}', '${chapter['title']}');
     txt(
         c,

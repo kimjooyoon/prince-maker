@@ -4,6 +4,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:prince_maker/main.dart';
 
+Map<String, dynamic> lineageGoldenStory({
+  required String id,
+  required String companionId,
+  required String companionName,
+  required String routeTitle,
+  required String epilogue,
+}) =>
+    {
+      'title': '프린스 메이커',
+      'setting': '루멘',
+      'hero': '노아',
+      'endingWeek': 12,
+      'personalities': [
+        {'name': '고요한 관찰자', 'voice': '신중', 'line': '별을 볼래.'}
+      ],
+      'legacyProfiles': [
+        {
+          'id': id,
+          'endingIds': [id],
+          'stat': '지혜',
+          'bonus': 0,
+          'companionId': companionId
+        }
+      ],
+      'companions': [
+        {
+          'id': companionId,
+          'name': companionName,
+          'routeTitle': routeTitle,
+          'routeTitleKey': 'companion.$companionId.routeTitle',
+          'bondThreshold': 0,
+          'epilogue': epilogue,
+          'epilogueKey': 'companion.$companionId.epilogue'
+        }
+      ],
+      'endings': [
+        {
+          'id': id,
+          'stat': '지혜',
+          'min': 0,
+          'title': '루멘의 별읽기꾼',
+          'body': '노아는 밤하늘의 결을 읽는 사람이 되었다.'
+        }
+      ],
+      'milestones': <Map<String, dynamic>>[],
+    };
+
+Future<void> reachGoldenEnding(WidgetTester tester, Map<String, dynamic> story,
+    String profileId, String goldenName) async {
+  await tester
+      .pumpWidget(Game(story, legacyId: profileId, key: ValueKey(profileId)));
+  await tester.pumpAndSettle();
+  for (var i = 0; i < 11; i++) {
+    await tester.tapAt(const Offset(200, 550));
+    await tester.pump();
+  }
+  expect(find.byKey(const ValueKey('2-12-0-0')), findsOneWidget);
+  await expectLater(
+      find.byType(Game), matchesGoldenFile('goldens/$goldenName.png'));
+}
+
 void main() {
   testWidgets('canonical event page is stable', (tester) async {
     await tester.pumpWidget(const Game({
@@ -589,6 +650,45 @@ void main() {
     expect(find.byKey(const ValueKey('2-12-0-0')), findsOneWidget);
     await expectLater(
         find.byType(Game), matchesGoldenFile('goldens/companion-epilogue.png'));
+  });
+  testWidgets('all lineage companion epilogues have distinct Canvas evidence',
+      (tester) async {
+    const routes = [
+      {
+        'id': 'stargazer',
+        'companionId': 'lumi',
+        'name': '루미',
+        'title': '별자리 동행',
+        'epilogue': '루미는 노아의 기록 첫 장에 작은 별표를 남겼다.'
+      },
+      {
+        'id': 'gardener',
+        'companionId': 'bora',
+        'name': '보라',
+        'title': '온실의 약속',
+        'epilogue': '보라는 노아와 계절마다 새로운 씨앗을 심었다.'
+      },
+      {
+        'id': 'pathfinder',
+        'companionId': 'taro',
+        'name': '타로',
+        'title': '바람길 동행',
+        'epilogue': '타로는 노아를 아직 지도에 없는 길로 데려갔다.'
+      }
+    ];
+    for (final route in routes) {
+      await reachGoldenEnding(
+          tester,
+          lineageGoldenStory(
+            id: route['id']!,
+            companionId: route['companionId']!,
+            companionName: route['name']!,
+            routeTitle: route['title']!,
+            epilogue: route['epilogue']!,
+          ),
+          route['id']!,
+          'companion-${route['id']}');
+    }
   });
   testWidgets('authored event branches and returns to the loop',
       (tester) async {

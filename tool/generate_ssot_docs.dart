@@ -23,11 +23,19 @@ String render(Map<String, dynamic> s, String hash) {
   final dialogue = (s['dialogueMetrics'] as Map? ?? {}).cast<String, dynamic>();
   final scenario =
       (s['scenarioCompleteness'] as Map? ?? {}).cast<String, dynamic>();
+  final decision =
+      (s['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
   final b = StringBuffer(
       '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · 스토리 SSOT\n\n');
   b.writeln(
       '${s['setting']}에서 ${s['hero']}는 ${s['endingWeek']}주 동안 스스로 선택한 내일을 걷는다.');
-  b.writeln('\n## 12주 진행도\n');
+  b.writeln('\n## 시스템 판정과 책임 추적\n');
+  b.writeln(
+      '판정 주체: **${decision['owner']}** · 모드 `${decision['mode']}` · 사람 승인 필요 여부 `${decision['humanApprovalRequired']}` · 실패 모드 `${decision['failureMode']}`');
+  b.writeln('책임 증적: ${decision['responsibility']}');
+  for (final rule in (decision['rules'] as List? ?? const []))
+    b.writeln('- `${rule['id']}` · ${rule['scope']} · ${rule['effect']}');
+  b.writeln('\n## ${s['endingWeek']}주 진행도\n');
   for (final c in progression)
     b.writeln(
         '- **${c['title']}** (`${c['id']}`): ${c['weekStart']}–${c['weekEnd']}주 · ${c['premise']} → ${c['payoff']} · 사건 ${((c['eventWeeks'] as List).join(', '))}주 · 목표 `${c['milestoneId']}`\n  - 막 계약: 공개 ${c['contract']['reveal']} · 압력 ${(c['contract']['pressureAxes'] as List).join('·')} · 선택 ${(c['contract']['choiceWeeks'] as List).join(', ')}주 · 결산 `${c['contract']['closureMilestone']}`');
@@ -111,13 +119,17 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
           .where((chapter) => (chapter as Map)['contract'] is Map)
           .length,
       dialogue = (s['dialogueMetrics'] as Map? ?? {}),
-      scenario = (s['scenarioCompleteness'] as Map? ?? {});
+      scenario = (s['scenarioCompleteness'] as Map? ?? {}),
+      ranges = (s['progression'] as List? ?? const [])
+          .map((chapter) => '${chapter['weekStart']}–${chapter['weekEnd']}주')
+          .join(' / ');
   final b = StringBuffer(
       '<!-- generated: tool/generate_ssot_docs.dart -->\n<!-- ssot-sha256: $hash -->\n<!-- source-ref: story/story.json#root -->\n\n# ${s['title']} · SSOT 자동 품질 지표\n\n');
   b.writeln(
       '이 문서는 `story/story.json`에서 자동 생성된다. 코드·Golden·CI의 수치가 SSOT 변경과 함께 갱신되는지 pre-commit에서 확인한다.\n');
   b.writeln('| 항목 | 현재 | 산출 기준 |\n| --- | ---: | --- |');
   b.writeln('| 캠페인 길이 | ${s['endingWeek']}주 | `endingWeek` |');
+  b.writeln('| 시스템 판정 | ${(s['decisionSystem'] as Map?)?['id'] ?? 'none'} | SSOT `decisionSystem` · fail-closed receipt |');
   b.writeln('| 활동 | $acts | `activities.length` |');
   b.writeln('| 성격 | $people | `personalities.length` |');
   b.writeln('| 동료 | $companions | `companions.length` |');
@@ -136,7 +148,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   b.writeln(
       '| 대사 locale | ${(s['localeRefs'] as List? ?? []).length} | `localeRefs.length` |');
   b.writeln(
-      '| 스토리 막 | $progression | `progression.length` · 1–3 / 4–6 / 7–9 / 10–12주 |');
+      '| 스토리 막 | $progression | `progression.length` · $ranges |');
   b.writeln(
       '| 막 계약 | $chapterContracts/$progression | 각 막의 `contract` 공개·압력·선택·결산 선언 |');
   b.writeln(
@@ -144,7 +156,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   b.writeln(
       '| locale 최소 키 | ${dialogue['minimumLocaleKeys']} | `dialogueMetrics.minimumLocaleKeys` |');
   b.writeln(
-      '| 캠페인 최소 대사 줄 | ${dialogue['minimumVisibleDialogueLines']} | 성격 1 + 사건 선택 6 |');
+      '| 캠페인 최소 대사 줄 | ${dialogue['minimumVisibleDialogueLines']} | 24주 authored 사건 선택 노출 기준 |');
   b.writeln(
       '| 캠페인 최소 서사 단위 | ${dialogue['minimumVisibleNarrativeUnits']} | 성격·사건 제목/본문·선택·엔딩 |');
   b.writeln(

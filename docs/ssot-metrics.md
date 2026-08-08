@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 879aa5cbdb139c9c4de13651961757f45a7d28ba035ea0ca9f92ccb3872e4b0e -->
+<!-- ssot-sha256: 45746c12bc8c03492f831647e688f321184fbbec22d128b96edda20b7c8adb9f -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -8,26 +8,27 @@
 
 | 항목 | 현재 | 산출 기준 |
 | --- | ---: | --- |
-| 캠페인 길이 | 12주 | `endingWeek` |
+| 캠페인 길이 | 24주 | `endingWeek` |
+| 시스템 판정 | lumen-ledger | SSOT `decisionSystem` · fail-closed receipt |
 | 활동 | 5 | `activities.length` |
 | 성격 | 3 | `personalities.length` |
 | 동료 | 3 | `companions.length` |
 | 회차 계승 프로필 | 3 | `legacyProfiles.length` |
-| 계절 목표 | 4 | `milestones.length` |
-| 사건 | 10 | `events.length` |
-| 사건 선택 | 20 | 모든 사건 choices 합계 |
+| 계절 목표 | 8 | `milestones.length` |
+| 사건 | 22 | `events.length` |
+| 사건 선택 | 44 | 모든 사건 choices 합계 |
 | 엔딩 | 6 | `endings.length` |
-| Canvas Golden | 23 | `test/goldens/*.png` |
-| 코드 ref | 11 | `codeRefs.length` |
+| Canvas Golden | 26 | `test/goldens/*.png` |
+| 코드 ref | 12 | `codeRefs.length` |
 | 이미지 ref | 4 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
-| 스토리 막 | 4 | `progression.length` · 1–3 / 4–6 / 7–9 / 10–12주 |
-| 막 계약 | 4/4 | 각 막의 `contract` 공개·압력·선택·결산 선언 |
+| 스토리 막 | 8 | `progression.length` · 1–3주 / 4–6주 / 7–9주 / 10–12주 / 13–15주 / 16–18주 / 19–21주 / 22–24주 |
+| 막 계약 | 8/8 | 각 막의 `contract` 공개·압력·선택·결산 선언 |
 | 시나리오 완전성 차원 | 8 | `scenarioCompleteness.dimensions.length` |
-| locale 최소 키 | 128 | `dialogueMetrics.minimumLocaleKeys` |
-| 캠페인 최소 대사 줄 | 7 | 성격 1 + 사건 선택 6 |
-| 캠페인 최소 서사 단위 | 27 | 성격·사건 제목/본문·선택·엔딩 |
+| locale 최소 키 | 216 | `dialogueMetrics.minimumLocaleKeys` |
+| 캠페인 최소 대사 줄 | 23 | 24주 authored 사건 선택 노출 기준 |
+| 캠페인 최소 서사 단위 | 64 | 성격·사건 제목/본문·선택·엔딩 |
 
 ## 폐쇄루프 연결
 

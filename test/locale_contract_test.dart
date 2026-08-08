@@ -63,7 +63,7 @@ void main() {
     ];
     expect(catalogs['ko']!.keys, containsAll(endingUiKeys));
     expect(catalogs['en']!.keys, containsAll(endingUiKeys));
-    expect(catalogs['ko']!.length, 128);
-    expect(catalogs['en']!.length, 128);
+    expect(catalogs['ko']!.length, 216);
+    expect(catalogs['en']!.length, 216);
   });
 }

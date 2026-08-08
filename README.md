@@ -1,6 +1,6 @@
 # 프린스 메이커
 
-독자 세계관 ‘루멘’에서 12주 동안 노아의 방향을 함께 고르는 작은 육성 시뮬레이션입니다. 원작의 캐릭터·문구·화면을 사용하지 않고, **일정 선택 → 수치 변화 → 서사 판정**이라는 장르의 구조만 새 규칙과 시각 언어로 재구성했습니다.
+독자 세계관 ‘루멘’에서 24주 동안 노아의 방향을 함께 고르는 결정론적 육성 시뮬레이션입니다. 원작의 캐릭터·문구·화면을 사용하지 않고, **일정 선택 → 수치 변화 → 서사 판정**이라는 장르의 구조만 새 규칙과 시각 언어로 재구성했습니다.
 
 화면은 Flutter 위젯 카드가 아니라 `CustomPaint`/`Canvas`를 기준으로 그립니다. 입력은 얇은 `GestureDetector`가 좌표를 게임 상태 전이로 바꾸고, 상태·도형·텍스트는 한 개의 painter에서 결정론적으로 렌더링합니다.
 
@@ -25,15 +25,18 @@ git config core.hooksPath .githooks
 ![계절 목표가 보이는 계획 화면](test/goldens/milestone.png)
 ![사건 선택 Golden](test/goldens/event.png)
 ![성격별 상반신 일러스트 페이지](test/goldens/illustration.png)
-![12주 엔딩 화면](test/goldens/ending.png)
+![24주 엔딩 화면](test/goldens/ending.png)
 ![엔딩 원인 회고 보드](test/goldens/ending.png)
 ![계승 동행 에필로그가 보이는 엔딩 Canvas](test/goldens/companion-epilogue.png)
+![별읽기 계승 동행 Golden](test/goldens/companion-stargazer.png)
+![정원 계승 동행 Golden](test/goldens/companion-gardener.png)
+![길잡이 계승 동행 Golden](test/goldens/companion-pathfinder.png)
 ![replay 기록 보관소 화면](test/goldens/save.png)
 ![새 캠페인 재시작 화면](test/goldens/restart.png)
 ![SSOT에서 직접 렌더링한 canonical 홈](test/goldens/canonical-home.png)
 ![SSOT 4주차 온실 사건](test/goldens/canonical-event.png)
 ![엔딩 도감이 보이는 replay 보관소](test/goldens/collection.png)
-![실제 SSOT 12주 경로의 canonical 엔딩](test/goldens/canonical-ending.png)
+![실제 SSOT 24주 경로의 canonical 엔딩](test/goldens/canonical-ending.png)
 ![사건 선택 결과 피드백 배너](test/goldens/feedback.png)
 ![관계 긴장 선택 결과 피드백](test/goldens/relationship-tension.png)
 ![관계 중재 선택 결과 피드백](test/goldens/mediation.png)
@@ -62,7 +65,7 @@ git config core.hooksPath .githooks
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 5개 활동 × 12주 = 60개의 계획 조합, 5개 SSOT 일정 정책 실험에서 distinct ending/signature 3개 이상, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 3개 성격 대화, 3명 동료 유대도·rival bond·관계 충돌·중재 기억·4개 장소 발견·동행 관계 목표·복수 에필로그, 3개 엔딩 계열별 회차 계승 프로필(다음 회차 시작 스탯 +2·계승 flag·trace·2주차 프로필별 성장 보정·profile route signature·target master ending·target companion epilogue), 4개 계절 목표·보상, 10개 고정 사건(5·11주차 외출 포함, 각 2선택, 스탯·유대·기억·계승 조건 잠금 포함), 6개 엔딩·20개 사건 선택의 26/26 도달성 계약 테스트, 한국어 fixture 8개·English locale 3개·canonical SSOT 홈·4주차 사건·canonical SSOT 12주 엔딩·엔딩 도감·관계 route 도감·사건 피드백·관계 긴장·관계 중재·장소 발견·외출·유대 게이트·기억 게이트·계승 게이트 피드백의 23개 골든 화면, `story/locales/ko.json`·`en.json` 키 기반 대사, 모든 SSOT `*Key`와 엔딩 UI 128키의 locale 계약 테스트, 성격 화면 언어 토글, 세 성격 숙련 엔딩 campaign 3종, 목표·유대에 따른 결정론적 1–3성 루멘 기록 등급, 재시작 후에도 누적되는 엔딩·관계 도감과 계승 해금, 피로 기반 성장 페널티, 사건 대사·기억·legacy replay, 엔딩 상반신 카드의 달성 관계 목표명·복수 에필로그·회고 보드의 최대 3개 원인 사건·계절 목표별 달성/미달 상태·미달 목표 다음 회차 단서, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 기억 플래그를 포함한 `lumen-save-v7` trace, 12주 이후 추가 입력을 차단하는 terminal 상태 불변식입니다.
+현재 지표: 5개 활동 × 24주 = 120개의 계획 조합, 5개 SSOT 일정 정책 실험에서 distinct ending/signature 3개 이상, 3개 성장축(지혜·공감·용기), 성격별 재능 보너스 3개와 선택 카드 내 가시화, 3개 성격 대화, 3명 동료 유대도·rival bond·관계 충돌·중재 기억·4개 장소 발견·동행 관계 목표·복수 에필로그, 3개 엔딩 계열별 회차 계승 프로필(다음 회차 시작 스탯 +2·계승 flag·trace·2주차 프로필별 성장 보정·profile route signature·target master ending·target companion epilogue), 8개 막 목표·보상, 22개 고정 사건(5·11주차 외출 포함, 각 2선택, 스탯·유대·기억·계승 조건 잠금 포함), 6개 엔딩·44개 사건 선택의 50/50 도달성 계약 테스트, 한국어 fixture 8개·English locale 3개·canonical SSOT 홈·4주차 사건·canonical SSOT 24주 엔딩·엔딩 도감·관계 route 도감·사건 피드백·관계 긴장·관계 중재·장소 발견·외출·유대 게이트·기억 게이트·계승 게이트 피드백의 26개 골든 화면, `story/locales/ko.json`·`en.json` 키 기반 216키 대사, 모든 SSOT `*Key`와 엔딩 UI의 locale 계약 테스트, 성격 화면 언어 토글, 세 성격 숙련 엔딩 campaign 3종, 목표·유대에 따른 결정론적 1–3성 루멘 기록 등급, 재시작 후에도 누적되는 엔딩·관계 도감과 계승 해금, 피로 기반 성장 페널티, 사건 대사·기억·legacy replay, 엔딩 상반신 카드의 달성 관계 목표명·복수 에필로그·회고 보드의 최대 3개 원인 사건·막 목표별 달성/미달 상태·미달 목표 다음 회차 단서, 행동·사건 직후 자동 생성되는 최근 기록 보관소, WASM `localStorage` 새로고침 복원(저장 당시 화면 포함), 기억 플래그와 시스템 결정 영수증을 포함한 `lumen-save-v7` trace, 24주 이후 추가 입력을 차단하는 fail-closed terminal 상태 불변식입니다.
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다.
 
@@ -72,9 +75,9 @@ git config core.hooksPath .githooks
 
 초안 이후 기능은 재활용 가능한 [Lumen Canvas Kit](docs/design-system.md)를 먼저 설계한 뒤 구현합니다. 토큰은 [`design/tokens.json`](design/tokens.json)과 [`lib/design_tokens.dart`](lib/design_tokens.dart)에 분리되어 있으며, 화면은 `stat_panel`, `choice_card`, `portrait_page`, `ending_panel` 조합으로 확장합니다.
 
-게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), 시나리오 표본은 [`docs/scenario-completeness.md`](docs/scenario-completeness.md), 기계 판정 계약은 [`docs/trilemma-contract.json`](docs/trilemma-contract.json), 트릴레마 폐쇄루프는 [`docs/trilemma.md`](docs/trilemma.md), CI 강제 검사는 [`tool/verify_game.dart`](tool/verify_game.dart)와 [`tool/benchmark_game.dart`](tool/benchmark_game.dart)에 있습니다. 게이트는 완전성·순수성·성능을 함께 확인하며, 완전성 점수가 95% 미만이거나 실제 SSOT campaign benchmark가 실패하면 변경을 거부합니다. 4막은 SSOT의 `reveal → pressureAxes → choiceWeeks → closureMilestone` 계약을 실제 사건·계절 목표와 대조합니다. 동일한 일정 예산으로 지혜·공감 경로가 서로 다른 authored 엔딩과 유대를 만드는 순수성 회귀도 고정합니다. SSOT 검사 → 트릴레마 계약 → 해시 매니페스트 → 정적 분석 → 상태/Golden 테스트 → 실제 SSOT campaign benchmark → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
+게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), 시나리오 표본은 [`docs/scenario-completeness.md`](docs/scenario-completeness.md), 기계 판정 계약은 [`docs/trilemma-contract.json`](docs/trilemma-contract.json), 트릴레마 폐쇄루프는 [`docs/trilemma.md`](docs/trilemma.md), CI 강제 검사는 [`tool/ci_gate.dart`](tool/ci_gate.dart), [`tool/verify_game.dart`](tool/verify_game.dart)와 [`tool/benchmark_game.dart`](tool/benchmark_game.dart)에 있습니다. 게이트는 완전성·순수성·성능을 함께 확인하며, 완전성 점수가 95% 미만이거나 실제 SSOT campaign benchmark가 실패하면 변경을 거부합니다. 8막은 SSOT의 `reveal → pressureAxes → choiceWeeks → closureMilestone` 계약을 실제 사건·막 목표와 대조합니다. 동일한 일정 예산으로 지혜·공감 경로가 서로 다른 authored 엔딩과 유대를 만드는 순수성 회귀도 고정합니다. SSOT 검사 → 독창성 계약 → 트릴레마 계약 → 해시 매니페스트 → 정적 분석 → 상태/Golden 테스트 → 실제 SSOT campaign benchmark → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
 
-SSOT에서 생성된 문서는 [`docs/story-ssot.md`](docs/story-ssot.md)와 [`docs/ssot-metrics.md`](docs/ssot-metrics.md)이며, 문서 헤더의 SHA-256과 `source-ref`를 CI가 검사합니다. 성능 benchmark는 `story/story.json`을 실제 `GameSession`에 주입해 10개 사건(외출 2개 포함)을 포함한 같은 5,000 campaign workload를 재실행하고, checksum·replayChecksum·3개 이상 결과 signature·3개 계승 프로필의 target ending·target companion epilogue까지 일치해야 통과합니다. 핵심 변경 파일은 [`docs/review-manifest.json`](docs/review-manifest.json)에 해시와 ref가 있어, 파일을 다시 읽고 검토하지 않은 변경은 통합되지 않습니다.
+SSOT에서 생성된 문서는 [`docs/story-ssot.md`](docs/story-ssot.md)와 [`docs/ssot-metrics.md`](docs/ssot-metrics.md)이며, 문서 헤더의 SHA-256과 `source-ref`를 CI가 검사합니다. 성능 benchmark는 `story/story.json`을 실제 `GameSession`에 주입해 22개 사건을 포함한 같은 5,000 campaign workload(225,000 transition)를 재실행하고, checksum·replayChecksum·3개 이상 결과 signature·3개 계승 프로필의 target ending·target companion epilogue까지 일치해야 통과합니다. 핵심 변경 파일은 [`docs/review-manifest.json`](docs/review-manifest.json)에 해시와 ref가 있어, 파일을 다시 읽고 검토하지 않은 변경은 통합되지 않습니다. 사람의 승인 대신 `SystemDecisionPolicy`와 `tool/ci_gate.dart`가 입력 계약·terminal 상태·Golden·benchmark를 fail-closed로 판정하고 결정 영수증을 trace에 남깁니다. 운영 규칙은 [`docs/automation-policy.md`](docs/automation-policy.md), 외부 게임의 규칙 단위 분석과 루멘의 독창성 차이는 [`docs/originality-contract.json`](docs/originality-contract.json)에 기록합니다.
 
 런타임 구조는 [architecture.md](docs/architecture.md)에 정의된 ECS/DOD + EDA + Hexagonal 경계를 따릅니다. Canvas는 어댑터이고, `GameSession`은 애플리케이션 포트이며, `GameWorld`는 결정론적 이벤트 시스템입니다.
 

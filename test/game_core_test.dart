@@ -3,6 +3,54 @@ import 'package:prince_maker/game_core.dart';
 import 'package:prince_maker/save_state.dart';
 
 void main() {
+  test('SystemDecisionPolicy owns approval and records a replay receipt', () {
+    final approved = SystemDecisionPolicy.evaluate(
+        kind: 'activity',
+        subject: '별 관측',
+        week: 1,
+        endingWeek: 24,
+        conditions: true,
+        owner: 'Lumen Ledger System',
+        contract: 'lumen-ledger');
+    final rejected = SystemDecisionPolicy.evaluate(
+        kind: 'activity',
+        subject: 'stale input',
+        week: 24,
+        endingWeek: 24,
+        conditions: true,
+        owner: 'Lumen Ledger System',
+        contract: 'lumen-ledger');
+    expect(approved.approved, isTrue);
+    expect(approved.trace, contains('approval:approved'));
+    expect(approved.trace, contains('decisionHash:'));
+    expect(rejected.approved, isFalse);
+    expect(rejected.rule, 'terminal-window');
+  });
+
+  test('GameSession commits the system receipt before state transition', () {
+    final story = JsonStoryAdapter({
+      'events': [],
+      'endings': [],
+      'companions': [],
+      'milestones': [],
+      'personalities': [],
+      'endingWeek': 12,
+      'decisionSystem': {
+        'id': 'test-ledger',
+        'owner': 'test-system',
+      }
+    });
+    final session = GameSession(story, MemorySaveAdapter());
+    session.choose(const ActivityChosen('지혜', 1, 0, 0, label: '기록'));
+    expect(session.world.progress[0]!.trace.first,
+        startsWith('approval:approved|owner:test-system'));
+    session.world.progress[0]!.week = 12;
+    session.choose(const ActivityChosen('지혜', 1, 0, 0, label: 'stale'));
+    expect(session.world.progress[0]!.trace.last,
+        startsWith('approval:rejected|owner:test-system'));
+    expect(session.world.stats[0]!.values['지혜'], 5);
+  });
+
   test('same stats resolve to the same authored ending', () {
     final story = JsonStoryAdapter({
       'events': [],

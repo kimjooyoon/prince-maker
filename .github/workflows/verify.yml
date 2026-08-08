@@ -1,12 +1,32 @@
 name: verify
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
-  test:
+  system-approval:
+    name: system-approval
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
+      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with: {flutter-version: '3.44.5', channel: stable}
-      - uses: actions/checkout@v4
       - run: flutter pub get
-      - run: bash .githooks/pre-commit
-      - run: flutter build web --wasm --release
+      - name: Run fail-closed system gate
+        run: dart run tool/ci_gate.dart --ci
+      - name: Upload machine verdict
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-verdict
+          path: build/ci-verdict.json
+          if-no-files-found: error
