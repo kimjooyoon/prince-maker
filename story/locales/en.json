@@ -494,5 +494,11 @@
   "chapter.returningGarden.scene.title": "A Garden for Leaving and Staying",
   "chapter.returningGarden.scene.line": "Do not choose only where flowers bloom. Leave a place where departing feet will not be hurt.",
   "chapter.handoff.scene.title": "The Next Person’s Hand",
-  "chapter.handoff.scene.line": "The last page is not a cover that closes. It is a handle for the next person to open again."
+  "chapter.handoff.scene.line": "The last page is not a cover that closes. It is a handle for the next person to open again.",
+  "ui.relationship.label": "Relationship state",
+  "ui.relationship.state.unformed": "Not yet woven",
+  "ui.relationship.state.balanced": "Side-by-side",
+  "ui.relationship.state.tension": "Tension",
+  "ui.relationship.state.estranged": "Estranged",
+  "ui.relationship.state.truce": "Truce"
 }

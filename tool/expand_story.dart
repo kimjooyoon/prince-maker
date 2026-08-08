@@ -178,6 +178,8 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/decision_proof.dart#SystemDecisionPolicy',
     'tool/verify_decision_proof.dart#decision-proof-preconditions',
     'test/decision_proof_test.dart#same preconditions reproduce the same chain',
+    'lib/game_core.dart#resolveRelationshipDynamics',
+    'test/relationship_dynamics_test.dart#deterministic relationship states',
   ];
   refs.removeWhere((entry) =>
       entry['ref'] == 'docs/decision-proof-contract.json#preconditionFields');
@@ -2017,6 +2019,12 @@ void main() {
     'ui.closure.scene': '동행의 한마디',
     'ui.closure.nextPage': '다음 장으로 →',
     'ui.closure.link': '결과는 시스템 영수증과 다음 선택에 연결됩니다.',
+    'ui.relationship.label': '관계 상태',
+    'ui.relationship.state.unformed': '아직 얽히지 않음',
+    'ui.relationship.state.balanced': '나란한 동행',
+    'ui.relationship.state.tension': '갈라지는 마음',
+    'ui.relationship.state.estranged': '멀어진 동행',
+    'ui.relationship.state.truce': '다시 잇는 동행',
   });
   en.addAll({
     'ui.ledger.button': 'Fate ledger',
@@ -2045,7 +2053,58 @@ void main() {
     'ui.closure.nextPage': 'Next chapter →',
     'ui.closure.link':
         'The result is linked to the system receipt and next choice.',
+    'ui.relationship.label': 'Relationship state',
+    'ui.relationship.state.unformed': 'Not yet woven',
+    'ui.relationship.state.balanced': 'Side-by-side',
+    'ui.relationship.state.tension': 'Tension',
+    'ui.relationship.state.estranged': 'Estranged',
+    'ui.relationship.state.truce': 'Truce',
   });
+  story['relationshipDesign'] = {
+    'schema': 'lumen-relationship-dynamics-v1',
+    'purpose':
+        'derive a visible relationship state from deterministic bond gaps and authored memory flags',
+    'stateOrder': ['unformed', 'balanced', 'tension', 'estranged', 'truce'],
+    'thresholds': {'tensionGap': 2, 'estrangedGap': 5},
+    'truceFlag': 'windmill-truce',
+    'states': [
+      {
+        'id': 'unformed',
+        'key': 'ui.relationship.state.unformed',
+        'fallback': '아직 얽히지 않음',
+        'fallbackEn': 'Not yet woven',
+      },
+      {
+        'id': 'balanced',
+        'key': 'ui.relationship.state.balanced',
+        'fallback': '나란한 동행',
+        'fallbackEn': 'Side-by-side',
+      },
+      {
+        'id': 'tension',
+        'key': 'ui.relationship.state.tension',
+        'fallback': '갈라지는 마음',
+        'fallbackEn': 'Tension',
+      },
+      {
+        'id': 'estranged',
+        'key': 'ui.relationship.state.estranged',
+        'fallback': '멀어진 동행',
+        'fallbackEn': 'Estranged',
+      },
+      {
+        'id': 'truce',
+        'key': 'ui.relationship.state.truce',
+        'fallback': '다시 잇는 동행',
+        'fallbackEn': 'Truce',
+      },
+    ],
+    'evidence': [
+      'lib/game_core.dart#resolveRelationshipDynamics',
+      'test/relationship_dynamics_test.dart#deterministic relationship states',
+      'lib/main.dart#relationshipState',
+    ],
+  };
   story['narrativeLoop'] = {
     'schema': 'lumen-memory-companion-loop-v1',
     'fateThreadCount': (story['fateThreads'] as List).length,
@@ -2053,7 +2112,8 @@ void main() {
     'stagesPerQuest': 3,
     'derivedFrom': 'event choice flags + deterministic companion bonds',
     'resolver':
-        'lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests',
+        'lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests,lib/game_core.dart#resolveRelationshipDynamics',
+    'relationshipStateContract': 'lumen-relationship-dynamics-v1',
     'systemOwner': 'lumen-rule-engine',
     'evidence': 'test/narrative_ledger_test.dart#deterministic-projection',
   };
@@ -2127,12 +2187,12 @@ void main() {
   };
   story['dialogueMetrics'] = {
     'locales': 'ko,en',
-    'minimumLocaleKeys': 488,
+    'minimumLocaleKeys': 494,
     'minimumVisibleDialogueLines': 63,
     'minimumVisibleNarrativeUnits': 176,
     'authoredDialogueLines': 216,
     'formula':
-        'catalog 488 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units',
+        'catalog 494 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units',
   };
   final choices = (story['events'] as List)
       .cast<Map<String, dynamic>>()
@@ -2221,13 +2281,13 @@ void main() {
   byId['agency']!['current'] =
       '94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible';
   byId['relationship']!['current'] =
-      '3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats';
+      '3 companions / rival conflict / deterministic tension-estrangement-truce state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats';
   byId['feedback']!['current'] =
       'stats, coins, fatigue, 16 milestones and 6 endings';
   byId['gating']!['current'] =
       '16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings';
   byId['presentation']!['current'] =
-      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
+      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats and visible relationship states / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;
@@ -2236,19 +2296,19 @@ void main() {
   materializeChapterScenes(story, ko, en);
   story['narrativeLoop']['chapterSceneCount'] =
       (story['progression'] as List).length;
-  story['dialogueMetrics']['minimumLocaleKeys'] = 488;
+  story['dialogueMetrics']['minimumLocaleKeys'] = 494;
   story['dialogueMetrics']['minimumVisibleDialogueLines'] =
       (story['events'] as List).length + (story['progression'] as List).length;
   story['dialogueMetrics']['minimumVisibleNarrativeUnits'] = 176;
   story['dialogueMetrics']['authoredDialogueLines'] = 216;
   story['dialogueMetrics']['formula'] =
-      'catalog 488 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units';
+      'catalog 494 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units';
 
-  refreshHashes(story);
   final encoder = const JsonEncoder.withIndent('  ');
-  storyFile.writeAsStringSync('${encoder.convert(story)}\n');
   koFile.writeAsStringSync('${encoder.convert(ko)}\n');
   enFile.writeAsStringSync('${encoder.convert(en)}\n');
+  refreshHashes(story);
+  storyFile.writeAsStringSync('${encoder.convert(story)}\n');
   stdout.writeln(
       'STORY_EXPANSION_OK: weeks=48 terminal=49 events=${(story['events'] as List).length} choices=94 chapters=${chapters.length} milestones=${milestones.length} koKeys=${ko.length} enKeys=${en.length}');
 }

@@ -167,8 +167,12 @@ void main() {
             line: raw['line']));
         expect(session.world.stats[0]!.values[raw['stat'] as String],
             before + (raw['delta'] as int));
-        expect(session.world.progress[0]!.trace.last,
-            startsWith('event:${raw['label']}'));
+        final events = session.world.progress[0]!.trace
+            .where((entry) => entry.startsWith('event:${raw['label']}'))
+            .toList();
+        expect(events, isNotEmpty);
+        expect(
+            session.world.progress[0]!.trace.last, startsWith('relationship:'));
       }
     }
   });

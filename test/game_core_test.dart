@@ -248,7 +248,10 @@ void main() {
           'stargazer': {'stat': '지혜', 'delta': 1}
         }));
     expect(session.world.stats[0]!.values, {'지혜': 7, '공감': 6, '용기': 3});
-    expect(session.world.progress[0]!.trace.last, 'event:기록 공유|legacy:지혜+1');
+    final trace = session.world.progress[0]!.trace;
+    expect(trace.where((entry) => entry.startsWith('event:')).single,
+        'event:기록 공유|legacy:지혜+1');
+    expect(trace.last, 'relationship:unformed|gap:0');
   });
   test('selected personality gives a deterministic focus bonus', () {
     final story = JsonStoryAdapter({
