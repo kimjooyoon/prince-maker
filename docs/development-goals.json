@@ -4,11 +4,11 @@
   "source": [
     {
       "ref": "story/story.json#root",
-      "sha256": "41f006dde328c972a9f81d9da59cddc058bb8c4f3d027a3c4df19a6ccc8ec908"
+      "sha256": "693baad92e3a98212c376544b7671963be989cb21305ee7b4cd7d2f05a1cf7a3"
     },
     {
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "127c19e6430633d78b142e8a3a8952b9fd5586ba5d15eaa4b768ef87a1cd8b0b"
+      "sha256": "706f928280f2a091b322b3dc9125a71a49b1ee999341085595a634ee5f9bbc55"
     },
     {
       "ref": "docs/render-quality-contract.json#preconditions",
@@ -16,7 +16,7 @@
     },
     {
       "ref": "docs/decision-proof-contract.json#preconditionFields",
-      "sha256": "ad1fffb6e09a7d2b2ddc22a8c3523ff32919ed50b3dbc518b0eb287a494a582b"
+      "sha256": "133b8eeebb404d178784b2760b18ab62914a768abc41eccdb1cd9a3afa3e163f"
     }
   ],
   "decision": {
@@ -56,15 +56,15 @@
     {
       "id": "visual-locale-units",
       "unit": "presentation-unit",
-      "value": 916,
-      "formula": "46 Goldens + 2 locales × 419 keys + 27 code refs + 4 asset refs + 1 font refs",
+      "value": 933,
+      "formula": "62 Goldens + 2 locales × 419 keys + 28 code refs + 4 asset refs + 1 font refs",
       "scope": "visual regression, localization and traceable production assets"
     },
     {
       "id": "verification-units",
       "unit": "proof-unit",
-      "value": 58,
-      "formula": "14 CI checks + 24 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields",
+      "value": 59,
+      "formula": "14 CI checks + 25 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields",
       "scope": "repeatable automated proof and release readiness"
     }
   ],
@@ -195,7 +195,7 @@
         "unit": "presentation-proof-units"
       },
       "currentContract": {
-        "goldens": 46,
+        "goldens": 62,
         "locales": 2,
         "keysPerLocale": 419,
         "renderPreconditions": 3,
@@ -279,7 +279,7 @@
       },
       "currentContract": {
         "ciChecks": 14,
-        "codeRefs": 27,
+        "codeRefs": 28,
         "decisionProofFields": 14,
         "assetRefs": 4,
         "fontRefs": 1,

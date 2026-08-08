@@ -5,7 +5,7 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "41f006dde328c972a9f81d9da59cddc058bb8c4f3d027a3c4df19a6ccc8ec908"
+      "sha256": "693baad92e3a98212c376544b7671963be989cb21305ee7b4cd7d2f05a1cf7a3"
     },
     {
       "path": "lib/main.dart",
@@ -210,7 +210,7 @@
     {
       "path": "docs/game-completeness.md",
       "ref": "docs/game-completeness.md#metrics",
-      "sha256": "2f4da3722c9e606bcccfac752d396179256265df37193d6f20e0a674aa077e73"
+      "sha256": "05a742d12bbacb9f8259cacef4a28cf93f9fd1f40208b0fc570607d39836d38f"
     },
     {
       "path": "docs/trilemma.md",
@@ -220,12 +220,12 @@
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "127c19e6430633d78b142e8a3a8952b9fd5586ba5d15eaa4b768ef87a1cd8b0b"
+      "sha256": "706f928280f2a091b322b3dc9125a71a49b1ee999341085595a634ee5f9bbc55"
     },
     {
       "path": "docs/scenario-completeness.md",
       "ref": "docs/scenario-completeness.md#scenario-completeness",
-      "sha256": "df2a8f1459c3505fe15feb6e2a63e3f4a3f7f8001e9e5baa2dea5fcf399e2809"
+      "sha256": "e5379d8ee78d44ed05b1bd9f3d901750d2b85db7b639c384036706dedbe98533"
     },
     {
       "path": "docs/architecture.md",
@@ -235,7 +235,7 @@
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "fc9ee6345158d439b85ee685bc23b5b544b6a772ff62145a179eba6f459f89c2"
+      "sha256": "767ceef47b250c9f329372f3867f2c6b843b8db8208d1b8f419ecec52b612b78"
     },
     {
       "path": "docs/design-system.md",
@@ -330,7 +330,7 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "51730ac5c6c6e392391427c9b77f2c0454d536d1985f2a6e3e1ebb4fcc4a8228"
+      "sha256": "88162a9f4fe0ccfddfe5a0b1665e3dece537ae3f87cd0fb91563d4252569f502"
     },
     {
       "path": "test/locale_contract_test.dart",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "b7d9b4e7c091347a29f547c688b4a09a616ba0fffd2c0e81eb978a10f2c0e9f0"
+      "sha256": "bf91945b8c739c7c95601a377a6208c60f9139c21ae3b984d849e9327dedd390"
     },
     {
       "path": "design/tokens.json",
@@ -390,7 +390,7 @@
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "53f21392accb518fde000ab82d20ac014bd3cde74291d3e15992a94d1128c4d1"
+      "sha256": "4561f8ea1a474aab43abac3552c323c4cc79d527014f1de3b5dc14d02a3d9494"
     },
     {
       "path": "tool/ci_gate.dart",
@@ -405,12 +405,12 @@
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "374207ac41cb51e553311a8b19275a3412744ba95601123762b96c7f795d7bfa"
+      "sha256": "3b4e4ceda7d188215fcc37321dc1b8c4163f4e5338870a1b0b19896206b1c923"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
       "ref": "tool/refresh_review_manifest.dart#reviewed",
-      "sha256": "534e24962ebcb00374c8edb8e8ecd46c605a8a9299064ea26a27efb24b05b18b"
+      "sha256": "0e4ee667cb72b8c6656670645796eb63ecb09f7856c81f466916af633975ca9f"
     },
     {
       "path": "tool/verify_scenario_variants.dart",
@@ -505,17 +505,17 @@
     {
       "path": "tool/verify_render_quality.dart",
       "ref": "tool/verify_render_quality.dart#reviewed",
-      "sha256": "261aad31f15c9caad19be57d52967d7069a734208a8c0e2243b64360ac433b41"
+      "sha256": "7899e73bf320a46588ef04ca32cb23c9912dd2aa81579c575a407677a9c49ca2"
     },
     {
       "path": "docs/development-goals.json",
       "ref": "docs/development-goals.json#reviewed",
-      "sha256": "0fd5ff9e40114e75ac99439a942a75930159f7272855be0f9f97bdfc50f4cb1a"
+      "sha256": "5867879f0f8c8b0ca0bbf1cc969483126ef743cfb06009a2daec7daef49a218a"
     },
     {
       "path": "docs/development-goals.md",
       "ref": "docs/development-goals.md#reviewed",
-      "sha256": "c51a45589fcb05cdd483f2a82252f765921f6fe3f4c51f1fc7ce0102b8bcdbab"
+      "sha256": "76a570532ac680ed92f0b1451364de381c142303e28399206d8f60e283c7168e"
     },
     {
       "path": "tool/generate_development_goals.dart",
@@ -535,7 +535,7 @@
     {
       "path": "docs/decision-proof-contract.json",
       "ref": "docs/decision-proof-contract.json#reviewed",
-      "sha256": "ad1fffb6e09a7d2b2ddc22a8c3523ff32919ed50b3dbc518b0eb287a494a582b"
+      "sha256": "133b8eeebb404d178784b2760b18ab62914a768abc41eccdb1cd9a3afa3e163f"
     },
     {
       "path": "tool/verify_decision_proof.dart",
@@ -631,6 +631,91 @@
       "path": "test/goldens/chapter-threshold.png",
       "ref": "test/goldens/chapter-threshold.png#reviewed",
       "sha256": "8432063f522ca8d863db5ba97dcbd7e6b353ee4250488cbc3d7d0a5eb992bbd9"
+    },
+    {
+      "path": "test/chapter_closure_golden_test.dart",
+      "ref": "test/chapter_closure_golden_test.dart#reviewed",
+      "sha256": "4c898108451fa09e47c475e0df22d3cff7565108ca59773d31f65ff7539d3a7f"
+    },
+    {
+      "path": "test/goldens/chapter-closure-arrival.png",
+      "ref": "test/goldens/chapter-closure-arrival.png#reviewed",
+      "sha256": "1d44ecc1caeaba27fb68d30924db9c650924318b477f5d115ad15afb356a46ca"
+    },
+    {
+      "path": "test/goldens/chapter-closure-blankMap.png",
+      "ref": "test/goldens/chapter-closure-blankMap.png#reviewed",
+      "sha256": "6da3d92c9d467e04973393c5a8b90378393fb99ed1e9dcac5dd0fa458eb0ba5e"
+    },
+    {
+      "path": "test/goldens/chapter-closure-commons.png",
+      "ref": "test/goldens/chapter-closure-commons.png#reviewed",
+      "sha256": "ed245b91d61a28053a67da9725dd7e23a830796f120fff1f59cbc673ff1fc9b0"
+    },
+    {
+      "path": "test/goldens/chapter-closure-constellation.png",
+      "ref": "test/goldens/chapter-closure-constellation.png#reviewed",
+      "sha256": "83b1200701c5a71874f34ff04a0b788c9e53cf90fc8325f452f9bcf3eed60f56"
+    },
+    {
+      "path": "test/goldens/chapter-closure-crossing.png",
+      "ref": "test/goldens/chapter-closure-crossing.png#reviewed",
+      "sha256": "9c9126d5e2baaa50385ef7571fa49da6b36ef05c40ab5c0d9590c413c376a790"
+    },
+    {
+      "path": "test/goldens/chapter-closure-fairShare.png",
+      "ref": "test/goldens/chapter-closure-fairShare.png#reviewed",
+      "sha256": "b1dd21c5fa3292e6a391bb686e0e181cac7b3dca90128a644ca9767a59779080"
+    },
+    {
+      "path": "test/goldens/chapter-closure-farShore.png",
+      "ref": "test/goldens/chapter-closure-farShore.png#reviewed",
+      "sha256": "abddd31170b664d7df8b03273ec606d7d7807ae4e84e4d45dd11242d36a9bb9f"
+    },
+    {
+      "path": "test/goldens/chapter-closure-frost.png",
+      "ref": "test/goldens/chapter-closure-frost.png#reviewed",
+      "sha256": "3d8825870a24345ebc0032bee4cc1078e640cefa9bbc7f721aaefd1d304ce240"
+    },
+    {
+      "path": "test/goldens/chapter-closure-handoff.png",
+      "ref": "test/goldens/chapter-closure-handoff.png#reviewed",
+      "sha256": "91bc994ae3144d1272fc4cf91f875e472f4fa87918f59c89d33a984bfd838c23"
+    },
+    {
+      "path": "test/goldens/chapter-closure-horizon.png",
+      "ref": "test/goldens/chapter-closure-horizon.png#reviewed",
+      "sha256": "809ed3c5f40da875483a9c3b04134ee7c5e042a9b3f1d4626740c5d284bb4afd"
+    },
+    {
+      "path": "test/goldens/chapter-closure-memoryHouse.png",
+      "ref": "test/goldens/chapter-closure-memoryHouse.png#reviewed",
+      "sha256": "b1a1246ac7e271a1cc07cb3a9f9ff359bbeac17e7464002a6b16e624be9f39b2"
+    },
+    {
+      "path": "test/goldens/chapter-closure-reply.png",
+      "ref": "test/goldens/chapter-closure-reply.png#reviewed",
+      "sha256": "23d3af491d33d342c1dd7d2d43b6dc6e53cd86bb695069b773d8a22ad11ae69a"
+    },
+    {
+      "path": "test/goldens/chapter-closure-return.png",
+      "ref": "test/goldens/chapter-closure-return.png#reviewed",
+      "sha256": "0fd82522c9c147d290b94216506e11584e3c330206471da50aeeab12444f9d50"
+    },
+    {
+      "path": "test/goldens/chapter-closure-returningGarden.png",
+      "ref": "test/goldens/chapter-closure-returningGarden.png#reviewed",
+      "sha256": "0d3f27c5c3fe6570d51cd9bd6d9f45cc1ef38c02d0d323060cf55ab6a55c5082"
+    },
+    {
+      "path": "test/goldens/chapter-closure-seedReturn.png",
+      "ref": "test/goldens/chapter-closure-seedReturn.png#reviewed",
+      "sha256": "df9d57f870fe73a28416b301eae7d70323161139f1872bc8528824a91240ae73"
+    },
+    {
+      "path": "test/goldens/chapter-closure-threshold.png",
+      "ref": "test/goldens/chapter-closure-threshold.png#reviewed",
+      "sha256": "e0bf481df80471286f55ccc51221de8d982d7a9a717d39c6e64ba304a9955005"
     }
   ]
 }
