@@ -34,6 +34,18 @@ String render(String source) {
           '3×3 personality×companion matrix·3개 성격별 상반신 Golden·활동 forecast Golden·활동 회고 일지 Golden·5개 exclusive follow-up')
       .replaceAll('3개 성격별 page 1 상반신 Golden, 16개 closure Golden',
           '3개 성격별 page 1 상반신 Golden·활동 forecast Golden·활동 회고 일지 Golden, 16개 closure Golden');
+  if (!output.contains('엔딩 뒤 다음 회차 계승 선택 Golden')) {
+    output = output.replaceAll(
+        '3개 회차 계승 프로필', '3개 회차 계승 프로필·엔딩 뒤 다음 회차 계승 선택 Golden(ko/en)');
+  }
+  if (!output.contains('엔딩 뒤 계승 프로필 선택 Golden')) {
+    output = output.replaceAll('3개 계승 프로필·3개 프로필별 선택 보정',
+        '3개 계승 프로필·엔딩 뒤 계승 프로필 선택 Golden(ko/en)·3개 프로필별 선택 보정');
+  }
+  if (!output.contains('explicit ending picker')) {
+    output = output.replaceAll('collection-driven legacy unlock',
+        'collection-driven legacy unlock with explicit ending picker');
+  }
   output = output
       .replaceAll('Canvas UI 다섯 상태 행렬·활동 forecast·활동 회고 일지·실제',
           'Canvas UI 다섯 상태 행렬·활동 forecast·활동 회고 일지(ko/en)·실제')

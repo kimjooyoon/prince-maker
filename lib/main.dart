@@ -26,6 +26,7 @@ import 'environment_catalog.dart';
 import 'canvas_ui_kit.dart';
 import 'canvas_choice_impact.dart';
 import 'event_art.dart';
+import 'legacy_profile_catalog.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,6 +71,7 @@ class _Game extends State<Game> {
       archiveEmotionIndex = 0;
   String locale = 'ko';
   bool finished = false;
+  String? selectedLegacyId;
   final history = <String>[];
   final stats = {'지혜': 4, '공감': 5, '용기': 3},
       bonds = {'lumi': 0, 'bora': 0, 'taro': 0};
@@ -87,15 +89,7 @@ class _Game extends State<Game> {
   late CollectionPort collection;
   LocaleCatalog get catalog => LocaleCatalog(widget.locales);
   String? legacyProfileId() {
-    final profiles = (widget.story['legacyProfiles'] as List? ?? const [])
-        .cast<Map<String, dynamic>>();
-    final candidates = profiles.where((profile) {
-      final endings =
-          (profile['endingIds'] as List? ?? const []).cast<String>();
-      return collectionEntries.any((entry) => endings.contains(entry['id']));
-    }).toList()
-      ..sort((a, b) => '${a['id']}'.compareTo('${b['id']}'));
-    return candidates.isEmpty ? null : '${candidates.first['id']}';
+    return defaultLegacyProfileId(widget.story, collectionEntries);
   }
 
   String tr(String key, String fallback) =>
@@ -329,6 +323,7 @@ class _Game extends State<Game> {
     collectionEntries
       ..clear()
       ..addAll(collection.read());
+    selectedLegacyId = legacyProfileId();
   }
 
   bool choiceAvailable(Map e) =>
@@ -420,6 +415,18 @@ class _Game extends State<Game> {
     } else if (page == 2) {
       if (y < 100 && x > 590)
         toggleLocale();
+      else if (y >= 600 &&
+          y < 655 &&
+          widget.story['legacySelection'] is Map &&
+          unlockedLegacyProfiles(widget.story, collectionEntries).isNotEmpty) {
+        final profiles =
+            unlockedLegacyProfiles(widget.story, collectionEntries);
+        if (widget.story['legacySelection'] is Map && profiles.isNotEmpty) {
+          final index = ((x - 24) ~/ 238).clamp(0, profiles.length - 1);
+          setState(() => selectedLegacyId = '${profiles[index]['id']}');
+        }
+      } else if (y >= 535 && y < 600 && x >= 365 && x < 665)
+        restart();
       else if (y > 490 && y < 680) restart();
     } else if (page == 3) {
       if (y < 100 && x > 590)
@@ -567,11 +574,11 @@ class _Game extends State<Game> {
 
   void restart() {
     session.save.clear();
+    final lineage = selectedLegacyId ?? widget.legacyId ?? legacyProfileId();
     setState(() {
       session = GameSession(JsonStoryAdapter(widget.story), createSaveAdapter(),
-          legacyUnlocked:
-              widget.legacyId != null || collectionEntries.isNotEmpty,
-          legacyId: widget.legacyId ?? legacyProfileId());
+          legacyUnlocked: lineage != null || collectionEntries.isNotEmpty,
+          legacyId: lineage);
       week = 1;
       coins = 12;
       fatigue = 0;
@@ -592,6 +599,7 @@ class _Game extends State<Game> {
       milestones.clear();
       flags.clear();
       sync();
+      selectedLegacyId = null;
     });
   }
 
@@ -643,6 +651,7 @@ class _Game extends State<Game> {
                           snapshot().encode(),
                           activities,
                           collectionEntries,
+                          selectedLegacyId,
                           locale,
                           widget.locales),
                       size: viewport),
@@ -683,6 +692,7 @@ class Scene extends CustomPainter {
       this.saveCode,
       this.activities,
       this.collectionEntries,
+      this.selectedLegacyId,
       this.locale,
       this.locales) {
     repaintKey = canvasSceneFingerprint([
@@ -721,6 +731,7 @@ class Scene extends CustomPainter {
           .map((a) => [a.label, a.icon, a.stat, a.delta, a.fatigue, a.coins])
           .toList(),
       collectionEntries,
+      selectedLegacyId,
       locale,
       locales.hashCode,
     ]);
@@ -747,6 +758,7 @@ class Scene extends CustomPainter {
   final String saveCode;
   final List<Activity> activities;
   final List<Map<String, dynamic>> collectionEntries;
+  final String? selectedLegacyId;
   final String locale;
   final Map<String, Map<String, String>> locales;
   late final String repaintKey;
@@ -2463,6 +2475,46 @@ class Scene extends CustomPainter {
     txt(c, '다시 루멘으로', const Offset(450, 557), 17, ink, bold: true);
     drawLocalizedEnding(c, s, d, rank, history, goalCount, missingGoals,
         allMilestones, milestones);
+    legacyPicker(c);
+  }
+
+  void legacyPicker(Canvas c) {
+    if (s['legacySelection'] is! Map) return;
+    final profiles = unlockedLegacyProfiles(s, collectionEntries);
+    if (profiles.isEmpty) return;
+    txt(
+        c,
+        localized('ui.ending.legacyTitle',
+            activeLocale == 'ko' ? '다음 회차 계승 선택' : 'Choose a next-run legacy'),
+        const Offset(24, 578),
+        10,
+        teal,
+        bold: true,
+        maxWidth: 330);
+    for (var i = 0; i < profiles.length && i < 3; i++) {
+      final profile = profiles[i],
+          id = '${profile['id']}',
+          selected = id == selectedLegacyId,
+          x = 24 + i * 238.0,
+          companion = (s['companions'] as List? ?? const [])
+              .whereType<Map>()
+              .firstWhere(
+                  (item) => '${item['id']}' == '${profile['companionId']}',
+                  orElse: () => <String, dynamic>{}),
+          title =
+              localized('${profile['titleKey']}', '${profile['title'] ?? id}'),
+          companionName = localized('${companion['nameKey']}',
+              '${companion['name'] ?? profile['companionId'] ?? ''}'),
+          stat = localizedStat('${profile['stat']}');
+      box(c, Rect.fromLTWH(x, 600, 226, 54), selected ? teal : Colors.white,
+          radius: 14, stroke: teal, shadow: selected);
+      txt(c, '${selected ? '✦ ' : ''}$title', Offset(x + 12, 610), 9,
+          selected ? Colors.white : ink,
+          bold: true, maxWidth: 202, maxLines: 1);
+      txt(c, '$companionName · $stat +${profile['bonus'] ?? 0}',
+          Offset(x + 12, 630), 8, selected ? Colors.white70 : teal,
+          maxWidth: 202, maxLines: 1);
+    }
   }
 
   @override

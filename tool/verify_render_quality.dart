@@ -132,6 +132,15 @@ void main() {
       activityJournalGoldenTest, 'goldens/activity-journal-en.png');
   requireText('test/activity_journal_golden_test.dart',
       activityJournalGoldenTest, 'goldens/activity-journal-ko.png');
+  requireText('test/golden_test.dart', goldenTest,
+      'ending exposes deterministic next-run legacy picker');
+  for (final name in [
+    'goldens/legacy-picker.png',
+    'goldens/legacy-picker-en.png',
+    'goldens/legacy-picker-selected.png',
+  ]) {
+    requireText('test/golden_test.dart', goldenTest, name);
+  }
   requireText('test/player_facing_golden_test.dart', playerFacingGoldenTest,
       'all personality illustration pages render deterministic portraits');
   for (final name in [

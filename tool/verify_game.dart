@@ -143,6 +143,8 @@ void main() {
       (story['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
   final narrativeLoop =
       (story['narrativeLoop'] as Map? ?? {}).cast<String, dynamic>();
+  final legacySelection =
+      (story['legacySelection'] as Map? ?? {}).cast<String, dynamic>();
   final chapterSceneContract =
       (story['chapterSceneContract'] as Map? ?? {}).cast<String, dynamic>();
   final relationshipDesign =
@@ -285,6 +287,23 @@ void main() {
           (profile['endingIds'] as List)
               .any((ending) => !endingIds.contains('$ending')))) {
     fail('legacy profile contract must map three authored growth lineages');
+  }
+  final legacySelectionEvidence =
+      (legacySelection['evidence'] as List? ?? const []).cast<String>();
+  if (legacySelection['schema'] != 'lumen-legacy-selection-v1' ||
+      legacySelection['unlockRule'] is! String ||
+      legacySelection['ordering'] != 'legacy profile id ascending' ||
+      legacySelection['maximumVisibleProfiles'] != 3 ||
+      legacySelection['defaultWhenUntouched'] is! String ||
+      legacySelection['effect'] is! String ||
+      !legacySelectionEvidence
+          .contains('lib/legacy_profile_catalog.dart#unlockedLegacyProfiles') ||
+      !legacySelectionEvidence.contains('lib/main.dart#legacyPicker') ||
+      !legacySelectionEvidence.contains(
+          'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order') ||
+      !legacySelectionEvidence.contains(
+          'test/golden_test.dart#ending exposes deterministic next-run legacy picker')) {
+    fail('legacy selection must be an explicit deterministic SSOT contract');
   }
   final scenarioDimensions =
       (scenario['dimensions'] as List? ?? []).cast<Map<String, dynamic>>();
@@ -836,6 +855,9 @@ void main() {
     'memory-gate.png',
     'legacy-gate.png',
     'legacy-profile.png',
+    'legacy-picker.png',
+    'legacy-picker-en.png',
+    'legacy-picker-selected.png',
     'companion-epilogue.png',
     'companion-stargazer.png',
     'companion-gardener.png',
@@ -917,6 +939,11 @@ void main() {
         uiEvidence.contains("matchesGoldenFile('goldens/outing.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/memory-gate.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/legacy-gate.png')") &&
+        uiEvidence
+            .contains('ending exposes deterministic next-run legacy picker') &&
+        uiEvidence.contains("goldens/legacy-picker.png") &&
+        uiEvidence.contains("goldens/legacy-picker-en.png") &&
+        uiEvidence.contains("goldens/legacy-picker-selected.png") &&
         uiEvidence
             .contains("matchesGoldenFile('goldens/companion-epilogue.png')") &&
         uiEvidence.contains(
@@ -1009,6 +1036,10 @@ void main() {
         gameplayEvidence.contains('endings.length, greaterThanOrEqualTo(3)') &&
         File('test/collection_test.dart').existsSync() &&
         uiEvidence.contains('ending collection survives a restart') &&
+        uiEvidence
+            .contains('ending exposes deterministic next-run legacy picker') &&
+        mainEvidence.contains('selectedLegacyId') &&
+        mainEvidence.contains('legacyPicker(c)') &&
         mainEvidence.contains('createCollectionAdapter') &&
         collectionEvidence.contains('lumen-collection-v1'),
     'scenarioCompleteness': scenarioDimensions.length == 8 &&

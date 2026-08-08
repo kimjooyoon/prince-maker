@@ -383,6 +383,9 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/jsonl_contract_test.dart#story JSONL is canonical and reconstructs authored collections',
     'test/quality_score_test.dart#quality score weights are a deterministic closed sum',
     'test/trilemma_verdict_test.dart#closed-loop-receipt',
+    'lib/legacy_profile_catalog.dart#unlockedLegacyProfiles',
+    'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order',
+    'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
   ];
   refs.removeWhere((entry) =>
       entry['ref'] == 'docs/decision-proof-contract.jsonl#preconditionFields' ||
@@ -4698,6 +4701,7 @@ void main() {
     'ui.closure.scene': '동행의 한마디',
     'ui.closure.nextPage': '다음 장으로 →',
     'ui.closure.link': '결과는 시스템 영수증과 다음 선택에 연결됩니다.',
+    'ui.ending.legacyTitle': '다음 회차 계승 선택',
     'ui.relationship.label': '관계 상태',
     'ui.relationship.state.unformed': '아직 얽히지 않음',
     'ui.relationship.state.balanced': '나란한 동행',
@@ -4859,6 +4863,7 @@ void main() {
     'ui.closure.nextPage': 'Next chapter →',
     'ui.closure.link':
         'The result is linked to the system receipt and next choice.',
+    'ui.ending.legacyTitle': 'Choose a next-run legacy',
     'ui.relationship.label': 'Relationship state',
     'ui.relationship.state.unformed': 'Not yet woven',
     'ui.relationship.state.balanced': 'Side-by-side',
@@ -5060,6 +5065,23 @@ void main() {
         '2^11 unconditional authored branch vectors × 5 activity policies × 3 personality routes × 4 legacy contexts = 122,880 route inputs; the CI enumerator replays all 2,048 branch vectors and requires at least 2,000 distinct deterministic scenario traces.',
     'evidence': 'tool/verify_scenario_variants.dart#scenario-case-enumerator',
   };
+  story['legacySelection'] = {
+    'schema': 'lumen-legacy-selection-v1',
+    'purpose':
+        'make next-run inheritance an explicit player choice after an authored ending',
+    'unlockRule': 'a collection ending id intersects the profile endingIds',
+    'ordering': 'legacy profile id ascending',
+    'maximumVisibleProfiles': 3,
+    'defaultWhenUntouched': 'first unlocked profile in stable order',
+    'effect': 'selected profile id becomes the next GameSession legacyId',
+    'systemOwner': 'lumen-rule-engine',
+    'evidence': [
+      'lib/legacy_profile_catalog.dart#unlockedLegacyProfiles',
+      'lib/main.dart#legacyPicker',
+      'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order',
+      'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
+    ],
+  };
   story['endingDesign'] = {
     'schema': 'lumen-ending-matrix-v1',
     'resolutionOrder': [
@@ -5246,6 +5268,8 @@ void main() {
       'Canvas event and closure evidence plus 6-location route atlas, 18 companion scenes, 24 side-scene records, 10 activity reflections, 18 ending variants, ko+en catalogs, speaker portrait bindings and system decision receipts';
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
+  byId['replay']!['current'] =
+      '5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / explicit deterministic next-run profile selection / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues';
   story['scenarioCompleteness']['dimensions'] = dimensions;
   story['engineDecision'] = engineDecisionContract();
 
