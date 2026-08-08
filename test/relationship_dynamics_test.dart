@@ -35,5 +35,20 @@ void main() {
         bondId: 'lumi', bondDelta: 6, rivalId: 'bora', rivalDelta: -1));
     expect(session.world.progress[0]!.trace,
         contains('relationship:estranged|gap:6'));
+    expect(session.world.progress[0]!.trace,
+        contains('relationship-followup:estranged-followup'));
+  });
+
+  test('deterministic relationship followups are mutually exclusive', () async {
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
+        as Map<String, dynamic>;
+    final story = JsonStoryAdapter(source);
+    final followups = ['unformed', 'balanced', 'tension', 'estranged', 'truce']
+        .map((id) => resolveRelationshipFollowup(story, {'id': id, 'gap': 0}));
+    expect(followups.every((item) => item.isNotEmpty), isTrue);
+    expect(followups.map((item) => item['exclusiveGroup']).toSet(),
+        {'relationship-followup'});
+    expect(followups.map((item) => item['stateId']).toSet().length, 5);
   });
 }

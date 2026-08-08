@@ -392,6 +392,13 @@ void main() {
   };
   final actualRelationshipStateIds =
       relationshipStates.map((state) => '${state['id']}').toSet();
+  final relationshipFollowups =
+      (relationshipDesign['followups'] as List? ?? const [])
+          .cast<Map<String, dynamic>>();
+  final followupStateIds =
+      relationshipFollowups.map((followup) => '${followup['stateId']}').toSet();
+  final companionIds =
+      companions.map((companion) => '${companion['id']}').toSet();
   if (relationshipDesign['schema'] != 'lumen-relationship-dynamics-v1' ||
       relationshipDesign['truceFlag'] is! String ||
       relationshipThresholds['tensionGap'] is! int ||
@@ -403,8 +410,24 @@ void main() {
       !actualRelationshipStateIds.containsAll(relationshipStateIds) ||
       relationshipStates.any(
           (state) => state['key'] is! String || state['fallback'] is! String) ||
+      relationshipDesign['followupExclusiveGroup'] != 'relationship-followup' ||
+      relationshipFollowups.length != relationshipStateIds.length ||
+      followupStateIds.length != relationshipStateIds.length ||
+      !followupStateIds.containsAll(relationshipStateIds) ||
+      relationshipFollowups.any((followup) =>
+          followup['exclusiveGroup'] != 'relationship-followup' ||
+          followup['speakerId'] is! String ||
+          !companionIds.contains(followup['speakerId']) ||
+          followup['titleKey'] is! String ||
+          followup['lineKey'] is! String ||
+          followup['title'] is! String ||
+          followup['line'] is! String) ||
       narrativeLoop['relationshipStateContract'] !=
-          'lumen-relationship-dynamics-v1') {
+          'lumen-relationship-dynamics-v1' ||
+      narrativeLoop['relationshipFollowupCount'] !=
+          relationshipStateIds.length ||
+      narrativeLoop['relationshipFollowupContract'] !=
+          'one exclusive follow-up per resolved state') {
     fail('relationship dynamics must expose five deterministic states');
   }
   for (final ref in refs) {

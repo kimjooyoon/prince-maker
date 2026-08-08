@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: de27e496c09067687e40cffb9df46478fa12e556a7824bb2451e81e6a9a7cd0e -->
+<!-- ssot-sha256: 03135bb3a834ba592f13a82f8219ea7fb51becd29b00fde9171e1d03059aa693 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -51,8 +51,8 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **494** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **176** · 전체 authored 대사 줄: **216**
-- 산식: catalog 494 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units
+- locale 최소 키: **505** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **176** · 전체 authored 대사 줄: **216**
+- 산식: catalog 505 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6 + relationship follow-up UI 11; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units
 
 ## 최소 플레이타임 계약
 
@@ -103,11 +103,11 @@
 | --- | --- | --- | --- |
 | 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 16 chapters / 47 events / 4 locations / 16 milestones / 16 chapter contracts / terminal week 49 | `story/story.json#progression.contract` |
 | 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
-| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / deterministic tension-estrangement-truce state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats | `story/story.json#companions` |
+| 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / rival conflict / deterministic tension-estrangement-truce state / one exclusive follow-up per state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats | `story/story.json#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 16 milestones and 6 endings | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
 | 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues | `test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures` |
-| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats and visible relationship states / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
+| 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | 62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats, visible relationship states and exclusive state follow-ups / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
 | 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | 48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark | `test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending` |
 
 ## 생성 이미지 자산
@@ -123,8 +123,8 @@
 
 ## 대사 로케일
 
-- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `b86bb151278c038870620b1a539bb0d99fff1929ce5593cfd6ca903864280af4`
-- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `525d43c8c822e14f962016cdb039fd4626c48a04f1dee85db758edf6e0e92663`
+- [`story/locales/ko.json#catalog`](../story/locales/ko.json) · SHA-256 `c16f720d8d983f9057de1174f4cad6d9776c2e24e0a22787c865f534a15d3f7c`
+- [`story/locales/en.json#catalog`](../story/locales/en.json) · SHA-256 `b9a1d8c8f7020ecda86ebeda284011072d28d6cf40f6aa216a9f9ba8b1d45e6a`
 
 ## 성격
 

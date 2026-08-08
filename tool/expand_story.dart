@@ -179,6 +179,8 @@ void refreshHashes(Map<String, dynamic> story) {
     'tool/verify_decision_proof.dart#decision-proof-preconditions',
     'test/decision_proof_test.dart#same preconditions reproduce the same chain',
     'lib/game_core.dart#resolveRelationshipDynamics',
+    'lib/main.dart#relationshipFollowup',
+    'lib/game_core.dart#resolveRelationshipFollowup',
     'test/relationship_dynamics_test.dart#deterministic relationship states',
   ];
   refs.removeWhere((entry) =>
@@ -2025,6 +2027,20 @@ void main() {
     'ui.relationship.state.tension': '갈라지는 마음',
     'ui.relationship.state.estranged': '멀어진 동행',
     'ui.relationship.state.truce': '다시 잇는 동행',
+    'ui.relationship.followup': '상태별 후속 기록',
+    'ui.relationship.followup.unformed.title': '빈칸의 약속',
+    'ui.relationship.followup.unformed.line':
+        '아직 누구의 길도 정하지 않았으니, 다음 기록은 열어 둔 채 걷자.',
+    'ui.relationship.followup.balanced.title': '같은 속도의 표식',
+    'ui.relationship.followup.balanced.line': '누가 먼저인지 세지 않아도, 나란히 간 흔적은 남아.',
+    'ui.relationship.followup.tension.title': '금이 간 온실',
+    'ui.relationship.followup.tension.line':
+        '마음이 갈라진 자리를 덮지 말고, 다음 말이 닿을 틈을 남겨.',
+    'ui.relationship.followup.estranged.title': '늦은 답장',
+    'ui.relationship.followup.estranged.line':
+        '멀어진 거리는 실패의 이름이 아니야. 답장이 올 자리를 지켜 보자.',
+    'ui.relationship.followup.truce.title': '다시 묶은 바람',
+    'ui.relationship.followup.truce.line': '서로의 몫을 돌려준 뒤에야, 같은 바람을 다시 탈 수 있어.',
   });
   en.addAll({
     'ui.ledger.button': 'Fate ledger',
@@ -2059,7 +2075,93 @@ void main() {
     'ui.relationship.state.tension': 'Tension',
     'ui.relationship.state.estranged': 'Estranged',
     'ui.relationship.state.truce': 'Truce',
+    'ui.relationship.followup': 'State follow-up',
+    'ui.relationship.followup.unformed.title': 'A Promise in the Blank',
+    'ui.relationship.followup.unformed.line':
+        'No path has been chosen yet, so leave the next record open as we walk.',
+    'ui.relationship.followup.balanced.title': 'A Mark of Equal Pace',
+    'ui.relationship.followup.balanced.line':
+        'We do not need to count who leads; the path remembers walking side by side.',
+    'ui.relationship.followup.tension.title': 'The Cracked Greenhouse',
+    'ui.relationship.followup.tension.line':
+        'Do not cover the split in our hearts; leave a gap for the next words to reach.',
+    'ui.relationship.followup.estranged.title': 'A Late Reply',
+    'ui.relationship.followup.estranged.line':
+        'Distance is not the name of failure. Let us keep a place for an answer.',
+    'ui.relationship.followup.truce.title': 'Wind Tied Again',
+    'ui.relationship.followup.truce.line':
+        'Only after returning each share can we ride the same wind again.',
   });
+  final relationshipFollowups = <Map<String, dynamic>>[
+    {
+      'id': 'unformed-followup',
+      'stateId': 'unformed',
+      'speakerId': 'lumi',
+      'title': '빈칸의 약속',
+      'titleEn': 'A Promise in the Blank',
+      'line': '아직 누구의 길도 정하지 않았으니, 다음 기록은 열어 둔 채 걷자.',
+      'lineEn':
+          'No path has been chosen yet, so leave the next record open as we walk.'
+    },
+    {
+      'id': 'balanced-followup',
+      'stateId': 'balanced',
+      'speakerId': 'taro',
+      'title': '같은 속도의 표식',
+      'titleEn': 'A Mark of Equal Pace',
+      'line': '누가 먼저인지 세지 않아도, 나란히 간 흔적은 남아.',
+      'lineEn':
+          'We do not need to count who leads; the path remembers walking side by side.'
+    },
+    {
+      'id': 'tension-followup',
+      'stateId': 'tension',
+      'speakerId': 'bora',
+      'title': '금이 간 온실',
+      'titleEn': 'The Cracked Greenhouse',
+      'line': '마음이 갈라진 자리를 덮지 말고, 다음 말이 닿을 틈을 남겨.',
+      'lineEn':
+          'Do not cover the split in our hearts; leave a gap for the next words to reach.'
+    },
+    {
+      'id': 'estranged-followup',
+      'stateId': 'estranged',
+      'speakerId': 'lumi',
+      'title': '늦은 답장',
+      'titleEn': 'A Late Reply',
+      'line': '멀어진 거리는 실패의 이름이 아니야. 답장이 올 자리를 지켜 보자.',
+      'lineEn':
+          'Distance is not the name of failure. Let us keep a place for an answer.'
+    },
+    {
+      'id': 'truce-followup',
+      'stateId': 'truce',
+      'speakerId': 'taro',
+      'title': '다시 묶은 바람',
+      'titleEn': 'Wind Tied Again',
+      'line': '서로의 몫을 돌려준 뒤에야, 같은 바람을 다시 탈 수 있어.',
+      'lineEn':
+          'Only after returning each share can we ride the same wind again.'
+    },
+  ];
+  final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
+  final companionById = {
+    for (final companion in companions) '${companion['id']}': companion
+  };
+  for (final followup in relationshipFollowups) {
+    final stateId = '${followup['stateId']}',
+        speaker = companionById[followup['speakerId']]!;
+    followup['exclusiveGroup'] = 'relationship-followup';
+    followup['speakerNameKey'] = speaker['nameKey'];
+    followup['speakerPortraitAsset'] = speaker['portraitAsset'];
+    followup['speakerPortraitFrame'] = speaker['portraitFrame'];
+    followup['titleKey'] = 'ui.relationship.followup.$stateId.title';
+    followup['lineKey'] = 'ui.relationship.followup.$stateId.line';
+    ko[followup['titleKey']] = followup['title'];
+    ko[followup['lineKey']] = followup['line'];
+    en[followup['titleKey']] = followup['titleEn'];
+    en[followup['lineKey']] = followup['lineEn'];
+  }
   story['relationshipDesign'] = {
     'schema': 'lumen-relationship-dynamics-v1',
     'purpose':
@@ -2067,6 +2169,8 @@ void main() {
     'stateOrder': ['unformed', 'balanced', 'tension', 'estranged', 'truce'],
     'thresholds': {'tensionGap': 2, 'estrangedGap': 5},
     'truceFlag': 'windmill-truce',
+    'followupExclusiveGroup': 'relationship-followup',
+    'followups': relationshipFollowups,
     'states': [
       {
         'id': 'unformed',
@@ -2103,6 +2207,9 @@ void main() {
       'lib/game_core.dart#resolveRelationshipDynamics',
       'test/relationship_dynamics_test.dart#deterministic relationship states',
       'lib/main.dart#relationshipState',
+      'lib/main.dart#relationshipFollowup',
+      'lib/game_core.dart#resolveRelationshipFollowup',
+      'test/relationship_dynamics_test.dart#deterministic relationship followups',
     ],
   };
   story['narrativeLoop'] = {
@@ -2112,8 +2219,11 @@ void main() {
     'stagesPerQuest': 3,
     'derivedFrom': 'event choice flags + deterministic companion bonds',
     'resolver':
-        'lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests,lib/game_core.dart#resolveRelationshipDynamics',
+        'lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests,lib/game_core.dart#resolveRelationshipDynamics,lib/game_core.dart#resolveRelationshipFollowup',
     'relationshipStateContract': 'lumen-relationship-dynamics-v1',
+    'relationshipFollowupCount': 5,
+    'relationshipFollowupContract':
+        'one exclusive follow-up per resolved state',
     'systemOwner': 'lumen-rule-engine',
     'evidence': 'test/narrative_ledger_test.dart#deterministic-projection',
   };
@@ -2281,13 +2391,13 @@ void main() {
   byId['agency']!['current'] =
       '94 event choices; outing choices trade time-budget coins for stat and bond; memory flags carry consequences; butterfly ledger makes six future echoes visible';
   byId['relationship']!['current'] =
-      '3 companions / rival conflict / deterministic tension-estrangement-truce state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats';
+      '3 companions / rival conflict / deterministic tension-estrangement-truce state / one exclusive follow-up per state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats';
   byId['feedback']!['current'] =
       'stats, coins, fatigue, 16 milestones and 6 endings';
   byId['gating']!['current'] =
       '16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings';
   byId['presentation']!['current'] =
-      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats and visible relationship states / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
+      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats, visible relationship states and exclusive state follow-ups / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;
@@ -2296,13 +2406,13 @@ void main() {
   materializeChapterScenes(story, ko, en);
   story['narrativeLoop']['chapterSceneCount'] =
       (story['progression'] as List).length;
-  story['dialogueMetrics']['minimumLocaleKeys'] = 494;
+  story['dialogueMetrics']['minimumLocaleKeys'] = 505;
   story['dialogueMetrics']['minimumVisibleDialogueLines'] =
       (story['events'] as List).length + (story['progression'] as List).length;
   story['dialogueMetrics']['minimumVisibleNarrativeUnits'] = 176;
   story['dialogueMetrics']['authoredDialogueLines'] = 216;
   story['dialogueMetrics']['formula'] =
-      'catalog 494 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units';
+      'catalog 505 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6 + relationship follow-up UI 11; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units';
 
   final encoder = const JsonEncoder.withIndent('  ');
   koFile.writeAsStringSync('${encoder.convert(ko)}\n');

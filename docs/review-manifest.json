@@ -5,12 +5,12 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "de27e496c09067687e40cffb9df46478fa12e556a7824bb2451e81e6a9a7cd0e"
+      "sha256": "03135bb3a834ba592f13a82f8219ea7fb51becd29b00fde9171e1d03059aa693"
     },
     {
       "path": "lib/main.dart",
       "ref": "lib/main.dart#_Game+Scene",
-      "sha256": "7ba2061bcf4017cde3ff05758718979e632165b4e6ba3e0a4ddde89da181c622"
+      "sha256": "7f81232d4d8179d2566f5ab09fd2003a2eea1ffedef7a31e07f3c5bc1ad3d1f5"
     },
     {
       "path": "lib/feedback_banner.dart",
@@ -30,7 +30,7 @@
     {
       "path": "lib/game_core.dart",
       "ref": "lib/game_core.dart#GameWorld+GameSession+resolveEnding",
-      "sha256": "e60e7b6025064bfa89e3ece0675f78ee9f2231ada964b2bd5aa663fcb12231fa"
+      "sha256": "1d04a73be37a6fad27306999605b1f4ef57da9e08b02bbea995e6380f1d11e3d"
     },
     {
       "path": "lib/save_adapter.dart",
@@ -200,32 +200,32 @@
     {
       "path": "story/locales/ko.json",
       "ref": "story/locales/ko.json#catalog",
-      "sha256": "b86bb151278c038870620b1a539bb0d99fff1929ce5593cfd6ca903864280af4"
+      "sha256": "c16f720d8d983f9057de1174f4cad6d9776c2e24e0a22787c865f534a15d3f7c"
     },
     {
       "path": "story/locales/en.json",
       "ref": "story/locales/en.json#catalog",
-      "sha256": "525d43c8c822e14f962016cdb039fd4626c48a04f1dee85db758edf6e0e92663"
+      "sha256": "b9a1d8c8f7020ecda86ebeda284011072d28d6cf40f6aa216a9f9ba8b1d45e6a"
     },
     {
       "path": "docs/game-completeness.md",
       "ref": "docs/game-completeness.md#metrics",
-      "sha256": "27212159efc19aa58404771e962be488258824dcabb4d002df0218d951480cd1"
+      "sha256": "0715236111c0b90ac6d4d761e3a09fdedc59c2fee6b08e8e4fea632f13027a44"
     },
     {
       "path": "docs/trilemma.md",
       "ref": "docs/trilemma.md#closed-loop",
-      "sha256": "acd73bb7d436c01f0c192924d5774d370c8b4badd044e9ba95def2e669598cef"
+      "sha256": "7055059cf2c00a21bdbf4039ac8c73aa8b04ea8c33b9bbac2f5b8f6150248ba9"
     },
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "b1788e0d1fc4bd962b1642f5b165891d4d423e6f379cd11debcc26931de2bd0a"
+      "sha256": "9efaecb3af1e843c78278881ca912d6c68479d1f003eeed34a07c806721b0ca9"
     },
     {
       "path": "docs/scenario-completeness.md",
       "ref": "docs/scenario-completeness.md#scenario-completeness",
-      "sha256": "29edfafcb41799cfa5ac4539cbe4a111b8c845eeaf6fb188517cd30d8cfd120e"
+      "sha256": "3e0ee63511403000d430107810824b6bad2909b2e016d6530c417e57a749ec49"
     },
     {
       "path": "docs/architecture.md",
@@ -235,12 +235,12 @@
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "9f4c18850e3e1bf42683f9030180ead9a5c5b15ddbe5df0e49656536e795d50e"
+      "sha256": "57d8d13d8f6fd1858e0e3876c26ac644fbbca26f8c2ecc9a21865b45cfac47a4"
     },
     {
       "path": "docs/design-system.md",
       "ref": "docs/design-system.md#personality_portrait",
-      "sha256": "05401e9faf3d0a84f84205e109873ee397bba6c55e854675ac2d6c7d073289c4"
+      "sha256": "2c1c91c14d80da4f3642ebce985d9a718fdb42c8f4d192bcc7003fe62409f261"
     },
     {
       "path": "docs/art-provenance.md",
@@ -270,7 +270,7 @@
     {
       "path": "test/story_integration_test.dart",
       "ref": "test/story_integration_test.dart#canonical-24-week-route",
-      "sha256": "776f5613908434f90b95a2ad08339d165c05305996907988ef783e6b4a4004cb"
+      "sha256": "f7288900c8fe7bd12693b5dac197bf9ce5c77b2ba9ac668d753e4de45a70bbb6"
     },
     {
       "path": "test/purity_integration_test.dart",
@@ -320,7 +320,7 @@
     {
       "path": "tool/verify_game.dart",
       "ref": "tool/verify_game.dart#trilemma-contract-assetRefs-localeRefs-progression-scenario",
-      "sha256": "0777abb48012ef8facd714b94d760a22d337d22b7c2102a5ec2f040a6f5a9802"
+      "sha256": "625ba4e931373b2d8b207205febe9a89df5c07c99ca280072c0fa4b6e36d3674"
     },
     {
       "path": "tool/benchmark_game.dart",
@@ -330,7 +330,7 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "e693d7e2dc7120c72e3c6b4becae6f2c2d23e2fc06b232dac488ddd5dceae6d8"
+      "sha256": "ea99f77c003e15987c424138c9f1f556337622fed2288db02fd4e235cb294213"
     },
     {
       "path": "test/locale_contract_test.dart",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "5c99cce206d46483aba40e48fa0122888554d228a515e0a6bcdcda8d3f8ea68d"
+      "sha256": "c61ff6a2411ac54acd0bb4d9b03688e4ed5aded1b428e9bf9d1c9560bf2e94e0"
     },
     {
       "path": "design/tokens.json",
@@ -390,7 +390,7 @@
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "57bfb490c87937dcce9a645cac237a6de93e63829e9c8c4927f5f33ed0abba6a"
+      "sha256": "1e1acc1ab596357321ea4c266f465560c2325d1f04c31af7c74bff0a30e15f50"
     },
     {
       "path": "tool/ci_gate.dart",
@@ -405,12 +405,12 @@
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "7affc9be978483affd1237fb649e4f20309ab1706b778fa94c61688b4fb53179"
+      "sha256": "c0395669c57b220663e3df0ad7e5a2176ad9986f514787e34c29ff84076da49b"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
       "ref": "tool/refresh_review_manifest.dart#reviewed",
-      "sha256": "accbad683bfdeec23a6566bb8235fd3687579f63c6b44db1b848fce46e254913"
+      "sha256": "a64a9d614e7f8a965c903c9379014f69355d5dca2ec34f5532570637fa94be7b"
     },
     {
       "path": "tool/verify_scenario_variants.dart",
@@ -510,17 +510,17 @@
     {
       "path": "docs/development-goals.json",
       "ref": "docs/development-goals.json#reviewed",
-      "sha256": "1caa96dadd56f3ed5bef60ec7b8791071c6be69200071b81183702d9b59b1d3e"
+      "sha256": "edd3e56b226e969b20f127e47e2374241f0ce25006568ed3987c3346d27e2a2a"
     },
     {
       "path": "docs/development-goals.md",
       "ref": "docs/development-goals.md#reviewed",
-      "sha256": "cf1ce17b61fa26d9cf714179b4ed26dff2bef87de70e0941e5696cd0b41e83a2"
+      "sha256": "484f1f56f60ab425aa7dd314029b42840adafe3c50bc0ed0e84b98938be9b939"
     },
     {
       "path": "tool/generate_development_goals.dart",
       "ref": "tool/generate_development_goals.dart#reviewed",
-      "sha256": "e0be548cd5dc0e3ec05dc40051149ea6737cbea3dc1ca6a1847289a5b87891b6"
+      "sha256": "8941543738c6272ed37760bab6883f69162ad2aa858835624b59ce8b37c9e6ef"
     },
     {
       "path": "tool/verify_development_goals.dart",
@@ -535,7 +535,7 @@
     {
       "path": "docs/decision-proof-contract.json",
       "ref": "docs/decision-proof-contract.json#reviewed",
-      "sha256": "da6790463e5a0ed7decbcefe45c18ef26c911f9f545aac2d1e94af2a88180639"
+      "sha256": "1557225f990bcb2efb280f746e7c155793ffe5d1d534bf4a47a6aa076884b2b5"
     },
     {
       "path": "tool/verify_decision_proof.dart",
@@ -640,82 +640,82 @@
     {
       "path": "test/goldens/chapter-closure-arrival.png",
       "ref": "test/goldens/chapter-closure-arrival.png#reviewed",
-      "sha256": "e644822d96a1db0aba9e77da6752c1b88e65d7701b47e2570e43a4f5e2031a9a"
+      "sha256": "ff37a21e41dd6eef505fc3e0027ca13d1a9edbaa679c40b00dea1fbbb5f15d42"
     },
     {
       "path": "test/goldens/chapter-closure-blankMap.png",
       "ref": "test/goldens/chapter-closure-blankMap.png#reviewed",
-      "sha256": "cf53a99de562c873db5302d57f01976bbf9529a524acf0bdd7578b59f17ebccf"
+      "sha256": "c1b9d77049d098a306a377d66f3f5e255760cca5c6b90243af1d0ebc030acabb"
     },
     {
       "path": "test/goldens/chapter-closure-commons.png",
       "ref": "test/goldens/chapter-closure-commons.png#reviewed",
-      "sha256": "d8dbc1c49bd2b5ecde11050afe107a15c2d6bfd9855d11e66b69c55f87434571"
+      "sha256": "5138a2b0f4481c043683f4dc2d2a4f5311c6021295786c7b8abacd5e0ee6ae99"
     },
     {
       "path": "test/goldens/chapter-closure-constellation.png",
       "ref": "test/goldens/chapter-closure-constellation.png#reviewed",
-      "sha256": "82a56271e76aab50b97ca1804792e09c12d3f2841a39eab3240f1c70a8c44997"
+      "sha256": "5167b3a3b9aeaaad32ead7cb704103550be028b7e6f3c45a9dc5b6ea7f2f4262"
     },
     {
       "path": "test/goldens/chapter-closure-crossing.png",
       "ref": "test/goldens/chapter-closure-crossing.png#reviewed",
-      "sha256": "ea571eff2868425983d39a6c3122564f47b086e4aad00b44c179231289e5df24"
+      "sha256": "bfac860c1e884f60c8fdc00d9bd977d12afc034a8333b0bbd49a8b6583253c51"
     },
     {
       "path": "test/goldens/chapter-closure-fairShare.png",
       "ref": "test/goldens/chapter-closure-fairShare.png#reviewed",
-      "sha256": "0d134eb56867fc82ab3c6d56163cd324e56fd8e5173b9650ba43b1d11b2578d1"
+      "sha256": "ef6d70a103d2725b9fcc22771bda031c72e18afbc56786c90d7eb60744fd2e65"
     },
     {
       "path": "test/goldens/chapter-closure-farShore.png",
       "ref": "test/goldens/chapter-closure-farShore.png#reviewed",
-      "sha256": "986bc46c80e13eaf01112037b1028823e68998bcce53c0983d8d22ecb5bc6fe8"
+      "sha256": "eb740f1751d078b87d583d7eaa7053ec33caddd0c31dd9bb89fe011965d2759b"
     },
     {
       "path": "test/goldens/chapter-closure-frost.png",
       "ref": "test/goldens/chapter-closure-frost.png#reviewed",
-      "sha256": "db48158c35d7c89f9c894f596dd882db81332ff2e6cd8a230ad91d4961b3324e"
+      "sha256": "2bbe139ce8cbe1f81a17199f7d72c6887e0558edddda415c59bcafb47c010ce1"
     },
     {
       "path": "test/goldens/chapter-closure-handoff.png",
       "ref": "test/goldens/chapter-closure-handoff.png#reviewed",
-      "sha256": "ce61a8fc5235da44e187056971538a08eb6547a0b1f1f635acc6015deebe7ab4"
+      "sha256": "d03cbb17be6467f9ccffeb300b3ecb257e0a0c2e40696a97e73f289955bd40b9"
     },
     {
       "path": "test/goldens/chapter-closure-horizon.png",
       "ref": "test/goldens/chapter-closure-horizon.png#reviewed",
-      "sha256": "277ecf563bd052c588f3245b85878858fc97b5e4264eac4bc97cbe7d75e4bbc4"
+      "sha256": "9891f125425388f53a2f0b123075b6da11aaface7d7633a891b38789b1a26e0d"
     },
     {
       "path": "test/goldens/chapter-closure-memoryHouse.png",
       "ref": "test/goldens/chapter-closure-memoryHouse.png#reviewed",
-      "sha256": "924121faa15c51bcdca369be03f44d1ab17e42e58b52614085949b26b5100ac6"
+      "sha256": "fad8f2915494611a601c792564aad0a336585fc1302d13205da17783d5ffbb7e"
     },
     {
       "path": "test/goldens/chapter-closure-reply.png",
       "ref": "test/goldens/chapter-closure-reply.png#reviewed",
-      "sha256": "9c873c81924c2742ff09362d5e72cf4e078cd09084c23deccc000097af9df73f"
+      "sha256": "56d681a26234ba96ccfc432451c2943955266bdbe3a31b94a705ecc5b1c5db14"
     },
     {
       "path": "test/goldens/chapter-closure-return.png",
       "ref": "test/goldens/chapter-closure-return.png#reviewed",
-      "sha256": "9a437ae323204e633ea014ade17abcbe81a780993915fc56719e1d6b674326a7"
+      "sha256": "1bcb82b19ede464077eb8907bab35b5045aedc0412a70665df4acad19690b38e"
     },
     {
       "path": "test/goldens/chapter-closure-returningGarden.png",
       "ref": "test/goldens/chapter-closure-returningGarden.png#reviewed",
-      "sha256": "bdcd48bcb54c22a2c30272c1eff86ff4d27ed6f031e37cfe959b36075e114095"
+      "sha256": "e1a3f9dbf67dd6e14162bad5b09112d16e03afecd58d75ff69dc46e601e8dc26"
     },
     {
       "path": "test/goldens/chapter-closure-seedReturn.png",
       "ref": "test/goldens/chapter-closure-seedReturn.png#reviewed",
-      "sha256": "130276b0f2d550e7ade17a3c94bccbf73337fdab2e00c3ce16ff8e89b1be3960"
+      "sha256": "c8d3b930e95f8d855deeabceb0df0f9175d475f2e4cba274917256e8d5dee92c"
     },
     {
       "path": "test/goldens/chapter-closure-threshold.png",
       "ref": "test/goldens/chapter-closure-threshold.png#reviewed",
-      "sha256": "afed276edc0e478ff6250ea056b0eb27930d390320dc907794c715bbfadae0ef"
+      "sha256": "bb62528865b98f989bcd0c3ffa0605d5be98c54087808d1654c672c88fe147e4"
     },
     {
       "path": "tool/verify_gameplay_fun.dart",
@@ -725,7 +725,12 @@
     {
       "path": "test/relationship_dynamics_test.dart",
       "ref": "test/relationship_dynamics_test.dart#reviewed",
-      "sha256": "62d0bfa93742d159b3d9fc6ad750c457584608edea8de1b5ed37a2dbeb46f542"
+      "sha256": "b33026ff1fb387dcd32f71d1eaa741ecc3ae27c2a2384ebdb62a149654ce089a"
+    },
+    {
+      "path": "test/relationship_followup_golden_test.dart",
+      "ref": "test/relationship_followup_golden_test.dart#reviewed",
+      "sha256": "428db8913772ab015998455c30c4b72d13c51cce881e0bd286a10f8bccdbf9c4"
     }
   ]
 }

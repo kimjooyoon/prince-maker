@@ -12,7 +12,7 @@
 
 ## 현재 증적 지표
 
-개발 작업의 정량 목표·gap·투입 단위는 생성 원장인 [`docs/development-goals.md`](development-goals.md)와 [`docs/development-goals.json`](development-goals.json)이 관리한다. authored content 227단위, narrative/relationship 25단위, replay exploration 604,928단위, presentation 934단위, proof 60단위로 종류를 분리하며, 이 숫자들을 품질 score로 임의 합산하지 않는다. `tool/verify_development_goals.dart`는 benchmark·결정 chain 실측과 6개 목표의 선행조건·증거를 함께 확인한다.
+개발 작업의 정량 목표·gap·투입 단위는 생성 원장인 [`docs/development-goals.md`](development-goals.md)와 [`docs/development-goals.json`](development-goals.json)이 관리한다. authored content 227단위, narrative/relationship 30단위, replay exploration 604,928단위, presentation 1,111단위, proof 62단위로 종류를 분리하며, 이 숫자들을 품질 score로 임의 합산하지 않는다. `tool/verify_development_goals.dart`는 benchmark·결정 chain 실측과 6개 목표의 선행조건·증거를 함께 확인한다.
 
 | 지표 | 기준 | 현재 |
 | --- | --- | ---: |
@@ -31,13 +31,13 @@
 | 발견 경로 | 장소 발견 flag를 홈 route atlas로 표시 | 4 |
 | 장기 목표 | 16개 막 목표/보상/성공·실패 피드백 | 16 |
 | 막 관계 장면 | 각 막 결산에 동료 speaker·portrait·i18n title/line을 묶은 결정론적 관계 beat | 16/16 |
-| 관계 상태 투영 | bond gap·windmill-truce flag를 `unformed/balanced/tension/estranged/truce`로 판정하고 Canvas·ECS trace에 반영 | 5 states + replay trace |
+| 관계 상태 투영 | bond gap·windmill-truce flag를 `unformed/balanced/tension/estranged/truce`로 판정하고 Canvas·ECS trace에 반영 | 5 states + replay trace + 5 exclusive follow-ups |
 | 엔딩 콘텐츠 | 스탯별 SSOT 엔딩 6개(기본/숙련) | 6 |
 | 엔딩 결산 | 달성 계절 목표·임계 동료 유대를 합산한 결정론적 루멘 기록 등급 1–3성 | 3 |
 | 분기 사건 | 47개 사건 × 선택 2개 | 47 × 2 |
 | 분기 도달성 | SSOT의 6개 엔딩·94개 사건 선택 계약 테스트 + 11개 authored branch 축 전수 열거 | 100/100 + 2,048 vectors |
 | 조건부 선택 | 용기 성장 4개 + 동료 유대 1개 + 이전 선택 기억 1개 + 계승 1개 잠금 선택지 | 6 |
-| 시각 회귀 | 한국어 fixture 8개·English locale 3개·사건 피드백·관계 상태·관계 긴장·관계 중재·외출·유대 게이트·기억 게이트·계승 게이트·계승 프로필 보정 피드백·나비효과/동료 퀘스트 기록 보관소(ko/en)·시스템 승인/거절 영수증 + canonical SSOT 홈·4주차 사건·48주 handoff 사건·엔딩·원인 회고·엔딩 도감·16막 canonical 사건·실제 16막 chapter-closure 관계 장면 Canvas Golden | 62 |
+| 시각 회귀 | 한국어 fixture 8개·English locale 3개·사건 피드백·관계 상태·관계 긴장·관계 중재·관계 후속 대화·외출·유대 게이트·기억 게이트·계승 게이트·계승 프로필 보정 피드백·나비효과/동료 퀘스트 기록 보관소(ko/en)·시스템 승인/거절 영수증 + canonical SSOT 홈·4주차 사건·48주 handoff 사건·엔딩·원인 회고·엔딩 도감·16막 canonical 사건·실제 16막 chapter-closure 관계 장면 Canvas Golden | 63 |
 | canonical 통합 경로 | 실제 `story/story.json` 48주 완주·사건 47개·목표 16개·에필로그·승인 영수증·48주 handoff·16막 사건·16막 결산 Golden 행렬 | 1 |
 | 최소 1회차 분량 | 48회 일정 + 47회 사건 선택 + 16회 막 결산 + 16회 관계 장면, SSOT 페이싱 계약 | 137분 (최소 120분) |
 | 종료 불변식 | 48주 완료 뒤 49주 terminal에서 추가 활동/사건 입력 차단 + 새 세션 재시작 | 1 |
@@ -45,7 +45,7 @@
 | personality campaign 경로 | 지혜·공감·용기 각 성격의 숙련 엔딩 재현 | 3 |
 | 글리프 안정성 | 번들 Noto Sans KR + Canvas 벡터 활동 아이콘 | 1 |
 | i18n 대사 | `key → locale catalog → Canvas` 한국어/English 대사·엔딩·동료·장소 결산 경로 | 2 locale |
-| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 494키 이상(실제 502) 및 character speaker·엔딩·운명 기록·chapter relationship scene·relationship state UI 키 검사 | 1 |
+| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 505키 이상(실제 513) 및 character speaker·엔딩·운명 기록·chapter relationship scene·relationship state/follow-up UI 키 검사 | 1 |
 | 스토리 진행도 | 1–3부터 46–48주까지 16막, 47개 사건·막 목표 연결 | 16 chapters |
 | 순수성 분기 | 동일 일정 예산의 지혜·공감 경로 + 5개 SSOT 일정 정책 + 동료 8 route set + 6개 fate thread·9개 퀘스트 stage가 서로 다른 authored 엔딩·유대·목표 서명을 생성 | 2,048 vectors + 8 route sets + 6/9 narrative |
 | 자동 게이트 | SSOT 검사·시나리오 vector 열거·해시 매니페스트·정적 분석·Flutter test·Golden·코어 benchmark·Wasm | 8 |

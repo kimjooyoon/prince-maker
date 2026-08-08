@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: de27e496c09067687e40cffb9df46478fa12e556a7824bb2451e81e6a9a7cd0e -->
+<!-- ssot-sha256: 03135bb3a834ba592f13a82f8219ea7fb51becd29b00fde9171e1d03059aa693 -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -25,15 +25,15 @@
 | 사건 | 47 | `events.length` |
 | 사건 선택 | 94 | 모든 사건 choices 합계 |
 | 엔딩 | 6 | `endings.length` |
-| Canvas Golden | 62 | `test/goldens/*.png` |
-| 코드 ref | 31 | `codeRefs.length` |
+| Canvas Golden | 63 | `test/goldens/*.png` |
+| 코드 ref | 33 | `codeRefs.length` |
 | 이미지 ref | 4 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
 | 스토리 막 | 16 | `progression.length` · 1–3주 / 4–6주 / 7–9주 / 10–12주 / 13–15주 / 16–18주 / 19–21주 / 22–24주 / 25–27주 / 28–30주 / 31–33주 / 34–36주 / 37–39주 / 40–42주 / 43–45주 / 46–48주 |
 | 막 계약 | 16/16 | 각 막의 `contract` 공개·압력·선택·결산 선언 |
 | 시나리오 완전성 차원 | 8 | `scenarioCompleteness.dimensions.length` |
-| locale 최소 키 | 494 | `dialogueMetrics.minimumLocaleKeys` |
+| locale 최소 키 | 505 | `dialogueMetrics.minimumLocaleKeys` |
 | 캠페인 최소 대사 줄 | 63 | 48주 authored 사건 선택 노출 기준 |
 | 캠페인 최소 서사 단위 | 176 | 성격·사건 제목/본문·선택·엔딩 |
 

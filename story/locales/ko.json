@@ -500,5 +500,16 @@
   "ui.relationship.state.balanced": "나란한 동행",
   "ui.relationship.state.tension": "갈라지는 마음",
   "ui.relationship.state.estranged": "멀어진 동행",
-  "ui.relationship.state.truce": "다시 잇는 동행"
+  "ui.relationship.state.truce": "다시 잇는 동행",
+  "ui.relationship.followup": "상태별 후속 기록",
+  "ui.relationship.followup.unformed.title": "빈칸의 약속",
+  "ui.relationship.followup.unformed.line": "아직 누구의 길도 정하지 않았으니, 다음 기록은 열어 둔 채 걷자.",
+  "ui.relationship.followup.balanced.title": "같은 속도의 표식",
+  "ui.relationship.followup.balanced.line": "누가 먼저인지 세지 않아도, 나란히 간 흔적은 남아.",
+  "ui.relationship.followup.tension.title": "금이 간 온실",
+  "ui.relationship.followup.tension.line": "마음이 갈라진 자리를 덮지 말고, 다음 말이 닿을 틈을 남겨.",
+  "ui.relationship.followup.estranged.title": "늦은 답장",
+  "ui.relationship.followup.estranged.line": "멀어진 거리는 실패의 이름이 아니야. 답장이 올 자리를 지켜 보자.",
+  "ui.relationship.followup.truce.title": "다시 묶은 바람",
+  "ui.relationship.followup.truce.line": "서로의 몫을 돌려준 뒤에야, 같은 바람을 다시 탈 수 있어."
 }
