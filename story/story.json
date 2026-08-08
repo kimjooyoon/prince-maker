@@ -6,15 +6,15 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "8403e7109fb0bb993c5c0971e1dab10220280ff7ae4ad7574663ddbc6c94b680"
+      "sha256": "7ba2061bcf4017cde3ff05758718979e632165b4e6ba3e0a4ddde89da181c622"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
-      "sha256": "5b6338e2b1617b77fa6f4c7825f0be8c4ee7f17101017cc753a85ea189a65bd5"
+      "sha256": "e60e7b6025064bfa89e3ece0675f78ee9f2231ada964b2bd5aa663fcb12231fa"
     },
     {
       "ref": "lib/game_core.dart#SystemDecisionPolicy",
-      "sha256": "5b6338e2b1617b77fa6f4c7825f0be8c4ee7f17101017cc753a85ea189a65bd5"
+      "sha256": "e60e7b6025064bfa89e3ece0675f78ee9f2231ada964b2bd5aa663fcb12231fa"
     },
     {
       "ref": "lib/save_adapter.dart#conditional-platform-boundary",
@@ -74,7 +74,7 @@
     },
     {
       "ref": "tool/verify_game.dart#visual-golden-contract",
-      "sha256": "7587aa949b1362b58279d9eaf559d2bf27c7e1ab738903ff7f7ed95a26aa3d29"
+      "sha256": "0777abb48012ef8facd714b94d760a22d337d22b7c2102a5ec2f040a6f5a9802"
     },
     {
       "ref": "lib/canvas_scene_fingerprint.dart#canvasSceneFingerprint",
@@ -119,6 +119,14 @@
     {
       "ref": "tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate",
       "sha256": "1254e1a50b9c41598870d4dd4c54249d00220b2bf2f038650a3278addfdda62b"
+    },
+    {
+      "ref": "lib/game_core.dart#resolveRelationshipDynamics",
+      "sha256": "e60e7b6025064bfa89e3ece0675f78ee9f2231ada964b2bd5aa663fcb12231fa"
+    },
+    {
+      "ref": "test/relationship_dynamics_test.dart#deterministic relationship states",
+      "sha256": "62d0bfa93742d159b3d9fc6ad750c457584608edea8de1b5ed37a2dbeb46f542"
     }
   ],
   "assetRefs": [
@@ -148,11 +156,11 @@
   "localeRefs": [
     {
       "ref": "story/locales/ko.json#catalog",
-      "sha256": "7e4a411c1fa72cf367efba05d902ac2f7a2b4bf406d165ae13d5ecd29e4dfcfb"
+      "sha256": "b86bb151278c038870620b1a539bb0d99fff1929ce5593cfd6ca903864280af4"
     },
     {
       "ref": "story/locales/en.json#catalog",
-      "sha256": "a4bc381fb608be87360b14ced9b46bb84fa3053774d126e05dddbbf2d23a9f4f"
+      "sha256": "525d43c8c822e14f962016cdb039fd4626c48a04f1dee85db758edf6e0e92663"
     }
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 48주를 걷는다. 기록은 사람이 승인하지 않고 루멘의 규칙 엔진이 승인한다.",
@@ -194,11 +202,11 @@
   },
   "dialogueMetrics": {
     "locales": "ko,en",
-    "minimumLocaleKeys": 488,
+    "minimumLocaleKeys": 494,
     "minimumVisibleDialogueLines": 63,
     "minimumVisibleNarrativeUnits": 176,
     "authoredDialogueLines": 216,
-    "formula": "catalog 488 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units"
+    "formula": "catalog 494 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4 + chapter relationship scene title/line 32 + closure scene UI 1 + relationship state UI 6; one 48-week route exposes at least 63 authored dialogue lines and 176 narrative units"
   },
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
@@ -222,7 +230,7 @@
         "id": "relationship",
         "name": "관계 아크",
         "target": "등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다",
-        "current": "3 companions / rival conflict / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats",
+        "current": "3 companions / rival conflict / deterministic tension-estrangement-truce state / reciprocal mediation flag / bond threshold / all-threshold epilogues / 3 lineage target companions / 16 chapter relationship scene beats",
         "evidence": "story/story.json#companions"
       },
       {
@@ -250,7 +258,7 @@
         "id": "presentation",
         "name": "장면 결산",
         "target": "도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다",
-        "current": "62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
+        "current": "62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views with 16 relationship scene beats and visible relationship states / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
         "evidence": "test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence"
       },
       {
@@ -3882,7 +3890,8 @@
     "companionQuestCount": 3,
     "stagesPerQuest": 3,
     "derivedFrom": "event choice flags + deterministic companion bonds",
-    "resolver": "lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests",
+    "resolver": "lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests,lib/game_core.dart#resolveRelationshipDynamics",
+    "relationshipStateContract": "lumen-relationship-dynamics-v1",
     "systemOwner": "lumen-rule-engine",
     "evidence": "test/narrative_ledger_test.dart#deterministic-projection",
     "chapterSceneCount": 16
@@ -3964,5 +3973,58 @@
     "count": 16,
     "purpose": "mid-chapter relationship beat rendered at deterministic closure",
     "evidence": "test/chapter_closure_golden_test.dart#relationship-scene-binding"
+  },
+  "relationshipDesign": {
+    "schema": "lumen-relationship-dynamics-v1",
+    "purpose": "derive a visible relationship state from deterministic bond gaps and authored memory flags",
+    "stateOrder": [
+      "unformed",
+      "balanced",
+      "tension",
+      "estranged",
+      "truce"
+    ],
+    "thresholds": {
+      "tensionGap": 2,
+      "estrangedGap": 5
+    },
+    "truceFlag": "windmill-truce",
+    "states": [
+      {
+        "id": "unformed",
+        "key": "ui.relationship.state.unformed",
+        "fallback": "아직 얽히지 않음",
+        "fallbackEn": "Not yet woven"
+      },
+      {
+        "id": "balanced",
+        "key": "ui.relationship.state.balanced",
+        "fallback": "나란한 동행",
+        "fallbackEn": "Side-by-side"
+      },
+      {
+        "id": "tension",
+        "key": "ui.relationship.state.tension",
+        "fallback": "갈라지는 마음",
+        "fallbackEn": "Tension"
+      },
+      {
+        "id": "estranged",
+        "key": "ui.relationship.state.estranged",
+        "fallback": "멀어진 동행",
+        "fallbackEn": "Estranged"
+      },
+      {
+        "id": "truce",
+        "key": "ui.relationship.state.truce",
+        "fallback": "다시 잇는 동행",
+        "fallbackEn": "Truce"
+      }
+    ],
+    "evidence": [
+      "lib/game_core.dart#resolveRelationshipDynamics",
+      "test/relationship_dynamics_test.dart#deterministic relationship states",
+      "lib/main.dart#relationshipState"
+    ]
   }
 }

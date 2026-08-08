@@ -4,11 +4,11 @@
   "source": [
     {
       "ref": "story/story.json#root",
-      "sha256": "67b3c971661e7d3d5ad0a90c04b8fbae60c6b61c65164ed2678108617c6954a3"
+      "sha256": "de27e496c09067687e40cffb9df46478fa12e556a7824bb2451e81e6a9a7cd0e"
     },
     {
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "ca882792d254c95f2e45011651c30ada723bf82d9d535647e7e79383772b0fc5"
+      "sha256": "b1788e0d1fc4bd962b1642f5b165891d4d423e6f379cd11debcc26931de2bd0a"
     },
     {
       "ref": "docs/render-quality-contract.json#preconditions",
@@ -16,7 +16,7 @@
     },
     {
       "ref": "docs/decision-proof-contract.json#preconditionFields",
-      "sha256": "bc50c407c7c361acd3c9229d61c6f08671a3f56e8347f3c1f0ba4f309a2f7394"
+      "sha256": "da6790463e5a0ed7decbcefe45c18ef26c911f9f545aac2d1e94af2a88180639"
     }
   ],
   "decision": {
@@ -56,15 +56,15 @@
     {
       "id": "visual-locale-units",
       "unit": "presentation-unit",
-      "value": 1072,
-      "formula": "62 Goldens + 2 locales × 488 keys + 29 code refs + 4 asset refs + 1 font refs",
+      "value": 1086,
+      "formula": "62 Goldens + 2 locales × 494 keys + 31 code refs + 4 asset refs + 1 font refs",
       "scope": "visual regression, localization and traceable production assets"
     },
     {
       "id": "verification-units",
       "unit": "proof-unit",
-      "value": 60,
-      "formula": "15 CI checks + 25 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields",
+      "value": 61,
+      "formula": "15 CI checks + 26 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields",
       "scope": "repeatable automated proof and release readiness"
     }
   ],
@@ -189,7 +189,7 @@
       "target": {
         "goldens": 30,
         "locales": 2,
-        "keysPerLocale": 488,
+        "keysPerLocale": 494,
         "renderPreconditions": 3,
         "renderProofs": 3,
         "unit": "presentation-proof-units"
@@ -197,7 +197,7 @@
       "currentContract": {
         "goldens": 62,
         "locales": 2,
-        "keysPerLocale": 488,
+        "keysPerLocale": 494,
         "renderPreconditions": 3,
         "renderProofs": 3
       },
@@ -279,7 +279,7 @@
       },
       "currentContract": {
         "ciChecks": 15,
-        "codeRefs": 29,
+        "codeRefs": 31,
         "decisionProofFields": 14,
         "assetRefs": 4,
         "fontRefs": 1,

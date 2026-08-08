@@ -18,6 +18,7 @@ abstract interface class StoryPort {
   Map<String, dynamic> get decisionSystem;
   Map<String, dynamic> get endingDesign;
   Map<String, dynamic> get scenarioVariantBudget;
+  Map<String, dynamic> get relationshipDesign;
   int get endingWeek;
   int get campaignWeeks;
 }
@@ -68,10 +69,94 @@ class JsonStoryAdapter implements StoryPort {
   Map<String, dynamic> get scenarioVariantBudget =>
       (source['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
   @override
+  Map<String, dynamic> get relationshipDesign {
+    final raw = source['relationshipDesign'];
+    if (raw is Map) return raw.cast<String, dynamic>();
+    return const {
+      'thresholds': {'tensionGap': 2, 'estrangedGap': 5},
+      'truceFlag': 'windmill-truce',
+      'states': [
+        {
+          'id': 'unformed',
+          'key': 'ui.relationship.state.unformed',
+          'fallback': '아직 얽히지 않음'
+        },
+        {
+          'id': 'balanced',
+          'key': 'ui.relationship.state.balanced',
+          'fallback': '나란한 동행'
+        },
+        {
+          'id': 'tension',
+          'key': 'ui.relationship.state.tension',
+          'fallback': '갈라지는 마음'
+        },
+        {
+          'id': 'estranged',
+          'key': 'ui.relationship.state.estranged',
+          'fallback': '멀어진 동행'
+        },
+        {
+          'id': 'truce',
+          'key': 'ui.relationship.state.truce',
+          'fallback': '다시 잇는 동행'
+        },
+      ],
+    };
+  }
+
+  @override
   int get endingWeek => source['endingWeek'] as int? ?? 12;
   @override
   int get campaignWeeks =>
       source['campaignWeeks'] as int? ?? ((endingWeek - 1).clamp(1, 999));
+}
+
+/// Projects authored bond opportunity-cost into one deterministic UI/replay state.
+/// The resolver is pure: equal bonds and memory flags always produce equal output.
+Map<String, dynamic> resolveRelationshipDynamics(
+    StoryPort story, Map<String, int> bonds, Map<String, bool> flags) {
+  final design = story.relationshipDesign,
+      states =
+          (design['states'] as List? ?? const []).cast<Map<String, dynamic>>(),
+      stateById = {for (final state in states) '${state['id']}': state},
+      thresholds =
+          (design['thresholds'] as Map? ?? const {}).cast<String, dynamic>(),
+      tensionGap = (thresholds['tensionGap'] as int?) ?? 2,
+      estrangedGap = (thresholds['estrangedGap'] as int?) ?? 5,
+      truceFlag = design['truceFlag'] as String? ?? 'windmill-truce';
+  final ranking = bonds.entries.toList()
+    ..sort((a, b) {
+      final value = b.value.compareTo(a.value);
+      return value == 0 ? a.key.compareTo(b.key) : value;
+    });
+  final lead = ranking.isEmpty ? null : ranking.first,
+      distant = ranking.isEmpty ? null : ranking.last,
+      top = lead?.value ?? 0,
+      bottom = distant?.value ?? 0,
+      gap = top - bottom;
+  final id = flags[truceFlag] == true
+      ? 'truce'
+      : top == 0
+          ? 'unformed'
+          : gap >= estrangedGap
+              ? 'estranged'
+              : gap >= tensionGap
+                  ? 'tension'
+                  : 'balanced';
+  final state = stateById[id] ??
+      <String, dynamic>{
+        'id': id,
+        'key': 'ui.relationship.state.$id',
+        'fallback': id,
+      };
+  return {
+    ...state,
+    'id': id,
+    'gap': gap,
+    'leadId': lead?.key,
+    'distantId': distant?.key,
+  };
 }
 
 class MemorySaveAdapter implements SavePort {
@@ -251,6 +336,12 @@ class LocationDiscovered extends GameEvent {
   final String id, name;
 }
 
+class RelationshipStateResolved extends GameEvent {
+  const RelationshipStateResolved(this.id, this.gap);
+  final String id;
+  final int gap;
+}
+
 class MilestoneResolved extends GameEvent {
   const MilestoneResolved(this.id, this.title, this.stat, this.min, this.coins,
       this.pass, this.fail);
@@ -351,6 +442,8 @@ class GameWorld {
         p.lastLine = line;
         p.trace.add(
             'event:$label${bondId == null ? '' : '|bond:$bondId+$bondDelta'}${rivalId == null ? '' : '|rival:$rivalId$rivalDelta'}${legacyStat == null ? '' : '|legacy:$legacyStat+$legacyDelta'}${setsFlag == null ? '' : '|flag:$setsFlag'}${line.isEmpty ? '' : '|line:$line'}');
+      case RelationshipStateResolved(:final id, :final gap):
+        p.trace.add('relationship:$id|gap:$gap');
       case WeekAdvanced():
         p.week++;
       case LocationDiscovered(:final id, :final name):
@@ -566,6 +659,9 @@ class GameSession {
     }
     world.dispatch(SystemDecisionApproved(receipt));
     world.dispatch(e);
+    final relationship = resolveRelationshipDynamics(story, p.bonds, p.flags);
+    world.dispatch(RelationshipStateResolved(
+        '${relationship['id']}', (relationship['gap'] as int?) ?? 0));
     _resolveMilestone();
     persist();
   }

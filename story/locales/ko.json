@@ -494,5 +494,11 @@
   "chapter.returningGarden.scene.title": "떠남과 머묾의 정원",
   "chapter.returningGarden.scene.line": "꽃이 피는 자리만 고르지 말고, 떠나는 발걸음도 다치지 않을 자리를 남겨줘.",
   "chapter.handoff.scene.title": "다음 사람의 손",
-  "chapter.handoff.scene.line": "마지막 장은 닫는 덮개가 아니야. 다음 사람이 다시 펼칠 손잡이야."
+  "chapter.handoff.scene.line": "마지막 장은 닫는 덮개가 아니야. 다음 사람이 다시 펼칠 손잡이야.",
+  "ui.relationship.label": "관계 상태",
+  "ui.relationship.state.unformed": "아직 얽히지 않음",
+  "ui.relationship.state.balanced": "나란한 동행",
+  "ui.relationship.state.tension": "갈라지는 마음",
+  "ui.relationship.state.estranged": "멀어진 동행",
+  "ui.relationship.state.truce": "다시 잇는 동행"
 }

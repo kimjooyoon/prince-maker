@@ -593,6 +593,9 @@ class Scene extends CustomPainter {
 
   StoryPort get storyModel => JsonStoryAdapter(s);
 
+  Map<String, dynamic> get relationshipState =>
+      resolveRelationshipDynamics(storyModel, bonds, flags);
+
   List<Map<String, dynamic>> get fateProgress =>
       resolveFateThreads(storyModel, flags);
 
@@ -852,7 +855,8 @@ class Scene extends CustomPainter {
         goal = pending.isEmpty ? null : pending.first,
         people = (s['personalities'] as List? ?? const []),
         talent =
-            people.isEmpty ? null : people[persona.clamp(0, people.length - 1)];
+            people.isEmpty ? null : people[persona.clamp(0, people.length - 1)],
+        relation = relationshipState;
     txt(c, s['title'], const Offset(24, 24), 30, ink, bold: true);
     txt(c, s['setting'], const Offset(25, 65), 14, teal);
     box(c, const Rect.fromLTWH(24, 105, 712, 120), ink,
@@ -866,8 +870,13 @@ class Scene extends CustomPainter {
     statPill(c, '용기', stats['용기'] ?? 0, 364, const Color(0xffff9a7a));
     txt(c, '은화 $coins · 피로 $fatigue/12 · $condition', const Offset(140, 190),
         14, fatigue > 9 ? const Color(0xffff8b6b) : sun);
-    txt(c, '유대 루미 ${bonds['lumi']} · 보라 ${bonds['bora']} · 타로 ${bonds['taro']}',
-        const Offset(140, 208), 10, Colors.white70);
+    txt(
+        c,
+        '유대 루미 ${bonds['lumi']} · 보라 ${bonds['bora']} · 타로 ${bonds['taro']} · ${localized('ui.relationship.label', '관계 상태')} ${localized('${relation['key']}', '${relation['fallback']}')}',
+        const Offset(140, 208),
+        10,
+        Colors.white70,
+        maxWidth: 570);
     txt(
         c,
         goal == null
@@ -1041,7 +1050,8 @@ class Scene extends CustomPainter {
         title = localized('${chapter['titleKey']}', '${chapter['title']}'),
         result = localized('${passed ? goal['passKey'] : goal['failKey']}',
             '${passed ? goal['pass'] : goal['fail']}'),
-        scene = (chapter['relationshipScene'] as Map? ?? const {}).cast();
+        scene = (chapter['relationshipScene'] as Map? ?? const {}).cast(),
+        relation = relationshipState;
     txt(
         c,
         localized(passed ? 'ui.closure.recorded' : 'ui.closure.next',
@@ -1091,9 +1101,14 @@ class Scene extends CustomPainter {
         const Offset(340, 680), 10, teal,
         maxWidth: 360);
     if (scene.isNotEmpty) {
-      txt(c, localized('ui.closure.scene', '동행의 한마디'), const Offset(340, 590),
-          10, teal,
-          bold: true);
+      txt(
+          c,
+          '${localized('ui.closure.scene', '동행의 한마디')} · ${localized('${relation['key']}', '${relation['fallback']}')}',
+          const Offset(340, 590),
+          10,
+          teal,
+          bold: true,
+          maxWidth: 360);
       box(c, const Rect.fromLTWH(340, 606, 360, 64), Colors.white,
           radius: 14, stroke: teal, shadow: true);
       dialoguePortrait(c, const Rect.fromLTWH(350, 612, 44, 52), scene);

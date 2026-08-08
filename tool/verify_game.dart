@@ -123,6 +123,8 @@ void main() {
       (story['narrativeLoop'] as Map? ?? {}).cast<String, dynamic>();
   final chapterSceneContract =
       (story['chapterSceneContract'] as Map? ?? {}).cast<String, dynamic>();
+  final relationshipDesign =
+      (story['relationshipDesign'] as Map? ?? {}).cast<String, dynamic>();
   final fateThreads =
       (story['fateThreads'] as List? ?? []).cast<Map<String, dynamic>>();
   final companionQuests =
@@ -376,6 +378,34 @@ void main() {
       chapterSceneContract['count'] != progression.length ||
       narrativeLoop['chapterSceneCount'] != progression.length) {
     fail('every chapter must expose one deterministic relationship scene beat');
+  }
+  final relationshipStates = (relationshipDesign['states'] as List? ?? const [])
+      .cast<Map<String, dynamic>>();
+  final relationshipThresholds =
+      (relationshipDesign['thresholds'] as Map? ?? {}).cast<String, dynamic>();
+  const relationshipStateIds = {
+    'unformed',
+    'balanced',
+    'tension',
+    'estranged',
+    'truce'
+  };
+  final actualRelationshipStateIds =
+      relationshipStates.map((state) => '${state['id']}').toSet();
+  if (relationshipDesign['schema'] != 'lumen-relationship-dynamics-v1' ||
+      relationshipDesign['truceFlag'] is! String ||
+      relationshipThresholds['tensionGap'] is! int ||
+      relationshipThresholds['estrangedGap'] is! int ||
+      relationshipThresholds['tensionGap'] >=
+          relationshipThresholds['estrangedGap'] ||
+      relationshipStates.length != relationshipStateIds.length ||
+      actualRelationshipStateIds.length != relationshipStateIds.length ||
+      !actualRelationshipStateIds.containsAll(relationshipStateIds) ||
+      relationshipStates.any(
+          (state) => state['key'] is! String || state['fallback'] is! String) ||
+      narrativeLoop['relationshipStateContract'] !=
+          'lumen-relationship-dynamics-v1') {
+    fail('relationship dynamics must expose five deterministic states');
   }
   for (final ref in refs) {
     final path = (ref['ref'] as String).split('#').first;
