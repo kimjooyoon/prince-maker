@@ -6,7 +6,7 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "5381165a98982dc12e10658136de4e0c0b1535442e45e18723864ec700e0de05"
+      "sha256": "aa95d41d93deb1df05e0911fbe9993d8f53a75b84af155e8906bb0982d3510d7"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
@@ -79,6 +79,10 @@
     {
       "ref": "lib/canvas_scene_fingerprint.dart#canvasSceneFingerprint",
       "sha256": "d4badb21956ac0d66caff4ad871a8c26d3cb6d06da017e7cedfee8208dc70a02"
+    },
+    {
+      "ref": "lib/activity_catalog.dart#activitiesFromStory",
+      "sha256": "762d80d5656ae0cc1164bc8defaa2893851b4f3107468357599cd358208f319a"
     }
   ],
   "assetRefs": [
