@@ -33,6 +33,7 @@ void verifyTrilemmaContract(String storyHash,
       (complete['narrativeFateThreads'] as int? ?? 0) < 6 ||
       (complete['companionQuestStages'] as int? ?? 0) < 9 ||
       (complete['activityForecastGoldens'] as int? ?? 0) < 1 ||
+      (complete['activityReflectionGoldens'] as int? ?? 0) < 1 ||
       complete['goldens'] < 20 ||
       complete['localeKeys'] < 118 ||
       complete['qualityScoreTarget'] != qualityScoreTarget ||
@@ -53,6 +54,8 @@ void verifyTrilemmaContract(String storyHash,
       (purity['minimumGatedChoices'] as int? ?? 0) < 20 ||
       (purity['activityForecastGoldens'] as int? ?? 0) < 1 ||
       purity['activityForecastDeterminism'] != true ||
+      (purity['activityReflectionGoldens'] as int? ?? 0) < 1 ||
+      purity['activityReflectionDeterminism'] != true ||
       purity['qualityScoreTarget'] != qualityScoreTarget ||
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] != 5000 * (endingWeek - 1 + eventCount) ||
@@ -795,6 +798,10 @@ void main() {
       File('test/activity_forecast_golden_test.dart').existsSync()
           ? File('test/activity_forecast_golden_test.dart').readAsStringSync()
           : '';
+  final activityReflectionGoldenEvidence =
+      File('test/activity_reflection_golden_test.dart').existsSync()
+          ? File('test/activity_reflection_golden_test.dart').readAsStringSync()
+          : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
           ? File('tool/verify_scenario_variants.dart').readAsStringSync()
@@ -843,6 +850,7 @@ void main() {
     'personality-kind.png',
     'personality-bold.png',
     'activity-forecast.png',
+    'activity-reflection-en.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -939,6 +947,10 @@ void main() {
             .contains('home shows deterministic activity forecasts') &&
         activityForecastGoldenEvidence
             .contains("goldens/activity-forecast.png") &&
+        activityReflectionGoldenEvidence.contains(
+            'event shows localized activity reflection after day spend') &&
+        activityReflectionGoldenEvidence
+            .contains("goldens/activity-reflection-en.png") &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(

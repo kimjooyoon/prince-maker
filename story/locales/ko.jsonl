@@ -1050,3 +1050,4 @@
 {"type":"entry","key":"ui.home.forecast","value":"예상 · {effects}"}
 {"type":"entry","key":"ui.home.forecast.none","value":"변화 없음"}
 {"type":"entry","key":"ui.home.fatigueDelta","value":"피로 {delta}"}
+{"type":"entry","key":"ui.event.activityReflection","value":"활동의 잔향 · {title}"}

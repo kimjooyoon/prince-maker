@@ -1050,3 +1050,4 @@
 {"type":"entry","key":"ui.home.forecast","value":"Forecast · {effects}"}
 {"type":"entry","key":"ui.home.forecast.none","value":"No numeric change"}
 {"type":"entry","key":"ui.home.fatigueDelta","value":"Fatigue {delta}"}
+{"type":"entry","key":"ui.event.activityReflection","value":"Activity reflection · {title}"}

@@ -20,6 +20,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       .whereType<File>()
       .where((file) => file.uri.pathSegments.last == 'activity-forecast.png')
       .length;
+  final activityReflectionGoldens = Directory('test/goldens')
+      .listSync()
+      .whereType<File>()
+      .where(
+          (file) => file.uri.pathSegments.last == 'activity-reflection-en.png')
+      .length;
   final dialogue = (story['dialogueMetrics'] as Map).cast<String, dynamic>();
   final scenarioCases =
       (story['scenarioVariantBudget'] as Map).cast<String, dynamic>();
@@ -65,6 +71,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'personalityIllustrationGoldens':
               (story['personalities'] as List? ?? const []).length,
           'activityForecastGoldens': activityForecastGoldens,
+          'activityReflectionGoldens': activityReflectionGoldens,
           'goldens': goldens,
           'localeKeys': dialogue['minimumLocaleKeys'],
           'qualityScoreTarget': qualityScoreTarget,
@@ -78,6 +85,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/golden_test.dart#all',
           'test/player_facing_golden_test.dart#all personality illustration pages render deterministic portraits',
           'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
+          'test/activity_reflection_golden_test.dart#event shows localized activity reflection after day spend',
           'test/locale_contract_test.dart#ssot-dialogue-contract',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/verify_quality_score.dart#quality-score-99',
@@ -116,6 +124,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               (story['personalities'] as List? ?? const []).length,
           'activityForecastGoldens': activityForecastGoldens,
           'activityForecastDeterminism': true,
+          'activityReflectionGoldens': activityReflectionGoldens,
+          'activityReflectionDeterminism': true,
           'matchedPersonalityCompanionRoutes':
               ((story['personalityCompanionRoutes'] as List? ?? const [])
                   .where((route) => (route as Map)['matched'] == true)
@@ -130,6 +140,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/golden_test.dart#event choice shows a separated result banner',
           'test/player_facing_golden_test.dart#all personality illustration pages render deterministic portraits',
           'test/activity_forecast_test.dart#fatigue and talent forecast is deterministic',
+          'test/activity_localization_test.dart#activity result localizes deterministic reflection',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/trilemma_verdict.dart#axis-verdict',
           'tool/trilemma_verdict.dart#closed-loop-receipt',
