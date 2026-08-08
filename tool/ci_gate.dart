@@ -67,6 +67,8 @@ Future<void> main(List<String> args) async {
         ['run', 'tool/generate_trilemma_contract.dart', '--check']),
     const GateCheck('generated-ssot-docs', 'dart',
         ['run', 'tool/generate_ssot_docs.dart', '--check']),
+    const GateCheck('generated-trilemma-docs', 'dart',
+        ['run', 'tool/refresh_trilemma_docs.dart', '--check']),
     const GateCheck('generated-engine-decision', 'dart',
         ['run', 'tool/generate_engine_decision.dart', '--check']),
     const GateCheck('generated-event-storm', 'dart',

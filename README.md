@@ -28,6 +28,9 @@ git config core.hooksPath .githooks
 ![사건 선택 Golden](test/goldens/event.png)
 ![대화 상대 상반신이 연결된 사건 Golden](test/goldens/chapter-arrival.png)
 ![성격별 상반신 일러스트 페이지](test/goldens/illustration.png)
+![고요한 관찰자 성격 일러스트 Golden](test/goldens/personality-quiet.png)
+![다정한 연결자 성격 일러스트 Golden](test/goldens/personality-kind.png)
+![용감한 개척자 성격 일러스트 Golden](test/goldens/personality-bold.png)
 ![48주 엔딩 화면](test/goldens/ending.png)
 ![엔딩 원인 회고 보드](test/goldens/ending.png)
 ![계승 동행 에필로그가 보이는 엔딩 Canvas](test/goldens/companion-epilogue.png)
@@ -73,7 +76,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![English locale 사건 선택](test/goldens/english-event.png)
 ![English locale 엔딩·동료 에필로그](test/goldens/english-ending.png)
 
-플레이어 표면의 English core-loop와 저장 보관소는 [`test/player_facing_golden_test.dart`](test/player_facing_golden_test.dart)가 실제 Canvas 상태를 재생해 고정합니다. 저장 화면은 raw schema/history/hash를 기본 화면에 표시하지 않고, 사람이 읽는 기록 요약과 복사·복원 동작만 노출합니다.
+플레이어 표면의 English core-loop·저장 보관소·세 성격별 상반신 일러스트는 [`test/player_facing_golden_test.dart`](test/player_facing_golden_test.dart)가 실제 Canvas 상태를 재생해 고정합니다. 저장 화면은 raw schema/history/hash를 기본 화면에 표시하지 않고, 사람이 읽는 기록 요약과 복사·복원 동작만 노출합니다.
 
 ![English core-loop home Golden](test/goldens/player-home-en.png)
 ![저장 보관소 요약 Golden](test/goldens/player-save.png)
@@ -100,7 +103,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
 ![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
 
-캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 전체 Canvas Golden 증적은 83장입니다.
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 전체 Canvas Golden 증적은 86장입니다.
 
 ### 감정·이벤트 일러스트 매트릭스
 
@@ -108,7 +111,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 
 홈 하단의 `동행 기록`은 `page == 11`에서 `resolveRelationshipDynamics`·`resolveRelationshipFollowup`·`resolveCompanionQuests`를 동일 입력으로 투영합니다. 현재 관계 상태·유대 간격·상태별 후속 기록·루미/보라/타로의 상반신·퀘스트 진행을 [`lib/relationship_archive_painter.dart`](lib/relationship_archive_painter.dart)가 재사용 가능한 패널로 렌더링하고, ko/en 화면과 고요·다정·용감 세 성격의 공명 결과를 [`test/goldens/relationship-archive.png`](test/goldens/relationship-archive.png)·[`test/goldens/relationship-archive-en.png`](test/goldens/relationship-archive-en.png)·[`test/goldens/relationship-archive-kind.png`](test/goldens/relationship-archive-kind.png)·[`test/goldens/relationship-archive-bold.png`](test/goldens/relationship-archive-bold.png)으로 고정합니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피도 각각 Golden으로 고정하며, 전체 Golden 증적은 83장입니다.
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피도 각각 Golden으로 고정하며, 전체 Golden 증적은 86장입니다.
 
 ### 캐릭터 일러스트·감정표현 설계
 

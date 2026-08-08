@@ -296,6 +296,7 @@ void refreshHashes(Map<String, dynamic> story) {
   final requiredRefs = [
     'tool/verify_scenario_variants.dart#scenario-case-enumerator',
     'tool/ci_gate.dart#system-verdict',
+    'tool/refresh_trilemma_docs.dart#documentation-golden-counts',
     'tool/trilemma_verdict.dart#axis-verdict',
     'tool/trilemma_verdict.dart#closed-loop-receipt',
     'tool/verify_game.dart#visual-golden-contract',
@@ -341,6 +342,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/player_input_contract_test.dart#event locale control changes the event Canvas state',
     'test/player_input_contract_test.dart#visible illustration back label returns home',
     'test/player_facing_golden_test.dart#English home is a player-facing core-loop Golden',
+    'test/player_facing_golden_test.dart#all personality illustration pages render deterministic portraits',
     'test/player_facing_golden_test.dart#save archive hides raw trace and renders localized summaries',
     'test/player_facing_golden_test.dart#English core loop reaches the ninth-week chapter closure',
     'lib/environment_catalog.dart#environmentsFromStory',

@@ -41,6 +41,7 @@ const requiredCiModeChecks = <String>[
   'quality-score',
   'generated-trilemma-contract',
   'generated-ssot-docs',
+  'generated-trilemma-docs',
   'generated-event-storm',
   'review-manifest',
   'static-analysis',

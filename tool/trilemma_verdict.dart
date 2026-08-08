@@ -16,6 +16,7 @@ Map<String, List<String>> requiredAxes(String mode) => {
         'generated-development-goals',
         'generated-trilemma-contract',
         'generated-ssot-docs',
+        'generated-trilemma-docs',
         'review-manifest',
         'static-analysis',
         'tests-and-goldens',
@@ -32,6 +33,7 @@ Map<String, List<String>> requiredAxes(String mode) => {
         'campaign-benchmark',
         'generated-development-goals',
         'generated-trilemma-contract',
+        'generated-trilemma-docs',
         'tests-and-goldens',
       ],
       'performance': [
@@ -43,6 +45,7 @@ Map<String, List<String>> requiredAxes(String mode) => {
         'quality-score',
         'campaign-benchmark',
         'generated-development-goals',
+        'generated-trilemma-docs',
         'tests-and-goldens',
         if (mode == 'ci') 'wasm-release-build',
       ],
