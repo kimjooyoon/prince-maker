@@ -49,6 +49,8 @@ Future<void> main(List<String> args) async {
     const GateCheck('render-quality-preconditions', 'dart',
         ['run', 'tool/verify_render_quality.dart']),
     const GateCheck('story-contract', 'dart', ['run', 'tool/verify_game.dart']),
+    const GateCheck(
+        'gameplay-fun', 'dart', ['run', 'tool/verify_gameplay_fun.dart']),
     const GateCheck('scenario-variants', 'dart',
         ['run', 'tool/verify_scenario_variants.dart']),
     const GateCheck(

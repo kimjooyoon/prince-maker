@@ -4,11 +4,11 @@
   "source": [
     {
       "ref": "story/story.json#root",
-      "sha256": "693baad92e3a98212c376544b7671963be989cb21305ee7b4cd7d2f05a1cf7a3"
+      "sha256": "9aeb82a76dfc40a767cc1df827b2853a96c092bc8e258550dd6baf73b551f106"
     },
     {
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "706f928280f2a091b322b3dc9125a71a49b1ee999341085595a634ee5f9bbc55"
+      "sha256": "1f58c23afd2cdb5f56722f7af79ffb6bbc6de6ffe51b919ab8eb6798e5983c58"
     },
     {
       "ref": "docs/render-quality-contract.json#preconditions",
@@ -16,7 +16,7 @@
     },
     {
       "ref": "docs/decision-proof-contract.json#preconditionFields",
-      "sha256": "133b8eeebb404d178784b2760b18ab62914a768abc41eccdb1cd9a3afa3e163f"
+      "sha256": "68ebfa85b0e9310a063e7ce9d23ce5d449591df9b4796e4b6dc62f2396c730c2"
     }
   ],
   "decision": {
@@ -56,15 +56,15 @@
     {
       "id": "visual-locale-units",
       "unit": "presentation-unit",
-      "value": 933,
-      "formula": "62 Goldens + 2 locales × 419 keys + 28 code refs + 4 asset refs + 1 font refs",
+      "value": 934,
+      "formula": "62 Goldens + 2 locales × 419 keys + 29 code refs + 4 asset refs + 1 font refs",
       "scope": "visual regression, localization and traceable production assets"
     },
     {
       "id": "verification-units",
       "unit": "proof-unit",
-      "value": 59,
-      "formula": "14 CI checks + 25 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields",
+      "value": 60,
+      "formula": "15 CI checks + 25 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields",
       "scope": "repeatable automated proof and release readiness"
     }
   ],
@@ -224,7 +224,7 @@
         "test/golden_test.dart#all",
         "test/locale_contract_test.dart#ssot-dialogue-contract"
       ],
-      "acceptance": "Canvas 좌표·입력 역변환·30개 Golden·ko/en locale 계약이 전부 통과한다."
+      "acceptance": "Canvas 좌표·입력 역변환·62개 Golden·ko/en locale 계약이 전부 통과한다."
     },
     {
       "id": "G5-deterministic-throughput",
@@ -272,14 +272,14 @@
       "priority": "P0",
       "title": "책임 추적 가능한 납품",
       "target": {
-        "ciChecks": 14,
+        "ciChecks": 15,
         "codeRefs": 24,
         "decisionProofFields": 14,
         "unit": "delivery-proof-units"
       },
       "currentContract": {
-        "ciChecks": 14,
-        "codeRefs": 28,
+        "ciChecks": 15,
+        "codeRefs": 29,
         "decisionProofFields": 14,
         "assetRefs": 4,
         "fontRefs": 1,

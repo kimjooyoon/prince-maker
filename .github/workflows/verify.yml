@@ -31,6 +31,7 @@ jobs:
           path: |
             build/decision-proof-verdict.json
             build/benchmark-verdict.json
+            build/gameplay-fun-verdict.json
             build/development-goal-verdict.json
             build/ci-verdict.json
             build/trilemma-verdict.json

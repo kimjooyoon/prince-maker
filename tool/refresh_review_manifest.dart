@@ -38,6 +38,7 @@ void main() {
     'tool/verify_game.dart',
     'docs/render-quality-contract.json',
     'tool/verify_render_quality.dart',
+    'tool/verify_gameplay_fun.dart',
     'test/chapter_golden_test.dart',
     'test/chapter_closure_golden_test.dart',
     'test/goldens/chapter-arrival.png',

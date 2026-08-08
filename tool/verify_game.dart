@@ -44,6 +44,10 @@ void verifyTrilemmaContract(String storyHash,
       purity['minLegacyTargetEndings'] < 3 ||
       purity['minLegacyTargetCompanions'] < 3 ||
       purity['deterministicReplay'] != true ||
+      (purity['choiceImpactRate'] as num? ?? 0) < 1.0 ||
+      (purity['eventDivergenceRate'] as num? ?? 0) < 1.0 ||
+      (purity['multiAxisImpactRate'] as num? ?? 0) < 0.9 ||
+      (purity['minimumGatedChoices'] as int? ?? 0) < 20 ||
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] != 5000 * (endingWeek - 1 + eventCount) ||
       performance['maxMillis'] != 24000 ||

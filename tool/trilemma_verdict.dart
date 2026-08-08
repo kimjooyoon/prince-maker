@@ -7,6 +7,7 @@ Map<String, List<String>> requiredAxes(String mode) => {
         'decision-proof-preconditions',
         'render-quality-preconditions',
         'story-contract',
+        'gameplay-fun',
         'scenario-variants',
         'generated-development-goals',
         'generated-trilemma-contract',

@@ -78,7 +78,7 @@ Map<String, dynamic> buildDocument() {
       codeRefs.length +
       assetRefs.length +
       fontRefs.length;
-  final verificationUnits = 14 +
+  final verificationUnits = 15 +
       testFiles +
       preconditions.length +
       proofs.length +
@@ -140,7 +140,7 @@ Map<String, dynamic> buildDocument() {
       'unit': 'proof-unit',
       'value': verificationUnits,
       'formula':
-          '14 CI checks + $testFiles Dart test files + ${preconditions.length} render preconditions + ${proofs.length} render proofs + $decisionProofFields decision precondition fields',
+          '15 CI checks + $testFiles Dart test files + ${preconditions.length} render preconditions + ${proofs.length} render proofs + $decisionProofFields decision precondition fields',
       'scope': 'repeatable automated proof and release readiness',
     },
   ];
@@ -280,7 +280,7 @@ Map<String, dynamic> buildDocument() {
         'test/golden_test.dart#all',
         'test/locale_contract_test.dart#ssot-dialogue-contract',
       ],
-      'acceptance': 'Canvas 좌표·입력 역변환·30개 Golden·ko/en locale 계약이 전부 통과한다.',
+      'acceptance': 'Canvas 좌표·입력 역변환·62개 Golden·ko/en locale 계약이 전부 통과한다.',
     },
     {
       'id': 'G5-deterministic-throughput',
@@ -323,13 +323,13 @@ Map<String, dynamic> buildDocument() {
       'priority': 'P0',
       'title': '책임 추적 가능한 납품',
       'target': {
-        'ciChecks': 14,
+        'ciChecks': 15,
         'codeRefs': 24,
         'decisionProofFields': 14,
         'unit': 'delivery-proof-units',
       },
       'currentContract': {
-        'ciChecks': 14,
+        'ciChecks': 15,
         'codeRefs': codeRefs.length,
         'decisionProofFields': decisionProofFields,
         'assetRefs': assetRefs.length,
