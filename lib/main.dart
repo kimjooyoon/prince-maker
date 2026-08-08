@@ -7,6 +7,7 @@ import 'design_tokens.dart';
 import 'canvas_surface.dart';
 import 'feedback_banner.dart';
 import 'i18n.dart';
+import 'decision_receipt.dart';
 import 'save_state.dart';
 import 'save_adapter.dart';
 import 'collection_adapter.dart';
@@ -918,7 +919,8 @@ class Scene extends CustomPainter {
   void ledger(Canvas c) {
     final threads = fateProgress,
         quests = questProgress,
-        companions = (s['companions'] as List? ?? const []).cast<Map>();
+        companions = (s['companions'] as List? ?? const []).cast<Map>(),
+        receipts = recentDecisionReceipts(history);
     txt(c, localized('ui.ledger.title', '운명 기록 보관소'), const Offset(24, 24), 30,
         ink,
         bold: true);
@@ -989,8 +991,39 @@ class Scene extends CustomPainter {
           complete ? sun : teal,
           radius: 3);
     }
-    txt(c, localized('ui.ledger.back', '← 홈으로'), const Offset(24, 570), 14,
-        teal,
+    if (receipts.isNotEmpty) {
+      final owner = receipts.first.owner, contract = receipts.first.contract;
+      txt(
+          c,
+          '${localized('ui.ledger.receipts', '시스템 판정 영수증')} · $owner · $contract',
+          const Offset(24, 535),
+          12,
+          teal,
+          bold: true);
+      for (var i = 0; i < receipts.take(2).length; i++) {
+        final receipt = receipts[i],
+            status = localized(
+                receipt.approved
+                    ? 'ui.ledger.receipt.approved'
+                    : 'ui.ledger.receipt.rejected',
+                receipt.approved ? '승인' : '거절'),
+            kind = localized('ui.ledger.receipt.${receipt.kind}', receipt.kind),
+            y = 558 + i * 38.0;
+        box(c, Rect.fromLTWH(24, y, 712, 30),
+            receipt.approved ? Colors.white : const Color(0xffffeee8),
+            radius: 10,
+            stroke: receipt.approved ? teal : const Color(0xffa84f3c));
+        txt(
+            c,
+            '$status · $kind · ${receipt.subject} · ${receipt.week}주 · ${receipt.rule} · #${receipt.shortHash}',
+            Offset(38, y + 8),
+            9,
+            receipt.approved ? ink : const Color(0xffa84f3c),
+            maxWidth: 670);
+      }
+    }
+    txt(c, localized('ui.ledger.back', '← 홈으로'),
+        Offset(24, receipts.isEmpty ? 570 : 650), 14, teal,
         bold: true);
   }
 

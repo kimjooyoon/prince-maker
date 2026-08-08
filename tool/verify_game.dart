@@ -606,6 +606,10 @@ void main() {
       File('test/narrative_ledger_golden_test.dart').existsSync()
           ? File('test/narrative_ledger_golden_test.dart').readAsStringSync()
           : '';
+  final receiptGoldenEvidence =
+      File('test/system_receipt_golden_test.dart').existsSync()
+          ? File('test/system_receipt_golden_test.dart').readAsStringSync()
+          : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
           ? File('tool/verify_scenario_variants.dart').readAsStringSync()
@@ -639,6 +643,7 @@ void main() {
     'companion-pathfinder.png',
     'narrative-ledger.png',
     'narrative-ledger-en.png',
+    'system-receipt.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -708,6 +713,8 @@ void main() {
             .contains("matchesGoldenFile('goldens/narrative-ledger.png')") &&
         narrativeGoldenEvidence
             .contains("matchesGoldenFile('goldens/narrative-ledger-en.png')") &&
+        receiptGoldenEvidence
+            .contains("matchesGoldenFile('goldens/system-receipt.png')") &&
         File('story/locales/ko.json').existsSync() &&
         File('story/locales/en.json').existsSync(),
     'localeContract': localeEvidence.contains(

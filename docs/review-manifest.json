@@ -5,12 +5,12 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "26d55daccd6563e8939c42f24946aa1a45c79a756274c004e5cb74e37379f35a"
+      "sha256": "702175914f1930f602064adde26e18960c20564739c14482c1e54ae449b8b895"
     },
     {
       "path": "lib/main.dart",
       "ref": "lib/main.dart#_Game+Scene",
-      "sha256": "155c3df1e4aa70353c9d98a248e0fba68de455185d02d44de62d65b727cb076d"
+      "sha256": "346d8732ed71b88f981c02a4f7906cf7bf67fe3649de9a602ed53d7825abe5be"
     },
     {
       "path": "lib/feedback_banner.dart",
@@ -200,27 +200,27 @@
     {
       "path": "story/locales/ko.json",
       "ref": "story/locales/ko.json#catalog",
-      "sha256": "779bfe3634c1507778f091c2d8caaf4462e745c910053054f2891690ed7dd88f"
+      "sha256": "dda8e2d0235ba3c9f2b6a6a06fe091bbb6d5a761e573873561013c41d8e98955"
     },
     {
       "path": "story/locales/en.json",
       "ref": "story/locales/en.json#catalog",
-      "sha256": "00d7e75ac4595b4f2dba77936d2049d9e224ee8be928eadfb303c8210522fb2b"
+      "sha256": "52e5a51b51cd82bb453e90fc6c85cba59193c1fd7f0c70f61387b63189f568db"
     },
     {
       "path": "docs/game-completeness.md",
       "ref": "docs/game-completeness.md#metrics",
-      "sha256": "fa7a83cd4509bb024f66a8ec938b293a5094e9cafb4646c84704e1d01f56fd5c"
+      "sha256": "610c567edfed612e981df8144bbb5591926689618114284aae2f5494b30a696c"
     },
     {
       "path": "docs/trilemma.md",
       "ref": "docs/trilemma.md#closed-loop",
-      "sha256": "3032c096528aaa8ee03a8841fdec3e8b61247875428b807200b39006c30f93a6"
+      "sha256": "dfa1fc38b018ce15e555f1300da9db6db13f7e7bfaf4274b75b680a56ed93220"
     },
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "4241541ad56b7d34175c06bfc96d790eebaea32431320972a504cbbfaaa53525"
+      "sha256": "2635e4608c8b17dbea725be519903d0637e7c383c1d50466669d2677972461c6"
     },
     {
       "path": "docs/scenario-completeness.md",
@@ -230,12 +230,12 @@
     {
       "path": "docs/architecture.md",
       "ref": "docs/architecture.md#runtime-architecture",
-      "sha256": "6ce6741fdc0f93be7ea2792aec2008c6f1dd9e69e66cc18f6a5bc8c40a0f2661"
+      "sha256": "ff2ec24d584974eb2f8775cef57a1920ce6c52731f8fbeb06c6c148ba860d61f"
     },
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "9f7fd98250a39f5b931b7bfff3f6e416cf52411a9abf7b27e8d905a475fb0d02"
+      "sha256": "64c7b020b528cf8e3a771f19d5d05cdbbc2f1c1cf7b319e7d96255f41d0ef784"
     },
     {
       "path": "docs/design-system.md",
@@ -320,7 +320,7 @@
     {
       "path": "tool/verify_game.dart",
       "ref": "tool/verify_game.dart#trilemma-contract-assetRefs-localeRefs-progression-scenario",
-      "sha256": "4c25b7ead38c3065c74ceb0f5aa77701e437103ac997fe8198eabc24328d54f2"
+      "sha256": "3de679fbbbde15934dfc5a73cafb769e9f70003fa40105967afca1381f364c62"
     },
     {
       "path": "tool/benchmark_game.dart",
@@ -330,12 +330,12 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "c65b1f6a7e2ec93d6748b18a2487c86797953bc80b002a7a161da62916068b33"
+      "sha256": "662ea0fc736e38cc88308cb3cf2723fcdddaa95717179b41bdb7f808ad830e9d"
     },
     {
       "path": "test/locale_contract_test.dart",
       "ref": "test/locale_contract_test.dart#ssot-dialogue-contract",
-      "sha256": "dbdfe60dc407d7f0ba17e528d7dfc08a040af7f6fda79a5b10b45bc8de9f6f09"
+      "sha256": "dbe67413f0f0c46be93c5c20c9b4bf7b8f7d9fbb735ecc843159b18f049f57f4"
     },
     {
       "path": "test/progression_contract_test.dart",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "a419b0f4873cd25b46fb4f09838f7722bb1b0acdd0a40795f702bc8dfa6232a0"
+      "sha256": "248a634b1c87828c49bfeaf079ba253840c9213d4373dbae502a85e774d8e7e0"
     },
     {
       "path": "design/tokens.json",
@@ -390,7 +390,7 @@
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "7109c94f191f86dc8d52e7fc219d01fc6821203b0ea1f5acf6f79ddf177dacdc"
+      "sha256": "2b04a9f907268f74d6af3fc259f10d50fd983f22c3879e53de1f9cc374c29720"
     },
     {
       "path": "tool/ci_gate.dart",
@@ -405,12 +405,12 @@
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "f25144180fd563307d0fad7a5fd79a823104cb26e685594bf5862edbde53d97c"
+      "sha256": "d01751d87f583af6e5078ac0b380f34bc8c3ba6fbe2f788a08526289aef49665"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
       "ref": "tool/refresh_review_manifest.dart#reviewed",
-      "sha256": "4d8fa9315e498ff92edf29655bfa3237c87e743b1d3ef81ffcd44cdea76e64e9"
+      "sha256": "12f7cad3c2adb6ed38702fd3d4fea3a2b20a066db7df01c8fc798077c66f951d"
     },
     {
       "path": "tool/verify_scenario_variants.dart",
@@ -456,6 +456,26 @@
       "path": "test/canvas_surface_test.dart",
       "ref": "test/canvas_surface_test.dart#reviewed",
       "sha256": "0fdd4a664d8c00a0dce1e7ceafe365c0d0b7484b18711092668b4e2f28414c64"
+    },
+    {
+      "path": "lib/decision_receipt.dart",
+      "ref": "lib/decision_receipt.dart#reviewed",
+      "sha256": "5cb9278eb955f26b62ae545ede792aed4f3522a38f78ad2f9270f357fcf8bb40"
+    },
+    {
+      "path": "test/decision_receipt_test.dart",
+      "ref": "test/decision_receipt_test.dart#reviewed",
+      "sha256": "b74508913a8d596806f0f53b7bf0715c46a4d7e925bfebbb32a2686f35968d22"
+    },
+    {
+      "path": "test/system_receipt_golden_test.dart",
+      "ref": "test/system_receipt_golden_test.dart#reviewed",
+      "sha256": "045f50d28fdd733ecd78676693466bc88877e8890d1b392aa77b2cf00ba44e64"
+    },
+    {
+      "path": "test/goldens/system-receipt.png",
+      "ref": "test/goldens/system-receipt.png#reviewed",
+      "sha256": "fe796882dbb736502710b617525f3d2e1a9d721d2be76c2c19bd0b92c6657e23"
     }
   ]
 }

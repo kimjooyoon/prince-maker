@@ -412,5 +412,10 @@
   "ui.ledger.quest": "Companion quests",
   "ui.ledger.back": "← Home",
   "ui.ledger.complete": "COMPLETE",
-  "ui.ledger.progress": "IN PROGRESS"
+  "ui.ledger.progress": "IN PROGRESS",
+  "ui.ledger.receipts": "System decision receipts",
+  "ui.ledger.receipt.approved": "approved",
+  "ui.ledger.receipt.rejected": "rejected",
+  "ui.ledger.receipt.activity": "activity",
+  "ui.ledger.receipt.story-choice": "story choice"
 }

@@ -6,7 +6,7 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "155c3df1e4aa70353c9d98a248e0fba68de455185d02d44de62d65b727cb076d"
+      "sha256": "346d8732ed71b88f981c02a4f7906cf7bf67fe3649de9a602ed53d7825abe5be"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
@@ -67,6 +67,14 @@
     {
       "ref": "lib/canvas_surface.dart#CanvasViewport",
       "sha256": "abd79376fff12b3e3820acff5bffcf2d3bf887cd04e19ac54bf08c403ddd6248"
+    },
+    {
+      "ref": "lib/decision_receipt.dart#DecisionReceipt",
+      "sha256": "5cb9278eb955f26b62ae545ede792aed4f3522a38f78ad2f9270f357fcf8bb40"
+    },
+    {
+      "ref": "tool/verify_game.dart#visual-golden-contract",
+      "sha256": "3de679fbbbde15934dfc5a73cafb769e9f70003fa40105967afca1381f364c62"
     }
   ],
   "assetRefs": [
@@ -96,11 +104,11 @@
   "localeRefs": [
     {
       "ref": "story/locales/ko.json#catalog",
-      "sha256": "779bfe3634c1507778f091c2d8caaf4462e745c910053054f2891690ed7dd88f"
+      "sha256": "dda8e2d0235ba3c9f2b6a6a06fe091bbb6d5a761e573873561013c41d8e98955"
     },
     {
       "ref": "story/locales/en.json#catalog",
-      "sha256": "00d7e75ac4595b4f2dba77936d2049d9e224ee8be928eadfb303c8210522fb2b"
+      "sha256": "52e5a51b51cd82bb453e90fc6c85cba59193c1fd7f0c70f61387b63189f568db"
     }
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 48주를 걷는다. 기록은 사람이 승인하지 않고 루멘의 규칙 엔진이 승인한다.",
@@ -140,11 +148,11 @@
   },
   "dialogueMetrics": {
     "locales": "ko,en",
-    "minimumLocaleKeys": 414,
+    "minimumLocaleKeys": 419,
     "minimumVisibleDialogueLines": 47,
     "minimumVisibleNarrativeUnits": 160,
     "authoredDialogueLines": 184,
-    "formula": "catalog 414 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 10; one 48-week route exposes at least 47 authored choice lines and 160 narrative units"
+    "formula": "catalog 419 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15; one 48-week route exposes at least 47 authored choice lines and 160 narrative units"
   },
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
@@ -196,7 +204,7 @@
         "id": "presentation",
         "name": "장면 결산",
         "target": "도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다",
-        "current": "29 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues",
+        "current": "30 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
         "evidence": "test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence"
       },
       {
