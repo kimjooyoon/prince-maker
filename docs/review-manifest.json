@@ -5,12 +5,12 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "702175914f1930f602064adde26e18960c20564739c14482c1e54ae449b8b895"
+      "sha256": "12e842a5f0d55952b945d88667a7e6de27186b0624a90e803cdd85a572527cfa"
     },
     {
       "path": "lib/main.dart",
       "ref": "lib/main.dart#_Game+Scene",
-      "sha256": "346d8732ed71b88f981c02a4f7906cf7bf67fe3649de9a602ed53d7825abe5be"
+      "sha256": "5381165a98982dc12e10658136de4e0c0b1535442e45e18723864ec700e0de05"
     },
     {
       "path": "lib/feedback_banner.dart",
@@ -220,7 +220,7 @@
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "2635e4608c8b17dbea725be519903d0637e7c383c1d50466669d2677972461c6"
+      "sha256": "ec4cf4916e082bdfc82f02d874e40c9f9f05af0771d71e1479b6b4aab2abe6ee"
     },
     {
       "path": "docs/scenario-completeness.md",
@@ -230,12 +230,12 @@
     {
       "path": "docs/architecture.md",
       "ref": "docs/architecture.md#runtime-architecture",
-      "sha256": "ff2ec24d584974eb2f8775cef57a1920ce6c52731f8fbeb06c6c148ba860d61f"
+      "sha256": "f6253e3730aea8e6475b890d1858d1d3b6c6ba983813ede148d097b081471bec"
     },
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "64c7b020b528cf8e3a771f19d5d05cdbbc2f1c1cf7b319e7d96255f41d0ef784"
+      "sha256": "15b52dc83a7504e1bb5a60476f5546abd8d71f58a88de6f1e335e26ad02f52ca"
     },
     {
       "path": "docs/design-system.md",
@@ -330,7 +330,7 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "662ea0fc736e38cc88308cb3cf2723fcdddaa95717179b41bdb7f808ad830e9d"
+      "sha256": "176fb019bbecf33e29504a4b5006c176615e9153fa06c9ea439794828b408321"
     },
     {
       "path": "test/locale_contract_test.dart",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "248a634b1c87828c49bfeaf079ba253840c9213d4373dbae502a85e774d8e7e0"
+      "sha256": "ac1af86dba7104407d0939af6f334ab3ca2e4ceda3b2f8c4e24be0361017b2f8"
     },
     {
       "path": "design/tokens.json",
@@ -390,7 +390,7 @@
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "2b04a9f907268f74d6af3fc259f10d50fd983f22c3879e53de1f9cc374c29720"
+      "sha256": "fc253a57dafd886c559b0f099a92cbd0aa2d8d18075b326904b753bc317f49fa"
     },
     {
       "path": "tool/ci_gate.dart",
@@ -405,12 +405,12 @@
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "d01751d87f583af6e5078ac0b380f34bc8c3ba6fbe2f788a08526289aef49665"
+      "sha256": "a34786410dba9536c8502e5623515db3346ecbfe6f0ce2a0d9d1031bc0928982"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
       "ref": "tool/refresh_review_manifest.dart#reviewed",
-      "sha256": "12f7cad3c2adb6ed38702fd3d4fea3a2b20a066db7df01c8fc798077c66f951d"
+      "sha256": "5d074a53c02f5204844bf47bf04db84fcfc9ef1acd0930216794189245a0e647"
     },
     {
       "path": "tool/verify_scenario_variants.dart",
@@ -476,6 +476,16 @@
       "path": "test/goldens/system-receipt.png",
       "ref": "test/goldens/system-receipt.png#reviewed",
       "sha256": "fe796882dbb736502710b617525f3d2e1a9d721d2be76c2c19bd0b92c6657e23"
+    },
+    {
+      "path": "lib/canvas_scene_fingerprint.dart",
+      "ref": "lib/canvas_scene_fingerprint.dart#reviewed",
+      "sha256": "d4badb21956ac0d66caff4ad871a8c26d3cb6d06da017e7cedfee8208dc70a02"
+    },
+    {
+      "path": "test/canvas_scene_fingerprint_test.dart",
+      "ref": "test/canvas_scene_fingerprint_test.dart#reviewed",
+      "sha256": "549d5290a84b5d55c9de27b742e4d4f91a052424c691e3b185db9af662ad72b2"
     }
   ]
 }

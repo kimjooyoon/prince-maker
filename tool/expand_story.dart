@@ -166,6 +166,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'tool/trilemma_verdict.dart#axis-verdict',
     'tool/verify_game.dart#visual-golden-contract',
     'lib/canvas_surface.dart#CanvasViewport',
+    'lib/canvas_scene_fingerprint.dart#canvasSceneFingerprint',
     'lib/decision_receipt.dart#DecisionReceipt',
   ];
   for (final ref in requiredRefs) {

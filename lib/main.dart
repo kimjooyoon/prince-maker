@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'design_tokens.dart';
 import 'canvas_surface.dart';
+import 'canvas_scene_fingerprint.dart';
 import 'feedback_banner.dart';
 import 'i18n.dart';
 import 'decision_receipt.dart';
@@ -494,7 +495,34 @@ class Scene extends CustomPainter {
       this.activities,
       this.collectionEntries,
       this.locale,
-      this.locales);
+      this.locales) {
+    repaintKey = canvasSceneFingerprint([
+      s.hashCode,
+      week,
+      coins,
+      fatigue,
+      selected,
+      page,
+      persona,
+      eventIndex,
+      stats,
+      bonds,
+      milestones,
+      flags,
+      lastResult,
+      lastLine,
+      image?.hashCode,
+      personaImage?.hashCode,
+      history,
+      saveCode,
+      activities
+          .map((a) => [a.label, a.icon, a.stat, a.delta, a.fatigue, a.coins])
+          .toList(),
+      collectionEntries,
+      locale,
+      locales.hashCode,
+    ]);
+  }
   final Map<String, dynamic> s;
   final int week, coins, fatigue, selected, page, persona, eventIndex;
   final Map<String, int> stats, bonds;
@@ -507,6 +535,7 @@ class Scene extends CustomPainter {
   final List<Map<String, dynamic>> collectionEntries;
   final String locale;
   final Map<String, Map<String, String>> locales;
+  late final String repaintKey;
   void txt(Canvas c, String v, Offset p, double z, Color color,
       {bool bold = false, double maxWidth = 330}) {
     final t = TextPainter(
@@ -1285,18 +1314,5 @@ class Scene extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(Scene o) =>
-      o.week != week ||
-      o.selected != selected ||
-      o.page != page ||
-      o.persona != persona ||
-      o.image != image ||
-      o.eventIndex != eventIndex ||
-      o.history.length != history.length ||
-      o.saveCode != saveCode ||
-      o.lastResult != lastResult ||
-      o.lastLine != lastLine ||
-      o.flags.toString() != flags.toString() ||
-      o.bonds.toString() != bonds.toString() ||
-      o.collectionEntries.toString() != collectionEntries.toString();
+  bool shouldRepaint(Scene o) => o.repaintKey != repaintKey;
 }
