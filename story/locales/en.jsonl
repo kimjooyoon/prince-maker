@@ -1045,3 +1045,5 @@
 {"type":"entry","key":"ui.sideScene.mechanic.constellation-trace","value":"Constellation trace"}
 {"type":"entry","key":"ui.sideScene.mechanic.handoff-crossing","value":"Handoff crossing"}
 {"type":"entry","key":"ui.sideScene.mechanic.handoff-cairn","value":"Handoff cairn"}
+{"type":"entry","key":"ui.relationshipArchive.resonance.matched","value":"Personality resonance · Bond +1"}
+{"type":"entry","key":"ui.relationshipArchive.resonance.neutral","value":"Different grain · Base bond"}

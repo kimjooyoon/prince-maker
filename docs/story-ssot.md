@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 3fd94ad05c49755f8caff07dbebd6073f79536af7eae11aae888d72fbf0aa1ba -->
+<!-- ssot-sha256: 10b3e76da5eac0a460bdce2ae88331670383632c665aec15f961e54a04542e68 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -56,7 +56,7 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **1046** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
+- locale 최소 키: **1048** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
 - 산식: authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
@@ -212,8 +212,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `1a93c94bf405cc19b48c80dabda3b57dc4215b8053d114904d73cf443ed08605`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `5edd763aa26b4dc78e7b825c47653e9a1c0952395c0015fb73809eebc3edf830`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `8e5e90da3d982a15f9d3f8d6be32ce7569350fe0a9775a022c75f68f022f2cb0`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `ae5f263c3e76ad8d9717653876d360f83fae01f6fa71b25d6db09bc0dbb8fba1`
 
 ## 성격
 
@@ -250,6 +250,19 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 - **루미** (`lumi`): 별자리 기록관 · quiet · frame 0 · 유대 8에서 에필로그 · “기록은 마음이 다시 길을 찾게 해.”
 - **보라** (`bora`): 온실의 돌봄지기 · kind · frame 1 · 유대 8에서 에필로그 · “함께 가꾼 시간은 쉽게 시들지 않아.”
 - **타로** (`taro`): 바람길 수리공 · bold · frame 2 · 유대 8에서 에필로그 · “망가진 길도 손을 대면 다시 이어져!”
+
+## 성격 × 동료 공명
+
+성격과 동료의 3×3 matrix는 선택이 승인될 때 같은 성격 결에 해당하는 동료 유대에 +1을 적용한다. 이 보너스는 `GameWorld` resonance event와 엔딩 route set으로 재생된다.
+- `quiet:lumi` · 공명 +1 · `lib/game_core.dart#resolvePersonalityCompanionRoute`
+- `quiet:bora` · 서로 다른 결 · 기본 유대 · `lib/game_core.dart#resolvePersonalityCompanionRoute`
+- `quiet:taro` · 서로 다른 결 · 기본 유대 · `lib/game_core.dart#resolvePersonalityCompanionRoute`
+- `kind:lumi` · 서로 다른 결 · 기본 유대 · `lib/game_core.dart#resolvePersonalityCompanionRoute`
+- `kind:bora` · 공명 +1 · `lib/game_core.dart#resolvePersonalityCompanionRoute`
+- `kind:taro` · 서로 다른 결 · 기본 유대 · `lib/game_core.dart#resolvePersonalityCompanionRoute`
+- `bold:lumi` · 서로 다른 결 · 기본 유대 · `lib/game_core.dart#resolvePersonalityCompanionRoute`
+- `bold:bora` · 서로 다른 결 · 기본 유대 · `lib/game_core.dart#resolvePersonalityCompanionRoute`
+- `bold:taro` · 공명 +1 · `lib/game_core.dart#resolvePersonalityCompanionRoute`
 
 ## 회차 계승 프로필
 

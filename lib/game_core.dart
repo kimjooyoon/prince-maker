@@ -17,6 +17,7 @@ abstract interface class StoryPort {
   List<Map<String, dynamic>> get endings;
   List<Map<String, dynamic>> get personalities;
   List<Map<String, dynamic>> get companions;
+  List<Map<String, dynamic>> get personalityCompanionRoutes;
   List<Map<String, dynamic>> get legacyProfiles;
   List<Map<String, dynamic>> get milestones;
   List<Map<String, dynamic>> get fateThreads;
@@ -64,6 +65,9 @@ class JsonStoryAdapter implements StoryPort {
       (source['personalities'] as List? ?? []).cast<Map<String, dynamic>>();
   late final List<Map<String, dynamic>> _companions =
       (source['companions'] as List? ?? []).cast<Map<String, dynamic>>();
+  late final List<Map<String, dynamic>> _personalityCompanionRoutes =
+      (source['personalityCompanionRoutes'] as List? ?? [])
+          .cast<Map<String, dynamic>>();
   late final List<Map<String, dynamic>> _legacyProfiles =
       (source['legacyProfiles'] as List? ?? []).cast<Map<String, dynamic>>();
   late final List<Map<String, dynamic>> _milestones =
@@ -106,6 +110,9 @@ class JsonStoryAdapter implements StoryPort {
   List<Map<String, dynamic>> get personalities => _personalities;
   @override
   List<Map<String, dynamic>> get companions => _companions;
+  @override
+  List<Map<String, dynamic>> get personalityCompanionRoutes =>
+      _personalityCompanionRoutes;
   @override
   List<Map<String, dynamic>> get legacyProfiles => _legacyProfiles;
   @override
@@ -311,6 +318,31 @@ List<Map<String, dynamic>> resolveCompanionScenes(
   }).toList();
 }
 
+/// Resolves the authored personality×companion matrix without mutating state.
+/// A matching pair adds one bond point to every accepted choice for that
+/// companion; the same input always produces the same route receipt.
+Map<String, dynamic> resolvePersonalityCompanionRoute(
+    StoryPort story, int persona, String? companionId) {
+  final person = story.personalities.isEmpty
+      ? null
+      : story.personalities[persona.clamp(0, story.personalities.length - 1)];
+  final personId = '${person?['id'] ?? ''}', target = companionId ?? '';
+  final route = story.personalityCompanionRoutes.firstWhere(
+      (candidate) =>
+          '${candidate['personaId']}' == personId &&
+          '${candidate['companionId']}' == target,
+      orElse: () => <String, dynamic>{});
+  return route.isEmpty
+      ? {
+          'id': '$personId:$target',
+          'personaId': personId,
+          'companionId': target,
+          'matched': false,
+          'bondBonus': 0,
+        }
+      : Map<String, dynamic>.from(route);
+}
+
 Map<String, dynamic> resolveEnding(StoryPort story, Map<String, int> stats,
     {Map<String, int>? bonds, Map<String, bool>? milestones}) {
   final winner = stats.entries.reduce((a, b) => a.value > b.value ? a : b);
@@ -461,6 +493,13 @@ class RelationshipFollowupResolved extends GameEvent {
   final String id;
 }
 
+class PersonalityCompanionResonanceApplied extends GameEvent {
+  const PersonalityCompanionResonanceApplied(
+      this.routeId, this.companionId, this.bonus);
+  final String routeId, companionId;
+  final int bonus;
+}
+
 class MilestoneResolved extends GameEvent {
   const MilestoneResolved(this.id, this.title, this.stat, this.min, this.coins,
       this.pass, this.fail);
@@ -569,6 +608,14 @@ class GameWorld {
         p.trace.add('relationship:$id|gap:$gap');
       case RelationshipFollowupResolved(:final id):
         p.trace.add('relationship-followup:$id');
+      case PersonalityCompanionResonanceApplied(
+          :final routeId,
+          :final companionId,
+          :final bonus
+        ):
+        p.bonds[companionId] =
+            ((p.bonds[companionId] ?? 0) + bonus).clamp(0, 100).toInt();
+        p.trace.add('resonance:$routeId|bond+$bonus');
       case WeekAdvanced():
         p.week++;
       case LocationDiscovered(:final id, :final name):
@@ -805,6 +852,12 @@ class GameSession {
     }
     world.dispatch(SystemDecisionApproved(receipt));
     world.dispatch(e);
+    final resonance =
+            resolvePersonalityCompanionRoute(story, p.persona, e.bondId),
+        resonanceBonus = (resonance['bondBonus'] as int?) ?? 0;
+    if (resonanceBonus > 0)
+      world.dispatch(PersonalityCompanionResonanceApplied(
+          '${resonance['id']}', '${resonance['companionId']}', resonanceBonus));
     final relationship = resolveRelationshipDynamics(story, p.bonds, p.flags);
     world.dispatch(RelationshipStateResolved(
         '${relationship['id']}', (relationship['gap'] as int?) ?? 0));

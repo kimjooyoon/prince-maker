@@ -18,6 +18,9 @@ void main() {
           .expand((event) =>
               (event['choices'] as List).cast<Map<String, dynamic>>())
           .toList();
+  final personalityCompanionRoutes =
+      (story['personalityCompanionRoutes'] as List? ?? const [])
+          .cast<Map<String, dynamic>>();
   bool effectful(Map<String, dynamic> choice) =>
       ChoiceImpact.from(choice).effectful ||
       choice['setsFlag'] != null ||
@@ -52,6 +55,9 @@ void main() {
               choice['requiresStat'] != null ||
               choice['requiresBondId'] != null ||
               choice['requiresFlag'] != null)
+          .length,
+      matchedPersonalityCompanionRoutes = personalityCompanionRoutes
+          .where((route) => route['matched'] == true)
           .length;
   final metrics = {
     'authoredChoices': choices.length,
@@ -64,6 +70,8 @@ void main() {
     'divergentEvents': divergentEvents,
     'eventDivergenceRate': divergentEvents / authoredScenes.length,
     'gatedChoices': gatedChoices,
+    'personalityCompanionRoutes': personalityCompanionRoutes.length,
+    'matchedPersonalityCompanionRoutes': matchedPersonalityCompanionRoutes,
     'feedbackGolden': File('test/goldens/feedback.png').existsSync() &&
         File('test/golden_test.dart')
             .readAsStringSync()
@@ -75,7 +83,11 @@ void main() {
       current['choiceImpactRate'] != metrics['choiceImpactRate'] ||
       current['eventDivergenceRate'] != metrics['eventDivergenceRate'] ||
       current['multiAxisImpactRate'] != metrics['multiAxisImpactRate'] ||
-      current['tradeoffRate'] != metrics['tradeoffRate']) {
+      current['tradeoffRate'] != metrics['tradeoffRate'] ||
+      current['personalityCompanionRoutes'] !=
+          metrics['personalityCompanionRoutes'] ||
+      current['matchedPersonalityCompanionRoutes'] !=
+          metrics['matchedPersonalityCompanionRoutes']) {
     fail('SSOT gameplay KPI drift');
   }
   final approved = choices.length >= 166 &&
@@ -85,6 +97,8 @@ void main() {
       (metrics['tradeoffRate'] as double) >=
           ((contract['targets'] as Map)['minimumTradeoffRate'] as num) &&
       gatedChoices >= 20 &&
+      personalityCompanionRoutes.length == 9 &&
+      matchedPersonalityCompanionRoutes == 3 &&
       metrics['feedbackGolden'] == true;
   final report = {
     'schema': 'lumen-gameplay-fun-verdict-v1',

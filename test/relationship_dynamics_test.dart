@@ -33,7 +33,9 @@ void main() {
     session.chooseEvent(const StoryChoiceMade('용기', 2, 0, '관계 상태 기록',
         bondId: 'lumi', bondDelta: 6, rivalId: 'bora', rivalDelta: -1));
     expect(session.world.progress[0]!.trace,
-        contains('relationship:estranged|gap:6'));
+        contains('relationship:estranged|gap:7'));
+    expect(session.world.progress[0]!.trace,
+        contains('resonance:quiet:lumi|bond+1'));
     expect(session.world.progress[0]!.trace,
         contains('relationship-followup:estranged-followup'));
   });
