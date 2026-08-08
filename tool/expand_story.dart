@@ -337,6 +337,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/image_design_matrix_test.dart#image design matrix closes the requested 312-frame formula',
     'test/relationship_archive_test.dart#relationship archive reuses the pure resolver projection',
     'test/relationship_archive_golden_test.dart#relationship archive renders the resolved state and follow-up',
+    'test/relationship_archive_golden_test.dart#relationship archive renders all personality resonance states',
     'test/player_input_contract_test.dart#event locale control changes the event Canvas state',
     'test/player_input_contract_test.dart#visible illustration back label returns home',
     'test/player_facing_golden_test.dart#English home is a player-facing core-loop Golden',
