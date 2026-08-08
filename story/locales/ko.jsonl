@@ -1002,3 +1002,46 @@
 {"type":"entry","key":"ui.characterArt.mood","value":"지금의 표정"}
 {"type":"entry","key":"ui.characterArt.back","value":"← 도감으로 돌아가기"}
 {"type":"entry","key":"ui.characterArt.footer","value":"이 표정은 함께한 대화와 기억에 색을 더합니다."}
+{"type":"entry","key":"ui.sideScene.title","value":"사이드 장면 기록"}
+{"type":"entry","key":"ui.sideScene.subtitle","value":"탐험·위기·자원·미니게임·동료 조합 사건은 선택의 흔적을 남깁니다."}
+{"type":"entry","key":"ui.sideScene.empty","value":"아직 사이드 장면이 없습니다."}
+{"type":"entry","key":"ui.sideScene.choice","value":"선택"}
+{"type":"entry","key":"ui.sideScene.previous","value":"← 이전 장면"}
+{"type":"entry","key":"ui.sideScene.next","value":"다음 장면 →"}
+{"type":"entry","key":"ui.sideScene.back","value":"← 홈으로"}
+{"type":"entry","key":"ui.sideScene.status.completed","value":"완료"}
+{"type":"entry","key":"ui.sideScene.status.available","value":"선택 가능"}
+{"type":"entry","key":"ui.sideScene.status.locked","value":"잠김"}
+{"type":"entry","key":"ui.sideScene.lock.completed","value":"이미 완료"}
+{"type":"entry","key":"ui.sideScene.lock.companion","value":"동료 유대 필요"}
+{"type":"entry","key":"ui.sideScene.lock.memory","value":"기억 단서 필요"}
+{"type":"entry","key":"ui.sideScene.lock.stat","value":"능력치 {stat} {min} 필요"}
+{"type":"entry","key":"ui.sideScene.lock.generic","value":"잠김"}
+{"type":"entry","key":"ui.sideScene.type.exploration","value":"탐험"}
+{"type":"entry","key":"ui.sideScene.type.resource-crisis","value":"자원 위기"}
+{"type":"entry","key":"ui.sideScene.type.mini-game","value":"미니게임"}
+{"type":"entry","key":"ui.sideScene.type.companion-pair","value":"동료 조합"}
+{"type":"entry","key":"ui.sideScene.mechanic.clue-sort","value":"단서 정렬"}
+{"type":"entry","key":"ui.sideScene.mechanic.water-ration","value":"물 배분"}
+{"type":"entry","key":"ui.sideScene.mechanic.token-budget","value":"한 닢 예산"}
+{"type":"entry","key":"ui.sideScene.mechanic.resource-draft","value":"자원 초안"}
+{"type":"entry","key":"ui.sideScene.mechanic.cloud-window","value":"구름 창"}
+{"type":"entry","key":"ui.sideScene.mechanic.route-memory","value":"경로 기억"}
+{"type":"entry","key":"ui.sideScene.mechanic.seed-match","value":"씨앗 맞추기"}
+{"type":"entry","key":"ui.sideScene.mechanic.echo-map","value":"메아리 지도"}
+{"type":"entry","key":"ui.sideScene.mechanic.fair-scale","value":"공정 저울"}
+{"type":"entry","key":"ui.sideScene.mechanic.paired-reading","value":"짝 읽기"}
+{"type":"entry","key":"ui.sideScene.mechanic.tide-timing","value":"물때 맞추기"}
+{"type":"entry","key":"ui.sideScene.mechanic.lens-repair","value":"렌즈 수리"}
+{"type":"entry","key":"ui.sideScene.mechanic.soil-layer","value":"흙 층위"}
+{"type":"entry","key":"ui.sideScene.mechanic.load-balance","value":"하중 균형"}
+{"type":"entry","key":"ui.sideScene.mechanic.rumour-map","value":"소문 지도"}
+{"type":"entry","key":"ui.sideScene.mechanic.witness-chain","value":"증언 연결"}
+{"type":"entry","key":"ui.sideScene.mechanic.marker-budget","value":"표식 예산"}
+{"type":"entry","key":"ui.sideScene.mechanic.signal-pattern","value":"신호 패턴"}
+{"type":"entry","key":"ui.sideScene.mechanic.stone-pattern","value":"돌 무늬"}
+{"type":"entry","key":"ui.sideScene.mechanic.care-rotation","value":"돌봄 순환"}
+{"type":"entry","key":"ui.sideScene.mechanic.shared-contract","value":"공통 계약"}
+{"type":"entry","key":"ui.sideScene.mechanic.constellation-trace","value":"별자리 추적"}
+{"type":"entry","key":"ui.sideScene.mechanic.handoff-crossing","value":"넘김 건너기"}
+{"type":"entry","key":"ui.sideScene.mechanic.handoff-cairn","value":"넘김 돌무더기"}

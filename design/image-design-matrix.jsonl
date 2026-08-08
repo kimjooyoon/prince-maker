@@ -1,5 +1,5 @@
 {"type":"header","schema":"lumen-document-jsonl-v1","document":"design/image-design-matrix.jsonl"}
-{"type":"field","key":"formula","value":"5 * 20 + 4 * 47 = 288"}
+{"type":"field","key":"formula","value":"5 * 20 + 4 * 47 + 6 * 4 = 312"}
 {"type":"field","key":"emotionCount","value":5}
 {"type":"field","key":"characterCount","value":20}
 {"type":"field","key":"majorCharacterCount","value":4}
@@ -7,9 +7,11 @@
 {"type":"field","key":"sideSceneCount","value":24}
 {"type":"field","key":"emotionFrameCount","value":100}
 {"type":"field","key":"eventFrameCount","value":188}
-{"type":"field","key":"totalFrameCount","value":288}
-{"type":"field","key":"packaging","value":"20 character sheets + 47 event sheets = 67 PNG sheets"}
-{"type":"field","key":"scope","value":"main events only; sideScenes are a separate future expansion"}
+{"type":"field","key":"sideSceneFrameCount","value":24}
+{"type":"field","key":"sideSceneSheetCount","value":6}
+{"type":"field","key":"totalFrameCount","value":312}
+{"type":"field","key":"packaging","value":"20 character sheets + 47 event sheets + 6 side-scene sheets = 73 PNG sheets"}
+{"type":"field","key":"scope","value":"main events and sideScenes"}
 {"type":"item","section":"characterEmotionSheets","index":0,"id":"doran","value":{"id":"doran","characterId":"doran","asset":"assets/generated/character-emotions/doran.png","frameCount":5,"emotionIds":["calm","joy","concern","resolve","wonder"],"sha256":"0ef8e70919cd59879f9e334190fbd0bf37bfaf4b5dbbea1d4f2f41319233b69a"}}
 {"type":"item","section":"characterEmotionSheets","index":1,"id":"mira","value":{"id":"mira","characterId":"mira","asset":"assets/generated/character-emotions/mira.png","frameCount":5,"emotionIds":["calm","joy","concern","resolve","wonder"],"sha256":"0acdb7094dadf1ca23185f8b40043cd04a1b0c7c171fd6b3d0ae8743f3750b84"}}
 {"type":"item","section":"characterEmotionSheets","index":2,"id":"kai","value":{"id":"kai","characterId":"kai","asset":"assets/generated/character-emotions/kai.png","frameCount":5,"emotionIds":["calm","joy","concern","resolve","wonder"],"sha256":"ddbe4f1d27a7295fba74bdca9569d7ce1369359d9a15f002a764612581cc8c09"}}
@@ -77,3 +79,9 @@
 {"type":"item","section":"eventIllustrationSheets","index":44,"id":"46","value":{"id":"46","eventId":"46","asset":"assets/generated/event-illustrations/event-46.png","frameCount":4,"majorCharacterIds":["noa","lumi","bora","taro"],"sha256":"6d20ab7f6eeb64a45c664baefc2c374dfe258259c617e20a7d5b8f9a8efd6708"}}
 {"type":"item","section":"eventIllustrationSheets","index":45,"id":"47","value":{"id":"47","eventId":"47","asset":"assets/generated/event-illustrations/event-47.png","frameCount":4,"majorCharacterIds":["noa","lumi","bora","taro"],"sha256":"b8962d04c826110fdd69b436428ddd9114306ce873d30580da0f44dd2ff31e42"}}
 {"type":"item","section":"eventIllustrationSheets","index":46,"id":"48","value":{"id":"48","eventId":"48","asset":"assets/generated/event-illustrations/event-48.png","frameCount":4,"majorCharacterIds":["noa","lumi","bora","taro"],"sha256":"374250ce2915cd7cde85bc6742c24866a2f81c19bf439f0b3735710bb61e3a9c"}}
+{"type":"item","section":"sideSceneIllustrationSheets","index":0,"id":"archive","value":{"id":"archive","locationId":"archive","asset":"assets/generated/side-scene-illustrations/archive.png","frameCount":4,"sideSceneIds":["sideArchiveLantern","sideArchiveIndex","sideArchiveNight","sideArchiveWitness"],"sha256":"86a5c820aaf668b1bf67b233c3d5397496207487d6f41b8b3edb63062dd0a263"}}
+{"type":"item","section":"sideSceneIllustrationSheets","index":1,"id":"greenhouse","value":{"id":"greenhouse","locationId":"greenhouse","asset":"assets/generated/side-scene-illustrations/greenhouse.png","frameCount":4,"sideSceneIds":["sideGreenhouseRain","sideGreenhouseSeed","sideGreenhouseCompost","sideGreenhouseBell"],"sha256":"7a9eaa8153f884a16109a5d8130c6bbe1eee0267064d2f7b295e4aa904dcc1f9"}}
+{"type":"item","section":"sideSceneIllustrationSheets","index":2,"id":"market","value":{"id":"market","locationId":"market","asset":"assets/generated/side-scene-illustrations/market.png","frameCount":4,"sideSceneIds":["sideMarketToken","sideMarketScale","sideMarketQuiet","sideMarketReturn"],"sha256":"ac0e9bf35eea53b5af4403be7cbb1f3fb349dbdd78ff704f3fbf0a91b22e6088"}}
+{"type":"item","section":"sideSceneIllustrationSheets","index":3,"id":"observatory","value":{"id":"observatory","locationId":"observatory","asset":"assets/generated/side-scene-illustrations/observatory.png","frameCount":4,"sideSceneIds":["sideObservatoryCloud","sideObservatoryLens","sideObservatorySignal","sideObservatoryDawn"],"sha256":"314a844b91783d3df98393db044b4ba5cbf60881ac4621b85ed6a9abca429af1"}}
+{"type":"item","section":"sideSceneIllustrationSheets","index":4,"id":"quarry","value":{"id":"quarry","locationId":"quarry","asset":"assets/generated/side-scene-illustrations/quarry.png","frameCount":4,"sideSceneIds":["sideQuarryEcho","sideQuarryLift","sideQuarryLedger","sideQuarryExit"],"sha256":"fa6eb7aaf92ea8ff8872a76dc2b5e42ab38c8381a285adcfb6a27f2078c977f6"}}
+{"type":"item","section":"sideSceneIllustrationSheets","index":5,"id":"river-road","value":{"id":"river-road","locationId":"river-road","asset":"assets/generated/side-scene-illustrations/river-road.png","frameCount":4,"sideSceneIds":["sideRiverRope","sideRiverTide","sideRiverMarker","sideRiverQuestion"],"sha256":"8e5741811a973e39d5e6ba3e7937e3f1f4025036181a7c643de526bd01315024"}}

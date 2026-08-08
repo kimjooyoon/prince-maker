@@ -23,7 +23,7 @@
 
 ## 이벤트 일러스트 매트릭스
 
-사용자 요청 산식은 [`design/image-design-matrix.jsonl`](../design/image-design-matrix.jsonl)에 고정한다. `5 × 20 = 100` 감정 프레임과 `4 × 47 = 188` 메인 이벤트 프레임을 합쳐 총 `288`프레임이며, 검수 가능한 PNG는 캐릭터 20장과 이벤트 47장, 총 67장이다. 이벤트 시트는 왼쪽부터 노아·루미·보라·타로의 4패널이고, `story/story.jsonl`의 각 `events[].illustrationAsset`과 `lib/event_art.dart`를 통해 이벤트 Canvas 페이지에 표시한다. 사이드씬 24개는 이번 산식에서 제외하고 별도 확장 대상으로 남긴다.
+사용자 요청 산식은 [`design/image-design-matrix.jsonl`](../design/image-design-matrix.jsonl)에 고정한다. `5 × 20 = 100` 감정 프레임, `4 × 47 = 188` 메인 이벤트 프레임, `6 × 4 = 24` 사이드 씬 프레임을 합쳐 총 `312`프레임이며, 검수 가능한 PNG는 캐릭터 20장·이벤트 47장·위치별 사이드 씬 6장, 총 73장이다. 이벤트 시트는 왼쪽부터 노아·루미·보라·타로의 4패널이고, 사이드 씬 시트는 위치별 4패널이다. `story/story.jsonl`의 `illustrationAsset + illustrationFrame`과 `lib/event_art.dart`를 통해 현재 Canvas 프레임에 표시한다.
 
 ## 추적성과 검증
 
