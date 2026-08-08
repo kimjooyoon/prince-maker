@@ -321,10 +321,14 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/character_art_test.dart#every resident has a distinct illustration and emotion contract',
     'test/character_art_golden_test.dart#archive card opens the art direction and emotion states',
     'lib/event_art.dart#eventIllustrationAsset',
+    'lib/event_art.dart#sideSceneIllustrationAsset',
     'test/event_art_test.dart#every main event has a deterministic illustration asset',
     'test/event_art_golden_test.dart#ko and en event surfaces render the authored illustration',
+    'test/side_scene_art_test.dart#every side scene binds a deterministic illustration frame',
+    'test/side_scene_golden_test.dart#side scene archive renders ko and en illustration',
+    'test/long_copy_contract_test.dart#all side-scene type and mechanic labels fit the copy contract',
     'tool/generate_image_matrix.dart#image-matrix-generator',
-    'test/image_design_matrix_test.dart#image design matrix closes the requested 288-frame formula',
+    'test/image_design_matrix_test.dart#image design matrix closes the requested 312-frame formula',
     'test/relationship_archive_test.dart#relationship archive reuses the pure resolver projection',
     'test/relationship_archive_golden_test.dart#relationship archive renders the resolved state and follow-up',
     'test/player_input_contract_test.dart#event locale control changes the event Canvas state',
@@ -364,6 +368,8 @@ void refreshHashes(Map<String, dynamic> story) {
   ];
   refs.removeWhere((entry) =>
       entry['ref'] == 'docs/decision-proof-contract.jsonl#preconditionFields' ||
+      entry['ref'] ==
+          'test/image_design_matrix_test.dart#image design matrix closes the requested 288-frame formula' ||
       entry['ref'] ==
           'test/environment_catalog_test.dart#four locations expose a complete environment design contract' ||
       entry['ref'] ==
@@ -461,6 +467,129 @@ void materializeEventIllustrationAssets(Map<String, dynamic> story) {
     }
   }
   story['assetRefs'] = refs;
+}
+
+void materializeSideSceneIllustrationAssets(Map<String, dynamic> story) {
+  const assets = <String, String>{
+    'archive': 'assets/generated/side-scene-illustrations/archive.png',
+    'greenhouse': 'assets/generated/side-scene-illustrations/greenhouse.png',
+    'market': 'assets/generated/side-scene-illustrations/market.png',
+    'observatory': 'assets/generated/side-scene-illustrations/observatory.png',
+    'river-road': 'assets/generated/side-scene-illustrations/river-road.png',
+    'quarry': 'assets/generated/side-scene-illustrations/quarry.png',
+  };
+  final refs = (story['assetRefs'] as List? ?? const [])
+      .whereType<Map>()
+      .map((entry) => entry.cast<String, dynamic>())
+      .toList();
+  final frames = <String, int>{};
+  final scenes = (story['sideScenes'] as List? ?? const [])
+      .whereType<Map>()
+      .map((entry) => entry.cast<String, dynamic>());
+  for (final scene in scenes) {
+    final location = '${scene['locationId']}', asset = assets[location];
+    if (asset == null || !File(asset).existsSync()) {
+      throw StateError('missing side scene illustration asset: $location');
+    }
+    final frame = frames[location] ?? 0;
+    if (frame >= 4) throw StateError('side scene frame overflow: $location');
+    frames[location] = frame + 1;
+    scene['illustrationAsset'] = asset;
+    scene['illustrationFrame'] = frame;
+    if (!refs.any((ref) => (ref['ref'] as String).split('#').first == asset)) {
+      refs.add(
+          {'ref': '$asset#$location-four-side-scene-frames', 'sha256': ''});
+    }
+  }
+  if (frames.length != assets.length ||
+      frames.values.any((value) => value != 4)) {
+    throw StateError('side scene illustration matrix must be 6 x 4');
+  }
+  story['assetRefs'] = refs;
+}
+
+void materializeSideSceneUiCatalog(Map<String, dynamic> story,
+    Map<String, dynamic> ko, Map<String, dynamic> en) {
+  const types = <String, List<String>>{
+    'exploration': ['탐험', 'Exploration'],
+    'resource-crisis': ['자원 위기', 'Resource crisis'],
+    'mini-game': ['미니게임', 'Mini-game'],
+    'companion-pair': ['동료 조합', 'Companion pair'],
+  };
+  const mechanics = <String, List<String>>{
+    'clue-sort': ['단서 정렬', 'Clue sort'],
+    'water-ration': ['물 배분', 'Water ration'],
+    'token-budget': ['한 닢 예산', 'Token budget'],
+    'resource-draft': ['자원 초안', 'Resource draft'],
+    'cloud-window': ['구름 창', 'Cloud window'],
+    'route-memory': ['경로 기억', 'Route memory'],
+    'seed-match': ['씨앗 맞추기', 'Seed match'],
+    'echo-map': ['메아리 지도', 'Echo map'],
+    'fair-scale': ['공정 저울', 'Fair scale'],
+    'paired-reading': ['짝 읽기', 'Paired reading'],
+    'tide-timing': ['물때 맞추기', 'Tide timing'],
+    'lens-repair': ['렌즈 수리', 'Lens repair'],
+    'soil-layer': ['흙 층위', 'Soil layers'],
+    'load-balance': ['하중 균형', 'Load balance'],
+    'rumour-map': ['소문 지도', 'Rumor map'],
+    'witness-chain': ['증언 연결', 'Witness chain'],
+    'marker-budget': ['표식 예산', 'Marker budget'],
+    'signal-pattern': ['신호 패턴', 'Signal pattern'],
+    'stone-pattern': ['돌 무늬', 'Stone pattern'],
+    'care-rotation': ['돌봄 순환', 'Care rotation'],
+    'shared-contract': ['공통 계약', 'Shared contract'],
+    'constellation-trace': ['별자리 추적', 'Constellation trace'],
+    'handoff-crossing': ['넘김 건너기', 'Handoff crossing'],
+    'handoff-cairn': ['넘김 돌무더기', 'Handoff cairn'],
+  };
+  ko.addAll({
+    'ui.sideScene.title': '사이드 장면 기록',
+    'ui.sideScene.subtitle': '탐험·위기·자원·미니게임·동료 조합 사건은 선택의 흔적을 남깁니다.',
+    'ui.sideScene.empty': '아직 사이드 장면이 없습니다.',
+    'ui.sideScene.choice': '선택',
+    'ui.sideScene.previous': '← 이전 장면',
+    'ui.sideScene.next': '다음 장면 →',
+    'ui.sideScene.back': '← 홈으로',
+    'ui.sideScene.status.completed': '완료',
+    'ui.sideScene.status.available': '선택 가능',
+    'ui.sideScene.status.locked': '잠김',
+    'ui.sideScene.lock.completed': '이미 완료',
+    'ui.sideScene.lock.companion': '동료 유대 필요',
+    'ui.sideScene.lock.memory': '기억 단서 필요',
+    'ui.sideScene.lock.stat': '능력치 {stat} {min} 필요',
+    'ui.sideScene.lock.generic': '잠김',
+  });
+  en.addAll({
+    'ui.sideScene.title': 'Side scene archive',
+    'ui.sideScene.subtitle':
+        'Exploration, crisis, resource, mini-game and companion-pair scenes leave traces.',
+    'ui.sideScene.empty': 'No side scenes yet.',
+    'ui.sideScene.choice': 'Choice',
+    'ui.sideScene.previous': '← Previous scene',
+    'ui.sideScene.next': 'Next scene →',
+    'ui.sideScene.back': '← Back to home',
+    'ui.sideScene.status.completed': 'COMPLETED',
+    'ui.sideScene.status.available': 'AVAILABLE',
+    'ui.sideScene.status.locked': 'LOCKED',
+    'ui.sideScene.lock.completed': 'Already complete',
+    'ui.sideScene.lock.companion': 'Companion bond needed',
+    'ui.sideScene.lock.memory': 'Memory clue needed',
+    'ui.sideScene.lock.stat': '{stat} {min} needed',
+    'ui.sideScene.lock.generic': 'Locked',
+  });
+  for (final entry in types.entries) {
+    ko['ui.sideScene.type.${entry.key}'] = entry.value[0];
+    en['ui.sideScene.type.${entry.key}'] = entry.value[1];
+  }
+  for (final entry in mechanics.entries) {
+    ko['ui.sideScene.mechanic.${entry.key}'] = entry.value[0];
+    en['ui.sideScene.mechanic.${entry.key}'] = entry.value[1];
+  }
+  final ids = (story['sideScenes'] as List? ?? const [])
+      .map((scene) => '${scene['id']}');
+  if (ids.length != 24 || mechanics.length != 24) {
+    throw StateError('side scene UI catalog must cover 24 authored mechanics');
+  }
 }
 
 void materializeCharacterContracts(Map<String, dynamic> story,
@@ -4936,6 +5065,8 @@ void main() {
 
   materializeCharacterEmotionAsset(story);
   materializeEventIllustrationAssets(story);
+  materializeSideSceneIllustrationAssets(story);
+  materializeSideSceneUiCatalog(story, ko, en);
   materializeCharacterContracts(story, ko, en);
   materializeChapterScenes(story, ko, en);
   story['narrativeLoop']['chapterSceneCount'] =

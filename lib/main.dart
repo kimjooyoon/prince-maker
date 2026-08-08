@@ -77,7 +77,9 @@ class _Game extends State<Game> {
   ui.Image? rosterImage;
   final characterEmotionImages = <String, ui.Image>{};
   final eventIllustrationImages = <String, ui.Image>{};
+  final sideSceneIllustrationImages = <String, ui.Image>{};
   int eventAssetGeneration = 0;
+  int sideSceneAssetGeneration = 0;
   late GameSession session;
   late CollectionPort collection;
   LocaleCatalog get catalog => LocaleCatalog(widget.locales);
@@ -120,6 +122,7 @@ class _Game extends State<Game> {
       sideSceneCursor = firstAvailable < 0 ? 0 : firstAvailable;
       page = 9;
     });
+    loadCurrentSideSceneIllustration();
   }
 
   void chooseSideScene(int choice) {
@@ -234,6 +237,7 @@ class _Game extends State<Game> {
       ..clear()
       ..addAll(s.flags);
     loadCurrentEventIllustration();
+    loadCurrentSideSceneIllustration();
   }
 
   void loadCurrentEventIllustration() {
@@ -257,6 +261,31 @@ class _Game extends State<Game> {
         return;
       }
       setState(() => eventIllustrationImages[asset] = f.image);
+    });
+  }
+
+  void loadCurrentSideSceneIllustration() {
+    final scenes = (widget.story['sideScenes'] as List? ?? const [])
+        .whereType<Map>()
+        .map((scene) => scene.cast<String, dynamic>())
+        .toList();
+    if (scenes.isEmpty) return;
+    final scene = scenes[sideSceneCursor.clamp(0, scenes.length - 1)];
+    final asset = sideSceneIllustrationAsset(scene);
+    if (sideSceneIllustrationImages.containsKey(asset)) return;
+    final generation = ++sideSceneAssetGeneration;
+    for (final image in sideSceneIllustrationImages.values) image.dispose();
+    sideSceneIllustrationImages.clear();
+    rootBundle
+        .load(asset)
+        .then((b) => ui.instantiateImageCodec(b.buffer.asUint8List()))
+        .then((c) => c.getNextFrame())
+        .then((f) {
+      if (!mounted || generation != sideSceneAssetGeneration) {
+        f.image.dispose();
+        return;
+      }
+      setState(() => sideSceneIllustrationImages[asset] = f.image);
     });
   }
 
@@ -441,14 +470,16 @@ class _Game extends State<Game> {
     } else if (page == 9) {
       if (y < 100 && x > 590) {
         toggleLocale();
-      } else if (y > 260 && y < 510) {
+      } else if (y > 285 && y < 510) {
         chooseSideScene((x ~/ 253).clamp(0, 2));
       } else if (y > 575 && x < 210) {
         setState(() => sideSceneCursor =
             (sideSceneCursor - 1).clamp(0, sideScenes.length - 1));
+        loadCurrentSideSceneIllustration();
       } else if (y > 575 && x > 550) {
         setState(() => sideSceneCursor =
             (sideSceneCursor + 1).clamp(0, sideScenes.length - 1));
+        loadCurrentSideSceneIllustration();
       } else if (y > 620) {
         setState(() => page = 0);
       }
@@ -590,6 +621,7 @@ class _Game extends State<Game> {
                           rosterImage,
                           characterEmotionImages,
                           eventIllustrationImages,
+                          sideSceneIllustrationImages,
                           history,
                           eventIndex,
                           sideSceneCursor,
@@ -629,6 +661,7 @@ class Scene extends CustomPainter {
       this.rosterImage,
       this.characterEmotionImages,
       this.eventIllustrationImages,
+      this.sideSceneIllustrationImages,
       this.history,
       this.eventIndex,
       this.sideSceneCursor,
@@ -666,6 +699,9 @@ class Scene extends CustomPainter {
       eventIllustrationImages.entries
           .map((entry) => [entry.key, entry.value.hashCode])
           .toList(),
+      sideSceneIllustrationImages.entries
+          .map((entry) => [entry.key, entry.value.hashCode])
+          .toList(),
       history,
       saveCode,
       activities
@@ -693,6 +729,7 @@ class Scene extends CustomPainter {
   final ui.Image? image, personaImage, rosterImage;
   final Map<String, ui.Image> characterEmotionImages;
   final Map<String, ui.Image> eventIllustrationImages;
+  final Map<String, ui.Image> sideSceneIllustrationImages;
   final List<String> history;
   final String saveCode;
   final List<Activity> activities;
@@ -1756,12 +1793,15 @@ class Scene extends CustomPainter {
   }
 
   void sideScene(Canvas c) {
-    final scenes = (s['sideScenes'] as List? ?? const []).cast<Map>(),
+    final scenes =
+            (s['sideScenes'] as List? ?? const []).cast<Map<String, dynamic>>(),
         scene = scenes.isEmpty
             ? <String, dynamic>{}
             : scenes[sideSceneCursor.clamp(0, scenes.length - 1)],
-        choices = (scene['choices'] as List? ?? const []).cast<Map>(),
-        locations = (s['locations'] as List? ?? const []).cast<Map>(),
+        choices = (scene['choices'] as List? ?? const [])
+            .cast<Map<String, dynamic>>(),
+        locations =
+            (s['locations'] as List? ?? const []).cast<Map<String, dynamic>>(),
         location = locations.firstWhere(
             (item) => item['id'] == scene['locationId'],
             orElse: () => {'name': scene['locationId']}),
@@ -1773,20 +1813,14 @@ class Scene extends CustomPainter {
             (scene['unlockWeek'] as int? ?? 1) <= week &&
             companionReady &&
             !completed;
-    txt(c, activeLocale == 'ko' ? '사이드 장면 기록' : 'Side scene archive',
+    txt(c, localized('ui.sideScene.title', 'Side scene archive'),
         const Offset(24, 22), 28, ink,
         bold: true, maxWidth: 540);
-    txt(
-        c,
-        activeLocale == 'ko'
-            ? '탐험·위기·자원·미니게임·동료 조합 사건은 선택의 흔적을 남깁니다.'
-            : 'Exploration, crisis, resource, mini-game and companion-pair scenes leave traces.',
-        const Offset(25, 60),
-        12,
-        teal,
+    txt(c, localized('ui.sideScene.subtitle', 'Side scenes leave traces.'),
+        const Offset(25, 60), 12, teal,
         maxWidth: 670);
     if (scene.isEmpty) {
-      txt(c, activeLocale == 'ko' ? '아직 사이드 장면이 없습니다.' : 'No side scenes yet.',
+      txt(c, localized('ui.sideScene.empty', 'No side scenes yet.'),
           const Offset(48, 180), 18, ink,
           bold: true);
       return;
@@ -1798,21 +1832,42 @@ class Scene extends CustomPainter {
             localized('${scene['consequenceKey']}', '${scene['consequence']}'),
         locationName =
             localized('${location['nameKey']}', '${location['name']}'),
-        state = flags['side-scene:${scene['id']}'] == true
-            ? (activeLocale == 'ko' ? '완료' : 'COMPLETED')
+        typeName = localized(
+            'ui.sideScene.type.${scene['sceneType']}', '${scene['sceneType']}'),
+        mechanicName = localized('ui.sideScene.mechanic.${scene['mechanic']}',
+            '${scene['mechanic']}'),
+        state = completed
+            ? localized('ui.sideScene.status.completed', 'COMPLETED')
             : unlocked
-                ? (activeLocale == 'ko' ? '선택 가능' : 'AVAILABLE')
-                : (activeLocale == 'ko' ? '잠김' : 'LOCKED');
-    txt(c, '$locationName · ${scene['sceneType']} · $state',
+                ? localized('ui.sideScene.status.available', 'AVAILABLE')
+                : localized('ui.sideScene.status.locked', 'LOCKED'),
+        sideAsset = sideSceneIllustrationAsset(scene),
+        sideImage = sideSceneIllustrationImages[sideAsset],
+        choiceTop = sideImage == null ? 275.0 : 298.0;
+    txt(c, '$locationName · $typeName · $mechanicName · $state',
         const Offset(25, 88), 10, unlocked ? teal : ink.withValues(alpha: .45),
-        bold: true);
-    txt(c, title, const Offset(25, 112), 20, ink, bold: true, maxWidth: 650);
-    box(c, const Rect.fromLTWH(24, 145, 712, 94), ink, radius: 20);
-    txt(c, body, const Offset(46, 166), 15, Colors.white,
-        bold: true, maxWidth: 665);
-    txt(c, '$prompt · $consequence', const Offset(25, 248), 10,
-        ink.withValues(alpha: .6),
-        maxWidth: 700);
+        bold: true, maxWidth: 710);
+    if (sideImage == null) {
+      txt(c, title, const Offset(25, 112), 20, ink, bold: true, maxWidth: 650);
+      box(c, const Rect.fromLTWH(24, 145, 712, 94), ink, radius: 20);
+      txt(c, body, const Offset(46, 166), 15, Colors.white,
+          bold: true, maxWidth: 665, maxLines: 2);
+      txt(c, '$prompt · $consequence', const Offset(25, 248), 10,
+          ink.withValues(alpha: .6),
+          maxWidth: 700, maxLines: 1);
+    } else {
+      drawSideSceneIllustration(
+          c, sideImage, const Rect.fromLTWH(24, 108, 330, 165),
+          frame: sideSceneIllustrationFrame(scene));
+      box(c, const Rect.fromLTWH(366, 108, 370, 165), ink, radius: 20);
+      txt(c, title, const Offset(386, 124), 18, Colors.white,
+          bold: true, maxWidth: 330, maxLines: 2);
+      txt(c, body, const Offset(386, 167), 13, Colors.white,
+          bold: true, maxWidth: 330, maxLines: 3);
+      txt(c, '$prompt · $consequence', const Offset(386, 235), 9,
+          const Color(0xffc6e3d9),
+          maxWidth: 330, maxLines: 2);
+    }
     for (var i = 0; i < choices.length && i < 3; i++) {
       final choice = choices[i],
           req = choice['requiresStat'] as String?,
@@ -1826,46 +1881,67 @@ class Scene extends CustomPainter {
               (bondReq != null && (bonds[bondReq] ?? 0) < bondMin) ||
               (flagReq != null && flags[flagReq] != true),
           x = 24 + i * 242.0;
-      CanvasUiKit.statePanel(c, Rect.fromLTWH(x, 275, 226, 228),
+      CanvasUiKit.statePanel(c, Rect.fromLTWH(x, choiceTop, 226, 228),
           state: locked ? CanvasUiState.disabled : CanvasUiState.idle,
           shadow: !locked);
-      txt(c, '${i + 1}', Offset(x + 18, 292), 12,
+      txt(c, '${i + 1}', Offset(x + 18, choiceTop + 17), 12,
           locked ? ink.withValues(alpha: .35) : teal,
           bold: true);
-      txt(c, localized('${choice['labelKey']}', '${choice['label']}'),
-          Offset(x + 18, 320), 13, locked ? ink.withValues(alpha: .42) : ink,
-          bold: true, maxWidth: 188);
       txt(
           c,
-          locked
-              ? completed
-                  ? '이미 완료'
-                  : requirements.isNotEmpty && !companionReady
-                      ? '동료 유대 필요'
-                      : flagReq != null
-                          ? '$flagReq 필요'
-                          : req != null
-                              ? '$req $min 필요'
-                              : '잠김'
-              : '${choice['stat']} +${choice['delta']} · 은화 ${choice['coins']} · 유대 +${choice['bondDelta'] ?? 0}',
-          Offset(x + 18, 405),
+          localized('${choice['labelKey']}', '${choice['label']}'),
+          Offset(x + 18, choiceTop + 45),
+          13,
+          locked ? ink.withValues(alpha: .42) : ink,
+          bold: true,
+          maxWidth: 188,
+          maxLines: 2);
+      final lockLabel = completed
+          ? localized('ui.sideScene.lock.completed', 'Already complete')
+          : requirements.isNotEmpty && !companionReady
+              ? localized(
+                  'ui.sideScene.lock.companion', 'Companion bond needed')
+              : flagReq != null
+                  ? localized('ui.sideScene.lock.memory', 'Memory clue needed')
+                  : req != null
+                      ? formatUi(
+                          'ui.sideScene.lock.stat',
+                          '{stat} {min} needed',
+                          {'stat': localizedStat(req), 'min': min})
+                      : localized('ui.sideScene.lock.generic', 'Locked');
+      txt(
+          c,
+          locked ? lockLabel : localizedChoiceEffect(choice),
+          Offset(x + 18, choiceTop + 130),
           10,
           locked ? ink.withValues(alpha: .4) : teal,
-          maxWidth: 185);
-      txt(c, localized('${choice['lineKey']}', '${choice['line']}'),
-          Offset(x + 18, 438), 9, locked ? ink.withValues(alpha: .35) : ink,
-          maxWidth: 185);
+          maxWidth: 185,
+          maxLines: 2);
+      txt(
+          c,
+          localized('${choice['lineKey']}', '${choice['line']}'),
+          Offset(x + 18, choiceTop + 163),
+          9,
+          locked ? ink.withValues(alpha: .35) : ink,
+          maxWidth: 185,
+          maxLines: 3);
     }
     box(c, const Rect.fromLTWH(24, 570, 180, 42), Colors.white,
         radius: 14, stroke: teal);
-    txt(c, '← 이전 장면', const Offset(62, 584), 12, teal, bold: true);
+    txt(c, localized('ui.sideScene.previous', '← Previous scene'),
+        const Offset(62, 584), 12, teal,
+        bold: true);
     txt(c, '${sideSceneCursor + 1}/${scenes.length}', const Offset(350, 584),
         12, teal,
         bold: true);
     box(c, const Rect.fromLTWH(550, 570, 186, 42), Colors.white,
         radius: 14, stroke: teal);
-    txt(c, '다음 장면 →', const Offset(594, 584), 12, teal, bold: true);
-    txt(c, '← 홈으로', const Offset(24, 665), 13, teal, bold: true);
+    txt(c, localized('ui.sideScene.next', 'Next scene →'),
+        const Offset(594, 584), 12, teal,
+        bold: true);
+    txt(c, localized('ui.sideScene.back', '← Back to home'),
+        const Offset(24, 665), 13, teal,
+        bold: true);
   }
 
   void chapterClosure(Canvas c) {

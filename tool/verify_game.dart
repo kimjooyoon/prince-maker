@@ -500,6 +500,23 @@ void main() {
       fail('event illustration asset is not declared: ${event['week']}');
     }
   }
+  final sideIllustrationFrames = <String, Set<int>>{};
+  for (final scene in sideScenes) {
+    final asset = scene['illustrationAsset'];
+    final frame = scene['illustrationFrame'];
+    if (asset is! String ||
+        !assetPaths.contains(asset) ||
+        frame is! int ||
+        frame < 0 ||
+        frame >= 4) {
+      fail('side scene illustration binding is invalid: ${scene['id']}');
+    }
+    (sideIllustrationFrames[asset] ??= <int>{}).add(frame);
+  }
+  if (sideIllustrationFrames.length != 6 ||
+      sideIllustrationFrames.values.any((frames) => frames.length != 4)) {
+    fail('side scene illustration matrix must be 6 sheets x 4 frames');
+  }
   for (final ref in fontRefs) {
     final path = (ref['ref'] as String).split('#').first;
     if (!File(path).existsSync()) fail('missing font ref $path');
@@ -734,6 +751,10 @@ void main() {
       File('test/environment_golden_test.dart').existsSync()
           ? File('test/environment_golden_test.dart').readAsStringSync()
           : '';
+  final sideSceneGoldenEvidence =
+      File('test/side_scene_golden_test.dart').existsSync()
+          ? File('test/side_scene_golden_test.dart').readAsStringSync()
+          : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
           ? File('tool/verify_scenario_variants.dart').readAsStringSync()
@@ -772,6 +793,8 @@ void main() {
     'character-roster-en.png',
     'environment-atlas.png',
     'environment-atlas-en.png',
+    'side-scene.png',
+    'side-scene-en.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -851,6 +874,8 @@ void main() {
             .contains("goldens/environment-atlas.png") &&
         environmentAtlasGoldenEvidence
             .contains("goldens/environment-atlas-en.png") &&
+        sideSceneGoldenEvidence.contains("goldens/side-scene.png") &&
+        sideSceneGoldenEvidence.contains("goldens/side-scene-en.png") &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(

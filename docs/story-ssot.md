@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: ad81362ced439a82793843489874db302cda9d1862b34f719c4bf0397d6b4394 -->
+<!-- ssot-sha256: 4b37d58cb97f04773469e4379914204345d197641055e63b4a8bde0cc9f980b5 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -51,7 +51,7 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **1003** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
+- locale 최소 키: **1046** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
 - 산식: authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
@@ -194,6 +194,12 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 - [`assets/generated/event-illustrations/event-46.png#event-46-four-major-character-frames`](../assets/generated/event-illustrations/event-46.png) · SHA-256 `6d20ab7f6eeb64a45c664baefc2c374dfe258259c617e20a7d5b8f9a8efd6708`
 - [`assets/generated/event-illustrations/event-47.png#event-47-four-major-character-frames`](../assets/generated/event-illustrations/event-47.png) · SHA-256 `b8962d04c826110fdd69b436428ddd9114306ce873d30580da0f44dd2ff31e42`
 - [`assets/generated/event-illustrations/event-48.png#event-48-four-major-character-frames`](../assets/generated/event-illustrations/event-48.png) · SHA-256 `374250ce2915cd7cde85bc6742c24866a2f81c19bf439f0b3735710bb61e3a9c`
+- [`assets/generated/side-scene-illustrations/archive.png#archive-four-side-scene-frames`](../assets/generated/side-scene-illustrations/archive.png) · SHA-256 `86a5c820aaf668b1bf67b233c3d5397496207487d6f41b8b3edb63062dd0a263`
+- [`assets/generated/side-scene-illustrations/greenhouse.png#greenhouse-four-side-scene-frames`](../assets/generated/side-scene-illustrations/greenhouse.png) · SHA-256 `7a9eaa8153f884a16109a5d8130c6bbe1eee0267064d2f7b295e4aa904dcc1f9`
+- [`assets/generated/side-scene-illustrations/market.png#market-four-side-scene-frames`](../assets/generated/side-scene-illustrations/market.png) · SHA-256 `ac0e9bf35eea53b5af4403be7cbb1f3fb349dbdd78ff704f3fbf0a91b22e6088`
+- [`assets/generated/side-scene-illustrations/observatory.png#observatory-four-side-scene-frames`](../assets/generated/side-scene-illustrations/observatory.png) · SHA-256 `314a844b91783d3df98393db044b4ba5cbf60881ac4621b85ed6a9abca429af1`
+- [`assets/generated/side-scene-illustrations/river-road.png#river-road-four-side-scene-frames`](../assets/generated/side-scene-illustrations/river-road.png) · SHA-256 `8e5741811a973e39d5e6ba3e7937e3f1f4025036181a7c643de526bd01315024`
+- [`assets/generated/side-scene-illustrations/quarry.png#quarry-four-side-scene-frames`](../assets/generated/side-scene-illustrations/quarry.png) · SHA-256 `fa6eb7aaf92ea8ff8872a76dc2b5e42ab38c8381a285adcfb6a27f2078c977f6`
 
 ## 폰트
 
@@ -201,8 +207,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `69140c6616dfbf73b3670034e67071934ecba583524d2cc1679c3c11d1817736`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `bcb9b1a2e7470b44c7e23db01f7b2e0caafc6cbfbfbbc1b00051b0019b8ad1c7`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `1a93c94bf405cc19b48c80dabda3b57dc4215b8053d114904d73cf443ed08605`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `5edd763aa26b4dc78e7b825c47653e9a1c0952395c0015fb73809eebc3edf830`
 
 ## 성격
 

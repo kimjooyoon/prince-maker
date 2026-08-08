@@ -1002,3 +1002,46 @@
 {"type":"entry","key":"ui.characterArt.mood","value":"Current mood"}
 {"type":"entry","key":"ui.characterArt.back","value":"← Back to archive"}
 {"type":"entry","key":"ui.characterArt.footer","value":"This mood colors the conversations and memories you share."}
+{"type":"entry","key":"ui.sideScene.title","value":"Side scene archive"}
+{"type":"entry","key":"ui.sideScene.subtitle","value":"Exploration, crisis, resource, mini-game and companion-pair scenes leave traces."}
+{"type":"entry","key":"ui.sideScene.empty","value":"No side scenes yet."}
+{"type":"entry","key":"ui.sideScene.choice","value":"Choice"}
+{"type":"entry","key":"ui.sideScene.previous","value":"← Previous scene"}
+{"type":"entry","key":"ui.sideScene.next","value":"Next scene →"}
+{"type":"entry","key":"ui.sideScene.back","value":"← Back to home"}
+{"type":"entry","key":"ui.sideScene.status.completed","value":"COMPLETED"}
+{"type":"entry","key":"ui.sideScene.status.available","value":"AVAILABLE"}
+{"type":"entry","key":"ui.sideScene.status.locked","value":"LOCKED"}
+{"type":"entry","key":"ui.sideScene.lock.completed","value":"Already complete"}
+{"type":"entry","key":"ui.sideScene.lock.companion","value":"Companion bond needed"}
+{"type":"entry","key":"ui.sideScene.lock.memory","value":"Memory clue needed"}
+{"type":"entry","key":"ui.sideScene.lock.stat","value":"{stat} {min} needed"}
+{"type":"entry","key":"ui.sideScene.lock.generic","value":"Locked"}
+{"type":"entry","key":"ui.sideScene.type.exploration","value":"Exploration"}
+{"type":"entry","key":"ui.sideScene.type.resource-crisis","value":"Resource crisis"}
+{"type":"entry","key":"ui.sideScene.type.mini-game","value":"Mini-game"}
+{"type":"entry","key":"ui.sideScene.type.companion-pair","value":"Companion pair"}
+{"type":"entry","key":"ui.sideScene.mechanic.clue-sort","value":"Clue sort"}
+{"type":"entry","key":"ui.sideScene.mechanic.water-ration","value":"Water ration"}
+{"type":"entry","key":"ui.sideScene.mechanic.token-budget","value":"Token budget"}
+{"type":"entry","key":"ui.sideScene.mechanic.resource-draft","value":"Resource draft"}
+{"type":"entry","key":"ui.sideScene.mechanic.cloud-window","value":"Cloud window"}
+{"type":"entry","key":"ui.sideScene.mechanic.route-memory","value":"Route memory"}
+{"type":"entry","key":"ui.sideScene.mechanic.seed-match","value":"Seed match"}
+{"type":"entry","key":"ui.sideScene.mechanic.echo-map","value":"Echo map"}
+{"type":"entry","key":"ui.sideScene.mechanic.fair-scale","value":"Fair scale"}
+{"type":"entry","key":"ui.sideScene.mechanic.paired-reading","value":"Paired reading"}
+{"type":"entry","key":"ui.sideScene.mechanic.tide-timing","value":"Tide timing"}
+{"type":"entry","key":"ui.sideScene.mechanic.lens-repair","value":"Lens repair"}
+{"type":"entry","key":"ui.sideScene.mechanic.soil-layer","value":"Soil layers"}
+{"type":"entry","key":"ui.sideScene.mechanic.load-balance","value":"Load balance"}
+{"type":"entry","key":"ui.sideScene.mechanic.rumour-map","value":"Rumor map"}
+{"type":"entry","key":"ui.sideScene.mechanic.witness-chain","value":"Witness chain"}
+{"type":"entry","key":"ui.sideScene.mechanic.marker-budget","value":"Marker budget"}
+{"type":"entry","key":"ui.sideScene.mechanic.signal-pattern","value":"Signal pattern"}
+{"type":"entry","key":"ui.sideScene.mechanic.stone-pattern","value":"Stone pattern"}
+{"type":"entry","key":"ui.sideScene.mechanic.care-rotation","value":"Care rotation"}
+{"type":"entry","key":"ui.sideScene.mechanic.shared-contract","value":"Shared contract"}
+{"type":"entry","key":"ui.sideScene.mechanic.constellation-trace","value":"Constellation trace"}
+{"type":"entry","key":"ui.sideScene.mechanic.handoff-crossing","value":"Handoff crossing"}
+{"type":"entry","key":"ui.sideScene.mechanic.handoff-cairn","value":"Handoff cairn"}
