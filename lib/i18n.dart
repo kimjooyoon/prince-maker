@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'design_tokens.dart';
 import 'canvas_choice_impact.dart';
+import 'activity_forecast.dart';
 
 class LocaleCatalog {
   const LocaleCatalog(this.bundles);
@@ -39,6 +40,28 @@ String localizedActivityLabel(String id, String fallback) =>
 
 String localizedActivityHint(String id, String fallback) =>
     localized('activity.$id.hint', fallback);
+
+String localizedActivityForecast(ActivityForecast forecast) {
+  final parts = <String>[];
+  if (forecast.growth != 0)
+    parts.add(_replace(localized('ui.event.statDelta', '{stat} {delta}'), {
+      'stat': localizedStat(forecast.stat),
+      'delta': _signed(forecast.growth),
+    }));
+  if (forecast.coinsDelta != 0)
+    parts.add(_replace(localized('ui.event.coinDelta', 'Coins {delta}'), {
+      'delta': _signed(forecast.coinsDelta),
+    }));
+  if (forecast.fatigueDelta != 0)
+    parts.add(_replace(localized('ui.home.fatigueDelta', 'Fatigue {delta}'), {
+      'delta': _signed(forecast.fatigueDelta),
+    }));
+  final effects = parts.isEmpty
+      ? localized('ui.home.forecast.none', 'No numeric change')
+      : parts.join(' · ');
+  return _replace(localized('ui.home.forecast', 'Forecast · {effects}'),
+      {'effects': effects});
+}
 
 String localizedChoiceEffect(Map choice) {
   final parts = <String>[];

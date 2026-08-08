@@ -2,11 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:prince_maker/jsonl.dart';
 import 'package:prince_maker/game_core.dart';
+import 'package:prince_maker/activity_catalog.dart';
+import 'package:prince_maker/activity_forecast.dart';
 
 class CampaignMetrics {
-  CampaignMetrics(this.checksum, this.endings, this.signatures, this.locations,
-      this.lineageEndings, this.lineageSignatures, this.lineageCompanions);
-  final int checksum;
+  CampaignMetrics(
+      this.checksum,
+      this.forecastChecksum,
+      this.endings,
+      this.signatures,
+      this.locations,
+      this.lineageEndings,
+      this.lineageSignatures,
+      this.lineageCompanions);
+  final int checksum, forecastChecksum;
   final Set<String> endings, signatures, locations;
   final Map<String, Set<String>> lineageEndings,
       lineageSignatures,
@@ -15,6 +24,7 @@ class CampaignMetrics {
 
 CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   var checksum = 0;
+  var forecastChecksum = 0;
   final endings = <String>{}, signatures = <String>{}, locations = <String>{};
   final lineageEndings = <String, Set<String>>{},
       lineageSignatures = <String, Set<String>>{},
@@ -24,6 +34,8 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
     for (final event in story.events) event['week'] as int: event,
   };
   final legacyIds = story.legacyProfiles.map((p) => '${p['id']}').toList();
+  final activities = activitiesFromStory(source),
+      personality = story.personalities.firstOrNull;
   for (var i = 0; i < campaigns; i++) {
     final legacyId = i.isEven && legacyIds.isNotEmpty
         ? legacyIds[i % legacyIds.length]
@@ -34,6 +46,21 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
         ? null
         : story.legacyProfiles.firstWhere((p) => p['id'] == legacyId);
     while (session.world.progress[0]!.week < story.endingWeek) {
+      final p = session.world.progress[0]!;
+      for (final activity in activities) {
+        final forecast = forecastActivity(activity,
+            week: p.week,
+            fatigue: p.fatigue,
+            coins: p.coins,
+            focusStat: personality?['focusStat'] as String?,
+            focusBonus: personality?['focusBonus'] as int? ?? 0,
+            events: story.events,
+            milestones: story.milestones);
+        forecastChecksum += forecast.growth * 31 +
+            forecast.nextCoins * 7 +
+            forecast.fatigueAfter * 5 +
+            forecast.nextWeek;
+      }
       final week = session.world.progress[0]!.week;
       final stat = legacyProfile?['stat'] as String? ??
           switch ((i + week) % 3) { 0 => '지혜', 1 => '공감', _ => '용기' };
@@ -113,8 +140,8 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
         p.bonds.values.reduce((a, b) => a + b) +
         p.trace.length;
   }
-  return CampaignMetrics(checksum, endings, signatures, locations,
-      lineageEndings, lineageSignatures, lineageCompanions);
+  return CampaignMetrics(checksum, forecastChecksum, endings, signatures,
+      locations, lineageEndings, lineageSignatures, lineageCompanions);
 }
 
 void main() {
@@ -156,6 +183,7 @@ void main() {
   final approved = millis <= 24000 &&
       first.checksum > campaigns &&
       replay.checksum == first.checksum &&
+      replay.forecastChecksum == first.forecastChecksum &&
       replay.endings.length == first.endings.length &&
       replay.signatures.length == first.signatures.length &&
       replay.locations.length == first.locations.length &&
@@ -178,6 +206,8 @@ void main() {
     'locations': first.locations.length,
     'checksum': first.checksum,
     'replayChecksum': replay.checksum,
+    'forecastChecksum': first.forecastChecksum,
+    'replayForecastChecksum': replay.forecastChecksum,
     'lineageProfiles': profileIds.length,
     'lineageEvidence': lineageEvidence,
     'lineageEndingEvidence': lineageEndingEvidence,
@@ -188,7 +218,7 @@ void main() {
   reportFile.writeAsStringSync(
       '${const JsonEncoder.withIndent('  ').convert(report)}\n');
   stdout.writeln(
-      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
+      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum} forecastChecksum=${first.forecastChecksum} replayForecastChecksum=${replay.forecastChecksum}');
   if (!approved) {
     stderr.writeln(
         'TRILEMMA_PERFORMANCE_FAIL: deterministic core budget or checksum drift');

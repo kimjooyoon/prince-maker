@@ -1,5 +1,5 @@
 {"type":"header","schema":"lumen-document-jsonl-v1","document":"docs/engine-decision.jsonl"}
-{"type":"field","key":"source","value":{"ref":"story/story.jsonl#engineDecision","sha256":"0486a4442d1ab6237ad77ad6424a8abc90d9def468cbdc401fcdcbf96af1118b"}}
+{"type":"field","key":"source","value":{"ref":"story/story.jsonl#engineDecision","sha256":"a1e2751da583a6460471c4677522258c2e15a6414c35216f586eba1ec447f8d5"}}
 {"type":"field","key":"schema","value":"lumen-engine-decision-v1"}
 {"type":"field","key":"selectedOption","value":"flutter-canvas-wasm"}
 {"type":"field","key":"decisionRule","value":"select the maximum weighted architectural-fit score"}

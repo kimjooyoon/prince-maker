@@ -1047,3 +1047,6 @@
 {"type":"entry","key":"ui.sideScene.mechanic.handoff-cairn","value":"Handoff cairn"}
 {"type":"entry","key":"ui.relationshipArchive.resonance.matched","value":"Personality resonance · Bond +1"}
 {"type":"entry","key":"ui.relationshipArchive.resonance.neutral","value":"Different grain · Base bond"}
+{"type":"entry","key":"ui.home.forecast","value":"Forecast · {effects}"}
+{"type":"entry","key":"ui.home.forecast.none","value":"No numeric change"}
+{"type":"entry","key":"ui.home.fatigueDelta","value":"Fatigue {delta}"}

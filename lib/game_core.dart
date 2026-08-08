@@ -1,4 +1,5 @@
 import 'save_state.dart';
+import 'activity_forecast.dart';
 
 export 'decision_proof.dart';
 import 'decision_proof.dart';
@@ -554,8 +555,8 @@ class GameWorld {
           :final label,
           :final bonus
         ):
-        final raw = delta + bonus,
-            growth = (p.fatigue >= 8 ? (raw - 1).clamp(0, raw) : raw).toInt();
+        final growth = resolveActivityGrowth(
+            delta: delta, fatigue: p.fatigue, bonus: bonus);
         s[stat] = s[stat]! + growth;
         p.coins += coins;
         p.fatigue = (p.fatigue + fatigue).clamp(0, 12).toInt();

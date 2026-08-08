@@ -8,6 +8,7 @@ import 'design_tokens.dart';
 import 'canvas_surface.dart';
 import 'canvas_scene_fingerprint.dart';
 import 'activity_catalog.dart';
+import 'activity_forecast.dart';
 import 'feedback_banner.dart';
 import 'i18n.dart';
 import 'decision_receipt.dart';
@@ -1330,7 +1331,22 @@ class Scene extends CustomPainter {
                     })}'
               : '',
           label = localizedActivityLabel(a.id, a.label),
-          hint = '${localizedActivityHint(a.id, a.hint)}$bonus';
+          hint = '${localizedActivityHint(a.id, a.hint)}$bonus',
+          forecast = forecastActivity(a,
+              week: week,
+              fatigue: fatigue,
+              coins: coins,
+              focusStat: talent?['focusStat'] as String?,
+              focusBonus: (talent?['focusBonus'] as int?) ?? 0,
+              events: (s['events'] as List? ?? const [])
+                  .whereType<Map>()
+                  .map((event) => event.cast<String, dynamic>())
+                  .toList(),
+              milestones: (s['milestones'] as List? ?? const [])
+                  .whereType<Map>()
+                  .map((goal) => goal.cast<String, dynamic>())
+                  .toList()),
+          forecastText = localizedActivityForecast(forecast);
       CanvasUiKit.statePanel(
           c,
           Rect.fromLTWH(x, y, DesignTokens.activityCardWidth,
@@ -1344,6 +1360,9 @@ class Scene extends CustomPainter {
           bold: true, maxWidth: 160, maxLines: 1);
       txt(c, hint, Offset(x + 52, y + 40), 9,
           on ? Colors.white70 : ink.withValues(alpha: .55));
+      txt(c, forecastText, Offset(x + 52, y + 62), 8,
+          on ? Colors.white70 : teal,
+          maxWidth: 160, maxLines: 1);
     }
     box(c, const Rect.fromLTWH(260, 500, 150, 54), Colors.white,
         radius: 15, stroke: teal, shadow: true);

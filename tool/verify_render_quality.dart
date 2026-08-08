@@ -78,6 +78,8 @@ void main() {
   final relationshipArchiveGoldenTest =
       read('test/relationship_archive_golden_test.dart');
   final playerFacingGoldenTest = read('test/player_facing_golden_test.dart');
+  final activityForecastGoldenTest =
+      read('test/activity_forecast_golden_test.dart');
   final characterRosterGoldenTest =
       read('test/character_roster_golden_test.dart');
   final environmentAtlasGoldenTest = read('test/environment_golden_test.dart');
@@ -106,6 +108,12 @@ void main() {
     requireText('test/relationship_archive_golden_test.dart',
         relationshipArchiveGoldenTest, name);
   }
+  requireText(
+      'test/activity_forecast_golden_test.dart',
+      activityForecastGoldenTest,
+      'home shows deterministic activity forecasts');
+  requireText('test/activity_forecast_golden_test.dart',
+      activityForecastGoldenTest, 'goldens/activity-forecast.png');
   requireText('test/player_facing_golden_test.dart', playerFacingGoldenTest,
       'all personality illustration pages render deterministic portraits');
   for (final name in [
@@ -113,8 +121,8 @@ void main() {
     'goldens/personality-kind.png',
     'goldens/personality-bold.png',
   ]) {
-    requireText('test/player_facing_golden_test.dart', playerFacingGoldenTest,
-        name);
+    requireText(
+        'test/player_facing_golden_test.dart', playerFacingGoldenTest, name);
   }
   final goldens = Directory('test/goldens')
       .listSync()
