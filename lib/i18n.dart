@@ -152,7 +152,7 @@ void drawEndingRetrospective(
   final events = history
       .where((entry) => entry.startsWith('event:'))
       .map((entry) => entry.replaceFirst('event:', '').split('|').first)
-      .take(3)
+      .take(2)
       .toList();
   final title = localized('ui.ending.retrospective', '기록 회고');
   final next = missingGoals.isEmpty
@@ -165,28 +165,18 @@ void drawEndingRetrospective(
               ? '${entry.value.substring(0, 15)}…'
               : entry.value;
           return '${entry.key + 1}. $value';
-        }).join('\n');
-  final ledger = milestones.map((goal) {
-    final title = activeLocale == 'ko'
-        ? '${goal['title']}'
-        : localized(goal['titleKey'] as String? ?? '', '${goal['title']}');
-    final compact = title.length > 7 ? '${title.substring(0, 7)}…' : title;
-    return '$compact${milestoneState[goal['id']] == true ? ' ✓' : ' ·'}';
-  }).join('   ');
+        }).join(' · ');
+  final ledger = milestones.isEmpty
+      ? localized('ui.ending.noGoals', 'No authored goals.')
+      : '${goalCount}/${milestones.length} · ${localized('ui.ending.seasonLedger', '계절 목표')}';
   c.drawRRect(
       RRect.fromRectAndRadius(
           const Rect.fromLTWH(365, 400, 300, 125), const Radius.circular(18)),
       Paint()..color = Colors.white);
   _text(c, title, const Offset(385, 410), 14, teal, bold: true, width: 260);
   _text(c, causes, const Offset(385, 437), 10, ink, width: 260);
-  _text(c, localized('ui.ending.seasonLedger', '계절 목표'), const Offset(385, 473),
-      10, teal,
-      bold: true, width: 260);
-  _text(c, ledger, const Offset(385, 489), 9, ink, width: 260);
-  _text(c, '${localized('ui.ending.goalCause', '달성 목표')} · $goalCount',
-      const Offset(385, 507), 10, ink,
-      width: 260);
-  _text(c, next, const Offset(385, 521), 10, teal, width: 260);
+  _text(c, ledger, const Offset(385, 473), 10, teal, bold: true, width: 260);
+  _text(c, next, const Offset(385, 495), 10, ink, width: 260);
 }
 
 void drawLocalizedEnding(

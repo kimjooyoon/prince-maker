@@ -57,6 +57,12 @@
 
 따라서 현재 표본의 시나리오 완전성 최소 단위는 `계획 → 상태 변화 → 조건 공개 → 관계/기억 결과 → authored ending → 원인 회고 → 다음 회차 해금`의 7단 연결이다. 각 연결은 SSOT, 코어 trace, Canvas Golden, benchmark 중 둘 이상으로 교차 증명하며, 회고 보드는 마지막 연결을 시각 증거로 고정한다.
 
+### 나비효과·동료 퀘스트·발견 경로
+
+조사한 선택형 서사의 재미 요소를 루멘 고유 규칙으로 압축한다. 사건 선택이 남긴 6개의 authored memory flag는 `resolveFateThreads`가 나비효과 기록으로 투영하고, 같은 flag가 후속 조건·회고·저장 trace에서 다시 읽힌다. 세 동료는 각각 `bondMin`이 올라가는 3단계 개인 퀘스트를 가지며, 총 9개 단계의 완료 여부는 유대 수치와 사건 flag의 교집합으로 시스템이 판정한다. 네 장소의 `place:<id>` 발견 flag는 홈의 route atlas에 이어져, 플레이어가 이미 열린 경로와 아직 닿지 않은 경로를 한눈에 볼 수 있다.
+
+이 요소들은 특정 외부 게임의 캐릭터·생존 규칙·여행 맵을 복제하지 않는다. `story/story.json#narrativeLoop`가 원천과 판정 주체를 선언하고, `lib/game_core.dart#resolveFateThreads`·`resolveCompanionQuests`가 동일한 입력에서 동일한 결과를 만들며, `test/narrative_ledger_test.dart`와 `test/narrative_ledger_golden_test.dart`가 결정론적 projection과 화면 증거를 고정한다. 따라서 플레이어에게는 선택이 “다음 장에 남는 기록”으로 보이고, CI에는 사람의 해석 없이 재현 가능한 상태 계약으로 남는다.
+
 ### 상태·관계·엔딩 완전성 행렬
 
 | 축 | 최소 표본 | 현재 증거 | 다음 확장 기준 |

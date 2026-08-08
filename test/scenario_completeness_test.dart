@@ -104,4 +104,43 @@ void main() {
     expect(ending['routeId'], 'stargazer-master::lumi+bora+taro');
     expect(ending['companionRouteIds'], ['lumi', 'bora', 'taro']);
   });
+
+  test('butterfly ledger and companion quests replay from authored flags',
+      () async {
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
+        as Map<String, dynamic>;
+    final story = JsonStoryAdapter(source);
+    final flags = <String, bool>{
+      'first-ledger': true,
+      'memory-house': true,
+      'final-question': true,
+      'windmill-truce': true,
+      'return-seed': true,
+      'public-rule': true,
+      'witness-garden': true,
+      'named-garden': true,
+      'windmill-repair': true,
+      'waterway': true,
+      'final-marker': true,
+    };
+    final threads = resolveFateThreads(story, flags);
+    expect(
+        threads.where((thread) => thread['discovered'] == true), hasLength(6));
+
+    final quests = resolveCompanionQuests(
+        story,
+        {
+          'lumi': 8,
+          'bora': 8,
+          'taro': 8,
+        },
+        flags);
+    expect(quests, hasLength(3));
+    expect(quests.every((quest) => quest['complete'] == true), isTrue);
+    expect(
+        quests.fold<int>(
+            0, (sum, quest) => sum + (quest['completedStages'] as int)),
+        9);
+  });
 }

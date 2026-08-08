@@ -61,10 +61,20 @@ void main() {
       'ui.ending.restart',
       'ui.event.legacy',
       'ui.event.legacyBonus',
+      'ui.ledger.button',
+      'ui.ledger.title',
+      'ui.ledger.subtitle',
+      'ui.ledger.system',
+      'ui.ledger.discovered',
+      'ui.ledger.hidden',
+      'ui.ledger.quest',
+      'ui.ledger.complete',
+      'ui.ledger.progress',
+      'ui.ledger.back',
     ];
     expect(catalogs['ko']!.keys, containsAll(endingUiKeys));
     expect(catalogs['en']!.keys, containsAll(endingUiKeys));
-    expect(catalogs['ko']!.length, 398);
-    expect(catalogs['en']!.length, 398);
+    expect(catalogs['ko']!.length, 414);
+    expect(catalogs['en']!.length, 414);
   });
 }

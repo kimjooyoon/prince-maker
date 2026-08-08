@@ -9,6 +9,8 @@ abstract interface class StoryPort {
   List<Map<String, dynamic>> get companions;
   List<Map<String, dynamic>> get legacyProfiles;
   List<Map<String, dynamic>> get milestones;
+  List<Map<String, dynamic>> get fateThreads;
+  List<Map<String, dynamic>> get companionQuests;
   Map<String, dynamic> get decisionSystem;
   Map<String, dynamic> get endingDesign;
   Map<String, dynamic> get scenarioVariantBudget;
@@ -43,6 +45,12 @@ class JsonStoryAdapter implements StoryPort {
   @override
   List<Map<String, dynamic>> get milestones =>
       (source['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
+  @override
+  List<Map<String, dynamic>> get fateThreads =>
+      (source['fateThreads'] as List? ?? []).cast<Map<String, dynamic>>();
+  @override
+  List<Map<String, dynamic>> get companionQuests =>
+      (source['companionQuests'] as List? ?? []).cast<Map<String, dynamic>>();
   @override
   Map<String, dynamic> get decisionSystem =>
       (source['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
@@ -119,6 +127,54 @@ int resolveRank(StoryPort story,
   return (1 + goals + companions).clamp(1, 3).toInt();
 }
 
+/// Replays the visible "butterfly effect" ledger from authored memory flags.
+/// A flag is deliberately enough: the same state is shown in UI, endings and
+/// save/replay traces without introducing a second mutable narrative system.
+List<Map<String, dynamic>> resolveFateThreads(
+    StoryPort story, Map<String, bool> flags) {
+  return story.fateThreads.map((thread) {
+    return {
+      ...thread,
+      'discovered': flags[thread['flag']] == true,
+    };
+  }).toList();
+}
+
+Map<String, dynamic> resolveCompanionQuest(StoryPort story, String companionId,
+    Map<String, int> bonds, Map<String, bool> flags) {
+  final quest = story.companionQuests
+      .firstWhere((candidate) => candidate['companionId'] == companionId,
+          orElse: () => {
+                'id': 'missing-$companionId',
+                'companionId': companionId,
+                'title': companionId,
+                'stages': const [],
+              });
+  final stages =
+      (quest['stages'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final completed = stages.where((stage) {
+    final flag = stage['flag'] as String?;
+    final bondMin = (stage['bondMin'] as int?) ?? 0;
+    return flag != null &&
+        flags[flag] == true &&
+        (bonds[companionId] ?? 0) >= bondMin;
+  }).length;
+  return {
+    ...quest,
+    'completedStages': completed,
+    'totalStages': stages.length,
+    'complete': stages.isNotEmpty && completed == stages.length,
+  };
+}
+
+List<Map<String, dynamic>> resolveCompanionQuests(
+    StoryPort story, Map<String, int> bonds, Map<String, bool> flags) {
+  return story.companions
+      .map((companion) =>
+          resolveCompanionQuest(story, '${companion['id']}', bonds, flags))
+      .toList();
+}
+
 Map<String, dynamic> resolveEnding(StoryPort story, Map<String, int> stats,
     {Map<String, int>? bonds, Map<String, bool>? milestones}) {
   final winner = stats.entries.reduce((a, b) => a.value > b.value ? a : b);
@@ -168,7 +224,8 @@ Map<String, dynamic> resolveEnding(StoryPort story, Map<String, int> stats,
       .map((route) => '${route['id']}')
       .toList();
   result['endingFamily'] = '${result['id']}'.split('-').first;
-  result['endingTier'] = '${result['id']}'.endsWith('-master') ? 'master' : 'seed';
+  result['endingTier'] =
+      '${result['id']}'.endsWith('-master') ? 'master' : 'seed';
   result['companionRouteIds'] = routeIds;
   result['routeId'] =
       '${result['id']}::${routeIds.isEmpty ? 'solo' : routeIds.join('+')}';

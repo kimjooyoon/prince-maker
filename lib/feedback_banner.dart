@@ -4,6 +4,10 @@ import 'design_tokens.dart';
 void drawFeedbackBanner(Canvas c, String result, String line) {
   final active = result.isNotEmpty;
   final rect = const Rect.fromLTWH(24, 452, 712, 48);
+  c.drawRRect(
+      RRect.fromRectAndRadius(
+          rect.shift(const Offset(0, 3)), const Radius.circular(14)),
+      Paint()..color = ink.withValues(alpha: .06));
   c.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(14)),
       Paint()..color = active ? teal.withValues(alpha: .1) : Colors.white);
   c.drawRRect(

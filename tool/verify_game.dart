@@ -29,12 +29,17 @@ void verifyTrilemmaContract(String storyHash,
       complete['scenarioDimensions'] != 8 ||
       (complete['scenarioCases'] as int? ?? 0) < 2000 ||
       (complete['scenarioRouteInputs'] as int? ?? 0) < 2000 ||
+      (complete['narrativeFateThreads'] as int? ?? 0) < 6 ||
+      (complete['companionQuestStages'] as int? ?? 0) < 9 ||
       complete['goldens'] < 20 ||
       complete['localeKeys'] < 118 ||
       purity['minDistinctEndings'] < 3 ||
       purity['minDistinctSignatures'] < 3 ||
       (purity['scenarioCases'] as int? ?? 0) < 2000 ||
       (purity['minScenarioSignatures'] as int? ?? 0) < 2000 ||
+      (purity['narrativeFateThreads'] as int? ?? 0) < 6 ||
+      (purity['companionQuestStages'] as int? ?? 0) < 9 ||
+      purity['narrativeDeterministic'] != true ||
       purity['minLegacyProfiles'] < 3 ||
       purity['minLegacyTargetEndings'] < 3 ||
       purity['minLegacyTargetCompanions'] < 3 ||
@@ -110,6 +115,14 @@ void main() {
       (story['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
   final endingDesign =
       (story['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
+  final narrativeLoop =
+      (story['narrativeLoop'] as Map? ?? {}).cast<String, dynamic>();
+  final fateThreads =
+      (story['fateThreads'] as List? ?? []).cast<Map<String, dynamic>>();
+  final companionQuests =
+      (story['companionQuests'] as List? ?? []).cast<Map<String, dynamic>>();
+  final companionQuestStages = companionQuests.fold<int>(
+      0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
   if (campaignWeeks < 48 || story['endingWeek'] != campaignWeeks + 1)
     fail('campaign must expose a 48-week route and one terminal week');
   if (contentBudget['schema'] != 'lumen-playtime-v1' ||
@@ -497,6 +510,72 @@ void main() {
       .any((choice) => choice['rivalId'] != null))) {
     fail('scenario needs at least one rival-bond choice');
   }
+  if (fateThreads.length < 6 ||
+      fateThreads.map((thread) => thread['id']).toSet().length !=
+          fateThreads.length ||
+      fateThreads.any((thread) =>
+          thread['id'] is! String ||
+          thread['flag'] is! String ||
+          thread['titleRef'] is! String ||
+          thread['detailKey'] is! String ||
+          thread['detail'] is! String ||
+          thread['detailEn'] is! String ||
+          !writtenFlags.contains(thread['flag']))) {
+    fail('butterfly ledger must use unique authored memory flags');
+  }
+  final companionIdSet =
+      companions.map((companion) => '${companion['id']}').toSet();
+  if (companionQuests.length != companions.length ||
+      companionQuests.map((quest) => quest['companionId']).toSet().length !=
+          companionQuests.length ||
+      companionQuests.any((quest) {
+        final stages =
+            (quest['stages'] as List? ?? const []).cast<Map<String, dynamic>>();
+        return quest['id'] is! String ||
+            !companionIdSet.contains('${quest['companionId']}') ||
+            quest['titleRef'] is! String ||
+            stages.length < 3 ||
+            stages.map((stage) => stage['id']).toSet().length !=
+                stages.length ||
+            stages.any((stage) =>
+                stage['id'] is! String ||
+                stage['flag'] is! String ||
+                !writtenFlags.contains(stage['flag']) ||
+                stage['bondMin'] is! int ||
+                stage['bondMin'] < 0 ||
+                stage['eventRef'] is! String);
+      })) {
+    fail('companion quests must define three authored stages per companion');
+  }
+  final trackedLocaleKeys = <String>{
+    ...fateThreads.map((thread) => '${thread['titleRef']}'),
+    ...fateThreads.map((thread) => '${thread['detailKey']}'),
+    ...companionQuests.map((quest) => '${quest['titleRef']}'),
+    ...companionQuests.expand((quest) => (quest['stages'] as List)
+        .cast<Map<String, dynamic>>()
+        .map((stage) => '${stage['eventRef']}')),
+  };
+  for (final ref in localeRefs) {
+    final catalog = (jsonDecode(File((ref['ref'] as String).split('#').first)
+            .readAsStringSync()) as Map)
+        .map((key, value) => MapEntry('$key', '$value'));
+    if (trackedLocaleKeys.any((key) => !catalog.containsKey(key)))
+      fail('butterfly/companion locale ref missing in ${ref['ref']}');
+  }
+  if (narrativeLoop['schema'] != 'lumen-memory-companion-loop-v1' ||
+      narrativeLoop['fateThreadCount'] != fateThreads.length ||
+      narrativeLoop['companionQuestCount'] != companionQuests.length ||
+      narrativeLoop['stagesPerQuest'] != 3 ||
+      narrativeLoop['systemOwner'] != 'lumen-rule-engine' ||
+      narrativeLoop['resolver'] is! String ||
+      !(narrativeLoop['resolver'] as String)
+          .contains('lib/game_core.dart#resolveFateThreads') ||
+      !(narrativeLoop['resolver'] as String)
+          .contains('lib/game_core.dart#resolveCompanionQuests') ||
+      narrativeLoop['evidence'] !=
+          'test/narrative_ledger_test.dart#deterministic-projection') {
+    fail('narrative loop contract must be system-owned and deterministic');
+  }
   final uiEvidence = File('test/golden_test.dart').existsSync()
       ? File('test/golden_test.dart').readAsStringSync()
       : '';
@@ -520,6 +599,13 @@ void main() {
   final endingMatrixEvidence = File('test/ending_matrix_test.dart').existsSync()
       ? File('test/ending_matrix_test.dart').readAsStringSync()
       : '';
+  final narrativeEvidence = File('test/narrative_ledger_test.dart').existsSync()
+      ? File('test/narrative_ledger_test.dart').readAsStringSync()
+      : '';
+  final narrativeGoldenEvidence =
+      File('test/narrative_ledger_golden_test.dart').existsSync()
+          ? File('test/narrative_ledger_golden_test.dart').readAsStringSync()
+          : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
           ? File('tool/verify_scenario_variants.dart').readAsStringSync()
@@ -551,6 +637,8 @@ void main() {
     'companion-stargazer.png',
     'companion-gardener.png',
     'companion-pathfinder.png',
+    'narrative-ledger.png',
+    'narrative-ledger-en.png',
     'english-illustration.png',
     'english-event.png',
     'english-ending.png'
@@ -614,6 +702,12 @@ void main() {
             'all lineage companion epilogues have distinct Canvas evidence') &&
         i18nEvidence.contains(
             'English locale renders original dialogue and authored ending epilogue') &&
+        narrativeEvidence.contains('deterministic-projection') &&
+        narrativeEvidence.contains('NARRATIVE_LEDGER_OK') &&
+        narrativeGoldenEvidence
+            .contains("matchesGoldenFile('goldens/narrative-ledger.png')") &&
+        narrativeGoldenEvidence
+            .contains("matchesGoldenFile('goldens/narrative-ledger-en.png')") &&
         File('story/locales/ko.json').existsSync() &&
         File('story/locales/en.json').existsSync(),
     'localeContract': localeEvidence.contains(
@@ -662,6 +756,7 @@ void main() {
         scenarioEvidence.contains('장소 발견') &&
         scenarioEvidence.contains('회차 계승') &&
         scenarioEvidence.contains('choiceConsequenceRate') &&
+        scenarioEvidence.contains('나비효과') &&
         storyEvidence
             .contains('every authored ending and event choice is reachable'),
   };
@@ -670,5 +765,5 @@ void main() {
           .round();
   if (score < 95) fail('completeness score below 95%: $score%');
   stdout.writeln(
-      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
+      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} events=${events.length} endings=${endings.length} fateThreads=${fateThreads.length} questStages=$companionQuestStages codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
 }

@@ -396,5 +396,21 @@
   "milestone.blank-map.title": "빈칸의 지도",
   "milestone.commons.title": "공동의 규칙",
   "milestone.returning-garden.title": "귀환의 정원",
-  "milestone.handoff.title": "넘겨지는 지평"
+  "milestone.handoff.title": "넘겨지는 지평",
+  "fate.ledger-echo.detail": "기록의 선택이 다음 막의 판단 방식으로 되돌아온다.",
+  "fate.windmill-echo.detail": "중재의 선택이 이후 관계의 긴장을 낮춘다.",
+  "fate.seed-echo.detail": "나눔의 선택이 돌아온 씨앗의 의미를 바꾼다.",
+  "fate.memory-echo.detail": "기억을 여는 선택이 엔딩 회고의 원인으로 남는다.",
+  "fate.rule-echo.detail": "공개 규칙을 고른 선택이 다음 사람의 출발점이 된다.",
+  "fate.question-echo.detail": "마지막 질문이 다음 회차의 첫 단서로 이어진다.",
+  "ui.ledger.button": "운명 기록",
+  "ui.ledger.title": "운명 기록 보관소",
+  "ui.ledger.subtitle": "선택은 기억이 되고, 동행은 다음 장을 연다.",
+  "ui.ledger.system": "루멘 규칙 엔진 · 자동 판정 · replay 가능",
+  "ui.ledger.discovered": "확인",
+  "ui.ledger.hidden": "아직 닿지 않음",
+  "ui.ledger.quest": "동행 퀘스트",
+  "ui.ledger.back": "← 홈으로",
+  "ui.ledger.complete": "완료",
+  "ui.ledger.progress": "진행 중"
 }
