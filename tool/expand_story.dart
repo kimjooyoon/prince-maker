@@ -169,6 +169,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/canvas_scene_fingerprint.dart#canvasSceneFingerprint',
     'lib/activity_catalog.dart#activitiesFromStory',
     'tool/verify_render_quality.dart#render-quality-preconditions',
+    'test/chapter_golden_test.dart#all sixteen SSOT chapters have deterministic event Goldens',
     'tool/generate_development_goals.dart#buildDocument',
     'tool/verify_development_goals.dart#quantitative-evidence-gate',
     'lib/decision_receipt.dart#DecisionReceipt',
@@ -1840,7 +1841,7 @@ void main() {
   byId['gating']!['current'] =
       '16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings';
   byId['presentation']!['current'] =
-      '30 Goldens / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
+      '46 Goldens including 16 canonical chapter event views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;

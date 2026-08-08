@@ -5,7 +5,7 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "8c5508d2caf1c3ce5bdeae01ad3bc75a98a379848e1f7ffd9d95977305cad9d1"
+      "sha256": "41f006dde328c972a9f81d9da59cddc058bb8c4f3d027a3c4df19a6ccc8ec908"
     },
     {
       "path": "lib/main.dart",
@@ -210,7 +210,7 @@
     {
       "path": "docs/game-completeness.md",
       "ref": "docs/game-completeness.md#metrics",
-      "sha256": "a82a5bd0ba7c84ba8f2c68bea16182068fd0c84a9f862797384c335c01579a0b"
+      "sha256": "2f4da3722c9e606bcccfac752d396179256265df37193d6f20e0a674aa077e73"
     },
     {
       "path": "docs/trilemma.md",
@@ -220,12 +220,12 @@
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "1457cd5eaa0575ede9abbcc0191201c1bad39ffd6025cace4b08045f5ebe4176"
+      "sha256": "127c19e6430633d78b142e8a3a8952b9fd5586ba5d15eaa4b768ef87a1cd8b0b"
     },
     {
       "path": "docs/scenario-completeness.md",
       "ref": "docs/scenario-completeness.md#scenario-completeness",
-      "sha256": "f36a44914bb4262d8a6ed1d70efb26de69d325a16f6db34229fb834a9d8ae302"
+      "sha256": "df2a8f1459c3505fe15feb6e2a63e3f4a3f7f8001e9e5baa2dea5fcf399e2809"
     },
     {
       "path": "docs/architecture.md",
@@ -235,7 +235,7 @@
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "8315260549f0137502c076a490ddab4009cf688a4095ca2ac9277dd0446d536d"
+      "sha256": "fc9ee6345158d439b85ee685bc23b5b544b6a772ff62145a179eba6f459f89c2"
     },
     {
       "path": "docs/design-system.md",
@@ -330,7 +330,7 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "2df3c5c4c6c49a84585140ae4017fa09eede20f2c8cd58a79bc2189eda859fbb"
+      "sha256": "51730ac5c6c6e392391427c9b77f2c0454d536d1985f2a6e3e1ebb4fcc4a8228"
     },
     {
       "path": "test/locale_contract_test.dart",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "55a308e5b789adfba1ebc893c66c7936a4e3dcbecb0ce5111ff3632782a39350"
+      "sha256": "b7d9b4e7c091347a29f547c688b4a09a616ba0fffd2c0e81eb978a10f2c0e9f0"
     },
     {
       "path": "design/tokens.json",
@@ -390,7 +390,7 @@
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "dadd5dad4aca7da7a62368127c0f5b66b95cd5169833cb178894a98ca3116cc8"
+      "sha256": "53f21392accb518fde000ab82d20ac014bd3cde74291d3e15992a94d1128c4d1"
     },
     {
       "path": "tool/ci_gate.dart",
@@ -405,12 +405,12 @@
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "41e1c297cf79241d6c646ae21fb96dd24d8f1ed0fc646ef56879da36e47aa093"
+      "sha256": "374207ac41cb51e553311a8b19275a3412744ba95601123762b96c7f795d7bfa"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
       "ref": "tool/refresh_review_manifest.dart#reviewed",
-      "sha256": "a9cea49b86a0cb5c49821d8f2fdba524922abc37d0b41514a20a1e70df80143c"
+      "sha256": "534e24962ebcb00374c8edb8e8ecd46c605a8a9299064ea26a27efb24b05b18b"
     },
     {
       "path": "tool/verify_scenario_variants.dart",
@@ -505,17 +505,17 @@
     {
       "path": "tool/verify_render_quality.dart",
       "ref": "tool/verify_render_quality.dart#reviewed",
-      "sha256": "c1d8b36b1a7f7310ebded046540dae96d6fab4f77d5970f4400991eca969b445"
+      "sha256": "261aad31f15c9caad19be57d52967d7069a734208a8c0e2243b64360ac433b41"
     },
     {
       "path": "docs/development-goals.json",
       "ref": "docs/development-goals.json#reviewed",
-      "sha256": "5388a667bb1402e35a5bd7eb12bfc99371ee14f7491a0b265ecbee3111a39a97"
+      "sha256": "0fd5ff9e40114e75ac99439a942a75930159f7272855be0f9f97bdfc50f4cb1a"
     },
     {
       "path": "docs/development-goals.md",
       "ref": "docs/development-goals.md#reviewed",
-      "sha256": "c5c015f05d8af9159f51fffd79b14927f778afa5f412a864addbb206a55f0f53"
+      "sha256": "c51a45589fcb05cdd483f2a82252f765921f6fe3f4c51f1fc7ce0102b8bcdbab"
     },
     {
       "path": "tool/generate_development_goals.dart",
@@ -535,7 +535,7 @@
     {
       "path": "docs/decision-proof-contract.json",
       "ref": "docs/decision-proof-contract.json#reviewed",
-      "sha256": "68a651c4ffbeac09cddb5f4c92b4be224e4a6796dba875477e1e294394d81add"
+      "sha256": "ad1fffb6e09a7d2b2ddc22a8c3523ff32919ed50b3dbc518b0eb287a494a582b"
     },
     {
       "path": "tool/verify_decision_proof.dart",
@@ -546,6 +546,91 @@
       "path": "test/decision_proof_test.dart",
       "ref": "test/decision_proof_test.dart#reviewed",
       "sha256": "09d620603b94f3b1e79419320148fff30f82b248f84ab02b78d74924ccd50f01"
+    },
+    {
+      "path": "test/chapter_golden_test.dart",
+      "ref": "test/chapter_golden_test.dart#reviewed",
+      "sha256": "e21d424be63e0aedadf99ac6f91347a94de556d20e99e94c1f4070a2018adba1"
+    },
+    {
+      "path": "test/goldens/chapter-arrival.png",
+      "ref": "test/goldens/chapter-arrival.png#reviewed",
+      "sha256": "97d3c1527f026335827c777e45e70d9d3ae338d1fd10797bfeafed3fb80cc1df"
+    },
+    {
+      "path": "test/goldens/chapter-blankMap.png",
+      "ref": "test/goldens/chapter-blankMap.png#reviewed",
+      "sha256": "0ba18904ed84c4458e6be7503445be05109532c287a8387002dce3b96aaebe67"
+    },
+    {
+      "path": "test/goldens/chapter-commons.png",
+      "ref": "test/goldens/chapter-commons.png#reviewed",
+      "sha256": "559a25b5ba2699e2f35c712a26bc00e14f581c55c74b02d2611f162cca363739"
+    },
+    {
+      "path": "test/goldens/chapter-constellation.png",
+      "ref": "test/goldens/chapter-constellation.png#reviewed",
+      "sha256": "922fcde4bad56e20b63fc6659bad1ef6f5dd3c48df56f5770abcb67a42e742c8"
+    },
+    {
+      "path": "test/goldens/chapter-crossing.png",
+      "ref": "test/goldens/chapter-crossing.png#reviewed",
+      "sha256": "6e2e782402c8c359914523a66894bc7b1e132f86b4f1797549249d95cff87dad"
+    },
+    {
+      "path": "test/goldens/chapter-fairShare.png",
+      "ref": "test/goldens/chapter-fairShare.png#reviewed",
+      "sha256": "ff813ab0ef937c08be10f9098a31ff79f4b8403d501ebdddd87515ef6f195b97"
+    },
+    {
+      "path": "test/goldens/chapter-farShore.png",
+      "ref": "test/goldens/chapter-farShore.png#reviewed",
+      "sha256": "cf7d91109f7e4a778704728be9031ff5f88efe5763ea0e81c3def4a61c9abfc5"
+    },
+    {
+      "path": "test/goldens/chapter-frost.png",
+      "ref": "test/goldens/chapter-frost.png#reviewed",
+      "sha256": "aae31f15bfd307d422987a20c0c6b5c83bf71de216d46f659238bb5b4b51b4d1"
+    },
+    {
+      "path": "test/goldens/chapter-handoff.png",
+      "ref": "test/goldens/chapter-handoff.png#reviewed",
+      "sha256": "577c8da3d726d1a0a196539fa61502684ac18f72695358e008c8a4bde9c592b0"
+    },
+    {
+      "path": "test/goldens/chapter-horizon.png",
+      "ref": "test/goldens/chapter-horizon.png#reviewed",
+      "sha256": "1ede344c96a296ac3f568d374c5066b860bc74786b514adaaf4048ed21fa37f0"
+    },
+    {
+      "path": "test/goldens/chapter-memoryHouse.png",
+      "ref": "test/goldens/chapter-memoryHouse.png#reviewed",
+      "sha256": "52527c1a6a64898f76ac57dd242b2811576216641d21cd0f2b53f68d2265b094"
+    },
+    {
+      "path": "test/goldens/chapter-reply.png",
+      "ref": "test/goldens/chapter-reply.png#reviewed",
+      "sha256": "d9a3a584c3b218d1e9f2b4f78e84963107785a856a8cebaa169cbc7e68792101"
+    },
+    {
+      "path": "test/goldens/chapter-return.png",
+      "ref": "test/goldens/chapter-return.png#reviewed",
+      "sha256": "c00f91778d9c863ccd4874fd6dd56c6fcda89326b781e39608b5a466846f4d39"
+    },
+    {
+      "path": "test/goldens/chapter-returningGarden.png",
+      "ref": "test/goldens/chapter-returningGarden.png#reviewed",
+      "sha256": "edbbcd4214ebb2cce11570daf6da28bac631dbac52b529f2a0a78a3faef80961"
+    },
+    {
+      "path": "test/goldens/chapter-seedReturn.png",
+      "ref": "test/goldens/chapter-seedReturn.png#reviewed",
+      "sha256": "3d63f06fd36a4fb537d16f5761fa0daa9bcce3137301971030e5da5f9dab5e2c"
+    },
+    {
+      "path": "test/goldens/chapter-threshold.png",
+      "ref": "test/goldens/chapter-threshold.png#reviewed",
+      "sha256": "8432063f522ca8d863db5ba97dcbd7e6b353ee4250488cbc3d7d0a5eb992bbd9"
     }
   ]
 }

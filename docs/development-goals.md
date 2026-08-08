@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_development_goals.dart -->
-<!-- source-sha256: 8c5508d2caf1c3ce5bdeae01ad3bc75a98a379848e1f7ffd9d95977305cad9d1|1457cd5eaa0575ede9abbcc0191201c1bad39ffd6025cace4b08045f5ebe4176|b7994be8155baaf773edb1038809b54727af2bbf34f0ca69f8d941d142db5c76|68a651c4ffbeac09cddb5f4c92b4be224e4a6796dba875477e1e294394d81add -->
+<!-- source-sha256: 41f006dde328c972a9f81d9da59cddc058bb8c4f3d027a3c4df19a6ccc8ec908|127c19e6430633d78b142e8a3a8952b9fd5586ba5d15eaa4b768ef87a1cd8b0b|b7994be8155baaf773edb1038809b54727af2bbf34f0ca69f8d941d142db5c76|ad1fffb6e09a7d2b2ddc22a8c3523ff32919ed50b3dbc518b0eb287a494a582b -->
 <!-- source-ref: story/story.json#root -->
 
 # 프린스 메이커 · 정량 개발목표 원장
@@ -18,9 +18,9 @@
 | `G1-completeness` | completeness | P0 | 장편 캠페인 완전성 · `{"value":0.95,"unit":"gate-score","display":"≥95%"}` | `{"value":1.0,"unit":"gate-score","formula":"8/8 scenario dimensions declared with target/current/evidence"}` | `0` | contract-satisfied; runtime-proof-required |
 | `G2-agency-replay` | purity | P0 | 선택 행위성과 재플레이 공간 · `{"scenarioCases":2000,"routeInputs":122880,"unit":"deterministic-replay-cases"}` | `{"scenarioCases":2048,"routeInputs":122880,"branchVectors":2048,"formula":"2^11 unconditional authored branch vectors × 5 activity policies × 3 personality routes × 4 legacy contexts = 122,880 route inputs; the CI enumerator replays all 2,048 branch vectors and requires at least 2,000 distinct deterministic scenario traces."}` | `{scenarioCases: 0, routeInputs: 0}` | contract-satisfied; runtime-proof-required |
 | `G3-narrative-depth` | completeness | P1 | 관계·기억·계승 서사 깊이 · `{"fateThreads":6,"companionQuestStages":9,"endings":6,"legacyProfiles":3,"unit":"authored-narrative-units"}` | `{"fateThreads":6,"companionQuestStages":9,"endings":6,"legacyProfiles":3}` | `{fateThreads: 0, companionQuestStages: 0, endings: 0, legacyProfiles: 0}` | contract-satisfied; runtime-proof-required |
-| `G4-presentation` | completeness | P1 | 시각·locale 품질 증적 · `{"goldens":30,"locales":2,"keysPerLocale":419,"renderPreconditions":3,"renderProofs":3,"unit":"presentation-proof-units"}` | `{"goldens":30,"locales":2,"keysPerLocale":419,"renderPreconditions":3,"renderProofs":3}` | `{goldens: 0, locales: 0, keysPerLocale: 0, renderPreconditions: 0, renderProofs: 0}` | contract-satisfied; runtime-proof-required |
+| `G4-presentation` | completeness | P1 | 시각·locale 품질 증적 · `{"goldens":30,"locales":2,"keysPerLocale":419,"renderPreconditions":3,"renderProofs":3,"unit":"presentation-proof-units"}` | `{"goldens":46,"locales":2,"keysPerLocale":419,"renderPreconditions":3,"renderProofs":3}` | `{goldens: 0, locales: 0, keysPerLocale: 0, renderPreconditions: 0, renderProofs: 0}` | contract-satisfied; runtime-proof-required |
 | `G5-deterministic-throughput` | performance | P0 | 결정론적 처리량과 replay · `{"campaigns":5000,"transitions":475000,"maxMillis":24000,"unit":"benchmark-contract"}` | `{"campaigns":5000,"transitions":475000,"maxMillis":24000,"checksumReplayMustMatch":true,"formula":"campaigns × (endingWeek − 1 + events) and replay checksum equality"}` | `{campaigns: 0, transitions: 0, maxMillis: 0}` | runtime-measured-by-benchmark |
-| `G6-accountable-delivery` | performance | P0 | 책임 추적 가능한 납품 · `{"ciChecks":14,"codeRefs":24,"decisionProofFields":14,"unit":"delivery-proof-units"}` | `{"ciChecks":14,"codeRefs":26,"decisionProofFields":14,"assetRefs":4,"fontRefs":1,"localeRefs":2,"systemAdjudicated":true,"failClosed":true}` | `{ciChecks: 0, codeRefs: 0, decisionProofFields: 0}` | contract-satisfied; runtime-proof-required |
+| `G6-accountable-delivery` | performance | P0 | 책임 추적 가능한 납품 · `{"ciChecks":14,"codeRefs":24,"decisionProofFields":14,"unit":"delivery-proof-units"}` | `{"ciChecks":14,"codeRefs":27,"decisionProofFields":14,"assetRefs":4,"fontRefs":1,"localeRefs":2,"systemAdjudicated":true,"failClosed":true}` | `{ciChecks: 0, codeRefs: 0, decisionProofFields: 0}` | contract-satisfied; runtime-proof-required |
 
 ## 투입·증적 원장
 
@@ -29,8 +29,8 @@
 | `authored-content-units` | content-unit | **227** | 48 weeks + 16 chapters + 47 events + 94 choices + 16 milestones + 6 endings | authored campaign content and closure work |
 | `narrative-relationship-units` | narrative-unit | **25** | 3 companions + 6 fate threads + 9 quest stages + 4 locations + 3 legacy profiles | relationship, memory, discovery and replay depth |
 | `exploration-units` | replay-unit | **604928** | 2048 branch vectors + 122880 route inputs + 5,000 campaigns + 475000 transitions | branch enumeration, route variety and deterministic throughput |
-| `visual-locale-units` | presentation-unit | **899** | 30 Goldens + 2 locales × 419 keys + 26 code refs + 4 asset refs + 1 font refs | visual regression, localization and traceable production assets |
-| `verification-units` | proof-unit | **57** | 14 CI checks + 23 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
+| `visual-locale-units` | presentation-unit | **916** | 46 Goldens + 2 locales × 419 keys + 27 code refs + 4 asset refs + 1 font refs | visual regression, localization and traceable production assets |
+| `verification-units` | proof-unit | **58** | 14 CI checks + 24 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
 
 ## 선행조건과 증거
 
