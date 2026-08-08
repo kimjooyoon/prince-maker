@@ -33,9 +33,9 @@ void main() {
     expect(art.map((entry) => entry.id), characters.map((entry) => entry.id));
     final emotionArt =
         art.where((entry) => entry.emotionAsset != null).toList();
-    expect(emotionArt, hasLength(16));
+    expect(emotionArt, hasLength(20));
     expect(
-        emotionArt.map((entry) => entry.emotionAsset).toSet(), hasLength(16));
+        emotionArt.map((entry) => entry.emotionAsset).toSet(), hasLength(20));
     final doran = art.firstWhere((entry) => entry.id == 'doran');
     expect(doran.emotionAsset, 'assets/generated/character-emotions/doran.png');
     final assetRefs = (story['assetRefs'] as List).cast<Map<String, dynamic>>();
@@ -44,7 +44,7 @@ void main() {
             .where((entry) => '${entry['ref']}'
                 .startsWith('assets/generated/character-emotions/'))
             .length,
-        16);
+        20);
     for (final entry in emotionArt) {
       final bytes =
           (await rootBundle.load(entry.emotionAsset!)).buffer.asUint8List();

@@ -22,6 +22,7 @@ import 'relationship_archive_painter.dart';
 import 'environment_catalog.dart';
 import 'canvas_ui_kit.dart';
 import 'canvas_choice_impact.dart';
+import 'event_art.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,6 +76,8 @@ class _Game extends State<Game> {
   ui.Image? image, personaImage;
   ui.Image? rosterImage;
   final characterEmotionImages = <String, ui.Image>{};
+  final eventIllustrationImages = <String, ui.Image>{};
+  int eventAssetGeneration = 0;
   late GameSession session;
   late CollectionPort collection;
   LocaleCatalog get catalog => LocaleCatalog(widget.locales);
@@ -230,6 +233,31 @@ class _Game extends State<Game> {
     flags
       ..clear()
       ..addAll(s.flags);
+    loadCurrentEventIllustration();
+  }
+
+  void loadCurrentEventIllustration() {
+    final events = (widget.story['events'] as List? ?? const [])
+        .whereType<Map>()
+        .map((event) => event.cast<String, dynamic>())
+        .toList();
+    if (eventIndex < 0 || eventIndex >= events.length) return;
+    final asset = eventIllustrationAsset(events[eventIndex]);
+    if (eventIllustrationImages.containsKey(asset)) return;
+    final generation = ++eventAssetGeneration;
+    for (final image in eventIllustrationImages.values) image.dispose();
+    eventIllustrationImages.clear();
+    rootBundle
+        .load(asset)
+        .then((b) => ui.instantiateImageCodec(b.buffer.asUint8List()))
+        .then((c) => c.getNextFrame())
+        .then((f) {
+      if (!mounted || generation != eventAssetGeneration) {
+        f.image.dispose();
+        return;
+      }
+      setState(() => eventIllustrationImages[asset] = f.image);
+    });
   }
 
   void next() {
@@ -249,6 +277,7 @@ class _Game extends State<Game> {
         if (upcoming >= 0) {
           eventIndex = upcoming;
           session.world.progress[0]!.eventIndex = eventIndex;
+          loadCurrentEventIllustration();
           page = 3;
         } else if (milestones.length > milestoneCount) {
           page = 6;
@@ -560,6 +589,7 @@ class _Game extends State<Game> {
                           personaImage,
                           rosterImage,
                           characterEmotionImages,
+                          eventIllustrationImages,
                           history,
                           eventIndex,
                           sideSceneCursor,
@@ -598,6 +628,7 @@ class Scene extends CustomPainter {
       this.personaImage,
       this.rosterImage,
       this.characterEmotionImages,
+      this.eventIllustrationImages,
       this.history,
       this.eventIndex,
       this.sideSceneCursor,
@@ -632,6 +663,9 @@ class Scene extends CustomPainter {
       characterEmotionImages.entries
           .map((entry) => [entry.key, entry.value.hashCode])
           .toList(),
+      eventIllustrationImages.entries
+          .map((entry) => [entry.key, entry.value.hashCode])
+          .toList(),
       history,
       saveCode,
       activities
@@ -658,6 +692,7 @@ class Scene extends CustomPainter {
   final String lastResult, lastLine;
   final ui.Image? image, personaImage, rosterImage;
   final Map<String, ui.Image> characterEmotionImages;
+  final Map<String, ui.Image> eventIllustrationImages;
   final List<String> history;
   final String saveCode;
   final List<Activity> activities;
@@ -1053,9 +1088,8 @@ class Scene extends CustomPainter {
       return;
     }
     if (page == 3) {
-      if (activeLocale == 'ko') event(c);
+      event(c);
       drawLocaleToggle(c, activeLocale, activeCatalog);
-      drawLocalizedEvent(c, s, eventIndex, stats, bonds, flags, personaImage);
       c.restore();
       return;
     }
@@ -1975,18 +2009,41 @@ class Scene extends CustomPainter {
 
   void event(Canvas c) {
     final e = s['events'][eventIndex];
+    final eventAsset = eventIllustrationAsset(e);
+    final eventImage = eventIllustrationImages[eventAsset];
     final locations = (s['locations'] as List? ?? const []).cast<Map>(),
         location = locations.firstWhere((l) => l['id'] == e['locationId'],
             orElse: () => {'name': e['locationId'] ?? ''}),
         locationName = activeLocale == 'ko'
             ? '${location['name']}'
             : localized('${location['nameKey']}', '${location['name']}');
-    txt(c, '작은 사건 · ${e['week']}주차', const Offset(24, 28), 30, ink, bold: true);
+    txt(
+        c,
+        formatUi('ui.event.small', 'A small event · week {week}',
+            {'week': e['week']}),
+        const Offset(24, 28),
+        30,
+        ink,
+        bold: true);
     txt(c, locationName, const Offset(25, 66), 11, teal, bold: true);
-    txt(c, e['title'], const Offset(25, 84), 16, teal);
-    box(c, const Rect.fromLTWH(24, 120, 712, 110), ink, radius: 22);
-    txt(c, e['body'], const Offset(48, 158), 22, Colors.white,
-        bold: true, maxWidth: 640);
+    txt(c, localized('${e['titleKey']}', '${e['title']}'), const Offset(25, 84),
+        16, teal);
+    final choiceTop = eventImage == null ? 270.0 : 278.0;
+    if (eventImage != null) {
+      box(c, const Rect.fromLTWH(24, 120, 330, 138), Colors.white,
+          radius: 22, shadow: true);
+      drawEventIllustration(
+          c, eventImage, const Rect.fromLTWH(24, 120, 330, 138));
+      box(c, const Rect.fromLTWH(366, 120, 370, 138), ink, radius: 18);
+      txt(c, localized('${e['bodyKey']}', '${e['body']}'),
+          const Offset(388, 143), 14, Colors.white,
+          bold: true, maxWidth: 326, maxLines: 5);
+    } else {
+      box(c, const Rect.fromLTWH(24, 120, 712, 110), ink, radius: 22);
+      txt(c, localized('${e['bodyKey']}', '${e['body']}'),
+          const Offset(48, 158), 18, Colors.white,
+          bold: true, maxWidth: 640, maxLines: 3);
+    }
     for (var i = 0; i < 2; i++) {
       final x = 24 + i * 356.0,
           ch = e['choices'][i],
@@ -2011,28 +2068,37 @@ class Scene extends CustomPainter {
                   .replaceAll('{stat}', localizedStat('${legacyBonus['stat']}'))
                   .replaceAll('{delta}', '${legacyBonus['delta']}')
               : '';
-      CanvasUiKit.statePanel(c, Rect.fromLTWH(x, 270, 332, 220),
+      CanvasUiKit.statePanel(c, Rect.fromLTWH(x, choiceTop, 332, 210),
           state: locked ? CanvasUiState.disabled : CanvasUiState.idle,
           shadow: !locked);
-      txt(c, formatUi('ui.event.choice', 'Choice {index}', {'index': i + 1}),
-          Offset(x + 22, 295), 14, locked ? ink.withValues(alpha: .45) : teal,
+      txt(
+          c,
+          formatUi('ui.event.choice', 'Choice {index}', {'index': i + 1}),
+          Offset(x + 22, choiceTop + 24),
+          14,
+          locked ? ink.withValues(alpha: .45) : teal,
           bold: true);
-      txt(c, ch['label'], Offset(x + 22, 340), 17,
+      txt(
+          c,
+          localized('${ch['labelKey']}', '${ch['label']}'),
+          Offset(x + 22, choiceTop + 68),
+          17,
           locked ? ink.withValues(alpha: .45) : ink,
-          bold: true, maxWidth: 190);
+          bold: true,
+          maxWidth: 190);
       txt(
           c,
           locked
               ? localizedChoiceCondition(ch)
               : '${localizedChoiceEffect(ch)}$legacyText',
-          Offset(x + 22, 400),
+          Offset(x + 22, choiceTop + 122),
           13,
           locked ? ink.withValues(alpha: .45) : ink.withValues(alpha: .6),
           maxWidth: 198,
           maxLines: 2);
-      dialoguePortrait(c, Rect.fromLTWH(x + 230, 300, 82, 102), ch);
-      drawChoiceEcho(c, ch, Offset(x + 22, 448));
-      drawChoiceImpact(c, Rect.fromLTWH(x + 22, 466, 198, 8), ch);
+      dialoguePortrait(c, Rect.fromLTWH(x + 230, choiceTop + 28, 82, 102), ch);
+      drawChoiceEcho(c, ch, Offset(x + 22, choiceTop + 170));
+      drawChoiceImpact(c, Rect.fromLTWH(x + 22, choiceTop + 188, 198, 8), ch);
     }
     txt(
         c,

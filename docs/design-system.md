@@ -105,9 +105,12 @@
 | --- | --- | --- |
 | character_art_panel | portrait sheet·일러스트 방향·실루엣·대표 동작·표정 키 | 캐릭터 도감 상세 |
 | emotion_chip | 감정 얼굴·라벨·개별 시각 큐를 idle / selected 상태로 표시 | 캐릭터 도감 상세 |
+| event_illustration_strip | 메인 이벤트의 장소 장면과 노아·루미·보라·타로 4패널을 한 장의 스토리보드로 표시 | 사건 선택 |
 | relationship_archive_panel | 순수 관계 resolver의 상태·유대 간격·후속 기록·동료 퀘스트를 한 화면에 표시 | 동행 관계 기록 |
 
 캐릭터 도감 7은 20종 character_card를 보여 주고, 카드를 누르면 캐릭터 아트 10으로 이동한다. 아트 상세는 locale_toggle, character_art_panel, emotion_chip, navigation_footer를 조합하며, 5종 감정 전환과 도감 복귀를 필수 상호작용으로 고정한다.
+
+메인 사건 3은 `event_illustration_strip`을 `choice_card` 위에 배치한다. 각 이벤트 시트는 `story/story.jsonl`의 `illustrationAsset`을 통해 4개 주요 캐릭터 프레임을 제공하며, 47개 사건 전체가 같은 `assets/generated/event-illustrations/event-<week>.png` 규칙을 사용한다.
 
 동행 관계 기록 11은 `resolveRelationshipDynamics`와 `resolveRelationshipFollowup`의 동일 결과를 상태·유대 간격·후속 기록·3명 동료 카드로 투영한다. 홈·막 결산·기록 보관소와 다른 surface가 같은 입력에서 같은 state id를 얻는지 `relationship-archive.png`와 replay 테스트로 고정한다.
 

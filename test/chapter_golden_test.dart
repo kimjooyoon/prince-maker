@@ -67,7 +67,7 @@ void main() {
           Game(source, initialSnapshot: snapshot, key: ValueKey(id)));
       await tester.pumpAndSettle();
       await tester.runAsync(
-          () => Future<void>.delayed(const Duration(milliseconds: 100)));
+          () => Future<void>.delayed(const Duration(milliseconds: 1000)));
       await tester.pump();
       expect(find.byKey(ValueKey('3-$week-0-${snapshot.eventIndex}')),
           findsOneWidget);

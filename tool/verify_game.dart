@@ -489,8 +489,16 @@ void main() {
       .map((character) => character['emotionAsset'])
       .whereType<String>()
       .toSet();
-  if (emotionAssets.length < 16) {
-    fail('at least sixteen character emotion sheets are required');
+  if (emotionAssets.length != characterArchive.length ||
+      emotionAssets.length != 20) {
+    fail('all twenty character archive residents require emotion sheets');
+  }
+  for (final event in events) {
+    final illustrationAsset = event['illustrationAsset'];
+    if (illustrationAsset is! String ||
+        !assetPaths.contains(illustrationAsset)) {
+      fail('event illustration asset is not declared: ${event['week']}');
+    }
   }
   for (final ref in fontRefs) {
     final path = (ref['ref'] as String).split('#').first;

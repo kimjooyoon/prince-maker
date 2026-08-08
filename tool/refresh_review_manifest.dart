@@ -63,6 +63,11 @@ void main() {
     'assets/generated/character-emotions/eil.png',
     'assets/generated/character-emotions/raon.png',
     'assets/generated/character-emotions/morin.png',
+    'assets/generated/character-emotions/daon.png',
+    'assets/generated/character-emotions/biyo.png',
+    'assets/generated/character-emotions/luka.png',
+    'assets/generated/character-emotions/hez.png',
+    'test/goldens/character-art-daon.png',
     'lib/environment_catalog.dart',
     'lib/design_tokens.dart',
     'test/environment_catalog_test.dart',
@@ -150,7 +155,21 @@ void main() {
     'test/goldens/ui-state-matrix.png',
     'reviews/gameplay-review.md',
     'docs/event-storm.jsonl',
-    'docs/event-storm.md'
+    'docs/event-storm.md',
+    'lib/event_art.dart',
+    'test/event_art_test.dart',
+    'test/event_art_golden_test.dart',
+    'test/goldens/event-art.png',
+    'test/goldens/event-art-en.png',
+    'tool/generate_image_matrix.dart',
+    'test/image_design_matrix_test.dart',
+    'design/image-design-matrix.jsonl',
+    ...['daon', 'biyo', 'luka', 'hez']
+        .map((id) => 'assets/generated/character-emotions/$id.png'),
+    ...List.generate(
+        47,
+        (index) =>
+            'assets/generated/event-illustrations/event-${index + 2}.png'),
   ]) {
     if (!known.containsKey(path)) {
       entries

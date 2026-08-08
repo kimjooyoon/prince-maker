@@ -59,4 +59,34 @@ void main() {
     await expectLater(find.byType(Game),
         matchesGoldenFile('goldens/character-art-doran-concern-en.png'));
   });
+
+  testWidgets('twentieth resident uses the authored emotion sheet',
+      (tester) async {
+    final story = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
+    await tester.pumpWidget(Game(
+      story,
+      locales: await loadCharacterArtLocales(),
+      initialSnapshot: const GameSnapshot(
+        week: 1,
+        coins: 12,
+        fatigue: 0,
+        selected: 0,
+        persona: 0,
+        page: 7,
+        eventIndex: 0,
+        stats: {'지혜': 4, '공감': 5, '용기': 3},
+        history: [],
+      ),
+    ));
+    await tester.pumpAndSettle();
+    await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 500)));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(160, 503));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('10-1-0-0')), findsOneWidget);
+    await expectLater(
+        find.byType(Game), matchesGoldenFile('goldens/character-art-daon.png'));
+  });
 }

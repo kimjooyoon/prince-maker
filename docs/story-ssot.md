@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: d8ac2f3e05128bf2a431391d2713c3f687530f3d6dc8940aee5b5c0f3944210c -->
+<!-- ssot-sha256: 3b4288ff01c48cc1559ff8e216b45a31a9412ce0760e15dfa6b67fc4573f3591 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -143,6 +143,57 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 - [`assets/generated/character-emotions/eil.png#eil-five-emotion-sheet`](../assets/generated/character-emotions/eil.png) · SHA-256 `2ed2999195bec0404133d2ca2543de0bb34f8d83ded0a0d68867ad277814c204`
 - [`assets/generated/character-emotions/raon.png#raon-five-emotion-sheet`](../assets/generated/character-emotions/raon.png) · SHA-256 `f942e8279fcc4e153aac195e8a99943a67518876abd67f428a13d80a8598491f`
 - [`assets/generated/character-emotions/morin.png#morin-five-emotion-sheet`](../assets/generated/character-emotions/morin.png) · SHA-256 `25d7bda1da9b8eb3bb186fb40afe0481229c500a782db57a275163cfeaed2161`
+- [`assets/generated/character-emotions/daon.png#daon-five-emotion-sheet`](../assets/generated/character-emotions/daon.png) · SHA-256 `957f0d54a89a6587f2de658898ce9e7d2e770b81376b0d7453de29c31e66cbe9`
+- [`assets/generated/character-emotions/biyo.png#biyo-five-emotion-sheet`](../assets/generated/character-emotions/biyo.png) · SHA-256 `39b285e100ba171f80f0b6aa6317187f4e5cc31c1ed4b7a27b4e74bf27e7383b`
+- [`assets/generated/character-emotions/luka.png#luka-five-emotion-sheet`](../assets/generated/character-emotions/luka.png) · SHA-256 `58b41e9162a1c52d19480691279e89a3965d2fd55abbdbb08f077ff8840d2697`
+- [`assets/generated/character-emotions/hez.png#hez-five-emotion-sheet`](../assets/generated/character-emotions/hez.png) · SHA-256 `82ce2fb5bedf0d8c80c9d1926d262885356167bae40323f26715b093bdae34dc`
+- [`assets/generated/event-illustrations/event-2.png#event-2-four-major-character-frames`](../assets/generated/event-illustrations/event-2.png) · SHA-256 `b05ecb32c58c9beff1ad877094aa6905799d2739df0a327d274f7ec038825b18`
+- [`assets/generated/event-illustrations/event-3.png#event-3-four-major-character-frames`](../assets/generated/event-illustrations/event-3.png) · SHA-256 `db0af68a3ae72f557864520420174a54c8bc0615ab0b2f8ac5aad88bbe9aaaa5`
+- [`assets/generated/event-illustrations/event-4.png#event-4-four-major-character-frames`](../assets/generated/event-illustrations/event-4.png) · SHA-256 `9581201bf4bacdfe51c7530686f41dccb4673b58b5236fff23953d9652f4c348`
+- [`assets/generated/event-illustrations/event-5.png#event-5-four-major-character-frames`](../assets/generated/event-illustrations/event-5.png) · SHA-256 `93df8e6f0a362d5ab723e5f2392d38480fcc0960ee09b71ca7dd1c1902ec1062`
+- [`assets/generated/event-illustrations/event-6.png#event-6-four-major-character-frames`](../assets/generated/event-illustrations/event-6.png) · SHA-256 `98ce8cca45830310a8ce2688e13ec8745b8dc936921a3bb3889cd8b28cde4adf`
+- [`assets/generated/event-illustrations/event-7.png#event-7-four-major-character-frames`](../assets/generated/event-illustrations/event-7.png) · SHA-256 `574fa75f1e1d7e639b7c0eb0b4742cfe56abe8cb0f8be78705819b1a333d616e`
+- [`assets/generated/event-illustrations/event-8.png#event-8-four-major-character-frames`](../assets/generated/event-illustrations/event-8.png) · SHA-256 `7a1b4ea34410d0fed5516e886239ce1c45506d13e2b5c6287f1882ab7341cf13`
+- [`assets/generated/event-illustrations/event-9.png#event-9-four-major-character-frames`](../assets/generated/event-illustrations/event-9.png) · SHA-256 `a5c8b5a742d31ae316523c391c94a4cf77e1be6572c72abe3b6779785286bcd5`
+- [`assets/generated/event-illustrations/event-10.png#event-10-four-major-character-frames`](../assets/generated/event-illustrations/event-10.png) · SHA-256 `00726a111981d00a213bc3bdeb73abc7c482ecf025a697b9b1973cb83e33f2f7`
+- [`assets/generated/event-illustrations/event-11.png#event-11-four-major-character-frames`](../assets/generated/event-illustrations/event-11.png) · SHA-256 `564be1fff6fc754b9624f6144bc0588328e96db328d12e38dcb319148a933626`
+- [`assets/generated/event-illustrations/event-12.png#event-12-four-major-character-frames`](../assets/generated/event-illustrations/event-12.png) · SHA-256 `7da9c35c005323e3241b2b76ffd310b9a6b55d32696548023e2a4c4d493a73f3`
+- [`assets/generated/event-illustrations/event-13.png#event-13-four-major-character-frames`](../assets/generated/event-illustrations/event-13.png) · SHA-256 `bd27d72425901c9c7f708a35f65da337c899f6ea63cd3ef96afa62386bf2e88d`
+- [`assets/generated/event-illustrations/event-14.png#event-14-four-major-character-frames`](../assets/generated/event-illustrations/event-14.png) · SHA-256 `6c30930ebf6a20461e7ead1d09678f0e9f1d1dfa82d249ad6d76c89c08e8ad5f`
+- [`assets/generated/event-illustrations/event-15.png#event-15-four-major-character-frames`](../assets/generated/event-illustrations/event-15.png) · SHA-256 `721c2a220c60025e7d2c13f64ecf4fd672a99a840ef7cb4810a1f6456178ad83`
+- [`assets/generated/event-illustrations/event-16.png#event-16-four-major-character-frames`](../assets/generated/event-illustrations/event-16.png) · SHA-256 `c6a56b89e5ba0eaab317e3a6e29102d580ac604ddfd96cb4151efd65f6dfdaf0`
+- [`assets/generated/event-illustrations/event-17.png#event-17-four-major-character-frames`](../assets/generated/event-illustrations/event-17.png) · SHA-256 `77c8641ffd5e67b57b7b7596616f030964223dfdeff89d3467725f84d6183dac`
+- [`assets/generated/event-illustrations/event-18.png#event-18-four-major-character-frames`](../assets/generated/event-illustrations/event-18.png) · SHA-256 `42f48b58cf8576252bae28747d521c7e44dadd3674459cbf29f2017e44e1f88d`
+- [`assets/generated/event-illustrations/event-19.png#event-19-four-major-character-frames`](../assets/generated/event-illustrations/event-19.png) · SHA-256 `f2ea202b07ecf8b25dfa1f5259938bdf4acdd0550dcce14839f4bae560c15ef9`
+- [`assets/generated/event-illustrations/event-20.png#event-20-four-major-character-frames`](../assets/generated/event-illustrations/event-20.png) · SHA-256 `49ebc0c43a120478aad69fb4a9c7e6a5ff57199618e3f1c3fb23a4ad441d701e`
+- [`assets/generated/event-illustrations/event-21.png#event-21-four-major-character-frames`](../assets/generated/event-illustrations/event-21.png) · SHA-256 `b8952327d2cd24d3e55637716574f69d33d5e5240404b136d89e0ad0410866fa`
+- [`assets/generated/event-illustrations/event-22.png#event-22-four-major-character-frames`](../assets/generated/event-illustrations/event-22.png) · SHA-256 `6cb5985fcb0b9239493d3c6618e654f05e9198de6c81cbcb9324969be9d70b9f`
+- [`assets/generated/event-illustrations/event-23.png#event-23-four-major-character-frames`](../assets/generated/event-illustrations/event-23.png) · SHA-256 `f91690c9890c7d5672fe0ecd178598438a1c5c921578201c90ea3fcc6d36c904`
+- [`assets/generated/event-illustrations/event-24.png#event-24-four-major-character-frames`](../assets/generated/event-illustrations/event-24.png) · SHA-256 `96a281ca22aec72ed68e82c8949dd81698d942ccbc198244fa8b5941562b09a6`
+- [`assets/generated/event-illustrations/event-25.png#event-25-four-major-character-frames`](../assets/generated/event-illustrations/event-25.png) · SHA-256 `31e189fb2c989be4709534066a389c96d1ebc05e7f80bc73310c23be4f6bc5e1`
+- [`assets/generated/event-illustrations/event-26.png#event-26-four-major-character-frames`](../assets/generated/event-illustrations/event-26.png) · SHA-256 `9e6520bab231c2dbe95c096b2636db2455b1e0f02822db7c2a6f700c762e9617`
+- [`assets/generated/event-illustrations/event-27.png#event-27-four-major-character-frames`](../assets/generated/event-illustrations/event-27.png) · SHA-256 `702a4ff0a7e3715b4fe8b9d83955d879c44ebd4dedba6de922882f5cbf467b9c`
+- [`assets/generated/event-illustrations/event-28.png#event-28-four-major-character-frames`](../assets/generated/event-illustrations/event-28.png) · SHA-256 `47bcd0d289201b542d90f477f922192cb025c1c8ed728721dc03c045be65f1ca`
+- [`assets/generated/event-illustrations/event-29.png#event-29-four-major-character-frames`](../assets/generated/event-illustrations/event-29.png) · SHA-256 `99f07704c13685d5185ec575a7ae0e39ca431cc3f9a9d19a89242f68921fea5f`
+- [`assets/generated/event-illustrations/event-30.png#event-30-four-major-character-frames`](../assets/generated/event-illustrations/event-30.png) · SHA-256 `4b546ec95e633a7d658036a05be3a8db0193b244540ba4e8ddaa280dc45a6b32`
+- [`assets/generated/event-illustrations/event-31.png#event-31-four-major-character-frames`](../assets/generated/event-illustrations/event-31.png) · SHA-256 `7d8bf2ff8455342531c63eeeb654164f6548b26a7498b8b50923b5fae404cf61`
+- [`assets/generated/event-illustrations/event-32.png#event-32-four-major-character-frames`](../assets/generated/event-illustrations/event-32.png) · SHA-256 `91c74f24994ca5c17a87464dce114f8e3d1d77260d211fe1ef9d4723fdc8c78d`
+- [`assets/generated/event-illustrations/event-33.png#event-33-four-major-character-frames`](../assets/generated/event-illustrations/event-33.png) · SHA-256 `b76595fd0ad63fe37874a02e270dbabc77639e0941fa5cad175f24ce1b85ff6d`
+- [`assets/generated/event-illustrations/event-34.png#event-34-four-major-character-frames`](../assets/generated/event-illustrations/event-34.png) · SHA-256 `e06bc0e5fae13b6db1337c079a43a6403e5ac1c13128da02f5dee4ec14ca29b9`
+- [`assets/generated/event-illustrations/event-35.png#event-35-four-major-character-frames`](../assets/generated/event-illustrations/event-35.png) · SHA-256 `1dafb28034d4c8ff9113c6f4eff0afa4f392c0e741869759d1e57f51f623c7a2`
+- [`assets/generated/event-illustrations/event-36.png#event-36-four-major-character-frames`](../assets/generated/event-illustrations/event-36.png) · SHA-256 `7e99105d3f4dcffc6f154a270fba137abbd0ddc195ccd80d3a0f2d34163d6e44`
+- [`assets/generated/event-illustrations/event-37.png#event-37-four-major-character-frames`](../assets/generated/event-illustrations/event-37.png) · SHA-256 `6c5b01c8def4bef251ec32fa5878ecbea61e094ca2f76c5fd2d037ab6a0b5e10`
+- [`assets/generated/event-illustrations/event-38.png#event-38-four-major-character-frames`](../assets/generated/event-illustrations/event-38.png) · SHA-256 `a2a9d4a8bf78bd4076f7b4178765c2de4c3dbe03f1e56c0c9096489d5cfca003`
+- [`assets/generated/event-illustrations/event-39.png#event-39-four-major-character-frames`](../assets/generated/event-illustrations/event-39.png) · SHA-256 `2e68ed1ca99a526486b24776b1d78e13a4b83ceeeda9e8f6aac18fcaf9e0f45b`
+- [`assets/generated/event-illustrations/event-40.png#event-40-four-major-character-frames`](../assets/generated/event-illustrations/event-40.png) · SHA-256 `f3ef4214ec4aae7da73f434d2a9577c4b1197caf15e120ee118fcaa9ce041bf8`
+- [`assets/generated/event-illustrations/event-41.png#event-41-four-major-character-frames`](../assets/generated/event-illustrations/event-41.png) · SHA-256 `bdf77485d132894a2fd8754e089efb4ab325b88e38912b991c1484c651d2683f`
+- [`assets/generated/event-illustrations/event-42.png#event-42-four-major-character-frames`](../assets/generated/event-illustrations/event-42.png) · SHA-256 `30c92a11a0d7064c3513d36cc037ffda3d4093970c4dc06a52e9e6ef962f10d0`
+- [`assets/generated/event-illustrations/event-43.png#event-43-four-major-character-frames`](../assets/generated/event-illustrations/event-43.png) · SHA-256 `a6dea91f735aa0efb58a966262ad5fe5aec684d04954a1c4f22cff033d081225`
+- [`assets/generated/event-illustrations/event-44.png#event-44-four-major-character-frames`](../assets/generated/event-illustrations/event-44.png) · SHA-256 `286d5fc28bfdc0d613f440b8beff551de1fb2cc184355e4bd6bc1ae74b648a29`
+- [`assets/generated/event-illustrations/event-45.png#event-45-four-major-character-frames`](../assets/generated/event-illustrations/event-45.png) · SHA-256 `923377f2d60cdaaa37b2f2d069deaeed22775f1599531e6b92c078a1b7eb554a`
+- [`assets/generated/event-illustrations/event-46.png#event-46-four-major-character-frames`](../assets/generated/event-illustrations/event-46.png) · SHA-256 `6d20ab7f6eeb64a45c664baefc2c374dfe258259c617e20a7d5b8f9a8efd6708`
+- [`assets/generated/event-illustrations/event-47.png#event-47-four-major-character-frames`](../assets/generated/event-illustrations/event-47.png) · SHA-256 `b8962d04c826110fdd69b436428ddd9114306ce873d30580da0f44dd2ff31e42`
+- [`assets/generated/event-illustrations/event-48.png#event-48-four-major-character-frames`](../assets/generated/event-illustrations/event-48.png) · SHA-256 `374250ce2915cd7cde85bc6742c24866a2f81c19bf439f0b3735710bb61e3a9c`
 
 ## 폰트
 
