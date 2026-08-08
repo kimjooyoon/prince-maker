@@ -18,6 +18,7 @@ import 'collection_platform.dart';
 import 'game_core.dart';
 import 'character_roster.dart';
 import 'environment_catalog.dart';
+import 'canvas_ui_kit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -326,7 +327,9 @@ class _Game extends State<Game> {
     } else if (page == 3) {
       if (y > 260 && y < 470) chooseEvent((x ~/ 380).clamp(0, 1));
     } else if (page == 4) {
-      if (y > 390 && y < 470 && x < 365) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
+      } else if (y > 390 && y < 470 && x < 365) {
         Clipboard.setData(ClipboardData(text: snapshot().encode()));
         session.persist(page: page);
       } else if (y > 390 && y < 470)
@@ -597,20 +600,11 @@ class Scene extends CustomPainter {
   }
 
   void box(Canvas c, Rect r, Color color,
-      {double radius = 18, Color? stroke, bool shadow = false}) {
-    final shape = RRect.fromRectAndRadius(r, Radius.circular(radius));
-    if (shadow) {
-      c.drawRRect(shape.shift(const Offset(0, 3)),
-          Paint()..color = ink.withValues(alpha: .08));
-    }
-    c.drawRRect(shape, Paint()..color = color);
-    if (stroke != null)
-      c.drawRRect(
-          shape,
-          Paint()
-            ..color = stroke
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 2);
+      {double radius = DesignTokens.radiusCard,
+      Color? stroke,
+      bool shadow = false}) {
+    CanvasUiKit.panel(c, r,
+        fill: color, stroke: stroke, radius: radius, shadow: shadow);
   }
 
   void background(Canvas c) {
@@ -644,8 +638,12 @@ class Scene extends CustomPainter {
   }
 
   void statPill(Canvas c, String label, int value, double x, Color accent) {
-    box(c, Rect.fromLTWH(x, 157, 104, 28), Colors.white.withValues(alpha: .08),
-        radius: 10);
+    CanvasUiKit.panel(
+        c,
+        Rect.fromLTWH(
+            x, 157, DesignTokens.statPillWidth, DesignTokens.statPillHeight),
+        fill: Colors.white.withValues(alpha: .08),
+        radius: DesignTokens.radiusBadge);
     c.drawCircle(Offset(x + 14, 171), 4, Paint()..color = accent);
     txt(c, label, Offset(x + 25, 163), 10, Colors.white70,
         bold: true, maxWidth: 42);
@@ -890,6 +888,7 @@ class Scene extends CustomPainter {
     }
     if (page == 4) {
       savePage(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
       c.restore();
       return;
     }
@@ -955,9 +954,7 @@ class Scene extends CustomPainter {
         10,
         teal,
         bold: true);
-    box(c, const Rect.fromLTWH(155, 231, 555, 5), ink.withValues(alpha: .12),
-        radius: 3);
-    box(c, Rect.fromLTWH(155, 231, 555 * progress, 5), teal, radius: 3);
+    CanvasUiKit.progress(c, const Rect.fromLTWH(155, 231, 555, 5), progress);
   }
 
   void home(Canvas c) {
@@ -1014,8 +1011,12 @@ class Scene extends CustomPainter {
           bonus = talent?['focusStat'] == a.stat && a.delta > 0
               ? ' · 재능 +${talent['focusBonus']}'
               : '';
-      box(c, Rect.fromLTWH(x, y, 220, 80), on ? teal : Colors.white,
-          stroke: on ? teal : ink.withValues(alpha: .12), shadow: true);
+      CanvasUiKit.statePanel(
+          c,
+          Rect.fromLTWH(x, y, DesignTokens.activityCardWidth,
+              DesignTokens.activityCardHeight),
+          state: on ? CanvasUiState.selected : CanvasUiState.idle,
+          shadow: true);
       c.drawCircle(Offset(x + 34, y + 40), 24,
           Paint()..color = on ? Colors.white.withValues(alpha: .16) : paper);
       mark(c, a.icon, Offset(x + 16, y + 22), on ? Colors.white : teal);
@@ -1030,9 +1031,10 @@ class Scene extends CustomPainter {
     box(c, const Rect.fromLTWH(430, 500, 150, 54), Colors.white,
         radius: 15, stroke: teal, shadow: true);
     txt(c, '일러스트', const Offset(458, 517), 16, teal, bold: true);
-    box(c, const Rect.fromLTWH(590, 500, 146, 54), teal,
-        radius: 15, shadow: true);
-    txt(c, '하루 보내기 →', const Offset(607, 517), 14, Colors.white, bold: true);
+    CanvasUiKit.button(c, const Rect.fromLTWH(590, 500, 146, 54),
+        activeLocale == 'ko' ? '하루 보내기 →' : 'Spend the day →',
+        state: CanvasUiState.selected,
+        fontSize: activeLocale == 'ko' ? 14 : 12);
     trackerLine(c, const Offset(24, 565));
     routeAtlas(c, origin: const Offset(24, 580));
     box(c, const Rect.fromLTWH(24, 660, 170, 30), Colors.white,
@@ -1525,9 +1527,8 @@ class Scene extends CustomPainter {
               (bondReq != null && (bonds[bondReq] ?? 0) < bondMin) ||
               (flagReq != null && flags[flagReq] != true),
           x = 24 + i * 242.0;
-      box(c, Rect.fromLTWH(x, 275, 226, 228), locked ? paper : Colors.white,
-          radius: 18,
-          stroke: locked ? ink.withValues(alpha: .16) : teal,
+      CanvasUiKit.statePanel(c, Rect.fromLTWH(x, 275, 226, 228),
+          state: locked ? CanvasUiState.disabled : CanvasUiState.idle,
           shadow: !locked);
       txt(c, '${i + 1}', Offset(x + 18, 292), 12,
           locked ? ink.withValues(alpha: .35) : teal,
@@ -1725,7 +1726,6 @@ class Scene extends CustomPainter {
           locked = (req != null && (stats[req] ?? 0) < (min ?? 0)) ||
               (bondReq != null && (bonds[bondReq] ?? 0) < (bondMin ?? 0)) ||
               (flagReq != null && flags[flagReq] != true),
-          tone = locked ? paper : Colors.white,
           rival = ch['rivalId'] as String?,
           rivalDelta = (ch['rivalDelta'] as int?) ?? 0,
           legacyId = flags.keys
@@ -1744,9 +1744,8 @@ class Scene extends CustomPainter {
           relation = rival == null
               ? ''
               : ' · $rival 유대 ${rivalDelta >= 0 ? '+' : ''}$rivalDelta';
-      box(c, Rect.fromLTWH(x, 270, 332, 190), tone,
-          radius: 18,
-          stroke: locked ? ink.withValues(alpha: .2) : teal,
+      CanvasUiKit.statePanel(c, Rect.fromLTWH(x, 270, 332, 190),
+          state: locked ? CanvasUiState.disabled : CanvasUiState.idle,
           shadow: !locked);
       txt(c, '선택 ${i + 1}', Offset(x + 22, 295), 14,
           locked ? ink.withValues(alpha: .45) : teal,
@@ -1786,7 +1785,8 @@ class Scene extends CustomPainter {
   }
 
   void savePage(Canvas c) {
-    final recent = history.reversed.take(3).toList(),
+    final ko = activeLocale == 'ko',
+        recent = history.reversed.take(3).toList(),
         endings = (s['endings'] as List? ?? const []).cast<Map>(),
         known = endings.length,
         discovered = collectionEntries.map((entry) {
@@ -1808,18 +1808,35 @@ class Scene extends CustomPainter {
             .map((id) => companions.firstWhere((c) => c['id'] == id,
                 orElse: () => {'name': id})['name'])
             .join(' · ');
-    txt(c, '기록 보관소', const Offset(24, 28), 32, ink, bold: true);
-    txt(c, '현재 상태를 코드로 보관하고 다른 실행에서 복원합니다.', const Offset(25, 70), 14, teal);
+    txt(c, ko ? '기록 보관소' : 'Save archive', const Offset(24, 28), 32, ink,
+        bold: true);
+    txt(
+        c,
+        ko
+            ? '현재 상태를 코드로 보관하고 다른 실행에서 복원합니다.'
+            : 'Keep the current state as a code and restore it in another run.',
+        const Offset(25, 70),
+        14,
+        teal,
+        maxWidth: 660);
     box(c, const Rect.fromLTWH(24, 120, 712, 240), Colors.white,
         radius: 20, stroke: ink.withValues(alpha: .12), shadow: true);
     txt(
         c,
-        'replay ${history.length}회 · 목표 ${milestones.values.where((v) => v).length}/${(s['milestones'] as List? ?? const []).length}',
+        ko
+            ? 'replay ${history.length}회 · 목표 ${milestones.values.where((v) => v).length}/${(s['milestones'] as List? ?? const []).length}'
+            : 'Replay ${history.length} · goals ${milestones.values.where((v) => v).length}/${(s['milestones'] as List? ?? const []).length}',
         const Offset(48, 155),
         15,
         ink);
-    txt(c, '유대 루미 ${bonds['lumi']} · 보라 ${bonds['bora']} · 타로 ${bonds['taro']}',
-        const Offset(48, 180), 13, teal);
+    txt(
+        c,
+        ko
+            ? '유대 루미 ${bonds['lumi']} · 보라 ${bonds['bora']} · 타로 ${bonds['taro']}'
+            : 'Bonds Lumi ${bonds['lumi']} · Bora ${bonds['bora']} · Taro ${bonds['taro']}',
+        const Offset(48, 180),
+        13,
+        teal);
     for (var i = 0; i < recent.length; i++)
       txt(c, recent[i].replaceAll('|line:', ' · '), Offset(48, 210 + i * 20),
           10, ink.withValues(alpha: .65));
@@ -1827,24 +1844,33 @@ class Scene extends CustomPainter {
         const Offset(48, 285), 10, ink.withValues(alpha: .45));
     txt(
         c,
-        '엔딩 도감 ${collectionEntries.length}/$known · ${discovered.isEmpty ? '아직 발견한 결말이 없습니다.' : discovered}',
+        ko
+            ? '엔딩 도감 ${collectionEntries.length}/$known · ${discovered.isEmpty ? '아직 발견한 결말이 없습니다.' : discovered}'
+            : 'Endings ${collectionEntries.length}/$known · ${discovered.isEmpty ? 'No endings discovered yet.' : discovered}',
         const Offset(48, 320),
         11,
         teal);
     txt(
         c,
-        '관계 도감 ${routeIds.length}/${companions.length} · ${routeNames.isEmpty ? '아직 발견한 동행이 없습니다.' : routeNames}',
+        ko
+            ? '관계 도감 ${routeIds.length}/${companions.length} · ${routeNames.isEmpty ? '아직 발견한 동행이 없습니다.' : routeNames}'
+            : 'Companion routes ${routeIds.length}/${companions.length} · ${routeNames.isEmpty ? 'No companion routes discovered yet.' : routeNames}',
         const Offset(48, 343),
         11,
         teal);
     trackerLine(c, const Offset(48, 368), maxWidth: 650);
     box(c, const Rect.fromLTWH(24, 390, 300, 64), teal,
         radius: 18, shadow: true);
-    txt(c, '저장 코드 복사', const Offset(100, 412), 16, Colors.white, bold: true);
+    txt(c, ko ? '저장 코드 복사' : 'Copy save code', const Offset(100, 412), 16,
+        Colors.white,
+        bold: true);
     box(c, const Rect.fromLTWH(365, 390, 300, 64), sun,
         radius: 18, shadow: true);
-    txt(c, '저장 코드 복원', const Offset(440, 412), 16, ink, bold: true);
-    txt(c, '← 홈으로', const Offset(24, 570), 14, teal, bold: true);
+    txt(c, ko ? '저장 코드 복원' : 'Restore save code', const Offset(440, 412), 16,
+        ink,
+        bold: true);
+    txt(c, ko ? '← 홈으로' : '← Back to home', const Offset(24, 570), 14, teal,
+        bold: true);
   }
 
   void ending(Canvas c) {

@@ -42,6 +42,7 @@ git config core.hooksPath .githooks
 ![Lumen character archive Golden](test/goldens/character-roster-en.png)
 ![루멘 환경 아틀라스 Golden](test/goldens/environment-atlas.png)
 ![Lumen environment atlas Golden](test/goldens/environment-atlas-en.png)
+![Canvas UI 상태 계약 Golden](test/goldens/ui-state-matrix.png)
 
 16막의 첫 canonical 사건 화면도 SSOT에서 결정론적으로 재생해 Golden으로 고정합니다.
 
@@ -83,9 +84,9 @@ git config core.hooksPath .githooks
 홈 화면 하단의 `캐릭터 도감`에서 루멘 주민 20종을 한 번에 확인할 수 있습니다. 도감은 [`story/story.jsonl`](story/story.jsonl)의 `characterArchive`를 [`lib/character_roster.dart`](lib/character_roster.dart)가 읽고, [`assets/lumen-character-roster.png`](assets/lumen-character-roster.png)의 5×4 독자 캐릭터 시트를 같은 `sheetIndex`로 연결해 기존 twilight / mist / sun / paper Canvas 언어 안에서 카드 그리드로 렌더링합니다. 노아·3명 동료의 서사 registry는 그대로 유지하고, 20종은 세계관 확장용 아카이브 캐릭터 디자인 레이어로 분리했습니다.
 
 홈 하단의 `환경 아틀라스`는 6개 장소를 기록관(기억/지혜), 온실(돌봄/공감), 시장(교환/은화), 바람길(횡단/용기), 관측소(발견/지혜), 채석장(자원/용기)으로 설명합니다. 각 환경은 `surface → affordance → memory`를 함께 가지며, 장소 발견 flag와 사건 선택의 의미를 같은 UI 카드와 Canvas 풍경으로 연결합니다. 상세 규칙은 [`docs/design-system.md`](docs/design-system.md)의 환경 게임디자인 시스템을 기준으로 합니다.
-한국어·English 도감 화면은 [`test/goldens/character-roster.png`](test/goldens/character-roster.png)와 [`test/goldens/character-roster-en.png`](test/goldens/character-roster-en.png)으로 고정되어 전체 Golden 증적은 67장입니다.
+한국어·English 도감 화면은 [`test/goldens/character-roster.png`](test/goldens/character-roster.png)와 [`test/goldens/character-roster-en.png`](test/goldens/character-roster-en.png)으로 고정되어 전체 Golden 증적은 68장입니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. 이 화면을 포함한 전체 Golden 증적은 67장입니다.
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태도 [`test/goldens/ui-state-matrix.png`](test/goldens/ui-state-matrix.png)로 고정하며, 전체 Golden 증적은 68장입니다.
 
 ### 성격 유형 캐릭터 시트
 
@@ -101,11 +102,13 @@ git config core.hooksPath .githooks
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다.
 
-대사의 확장 단위는 `key → locale catalog → Canvas`이며, 새로운 언어는 게임 규칙을 건드리지 않고 `story/locales/<locale>.jsonll`과 Golden만 추가합니다. 시각 방향은 기존 작품을 모사하지 않는 독자적 **황혼 운명 기록** 무드(`twilight / mist / sun / paper`)로 확장합니다.
+대사의 확장 단위는 `key → locale catalog → Canvas`이며, 새로운 언어는 게임 규칙을 건드리지 않고 `story/locales/<locale>.jsonl`과 Golden만 추가합니다. 시각 방향은 기존 작품을 모사하지 않는 독자적 **황혼 운명 기록** 무드(`twilight / mist / sun / paper`)로 확장합니다.
 
 ## 장기 설계 기준
 
 초안 이후 기능은 재활용 가능한 [Lumen Canvas Kit](docs/design-system.md)를 먼저 설계한 뒤 구현합니다. 토큰은 [`design/tokens.jsonl`](design/tokens.jsonl)과 [`lib/design_tokens.dart`](lib/design_tokens.dart)에 분리되어 있으며, 화면은 `stat_panel`, `choice_card`, `portrait_page`, `ending_panel` 조합으로 확장합니다.
+
+게임 UI 전체 조합은 [`docs/design-system.md`](docs/design-system.md)의 화면별 조합표와 [`lib/canvas_ui_kit.dart`](lib/canvas_ui_kit.dart)의 공통 상태 surface를 기준으로 합니다. 홈 HUD·활동 카드·진행 바·피로/조건 배지·선택 카드·화자 패널·피드백 배너·저장/복원·운명 기록·막 결산·엔딩 회고·도감·환경·사이드 장면까지 `idle / selected / disabled / success / danger` 상태를 같은 토큰으로 렌더링합니다.
 
 게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), 시나리오 표본은 [`docs/scenario-completeness.md`](docs/scenario-completeness.md), 정량 개발목표 원장은 [`docs/development-goals.md`](docs/development-goals.md)·[`docs/development-goals.jsonl`](docs/development-goals.jsonl), 결정 증명 계약은 [`docs/decision-proof-contract.jsonl`](docs/decision-proof-contract.jsonl), 기계 판정 계약은 [`docs/trilemma-contract.jsonl`](docs/trilemma-contract.jsonl), 트릴레마 폐쇄루프는 [`docs/trilemma.md`](docs/trilemma.md), CI 강제 검사는 [`tool/ci_gate.dart`](tool/ci_gate.dart), [`tool/trilemma_verdict.dart`](tool/trilemma_verdict.dart), [`tool/verify_game.dart`](tool/verify_game.dart), [`tool/verify_scenario_variants.dart`](tool/verify_scenario_variants.dart), [`tool/verify_decision_proof.dart`](tool/verify_decision_proof.dart), [`tool/verify_development_goals.dart`](tool/verify_development_goals.dart)와 [`tool/benchmark_game.dart`](tool/benchmark_game.dart)에 있습니다. 게이트는 완전성·순수성·성능을 축별로 기록하며, `build/trilemma-verdict.json`에서 하나라도 실패하면 전체 변경을 거부합니다. 완전성 점수가 95% 미만이거나 2,000개 scenario vector·실제 SSOT campaign benchmark·정량 목표 증적·결정 chain 증명이 실패해도 변경을 거부합니다. 각 막은 SSOT의 `reveal → pressureAxes → choiceWeeks → closureMilestone` 계약을 실제 사건·막 목표와 대조합니다. 동일한 일정 예산으로 지혜·공감 경로가 서로 다른 authored 엔딩과 유대를 만드는 순수성 회귀도 고정합니다. SSOT 검사 → 결정 증명 → 시나리오 경우의 수 열거 → 독창성 계약 → 트릴레마 계약 → 해시 매니페스트 → 정적 분석 → 상태/Golden 테스트 → 실제 SSOT campaign benchmark → 정량 개발목표 verdict → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
 

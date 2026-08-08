@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: aa392dd7002e8012364940d194bfe9283ea66d2f4ef8c0649f66e4ab3db6ab83 -->
+<!-- ssot-sha256: 7da011f786f4b688e9e09e1cbd586f49dcd2705022dadb4895d95c18dd34eb22 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -30,8 +30,8 @@
 | 엔딩 변형 | 18 | `endingVariants.length` · 핵심 엔딩별 실패/중립/관계 |
 | 사건 선택 | 94 | 모든 사건 choices 합계 |
 | 엔딩 | 6 | `endings.length` |
-| Canvas Golden | 67 | `test/goldens/*.png` |
-| 코드 ref | 51 | `codeRefs.length` |
+| Canvas Golden | 68 | `test/goldens/*.png` |
+| 코드 ref | 56 | `codeRefs.length` |
 | 이미지 ref | 5 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
