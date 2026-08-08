@@ -197,6 +197,58 @@ void refreshHashes(Map<String, dynamic> story) {
   }
 }
 
+void materializeCharacterContracts(Map<String, dynamic> story,
+    Map<String, dynamic> ko, Map<String, dynamic> en) {
+  final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
+  final frames = <String, int>{};
+  final characters = <Map<String, dynamic>>[
+    {
+      'id': 'noa',
+      'kind': 'hero',
+      'name': story['hero'],
+      'nameKey': 'hero.name',
+      'portraitAsset': 'assets/noa-sprite-sheet.png',
+      'portraitFrame': 0,
+    },
+  ];
+  ko['hero.name'] = story['hero'];
+  en['hero.name'] = 'Noa';
+  for (final companion in companions) {
+    final id = '${companion['id']}', frame = companion['portraitFrame'] as int;
+    frames[id] = frame;
+    companion['nameKey'] = 'companion.$id.name';
+    companion['portraitAsset'] ??= 'assets/lumen-personality-sheet.png';
+    ko[companion['nameKey']] = companion['name'];
+    en[companion['nameKey']] = switch (id) {
+      'lumi' => 'Lumi',
+      'bora' => 'Bora',
+      'taro' => 'Taro',
+      _ => '${companion['name']}',
+    };
+    characters.add({
+      'id': id,
+      'kind': 'companion',
+      'name': companion['name'],
+      'nameKey': companion['nameKey'],
+      'role': companion['role'],
+      'personality': companion['personality'],
+      'portraitAsset': companion['portraitAsset'],
+      'portraitFrame': frame,
+    });
+  }
+  for (final event in (story['events'] as List).cast<Map<String, dynamic>>()) {
+    for (final choice
+        in (event['choices'] as List).cast<Map<String, dynamic>>()) {
+      final id = '${choice['bondId']}';
+      choice['speakerId'] = id;
+      choice['speakerNameKey'] = 'companion.$id.name';
+      choice['speakerPortraitAsset'] = 'assets/lumen-personality-sheet.png';
+      choice['speakerPortraitFrame'] = frames[id] ?? 0;
+    }
+  }
+  story['characters'] = characters;
+}
+
 void main() {
   final storyFile = File('story/story.json');
   final koFile = File('story/locales/ko.json');
@@ -2017,10 +2069,15 @@ void main() {
   byId['gating']!['current'] =
       '16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings';
   byId['presentation']!['current'] =
-      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
+      '62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt';
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;
+
+  materializeCharacterContracts(story, ko, en);
+  story['dialogueMetrics']['minimumLocaleKeys'] = 455;
+  story['dialogueMetrics']['formula'] =
+      'catalog 455 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4; one 48-week route exposes at least 47 authored choice lines and 160 narrative units';
 
   refreshHashes(story);
   final encoder = const JsonEncoder.withIndent('  ');

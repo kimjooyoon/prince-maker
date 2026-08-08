@@ -6,15 +6,15 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "8c8d99c5a53257b087b15bc5eef521619b48ca388c02dc4a12d583e2b4c13588"
+      "sha256": "c399d84b15a736bdd64da490702e1396bfd1ba2637357bcee4358685a84b20e7"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
-      "sha256": "3dbc7871c37932958bd022af9b4c95db31fb907b6c5dd98d184659a178b1107f"
+      "sha256": "5b6338e2b1617b77fa6f4c7825f0be8c4ee7f17101017cc753a85ea189a65bd5"
     },
     {
       "ref": "lib/game_core.dart#SystemDecisionPolicy",
-      "sha256": "3dbc7871c37932958bd022af9b4c95db31fb907b6c5dd98d184659a178b1107f"
+      "sha256": "5b6338e2b1617b77fa6f4c7825f0be8c4ee7f17101017cc753a85ea189a65bd5"
     },
     {
       "ref": "lib/save_adapter.dart#conditional-platform-boundary",
@@ -50,7 +50,7 @@
     },
     {
       "ref": "lib/i18n.dart#LocaleCatalog/drawLocalizedEnding",
-      "sha256": "64ce25489ddd3e22f5886987c7cdd8aa5520b5dfc6f3405caacb6c79ec64503a"
+      "sha256": "75fe5d07a82f77951347529480edf72338550a61a5835c04ce0d4bcdd97cb71d"
     },
     {
       "ref": "tool/verify_scenario_variants.dart#scenario-case-enumerator",
@@ -110,7 +110,7 @@
     },
     {
       "ref": "test/chapter_golden_test.dart#all sixteen SSOT chapters have deterministic event Goldens",
-      "sha256": "e21d424be63e0aedadf99ac6f91347a94de556d20e99e94c1f4070a2018adba1"
+      "sha256": "800b8fe62985471e627721d65e35f148a1183efd012a1daa930ba745e673734b"
     },
     {
       "ref": "test/chapter_closure_golden_test.dart#all sixteen SSOT chapter closures have deterministic goal Goldens",
@@ -148,11 +148,11 @@
   "localeRefs": [
     {
       "ref": "story/locales/ko.json#catalog",
-      "sha256": "0ed32bcb8cd08c9735030959a821e6374df7982f1356d5f5717b71276a89bfe7"
+      "sha256": "3570749decc051d595ddffe6ddbdcef67c7784e8d32527de225d452c28dc45c5"
     },
     {
       "ref": "story/locales/en.json#catalog",
-      "sha256": "efd7c68a964dd0bab2818c2ab5cb41ba682c7b2dd2786903c3273f60e9f3f706"
+      "sha256": "bfd71932cbf4bf96ec222924f694fa841d4211f1446ef0e7eb5df52f368b0d8e"
     }
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 48주를 걷는다. 기록은 사람이 승인하지 않고 루멘의 규칙 엔진이 승인한다.",
@@ -194,11 +194,11 @@
   },
   "dialogueMetrics": {
     "locales": "ko,en",
-    "minimumLocaleKeys": 451,
+    "minimumLocaleKeys": 455,
     "minimumVisibleDialogueLines": 47,
     "minimumVisibleNarrativeUnits": 160,
     "authoredDialogueLines": 184,
-    "formula": "catalog 451 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32; one 48-week route exposes at least 47 authored choice lines and 160 narrative units"
+    "formula": "catalog 455 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32 + character names 4; one 48-week route exposes at least 47 authored choice lines and 160 narrative units"
   },
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
@@ -250,7 +250,7 @@
         "id": "presentation",
         "name": "장면 결산",
         "target": "도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다",
-        "current": "62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
+        "current": "62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / 94 speaker portrait bindings / character registry / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
         "evidence": "test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence"
       },
       {
@@ -852,7 +852,9 @@
       "greeting": "기록은 마음이 다시 길을 찾게 해.",
       "greetingKey": "companion.lumi.greeting",
       "epilogue": "루미는 노아의 기록 첫 장에 작은 별표를 남겼다.",
-      "epilogueKey": "companion.lumi.epilogue"
+      "epilogueKey": "companion.lumi.epilogue",
+      "nameKey": "companion.lumi.name",
+      "portraitAsset": "assets/lumen-personality-sheet.png"
     },
     {
       "id": "bora",
@@ -866,7 +868,9 @@
       "greeting": "함께 가꾼 시간은 쉽게 시들지 않아.",
       "greetingKey": "companion.bora.greeting",
       "epilogue": "보라는 노아와 함께 계절마다 새로운 씨앗을 심었다.",
-      "epilogueKey": "companion.bora.epilogue"
+      "epilogueKey": "companion.bora.epilogue",
+      "nameKey": "companion.bora.name",
+      "portraitAsset": "assets/lumen-personality-sheet.png"
     },
     {
       "id": "taro",
@@ -880,7 +884,9 @@
       "greeting": "망가진 길도 손을 대면 다시 이어져!",
       "greetingKey": "companion.taro.greeting",
       "epilogue": "타로는 노아를 데리고 아직 지도에 없는 길로 떠났다.",
-      "epilogueKey": "companion.taro.epilogue"
+      "epilogueKey": "companion.taro.epilogue",
+      "nameKey": "companion.taro.name",
+      "portraitAsset": "assets/lumen-personality-sheet.png"
     }
   ],
   "locations": [
@@ -1335,7 +1341,11 @@
           "bondId": "lumi",
           "bondDelta": 2,
           "line": "이름을 부르면 낯선 것도 조금 가까워져.",
-          "lineKey": "event.mail.lumi.line"
+          "lineKey": "event.mail.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "마을 게시판에 소식을 나눈다",
@@ -1361,7 +1371,11 @@
             }
           },
           "line": "좋은 소식은 나눌수록 오래 남아.",
-          "lineKey": "event.mail.bora.line"
+          "lineKey": "event.mail.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -1382,7 +1396,11 @@
           "bondId": "bora",
           "bondDelta": 4,
           "line": "작은 빛도 함께라면 길이 돼.",
-          "lineKey": "event.rain.bora.line"
+          "lineKey": "event.rain.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "별을 읽어 길을 찾는다",
@@ -1393,7 +1411,11 @@
           "bondId": "lumi",
           "bondDelta": 4,
           "line": "하늘은 아직 방향을 숨기지 않았어.",
-          "lineKey": "event.rain.lumi.line"
+          "lineKey": "event.rain.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -1414,7 +1436,11 @@
           "bondId": "lumi",
           "bondDelta": 2,
           "line": "빛이 머무는 각도를 알면, 금도 길이 될 수 있어.",
-          "lineKey": "event.greenhouse.lumi.line"
+          "lineKey": "event.greenhouse.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 천을 덧댄다",
@@ -1425,7 +1451,11 @@
           "bondId": "bora",
           "bondDelta": 2,
           "line": "함께 덧댄 자리는 오래 버틸 거야.",
-          "lineKey": "event.greenhouse.bora.line"
+          "lineKey": "event.greenhouse.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -1446,7 +1476,11 @@
           "bondId": "lumi",
           "bondDelta": 3,
           "line": "지도 가장자리에도 다음 길의 단서가 있어.",
-          "lineKey": "event.outing.market.lumi.line"
+          "lineKey": "event.outing.market.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 씨앗 장터를 둘러본다",
@@ -1457,7 +1491,11 @@
           "bondId": "bora",
           "bondDelta": 3,
           "line": "같은 씨앗을 고르면 내일의 정원도 닮아갈 거야.",
-          "lineKey": "event.outing.market.bora.line"
+          "lineKey": "event.outing.market.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -1480,7 +1518,11 @@
           "requiresStat": "용기",
           "requiresMin": 8,
           "line": "떨려도, 한 걸음은 내 것이야.",
-          "lineKey": "event.bridge.taro.line"
+          "lineKey": "event.bridge.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "모두의 속도를 맞춘다",
@@ -1491,7 +1533,11 @@
           "bondId": "bora",
           "bondDelta": 4,
           "line": "같은 박자로 걸으면 강도 덜 무서워.",
-          "lineKey": "event.bridge.bora.line"
+          "lineKey": "event.bridge.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -1512,7 +1558,11 @@
           "bondId": "lumi",
           "bondDelta": 2,
           "line": "간격을 기록하면 보이지 않는 길도 드러날 거야.",
-          "lineKey": "event.bell.lumi.line"
+          "lineKey": "event.bell.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "타로와 종이 있는 곳을 찾아간다",
@@ -1525,7 +1575,11 @@
           "requiresStat": "용기",
           "requiresMin": 8,
           "line": "들리는 곳까지 직접 가보자!",
-          "lineKey": "event.bell.taro.line"
+          "lineKey": "event.bell.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -1549,7 +1603,11 @@
           "rivalDelta": -1,
           "setsFlag": "windmill-repair",
           "line": "멈춘 바람도 손을 대면 다시 움직여.",
-          "lineKey": "event.windmill.taro.line"
+          "lineKey": "event.windmill.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "보라와 타로의 말을 함께 듣는다",
@@ -1563,7 +1621,11 @@
           "rivalDelta": 1,
           "setsFlag": "windmill-truce",
           "line": "서로의 바람을 들으면 다시 같은 길을 만들 수 있어.",
-          "lineKey": "event.windmill.bora.line"
+          "lineKey": "event.windmill.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -1584,7 +1646,11 @@
           "bondId": "lumi",
           "bondDelta": 4,
           "line": "정확한 말은 먼 곳에서도 길이 될 거야.",
-          "lineKey": "event.letter.lumi.line"
+          "lineKey": "event.letter.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "직접 찾아가겠다고 약속한다",
@@ -1597,7 +1663,11 @@
           "requiresStat": "용기",
           "requiresMin": 14,
           "line": "기다리게 하지 않을게. 내가 갈게!",
-          "lineKey": "event.letter.taro.line"
+          "lineKey": "event.letter.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -1618,7 +1688,11 @@
           "bondId": "bora",
           "bondDelta": 4,
           "line": "즐거운 날일수록 쉬어갈 자리도 필요해.",
-          "lineKey": "event.festival.bora.line"
+          "lineKey": "event.festival.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "새로운 무대를 직접 세운다",
@@ -1632,7 +1706,11 @@
           "requiresMin": 12,
           "requiresFlag": "windmill-repair",
           "line": "조금 삐뚤어도 우리 손으로 세워보자.",
-          "lineKey": "event.festival.taro.line"
+          "lineKey": "event.festival.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -1655,7 +1733,11 @@
           "requiresBondId": "taro",
           "requiresBondMin": 2,
           "line": "길의 이름은 걸은 뒤에 붙여도 늦지 않아.",
-          "lineKey": "event.outing.hill.taro.line"
+          "lineKey": "event.outing.hill.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "루미와 별빛 표식을 남긴다",
@@ -1666,7 +1748,11 @@
           "bondId": "lumi",
           "bondDelta": 3,
           "line": "돌아올 표식이 있으면 멀리 가도 길을 잃지 않아.",
-          "lineKey": "event.outing.hill.lumi.line"
+          "lineKey": "event.outing.hill.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -1688,7 +1774,11 @@
           "bondDelta": 3,
           "setsFlag": "first-ledger",
           "line": "결과만 적지 말고, 그 결과에 닿은 발걸음도 적자.",
-          "lineKey": "event.firstLedger.lumi.line"
+          "lineKey": "event.firstLedger.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 모두의 목소리를 장부에 남긴다",
@@ -1700,7 +1790,11 @@
           "bondDelta": 3,
           "setsFlag": "first-ledger",
           "line": "기록에 이름을 올리면 누구도 혼자 책임지지 않아도 돼.",
-          "lineKey": "event.firstLedger.bora.line"
+          "lineKey": "event.firstLedger.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -1721,7 +1815,11 @@
           "bondId": "bora",
           "bondDelta": 3,
           "line": "살리는 일에는 때로 자라지 않게 기다리는 용기도 필요해.",
-          "lineKey": "event.frostWindow.bora.line"
+          "lineKey": "event.frostWindow.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "타로와 얼음 틀을 고친다",
@@ -1732,7 +1830,11 @@
           "bondId": "taro",
           "bondDelta": 3,
           "line": "멈춘 장치도 한 조각씩 보면 다시 움직일 수 있어.",
-          "lineKey": "event.frostWindow.taro.line"
+          "lineKey": "event.frostWindow.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -1753,7 +1855,11 @@
           "bondId": "taro",
           "bondDelta": 3,
           "line": "빈자리를 두려워하지 말고 먼저 물어보자.",
-          "lineKey": "event.winterMarket.taro.line"
+          "lineKey": "event.winterMarket.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "루미와 기다림의 시간을 기록한다",
@@ -1764,7 +1870,11 @@
           "bondId": "lumi",
           "bondDelta": 3,
           "line": "기다린 시간도 누군가 돌아올 수 있게 하는 지도야.",
-          "lineKey": "event.winterMarket.lumi.line"
+          "lineKey": "event.winterMarket.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -1786,7 +1896,11 @@
           "bondDelta": 3,
           "setsFlag": "seed-vault",
           "line": "열쇠보다 먼저, 누구나 확인할 수 있는 조건을 만들자.",
-          "lineKey": "event.seedVault.lumi.line"
+          "lineKey": "event.seedVault.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 저장고의 씨앗을 나눈다",
@@ -1798,7 +1912,11 @@
           "bondDelta": 3,
           "setsFlag": "seed-vault",
           "line": "나눌 기준을 함께 정하면 씨앗은 한 사람의 것이 아니야.",
-          "lineKey": "event.seedVault.bora.line"
+          "lineKey": "event.seedVault.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -1819,7 +1937,11 @@
           "bondId": "bora",
           "bondDelta": 3,
           "line": "도움을 받은 이름을 기억해야 다음 도움도 공평해져.",
-          "lineKey": "event.returningWater.bora.line"
+          "lineKey": "event.returningWater.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "타로와 답장의 길을 직접 확인한다",
@@ -1830,7 +1952,11 @@
           "bondId": "taro",
           "bondDelta": 3,
           "line": "편지가 도착했다면 그 길도 다시 걸을 수 있어.",
-          "lineKey": "event.returningWater.taro.line"
+          "lineKey": "event.returningWater.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -1853,7 +1979,11 @@
           "rivalId": "bora",
           "rivalDelta": -1,
           "line": "잘못 맞춘 나사는 빼고, 다시 맞추면 돼.",
-          "lineKey": "event.sharedRepair.taro.line"
+          "lineKey": "event.sharedRepair.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "루미와 두 설계의 차이를 남긴다",
@@ -1866,7 +1996,11 @@
           "rivalId": "bora",
           "rivalDelta": 1,
           "line": "다른 설계는 오류가 아니라 다음 선택의 근거가 될 수 있어.",
-          "lineKey": "event.sharedRepair.lumi.line"
+          "lineKey": "event.sharedRepair.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -1887,7 +2021,11 @@
           "bondId": "lumi",
           "bondDelta": 3,
           "line": "순서를 모두가 볼 수 있으면 기다림도 약속이 돼.",
-          "lineKey": "event.riverCouncil.lumi.line"
+          "lineKey": "event.riverCouncil.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 가장 급한 집부터 살핀다",
@@ -1898,7 +2036,11 @@
           "bondId": "bora",
           "bondDelta": 3,
           "line": "같은 규칙도 지금 가장 목마른 사람을 볼 수 있어야 해.",
-          "lineKey": "event.riverCouncil.bora.line"
+          "lineKey": "event.riverCouncil.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -1920,7 +2062,11 @@
           "bondDelta": 3,
           "requiresFlag": "first-ledger",
           "line": "모르는 것을 함께 말할 수 있어야 기록이 살아 있어.",
-          "lineKey": "event.openRecord.bora.line"
+          "lineKey": "event.openRecord.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "타로와 빈칸까지 표시한 지도를 배포한다",
@@ -1932,7 +2078,11 @@
           "bondDelta": 3,
           "requiresFlag": "first-ledger",
           "line": "모두가 빈칸을 보면 다음 길은 혼자 찾지 않아도 돼.",
-          "lineKey": "event.openRecord.taro.line"
+          "lineKey": "event.openRecord.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -1953,7 +2103,11 @@
           "bondId": "taro",
           "bondDelta": 3,
           "line": "지도는 발밑의 돌과 만날 때 비로소 길이 돼.",
-          "lineKey": "event.threeMaps.taro.line"
+          "lineKey": "event.threeMaps.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "루미와 겹친 선의 공통점을 찾는다",
@@ -1964,7 +2118,11 @@
           "bondId": "lumi",
           "bondDelta": 3,
           "line": "다른 선이 만나는 곳에는 함께 확인할 이유가 있어.",
-          "lineKey": "event.threeMaps.lumi.line"
+          "lineKey": "event.threeMaps.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -1985,7 +2143,11 @@
           "bondId": "lumi",
           "bondDelta": 3,
           "line": "정답보다 먼저, 서로 같은 별을 보고 있는지 확인하자.",
-          "lineKey": "event.disagreement.lumi.line"
+          "lineKey": "event.disagreement.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 가장 작은 합의를 실험한다",
@@ -1996,7 +2158,11 @@
           "bondId": "bora",
           "bondDelta": 3,
           "line": "큰 약속은 작은 합의가 안전하게 이어질 때 자라나.",
-          "lineKey": "event.disagreement.bora.line"
+          "lineKey": "event.disagreement.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -2017,7 +2183,11 @@
           "bondId": "bora",
           "bondDelta": 3,
           "line": "떠남이 가능하려면 남아 있는 자리도 안전해야 해.",
-          "lineKey": "event.horizonMarket.bora.line"
+          "lineKey": "event.horizonMarket.bora.line",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "타로와 새 항로의 첫 표식을 세운다",
@@ -2028,7 +2198,11 @@
           "bondId": "taro",
           "bondDelta": 3,
           "line": "첫 표식은 목적지가 아니라 다시 찾을 수 있다는 약속이야.",
-          "lineKey": "event.horizonMarket.taro.line"
+          "lineKey": "event.horizonMarket.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -2050,7 +2224,11 @@
           "bondDelta": 3,
           "setsFlag": "horizon-mark",
           "line": "내가 없어도 다시 찾을 수 있는 길이어야 해.",
-          "lineKey": "event.lastMarker.taro.line"
+          "lineKey": "event.lastMarker.taro.line",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "루미와 마지막 근거를 별자리로 남긴다",
@@ -2062,7 +2240,11 @@
           "bondDelta": 3,
           "setsFlag": "horizon-mark",
           "line": "마지막 기록은 끝맺음이 아니라 다음 검증의 시작이야.",
-          "lineKey": "event.lastMarker.lumi.line"
+          "lineKey": "event.lastMarker.lumi.line",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -2086,7 +2268,11 @@
           "line": "첫 지평은 결론이 아니라 다시 읽을 수 있는 방향이어야 해.",
           "lineKey": "event.firstHorizon.lumi.line",
           "lineEn": "The first horizon should be a direction that can be read again.",
-          "setsFlag": "first-horizon"
+          "setsFlag": "first-horizon",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "타로와 강 건너 표식을 세운다",
@@ -2100,7 +2286,11 @@
           "line": "다음 사람의 발이 닿을 곳을 먼저 약속하자.",
           "lineKey": "event.firstHorizon.taro.line",
           "lineEn": "Let us promise where the next traveller can place a foot.",
-          "setsFlag": "first-horizon"
+          "setsFlag": "first-horizon",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -2125,7 +2315,11 @@
           "lineKey": "event.seedReturn.lumi.line",
           "lineEn": "Even a gift needs its conditions read to last.",
           "requiresFlag": "first-ledger",
-          "setsFlag": "return-debt"
+          "setsFlag": "return-debt",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 씨앗을 마을에 나눈다",
@@ -2139,7 +2333,11 @@
           "line": "받은 것을 나누면 빚은 함께 지는 약속이 돼.",
           "lineKey": "event.seedReturn.bora.line",
           "lineEn": "When we share what we received, debt becomes a promise we carry together.",
-          "setsFlag": "return-seed"
+          "setsFlag": "return-seed",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -2165,7 +2363,11 @@
           "lineEn": "An empty field is not a failure; it is an untested place.",
           "requiresStat": "용기",
           "requiresMin": 20,
-          "setsFlag": "waterway"
+          "setsFlag": "waterway",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "보라와 먼저 머물 사람을 묻는다",
@@ -2180,7 +2382,11 @@
           "lineKey": "event.emptyField.bora.line",
           "lineEn": "Before the land, we need to hear the people who will live here.",
           "rivalId": "taro",
-          "rivalDelta": -1
+          "rivalDelta": -1,
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -2205,7 +2411,11 @@
           "lineKey": "event.witness.lumi.line",
           "lineEn": "Let us record the hands that carried the work, not one person’s credit.",
           "requiresFlag": "return-debt",
-          "setsFlag": "witness-ledger"
+          "setsFlag": "witness-ledger",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 함께 첫 수확을 나눈다",
@@ -2220,7 +2430,11 @@
           "lineKey": "event.witness.bora.line",
           "lineEn": "Even when memories differ, a shared taste can become the next promise.",
           "requiresFlag": "return-seed",
-          "setsFlag": "witness-garden"
+          "setsFlag": "witness-garden",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -2245,7 +2459,11 @@
           "lineKey": "event.receipt.lumi.line",
           "lineEn": "The empty blocks must be visible for the next calculation to be honest.",
           "requiresFlag": "first-ledger",
-          "setsFlag": "labor-audit"
+          "setsFlag": "labor-audit",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "타로와 직접 작업량을 다시 잰다",
@@ -2260,7 +2478,11 @@
           "lineKey": "event.receipt.taro.line",
           "lineEn": "A wrong calculation can be checked again by hand.",
           "rivalId": "lumi",
-          "rivalDelta": -1
+          "rivalDelta": -1,
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -2284,7 +2506,11 @@
           "line": "같은 양을 나누는 것과 같은 마음으로 보는 것은 다를 수 있어.",
           "lineKey": "event.emptyCart.bora.line",
           "lineEn": "Equal portions and equal care are not always the same.",
-          "setsFlag": "need-first"
+          "setsFlag": "need-first",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "타로와 다음 수레를 직접 부른다",
@@ -2298,7 +2524,11 @@
           "line": "이번에 부족했다면 다음 길을 지금 만들자.",
           "lineKey": "event.emptyCart.taro.line",
           "lineEn": "If this was not enough, let us make the next road now.",
-          "setsFlag": "next-cart"
+          "setsFlag": "next-cart",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -2322,7 +2552,11 @@
           "line": "보이지 않는 일도 하루를 바꾼다면 기록되어야 해.",
           "lineKey": "event.sharedLabor.bora.line",
           "lineEn": "If unseen work changes the day, it deserves a place in the record.",
-          "setsFlag": "care-counted"
+          "setsFlag": "care-counted",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "루미와 늦은 손의 패턴을 찾는다",
@@ -2336,7 +2570,11 @@
           "line": "반복되는 피로에는 개인의 약함이 아닌 규칙이 있을 수 있어.",
           "lineKey": "event.sharedLabor.lumi.line",
           "lineEn": "Repeated fatigue may reveal a rule, not a person’s weakness.",
-          "requiresFlag": "labor-audit"
+          "requiresFlag": "labor-audit",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -2360,7 +2598,11 @@
           "line": "기억은 완벽하지 않아도 다시 찾을 표식이 필요해.",
           "lineKey": "event.memoryHouse.lumi.line",
           "lineEn": "Memory need not be perfect, but it needs a marker to be found again.",
-          "setsFlag": "memory-house"
+          "setsFlag": "memory-house",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 상자의 주인을 기다린다",
@@ -2374,7 +2616,11 @@
           "line": "이름을 대신 정하지 않는 것도 기억을 돌보는 일이야.",
           "lineKey": "event.memoryHouse.bora.line",
           "lineEn": "Not deciding a name for someone is also a way to care for memory.",
-          "setsFlag": "memory-table"
+          "setsFlag": "memory-table",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -2398,7 +2644,11 @@
           "line": "지워진 자리에 내 이름을 덧쓰지 말고 먼저 물어보자.",
           "lineKey": "event.lostName.taro.line",
           "lineEn": "Let us ask before writing our name over an erased place.",
-          "requiresFlag": "memory-house"
+          "requiresFlag": "memory-house",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "보라와 빈 표식을 그대로 보존한다",
@@ -2412,7 +2662,11 @@
           "line": "빈칸도 누군가 돌아올 수 있는 자리로 남겨 두자.",
           "lineKey": "event.lostName.bora.line",
           "lineEn": "Let the blank remain a place someone can return to.",
-          "setsFlag": "blank-name"
+          "setsFlag": "blank-name",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -2438,7 +2692,11 @@
           "lineEn": "When light is not owned, judgements can be checked together.",
           "requiresStat": "지혜",
           "requiresMin": 30,
-          "setsFlag": "open-reading"
+          "setsFlag": "open-reading",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "타로와 등불을 여러 곳에 나눈다",
@@ -2452,7 +2710,11 @@
           "line": "한 등불이 꺼져도 길 전체가 어두워지지 않게 하자.",
           "lineKey": "event.archiveLantern.taro.line",
           "lineEn": "Let one dark lantern not darken the whole road.",
-          "setsFlag": "many-lanterns"
+          "setsFlag": "many-lanterns",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -2477,7 +2739,11 @@
           "lineKey": "event.shadowLetter.taro.line",
           "lineEn": "We must see who our rule pushed aside.",
           "requiresFlag": "waterway",
-          "setsFlag": "far-shore"
+          "setsFlag": "far-shore",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "루미와 규칙의 전달 경로를 추적한다",
@@ -2491,7 +2757,11 @@
           "line": "좋은 의도도 전달되는 동안 다른 뜻이 될 수 있어.",
           "lineKey": "event.shadowLetter.lumi.line",
           "lineEn": "Good intentions can become something else while travelling.",
-          "setsFlag": "rule-shadow"
+          "setsFlag": "rule-shadow",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -2515,7 +2785,11 @@
           "line": "두 물결이 만나는 곳에는 먼저 마실 사람도 함께 정해야 해.",
           "lineKey": "event.tideCrossing.bora.line",
           "lineEn": "Where currents meet, we must decide together who drinks first.",
-          "setsFlag": "shared-water"
+          "setsFlag": "shared-water",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "타로와 수문을 다시 설계한다",
@@ -2531,7 +2805,11 @@
           "lineEn": "To change a flow, we must find the blockage by hand.",
           "rivalId": "bora",
           "rivalDelta": -1,
-          "setsFlag": "sluice-plan"
+          "setsFlag": "sluice-plan",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -2556,7 +2834,11 @@
           "lineKey": "event.returningSeed.bora.line",
           "lineEn": "What returns is not finished; it is someone else’s beginning.",
           "requiresFlag": "witness-garden",
-          "setsFlag": "returning-garden"
+          "setsFlag": "returning-garden",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "루미와 씨앗의 이동을 지도에 남긴다",
@@ -2570,7 +2852,11 @@
           "line": "순환을 보이게 하면 다음 약속도 다시 확인할 수 있어.",
           "lineKey": "event.returningSeed.lumi.line",
           "lineEn": "When the cycle is visible, the next promise can be checked again.",
-          "setsFlag": "seed-route"
+          "setsFlag": "seed-route",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -2595,7 +2881,11 @@
           "lineKey": "event.blankMap.lumi.line",
           "lineEn": "A mark of not knowing is an exact starting point for the next judgement.",
           "requiresFlag": "first-ledger",
-          "setsFlag": "blank-map"
+          "setsFlag": "blank-map",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "타로와 빈칸까지 직접 걸어 본다",
@@ -2610,7 +2900,11 @@
           "lineKey": "event.blankMap.taro.line",
           "lineEn": "A road may begin where the map ends.",
           "requiresFlag": "horizon-mark",
-          "setsFlag": "blank-walk"
+          "setsFlag": "blank-walk",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -2636,7 +2930,11 @@
           "lineEn": "The courage to leave needs a promise to return and check.",
           "requiresStat": "용기",
           "requiresMin": 35,
-          "setsFlag": "return-marker"
+          "setsFlag": "return-marker",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "보라와 남는 사람의 문을 연다",
@@ -2650,7 +2948,11 @@
           "line": "모든 사람이 떠날 수 없다면 남는 선택도 길이어야 해.",
           "lineKey": "event.northGate.bora.line",
           "lineEn": "If not everyone can leave, staying must also be a road.",
-          "setsFlag": "stay-gate"
+          "setsFlag": "stay-gate",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -2674,7 +2976,11 @@
           "line": "나침반보다 먼저, 나침반을 읽는 법을 함께 보여 주자.",
           "lineKey": "event.sharedCompass.lumi.line",
           "lineEn": "Before the compass, let us show everyone how to read it.",
-          "setsFlag": "public-map"
+          "setsFlag": "public-map",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 서로 다른 북쪽을 들어 본다",
@@ -2689,7 +2995,11 @@
           "lineKey": "event.sharedCompass.bora.line",
           "lineEn": "We can stand together without looking at the same place.",
           "rivalId": "lumi",
-          "rivalDelta": -1
+          "rivalDelta": -1,
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -2714,7 +3024,11 @@
           "lineKey": "event.councilNight.bora.line",
           "lineEn": "Before pleasing everyone, let us find one sentence we can keep together.",
           "requiresFlag": "first-ledger",
-          "setsFlag": "small-agreement"
+          "setsFlag": "small-agreement",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "타로와 결정권을 분산한다",
@@ -2728,7 +3042,11 @@
           "line": "책임을 나누려면 판단할 자리도 나눠야 해.",
           "lineKey": "event.councilNight.taro.line",
           "lineEn": "To share responsibility, we must share the place of judgement.",
-          "setsFlag": "shared-rule"
+          "setsFlag": "shared-rule",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -2752,7 +3070,11 @@
           "line": "답을 재촉하지 않는 시간도 돌봄의 규칙에 넣자.",
           "lineKey": "event.minorityVoice.bora.line",
           "lineEn": "Let time without an answer be part of the rule of care.",
-          "setsFlag": "quiet-voice"
+          "setsFlag": "quiet-voice",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "루미와 침묵이 생긴 순간을 기록한다",
@@ -2766,7 +3088,11 @@
           "line": "침묵의 원인을 모르면 합의의 숫자도 믿을 수 없어.",
           "lineKey": "event.minorityVoice.lumi.line",
           "lineEn": "Without its cause, the number of an agreement cannot be trusted.",
-          "setsFlag": "silence-record"
+          "setsFlag": "silence-record",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -2791,7 +3117,11 @@
           "lineKey": "event.publicRule.lumi.line",
           "lineEn": "A rule outlives people only when anyone can verify it again.",
           "requiresFlag": "first-ledger",
-          "setsFlag": "public-rule"
+          "setsFlag": "public-rule",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "타로와 규칙을 현장에서 시험한다",
@@ -2805,7 +3135,11 @@
           "line": "벽의 문장은 발밑의 돌을 만날 때 진짜가 돼.",
           "lineKey": "event.publicRule.taro.line",
           "lineEn": "A sentence on a wall becomes real when it meets stones underfoot.",
-          "setsFlag": "field-rule"
+          "setsFlag": "field-rule",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         }
       ]
     },
@@ -2830,7 +3164,11 @@
           "lineKey": "event.seedFestival.bora.line",
           "lineEn": "The best way to remember a beginning is to name the next people too.",
           "requiresFlag": "witness-garden",
-          "setsFlag": "flower-names"
+          "setsFlag": "flower-names",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "루미와 발아의 조건을 공개한다",
@@ -2844,7 +3182,11 @@
           "line": "기적처럼 보인 일도 조건을 나누면 다시 만날 수 있어.",
           "lineKey": "event.seedFestival.lumi.line",
           "lineEn": "What looks like a miracle can happen again when its conditions are shared.",
-          "setsFlag": "flower-record"
+          "setsFlag": "flower-record",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -2868,7 +3210,11 @@
           "line": "가볍게 떠나는 것과 안전하게 떠나는 것은 함께 계산해야 해.",
           "lineKey": "event.farewellMarket.taro.line",
           "lineEn": "Leaving lightly and leaving safely must be calculated together.",
-          "setsFlag": "departure-pack"
+          "setsFlag": "departure-pack",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "보라와 남은 물건의 새 주인을 찾는다",
@@ -2882,7 +3228,11 @@
           "line": "떠난 자리도 누군가 다시 살아갈 수 있는 자리로 남겨 두자.",
           "lineKey": "event.farewellMarket.bora.line",
           "lineEn": "Let the place someone leaves remain a place another can live.",
-          "setsFlag": "left-behind"
+          "setsFlag": "left-behind",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -2907,7 +3257,11 @@
           "lineKey": "event.gardenOfNames.bora.line",
           "lineEn": "Calling a name becomes warmer when it waits for permission.",
           "requiresFlag": "memory-table",
-          "setsFlag": "named-garden"
+          "setsFlag": "named-garden",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         },
         {
           "label": "루미와 이름이 바뀐 기록을 남긴다",
@@ -2921,7 +3275,11 @@
           "line": "변한 이름까지 남겨야 한 사람을 한 모습에 가두지 않아.",
           "lineKey": "event.gardenOfNames.lumi.line",
           "lineEn": "Recording changed names keeps a person from one frozen shape.",
-          "setsFlag": "name-history"
+          "setsFlag": "name-history",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -2946,7 +3304,11 @@
           "lineKey": "event.nextTraveller.taro.line",
           "lineEn": "A safe road is not risk-free; it is a road whose risks are shared.",
           "requiresFlag": "horizon-mark",
-          "setsFlag": "risk-shared"
+          "setsFlag": "risk-shared",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "루미와 읽는 순서만 건넨다",
@@ -2960,7 +3322,11 @@
           "line": "답을 건네는 대신 다시 판단할 순서를 건네자.",
           "lineKey": "event.nextTraveller.lumi.line",
           "lineEn": "Instead of giving an answer, give the order for judging again.",
-          "setsFlag": "reading-order"
+          "setsFlag": "reading-order",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     },
@@ -2985,7 +3351,11 @@
           "lineKey": "event.handoffLedger.lumi.line",
           "lineEn": "For the next person to check again, they need where we were wrong.",
           "requiresFlag": "public-rule",
-          "setsFlag": "handoff-open"
+          "setsFlag": "handoff-open",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         },
         {
           "label": "보라와 장부를 읽을 사람을 초대한다",
@@ -2999,7 +3369,11 @@
           "line": "장부가 혼자 닫히지 않도록 읽는 사람을 함께 남기자.",
           "lineKey": "event.handoffLedger.bora.line",
           "lineEn": "Let us leave readers with the ledger so it never closes alone.",
-          "setsFlag": "handoff-circle"
+          "setsFlag": "handoff-circle",
+          "speakerId": "bora",
+          "speakerNameKey": "companion.bora.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 1
         }
       ]
     },
@@ -3023,7 +3397,11 @@
           "line": "내가 없어도 다시 찾을 수 있다면, 이 길은 끝나지 않아.",
           "lineKey": "event.finalHorizon.taro.line",
           "lineEn": "If it can be found without me, this road does not end.",
-          "setsFlag": "final-marker"
+          "setsFlag": "final-marker",
+          "speakerId": "taro",
+          "speakerNameKey": "companion.taro.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 2
         },
         {
           "label": "루미와 첫 질문을 남긴다",
@@ -3038,7 +3416,11 @@
           "lineKey": "event.finalHorizon.lumi.line",
           "lineEn": "A good record keeps the next question alive longer than the last answer.",
           "requiresFlag": "public-map",
-          "setsFlag": "final-question"
+          "setsFlag": "final-question",
+          "speakerId": "lumi",
+          "speakerNameKey": "companion.lumi.name",
+          "speakerPortraitAsset": "assets/lumen-personality-sheet.png",
+          "speakerPortraitFrame": 0
         }
       ]
     }
@@ -3325,5 +3707,45 @@
       "test/purity_integration_test.dart#same-schedule-budget-outcomes",
       "test/golden_test.dart#event choice shows a separated result banner"
     ]
-  }
+  },
+  "characters": [
+    {
+      "id": "noa",
+      "kind": "hero",
+      "name": "노아",
+      "nameKey": "hero.name",
+      "portraitAsset": "assets/noa-sprite-sheet.png",
+      "portraitFrame": 0
+    },
+    {
+      "id": "lumi",
+      "kind": "companion",
+      "name": "루미",
+      "nameKey": "companion.lumi.name",
+      "role": "별자리 기록관",
+      "personality": "quiet",
+      "portraitAsset": "assets/lumen-personality-sheet.png",
+      "portraitFrame": 0
+    },
+    {
+      "id": "bora",
+      "kind": "companion",
+      "name": "보라",
+      "nameKey": "companion.bora.name",
+      "role": "온실의 돌봄지기",
+      "personality": "kind",
+      "portraitAsset": "assets/lumen-personality-sheet.png",
+      "portraitFrame": 1
+    },
+    {
+      "id": "taro",
+      "kind": "companion",
+      "name": "타로",
+      "nameKey": "companion.taro.name",
+      "role": "바람길 수리공",
+      "personality": "bold",
+      "portraitAsset": "assets/lumen-personality-sheet.png",
+      "portraitFrame": 2
+    }
+  ]
 }

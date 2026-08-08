@@ -457,5 +457,9 @@
   "ui.closure.keepGrowing": "KEEP GROWING",
   "ui.closure.question": "This chapter's question",
   "ui.closure.nextPage": "Next chapter →",
-  "ui.closure.link": "The result is linked to the system receipt and next choice."
+  "ui.closure.link": "The result is linked to the system receipt and next choice.",
+  "hero.name": "Noa",
+  "companion.lumi.name": "Lumi",
+  "companion.bora.name": "Bora",
+  "companion.taro.name": "Taro"
 }

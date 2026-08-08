@@ -6,6 +6,7 @@ import 'decision_proof.dart';
 typedef Entity = int;
 
 abstract interface class StoryPort {
+  List<Map<String, dynamic>> get characters;
   List<Map<String, dynamic>> get events;
   List<Map<String, dynamic>> get endings;
   List<Map<String, dynamic>> get personalities;
@@ -30,6 +31,9 @@ abstract interface class SavePort {
 class JsonStoryAdapter implements StoryPort {
   JsonStoryAdapter(this.source);
   final Map<String, dynamic> source;
+  @override
+  List<Map<String, dynamic>> get characters =>
+      (source['characters'] as List? ?? []).cast<Map<String, dynamic>>();
   @override
   List<Map<String, dynamic>> get events =>
       (source['events'] as List? ?? []).cast<Map<String, dynamic>>();

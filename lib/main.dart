@@ -694,6 +694,19 @@ class Scene extends CustomPainter {
     chibi(c, d, n);
   }
 
+  void dialoguePortrait(Canvas c, Rect d, Map choice) {
+    final sheet = personaImage, n = speakerPortraitFrame(s, choice);
+    if (sheet != null) {
+      final w = sheet.width / 3.0;
+      c.drawImageRect(
+          sheet, Rect.fromLTWH(n * w, 0, w, sheet.height * .9), d, Paint());
+    } else {
+      chibi(c, d, n);
+    }
+    txt(c, localizedSpeaker(s, choice), Offset(d.left, d.bottom + 4), 9, teal,
+        bold: true, maxWidth: d.width);
+  }
+
   void chibi(Canvas c, Rect d, int n) {
     final p = Paint()..color = const Color(0xffffd9c0),
         cx = d.center.dx,
@@ -768,7 +781,7 @@ class Scene extends CustomPainter {
     if (page == 3) {
       if (activeLocale == 'ko') event(c);
       drawLocaleToggle(c, activeLocale, activeCatalog);
-      drawLocalizedEvent(c, s, eventIndex, stats, bonds);
+      drawLocalizedEvent(c, s, eventIndex, stats, bonds, flags, personaImage);
       c.restore();
       return;
     }
@@ -1163,9 +1176,9 @@ class Scene extends CustomPainter {
       txt(c, '선택 ${i + 1}', Offset(x + 22, 295), 14,
           locked ? ink.withValues(alpha: .45) : teal,
           bold: true);
-      txt(c, ch['label'], Offset(x + 22, 340), 19,
+      txt(c, ch['label'], Offset(x + 22, 340), 17,
           locked ? ink.withValues(alpha: .45) : ink,
-          bold: true);
+          bold: true, maxWidth: 190);
       txt(
           c,
           locked
@@ -1173,7 +1186,9 @@ class Scene extends CustomPainter {
               : '${ch['stat']} +${ch['delta']}   은화 ${ch['coins']}   유대 +${(ch['bondDelta'] as int?) ?? 0}$relation$legacyText',
           Offset(x + 22, 400),
           13,
-          locked ? ink.withValues(alpha: .45) : ink.withValues(alpha: .6));
+          locked ? ink.withValues(alpha: .45) : ink.withValues(alpha: .6),
+          maxWidth: 190);
+      dialoguePortrait(c, Rect.fromLTWH(x + 230, 300, 82, 102), ch);
       drawChoiceEcho(c, ch, Offset(x + 22, 435));
     }
     txt(
