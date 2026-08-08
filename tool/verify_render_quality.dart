@@ -80,6 +80,8 @@ void main() {
       'all sixteen SSOT chapter closures have deterministic goal Goldens');
   requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
       'goldens/chapter-closure-\$id.png');
+  requireText('lib/main.dart', main, 'chapterClosure(c)');
+  requireText('lib/main.dart', main, 'page == 6');
   final goldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()

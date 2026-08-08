@@ -6,7 +6,7 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "d26fb892d7cfedfb142f5c471024cfdc1fb408f6e3a16693141acefbf478b447"
+      "sha256": "8c8d99c5a53257b087b15bc5eef521619b48ca388c02dc4a12d583e2b4c13588"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
@@ -86,7 +86,7 @@
     },
     {
       "ref": "tool/verify_render_quality.dart#render-quality-preconditions",
-      "sha256": "7899e73bf320a46588ef04ca32cb23c9912dd2aa81579c575a407677a9c49ca2"
+      "sha256": "c9397fbf3624c3d89d628e8209691f291d0357cf2c9c8b72d4c2bb9a3f8088b3"
     },
     {
       "ref": "tool/generate_development_goals.dart#buildDocument",
@@ -114,7 +114,7 @@
     },
     {
       "ref": "test/chapter_closure_golden_test.dart#all sixteen SSOT chapter closures have deterministic goal Goldens",
-      "sha256": "4c898108451fa09e47c475e0df22d3cff7565108ca59773d31f65ff7539d3a7f"
+      "sha256": "d9442355108b525c1e99e54b130796728b919fc24438a27146e1c487c6443256"
     },
     {
       "ref": "tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate",
@@ -148,11 +148,11 @@
   "localeRefs": [
     {
       "ref": "story/locales/ko.json#catalog",
-      "sha256": "dda8e2d0235ba3c9f2b6a6a06fe091bbb6d5a761e573873561013c41d8e98955"
+      "sha256": "0ed32bcb8cd08c9735030959a821e6374df7982f1356d5f5717b71276a89bfe7"
     },
     {
       "ref": "story/locales/en.json#catalog",
-      "sha256": "52e5a51b51cd82bb453e90fc6c85cba59193c1fd7f0c70f61387b63189f568db"
+      "sha256": "efd7c68a964dd0bab2818c2ab5cb41ba682c7b2dd2786903c3273f60e9f3f706"
     }
   ],
   "premise": "왕좌가 아닌, 스스로 선택한 내일을 향해 48주를 걷는다. 기록은 사람이 승인하지 않고 루멘의 규칙 엔진이 승인한다.",
@@ -194,11 +194,11 @@
   },
   "dialogueMetrics": {
     "locales": "ko,en",
-    "minimumLocaleKeys": 419,
+    "minimumLocaleKeys": 451,
     "minimumVisibleDialogueLines": 47,
     "minimumVisibleNarrativeUnits": 160,
     "authoredDialogueLines": 184,
-    "formula": "catalog 419 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15; one 48-week route exposes at least 47 authored choice lines and 160 narrative units"
+    "formula": "catalog 451 = base UI/dialogue catalog 398 + fate detail 6 + ledger UI 15 + chapter outcome detail 32; one 48-week route exposes at least 47 authored choice lines and 160 narrative units"
   },
   "scenarioCompleteness": {
     "schema": "life-sim-scenario-v1",
@@ -250,7 +250,7 @@
         "id": "presentation",
         "name": "장면 결산",
         "target": "도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다",
-        "current": "62 Goldens including 16 canonical chapter event views and 16 chapter closure views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
+        "current": "62 Goldens including 16 canonical chapter event views and 16 actual chapter closure Canvas views / ko+en catalogs / 16 chapter beats / canonical week-4 event / canonical week-48 handoff event / outing choice / relationship, memory and legacy gates / butterfly ledger / route atlas / three companion quests and epilogues / system decision receipt",
         "evidence": "test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence"
       },
       {
@@ -957,7 +957,11 @@
       "min": 8,
       "coins": 3,
       "pass": "첫 별씨앗이 싹텄다.",
-      "fail": "별씨앗은 아직 잠들어 있다."
+      "fail": "별씨앗은 아직 잠들어 있다.",
+      "passKey": "milestone.spring.pass",
+      "failKey": "milestone.spring.fail",
+      "passEn": "The first star seed sprouted.",
+      "failEn": "The star seed is still asleep."
     },
     {
       "id": "summer",
@@ -968,7 +972,11 @@
       "min": 12,
       "coins": 4,
       "pass": "서로의 속도가 하나의 다리가 되었다.",
-      "fail": "다리는 아직 흔들리지만 다시 건널 수 있다."
+      "fail": "다리는 아직 흔들리지만 다시 건널 수 있다.",
+      "passKey": "milestone.summer.pass",
+      "failKey": "milestone.summer.fail",
+      "passEn": "Different paces became one bridge.",
+      "failEn": "The bridge still shakes, but it can be crossed again."
     },
     {
       "id": "autumn",
@@ -979,7 +987,11 @@
       "min": 16,
       "coins": 5,
       "pass": "답장을 바람에 맡길 용기가 생겼다.",
-      "fail": "편지는 아직 서랍 안에서 다음 계절을 기다린다."
+      "fail": "편지는 아직 서랍 안에서 다음 계절을 기다린다.",
+      "passKey": "milestone.autumn.pass",
+      "failKey": "milestone.autumn.fail",
+      "passEn": "The courage to send the reply has grown.",
+      "failEn": "The letter waits in the drawer for the next season."
     },
     {
       "id": "winter",
@@ -990,7 +1002,11 @@
       "min": 24,
       "coins": 8,
       "pass": "노아는 첫 결산의 문을 열었다.",
-      "fail": "문은 닫혔지만 다음 열쇠를 남겼다."
+      "fail": "문은 닫혔지만 다음 열쇠를 남겼다.",
+      "passKey": "milestone.winter.pass",
+      "failKey": "milestone.winter.fail",
+      "passEn": "Noa opened the first ledger's door.",
+      "failEn": "The door stayed closed, but left the next key."
     },
     {
       "id": "frost",
@@ -1001,7 +1017,11 @@
       "min": 30,
       "coins": 5,
       "pass": "멈춘 계절에도 돌봄의 기록이 남았다.",
-      "fail": "씨앗은 아직 차가운 흙 아래에서 기다린다."
+      "fail": "씨앗은 아직 차가운 흙 아래에서 기다린다.",
+      "passKey": "milestone.frost.pass",
+      "failKey": "milestone.frost.fail",
+      "passEn": "A care record remained even in the stopped season.",
+      "failEn": "The seed still waits beneath cold soil."
     },
     {
       "id": "return",
@@ -1012,7 +1032,11 @@
       "min": 36,
       "coins": 6,
       "pass": "보낸 마음이 공동의 약속으로 돌아왔다.",
-      "fail": "답장은 아직 다음 물결을 기다린다."
+      "fail": "답장은 아직 다음 물결을 기다린다.",
+      "passKey": "milestone.return.pass",
+      "failKey": "milestone.return.fail",
+      "passEn": "A sent feeling returned as a shared promise.",
+      "failEn": "The reply still waits for the next wave."
     },
     {
       "id": "constellation",
@@ -1023,7 +1047,11 @@
       "min": 42,
       "coins": 7,
       "pass": "서로 다른 근거가 하나의 공개 지도가 되었다.",
-      "fail": "지도에는 아직 지워지지 않은 빈칸이 남았다."
+      "fail": "지도에는 아직 지워지지 않은 빈칸이 남았다.",
+      "passKey": "milestone.constellation.pass",
+      "failKey": "milestone.constellation.fail",
+      "passEn": "Different reasons became one public map.",
+      "failEn": "The map still holds blank spaces that have not faded."
     },
     {
       "id": "horizon",
@@ -1034,7 +1062,11 @@
       "min": 48,
       "coins": 10,
       "pass": "노아는 다음 사람이 다시 검증할 지평을 남겼다.",
-      "fail": "지평은 닫히지 않았고 다음 회차의 질문이 되었다."
+      "fail": "지평은 닫히지 않았고 다음 회차의 질문이 되었다.",
+      "passKey": "milestone.horizon.pass",
+      "failKey": "milestone.horizon.fail",
+      "passEn": "Noa left a horizon the next person can verify.",
+      "failEn": "The horizon stayed open as a question for the next run."
     },
     {
       "id": "waterline",
@@ -1046,7 +1078,11 @@
       "min": 30,
       "coins": 5,
       "pass": "빈 터에 첫 물길이 이어졌다.",
-      "fail": "물길은 아직 다음 손을 기다린다."
+      "fail": "물길은 아직 다음 손을 기다린다.",
+      "passKey": "milestone.waterline.pass",
+      "failKey": "milestone.waterline.fail",
+      "passEn": "The first waterway reached the empty field.",
+      "failEn": "The waterway still waits for the next pair of hands."
     },
     {
       "id": "fair-share",
@@ -1058,7 +1094,11 @@
       "min": 40,
       "coins": 5,
       "pass": "보이지 않던 노동도 하루의 일부가 되었다.",
-      "fail": "장부의 빈칸이 아직 누군가를 기다린다."
+      "fail": "장부의 빈칸이 아직 누군가를 기다린다.",
+      "passKey": "milestone.fair-share.pass",
+      "failKey": "milestone.fair-share.fail",
+      "passEn": "Invisible labour became part of the day.",
+      "failEn": "A blank in the ledger still waits for someone."
     },
     {
       "id": "memory-house",
@@ -1070,7 +1110,11 @@
       "min": 48,
       "coins": 6,
       "pass": "기억은 닫힌 상자가 아니라 다시 찾을 길이 되었다.",
-      "fail": "이름 없는 상자는 아직 빛을 기다린다."
+      "fail": "이름 없는 상자는 아직 빛을 기다린다.",
+      "passKey": "milestone.memory-house.pass",
+      "failKey": "milestone.memory-house.fail",
+      "passEn": "Memory became a path to find again, not a closed box.",
+      "failEn": "The nameless box still waits for light."
     },
     {
       "id": "far-shore",
@@ -1082,7 +1126,11 @@
       "min": 56,
       "coins": 6,
       "pass": "먼 영지의 답이 루멘의 규칙을 다시 고쳤다.",
-      "fail": "두 물길은 아직 서로의 속도를 배우는 중이다."
+      "fail": "두 물길은 아직 서로의 속도를 배우는 중이다.",
+      "passKey": "milestone.far-shore.pass",
+      "failKey": "milestone.far-shore.fail",
+      "passEn": "The far shore's answer changed Lumen's rule again.",
+      "failEn": "The two waterways are still learning each other's pace."
     },
     {
       "id": "blank-map",
@@ -1094,7 +1142,11 @@
       "min": 64,
       "coins": 7,
       "pass": "모른다는 표시가 함께 걷는 출발점이 되었다.",
-      "fail": "지도에는 아직 혼자 건너야 할 빈칸이 남았다."
+      "fail": "지도에는 아직 혼자 건너야 할 빈칸이 남았다.",
+      "passKey": "milestone.blank-map.pass",
+      "failKey": "milestone.blank-map.fail",
+      "passEn": "The mark for unknown became a starting point to walk together.",
+      "failEn": "The map still has a blank that must be crossed alone."
     },
     {
       "id": "commons",
@@ -1106,7 +1158,11 @@
       "min": 72,
       "coins": 7,
       "pass": "가장 작은 목소리까지 규칙에 들어왔다.",
-      "fail": "합의 밖의 목소리가 아직 문을 두드린다."
+      "fail": "합의 밖의 목소리가 아직 문을 두드린다.",
+      "passKey": "milestone.commons.pass",
+      "failKey": "milestone.commons.fail",
+      "passEn": "Even the smallest voice entered the rule.",
+      "failEn": "A voice outside the agreement still knocks."
     },
     {
       "id": "returning-garden",
@@ -1118,7 +1174,11 @@
       "min": 80,
       "coins": 8,
       "pass": "처음의 씨앗이 다음 사람의 꽃이 되었다.",
-      "fail": "정원은 아직 떠남과 머묾의 자리를 고르는 중이다."
+      "fail": "정원은 아직 떠남과 머묾의 자리를 고르는 중이다.",
+      "passKey": "milestone.returning-garden.pass",
+      "failKey": "milestone.returning-garden.fail",
+      "passEn": "The first seed became the next person's flower.",
+      "failEn": "The garden is still choosing a place for leaving and staying."
     },
     {
       "id": "handoff",
@@ -1130,7 +1190,11 @@
       "min": 88,
       "coins": 10,
       "pass": "노아는 다음 사람이 다시 시작할 첫걸음을 남겼다.",
-      "fail": "지평은 닫히지 않았고 다음 기록을 기다린다."
+      "fail": "지평은 닫히지 않았고 다음 기록을 기다린다.",
+      "passKey": "milestone.handoff.pass",
+      "failKey": "milestone.handoff.fail",
+      "passEn": "Noa left the first step for the next person's beginning.",
+      "failEn": "The horizon remains open and waits for the next record."
     }
   ],
   "endings": [

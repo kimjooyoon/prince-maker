@@ -158,6 +158,7 @@ class _Game extends State<Game> {
 
   void next() {
     final a = activities[selected.clamp(0, activities.length - 1)];
+    final milestoneCount = milestones.length;
     setState(() {
       session.choose(
           ActivityChosen(a.stat, a.delta, a.coins, a.fatigue, label: a.label));
@@ -173,6 +174,8 @@ class _Game extends State<Game> {
           eventIndex = upcoming;
           session.world.progress[0]!.eventIndex = eventIndex;
           page = 3;
+        } else if (milestones.length > milestoneCount) {
+          page = 6;
         }
       }
       session.persist(page: page);
@@ -211,7 +214,9 @@ class _Game extends State<Game> {
               : '관계 조건 부족 · $bondReq 유대 ${e['requiresBondMin']} 필요');
       return;
     }
-    final d = e['delta'] as int, g = e['coins'] as int;
+    final d = e['delta'] as int,
+        g = e['coins'] as int,
+        milestoneCount = milestones.length;
     setState(() {
       session.chooseEvent(StoryChoiceMade(e['stat'], d, g, e['label'],
           bondId: e['bondId'] as String?,
@@ -228,7 +233,7 @@ class _Game extends State<Game> {
           legacyBonuses: (e['legacyBonuses'] as Map?)?.cast<String, dynamic>(),
           legacyId: session.legacyId));
       sync();
-      page = 0;
+      page = milestones.length > milestoneCount ? 6 : 0;
       session.persist(page: page);
     });
   }
@@ -288,6 +293,14 @@ class _Game extends State<Game> {
       if (y < 100 && x > 590)
         toggleLocale();
       else if (y < 100 || y > 560) setState(() => page = 0);
+    } else if (page == 6) {
+      if (y < 100 && x > 590)
+        toggleLocale();
+      else if (y > 500)
+        setState(() {
+          page = 0;
+          session.persist(page: page);
+        });
     } else if (y > 500 && x >= 590) {
       next();
     } else if (y > 500 && x >= 430) {
@@ -770,6 +783,12 @@ class Scene extends CustomPainter {
       c.restore();
       return;
     }
+    if (page == 6) {
+      chapterClosure(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
     home(c);
     drawFeedbackBanner(c, lastResult, lastLine);
     seasonProgress(c);
@@ -992,6 +1011,71 @@ class Scene extends CustomPainter {
     txt(c, localized('ui.ledger.back', '← 홈으로'),
         Offset(24, receipts.isEmpty ? 570 : 650), 14, teal,
         bold: true);
+  }
+
+  void chapterClosure(Canvas c) {
+    final chapters = (s['progression'] as List? ?? const []).cast<Map>(),
+        chapter = chapters.firstWhere(
+            (item) =>
+                week >= (item['weekStart'] as int) &&
+                week <= (item['weekEnd'] as int),
+            orElse: () => <String, dynamic>{}),
+        milestoneId = '${chapter['milestoneId']}',
+        goals = (s['milestones'] as List? ?? const []).cast<Map>(),
+        goal = goals.firstWhere((item) => '${item['id']}' == milestoneId,
+            orElse: () => <String, dynamic>{}),
+        passed = milestones[milestoneId] == true,
+        title = localized('${chapter['titleKey']}', '${chapter['title']}'),
+        result = localized('${passed ? goal['passKey'] : goal['failKey']}',
+            '${passed ? goal['pass'] : goal['fail']}');
+    txt(
+        c,
+        localized(passed ? 'ui.closure.recorded' : 'ui.closure.next',
+            passed ? '장 결산 · 기록됨' : '장 결산 · 다음 기회'),
+        const Offset(24, 28),
+        30,
+        ink,
+        bold: true,
+        maxWidth: 700);
+    txt(c, '$title · ${goal['week']}${localized('ui.closure.week', '주차')}',
+        const Offset(25, 70), 14, teal,
+        bold: true);
+    box(c, const Rect.fromLTWH(24, 120, 270, 410), ink,
+        radius: 24, shadow: true);
+    portrait(c, const Rect.fromLTWH(48, 155, 222, 300), persona);
+    mark(c, passed ? '✦' : '◇', const Offset(102, 420),
+        passed ? sun : Colors.white70);
+    txt(
+        c,
+        localized(passed ? 'ui.closure.goalCleared' : 'ui.closure.keepGrowing',
+            passed ? '목표 달성' : '다음에 이어가기'),
+        const Offset(65, 490),
+        12,
+        passed ? sun : Colors.white70,
+        bold: true);
+    txt(c, localized('ui.closure.question', '이번 장의 질문'), const Offset(340, 132),
+        13, teal,
+        bold: true);
+    txt(c, localized('${chapter['payoffKey']}', '${chapter['payoff'] ?? ''}'),
+        const Offset(340, 164), 22, ink,
+        bold: true, maxWidth: 360);
+    box(c, const Rect.fromLTWH(340, 250, 360, 125), Colors.white,
+        radius: 20, stroke: teal, shadow: true);
+    txt(c, result, const Offset(365, 282), 17, ink, bold: true, maxWidth: 310);
+    txt(c, '${goal['stat']} ${stats[goal['stat']] ?? 0}/${goal['min']}',
+        const Offset(365, 338), 14, passed ? teal : const Color(0xffa84f3c),
+        bold: true);
+    trackerLine(c, const Offset(340, 405), maxWidth: 360);
+    txt(c, lastResult, const Offset(340, 440), 11, ink.withValues(alpha: .6),
+        maxWidth: 360);
+    box(c, const Rect.fromLTWH(340, 510, 360, 64), teal,
+        radius: 18, shadow: true);
+    txt(c, localized('ui.closure.nextPage', '다음 장으로 →'), const Offset(445, 531),
+        17, Colors.white,
+        bold: true);
+    txt(c, localized('ui.closure.link', '결과는 시스템 영수증과 다음 선택에 연결됩니다.'),
+        const Offset(340, 595), 11, teal,
+        maxWidth: 360);
   }
 
   void illustration(Canvas c) {

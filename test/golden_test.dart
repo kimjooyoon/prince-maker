@@ -591,6 +591,10 @@ void main() {
     for (var i = 0; i < 11; i++) {
       await tester.tapAt(const Offset(200, 550));
       await tester.pump();
+      if (find.byKey(const ValueKey('6-3-0-0')).evaluate().isNotEmpty) {
+        await tester.tapAt(const Offset(500, 540));
+        await tester.pump();
+      }
     }
     expect(find.byKey(const ValueKey('2-12-0-0')), findsOneWidget);
     await expectLater(
