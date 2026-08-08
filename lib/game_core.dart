@@ -11,6 +11,7 @@ abstract interface class StoryPort {
   List<Map<String, dynamic>> get milestones;
   Map<String, dynamic> get decisionSystem;
   int get endingWeek;
+  int get campaignWeeks;
 }
 
 abstract interface class SavePort {
@@ -45,6 +46,9 @@ class JsonStoryAdapter implements StoryPort {
       (source['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
   @override
   int get endingWeek => source['endingWeek'] as int? ?? 12;
+  @override
+  int get campaignWeeks =>
+      source['campaignWeeks'] as int? ?? ((endingWeek - 1).clamp(1, 999));
 }
 
 class SystemDecisionReceipt {
@@ -431,8 +435,7 @@ class GameSession {
 
   void choose(ActivityChosen e) {
     final p = world.progress[0]!;
-    final terminal =
-        '${story.endingWeek}주 기록이 완성되었습니다 · 새 기록을 시작하세요.';
+    final terminal = '${story.campaignWeeks}주 기록이 완성되었습니다 · 새 기록을 시작하세요.';
     final message = p.week >= story.endingWeek
         ? terminal
         : !world.stats[0]!.values.containsKey(e.stat)
@@ -471,11 +474,12 @@ class GameSession {
   void chooseEvent(StoryChoiceMade e) {
     final p = world.progress[0]!;
     final message = p.week >= story.endingWeek
-        ? '${story.endingWeek}주 기록이 완성되었습니다 · 새 기록을 시작하세요.'
+        ? '${story.campaignWeeks}주 기록이 완성되었습니다 · 새 기록을 시작하세요.'
         : !world.stats[0]!.values.containsKey(e.stat)
             ? '시스템 판정 · 등록되지 않은 성장축'
             : e.requiresStat != null &&
-                    (world.stats[0]!.values[e.requiresStat] ?? 0) < e.requiresMin
+                    (world.stats[0]!.values[e.requiresStat] ?? 0) <
+                        e.requiresMin
                 ? '조건 부족 · ${e.requiresStat} ${e.requiresMin} 필요'
                 : e.requiresBondId != null &&
                         (p.bonds[e.requiresBondId] ?? 0) < e.requiresBondMin
@@ -483,8 +487,8 @@ class GameSession {
                     : e.requiresFlag != null && p.flags[e.requiresFlag] != true
                         ? '기억 조건 부족 · ${e.requiresFlag} 필요'
                         : null;
-    final receipt = _decision('story-choice', e.label,
-        conditions: message == null);
+    final receipt =
+        _decision('story-choice', e.label, conditions: message == null);
     if (!receipt.approved) {
       _recordRejected(receipt, message ?? '시스템 판정 · 입력 계약 위반');
       return;

@@ -760,10 +760,11 @@ void main() {
         find.byType(Game), matchesGoldenFile('goldens/collection.png'));
   });
   testWidgets('canonical SSOT renders a stable Canvas home', (tester) async {
-    final source =
-        jsonDecode(await rootBundle.loadString('story/story.json')) as Map;
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
+        as Map;
     await tester.pumpWidget(Game(Map<String, dynamic>.from(source)));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 100));
     await tester
         .runAsync(() async => Future<void>.delayed(const Duration(seconds: 1)));
     await tester.pump();

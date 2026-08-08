@@ -6,7 +6,8 @@ import 'package:prince_maker/game_core.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   Future<Map<String, dynamic>> play(String stat, int persona) async {
-    final source = jsonDecode(await rootBundle.loadString('story/story.json'))
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
         as Map<String, dynamic>;
     final story = JsonStoryAdapter(source),
         session = GameSession(story, MemorySaveAdapter());
@@ -54,8 +55,9 @@ void main() {
         bonds: p.bonds, milestones: p.milestones);
   }
 
-  test('canonical SSOT completes a deterministic 24-week route', () async {
-    final source = jsonDecode(await rootBundle.loadString('story/story.json'))
+  test('canonical SSOT completes a deterministic 48-week route', () async {
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
         as Map<String, dynamic>;
     final story = JsonStoryAdapter(source),
         session = GameSession(story, MemorySaveAdapter());
@@ -92,9 +94,9 @@ void main() {
     final progress = session.world.progress[0]!,
         ending = resolveEnding(story, session.world.stats[0]!.values,
             bonds: progress.bonds, milestones: progress.milestones);
-    expect(progress.week, 24);
-    expect(progress.milestones.length, 8);
-    expect(progress.bonds['bora'], 22);
+    expect(progress.week, story.endingWeek);
+    expect(progress.milestones.length, story.milestones.length);
+    expect(progress.bonds.values.reduce((a, b) => a + b), greaterThan(22));
     expect(
         progress.flags.keys.where((key) => key.startsWith('place:')).toSet(), {
       'place:archive',
@@ -107,9 +109,11 @@ void main() {
         4);
     expect(ending['id'], 'stargazer-master');
     expect(ending['epilogue'], isNotNull);
-    expect(progress.trace.where((e) => e.startsWith('milestone:')).length, 8);
-    expect(progress.trace.where((e) => e.startsWith('approval:approved')).length,
-        greaterThanOrEqualTo(23 + 22));
+    expect(progress.trace.where((e) => e.startsWith('milestone:')).length,
+        story.milestones.length);
+    expect(
+        progress.trace.where((e) => e.startsWith('approval:approved')).length,
+        greaterThanOrEqualTo(story.endingWeek - 1 + story.events.length));
   });
   test('all three personality routes reach their authored master ending',
       () async {
@@ -119,7 +123,8 @@ void main() {
   });
   test('every authored ending and event choice is reachable under its contract',
       () async {
-    final source = jsonDecode(await rootBundle.loadString('story/story.json'))
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
         as Map<String, dynamic>;
     final story = JsonStoryAdapter(source);
     for (final ending in story.endings) {

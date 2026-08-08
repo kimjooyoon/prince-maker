@@ -74,7 +74,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   test('five SSOT schedule policies produce measurable route variety',
       () async {
-    final source = jsonDecode(await rootBundle.loadString('story/story.json'))
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
         as Map<String, dynamic>;
     final story = JsonStoryAdapter(source),
         activities =
@@ -95,7 +96,8 @@ void main() {
   });
   test('three legacy profiles produce distinct deterministic route signatures',
       () async {
-    final source = jsonDecode(await rootBundle.loadString('story/story.json'))
+    final source = jsonDecode(utf8.decode(
+            (await rootBundle.load('story/story.json')).buffer.asUint8List()))
         as Map<String, dynamic>;
     final story = JsonStoryAdapter(source),
         activities =

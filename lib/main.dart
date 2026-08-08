@@ -86,11 +86,13 @@ class Game extends StatefulWidget {
       {this.locales = const {},
       this.legacySeed = false,
       this.legacyId,
+      this.initialSnapshot,
       super.key});
   final Map<String, dynamic> story;
   final Map<String, Map<String, String>> locales;
   final bool legacySeed;
   final String? legacyId;
+  final GameSnapshot? initialSnapshot;
   @override
   State<Game> createState() => _Game();
 }
@@ -161,10 +163,15 @@ class _Game extends State<Game> {
             collectionEntries.isNotEmpty,
         legacyId:
             widget.legacyId ?? (widget.legacySeed ? null : legacyProfileId()));
-    try {
-      final restored = session.restore();
-      if (restored != null) page = restored.page;
-    } catch (_) {}
+    if (widget.initialSnapshot != null) {
+      session.world.restore(widget.initialSnapshot!);
+      page = widget.initialSnapshot!.page;
+    } else {
+      try {
+        final restored = session.restore();
+        if (restored != null) page = restored.page;
+      } catch (_) {}
+    }
     sync();
     FontLoader('NotoSansKR')
       ..addFont(rootBundle.load('assets/fonts/NotoSansKR-Regular.ttf'))
@@ -631,17 +638,9 @@ class Scene extends CustomPainter {
   }
 
   void seasonProgress(Canvas c) {
-    final label = week <= 3
-            ? '봄'
-            : week <= 6
-                ? '여름'
-                : week <= 9
-                    ? '가을'
-                    : week <= 12
-                        ? '겨울'
-                        : '다음 계절',
-        endingWeek = (s['endingWeek'] as int? ?? 12),
-        progress = ((week - 1) / (endingWeek - 1)).clamp(0.0, 1.0),
+    final endingWeek = (s['endingWeek'] as int? ?? 12),
+        campaignWeeks = (s['campaignWeeks'] as int? ?? endingWeek - 1),
+        progress = ((week - 1) / campaignWeeks).clamp(0.0, 1.0),
         people = (s['personalities'] as List? ?? const []),
         person =
             people.isEmpty ? null : people[persona.clamp(0, people.length - 1)],
@@ -655,11 +654,11 @@ class Scene extends CustomPainter {
         chapterTitle = chapter.isEmpty
             ? ''
             : activeLocale == 'ko'
-                ? '${endingWeek > 12 ? '${chapterIndex + 1}막 · ' : ''}${chapter['title']}'
+                ? '${chapterIndex + 1}막 · ${chapter['title']}'
                 : localized('${chapter['titleKey']}', '${chapter['title']}');
     txt(
         c,
-        '$label · $chapterTitle · 루멘의 $week주차 · ${person?['name'] ?? '성격 미지정'}',
+        '$chapterTitle · 루멘의 $week주차/$campaignWeeks · ${person?['name'] ?? '성격 미지정'}',
         const Offset(24, 228),
         10,
         teal,
@@ -938,7 +937,7 @@ class Scene extends CustomPainter {
                 : localized(
                     goal['titleKey'] as String? ?? '', '${goal['title']}'))
             .toList();
-    txt(c, '${JsonStoryAdapter(s).endingWeek}주의 끝', const Offset(24, 28), 32,
+    txt(c, '${JsonStoryAdapter(s).campaignWeeks}주의 끝', const Offset(24, 28), 32,
         ink,
         bold: true);
     txt(c, '루멘은 노아가 고른 방향을 기억합니다.', const Offset(25, 70), 14, teal);

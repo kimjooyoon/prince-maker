@@ -2,7 +2,7 @@
   "schema": "lumen-originality-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "45746c12bc8c03492f831647e688f321184fbbec22d128b96edda20b7c8adb9f"
+    "sha256": "bd163f2ee40a911de0fb3016d310d17dfd64f93421a25fb51b1136605b9cb7d6"
   },
   "designIntent": "황혼 운명 기록: 주간 선택의 결과를 수치가 아니라 관계·기억·다음 회차의 기록으로 되돌려주는 독자 생활 시뮬레이션",
   "referencePrinciples": [
@@ -10,7 +10,7 @@
       "id": "scheduled-raising",
       "sources": [{"title": "Princess Maker 1 mechanics overview", "url": "https://princessmaker.fandom.com/wiki/Princess_Maker_1"}],
       "observed": "시간 단위의 일정 선택과 성장 수치가 결산 결과를 만든다.",
-      "adoptedAs": "24주 일정 선택과 지혜·공감·용기 성장축",
+      "adoptedAs": "48주 일정 선택과 지혜·공감·용기 성장축",
       "notCopied": "왕녀 양육, 원작 인물·문구·엔딩 조건·화면을 사용하지 않는다."
     },
     {
@@ -34,7 +34,7 @@
       "id": "run-variety",
       "sources": [{"title": "Slay the Spire on Steam", "url": "https://store.steampowered.com/app/646570/Slay_the_Spire/"}],
       "observed": "반복 시도마다 선택 조합과 경로가 달라져 재플레이 가치가 생긴다.",
-      "adoptedAs": "5개 활동 정책, 4개 계절 목표, 3개 동료 관계 경로, 6개 authored ending의 조합",
+      "adoptedAs": "5개 활동 정책, 16개 막 목표, 3개 동료 관계 경로, 6개 authored ending의 조합",
       "notCopied": "덱·카드·유물·탑·전투·절차생성 맵은 사용하지 않는다."
     }
   ],

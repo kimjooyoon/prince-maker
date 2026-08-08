@@ -2,7 +2,7 @@
   "schema": "prince-maker-trilemma-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "45746c12bc8c03492f831647e688f321184fbbec22d128b96edda20b7c8adb9f"
+    "sha256": "bd163f2ee40a911de0fb3016d310d17dfd64f93421a25fb51b1136605b9cb7d6"
   },
   "axes": [
     {
@@ -11,9 +11,9 @@
       "unit": "gate-score",
       "guardrails": {
         "scenarioDimensions": 8,
-        "authoredBranches": 50,
+        "authoredBranches": 100,
         "goldens": 26,
-        "localeKeys": 216
+        "localeKeys": 398
       },
       "evidence": [
         "tool/verify_game.dart#scenario-contract",
@@ -46,10 +46,10 @@
       "unit": "campaign-throughput",
       "guardrails": {
         "campaigns": 5000,
-        "transitionBudget": 225000,
+        "transitionBudget": 475000,
         "systemApproval": true,
         "failClosed": true,
-        "maxMillis": 8000,
+        "maxMillis": 24000,
         "minSignatures": 3,
         "lineageProfiles": 3,
         "lineageTargetEndings": 3,
