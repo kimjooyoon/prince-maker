@@ -6,13 +6,15 @@ void main() {
     final receipt = DecisionReceipt.parse(
         'approval:approved|owner:Lumen Ledger System|kind:story-choice|'
         'subject:첫 질문:기록|week:17|rule:input-contract|'
-        'contract:lumen-ledger|decisionHash:1a2b3c4d5e');
+        'contract:lumen-ledger|preconditionHash:abc12345|'
+        'parentDecisionHash:genesis|decisionHash:1a2b3c4d5e');
 
     expect(receipt, isNotNull);
     expect(receipt!.approved, isTrue);
     expect(receipt.subject, '첫 질문:기록');
     expect(receipt.week, 17);
     expect(receipt.shortHash, '1a2b3c4d');
+    expect(receipt.shortPreconditionHash, 'abc12345');
   });
 
   test('projects only the latest three valid decisions', () {

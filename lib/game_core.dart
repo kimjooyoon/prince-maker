@@ -1,5 +1,8 @@
 import 'save_state.dart';
 
+export 'decision_proof.dart';
+import 'decision_proof.dart';
+
 typedef Entity = int;
 
 abstract interface class StoryPort {
@@ -65,46 +68,6 @@ class JsonStoryAdapter implements StoryPort {
   @override
   int get campaignWeeks =>
       source['campaignWeeks'] as int? ?? ((endingWeek - 1).clamp(1, 999));
-}
-
-class SystemDecisionReceipt {
-  const SystemDecisionReceipt(this.approved, this.kind, this.subject, this.week,
-      this.rule, this.contract, this.decisionHash, this.owner);
-  final bool approved;
-  final String kind, subject, rule, contract, decisionHash, owner;
-  final int week;
-  String get trace =>
-      'approval:${approved ? 'approved' : 'rejected'}|owner:$owner|kind:$kind|subject:$subject|week:$week|rule:$rule|contract:$contract|decisionHash:$decisionHash';
-}
-
-/// Deterministic system adjudication: no human approval is part of a move.
-class SystemDecisionPolicy {
-  static SystemDecisionReceipt evaluate({
-    required String kind,
-    required String subject,
-    required int week,
-    required int endingWeek,
-    required bool conditions,
-    required String owner,
-    required String contract,
-  }) {
-    final inWindow = week < endingWeek;
-    final approved = inWindow && conditions;
-    final rule = !inWindow
-        ? 'terminal-window'
-        : conditions
-            ? 'input-contract'
-            : 'input-contract-rejected';
-    final payload =
-        '$contract|$kind|$subject|$week|${approved ? 'approve' : 'reject'}';
-    var hash = 2166136261;
-    for (final unit in payload.codeUnits) {
-      hash = ((hash ^ unit) * 16777619) & 0x7fffffff;
-    }
-    final decisionHash = hash.toRadixString(16).padLeft(8, '0');
-    return SystemDecisionReceipt(
-        approved, kind, subject, week, rule, contract, decisionHash, owner);
-  }
 }
 
 class MemorySaveAdapter implements SavePort {
@@ -463,7 +426,7 @@ class GameWorld {
 /// Application port: UI sends commands; adapters handle story and saves.
 class GameSession {
   GameSession(this.story, this.save,
-      {this.legacyUnlocked = false, this.legacyId}) {
+      {this.legacyUnlocked = false, this.legacyId, this.autoPersist = true}) {
     if (legacyUnlocked) {
       world.progress[0]!.flags['legacy-star'] = true;
       final profile =
@@ -484,6 +447,9 @@ class GameSession {
   final world = GameWorld();
   final bool legacyUnlocked;
   final String? legacyId;
+
+  /// Batch/replay ports may disable persistence without changing game rules.
+  final bool autoPersist;
   SystemDecisionReceipt _decision(String kind, String subject,
       {required bool conditions}) {
     final model = story.decisionSystem,
@@ -496,7 +462,34 @@ class GameSession {
         endingWeek: story.endingWeek,
         conditions: conditions,
         owner: owner,
-        contract: contract);
+        contract: contract,
+        preconditions: _preconditionState(kind, subject, conditions),
+        parentDecisionHash:
+            SystemDecisionPolicy.parentHash(world.progress[0]!.trace));
+  }
+
+  String _preconditionState(String kind, String subject, bool conditions) {
+    final p = world.progress[0]!, s = world.stats[0]!.values;
+    String mapState(Map<Object?, Object?> values) => (values.entries.toList()
+          ..sort((a, b) => '${a.key}'.compareTo('${b.key}')))
+        .map((entry) => '${entry.key}=${entry.value}')
+        .join(',');
+    return [
+      'kind=$kind',
+      'subject=$subject',
+      'week=${p.week}',
+      'endingWeek=${story.endingWeek}',
+      'coins=${p.coins}',
+      'fatigue=${p.fatigue}',
+      'selected=${p.selected}',
+      'persona=${p.persona}',
+      'eventIndex=${p.eventIndex}',
+      'stats=${mapState(s)}',
+      'bonds=${mapState(p.bonds)}',
+      'milestones=${mapState(p.milestones)}',
+      'flags=${mapState(p.flags)}',
+      'conditions=$conditions',
+    ].join('|');
   }
 
   void _recordRejected(SystemDecisionReceipt receipt, String message) {
@@ -584,8 +577,10 @@ class GameSession {
           m['coins'], m['pass'], m['fail']));
   }
 
-  void persist({int page = 0}) =>
-      save.write(world.snapshot(page: page).encode());
+  void persist({int page = 0}) {
+    if (autoPersist) save.write(world.snapshot(page: page).encode());
+  }
+
   GameSnapshot? restore() {
     final raw = save.read();
     if (raw == null) return null;

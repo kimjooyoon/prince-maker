@@ -20,6 +20,12 @@ SSOT 콘텐츠 → GameWorld 전이 → Canvas/Golden 증거
 
 렌더링 품질도 별도 추론이 아니라 `render-quality-preconditions` 게이트로 판정한다. `docs/render-quality-contract.json`의 viewport·입력 역변환·Golden 선행조건이 누락되면 세 축 전체가 거절된다.
 
+결정 증명도 별도 추론이 아니라 `decision-proof-preconditions` 게이트로 판정한다. `docs/decision-proof-contract.json`이 현재 precondition 필드와 직전 결정 hash의 chain을 선언하며, `build/decision-proof-verdict.json`에 system-adjudicated 결과가 남아야 다음 게이트로 진행된다.
+
+개발 목표도 별도 추론이 아니라 `generated-development-goals` 게이트로 판정한다. `docs/development-goals.json`은 SSOT·트릴레마·렌더 계약에서 6개 고수준 목표와 5개 투입 원장을 생성하고, 각 항목의 target/current/gap·산식·선행조건·evidence를 고정한다. benchmark 실측은 `build/benchmark-verdict.json`, 목표별 시스템 판정은 `build/development-goal-verdict.json`에 남으며, 이 증적이 없으면 세 축 모두 거절된다.
+
+결정 증명은 `decision-proof-preconditions` 게이트가 14개 상태 precondition field, `genesis → parentDecisionHash → decisionHash` chain, 동일 replay 재현성을 먼저 검증한다. 이 선행조건이 없으면 정량 목표나 트릴레마 축의 승인도 성립하지 않는다.
+
 현재 장편 계약은 48주·16막·47개 사건·94개 선택지이며, 48회 일정 반영과 16회 막 결산을 포함한 보수적 콘텐츠 예산이 최소 120분을 넘도록 SSOT에서 계산된다.
 
 현재 시각 책임 증적은 30개 Golden과 419개 locale key이며, `system-receipt.png`는 승인·거절 trace의 owner·contract·rule·decisionHash를 Canvas에서 재현한다.

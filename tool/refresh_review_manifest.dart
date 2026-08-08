@@ -37,7 +37,15 @@ void main() {
     'test/goldens/system-receipt.png',
     'tool/verify_game.dart',
     'docs/render-quality-contract.json',
-    'tool/verify_render_quality.dart'
+    'tool/verify_render_quality.dart',
+    'docs/development-goals.json',
+    'docs/development-goals.md',
+    'tool/generate_development_goals.dart',
+    'tool/verify_development_goals.dart',
+    'lib/decision_proof.dart',
+    'docs/decision-proof-contract.json',
+    'tool/verify_decision_proof.dart',
+    'test/decision_proof_test.dart'
   ]) {
     if (!known.containsKey(path)) {
       entries

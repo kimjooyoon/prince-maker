@@ -44,6 +44,8 @@ Future<void> main(List<String> args) async {
   final mode = args.contains('--ci') ? 'ci' : 'local';
   final checks = <GateCheck>[
     const GateCheck('ci-policy', 'dart', ['run', 'tool/verify_ci_policy.dart']),
+    const GateCheck('decision-proof-preconditions', 'dart',
+        ['run', 'tool/verify_decision_proof.dart']),
     const GateCheck('render-quality-preconditions', 'dart',
         ['run', 'tool/verify_render_quality.dart']),
     const GateCheck('story-contract', 'dart', ['run', 'tool/verify_game.dart']),
@@ -63,6 +65,8 @@ Future<void> main(List<String> args) async {
       const GateCheck('wasm-release-build', 'flutter',
           ['build', 'web', '--wasm', '--release']),
     const GateCheck('diff-whitespace', 'git', ['diff', '--check']),
+    const GateCheck('generated-development-goals', 'dart',
+        ['run', 'tool/verify_development_goals.dart']),
   ];
 
   final results = <Map<String, dynamic>>[];

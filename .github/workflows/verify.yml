@@ -29,6 +29,9 @@ jobs:
         with:
           name: ci-verdict
           path: |
+            build/decision-proof-verdict.json
+            build/benchmark-verdict.json
+            build/development-goal-verdict.json
             build/ci-verdict.json
             build/trilemma-verdict.json
           if-no-files-found: error

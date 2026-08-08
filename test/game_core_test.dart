@@ -23,8 +23,53 @@ void main() {
     expect(approved.approved, isTrue);
     expect(approved.trace, contains('approval:approved'));
     expect(approved.trace, contains('decisionHash:'));
+    expect(approved.trace, contains('preconditionHash:'));
+    expect(approved.trace, contains('parentDecisionHash:genesis'));
     expect(rejected.approved, isFalse);
     expect(rejected.rule, 'terminal-window');
+  });
+
+  test('decision proof changes when preconditions or parent chain changes', () {
+    final first = SystemDecisionPolicy.evaluate(
+        kind: 'activity',
+        subject: '별 관측',
+        week: 1,
+        endingWeek: 12,
+        conditions: true,
+        owner: 'system',
+        contract: 'ledger',
+        preconditions: 'week=1|stat=4');
+    final changedState = SystemDecisionPolicy.evaluate(
+        kind: 'activity',
+        subject: '별 관측',
+        week: 1,
+        endingWeek: 12,
+        conditions: true,
+        owner: 'system',
+        contract: 'ledger',
+        preconditions: 'week=1|stat=5');
+    final changedParent = SystemDecisionPolicy.evaluate(
+        kind: 'activity',
+        subject: '별 관측',
+        week: 1,
+        endingWeek: 12,
+        conditions: true,
+        owner: 'system',
+        contract: 'ledger',
+        preconditions: 'week=1|stat=4',
+        parentDecisionHash: 'deadbeef');
+    expect(first.preconditionHash, isNot(changedState.preconditionHash));
+    expect(first.decisionHash, isNot(changedState.decisionHash));
+    expect(first.decisionHash, isNot(changedParent.decisionHash));
+  });
+
+  test('parent proof follows the latest approved trace hash', () {
+    final trace = [
+      'activity:별 관측',
+      'approval:approved|decisionHash:abcd1234',
+      'activity:정원',
+    ];
+    expect(SystemDecisionPolicy.parentHash(trace), 'abcd1234');
   });
 
   test('GameSession commits the system receipt before state transition', () {
@@ -507,6 +552,14 @@ void main() {
     final restored = GameSnapshot.decode(save.read()!);
     expect(restored.stats['공감'], 6);
     expect(restored.replayTrace, contains('event:등불'));
+  });
+  test('batch replay can disable persistence without changing the trace', () {
+    final story = JsonStoryAdapter({'events': []});
+    final save = MemorySaveAdapter();
+    final session = GameSession(story, save, autoPersist: false);
+    session.choose(const ActivityChosen('지혜', 2, 1, 1));
+    expect(save.value, isNull);
+    expect(session.world.progress[0]!.trace, isNotEmpty);
   });
   test('restore returns the saved page for reload continuity', () {
     final save = MemorySaveAdapter();

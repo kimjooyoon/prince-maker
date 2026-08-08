@@ -5,12 +5,12 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "9eb20f4b86d454def359c6072bcdbea4e41eb3cfa4c549eedb4ce5e22511f74f"
+      "sha256": "8c5508d2caf1c3ce5bdeae01ad3bc75a98a379848e1f7ffd9d95977305cad9d1"
     },
     {
       "path": "lib/main.dart",
       "ref": "lib/main.dart#_Game+Scene",
-      "sha256": "7713dc436e24cde2ca62f1c860fa07fff8937a9a79cd5714071903472544e8c0"
+      "sha256": "d26fb892d7cfedfb142f5c471024cfdc1fb408f6e3a16693141acefbf478b447"
     },
     {
       "path": "lib/feedback_banner.dart",
@@ -30,7 +30,7 @@
     {
       "path": "lib/game_core.dart",
       "ref": "lib/game_core.dart#GameWorld+GameSession+resolveEnding",
-      "sha256": "5c6e8d3f315d386709f32601b7f2a91d561d95f4f17ab02548810eb3e5d282ce"
+      "sha256": "3dbc7871c37932958bd022af9b4c95db31fb907b6c5dd98d184659a178b1107f"
     },
     {
       "path": "lib/save_adapter.dart",
@@ -210,17 +210,17 @@
     {
       "path": "docs/game-completeness.md",
       "ref": "docs/game-completeness.md#metrics",
-      "sha256": "610c567edfed612e981df8144bbb5591926689618114284aae2f5494b30a696c"
+      "sha256": "a82a5bd0ba7c84ba8f2c68bea16182068fd0c84a9f862797384c335c01579a0b"
     },
     {
       "path": "docs/trilemma.md",
       "ref": "docs/trilemma.md#closed-loop",
-      "sha256": "6d7694d76441319ea2af165fd8978e63961f04ace2f58c3b08f826495203fdd1"
+      "sha256": "c1699d71280ab1907e1f699b69599aecf8d7c818ae97577da451dd96c1f80599"
     },
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "30cb16763096ed546e82220c48a4dc13f1c1c39366921a725aa59032b79858af"
+      "sha256": "1457cd5eaa0575ede9abbcc0191201c1bad39ffd6025cace4b08045f5ebe4176"
     },
     {
       "path": "docs/scenario-completeness.md",
@@ -230,12 +230,12 @@
     {
       "path": "docs/architecture.md",
       "ref": "docs/architecture.md#runtime-architecture",
-      "sha256": "a6570a9344b51cbdd37dc3c54c5194bd441b16885c90a26277c5ea3c8ba7ca02"
+      "sha256": "e1c125c193af15c2fe8504e794d6a7fb5532ec8f2008325396451f08706e0a83"
     },
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "84486376e8f94d6bc4eb5d5f45763613df2f093f94cd86e60540ba72585672a0"
+      "sha256": "8315260549f0137502c076a490ddab4009cf688a4095ca2ac9277dd0446d536d"
     },
     {
       "path": "docs/design-system.md",
@@ -250,7 +250,7 @@
     {
       "path": "test/game_core_test.dart",
       "ref": "test/game_core_test.dart#rules",
-      "sha256": "37a09b73392f0fc06546505ef3878e18afef978df60a8d2ce21171e8d7fd7995"
+      "sha256": "3abbe930d45b29c0aaf41f9b8e8b79d8e37f0094b227eaba00f1148df151c28e"
     },
     {
       "path": "test/save_state_test.dart",
@@ -315,7 +315,7 @@
     {
       "path": "tool/generate_trilemma_contract.dart",
       "ref": "tool/generate_trilemma_contract.dart#buildContract",
-      "sha256": "819196b7b1bfb041ceb57d06af524da3d707ce26888f7ee859d4933dd1894da6"
+      "sha256": "d6f8ffb88293f1a4b93e4b1e611ec9d84c6c6fb0896cd398e1c3a6e4d9a6760c"
     },
     {
       "path": "tool/verify_game.dart",
@@ -325,12 +325,12 @@
     {
       "path": "tool/benchmark_game.dart",
       "ref": "tool/benchmark_game.dart#ssot-campaign-throughput-signatures",
-      "sha256": "0c65e3fc1d5c095f6a33fd71997abb0cf2ffb07e7990422dd8b1fdc9b19f3f4a"
+      "sha256": "bfb562925a100784621623e0fd48084b4f5537cd353079646b0b2b3c8bda3330"
     },
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "f45c05d846cf28943c0209a363169b9f2a7f71ce644928702eebf1080128d81e"
+      "sha256": "2df3c5c4c6c49a84585140ae4017fa09eede20f2c8cd58a79bc2189eda859fbb"
     },
     {
       "path": "test/locale_contract_test.dart",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "75cfc900262fe5d87b51a546dc6e60c814c932cfb30bfa24fecfc4c9aec102ae"
+      "sha256": "55a308e5b789adfba1ebc893c66c7936a4e3dcbecb0ce5111ff3632782a39350"
     },
     {
       "path": "design/tokens.json",
@@ -380,37 +380,37 @@
     {
       "path": ".github/workflows/verify.yml",
       "ref": ".github/workflows/verify.yml#system-approval",
-      "sha256": "b21c1d4f83c0c19c34b369a398f737d98558ebcc5171972dafd6c156aed200ec"
+      "sha256": "c11439721352092270d4131c4785c70fd327582c2d600c3a87d3ab4b78ce8e4e"
     },
     {
       "path": "docs/automation-policy.md",
       "ref": "docs/automation-policy.md#decision-authority",
-      "sha256": "b3a238df0f9c3c25db9a45ea3918ec37f0dc893713ea6345a39fb44d96973e8b"
+      "sha256": "5660c85e236020aeda9fc07166ca5018e0e7eb98b86ef5703490858ff0e55684"
     },
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "86586de3737bfd47f5dba52c15ab4dffbf5a5ab6daf8c6c79c2b1b890286918e"
+      "sha256": "dadd5dad4aca7da7a62368127c0f5b66b95cd5169833cb178894a98ca3116cc8"
     },
     {
       "path": "tool/ci_gate.dart",
       "ref": "tool/ci_gate.dart#system-verdict",
-      "sha256": "5b23275384317e9df7f81d2c1d452f40836dece836b5301474d9888a8a47d7a2"
+      "sha256": "697f3336828134979f19a0f7555bf46dde530ba367f62b1a6a43daedcfab5144"
     },
     {
       "path": "tool/verify_ci_policy.dart",
       "ref": "tool/verify_ci_policy.dart#fail-closed-policy",
-      "sha256": "c42ab3f24f70ea34ffd26c5f9dda4f63acf56366262690f328cc92eed9b63914"
+      "sha256": "fbc84d402799dfa8eaa8da2e9a803f958183dbecd7693439af7c0bfe7b461fbe"
     },
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "d7b86a2da80604d8db9adfdb8ab812f49e6086f91b763f7eda406c9185a4d23e"
+      "sha256": "41e1c297cf79241d6c646ae21fb96dd24d8f1ed0fc646ef56879da36e47aa093"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
       "ref": "tool/refresh_review_manifest.dart#reviewed",
-      "sha256": "d71085af92ce456ca9df869eaa9a690b716086aef5f8cb40b2507d9affa2d8f9"
+      "sha256": "a9cea49b86a0cb5c49821d8f2fdba524922abc37d0b41514a20a1e70df80143c"
     },
     {
       "path": "tool/verify_scenario_variants.dart",
@@ -445,7 +445,7 @@
     {
       "path": "tool/trilemma_verdict.dart",
       "ref": "tool/trilemma_verdict.dart#reviewed",
-      "sha256": "fb3c686817b9dea5b0335740d04ecf9027b2841b8f9679711767f9d4ba51b8de"
+      "sha256": "416d62530eb3bef7c0d71b1f9be38d5ed0ba65749c4edc6f78b70fb8a4acca6f"
     },
     {
       "path": "test/trilemma_verdict_test.dart",
@@ -460,22 +460,22 @@
     {
       "path": "lib/decision_receipt.dart",
       "ref": "lib/decision_receipt.dart#reviewed",
-      "sha256": "5cb9278eb955f26b62ae545ede792aed4f3522a38f78ad2f9270f357fcf8bb40"
+      "sha256": "ac58c52f7044307260168b309a0f8d54c2450437709eb6b47912c2cb4b13ef48"
     },
     {
       "path": "test/decision_receipt_test.dart",
       "ref": "test/decision_receipt_test.dart#reviewed",
-      "sha256": "b74508913a8d596806f0f53b7bf0715c46a4d7e925bfebbb32a2686f35968d22"
+      "sha256": "7e20a0a5aafdc6f1613ec51d9563b82cea13ca61276f99bdd8ab0edb9c77be1c"
     },
     {
       "path": "test/system_receipt_golden_test.dart",
       "ref": "test/system_receipt_golden_test.dart#reviewed",
-      "sha256": "045f50d28fdd733ecd78676693466bc88877e8890d1b392aa77b2cf00ba44e64"
+      "sha256": "ff53e33767ed5461f80bac536dcaf8492dfe9004e13b9c6bc6a8642160de6f59"
     },
     {
       "path": "test/goldens/system-receipt.png",
       "ref": "test/goldens/system-receipt.png#reviewed",
-      "sha256": "c7a60f89ee81f0d91988945ddfe9ffc86466daaa7d697740c6bd13a40c3dcdf4"
+      "sha256": "a399b9a4efcecd25ce80e406ed85859c7c4ea0e633bd019f330c7a601ce79c79"
     },
     {
       "path": "lib/canvas_scene_fingerprint.dart",
@@ -506,6 +506,46 @@
       "path": "tool/verify_render_quality.dart",
       "ref": "tool/verify_render_quality.dart#reviewed",
       "sha256": "c1d8b36b1a7f7310ebded046540dae96d6fab4f77d5970f4400991eca969b445"
+    },
+    {
+      "path": "docs/development-goals.json",
+      "ref": "docs/development-goals.json#reviewed",
+      "sha256": "5388a667bb1402e35a5bd7eb12bfc99371ee14f7491a0b265ecbee3111a39a97"
+    },
+    {
+      "path": "docs/development-goals.md",
+      "ref": "docs/development-goals.md#reviewed",
+      "sha256": "c5c015f05d8af9159f51fffd79b14927f778afa5f412a864addbb206a55f0f53"
+    },
+    {
+      "path": "tool/generate_development_goals.dart",
+      "ref": "tool/generate_development_goals.dart#reviewed",
+      "sha256": "47023e04db33ac98e5daa1cb4edc0cd52ec54529845ddce1ac38e35a6fbcf93f"
+    },
+    {
+      "path": "tool/verify_development_goals.dart",
+      "ref": "tool/verify_development_goals.dart#reviewed",
+      "sha256": "1e4e728785ca234e900714761b08a920845738aab6d3ea65a00e63cfbd01b166"
+    },
+    {
+      "path": "lib/decision_proof.dart",
+      "ref": "lib/decision_proof.dart#reviewed",
+      "sha256": "851ea22ba42780dfe4024a7a96915e66706c5d5125de6ac6378b5b10d577c88d"
+    },
+    {
+      "path": "docs/decision-proof-contract.json",
+      "ref": "docs/decision-proof-contract.json#reviewed",
+      "sha256": "68a651c4ffbeac09cddb5f4c92b4be224e4a6796dba875477e1e294394d81add"
+    },
+    {
+      "path": "tool/verify_decision_proof.dart",
+      "ref": "tool/verify_decision_proof.dart#reviewed",
+      "sha256": "e77d32971f94928c3e431da52c62e8c9b3f7bf5654809ca293777936d074c249"
+    },
+    {
+      "path": "test/decision_proof_test.dart",
+      "ref": "test/decision_proof_test.dart#reviewed",
+      "sha256": "09d620603b94f3b1e79419320148fff30f82b248f84ab02b78d74924ccd50f01"
     }
   ]
 }

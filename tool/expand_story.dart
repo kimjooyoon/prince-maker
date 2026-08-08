@@ -169,8 +169,15 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/canvas_scene_fingerprint.dart#canvasSceneFingerprint',
     'lib/activity_catalog.dart#activitiesFromStory',
     'tool/verify_render_quality.dart#render-quality-preconditions',
+    'tool/generate_development_goals.dart#buildDocument',
+    'tool/verify_development_goals.dart#quantitative-evidence-gate',
     'lib/decision_receipt.dart#DecisionReceipt',
+    'lib/decision_proof.dart#SystemDecisionPolicy',
+    'tool/verify_decision_proof.dart#decision-proof-preconditions',
+    'test/decision_proof_test.dart#same preconditions reproduce the same chain',
   ];
+  refs.removeWhere((entry) =>
+      entry['ref'] == 'docs/decision-proof-contract.json#preconditionFields');
   for (final ref in requiredRefs) {
     if (!refs.any((entry) => entry['ref'] == ref)) {
       refs.add({'ref': ref, 'sha256': ''});

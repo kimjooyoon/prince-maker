@@ -2,7 +2,7 @@
   "schema": "prince-maker-trilemma-v1",
   "source": {
     "ref": "story/story.json#root",
-    "sha256": "9eb20f4b86d454def359c6072bcdbea4e41eb3cfa4c549eedb4ce5e22511f74f"
+    "sha256": "8c5508d2caf1c3ce5bdeae01ad3bc75a98a379848e1f7ffd9d95977305cad9d1"
   },
   "axes": [
     {
@@ -24,6 +24,7 @@
         "test/scenario_completeness_test.dart#scenario-closure",
         "test/golden_test.dart#all",
         "test/locale_contract_test.dart#ssot-dialogue-contract",
+        "tool/verify_decision_proof.dart#decision-proof-preconditions",
         "tool/trilemma_verdict.dart#axis-verdict"
       ]
     },
@@ -48,6 +49,7 @@
       "evidence": [
         "test/gameplay_metrics_test.dart#route-variety",
         "test/purity_integration_test.dart#same-schedule-budget-outcomes",
+        "tool/verify_decision_proof.dart#decision-proof-preconditions",
         "tool/trilemma_verdict.dart#axis-verdict"
       ]
     },
@@ -69,6 +71,7 @@
       },
       "evidence": [
         "tool/benchmark_game.dart#ssot-campaign-throughput-signatures",
+        "tool/verify_decision_proof.dart#decision-proof-preconditions",
         "tool/trilemma_verdict.dart#axis-verdict"
       ]
     }
