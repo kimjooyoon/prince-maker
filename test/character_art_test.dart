@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui' as ui;
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,6 +31,29 @@ void main() {
             entry.gesture.isNotEmpty),
         isTrue);
     expect(art.map((entry) => entry.id), characters.map((entry) => entry.id));
+    final emotionArt =
+        art.where((entry) => entry.emotionAsset != null).toList();
+    expect(emotionArt, hasLength(16));
+    expect(
+        emotionArt.map((entry) => entry.emotionAsset).toSet(), hasLength(16));
+    final doran = art.firstWhere((entry) => entry.id == 'doran');
+    expect(doran.emotionAsset, 'assets/generated/character-emotions/doran.png');
+    final assetRefs = (story['assetRefs'] as List).cast<Map<String, dynamic>>();
+    expect(
+        assetRefs
+            .where((entry) => '${entry['ref']}'
+                .startsWith('assets/generated/character-emotions/'))
+            .length,
+        16);
+    for (final entry in emotionArt) {
+      final bytes =
+          (await rootBundle.load(entry.emotionAsset!)).buffer.asUint8List();
+      final codec = await ui.instantiateImageCodec(bytes);
+      final frame = await codec.getNextFrame();
+      expect(frame.image.width, greaterThan(1500));
+      expect(frame.image.height, greaterThan(700));
+      expect(frame.image.width / frame.image.height, closeTo(2.4, .2));
+    }
   });
 
   test('emotion vocabulary is stable for every art surface', () {

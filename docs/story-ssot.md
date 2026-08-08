@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 7606eae5d01e4e5e7492a2a9424620b1ce6e216e205ecb352214ca98a1f0c372 -->
+<!-- ssot-sha256: 447c8c767d1a1f2aafe8752e97f04ab3c58bfb0ce1609c0e9f52f6bb62a6c277 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -51,7 +51,7 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **913** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
+- locale 최소 키: **923** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
 - 산식: authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
@@ -123,6 +123,22 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 - [`assets/lumen-personality-sheet.png#personality-frames`](../assets/lumen-personality-sheet.png) · SHA-256 `4f0529df6b24415f44bf18284d6ba15492838dc5bff5f6dab2c620eb97e6fb28`
 - [`assets/lumen-personality-sheet-source.png#chroma-key-source`](../assets/lumen-personality-sheet-source.png) · SHA-256 `0e652df6e6a35f67bd8623c15ba23fb88d745a82ac8f083a32ea14a715b706d8`
 - [`assets/lumen-character-roster.png#character-archive-sheet`](../assets/lumen-character-roster.png) · SHA-256 `5302f4560c014f619cda1c3de0cf986a8428cec4c005cf29ab6ef62ed5657356`
+- [`assets/generated/character-emotions/doran.png#doran-five-emotion-sheet`](../assets/generated/character-emotions/doran.png) · SHA-256 `0ef8e70919cd59879f9e334190fbd0bf37bfaf4b5dbbea1d4f2f41319233b69a`
+- [`assets/generated/character-emotions/mira.png#mira-five-emotion-sheet`](../assets/generated/character-emotions/mira.png) · SHA-256 `0acdb7094dadf1ca23185f8b40043cd04a1b0c7c171fd6b3d0ae8743f3750b84`
+- [`assets/generated/character-emotions/kai.png#kai-five-emotion-sheet`](../assets/generated/character-emotions/kai.png) · SHA-256 `ddbe4f1d27a7295fba74bdca9569d7ce1369359d9a15f002a764612581cc8c09`
+- [`assets/generated/character-emotions/ria.png#ria-five-emotion-sheet`](../assets/generated/character-emotions/ria.png) · SHA-256 `148f96190a24d8cc1577f85026d721c57b3fc726970ed43cf171d2c13100df84`
+- [`assets/generated/character-emotions/or.png#or-five-emotion-sheet`](../assets/generated/character-emotions/or.png) · SHA-256 `68339520d191ff5d88726de0c18aa6bf7082509be1f6afcdd5d25a4afc12abca`
+- [`assets/generated/character-emotions/sena.png#sena-five-emotion-sheet`](../assets/generated/character-emotions/sena.png) · SHA-256 `c169ed21c988125ee9a0e2efdf69433acb6148c3dc9e3931e1cf856736f889c8`
+- [`assets/generated/character-emotions/bron.png#bron-five-emotion-sheet`](../assets/generated/character-emotions/bron.png) · SHA-256 `82dac30a8bd22912e42e128a2120410ca9d007f14915774e336082436eccf8b3`
+- [`assets/generated/character-emotions/elbi.png#elbi-five-emotion-sheet`](../assets/generated/character-emotions/elbi.png) · SHA-256 `d8befe99b664ae2d0972e223f97f6500b7039d6b5d57915a978911391c1220eb`
+- [`assets/generated/character-emotions/haon.png#haon-five-emotion-sheet`](../assets/generated/character-emotions/haon.png) · SHA-256 `cedbb083c04b7d327579a4b1c9dc7e55cbd34ccf7cdd572ab708bd762a813250`
+- [`assets/generated/character-emotions/navin.png#navin-five-emotion-sheet`](../assets/generated/character-emotions/navin.png) · SHA-256 `d8df08bfe66b16d0ab824f552055044cda2fe35645d40bb3b43850bb1b931ba1`
+- [`assets/generated/character-emotions/yoonseul.png#yoonseul-five-emotion-sheet`](../assets/generated/character-emotions/yoonseul.png) · SHA-256 `d2cbeb8bbde4ad6a731e5162117e0def85f415d72b89c4aea0c40210399d6f4f`
+- [`assets/generated/character-emotions/moa.png#moa-five-emotion-sheet`](../assets/generated/character-emotions/moa.png) · SHA-256 `efdcfdc03e42f2d41d33d79728e80d522279996e2a001bf8cb1a49c7eb248fca`
+- [`assets/generated/character-emotions/sol.png#sol-five-emotion-sheet`](../assets/generated/character-emotions/sol.png) · SHA-256 `a9b564680448ac639b33e440918510cc070f62364bbac13d3797fd639c9b529c`
+- [`assets/generated/character-emotions/eil.png#eil-five-emotion-sheet`](../assets/generated/character-emotions/eil.png) · SHA-256 `2ed2999195bec0404133d2ca2543de0bb34f8d83ded0a0d68867ad277814c204`
+- [`assets/generated/character-emotions/raon.png#raon-five-emotion-sheet`](../assets/generated/character-emotions/raon.png) · SHA-256 `f942e8279fcc4e153aac195e8a99943a67518876abd67f428a13d80a8598491f`
+- [`assets/generated/character-emotions/morin.png#morin-five-emotion-sheet`](../assets/generated/character-emotions/morin.png) · SHA-256 `25d7bda1da9b8eb3bb186fb40afe0481229c500a782db57a275163cfeaed2161`
 
 ## 폰트
 
@@ -130,8 +146,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `d74c458593f6a15b0e486de8af1123fac600a186027031c232052c2de7dcb884`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `79af9ee5c3203b935df963ec9d69bf431c1371bba424e5aaf38cfdbc4f67a20f`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `c7f71452465bd75ef543967da97de59228315cab338e7723e9665c0e03cb9951`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `3a346f216fbc8017e4ded425de7efff55aa43acf8f72c4ba37a9a76cdb51620a`
 
 ## 성격
 

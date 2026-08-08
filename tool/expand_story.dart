@@ -312,10 +312,13 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/character_roster.dart#archiveCharacters',
     'lib/character_art.dart#characterArtFromStory',
     'lib/character_art_painter.dart#CharacterArtPainter',
+    'lib/relationship_archive_painter.dart#RelationshipArchivePainter',
     'test/character_roster_test.dart#SSOT character archive binding',
     'test/character_roster_golden_test.dart#home opens the twenty-character archive',
     'test/character_art_test.dart#every resident has a distinct illustration and emotion contract',
     'test/character_art_golden_test.dart#archive card opens the art direction and emotion states',
+    'test/relationship_archive_test.dart#relationship archive reuses the pure resolver projection',
+    'test/relationship_archive_golden_test.dart#relationship archive renders the resolved state and follow-up',
     'lib/environment_catalog.dart#environmentsFromStory',
     'lib/design_tokens.dart#DesignTokens',
     'lib/canvas_ui_kit.dart#CanvasUiKit',
@@ -366,6 +369,56 @@ void refreshHashes(Map<String, dynamic> story) {
     final path = (ref['ref'] as String).split('#').first;
     ref['sha256'] = sha256.convert(File(path).readAsBytesSync()).toString();
   }
+  for (final ref in (story['assetRefs'] as List).cast<Map<String, dynamic>>()) {
+    final path = (ref['ref'] as String).split('#').first;
+    ref['sha256'] = sha256.convert(File(path).readAsBytesSync()).toString();
+  }
+}
+
+void materializeCharacterEmotionAsset(Map<String, dynamic> story) {
+  const assets = <String, String>{
+    'doran': 'assets/generated/character-emotions/doran.png',
+    'mira': 'assets/generated/character-emotions/mira.png',
+    'kai': 'assets/generated/character-emotions/kai.png',
+    'ria': 'assets/generated/character-emotions/ria.png',
+    'or': 'assets/generated/character-emotions/or.png',
+    'sena': 'assets/generated/character-emotions/sena.png',
+    'bron': 'assets/generated/character-emotions/bron.png',
+    'elbi': 'assets/generated/character-emotions/elbi.png',
+    'haon': 'assets/generated/character-emotions/haon.png',
+    'navin': 'assets/generated/character-emotions/navin.png',
+    'yoonseul': 'assets/generated/character-emotions/yoonseul.png',
+    'moa': 'assets/generated/character-emotions/moa.png',
+    'sol': 'assets/generated/character-emotions/sol.png',
+    'eil': 'assets/generated/character-emotions/eil.png',
+    'raon': 'assets/generated/character-emotions/raon.png',
+    'morin': 'assets/generated/character-emotions/morin.png',
+  };
+  final archive = (story['characterArchive'] as List? ?? const [])
+      .whereType<Map>()
+      .map((entry) => entry.cast<String, dynamic>());
+  for (final entry in archive) {
+    final asset = assets['${entry['id']}'];
+    if (asset == null) continue;
+    if (!File(asset).existsSync()) {
+      throw StateError('missing character emotion asset: $asset');
+    }
+    entry['emotionAsset'] = asset;
+  }
+  final refs = (story['assetRefs'] as List? ?? const [])
+      .whereType<Map>()
+      .map((entry) => entry.cast<String, dynamic>())
+      .toList();
+  for (final entry in assets.entries) {
+    final asset = entry.value;
+    if (!refs.any((ref) => (ref['ref'] as String).split('#').first == asset)) {
+      refs.add({
+        'ref': '$asset#${entry.key}-five-emotion-sheet',
+        'sha256': '',
+      });
+    }
+  }
+  story['assetRefs'] = refs;
 }
 
 void materializeCharacterContracts(Map<String, dynamic> story,
@@ -4266,6 +4319,16 @@ void main() {
         '멀어진 거리는 실패의 이름이 아니야. 답장이 올 자리를 지켜 보자.',
     'ui.relationship.followup.truce.title': '다시 묶은 바람',
     'ui.relationship.followup.truce.line': '서로의 몫을 돌려준 뒤에야, 같은 바람을 다시 탈 수 있어.',
+    'ui.relationshipArchive.title': '동행 관계 기록',
+    'ui.relationshipArchive.subtitle': '같은 resolver가 다음 선택과 기록을 함께 판정합니다.',
+    'ui.relationshipArchive.state': '현재 관계 상태',
+    'ui.relationshipArchive.gap': '유대 간격',
+    'ui.relationshipArchive.lead': '앞선 동행',
+    'ui.relationshipArchive.distant': '먼 동행',
+    'ui.relationshipArchive.followup': '상태별 후속 기록',
+    'ui.relationshipArchive.bond': '유대',
+    'ui.relationshipArchive.quest': '퀘스트',
+    'ui.relationshipArchive.back': '← 운명 기록',
   });
   en.addAll({
     'ui.ledger.button': 'Fate ledger',
@@ -4318,6 +4381,17 @@ void main() {
     'ui.relationship.followup.truce.title': 'Wind Tied Again',
     'ui.relationship.followup.truce.line':
         'Only after returning each share can we ride the same wind again.',
+    'ui.relationshipArchive.title': 'Companion Relationship Ledger',
+    'ui.relationshipArchive.subtitle':
+        'The same resolver adjudicates the next choice and this record.',
+    'ui.relationshipArchive.state': 'Current relationship state',
+    'ui.relationshipArchive.gap': 'Bond gap',
+    'ui.relationshipArchive.lead': 'Leading companion',
+    'ui.relationshipArchive.distant': 'Distant companion',
+    'ui.relationshipArchive.followup': 'State follow-up',
+    'ui.relationshipArchive.bond': 'Bond',
+    'ui.relationshipArchive.quest': 'Quest',
+    'ui.relationshipArchive.back': '← Fate ledger',
   });
   final relationshipFollowups = <Map<String, dynamic>>[
     {
@@ -4650,6 +4724,7 @@ void main() {
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   story['scenarioCompleteness']['dimensions'] = dimensions;
 
+  materializeCharacterEmotionAsset(story);
   materializeCharacterContracts(story, ko, en);
   materializeChapterScenes(story, ko, en);
   story['narrativeLoop']['chapterSceneCount'] =

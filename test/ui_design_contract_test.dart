@@ -37,6 +37,7 @@ void main() {
           'character_card',
           'character_art_panel',
           'emotion_chip',
+          'relationship_archive_panel',
           'ledger_thread_card',
           'quest_progress_card',
           'receipt_row',
@@ -52,5 +53,7 @@ void main() {
         containsAll(['empty', 'success', 'warning', 'danger']));
     expect(components['emotion_chip']['states'],
         containsAll(['idle', 'selected']));
+    expect(components['relationship_archive_panel']['states'],
+        containsAll(['resolved', 'replayable']));
   });
 }

@@ -94,6 +94,8 @@ void main() {
   final activities = (story['activities'] as List).cast<Map<String, dynamic>>();
   final people = (story['personalities'] as List).cast<Map<String, dynamic>>();
   final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
+  final characterArchive = (story['characterArchive'] as List? ?? const [])
+      .cast<Map<String, dynamic>>();
   final locations = (story['locations'] as List).cast<Map<String, dynamic>>();
   final legacyProfiles =
       (story['legacyProfiles'] as List).cast<Map<String, dynamic>>();
@@ -471,6 +473,25 @@ void main() {
       (p['design'] as Map?)?['motif'] is! String ||
       (p['design'] as Map?)?['silhouette'] is! String))
     fail('personality design-to-PNG contract invalid');
+  for (final character in characterArchive) {
+    final emotionAsset = character['emotionAsset'];
+    if (emotionAsset is String && !assetPaths.contains(emotionAsset)) {
+      fail('character emotion asset is not declared: ${character['id']}');
+    }
+  }
+  if (!characterArchive.any((character) =>
+      character['id'] == 'doran' &&
+      character['emotionAsset'] ==
+          'assets/generated/character-emotions/doran.png')) {
+    fail('doran emotion sheet contract is missing');
+  }
+  final emotionAssets = characterArchive
+      .map((character) => character['emotionAsset'])
+      .whereType<String>()
+      .toSet();
+  if (emotionAssets.length < 16) {
+    fail('at least sixteen character emotion sheets are required');
+  }
   for (final ref in fontRefs) {
     final path = (ref['ref'] as String).split('#').first;
     if (!File(path).existsSync()) fail('missing font ref $path');

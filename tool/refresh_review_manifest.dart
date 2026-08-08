@@ -47,6 +47,22 @@ void main() {
     'test/goldens/character-art-doran-concern.png',
     'test/goldens/character-art-doran-concern-en.png',
     'assets/lumen-character-roster.png',
+    'assets/generated/character-emotions/doran.png',
+    'assets/generated/character-emotions/mira.png',
+    'assets/generated/character-emotions/kai.png',
+    'assets/generated/character-emotions/ria.png',
+    'assets/generated/character-emotions/or.png',
+    'assets/generated/character-emotions/sena.png',
+    'assets/generated/character-emotions/bron.png',
+    'assets/generated/character-emotions/elbi.png',
+    'assets/generated/character-emotions/haon.png',
+    'assets/generated/character-emotions/navin.png',
+    'assets/generated/character-emotions/yoonseul.png',
+    'assets/generated/character-emotions/moa.png',
+    'assets/generated/character-emotions/sol.png',
+    'assets/generated/character-emotions/eil.png',
+    'assets/generated/character-emotions/raon.png',
+    'assets/generated/character-emotions/morin.png',
     'lib/environment_catalog.dart',
     'lib/design_tokens.dart',
     'test/environment_catalog_test.dart',
@@ -123,7 +139,8 @@ void main() {
     'test/ui_design_contract_test.dart',
     'lib/ui_state_gallery.dart',
     'test/ui_state_golden_test.dart',
-    'test/goldens/ui-state-matrix.png'
+    'test/goldens/ui-state-matrix.png',
+    'reviews/gameplay-review.md'
   ]) {
     if (!known.containsKey(path)) {
       entries

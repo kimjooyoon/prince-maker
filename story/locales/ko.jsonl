@@ -912,3 +912,13 @@
 {"type":"entry","key":"companionScene.taro-next-foothold.closing","value":"타로의 독립 장면은 다음 막의 조건으로 기록되었다."}
 {"type":"entry","key":"ui.event.tradeoff","value":"교환이 있는 선택"}
 {"type":"entry","key":"ui.event.commitment","value":"축을 쌓는 선택"}
+{"type":"entry","key":"ui.relationshipArchive.title","value":"동행 관계 기록"}
+{"type":"entry","key":"ui.relationshipArchive.subtitle","value":"같은 resolver가 다음 선택과 기록을 함께 판정합니다."}
+{"type":"entry","key":"ui.relationshipArchive.state","value":"현재 관계 상태"}
+{"type":"entry","key":"ui.relationshipArchive.gap","value":"유대 간격"}
+{"type":"entry","key":"ui.relationshipArchive.lead","value":"앞선 동행"}
+{"type":"entry","key":"ui.relationshipArchive.distant","value":"먼 동행"}
+{"type":"entry","key":"ui.relationshipArchive.followup","value":"상태별 후속 기록"}
+{"type":"entry","key":"ui.relationshipArchive.bond","value":"유대"}
+{"type":"entry","key":"ui.relationshipArchive.quest","value":"퀘스트"}
+{"type":"entry","key":"ui.relationshipArchive.back","value":"← 운명 기록"}

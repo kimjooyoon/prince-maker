@@ -7,7 +7,7 @@ import 'package:prince_maker/jsonl.dart';
 import 'package:prince_maker/main.dart';
 import 'package:prince_maker/save_state.dart';
 
-Future<Map<String, Map<String, String>>> loadCharacterArtLocales() async {
+Future<Map<String, Map<String, String>>> loadRelationshipLocales() async {
   final locales = <String, Map<String, String>>{};
   for (final locale in ['ko', 'en']) {
     final raw = decodeJsonl(utf8.decode(
@@ -20,20 +20,20 @@ Future<Map<String, Map<String, String>>> loadCharacterArtLocales() async {
 }
 
 void main() {
-  testWidgets('archive card opens the art direction and emotion states',
+  testWidgets('relationship archive renders the resolved state and follow-up',
       (tester) async {
     final story = decodeJsonl(utf8.decode(
         (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
     await tester.pumpWidget(Game(
       story,
-      locales: await loadCharacterArtLocales(),
+      locales: await loadRelationshipLocales(),
       initialSnapshot: const GameSnapshot(
         week: 1,
         coins: 12,
         fatigue: 0,
         selected: 0,
         persona: 0,
-        page: 7,
+        page: 11,
         eventIndex: 0,
         stats: {'지혜': 4, '공감': 5, '용기': 3},
         history: [],
@@ -41,22 +41,14 @@ void main() {
     ));
     await tester.pumpAndSettle();
     await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 500)));
-    await tester.pumpAndSettle();
-    expect(
-        find.byKey(const ValueKey('character-emotion-ready')), findsOneWidget);
-    await tester.tapAt(const Offset(100, 180));
+        () => Future<void>.delayed(const Duration(milliseconds: 300)));
     await tester.pump();
-    expect(find.byKey(const ValueKey('10-1-0-0')), findsOneWidget);
+    expect(find.byKey(const ValueKey('11-1-0-0')), findsOneWidget);
     await expectLater(find.byType(Game),
-        matchesGoldenFile('goldens/character-art-doran.png'));
-    await tester.tapAt(const Offset(500, 480));
-    await tester.pump();
-    await expectLater(find.byType(Game),
-        matchesGoldenFile('goldens/character-art-doran-concern.png'));
+        matchesGoldenFile('goldens/relationship-archive.png'));
     await tester.tapAt(const Offset(650, 40));
     await tester.pump();
     await expectLater(find.byType(Game),
-        matchesGoldenFile('goldens/character-art-doran-concern-en.png'));
+        matchesGoldenFile('goldens/relationship-archive-en.png'));
   });
 }

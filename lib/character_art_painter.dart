@@ -13,6 +13,7 @@ class CharacterArtPainter {
   const CharacterArtPainter({
     required this.story,
     required this.sheet,
+    required this.emotionSheets,
     required this.characterIndex,
     required this.emotionIndex,
     required this.locale,
@@ -20,6 +21,7 @@ class CharacterArtPainter {
 
   final Map<String, dynamic> story;
   final ui.Image? sheet;
+  final Map<String, ui.Image> emotionSheets;
   final int characterIndex, emotionIndex;
   final String locale;
 
@@ -117,6 +119,16 @@ class CharacterArtPainter {
         Paint());
   }
 
+  void drawEmotionSheet(
+      Canvas c, ui.Image sheet, int emotion, Rect destination) {
+    final width = sheet.width / lumenEmotionStates.length;
+    c.drawImageRect(
+        sheet,
+        Rect.fromLTWH(emotion * width, 0, width, sheet.height.toDouble()),
+        destination,
+        Paint());
+  }
+
   void paint(Canvas c) {
     final characters = archiveCharacters(story);
     if (characters.isEmpty) return;
@@ -124,6 +136,8 @@ class CharacterArtPainter {
             characters[characterIndex.clamp(0, characters.length - 1)],
         art = characterArtFor(story, character.id),
         emotion = emotionIndex.clamp(0, lumenEmotionStates.length - 1),
+        emotionSheet =
+            art.emotionAsset == null ? null : emotionSheets[art.emotionAsset],
         accent = Color(character.accent),
         ko = locale == 'ko';
     text(c, ko ? '캐릭터 일러스트 설계' : 'Character art direction',
@@ -186,7 +200,12 @@ class CharacterArtPainter {
         bold: true);
     CanvasUiKit.statePanel(c, const Rect.fromLTWH(338, 366, 88, 104),
         state: CanvasUiState.selected, accent: accent, radius: 16);
-    face(c, const Rect.fromLTWH(354, 378, 56, 72), emotion, accent);
+    if (emotionSheet != null) {
+      drawEmotionSheet(
+          c, emotionSheet, emotion, const Rect.fromLTWH(338, 366, 88, 104));
+    } else {
+      face(c, const Rect.fromLTWH(354, 378, 56, 72), emotion, accent);
+    }
     text(c, lumenEmotionStates[emotion].title(locale), const Offset(450, 368),
         19, ink,
         bold: true, width: 230);

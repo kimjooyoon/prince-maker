@@ -912,3 +912,13 @@
 {"type":"entry","key":"companionScene.taro-next-foothold.closing","value":"Taro’s independent scene was recorded as a condition for the next chapter."}
 {"type":"entry","key":"ui.event.tradeoff","value":"Trade-off choice"}
 {"type":"entry","key":"ui.event.commitment","value":"Builds one axis"}
+{"type":"entry","key":"ui.relationshipArchive.title","value":"Companion Relationship Ledger"}
+{"type":"entry","key":"ui.relationshipArchive.subtitle","value":"The same resolver adjudicates the next choice and this record."}
+{"type":"entry","key":"ui.relationshipArchive.state","value":"Current relationship state"}
+{"type":"entry","key":"ui.relationshipArchive.gap","value":"Bond gap"}
+{"type":"entry","key":"ui.relationshipArchive.lead","value":"Leading companion"}
+{"type":"entry","key":"ui.relationshipArchive.distant","value":"Distant companion"}
+{"type":"entry","key":"ui.relationshipArchive.followup","value":"State follow-up"}
+{"type":"entry","key":"ui.relationshipArchive.bond","value":"Bond"}
+{"type":"entry","key":"ui.relationshipArchive.quest","value":"Quest"}
+{"type":"entry","key":"ui.relationshipArchive.back","value":"← Fate ledger"}

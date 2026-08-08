@@ -84,6 +84,7 @@
 | 캐릭터 아트 `10` | `character_art_panel` + `emotion_chip` + `locale_toggle` + `navigation_footer` | 선택 주민의 일러스트 방향·실루엣·동작·5종 감정 키 확인 |
 | 환경 아틀라스 `8` | `environment_card` + `environment_surface` | 장소 규칙 확인, 사이드 장면 진입 |
 | 사이드 장면 `9` | `side_scene_card` + `requirement_badge` + `navigation_footer` | 이전/다음 장면, 선택/잠금 확인 |
+| 동행 관계 기록 `11` | `relationship_archive_panel` + `quest_progress_card` + `speaker_portrait` + `locale_toggle` | 동일 resolver의 관계 상태·유대 간격·후속 기록·동료 퀘스트 확인 |
 
 ## 환경 게임디자인 시스템
 
@@ -104,8 +105,11 @@
 | --- | --- | --- |
 | character_art_panel | portrait sheet·일러스트 방향·실루엣·대표 동작·표정 키 | 캐릭터 도감 상세 |
 | emotion_chip | 감정 얼굴·라벨·개별 시각 큐를 idle / selected 상태로 표시 | 캐릭터 도감 상세 |
+| relationship_archive_panel | 순수 관계 resolver의 상태·유대 간격·후속 기록·동료 퀘스트를 한 화면에 표시 | 동행 관계 기록 |
 
 캐릭터 도감 7은 20종 character_card를 보여 주고, 카드를 누르면 캐릭터 아트 10으로 이동한다. 아트 상세는 locale_toggle, character_art_panel, emotion_chip, navigation_footer를 조합하며, 5종 감정 전환과 도감 복귀를 필수 상호작용으로 고정한다.
+
+동행 관계 기록 11은 `resolveRelationshipDynamics`와 `resolveRelationshipFollowup`의 동일 결과를 상태·유대 간격·후속 기록·3명 동료 카드로 투영한다. 홈·막 결산·기록 보관소와 다른 surface가 같은 입력에서 같은 state id를 얻는지 `relationship-archive.png`와 replay 테스트로 고정한다.
 
 ## 다음 설계 단계
 

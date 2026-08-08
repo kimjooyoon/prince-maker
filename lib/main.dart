@@ -18,6 +18,7 @@ import 'collection_platform.dart';
 import 'game_core.dart';
 import 'character_roster.dart';
 import 'character_art_painter.dart';
+import 'relationship_archive_painter.dart';
 import 'environment_catalog.dart';
 import 'canvas_ui_kit.dart';
 import 'canvas_choice_impact.dart';
@@ -73,6 +74,7 @@ class _Game extends State<Game> {
   String lastResult = '', lastLine = '';
   ui.Image? image, personaImage;
   ui.Image? rosterImage;
+  final characterEmotionImages = <String, ui.Image>{};
   late GameSession session;
   late CollectionPort collection;
   LocaleCatalog get catalog => LocaleCatalog(widget.locales);
@@ -175,6 +177,23 @@ class _Game extends State<Game> {
         .then((f) {
       if (mounted) setState(() => rosterImage = f.image);
     });
+    final emotionAssets =
+        (widget.story['characterArchive'] as List? ?? const [])
+            .whereType<Map>()
+            .map((entry) => entry['emotionAsset'])
+            .whereType<String>()
+            .toSet();
+    for (final asset in emotionAssets) {
+      rootBundle
+          .load(asset)
+          .then((b) => ui.instantiateImageCodec(b.buffer.asUint8List()))
+          .then((c) => c.getNextFrame())
+          .then((f) {
+        if (mounted) {
+          setState(() => characterEmotionImages[asset] = f.image);
+        }
+      });
+    }
   }
 
   void sync() {
@@ -402,6 +421,16 @@ class _Game extends State<Game> {
       } else if (y > 640) {
         setState(() => page = 7);
       }
+    } else if (page == 11) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
+      } else if (y > 640 && x < 220) {
+        setState(() => page = 5);
+      } else if (y > 640) {
+        setState(() => page = 0);
+      }
+    } else if (y > 655 && x >= 590) {
+      setState(() => page = 11);
     } else if (y > 655 && x >= 200 && x < 410) {
       setState(() => page = 7);
     } else if (y > 655 && x >= 410 && x < 590) {
@@ -519,6 +548,7 @@ class _Game extends State<Game> {
                           image,
                           personaImage,
                           rosterImage,
+                          characterEmotionImages,
                           history,
                           eventIndex,
                           sideSceneCursor,
@@ -532,6 +562,8 @@ class _Game extends State<Game> {
                       size: viewport),
                   if (rosterImage != null)
                     const SizedBox(key: ValueKey('roster-ready')),
+                  if (characterEmotionImages.isNotEmpty)
+                    const SizedBox(key: ValueKey('character-emotion-ready')),
                 ]));
           }))));
 }
@@ -554,6 +586,7 @@ class Scene extends CustomPainter {
       this.image,
       this.personaImage,
       this.rosterImage,
+      this.characterEmotionImages,
       this.history,
       this.eventIndex,
       this.sideSceneCursor,
@@ -585,6 +618,9 @@ class Scene extends CustomPainter {
       image?.hashCode,
       personaImage?.hashCode,
       rosterImage?.hashCode,
+      characterEmotionImages.entries
+          .map((entry) => [entry.key, entry.value.hashCode])
+          .toList(),
       history,
       saveCode,
       activities
@@ -610,6 +646,7 @@ class Scene extends CustomPainter {
   final Map<String, bool> milestones, flags;
   final String lastResult, lastLine;
   final ui.Image? image, personaImage, rosterImage;
+  final Map<String, ui.Image> characterEmotionImages;
   final List<String> history;
   final String saveCode;
   final List<Activity> activities;
@@ -961,6 +998,12 @@ class Scene extends CustomPainter {
       c.restore();
       return;
     }
+    if (page == 11) {
+      relationshipArchive(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
     home(c);
     drawFeedbackBanner(c, lastResult, lastLine);
     seasonProgress(c);
@@ -970,8 +1013,17 @@ class Scene extends CustomPainter {
   void characterArt(Canvas c) => CharacterArtPainter(
         story: s,
         sheet: rosterImage,
+        emotionSheets: characterEmotionImages,
         characterIndex: archiveCharacterIndex,
         emotionIndex: archiveEmotionIndex,
+        locale: activeLocale,
+      ).paint(c);
+
+  void relationshipArchive(Canvas c) => RelationshipArchivePainter(
+        story: s,
+        bonds: bonds,
+        flags: flags,
+        portraitSheet: personaImage,
         locale: activeLocale,
       ).paint(c);
 
@@ -1099,6 +1151,11 @@ class Scene extends CustomPainter {
     txt(c, activeLocale == 'ko' ? '환경 아틀라스' : 'Environment atlas',
         const Offset(438, 668), 12, teal,
         bold: true, maxWidth: 130);
+    box(c, const Rect.fromLTWH(608, 660, 128, 30), Colors.white,
+        radius: 12, stroke: teal);
+    txt(c, activeLocale == 'ko' ? '동행 기록' : 'Bonds', const Offset(624, 668), 11,
+        teal,
+        bold: true, maxWidth: 98);
   }
 
   void ledger(Canvas c) {

@@ -36,6 +36,7 @@ class LumenCharacterArt {
     required this.gestureEn,
     required this.emotionNotes,
     required this.emotionNotesEn,
+    this.emotionAsset,
   });
 
   final String id;
@@ -47,6 +48,7 @@ class LumenCharacterArt {
   final String gestureEn;
   final List<String> emotionNotes;
   final List<String> emotionNotesEn;
+  final String? emotionAsset;
 
   factory LumenCharacterArt.fromJson(Map<String, dynamic> json) {
     return LumenCharacterArt(
@@ -59,6 +61,7 @@ class LumenCharacterArt {
       gestureEn: '${json['gestureEn']}',
       emotionNotes: _fiveStrings(json['emotionNotes']),
       emotionNotesEn: _fiveStrings(json['emotionNotesEn']),
+      emotionAsset: json['emotionAsset'] as String?,
     );
   }
 
@@ -88,6 +91,7 @@ class LumenCharacterArt {
           'Plant both feet and face forward',
           'Look up toward the light beyond the motif',
         ],
+        emotionAsset: null,
       );
 
   String illustrationFor(String locale) =>
