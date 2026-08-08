@@ -5,8 +5,8 @@
   "endingWeek": 24,
   "codeRefs": [
     {"ref":"lib/main.dart#_Game/Scene","sha256":"abb4fff3aec3afa54c7ded036ec651e40c82af1fc2465e7d137107199d2ef9e5"},
-    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"09a862c337fb252e6675c6c1ee61c6fe3a4bf1fa1250e764db7719a54131e0eb"},
-    {"ref":"lib/game_core.dart#SystemDecisionPolicy","sha256":"09a862c337fb252e6675c6c1ee61c6fe3a4bf1fa1250e764db7719a54131e0eb"},
+    {"ref":"lib/game_core.dart#GameWorld/GameSession/resolveEnding","sha256":"3edcf4a24db07bace128c92de6085c71ff896f5bf8296d35b474052ca9c8bb81"},
+    {"ref":"lib/game_core.dart#SystemDecisionPolicy","sha256":"3edcf4a24db07bace128c92de6085c71ff896f5bf8296d35b474052ca9c8bb81"},
     {"ref":"lib/save_adapter.dart#conditional-platform-boundary","sha256":"9a56a4077458c6d1da48f4f0b1ba15e8c5914026acca9771f0bc6655de0bffd9"},
     {"ref":"lib/save_adapter_web.dart#BrowserSaveAdapter","sha256":"27d150569a966bb036aa0cb1eb2070f09610a6ded8f061bf11c0e3d84ce37163"},
     {"ref":"lib/save_adapter_stub.dart#MemorySaveAdapter-fallback","sha256":"f14b98d51781f31f35a82a9259f9bace404e8197f813c5f5f4b0a8bc1a8b6875"},

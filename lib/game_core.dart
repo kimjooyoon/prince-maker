@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'save_state.dart';
 
 typedef Entity = int;
@@ -77,10 +75,15 @@ class SystemDecisionPolicy {
         : conditions
             ? 'input-contract'
             : 'input-contract-rejected';
-    final payload = '$contract|$kind|$subject|$week|${approved ? 'approve' : 'reject'}';
-    final hash = sha256.convert(utf8.encode(payload)).toString().substring(0, 16);
+    final payload =
+        '$contract|$kind|$subject|$week|${approved ? 'approve' : 'reject'}';
+    var hash = 2166136261;
+    for (final unit in payload.codeUnits) {
+      hash = ((hash ^ unit) * 16777619) & 0x7fffffff;
+    }
+    final decisionHash = hash.toRadixString(16).padLeft(8, '0');
     return SystemDecisionReceipt(
-        approved, kind, subject, week, rule, contract, hash, owner);
+        approved, kind, subject, week, rule, contract, decisionHash, owner);
   }
 }
 
