@@ -7,6 +7,7 @@ import 'canvas_ui_kit.dart';
 import 'character_art.dart';
 import 'character_roster.dart';
 import 'design_tokens.dart';
+import 'i18n.dart';
 
 /// Reusable Canvas surface for the authored character-art direction page.
 class CharacterArtPainter {
@@ -140,14 +141,21 @@ class CharacterArtPainter {
             art.emotionAsset == null ? null : emotionSheets[art.emotionAsset],
         accent = Color(character.accent),
         ko = locale == 'ko';
-    text(c, ko ? '캐릭터 일러스트 설계' : 'Character art direction',
-        const Offset(24, 22), 28, ink,
-        bold: true, width: 520);
     text(
         c,
-        ko
-            ? '도감 카드에서 재사용 가능한 포즈와 감정 키를 확인하세요.'
-            : 'Inspect reusable pose and emotion keys from the archive card.',
+        localized('ui.characterArt.title', ko ? '루멘 사람들' : 'People of Lumen'),
+        const Offset(24, 22),
+        28,
+        ink,
+        bold: true,
+        width: 520);
+    text(
+        c,
+        localized(
+            'ui.characterArt.lead',
+            ko
+                ? '선택으로 가까워진 루멘 사람들의 하루를 만나 보세요.'
+                : 'Meet the people of Lumen your choices bring closer.'),
         const Offset(25, 60),
         12,
         teal,
@@ -169,34 +177,60 @@ class CharacterArtPainter {
         bold: true, width: 220);
     text(c, character.subtitle(locale), const Offset(46, 374), 11, accent,
         bold: true, width: 220);
-    text(c, ko ? '대표 모티프' : 'Signature motif', const Offset(46, 405), 9,
+    text(
+        c,
+        localized(
+            'ui.characterArt.focus', ko ? '자주 보여 주는 모습' : 'A familiar gesture'),
+        const Offset(46, 405),
+        9,
         Colors.white70,
         bold: true);
-    text(c, character.motif, const Offset(46, 424), 14, Colors.white,
+    text(c, art.gestureFor(locale), const Offset(46, 424), 14, Colors.white,
         bold: true, width: 220);
     CanvasUiKit.badge(
-        c, const Rect.fromLTWH(46, 466, 108, 28), ko ? '5종 표정' : '5 emotions',
-        accent: accent, state: CanvasUiState.selected, fontSize: 9);
+        c,
+        const Rect.fromLTWH(46, 466, 132, 28),
+        localized(
+            'ui.characterArt.emotions', ko ? '기억에 남는 표정' : 'Memorable moods'),
+        accent: accent,
+        state: CanvasUiState.selected,
+        fontSize: 9);
 
     panel(c, const Rect.fromLTWH(316, 108, 420, 198), Colors.white, accent);
-    text(c, ko ? '일러스트 방향' : 'Illustration brief', const Offset(338, 130), 13,
+    text(
+        c,
+        localized(
+            'ui.characterArt.day', ko ? '이 사람의 하루' : 'A day in their life'),
+        const Offset(338, 130),
+        13,
         accent,
         bold: true);
     text(c, art.illustrationFor(locale), const Offset(338, 158), 12, ink,
         bold: true, width: 370);
-    text(c, ko ? '실루엣' : 'Silhouette', const Offset(338, 208), 9, teal,
+    text(
+        c,
+        localized(
+            'ui.characterArt.impression', ko ? '첫인상' : 'First impression'),
+        const Offset(338, 208),
+        9,
+        teal,
         bold: true);
     text(c, art.silhouetteFor(locale), const Offset(338, 226), 10, ink,
         width: 370);
-    text(c, ko ? '시그니처 동작' : 'Signature gesture', const Offset(338, 257), 9,
+    text(
+        c,
+        localized(
+            'ui.characterArt.gesture', ko ? '자주 하는 모습' : 'A familiar gesture'),
+        const Offset(338, 257),
+        9,
         teal,
         bold: true);
     text(c, art.gestureFor(locale), const Offset(338, 275), 10, ink,
         width: 370);
 
     panel(c, const Rect.fromLTWH(316, 320, 420, 190), Colors.white, accent);
-    text(c, ko ? '현재 표정 키' : 'Active expression key', const Offset(338, 340),
-        12, accent,
+    text(c, localized('ui.characterArt.mood', ko ? '지금의 표정' : 'Current mood'),
+        const Offset(338, 340), 12, accent,
         bold: true);
     CanvasUiKit.statePanel(c, const Rect.fromLTWH(338, 366, 88, 104),
         state: CanvasUiState.selected, accent: accent, radius: 16);
@@ -231,14 +265,21 @@ class CharacterArtPainter {
           bold: true,
           width: 60);
     }
-    text(c, ko ? '← 도감으로 돌아가기' : '← Back to archive', const Offset(24, 665), 13,
+    text(
+        c,
+        localized(
+            'ui.characterArt.back', ko ? '← 도감으로 돌아가기' : '← Back to archive'),
+        const Offset(24, 665),
+        13,
         teal,
         bold: true);
     text(
         c,
-        ko
-            ? '표정 키는 대화·기억 장면에서 재사용됩니다.'
-            : 'Emotion keys are reused by dialogue and memory scenes.',
+        localized(
+            'ui.characterArt.footer',
+            ko
+                ? '이 표정은 함께한 대화와 기억에 색을 더합니다.'
+                : 'This mood colors the conversations and memories you share.'),
         const Offset(316, 665),
         9,
         ink.withValues(alpha: .55),

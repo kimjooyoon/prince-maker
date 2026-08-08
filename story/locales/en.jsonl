@@ -922,3 +922,83 @@
 {"type":"entry","key":"ui.relationshipArchive.bond","value":"Bond"}
 {"type":"entry","key":"ui.relationshipArchive.quest","value":"Quest"}
 {"type":"entry","key":"ui.relationshipArchive.back","value":"← Fate ledger"}
+{"type":"entry","key":"ui.home.title","value":"Prince Maker"}
+{"type":"entry","key":"ui.home.setting","value":"A small domain where wind and starlight coexist"}
+{"type":"entry","key":"ui.home.week","value":"{hero} · week {week}"}
+{"type":"entry","key":"ui.home.status","value":"Coins {coins} · Fatigue {fatigue}/12 · {condition}"}
+{"type":"entry","key":"ui.home.bonds","value":"Bonds · Lumi {lumi} · Bora {bora} · Taro {taro} · {state}"}
+{"type":"entry","key":"ui.home.goal.free","value":"Begin this run without a seasonal goal."}
+{"type":"entry","key":"ui.home.goal.complete","value":"Every seasonal goal has been recorded."}
+{"type":"entry","key":"ui.home.goal.next","value":"Next goal · {title} · {stat} {value}/{min}"}
+{"type":"entry","key":"ui.home.talent","value":"Talent +{bonus}"}
+{"type":"entry","key":"ui.home.save","value":"Save / restore"}
+{"type":"entry","key":"ui.home.illustration","value":"Illustration"}
+{"type":"entry","key":"ui.home.spend","value":"Spend the day →"}
+{"type":"entry","key":"ui.home.chapter","value":"Chapter {chapter} · Lumen week {week}/{total} · {persona}"}
+{"type":"entry","key":"ui.home.route","value":"Route atlas"}
+{"type":"entry","key":"ui.home.ledger","value":"Fate ledger"}
+{"type":"entry","key":"ui.home.characters","value":"Character archive"}
+{"type":"entry","key":"ui.home.environments","value":"Environment atlas"}
+{"type":"entry","key":"ui.home.bondsButton","value":"Bonds"}
+{"type":"entry","key":"ui.home.condition.clear","value":"A clear mind"}
+{"type":"entry","key":"ui.home.condition.tired","value":"A little tired"}
+{"type":"entry","key":"ui.home.condition.strained","value":"Do not push today"}
+{"type":"entry","key":"ui.event.small","value":"A small event · week {week}"}
+{"type":"entry","key":"ui.event.choice","value":"Choice {index}"}
+{"type":"entry","key":"ui.event.condition","value":"Condition: {value} required"}
+{"type":"entry","key":"ui.event.statDelta","value":"{stat} {delta}"}
+{"type":"entry","key":"ui.event.coinDelta","value":"Coins {delta}"}
+{"type":"entry","key":"ui.event.bondDelta","value":"Bond {name} {delta}"}
+{"type":"entry","key":"ui.event.rivalDelta","value":"Relation {name} {delta}"}
+{"type":"entry","key":"ui.event.statNeeded","value":"{stat} {min}"}
+{"type":"entry","key":"ui.event.bondNeeded","value":"Bond {name} {min}"}
+{"type":"entry","key":"ui.event.condition.none","value":"No condition"}
+{"type":"entry","key":"ui.event.locked","value":"Locked"}
+{"type":"entry","key":"ui.home.weeklyRecord","value":"weekly record"}
+{"type":"entry","key":"ui.home.result","value":"The record was updated."}
+{"type":"entry","key":"ui.save.location","value":"Location discovered · {name}"}
+{"type":"entry","key":"ui.save.record","value":"A record was updated."}
+{"type":"entry","key":"ui.event.memoryNeeded","value":"memory clue"}
+{"type":"entry","key":"ui.event.continue","value":"Choose one path to continue the story."}
+{"type":"entry","key":"ui.save.title","value":"Save archive"}
+{"type":"entry","key":"ui.save.subtitle","value":"Keep the current state as a safe code and restore it in another run."}
+{"type":"entry","key":"ui.save.replay","value":"Records {count} · goals {done}/{total}"}
+{"type":"entry","key":"ui.save.bonds","value":"Companion bonds · Lumi {lumi} · Bora {bora} · Taro {taro}"}
+{"type":"entry","key":"ui.save.recent","value":"Recent records"}
+{"type":"entry","key":"ui.save.codeHint","value":"The original save code is handled only through the copy button."}
+{"type":"entry","key":"ui.save.endings","value":"Ending archive {done}/{total}"}
+{"type":"entry","key":"ui.save.noEndings","value":"No endings discovered yet."}
+{"type":"entry","key":"ui.save.routes","value":"Relationship archive {done}/{total}"}
+{"type":"entry","key":"ui.save.noRoutes","value":"No companion routes discovered yet."}
+{"type":"entry","key":"ui.save.copy","value":"Copy save code"}
+{"type":"entry","key":"ui.save.restore","value":"Restore save code"}
+{"type":"entry","key":"ui.save.back","value":"← Back to home"}
+{"type":"entry","key":"ui.save.activity","value":"Activity · {stat} {delta}"}
+{"type":"entry","key":"ui.save.event","value":"Event · {label}"}
+{"type":"entry","key":"ui.save.sideScene","value":"Side scene · {title}"}
+{"type":"entry","key":"ui.save.relationship","value":"Relationship record · {name}"}
+{"type":"entry","key":"stat.지혜","value":"Wisdom"}
+{"type":"entry","key":"stat.공감","value":"Empathy"}
+{"type":"entry","key":"stat.용기","value":"Courage"}
+{"type":"entry","key":"activity.observatory.label","value":"Observe the stars"}
+{"type":"entry","key":"activity.observatory.hint","value":"Wisdom +3 · fatigue +1"}
+{"type":"entry","key":"activity.garden.label","value":"Tend the garden"}
+{"type":"entry","key":"activity.garden.hint","value":"Empathy +3 · fatigue +1"}
+{"type":"entry","key":"activity.workshop.label","value":"Help at the workshop"}
+{"type":"entry","key":"activity.workshop.hint","value":"Courage +2 · coins +4"}
+{"type":"entry","key":"activity.rest.label","value":"Rest beneath the moon"}
+{"type":"entry","key":"activity.rest.hint","value":"Fatigue -2 · no growth"}
+{"type":"entry","key":"activity.market.label","value":"Run an errand at the market"}
+{"type":"entry","key":"activity.market.hint","value":"Coins +6 · fatigue +1"}
+{"type":"entry","key":"ui.home.prompt","value":"Choose an activity to spend the day."}
+{"type":"entry","key":"ui.environment.summary","value":"6 places · choices, rewards, and memories connect"}
+{"type":"entry","key":"ui.characterArt.title","value":"People of Lumen"}
+{"type":"entry","key":"ui.characterArt.lead","value":"Meet the people of Lumen your choices bring closer."}
+{"type":"entry","key":"ui.characterArt.focus","value":"A familiar gesture"}
+{"type":"entry","key":"ui.characterArt.emotions","value":"Memorable moods"}
+{"type":"entry","key":"ui.characterArt.day","value":"A day in their life"}
+{"type":"entry","key":"ui.characterArt.impression","value":"First impression"}
+{"type":"entry","key":"ui.characterArt.gesture","value":"A familiar gesture"}
+{"type":"entry","key":"ui.characterArt.mood","value":"Current mood"}
+{"type":"entry","key":"ui.characterArt.back","value":"← Back to archive"}
+{"type":"entry","key":"ui.characterArt.footer","value":"This mood colors the conversations and memories you share."}

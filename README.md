@@ -73,6 +73,12 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![English locale 사건 선택](test/goldens/english-event.png)
 ![English locale 엔딩·동료 에필로그](test/goldens/english-ending.png)
 
+플레이어 표면의 English core-loop와 저장 보관소는 [`test/player_facing_golden_test.dart`](test/player_facing_golden_test.dart)가 실제 Canvas 상태를 재생해 고정합니다. 저장 화면은 raw schema/history/hash를 기본 화면에 표시하지 않고, 사람이 읽는 기록 요약과 복사·복원 동작만 노출합니다.
+
+![English core-loop home Golden](test/goldens/player-home-en.png)
+![저장 보관소 요약 Golden](test/goldens/player-save.png)
+![English 저장 보관소 Golden](test/goldens/player-save-en.png)
+
 ## SSOT와 게임성 지표
 
 게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 166/166 effectful choice, 71/71 divergent scene, 166/166 multi-axis choice, 72/166 trade-off choice(0.4337), 29 gated choice이며, 결과 피드백 Golden·5-state 관계 resolver/replay trace·상태별 상호 배타 후속 대화까지 purity 축의 fail-closed 게이트로 연결됩니다. 상세 계약은 story/story.jsonl의 gameplayKpis·relationshipDesign와 lib/choice_impact.dart·tool/verify_gameplay_fun.dart에 있습니다.
@@ -94,11 +100,11 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
 ![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
 
-캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 전체 Canvas Golden 증적은 73장입니다.
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 전체 Canvas Golden 증적은 76장입니다.
 
 홈 하단의 `동행 기록`은 `page == 11`에서 `resolveRelationshipDynamics`·`resolveRelationshipFollowup`·`resolveCompanionQuests`를 동일 입력으로 투영합니다. 현재 관계 상태·유대 간격·상태별 후속 기록·루미/보라/타로의 상반신·퀘스트 진행을 [`lib/relationship_archive_painter.dart`](lib/relationship_archive_painter.dart)가 재사용 가능한 패널로 렌더링하고, ko/en 화면을 [`test/goldens/relationship-archive.png`](test/goldens/relationship-archive.png)·[`test/goldens/relationship-archive-en.png`](test/goldens/relationship-archive-en.png)으로 고정합니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태도 [`test/goldens/ui-state-matrix.png`](test/goldens/ui-state-matrix.png)로 고정하며, 전체 Golden 증적은 73장입니다.
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태도 [`test/goldens/ui-state-matrix.png`](test/goldens/ui-state-matrix.png)로 고정하며, 전체 Golden 증적은 76장입니다.
 
 ### 캐릭터 일러스트·감정표현 설계
 
@@ -114,7 +120,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 authored 대사 612줄, ko/en locale 923키, 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
+현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 authored 대사 612줄, ko/en locale 1003키, 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다.
 

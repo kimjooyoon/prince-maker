@@ -922,3 +922,83 @@
 {"type":"entry","key":"ui.relationshipArchive.bond","value":"유대"}
 {"type":"entry","key":"ui.relationshipArchive.quest","value":"퀘스트"}
 {"type":"entry","key":"ui.relationshipArchive.back","value":"← 운명 기록"}
+{"type":"entry","key":"ui.home.title","value":"프린스 메이커"}
+{"type":"entry","key":"ui.home.setting","value":"바람과 별빛이 공존하는 작은 영지 루멘"}
+{"type":"entry","key":"ui.home.week","value":"{hero} · {week}주차"}
+{"type":"entry","key":"ui.home.status","value":"은화 {coins} · 피로 {fatigue}/12 · {condition}"}
+{"type":"entry","key":"ui.home.bonds","value":"유대 {lumi} · {bora} · {taro} · {state}"}
+{"type":"entry","key":"ui.home.goal.free","value":"이번 회차는 자유롭게 시작합니다."}
+{"type":"entry","key":"ui.home.goal.complete","value":"계절 목표를 모두 확인했습니다."}
+{"type":"entry","key":"ui.home.goal.next","value":"다음 목표 · {title} · {stat} {value}/{min}"}
+{"type":"entry","key":"ui.home.talent","value":"재능 +{bonus}"}
+{"type":"entry","key":"ui.home.save","value":"저장/복원"}
+{"type":"entry","key":"ui.home.illustration","value":"일러스트"}
+{"type":"entry","key":"ui.home.spend","value":"하루 보내기 →"}
+{"type":"entry","key":"ui.home.chapter","value":"{chapter}막 · 루멘의 {week}주차/{total} · {persona}"}
+{"type":"entry","key":"ui.home.route","value":"발견 경로"}
+{"type":"entry","key":"ui.home.ledger","value":"운명 도감"}
+{"type":"entry","key":"ui.home.characters","value":"캐릭터 도감"}
+{"type":"entry","key":"ui.home.environments","value":"환경 아틀라스"}
+{"type":"entry","key":"ui.home.bondsButton","value":"동행 기록"}
+{"type":"entry","key":"ui.home.condition.clear","value":"마음이 맑아요"}
+{"type":"entry","key":"ui.home.condition.tired","value":"조금 지쳤어요"}
+{"type":"entry","key":"ui.home.condition.strained","value":"오늘은 무리하지 말기"}
+{"type":"entry","key":"ui.event.small","value":"작은 사건 · {week}주차"}
+{"type":"entry","key":"ui.event.choice","value":"선택 {index}"}
+{"type":"entry","key":"ui.event.condition","value":"조건: {value} 필요"}
+{"type":"entry","key":"ui.event.statDelta","value":"{stat} {delta}"}
+{"type":"entry","key":"ui.event.coinDelta","value":"은화 {delta}"}
+{"type":"entry","key":"ui.event.bondDelta","value":"유대 {name} {delta}"}
+{"type":"entry","key":"ui.event.rivalDelta","value":"관계 {name} {delta}"}
+{"type":"entry","key":"ui.event.statNeeded","value":"{stat} {min}"}
+{"type":"entry","key":"ui.event.bondNeeded","value":"유대 {name} {min}"}
+{"type":"entry","key":"ui.event.condition.none","value":"조건 없음"}
+{"type":"entry","key":"ui.event.locked","value":"잠김"}
+{"type":"entry","key":"ui.home.weeklyRecord","value":"이번 주 기록"}
+{"type":"entry","key":"ui.home.result","value":"기록이 갱신되었습니다."}
+{"type":"entry","key":"ui.save.location","value":"장소 발견 · {name}"}
+{"type":"entry","key":"ui.save.record","value":"기록이 갱신되었습니다."}
+{"type":"entry","key":"ui.event.memoryNeeded","value":"기억 단서"}
+{"type":"entry","key":"ui.event.continue","value":"하나를 골라 이야기를 이어갑니다."}
+{"type":"entry","key":"ui.save.title","value":"기록 보관소"}
+{"type":"entry","key":"ui.save.subtitle","value":"현재 상태를 안전한 코드로 보관하고 다른 실행에서 복원합니다."}
+{"type":"entry","key":"ui.save.replay","value":"기록 {count}회 · 목표 {done}/{total}"}
+{"type":"entry","key":"ui.save.bonds","value":"동행 유대 · 루미 {lumi} · 보라 {bora} · 타로 {taro}"}
+{"type":"entry","key":"ui.save.recent","value":"최근 기록"}
+{"type":"entry","key":"ui.save.codeHint","value":"원본 저장 코드는 복사 버튼으로만 다룹니다."}
+{"type":"entry","key":"ui.save.endings","value":"엔딩 도감 {done}/{total}"}
+{"type":"entry","key":"ui.save.noEndings","value":"아직 발견한 결말이 없습니다."}
+{"type":"entry","key":"ui.save.routes","value":"관계 도감 {done}/{total}"}
+{"type":"entry","key":"ui.save.noRoutes","value":"아직 발견한 동행이 없습니다."}
+{"type":"entry","key":"ui.save.copy","value":"저장 코드 복사"}
+{"type":"entry","key":"ui.save.restore","value":"저장 코드 복원"}
+{"type":"entry","key":"ui.save.back","value":"← 홈으로"}
+{"type":"entry","key":"ui.save.activity","value":"활동 · {stat} {delta}"}
+{"type":"entry","key":"ui.save.event","value":"사건 · {label}"}
+{"type":"entry","key":"ui.save.sideScene","value":"사이드 장면 · {title}"}
+{"type":"entry","key":"ui.save.relationship","value":"관계 기록 · {name}"}
+{"type":"entry","key":"stat.지혜","value":"지혜"}
+{"type":"entry","key":"stat.공감","value":"공감"}
+{"type":"entry","key":"stat.용기","value":"용기"}
+{"type":"entry","key":"activity.observatory.label","value":"별 관측"}
+{"type":"entry","key":"activity.observatory.hint","value":"지혜 +3 · 피로 +1"}
+{"type":"entry","key":"activity.garden.label","value":"정원 돌보기"}
+{"type":"entry","key":"activity.garden.hint","value":"공감 +3 · 피로 +1"}
+{"type":"entry","key":"activity.workshop.label","value":"공방 돕기"}
+{"type":"entry","key":"activity.workshop.hint","value":"용기 +2 · 은화 +4"}
+{"type":"entry","key":"activity.rest.label","value":"달빛 아래 휴식"}
+{"type":"entry","key":"activity.rest.hint","value":"피로 -2 · 성장 없음"}
+{"type":"entry","key":"activity.market.label","value":"장터 심부름"}
+{"type":"entry","key":"activity.market.hint","value":"은화 +6 · 피로 +1"}
+{"type":"entry","key":"ui.home.prompt","value":"일정을 고르고 하루를 보냅니다."}
+{"type":"entry","key":"ui.environment.summary","value":"6곳 · 사건·보상·기억이 이어지는 장소"}
+{"type":"entry","key":"ui.characterArt.title","value":"루멘 사람들"}
+{"type":"entry","key":"ui.characterArt.lead","value":"선택으로 가까워진 루멘 사람들의 하루를 만나 보세요."}
+{"type":"entry","key":"ui.characterArt.focus","value":"자주 보여 주는 모습"}
+{"type":"entry","key":"ui.characterArt.emotions","value":"기억에 남는 표정"}
+{"type":"entry","key":"ui.characterArt.day","value":"이 사람의 하루"}
+{"type":"entry","key":"ui.characterArt.impression","value":"첫인상"}
+{"type":"entry","key":"ui.characterArt.gesture","value":"자주 하는 모습"}
+{"type":"entry","key":"ui.characterArt.mood","value":"지금의 표정"}
+{"type":"entry","key":"ui.characterArt.back","value":"← 도감으로 돌아가기"}
+{"type":"entry","key":"ui.characterArt.footer","value":"이 표정은 함께한 대화와 기억에 색을 더합니다."}

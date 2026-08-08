@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'design_tokens.dart';
 import 'canvas_ui_kit.dart';
 
-void drawFeedbackBanner(Canvas c, String result, String line) {
+void drawFeedbackBanner(Canvas c, String result, String line,
+    {String emptyLabel = '일정을 고르고 하루를 보냅니다.'}) {
   final active = result.isNotEmpty;
   final rect = const Rect.fromLTWH(24, 452, 712, 48);
   CanvasUiKit.statePanel(c, rect,
@@ -12,7 +13,7 @@ void drawFeedbackBanner(Canvas c, String result, String line) {
       shadow: true);
   final title = TextPainter(
       text: TextSpan(
-          text: active ? result : '일정을 고르고 하루를 보냅니다.',
+          text: active ? result : emptyLabel,
           style: TextStyle(
               fontFamily: 'NotoSansKR',
               fontSize: 12,

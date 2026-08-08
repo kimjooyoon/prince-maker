@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 1b5bfdd97dccf7661a27761fccb5c7d705b46a2f681530a64e23ac7e84cbea01 -->
+<!-- ssot-sha256: 52fb864273908273b604c2a914530c66fe3dae9b30dfa0dd64917412852a402e -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -51,7 +51,7 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **923** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
+- locale 최소 키: **1003** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
 - 산식: authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
@@ -150,8 +150,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `c7f71452465bd75ef543967da97de59228315cab338e7723e9665c0e03cb9951`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `3a346f216fbc8017e4ded425de7efff55aa43acf8f72c4ba37a9a76cdb51620a`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `69140c6616dfbf73b3670034e67071934ecba583524d2cc1679c3c11d1817736`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `bcb9b1a2e7470b44c7e23db01f7b2e0caafc6cbfbfbbc1b00051b0019b8ad1c7`
 
 ## 성격
 

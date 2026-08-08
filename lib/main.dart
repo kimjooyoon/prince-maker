@@ -92,6 +92,13 @@ class _Game extends State<Game> {
 
   String tr(String key, String fallback) =>
       catalog.text(locale, key, fallback: fallback);
+  String formatUi(String key, String fallback, Map<String, Object?> values) {
+    var value = tr(key, fallback);
+    for (final entry in values.entries)
+      value = value.replaceAll('{${entry.key}}', '${entry.value}');
+    return value;
+  }
+
   void toggleLocale() => setState(() {
         locale = locale == 'ko' ? 'en' : 'ko';
         setActiveLocale(locale, catalog);
@@ -659,7 +666,7 @@ class Scene extends CustomPainter {
   final Map<String, Map<String, String>> locales;
   late final String repaintKey;
   void txt(Canvas c, String v, Offset p, double z, Color color,
-      {bool bold = false, double maxWidth = 330}) {
+      {bool bold = false, double maxWidth = 330, int? maxLines}) {
     final t = TextPainter(
         text: TextSpan(
             text: v,
@@ -668,9 +675,101 @@ class Scene extends CustomPainter {
                 fontSize: z,
                 color: color,
                 fontWeight: bold ? FontWeight.w800 : FontWeight.w400)),
-        textDirection: TextDirection.ltr)
+        textDirection: TextDirection.ltr,
+        maxLines: maxLines,
+        ellipsis: maxLines == null ? null : '…')
       ..layout(maxWidth: maxWidth);
     t.paint(c, p);
+  }
+
+  String formatUi(String key, String fallback, Map<String, Object?> values) {
+    var value = localized(key, fallback);
+    for (final entry in values.entries)
+      value = value.replaceAll('{${entry.key}}', '${entry.value}');
+    return value;
+  }
+
+  String readableHistory(String entry) {
+    final head = entry.split('|').first;
+    if (head.startsWith('activity:')) {
+      final value = head.substring('activity:'.length),
+          parts = value.split('+');
+      final stat = parts.first, delta = parts.length > 1 ? parts[1] : '0';
+      return formatUi('ui.save.activity', 'Activity · {stat} {delta}', {
+        'stat': localizedStat(stat),
+        'delta':
+            delta.startsWith('-') || delta.startsWith('+') ? delta : '+$delta',
+      });
+    }
+    if (head.startsWith('event:')) {
+      return formatUi('ui.save.event', 'Event · {label}', {
+        'label': localizedHistoryLabel(s, head.substring('event:'.length)),
+      });
+    }
+    if (head.startsWith('side-scene:')) {
+      final id = head.substring('side-scene:'.length);
+      final scene = (s['sideScenes'] as List? ?? const [])
+          .whereType<Map>()
+          .cast<Map<String, dynamic>>()
+          .firstWhere((item) => '${item['id']}' == id,
+              orElse: () => <String, dynamic>{});
+      return formatUi('ui.save.sideScene', 'Side scene · {title}', {
+        'title': scene.isEmpty
+            ? id
+            : localized('${scene['titleKey']}', '${scene['title']}'),
+      });
+    }
+    if (head.startsWith('relationship:')) {
+      final id = head.substring('relationship:'.length).split('|').first;
+      return formatUi('ui.save.relationship', 'Relationship record · {name}', {
+        'name': localized('ui.relationship.state.$id', id),
+      });
+    }
+    if (head.startsWith('location:')) {
+      final id = head.substring('location:'.length);
+      final location = (s['locations'] as List? ?? const [])
+          .whereType<Map>()
+          .cast<Map<String, dynamic>>()
+          .firstWhere((item) => '${item['id']}' == id,
+              orElse: () => <String, dynamic>{});
+      return formatUi('ui.save.location', 'Location discovered · {name}', {
+        'name': location.isEmpty
+            ? id
+            : localized('${location['nameKey']}', '${location['name']}'),
+      });
+    }
+    return localized('ui.save.record', 'A record was updated.');
+  }
+
+  String localizedResult() {
+    if (activeLocale == 'ko' || lastResult.isEmpty) return lastResult;
+    for (final event in [
+      ...(s['events'] as List? ?? const []),
+      ...(s['sideScenes'] as List? ?? const []),
+    ]) {
+      for (final choice in ((event as Map)['choices'] as List? ?? const [])) {
+        final item = (choice as Map).cast<String, dynamic>();
+        if ('${item['line']}' == lastLine) {
+          return '${localized('${item['labelKey']}', '${item['label']}')} · ${localizedChoiceEffect(item)}';
+        }
+      }
+    }
+    return localized('ui.home.result', 'The record was updated.');
+  }
+
+  String localizedLine() {
+    if (activeLocale == 'ko' || lastLine.isEmpty) return lastLine;
+    for (final event in [
+      ...(s['events'] as List? ?? const []),
+      ...(s['sideScenes'] as List? ?? const []),
+    ]) {
+      for (final choice in ((event as Map)['choices'] as List? ?? const [])) {
+        final item = (choice as Map).cast<String, dynamic>();
+        if ('${item['line']}' == lastLine)
+          return localized('${item['lineKey']}', lastLine);
+      }
+    }
+    return lastLine;
   }
 
   void box(Canvas c, Rect r, Color color,
@@ -1009,7 +1108,9 @@ class Scene extends CustomPainter {
       return;
     }
     home(c);
-    drawFeedbackBanner(c, lastResult, lastLine);
+    drawFeedbackBanner(c, localizedResult(), localizedLine(),
+        emptyLabel: localized(
+            'ui.home.prompt', 'Choose an activity to spend the day.'));
     seasonProgress(c);
     c.restore();
   }
@@ -1047,25 +1148,24 @@ class Scene extends CustomPainter {
         chapterIndex = chapters.cast<Map>().indexOf(chapter),
         chapterTitle = chapter.isEmpty
             ? ''
-            : activeLocale == 'ko'
-                ? '${chapterIndex + 1}막 · ${chapter['title']}'
-                : localized('${chapter['titleKey']}', '${chapter['title']}');
-    txt(
-        c,
-        '$chapterTitle · 루멘의 $week주차/$campaignWeeks · ${person?['name'] ?? '성격 미지정'}',
-        const Offset(24, 228),
-        10,
-        teal,
-        bold: true);
+            : formatUi(
+                'ui.home.chapter', '{chapter} · {week}/{total} · {persona}', {
+                'chapter': chapterIndex + 1,
+                'week': week,
+                'total': campaignWeeks,
+                'persona': localized('personality.${person?['id']}.name',
+                    '${person?['name'] ?? ''}'),
+              });
+    txt(c, chapterTitle, const Offset(24, 228), 10, teal, bold: true);
     CanvasUiKit.progress(c, const Rect.fromLTWH(155, 231, 555, 5), progress);
   }
 
   void home(Canvas c) {
     final condition = fatigue >= 10
-            ? '오늘은 무리하지 말기'
+            ? localized('ui.home.condition.strained', 'Do not push today')
             : fatigue >= 8
-                ? '조금 지쳤어요'
-                : '마음이 맑아요',
+                ? localized('ui.home.condition.tired', 'A little tired')
+                : localized('ui.home.condition.clear', 'A clear mind'),
         rawGoals = (s['milestones'] as List? ?? const []),
         pending = rawGoals
             .where((g) => !milestones.containsKey(g['id']) && g['week'] >= week)
@@ -1075,22 +1175,51 @@ class Scene extends CustomPainter {
         talent =
             people.isEmpty ? null : people[persona.clamp(0, people.length - 1)],
         relation = relationshipState;
-    txt(c, s['title'], const Offset(24, 24), 30, ink, bold: true);
-    txt(c, s['setting'], const Offset(25, 65), 14, teal);
+    txt(c, localized('ui.home.title', '${s['title']}'), const Offset(24, 24),
+        30, ink,
+        bold: true);
+    txt(c, localized('ui.home.setting', '${s['setting']}'),
+        const Offset(25, 65), 14, teal);
     box(c, const Rect.fromLTWH(24, 105, 712, 120), ink,
         radius: 22, shadow: true);
     box(c, const Rect.fromLTWH(44, 125, 76, 76), sun, radius: 18);
     portrait(c, const Rect.fromLTWH(45, 122, 74, 80), persona);
-    txt(c, '${s['hero']} · $week주차', const Offset(140, 128), 20, Colors.white,
-        bold: true);
-    statPill(c, '지혜', stats['지혜'] ?? 0, 140, sun);
-    statPill(c, '공감', stats['공감'] ?? 0, 252, const Color(0xff9fe0c9));
-    statPill(c, '용기', stats['용기'] ?? 0, 364, const Color(0xffff9a7a));
-    txt(c, '은화 $coins · 피로 $fatigue/12 · $condition', const Offset(140, 190),
-        14, fatigue > 9 ? const Color(0xffff8b6b) : sun);
     txt(
         c,
-        '유대 루미 ${bonds['lumi']} · 보라 ${bonds['bora']} · 타로 ${bonds['taro']} · ${localized('ui.relationship.label', '관계 상태')} ${localized('${relation['key']}', '${relation['fallback']}')}',
+        formatUi('ui.home.week', '{hero} · week {week}', {
+          'hero': localized('hero.name', '${s['hero']}'),
+          'week': week,
+        }),
+        const Offset(140, 128),
+        20,
+        Colors.white,
+        bold: true);
+    statPill(c, localizedStat('지혜'), stats['지혜'] ?? 0, 140, sun);
+    statPill(
+        c, localizedStat('공감'), stats['공감'] ?? 0, 252, const Color(0xff9fe0c9));
+    statPill(
+        c, localizedStat('용기'), stats['용기'] ?? 0, 364, const Color(0xffff9a7a));
+    txt(
+        c,
+        formatUi('ui.home.status',
+            'Coins {coins} · Fatigue {fatigue}/12 · {condition}', {
+          'coins': coins,
+          'fatigue': fatigue,
+          'condition': condition,
+        }),
+        const Offset(140, 190),
+        14,
+        fatigue > 9 ? const Color(0xffff8b6b) : sun,
+        maxWidth: 560);
+    txt(
+        c,
+        formatUi('ui.home.bonds',
+            'Bonds · Lumi {lumi} · Bora {bora} · Taro {taro} · {state}', {
+          'lumi': bonds['lumi'] ?? 0,
+          'bora': bonds['bora'] ?? 0,
+          'taro': bonds['taro'] ?? 0,
+          'state': localized('${relation['key']}', '${relation['fallback']}'),
+        }),
         const Offset(140, 208),
         10,
         Colors.white70,
@@ -1098,8 +1227,20 @@ class Scene extends CustomPainter {
     txt(
         c,
         goal == null
-            ? (rawGoals.isEmpty ? '이번 회차는 자유롭게 시작합니다.' : '계절 목표를 모두 확인했습니다.')
-            : '다음 목표 · ${goal['title']} · ${goal['stat']} ${stats[goal['stat']]}/${goal['min']}',
+            ? localized(
+                rawGoals.isEmpty
+                    ? 'ui.home.goal.free'
+                    : 'ui.home.goal.complete',
+                rawGoals.isEmpty
+                    ? 'Begin this run without a seasonal goal.'
+                    : 'Every seasonal goal has been recorded.')
+            : formatUi('ui.home.goal.next',
+                'Next goal · {title} · {stat} {value}/{min}', {
+                'title': localized('${goal['titleKey']}', '${goal['title']}'),
+                'stat': localizedStat('${goal['stat']}'),
+                'value': stats[goal['stat']],
+                'min': goal['min'],
+              }),
         const Offset(24, 250),
         14,
         teal,
@@ -1112,8 +1253,12 @@ class Scene extends CustomPainter {
           y = row == 0 ? 275.0 : 370.0,
           on = i == selected,
           bonus = talent?['focusStat'] == a.stat && a.delta > 0
-              ? ' · 재능 +${talent['focusBonus']}'
-              : '';
+              ? ' · ${formatUi('ui.home.talent', 'Talent +{bonus}', {
+                      'bonus': talent['focusBonus']
+                    })}'
+              : '',
+          label = localizedActivityLabel(a.id, a.label),
+          hint = '${localizedActivityHint(a.id, a.hint)}$bonus';
       CanvasUiKit.statePanel(
           c,
           Rect.fromLTWH(x, y, DesignTokens.activityCardWidth,
@@ -1123,42 +1268,46 @@ class Scene extends CustomPainter {
       c.drawCircle(Offset(x + 34, y + 40), 24,
           Paint()..color = on ? Colors.white.withValues(alpha: .16) : paper);
       mark(c, a.icon, Offset(x + 16, y + 22), on ? Colors.white : teal);
-      txt(c, a.label, Offset(x + 52, y + 12), 14, on ? Colors.white : ink,
-          bold: true);
-      txt(c, '${a.hint}$bonus', Offset(x + 52, y + 40), 9,
+      txt(c, label, Offset(x + 52, y + 12), 14, on ? Colors.white : ink,
+          bold: true, maxWidth: 160, maxLines: 1);
+      txt(c, hint, Offset(x + 52, y + 40), 9,
           on ? Colors.white70 : ink.withValues(alpha: .55));
     }
     box(c, const Rect.fromLTWH(260, 500, 150, 54), Colors.white,
         radius: 15, stroke: teal, shadow: true);
-    txt(c, '기록 보관소', const Offset(282, 517), 14, teal, bold: true);
+    txt(c, localized('ui.home.save', 'Save / restore'), const Offset(282, 517),
+        14, teal,
+        bold: true);
     box(c, const Rect.fromLTWH(430, 500, 150, 54), Colors.white,
         radius: 15, stroke: teal, shadow: true);
-    txt(c, '일러스트', const Offset(458, 517), 16, teal, bold: true);
+    txt(c, localized('ui.home.illustration', 'Illustration'),
+        const Offset(458, 517), 16, teal,
+        bold: true);
     CanvasUiKit.button(c, const Rect.fromLTWH(590, 500, 146, 54),
-        activeLocale == 'ko' ? '하루 보내기 →' : 'Spend the day →',
+        localized('ui.home.spend', 'Spend the day →'),
         state: CanvasUiState.selected,
         fontSize: activeLocale == 'ko' ? 14 : 12);
     trackerLine(c, const Offset(24, 565));
     routeAtlas(c, origin: const Offset(24, 580));
     box(c, const Rect.fromLTWH(24, 660, 170, 30), Colors.white,
         radius: 12, stroke: teal);
-    txt(c, localized('ui.ledger.button', '운명 기록'), const Offset(62, 668), 12,
-        teal,
+    txt(c, localized('ui.home.ledger', 'Fate ledger'), const Offset(62, 668),
+        12, teal,
         bold: true);
     box(c, const Rect.fromLTWH(210, 660, 180, 30), Colors.white,
         radius: 12, stroke: teal);
-    txt(c, activeLocale == 'ko' ? '캐릭터 도감' : 'Character archive',
+    txt(c, localized('ui.home.characters', 'Character archive'),
         const Offset(238, 668), 12, teal,
         bold: true, maxWidth: 130);
     box(c, const Rect.fromLTWH(410, 660, 180, 30), Colors.white,
         radius: 12, stroke: teal);
-    txt(c, activeLocale == 'ko' ? '환경 아틀라스' : 'Environment atlas',
+    txt(c, localized('ui.home.environments', 'Environment atlas'),
         const Offset(438, 668), 12, teal,
         bold: true, maxWidth: 130);
     box(c, const Rect.fromLTWH(608, 660, 128, 30), Colors.white,
         radius: 12, stroke: teal);
-    txt(c, activeLocale == 'ko' ? '동행 기록' : 'Bonds', const Offset(624, 668), 11,
-        teal,
+    txt(c, localized('ui.home.bondsButton', 'Bonds'), const Offset(624, 668),
+        11, teal,
         bold: true, maxWidth: 98);
   }
 
@@ -1513,8 +1662,13 @@ class Scene extends CustomPainter {
         13,
         teal,
         maxWidth: 570);
-    txt(c, '6 environments · surface / affordance / memory',
-        const Offset(25, 84), 10, ink.withValues(alpha: .55),
+    txt(
+        c,
+        localized('ui.environment.summary',
+            '6 places · choices, rewards, and memories connect'),
+        const Offset(25, 84),
+        10,
+        ink.withValues(alpha: .55),
         bold: true);
 
     for (var i = 0; i < environments.length && i < 6; i++) {
@@ -1732,11 +1886,16 @@ class Scene extends CustomPainter {
     box(c, const Rect.fromLTWH(340, 250, 360, 125), Colors.white,
         radius: 20, stroke: teal, shadow: true);
     txt(c, result, const Offset(365, 282), 17, ink, bold: true, maxWidth: 310);
-    txt(c, '${goal['stat']} ${stats[goal['stat']] ?? 0}/${goal['min']}',
-        const Offset(365, 338), 14, passed ? teal : const Color(0xffa84f3c),
+    txt(
+        c,
+        '${localizedStat('${goal['stat']}')} ${stats[goal['stat']] ?? 0}/${goal['min']}',
+        const Offset(365, 338),
+        14,
+        passed ? teal : const Color(0xffa84f3c),
         bold: true);
     trackerLine(c, const Offset(340, 405), maxWidth: 360);
-    txt(c, lastResult, const Offset(340, 440), 11, ink.withValues(alpha: .6),
+    txt(c, activeLocale == 'ko' ? lastResult : localizedResult(),
+        const Offset(340, 440), 11, ink.withValues(alpha: .6),
         maxWidth: 360);
     box(c, const Rect.fromLTWH(340, 510, 360, 64), teal,
         radius: 18, shadow: true);
@@ -1839,8 +1998,6 @@ class Scene extends CustomPainter {
           locked = (req != null && (stats[req] ?? 0) < (min ?? 0)) ||
               (bondReq != null && (bonds[bondReq] ?? 0) < (bondMin ?? 0)) ||
               (flagReq != null && flags[flagReq] != true),
-          rival = ch['rivalId'] as String?,
-          rivalDelta = (ch['rivalDelta'] as int?) ?? 0,
           legacyId = flags.keys
               .where((key) => key.startsWith('legacy:'))
               .map((key) => key.substring('legacy:'.length))
@@ -1851,17 +2008,14 @@ class Scene extends CustomPainter {
           legacyText = legacyBonus is Map
               ? localized('ui.event.legacyBonus',
                       '계승 ${legacyBonus['stat']} +${legacyBonus['delta']}')
-                  .replaceAll('{stat}', '${legacyBonus['stat']}')
+                  .replaceAll('{stat}', localizedStat('${legacyBonus['stat']}'))
                   .replaceAll('{delta}', '${legacyBonus['delta']}')
-              : '',
-          relation = rival == null
-              ? ''
-              : ' · $rival 유대 ${rivalDelta >= 0 ? '+' : ''}$rivalDelta';
-      CanvasUiKit.statePanel(c, Rect.fromLTWH(x, 270, 332, 190),
+              : '';
+      CanvasUiKit.statePanel(c, Rect.fromLTWH(x, 270, 332, 220),
           state: locked ? CanvasUiState.disabled : CanvasUiState.idle,
           shadow: !locked);
-      txt(c, '선택 ${i + 1}', Offset(x + 22, 295), 14,
-          locked ? ink.withValues(alpha: .45) : teal,
+      txt(c, formatUi('ui.event.choice', 'Choice {index}', {'index': i + 1}),
+          Offset(x + 22, 295), 14, locked ? ink.withValues(alpha: .45) : teal,
           bold: true);
       txt(c, ch['label'], Offset(x + 22, 340), 17,
           locked ? ink.withValues(alpha: .45) : ink,
@@ -1869,15 +2023,16 @@ class Scene extends CustomPainter {
       txt(
           c,
           locked
-              ? '조건: ${flagReq != null ? '$flagReq 기억' : '${bondReq == null ? '$req $min' : '$bondReq 유대 $bondMin'}'} 필요'
-              : '${ch['stat']} +${ch['delta']}   은화 ${ch['coins']}   유대 +${(ch['bondDelta'] as int?) ?? 0}$relation$legacyText',
+              ? localizedChoiceCondition(ch)
+              : '${localizedChoiceEffect(ch)}$legacyText',
           Offset(x + 22, 400),
           13,
           locked ? ink.withValues(alpha: .45) : ink.withValues(alpha: .6),
-          maxWidth: 190);
+          maxWidth: 198,
+          maxLines: 2);
       dialoguePortrait(c, Rect.fromLTWH(x + 230, 300, 82, 102), ch);
-      drawChoiceEcho(c, ch, Offset(x + 22, 435));
-      drawChoiceImpact(c, Rect.fromLTWH(x + 22, 420, 190, 8), ch);
+      drawChoiceEcho(c, ch, Offset(x + 22, 448));
+      drawChoiceImpact(c, Rect.fromLTWH(x + 22, 466, 198, 8), ch);
     }
     txt(
         c,
@@ -1887,7 +2042,8 @@ class Scene extends CustomPainter {
                     lastResult.startsWith('관계 조건') ||
                     lastResult.startsWith('기억 조건')
                 ? lastResult
-                : '하나를 골라 이야기를 이어갑니다.',
+                : localized('ui.event.continue',
+                    'Choose one path to continue the story.'),
         const Offset(24, 570),
         14,
         flags['legacy-star'] == true ||
@@ -1899,15 +2055,16 @@ class Scene extends CustomPainter {
   }
 
   void savePage(Canvas c) {
-    final ko = activeLocale == 'ko',
-        recent = history.reversed.take(3).toList(),
+    final publicRecords =
+            history.where((entry) => !entry.startsWith('approval:')).toList(),
+        recent = publicRecords.reversed.map(readableHistory).take(3).toList(),
         endings = (s['endings'] as List? ?? const []).cast<Map>(),
         known = endings.length,
         discovered = collectionEntries.map((entry) {
           final e = endings.firstWhere(
               (candidate) => candidate['id'] == entry['id'],
               orElse: () => {'title': entry['id']});
-          return '${e['title']} ★${entry['rank']}';
+          return '${localized('${e['titleKey']}', '${e['title']}')} ★${entry['rank']}';
         }).join(' · ');
     final companions = (s['companions'] as List? ?? const []).cast<Map>(),
         companionIds = companions.map((c) => '${c['id']}').toSet(),
@@ -1918,17 +2075,18 @@ class Scene extends CustomPainter {
             .toSet()
             .toList()
           ..sort(),
-        routeNames = routeIds
-            .map((id) => companions.firstWhere((c) => c['id'] == id,
-                orElse: () => {'name': id})['name'])
-            .join(' · ');
-    txt(c, ko ? '기록 보관소' : 'Save archive', const Offset(24, 28), 32, ink,
+        routeNames = routeIds.map((id) {
+          final companion = companions.firstWhere((c) => c['id'] == id,
+              orElse: () => {'name': id});
+          return localized('${companion['nameKey']}', '${companion['name']}');
+        }).join(' · ');
+    txt(c, localized('ui.save.title', 'Save archive'), const Offset(24, 28), 32,
+        ink,
         bold: true);
     txt(
         c,
-        ko
-            ? '현재 상태를 코드로 보관하고 다른 실행에서 복원합니다.'
-            : 'Keep the current state as a code and restore it in another run.',
+        localized('ui.save.subtitle',
+            'Keep the current state as a safe code and restore it in another run.'),
         const Offset(25, 70),
         14,
         teal,
@@ -1937,53 +2095,71 @@ class Scene extends CustomPainter {
         radius: 20, stroke: ink.withValues(alpha: .12), shadow: true);
     txt(
         c,
-        ko
-            ? 'replay ${history.length}회 · 목표 ${milestones.values.where((v) => v).length}/${(s['milestones'] as List? ?? const []).length}'
-            : 'Replay ${history.length} · goals ${milestones.values.where((v) => v).length}/${(s['milestones'] as List? ?? const []).length}',
+        formatUi('ui.save.replay', 'Records {count} · goals {done}/{total}', {
+          'count': publicRecords.length,
+          'done': milestones.values.where((v) => v).length,
+          'total': (s['milestones'] as List? ?? const []).length,
+        }),
         const Offset(48, 155),
         15,
         ink);
     txt(
         c,
-        ko
-            ? '유대 루미 ${bonds['lumi']} · 보라 ${bonds['bora']} · 타로 ${bonds['taro']}'
-            : 'Bonds Lumi ${bonds['lumi']} · Bora ${bonds['bora']} · Taro ${bonds['taro']}',
+        formatUi('ui.save.bonds',
+            'Companion bonds · Lumi {lumi} · Bora {bora} · Taro {taro}', {
+          'lumi': bonds['lumi'] ?? 0,
+          'bora': bonds['bora'] ?? 0,
+          'taro': bonds['taro'] ?? 0,
+        }),
         const Offset(48, 180),
         13,
         teal);
+    txt(c, localized('ui.save.recent', 'Recent records'), const Offset(48, 208),
+        10, teal,
+        bold: true);
     for (var i = 0; i < recent.length; i++)
-      txt(c, recent[i].replaceAll('|line:', ' · '), Offset(48, 210 + i * 20),
-          10, ink.withValues(alpha: .65));
-    txt(c, saveCode.substring(0, saveCode.length > 90 ? 90 : saveCode.length),
-        const Offset(48, 285), 10, ink.withValues(alpha: .45));
+      txt(c, recent[i], Offset(48, 228 + i * 20), 10,
+          ink.withValues(alpha: .65),
+          maxWidth: 650, maxLines: 1);
     txt(
         c,
-        ko
-            ? '엔딩 도감 ${collectionEntries.length}/$known · ${discovered.isEmpty ? '아직 발견한 결말이 없습니다.' : discovered}'
-            : 'Endings ${collectionEntries.length}/$known · ${discovered.isEmpty ? 'No endings discovered yet.' : discovered}',
+        localized('ui.save.codeHint',
+            'The original save code is handled only through the copy button.'),
+        const Offset(48, 285),
+        10,
+        ink.withValues(alpha: .45),
+        maxWidth: 650);
+    txt(
+        c,
+        '${formatUi('ui.save.endings', 'Ending archive {done}/{total}', {
+              'done': collectionEntries.length,
+              'total': known,
+            })} · ${discovered.isEmpty ? localized('ui.save.noEndings', 'No endings discovered yet.') : discovered}',
         const Offset(48, 320),
         11,
         teal);
     txt(
         c,
-        ko
-            ? '관계 도감 ${routeIds.length}/${companions.length} · ${routeNames.isEmpty ? '아직 발견한 동행이 없습니다.' : routeNames}'
-            : 'Companion routes ${routeIds.length}/${companions.length} · ${routeNames.isEmpty ? 'No companion routes discovered yet.' : routeNames}',
+        '${formatUi('ui.save.routes', 'Relationship archive {done}/{total}', {
+              'done': routeIds.length,
+              'total': companions.length,
+            })} · ${routeNames.isEmpty ? localized('ui.save.noRoutes', 'No companion routes discovered yet.') : routeNames}',
         const Offset(48, 343),
         11,
         teal);
     trackerLine(c, const Offset(48, 368), maxWidth: 650);
     box(c, const Rect.fromLTWH(24, 390, 300, 64), teal,
         radius: 18, shadow: true);
-    txt(c, ko ? '저장 코드 복사' : 'Copy save code', const Offset(100, 412), 16,
-        Colors.white,
+    txt(c, localized('ui.save.copy', 'Copy save code'), const Offset(100, 412),
+        16, Colors.white,
         bold: true);
     box(c, const Rect.fromLTWH(365, 390, 300, 64), sun,
         radius: 18, shadow: true);
-    txt(c, ko ? '저장 코드 복원' : 'Restore save code', const Offset(440, 412), 16,
-        ink,
+    txt(c, localized('ui.save.restore', 'Restore save code'),
+        const Offset(440, 412), 16, ink,
         bold: true);
-    txt(c, ko ? '← 홈으로' : '← Back to home', const Offset(24, 570), 14, teal,
+    txt(c, localized('ui.save.back', '← Back to home'), const Offset(24, 570),
+        14, teal,
         bold: true);
   }
 

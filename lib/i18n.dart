@@ -23,6 +23,105 @@ void setActiveFlags(Map<String, bool> flags) => activeFlags = flags;
 String localized(String key, String fallback) =>
     activeCatalog.text(activeLocale, key, fallback: fallback);
 
+String localizedStat(String stat) => localized('stat.$stat', stat);
+
+String _signed(num value) => value >= 0 ? '+$value' : '$value';
+
+String _replace(String value, Map<String, Object?> tokens) {
+  var result = value;
+  for (final entry in tokens.entries)
+    result = result.replaceAll('{${entry.key}}', '${entry.value}');
+  return result;
+}
+
+String localizedActivityLabel(String id, String fallback) =>
+    localized('activity.$id.label', fallback);
+
+String localizedActivityHint(String id, String fallback) =>
+    localized('activity.$id.hint', fallback);
+
+String localizedChoiceEffect(Map choice) {
+  final parts = <String>[];
+  final stat = choice['stat'];
+  final delta = (choice['delta'] as num?)?.toInt() ?? 0;
+  if (stat != null && delta != 0) {
+    parts.add(_replace(localized('ui.event.statDelta', '{stat} {delta}'), {
+      'stat': localizedStat('$stat'),
+      'delta': _signed(delta),
+    }));
+  }
+  final coins = (choice['coins'] as num?)?.toInt() ?? 0;
+  if (coins != 0) {
+    parts.add(_replace(localized('ui.event.coinDelta', 'Coins {delta}'), {
+      'delta': _signed(coins),
+    }));
+  }
+  final bondId = choice['bondId'];
+  final bondDelta = (choice['bondDelta'] as num?)?.toInt() ?? 0;
+  if (bondId != null && bondDelta != 0) {
+    parts.add(_replace(localized('ui.event.bondDelta', 'Bond {name} {delta}'), {
+      'name': localized('companion.$bondId.name', '$bondId'),
+      'delta': _signed(bondDelta),
+    }));
+  }
+  final rivalId = choice['rivalId'];
+  final rivalDelta = (choice['rivalDelta'] as num?)?.toInt() ?? 0;
+  if (rivalId != null && rivalDelta != 0) {
+    parts.add(
+        _replace(localized('ui.event.rivalDelta', 'Relation {name} {delta}'), {
+      'name': localized('companion.$rivalId.name', '$rivalId'),
+      'delta': _signed(rivalDelta),
+    }));
+  }
+  return parts.join(' · ');
+}
+
+String localizedChoiceCondition(Map choice) {
+  final flag = choice['requiresFlag'];
+  if (flag != null) return localized('ui.event.memoryNeeded', 'memory clue');
+  final bond = choice['requiresBondId'];
+  if (bond != null) {
+    return _replace(
+        localized('ui.event.condition', 'Condition: {value} required'), {
+      'value': _replace(localized('ui.event.bondNeeded', 'Bond {name} {min}'), {
+        'name': localized('companion.$bond.name', '$bond'),
+        'min': choice['requiresBondMin'] ?? 0,
+      })
+    });
+  }
+  final stat = choice['requiresStat'];
+  if (stat != null) {
+    return _replace(
+        localized('ui.event.condition', 'Condition: {value} required'), {
+      'value': _replace(localized('ui.event.statNeeded', '{stat} {min}'), {
+        'stat': localizedStat('$stat'),
+        'min': choice['requiresMin'] ?? 0,
+      })
+    });
+  }
+  return localized('ui.event.condition.none', 'No condition');
+}
+
+String localizedHistoryLabel(Map<String, dynamic> story, String raw) {
+  for (final activity in (story['activities'] as List? ?? const [])) {
+    final item = (activity as Map).cast<String, dynamic>();
+    if ('${item['label']}' == raw)
+      return localizedActivityLabel('${item['id']}', raw);
+  }
+  for (final event in [
+    ...(story['events'] as List? ?? const []),
+    ...(story['sideScenes'] as List? ?? const []),
+  ]) {
+    final item = (event as Map).cast<String, dynamic>();
+    for (final choice in (item['choices'] as List? ?? const [])) {
+      final candidate = (choice as Map).cast<String, dynamic>();
+      if ('${candidate['label']}' == raw)
+        return localized('${candidate['labelKey']}', raw);
+    }
+  }
+  return raw;
+}
+
 String localizedSpeaker(Map story, Map choice) {
   final id = '${choice['speakerId'] ?? choice['bondId'] ?? ''}';
   final people = (story['companions'] as List? ?? const []).cast<Map>();
@@ -43,7 +142,7 @@ int speakerPortraitFrame(Map story, Map choice) {
 }
 
 void _text(Canvas c, String value, Offset offset, double size, Color color,
-    {bool bold = false, double width = 680}) {
+    {bool bold = false, double width = 680, int? maxLines}) {
   final painter = TextPainter(
       text: TextSpan(
           text: value,
@@ -52,7 +151,9 @@ void _text(Canvas c, String value, Offset offset, double size, Color color,
               fontSize: size,
               color: color,
               fontWeight: bold ? FontWeight.w800 : FontWeight.w400)),
-      textDirection: TextDirection.ltr)
+      textDirection: TextDirection.ltr,
+      maxLines: maxLines,
+      ellipsis: maxLines == null ? null : '…')
     ..layout(maxWidth: width);
   painter.paint(c, offset);
 }
@@ -68,7 +169,7 @@ void drawLocalizedIllustration(
       bold: true);
   _text(c, localized('personality.$id.voice', p['voice'] as String),
       const Offset(390, 165), 14, teal);
-  _text(c, 'Talent · ${p['focusStat']} +${p['focusBonus']}',
+  _text(c, 'Talent · ${localizedStat('${p['focusStat']}')} +${p['focusBonus']}',
       const Offset(390, 195), 13, teal);
   c.drawRRect(
       RRect.fromRectAndRadius(
@@ -77,7 +178,11 @@ void drawLocalizedIllustration(
   _text(c, '“${localized(p['lineKey'] as String? ?? '', p['line'] as String)}”',
       const Offset(415, 250), 20, ink,
       bold: true, width: 290);
-  _text(c, '${story['hero']} · weekly record', const Offset(390, 400), 14,
+  _text(
+      c,
+      '${localized('hero.name', '${story['hero']}')} · ${localized('ui.home.weeklyRecord', 'weekly record')}',
+      const Offset(390, 400),
+      14,
       ink.withValues(alpha: .55));
 }
 
@@ -139,7 +244,14 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
         RRect.fromRectAndRadius(
             Rect.fromLTWH(x, 270, 332, 190), const Radius.circular(18)),
         Paint()..color = locked ? paper : Colors.white);
-    _text(c, locked ? 'Locked' : 'Choice ${i + 1}', Offset(x + 22, 295), 14,
+    _text(
+        c,
+        locked
+            ? localized('ui.event.locked', 'Locked')
+            : _replace(localized('ui.event.choice', 'Choice {index}'),
+                {'index': i + 1}),
+        Offset(x + 22, 295),
+        14,
         locked ? ink.withValues(alpha: .45) : teal,
         bold: true);
     _text(
@@ -149,7 +261,8 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
         17,
         locked ? ink.withValues(alpha: .45) : ink,
         bold: true,
-        width: 280);
+        width: 280,
+        maxLines: 2);
     final sheet = portraitSheet;
     if (sheet != null) {
       final frame = speakerPortraitFrame(story, choice), w = sheet.width / 3.0;
@@ -158,18 +271,28 @@ void drawLocalizedEvent(Canvas c, Map<String, dynamic> story, int eventIndex,
     }
     _text(c, localizedSpeaker(story, choice), Offset(x + 230, 406), 9, teal,
         bold: true, width: 82);
+    _text(
+        c,
+        locked
+            ? localizedChoiceCondition(choice)
+            : localizedChoiceEffect(choice),
+        Offset(x + 22, 388),
+        11,
+        locked ? ink.withValues(alpha: .45) : ink.withValues(alpha: .6),
+        width: 196,
+        maxLines: 2);
     if (legacyBonus is Map)
       _text(
           c,
           localized('ui.event.legacyBonus',
                   'Legacy ${legacyBonus['stat']} +${legacyBonus['delta']}')
-              .replaceAll('{stat}', '${legacyBonus['stat']}')
+              .replaceAll('{stat}', localizedStat('${legacyBonus['stat']}'))
               .replaceAll('{delta}', '${legacyBonus['delta']}'),
-          Offset(x + 22, 400),
-          12,
+          Offset(x + 22, 420),
+          10,
           teal);
     drawChoiceImpact(
-        c, Rect.fromLTWH(x + 22, 420, 190, 8), choice.cast<String, dynamic>());
+        c, Rect.fromLTWH(x + 22, 447, 190, 8), choice.cast<String, dynamic>());
   }
 }
 
