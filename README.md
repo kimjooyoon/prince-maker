@@ -4,7 +4,7 @@
 
 장편 분량의 권위 있는 기준은 `story/story.json#contentBudget`이며, `tool/verify_game.dart`가 최소 120분·사건/선택지/막 결산 수를 함께 판정합니다.
 
-화면은 Flutter 위젯 카드가 아니라 `CustomPaint`/`Canvas`를 기준으로 그립니다. 입력은 얇은 `GestureDetector`와 재사용 가능한 [`CanvasViewport`](lib/canvas_surface.dart)가 좌표를 게임 상태 전이로 바꾸고, [`canvasSceneFingerprint`](lib/canvas_scene_fingerprint.dart)가 상태 key를 결정론적으로 정규화해 필요한 repaint만 허용합니다.
+화면은 Flutter 위젯 카드가 아니라 `CustomPaint`/`Canvas`를 기준으로 그립니다. 입력은 얇은 `GestureDetector`와 재사용 가능한 [`CanvasViewport`](lib/canvas_surface.dart)가 좌표를 게임 상태 전이로 바꾸고, [`canvasSceneFingerprint`](lib/canvas_scene_fingerprint.dart)가 상태 key를 결정론적으로 정규화해 필요한 repaint만 허용합니다. 활동 선택은 [`activity_catalog.dart`](lib/activity_catalog.dart)가 5개 성장·피로·은화 tradeoff를 재활용 가능한 데이터 계약으로 공급합니다.
 
 한글 Golden 재현성을 위해 [Noto Sans KR](https://github.com/google/fonts/tree/main/ofl/notosanskr)을 OFL 폰트 자산으로 번들합니다. 캐릭터와 UI 일러스트는 이 폰트와 독자 PNG 시트만 사용하며 원작의 이미지·문구·캐릭터를 복제하지 않습니다.
 

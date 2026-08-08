@@ -23,6 +23,8 @@ void main() {
     'test/canvas_surface_test.dart',
     'lib/canvas_scene_fingerprint.dart',
     'test/canvas_scene_fingerprint_test.dart',
+    'lib/activity_catalog.dart',
+    'test/activity_catalog_test.dart',
     'lib/decision_receipt.dart',
     'test/decision_receipt_test.dart',
     'test/ending_matrix_test.dart',

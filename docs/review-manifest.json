@@ -5,12 +5,12 @@
     {
       "path": "story/story.json",
       "ref": "story/story.json#root",
-      "sha256": "12e842a5f0d55952b945d88667a7e6de27186b0624a90e803cdd85a572527cfa"
+      "sha256": "001f77804474929b750005a49c3bd3ea7c1fafaee88b3bc149f6e81e5830fe1f"
     },
     {
       "path": "lib/main.dart",
       "ref": "lib/main.dart#_Game+Scene",
-      "sha256": "5381165a98982dc12e10658136de4e0c0b1535442e45e18723864ec700e0de05"
+      "sha256": "aa95d41d93deb1df05e0911fbe9993d8f53a75b84af155e8906bb0982d3510d7"
     },
     {
       "path": "lib/feedback_banner.dart",
@@ -220,7 +220,7 @@
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "ec4cf4916e082bdfc82f02d874e40c9f9f05af0771d71e1479b6b4aab2abe6ee"
+      "sha256": "1df884dec56864babddffa1af2fe5beb5a97dd6c5776027d54f3a6fb849b73a6"
     },
     {
       "path": "docs/scenario-completeness.md",
@@ -230,12 +230,12 @@
     {
       "path": "docs/architecture.md",
       "ref": "docs/architecture.md#runtime-architecture",
-      "sha256": "f6253e3730aea8e6475b890d1858d1d3b6c6ba983813ede148d097b081471bec"
+      "sha256": "241db173387e539518561b71be52f74a99fce2215c9ef0a59346abdfabff8bb7"
     },
     {
       "path": "docs/story-ssot.md",
       "ref": "docs/story-ssot.md#generated",
-      "sha256": "15b52dc83a7504e1bb5a60476f5546abd8d71f58a88de6f1e335e26ad02f52ca"
+      "sha256": "b2b94637a3bd63a709ba60ab3c51a1779e370e2391903ce537f73d21270f5191"
     },
     {
       "path": "docs/design-system.md",
@@ -330,7 +330,7 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "176fb019bbecf33e29504a4b5006c176615e9153fa06c9ea439794828b408321"
+      "sha256": "f45c05d846cf28943c0209a363169b9f2a7f71ce644928702eebf1080128d81e"
     },
     {
       "path": "test/locale_contract_test.dart",
@@ -345,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "ac1af86dba7104407d0939af6f334ab3ca2e4ceda3b2f8c4e24be0361017b2f8"
+      "sha256": "863d9348ad7ffbcf99972015a809997cb812fb1853affa70f318e859058b8cd3"
     },
     {
       "path": "design/tokens.json",
@@ -390,7 +390,7 @@
     {
       "path": "docs/originality-contract.json",
       "ref": "docs/originality-contract.json#pillars",
-      "sha256": "fc253a57dafd886c559b0f099a92cbd0aa2d8d18075b326904b753bc317f49fa"
+      "sha256": "21206e47ab6adb27fbd267baadea02a021b7e5e303471c15a18bc95b9069da84"
     },
     {
       "path": "tool/ci_gate.dart",
@@ -405,12 +405,12 @@
     {
       "path": "tool/expand_story.dart",
       "ref": "tool/expand_story.dart#reviewed",
-      "sha256": "a34786410dba9536c8502e5623515db3346ecbfe6f0ce2a0d9d1031bc0928982"
+      "sha256": "0023b1afacd2e0490d9df151ee6cd6359355c90b9650def52f838b6128785a60"
     },
     {
       "path": "tool/refresh_review_manifest.dart",
       "ref": "tool/refresh_review_manifest.dart#reviewed",
-      "sha256": "5d074a53c02f5204844bf47bf04db84fcfc9ef1acd0930216794189245a0e647"
+      "sha256": "35dc7c46d4c5678d03a19e13c3471955b16637b4066f1d12090af5fcd7572a37"
     },
     {
       "path": "tool/verify_scenario_variants.dart",
@@ -486,6 +486,16 @@
       "path": "test/canvas_scene_fingerprint_test.dart",
       "ref": "test/canvas_scene_fingerprint_test.dart#reviewed",
       "sha256": "549d5290a84b5d55c9de27b742e4d4f91a052424c691e3b185db9af662ad72b2"
+    },
+    {
+      "path": "lib/activity_catalog.dart",
+      "ref": "lib/activity_catalog.dart#reviewed",
+      "sha256": "762d80d5656ae0cc1164bc8defaa2893851b4f3107468357599cd358208f319a"
+    },
+    {
+      "path": "test/activity_catalog_test.dart",
+      "ref": "test/activity_catalog_test.dart#reviewed",
+      "sha256": "398d95cb599f0fb5c4a8ec45c2f226f1278ec18a96d219646db61d9130435b2f"
     }
   ]
 }
