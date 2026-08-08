@@ -88,6 +88,7 @@ void main() {
     'tool/verify_event_storm.dart',
     'test/content_depth_test.dart',
     'test/event_storm_test.dart',
+    'test/player_input_contract_test.dart',
     'test/chapter_golden_test.dart',
     'test/chapter_closure_golden_test.dart',
     'test/goldens/chapter-arrival.png',
