@@ -59,8 +59,8 @@
     },
     {
       "path": "test/canonical_golden_test.dart",
-      "ref": "test/canonical_golden_test.dart#canonical-event-and-ending",
-      "sha256": "8ccac0ae3a2dd9d45c52728be274d75d453d1d44b0f97864cf3258fa7392dce9"
+      "ref": "test/canonical_golden_test.dart#canonical-event-handoff-and-ending",
+      "sha256": "2d70a8229dc7895c8e0d0c7567338ff31ce725ea740959e87bca47f930df16c3"
     },
     {
       "path": "test/gameplay_metrics_test.dart",
@@ -126,6 +126,11 @@
       "path": "test/goldens/canonical-event.png",
       "ref": "test/goldens/canonical-event.png#ssot-canonical-week-4-event",
       "sha256": "f84d305a0cda22b8041e7313092e7bb25f142064aa6a2abf0e99329943929f00"
+    },
+    {
+      "path": "test/goldens/canonical-handoff-event.png",
+      "ref": "test/goldens/canonical-handoff-event.png#ssot-canonical-week-48-handoff-event",
+      "sha256": "6bbd5e1d3316305502e6f0d9b8acab6cd37f61500f979722788c0b6ca112ee06"
     },
     {
       "path": "test/goldens/canonical-ending.png",
@@ -205,17 +210,17 @@
     {
       "path": "docs/game-completeness.md",
       "ref": "docs/game-completeness.md#metrics",
-      "sha256": "5ba66595ad1e53ad636d020a8f8c8db5802de523ac7f8aadede7e69279e4d363"
+      "sha256": "b4f69b575c426abcc30a34106f8ac1c8817e08b96667eb1c682aae4e50bbadd6"
     },
     {
       "path": "docs/trilemma.md",
       "ref": "docs/trilemma.md#closed-loop",
-      "sha256": "72eeedabca86adcf5c24c9d2534a49f74db5d4f53b5632e7a2e511f3689e7762"
+      "sha256": "a0d632e24240961e7c4dbeab1c9bc5f4754099bb0ea8d80b5616762ebd0d3387"
     },
     {
       "path": "docs/trilemma-contract.json",
       "ref": "docs/trilemma-contract.json#axes",
-      "sha256": "15294bcbe1e967f680ba573f441b8b8a64bb714249a3eaa79d17ce49bc71c6e1"
+      "sha256": "965124073f588f987a8ecd37d01a88de52529865d06552092e1c45ca41d0397c"
     },
     {
       "path": "docs/scenario-completeness.md",
@@ -315,7 +320,7 @@
     {
       "path": "tool/verify_game.dart",
       "ref": "tool/verify_game.dart#trilemma-contract-assetRefs-localeRefs-progression-scenario",
-      "sha256": "9c84d948428575934665a958c530325d9349159791a1fe6d380705dbac11f099"
+      "sha256": "ec14814ebff347b08719889290e88de037b39d5e34fe6ddab38f5c5da2ab8161"
     },
     {
       "path": "tool/benchmark_game.dart",
@@ -325,7 +330,7 @@
     {
       "path": "README.md",
       "ref": "README.md#ssot-and-golden-evidence",
-      "sha256": "f17f895fc6efd5c2b5a9c002139b412612b57e39a63829f97d07375e146cc0bb"
+      "sha256": "5387c72271933b9ffcde1010b72f92878d7d1a18a51937195c5cf65d0cf5e86b"
     },
     {
       "path": "test/locale_contract_test.dart",
@@ -340,7 +345,7 @@
     {
       "path": "docs/ssot-metrics.md",
       "ref": "docs/ssot-metrics.md#generated",
-      "sha256": "31f173366ab3f497d7296734fa33d2a30f21b22ac7f4c8ab57d79d4444a27955"
+      "sha256": "26decc05a9308ab128f670986c61d03f4faa7dd32e3ed5660853f684c503346f"
     },
     {
       "path": "design/tokens.json",

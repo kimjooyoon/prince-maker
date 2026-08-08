@@ -463,6 +463,7 @@ void main() {
     'restart.png',
     'canonical-home.png',
     'canonical-event.png',
+    'canonical-handoff-event.png',
     'collection.png',
     'canonical-ending.png',
     'feedback.png',
@@ -528,6 +529,8 @@ void main() {
             .contains('matchesGoldenFile') &&
         canonicalUiEvidence
             .contains('canonical SSOT renders a stable Canvas ending') &&
+        canonicalUiEvidence.contains(
+            "matchesGoldenFile('goldens/canonical-handoff-event.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/outing.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/memory-gate.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/legacy-gate.png')") &&

@@ -74,6 +74,17 @@ void main() {
     await expectLater(
         find.byType(Game), matchesGoldenFile('goldens/canonical-event.png'));
 
+    final handoffSnapshot = routeSnapshot(Map<String, dynamic>.from(source),
+        targetWeek: (source['campaignWeeks'] as int), page: 3);
+    await tester.pumpWidget(Game(Map<String, dynamic>.from(source),
+        initialSnapshot: handoffSnapshot, key: const ValueKey('handoff')));
+    await tester.pump(const Duration(milliseconds: 100));
+    final handoffIndex = handoffSnapshot.eventIndex;
+    expect(find.byKey(ValueKey('3-${source['campaignWeeks']}-0-$handoffIndex')),
+        findsOneWidget);
+    await expectLater(find.byType(Game),
+        matchesGoldenFile('goldens/canonical-handoff-event.png'));
+
     final endingSnapshot = routeSnapshot(Map<String, dynamic>.from(source),
         targetWeek: (source['endingWeek'] as int), page: 2);
     await tester.pumpWidget(Game(Map<String, dynamic>.from(source),
