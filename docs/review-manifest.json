@@ -380,7 +380,7 @@
     {
       "path": ".github/workflows/verify.yml",
       "ref": ".github/workflows/verify.yml#system-approval",
-      "sha256": "b21c1d4f83c0c19c34b369a398f737d98558ebcc5171972dafd6c156aed200ec"
+      "sha256": "c11439721352092270d4131c4785c70fd327582c2d600c3a87d3ab4b78ce8e4e"
     },
     {
       "path": "docs/automation-policy.md",
