@@ -153,23 +153,43 @@ void main() {
             (first.lineageCompanions[id] ?? const <String>{}).toList()..sort();
         return '$id:${endingIds.join('+')}|target:$target|routes:${companions.join('+')}/${first.lineageSignatures[id]?.length ?? 0}sig';
       }).join(',');
+  final approved = millis <= 24000 &&
+      first.checksum > campaigns &&
+      replay.checksum == first.checksum &&
+      replay.endings.length == first.endings.length &&
+      replay.signatures.length == first.signatures.length &&
+      replay.locations.length == first.locations.length &&
+      first.locations.length >= 4 &&
+      first.signatures.length >= 3 &&
+      lineageEvidence &&
+      lineageEndingEvidence &&
+      lineageCompanionEvidence &&
+      replay.lineageSignatures.toString() ==
+          first.lineageSignatures.toString() &&
+      replay.lineageCompanions.toString() == first.lineageCompanions.toString();
+  final report = {
+    'schema': 'lumen-campaign-benchmark-v1',
+    'decision': approved ? 'approve' : 'reject',
+    'campaigns': campaigns,
+    'transitions': transitions,
+    'elapsedMillis': double.parse(millis.toStringAsFixed(1)),
+    'endings': first.endings.length,
+    'signatures': first.signatures.length,
+    'locations': first.locations.length,
+    'checksum': first.checksum,
+    'replayChecksum': replay.checksum,
+    'lineageProfiles': profileIds.length,
+    'lineageEvidence': lineageEvidence,
+    'lineageEndingEvidence': lineageEndingEvidence,
+    'lineageCompanionEvidence': lineageCompanionEvidence,
+  };
+  final reportFile = File('build/benchmark-verdict.json')
+    ..parent.createSync(recursive: true);
+  reportFile.writeAsStringSync(
+      '${const JsonEncoder.withIndent('  ').convert(report)}\n');
   stdout.writeln(
       'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum}');
-  if (millis > 24000 ||
-      first.checksum <= campaigns ||
-      replay.checksum != first.checksum ||
-      replay.endings.length != first.endings.length ||
-      replay.signatures.length != first.signatures.length ||
-      replay.locations.length != first.locations.length ||
-      first.locations.length < 4 ||
-      first.signatures.length < 3 ||
-      !lineageEvidence ||
-      !lineageEndingEvidence ||
-      !lineageCompanionEvidence ||
-      replay.lineageSignatures.toString() !=
-          first.lineageSignatures.toString() ||
-      replay.lineageCompanions.toString() !=
-          first.lineageCompanions.toString()) {
+  if (!approved) {
     stderr.writeln(
         'TRILEMMA_PERFORMANCE_FAIL: deterministic core budget or checksum drift');
     exit(1);

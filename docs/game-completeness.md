@@ -12,6 +12,8 @@
 
 ## 현재 증적 지표
 
+개발 작업의 정량 목표·gap·투입 단위는 생성 원장인 [`docs/development-goals.md`](development-goals.md)와 [`docs/development-goals.json`](development-goals.json)이 관리한다. authored content 227단위, narrative/relationship 25단위, replay exploration 604,928단위, presentation 899단위, proof 57단위로 종류를 분리하며, 이 숫자들을 품질 score로 임의 합산하지 않는다. `tool/verify_development_goals.dart`는 benchmark·결정 chain 실측과 6개 목표의 선행조건·증거를 함께 확인한다.
+
 | 지표 | 기준 | 현재 |
 | --- | --- | ---: |
 | 활동 조합 공간 | 활동 5개 × 48주 | 240 |

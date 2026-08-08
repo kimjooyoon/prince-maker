@@ -9,10 +9,13 @@ class DecisionReceipt {
     required this.rule,
     required this.contract,
     required this.decisionHash,
+    this.preconditionHash = 'legacy',
+    this.parentDecisionHash = 'genesis',
   });
 
   final bool approved;
   final String owner, kind, subject, rule, contract, decisionHash;
+  final String preconditionHash, parentDecisionHash;
   final int week;
 
   static DecisionReceipt? parse(String trace) {
@@ -41,11 +44,16 @@ class DecisionReceipt {
       rule: fields['rule'] ?? '',
       contract: fields['contract'] ?? '',
       decisionHash: fields['decisionHash']!,
+      preconditionHash: fields['preconditionHash'] ?? 'legacy',
+      parentDecisionHash: fields['parentDecisionHash'] ?? 'genesis',
     );
   }
 
   String get shortHash =>
       decisionHash.length > 8 ? decisionHash.substring(0, 8) : decisionHash;
+  String get shortPreconditionHash => preconditionHash.length > 8
+      ? preconditionHash.substring(0, 8)
+      : preconditionHash;
 }
 
 List<DecisionReceipt> recentDecisionReceipts(Iterable<String> trace) => trace

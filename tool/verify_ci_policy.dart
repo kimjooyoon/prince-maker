@@ -51,10 +51,17 @@ void main() {
   if (decision['mode'] != 'system-adjudicated' ||
       decision['humanApprovalRequired'] != false ||
       decision['failureMode'] != 'fail-closed' ||
-      !File('lib/game_core.dart')
+      !File('lib/decision_proof.dart')
           .readAsStringSync()
           .contains('class SystemDecisionPolicy')) {
-    fail('story and runtime must declare system-owned fail-closed adjudication');
+    fail(
+        'story and decision proof must declare system-owned fail-closed adjudication');
+  }
+  if (!File('docs/decision-proof-contract.json').existsSync() ||
+      !File('tool/ci_gate.dart')
+          .readAsStringSync()
+          .contains("'decision-proof-preconditions'")) {
+    fail('CI must force the decision proof precondition gate');
   }
   for (final phrase in [
     'SYSTEM_APPROVAL: APPROVE',

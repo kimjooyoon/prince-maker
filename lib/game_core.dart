@@ -1,5 +1,8 @@
 import 'save_state.dart';
 
+export 'decision_proof.dart';
+import 'decision_proof.dart';
+
 typedef Entity = int;
 
 abstract interface class StoryPort {
@@ -65,46 +68,6 @@ class JsonStoryAdapter implements StoryPort {
   @override
   int get campaignWeeks =>
       source['campaignWeeks'] as int? ?? ((endingWeek - 1).clamp(1, 999));
-}
-
-class SystemDecisionReceipt {
-  const SystemDecisionReceipt(this.approved, this.kind, this.subject, this.week,
-      this.rule, this.contract, this.decisionHash, this.owner);
-  final bool approved;
-  final String kind, subject, rule, contract, decisionHash, owner;
-  final int week;
-  String get trace =>
-      'approval:${approved ? 'approved' : 'rejected'}|owner:$owner|kind:$kind|subject:$subject|week:$week|rule:$rule|contract:$contract|decisionHash:$decisionHash';
-}
-
-/// Deterministic system adjudication: no human approval is part of a move.
-class SystemDecisionPolicy {
-  static SystemDecisionReceipt evaluate({
-    required String kind,
-    required String subject,
-    required int week,
-    required int endingWeek,
-    required bool conditions,
-    required String owner,
-    required String contract,
-  }) {
-    final inWindow = week < endingWeek;
-    final approved = inWindow && conditions;
-    final rule = !inWindow
-        ? 'terminal-window'
-        : conditions
-            ? 'input-contract'
-            : 'input-contract-rejected';
-    final payload =
-        '$contract|$kind|$subject|$week|${approved ? 'approve' : 'reject'}';
-    var hash = 2166136261;
-    for (final unit in payload.codeUnits) {
-      hash = ((hash ^ unit) * 16777619) & 0x7fffffff;
-    }
-    final decisionHash = hash.toRadixString(16).padLeft(8, '0');
-    return SystemDecisionReceipt(
-        approved, kind, subject, week, rule, contract, decisionHash, owner);
-  }
 }
 
 class MemorySaveAdapter implements SavePort {
@@ -496,7 +459,34 @@ class GameSession {
         endingWeek: story.endingWeek,
         conditions: conditions,
         owner: owner,
-        contract: contract);
+        contract: contract,
+        preconditions: _preconditionState(kind, subject, conditions),
+        parentDecisionHash:
+            SystemDecisionPolicy.parentHash(world.progress[0]!.trace));
+  }
+
+  String _preconditionState(String kind, String subject, bool conditions) {
+    final p = world.progress[0]!, s = world.stats[0]!.values;
+    String mapState(Map<Object?, Object?> values) => (values.entries.toList()
+          ..sort((a, b) => '${a.key}'.compareTo('${b.key}')))
+        .map((entry) => '${entry.key}=${entry.value}')
+        .join(',');
+    return [
+      'kind=$kind',
+      'subject=$subject',
+      'week=${p.week}',
+      'endingWeek=${story.endingWeek}',
+      'coins=${p.coins}',
+      'fatigue=${p.fatigue}',
+      'selected=${p.selected}',
+      'persona=${p.persona}',
+      'eventIndex=${p.eventIndex}',
+      'stats=${mapState(s)}',
+      'bonds=${mapState(p.bonds)}',
+      'milestones=${mapState(p.milestones)}',
+      'flags=${mapState(p.flags)}',
+      'conditions=$conditions',
+    ].join('|');
   }
 
   void _recordRejected(SystemDecisionReceipt receipt, String message) {

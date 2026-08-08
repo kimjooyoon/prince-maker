@@ -1,0 +1,47 @@
+{
+  "schema": "lumen-decision-proof-v1",
+  "version": 1,
+  "source": {
+    "ref": "story/story.json#decisionSystem",
+    "sha256": "0587ff35d1ac904e808a3a7140e693816a2ae88a2d2eb465212f5281564a4ef2"
+  },
+  "preconditionFields": [
+    "kind",
+    "subject",
+    "week",
+    "endingWeek",
+    "coins",
+    "fatigue",
+    "selected",
+    "persona",
+    "eventIndex",
+    "stats",
+    "bonds",
+    "milestones",
+    "flags",
+    "conditions"
+  ],
+  "chain": {
+    "root": "genesis",
+    "parentField": "parentDecisionHash",
+    "decisionField": "decisionHash",
+    "replayMustMatch": true
+  },
+  "receiptFields": [
+    "kind",
+    "subject",
+    "week",
+    "rule",
+    "contract",
+    "preconditionHash",
+    "parentDecisionHash",
+    "decisionHash"
+  ],
+  "decision": {
+    "owner": "Lumen Decision Proof Gate",
+    "mode": "system-adjudicated",
+    "humanApprovalRequired": false,
+    "failureMode": "fail-closed",
+    "onlyBlockingCondition": "missing or failed deterministic proof"
+  }
+}

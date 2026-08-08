@@ -38,11 +38,13 @@ void main() {
       history: const [
         'approval:approved|owner:Lumen Ledger System|kind:activity|'
             'subject:별 관측|week:16|rule:input-contract|'
-            'contract:lumen-ledger|decisionHash:1a2b3c4d',
+            'contract:lumen-ledger|preconditionHash:aaaabbbb|'
+            'parentDecisionHash:genesis|decisionHash:1a2b3c4d',
         'activity:지혜+3',
         'approval:rejected|owner:Lumen Ledger System|kind:story-choice|'
             'subject:잠긴 질문|week:17|rule:input-contract-rejected|'
-            'contract:lumen-ledger|decisionHash:5e6f7a8b',
+            'contract:lumen-ledger|preconditionHash:ccccdddd|'
+            'parentDecisionHash:1a2b3c4d|decisionHash:5e6f7a8b',
       ],
     );
     await tester.pumpWidget(

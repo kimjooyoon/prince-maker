@@ -6,15 +6,15 @@
   "codeRefs": [
     {
       "ref": "lib/main.dart#_Game/Scene",
-      "sha256": "7713dc436e24cde2ca62f1c860fa07fff8937a9a79cd5714071903472544e8c0"
+      "sha256": "d26fb892d7cfedfb142f5c471024cfdc1fb408f6e3a16693141acefbf478b447"
     },
     {
       "ref": "lib/game_core.dart#GameWorld/GameSession/resolveEnding",
-      "sha256": "5c6e8d3f315d386709f32601b7f2a91d561d95f4f17ab02548810eb3e5d282ce"
+      "sha256": "20b13ed5320dd6677ce1e19c5bc41c8c03de5a9e30dbf703a1402ed08b5447d8"
     },
     {
       "ref": "lib/game_core.dart#SystemDecisionPolicy",
-      "sha256": "5c6e8d3f315d386709f32601b7f2a91d561d95f4f17ab02548810eb3e5d282ce"
+      "sha256": "20b13ed5320dd6677ce1e19c5bc41c8c03de5a9e30dbf703a1402ed08b5447d8"
     },
     {
       "ref": "lib/save_adapter.dart#conditional-platform-boundary",
@@ -58,11 +58,11 @@
     },
     {
       "ref": "tool/ci_gate.dart#system-verdict",
-      "sha256": "5b23275384317e9df7f81d2c1d452f40836dece836b5301474d9888a8a47d7a2"
+      "sha256": "697f3336828134979f19a0f7555bf46dde530ba367f62b1a6a43daedcfab5144"
     },
     {
       "ref": "tool/trilemma_verdict.dart#axis-verdict",
-      "sha256": "fb3c686817b9dea5b0335740d04ecf9027b2841b8f9679711767f9d4ba51b8de"
+      "sha256": "416d62530eb3bef7c0d71b1f9be38d5ed0ba65749c4edc6f78b70fb8a4acca6f"
     },
     {
       "ref": "lib/canvas_surface.dart#CanvasViewport",
@@ -70,7 +70,7 @@
     },
     {
       "ref": "lib/decision_receipt.dart#DecisionReceipt",
-      "sha256": "5cb9278eb955f26b62ae545ede792aed4f3522a38f78ad2f9270f357fcf8bb40"
+      "sha256": "ac58c52f7044307260168b309a0f8d54c2450437709eb6b47912c2cb4b13ef48"
     },
     {
       "ref": "tool/verify_game.dart#visual-golden-contract",
@@ -87,6 +87,26 @@
     {
       "ref": "tool/verify_render_quality.dart#render-quality-preconditions",
       "sha256": "c1d8b36b1a7f7310ebded046540dae96d6fab4f77d5970f4400991eca969b445"
+    },
+    {
+      "ref": "tool/generate_development_goals.dart#buildDocument",
+      "sha256": "47023e04db33ac98e5daa1cb4edc0cd52ec54529845ddce1ac38e35a6fbcf93f"
+    },
+    {
+      "ref": "tool/verify_development_goals.dart#quantitative-evidence-gate",
+      "sha256": "1e4e728785ca234e900714761b08a920845738aab6d3ea65a00e63cfbd01b166"
+    },
+    {
+      "ref": "lib/decision_proof.dart#SystemDecisionPolicy",
+      "sha256": "851ea22ba42780dfe4024a7a96915e66706c5d5125de6ac6378b5b10d577c88d"
+    },
+    {
+      "ref": "tool/verify_decision_proof.dart#decision-proof-preconditions",
+      "sha256": "e77d32971f94928c3e431da52c62e8c9b3f7bf5654809ca293777936d074c249"
+    },
+    {
+      "ref": "test/decision_proof_test.dart#same preconditions reproduce the same chain",
+      "sha256": "09d620603b94f3b1e79419320148fff30f82b248f84ab02b78d74924ccd50f01"
     }
   ],
   "assetRefs": [
@@ -138,7 +158,9 @@
       "week",
       "rule",
       "contract",
-      "decisionHash"
+      "decisionHash",
+      "preconditionHash",
+      "parentDecisionHash"
     ],
     "rules": [
       {

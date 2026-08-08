@@ -982,7 +982,7 @@ class Scene extends CustomPainter {
             stroke: receipt.approved ? teal : const Color(0xffa84f3c));
         txt(
             c,
-            '$status · $kind · ${receipt.subject} · ${receipt.week}주 · ${receipt.rule} · #${receipt.shortHash}',
+            '$status · $kind · ${receipt.subject} · ${receipt.week}주 · ${receipt.rule} · #${receipt.shortHash} · p#${receipt.shortPreconditionHash}',
             Offset(38, y + 8),
             9,
             receipt.approved ? ink : const Color(0xffa84f3c),
