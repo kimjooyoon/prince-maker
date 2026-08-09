@@ -64,6 +64,8 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln(
       '판정 주체: **${decision['owner']}** · 모드 `${decision['mode']}` · 사람 승인 필요 여부 `${decision['humanApprovalRequired']}` · 실패 모드 `${decision['failureMode']}`');
   b.writeln('책임 증적: ${decision['responsibility']}');
+  b.writeln(
+      '시각 책임 증적: system decision receipt Golden `${gameplay['current']['systemDecisionReceiptGolden']}` · 승인·거절·owner·contract·rule·chained hashes');
   for (final rule in (decision['rules'] as List? ?? const []))
     b.writeln('- `${rule['id']}` · ${rule['scope']} · ${rule['effect']}');
   b.writeln('\n## 렌더러 결정 계약\n');
@@ -326,6 +328,8 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   b.writeln('| 사건 선택 | $choices | 모든 사건 choices 합계 |');
   b.writeln(
       '| 교환 선택 | ${gameplay['current']['tradeoffChoices']}/${gameplay['current']['authoredChoices']} (${gameplay['current']['tradeoffRate']}) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |');
+  b.writeln(
+      '| 시스템 판정 영수증 Golden | ${gameplay['current']['systemDecisionReceiptGolden']} | `gameplayKpis.current.systemDecisionReceiptGolden` · `test/goldens/system-receipt.png` 승인·거절·hash 표면 |');
   b.writeln('| 엔딩 | $endings | `endings.length` |');
   b.writeln('| Canvas Golden | $goldens | `test/goldens/*.png` |');
   b.writeln(

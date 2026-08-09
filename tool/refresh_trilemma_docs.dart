@@ -148,6 +148,9 @@ String render(String source) {
         '활동 horizon Golden·활동 피로 위험 Golden',
         '활동 horizon Golden·활동 피로 위험 Golden·memory impact forecast Golden');
   }
+  output = output.replaceAll(
+      '`system-receipt.png`는 승인·거절 trace',
+      '`system-receipt.png` Golden은 승인·거절 trace');
   return output;
 }
 

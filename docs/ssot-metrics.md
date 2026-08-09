@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 7ab46a2ef919dc81b2043580a1c44278d54d13776e2d39bc14c3851a9b57b911 -->
+<!-- ssot-sha256: 640dacf9d6a2d5bed200233833d0292e462e4dd6feaf81ec9d5234c84589c36d -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -35,6 +35,7 @@
 | 이벤트 스토밍 노드 | 133 | 본편·사이드·동료·활동·엔딩 변형·막 결산을 합친 생성 원장 |
 | 사건 선택 | 94 | 모든 사건 choices 합계 |
 | 교환 선택 | 72/166 (0.43373493975903615) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |
+| 시스템 판정 영수증 Golden | true | `gameplayKpis.current.systemDecisionReceiptGolden` · `test/goldens/system-receipt.png` 승인·거절·hash 표면 |
 | 엔딩 | 6 | `endings.length` |
 | Canvas Golden | 105 | `test/goldens/*.png` |
 | 코드 ref | 120 | `codeRefs.length` |

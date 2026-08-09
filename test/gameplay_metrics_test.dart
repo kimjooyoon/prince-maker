@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/game_core.dart';
@@ -93,6 +94,13 @@ void main() {
         routes.every((route) => (route['trace'] as List).length >= 12), isTrue);
     print(
         'GAMEPLAY_METRICS_OK: policies=${routes.length} distinctEndings=${endings.length} distinctSignatures=${signatures.length}');
+  });
+  test('system receipt Golden binds approved and rejected decisions', () {
+    final source = File('test/system_receipt_golden_test.dart').readAsStringSync();
+    expect(File('test/goldens/system-receipt.png').existsSync(), isTrue);
+    expect(source, contains("matchesGoldenFile('goldens/system-receipt.png')"));
+    expect(source, contains('approval:approved'));
+    expect(source, contains('approval:rejected'));
   });
   test('three legacy profiles produce distinct deterministic route signatures',
       () async {
