@@ -1049,6 +1049,9 @@
 {"type":"entry","key":"ui.relationshipArchive.resonance.neutral","value":"Different grain · Base bond"}
 {"type":"entry","key":"ui.home.forecast","value":"Forecast · {effects}"}
 {"type":"entry","key":"ui.home.forecast.none","value":"No numeric change"}
+{"type":"entry","key":"ui.home.horizon.event","value":"Next event · {title}"}
+{"type":"entry","key":"ui.home.horizon.milestone","value":"Next goal · {title}"}
+{"type":"entry","key":"ui.home.horizon.open","value":"Next week · open choice"}
 {"type":"entry","key":"ui.home.fatigueDelta","value":"Fatigue {delta}"}
 {"type":"entry","key":"ui.event.activityReflection","value":"Activity reflection · {title}"}
 {"type":"entry","key":"ui.home.journal","value":"Reflection journal"}

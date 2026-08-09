@@ -64,6 +64,23 @@ String localizedActivityForecast(ActivityForecast forecast) {
       {'effects': effects});
 }
 
+String localizedActivityHorizon(ActivityForecast forecast) {
+  if (forecast.nextEventKey != null) {
+    return _replace(
+        localized('ui.home.horizon.event', 'Next event · {title}'), {
+      'title': localized(forecast.nextEventKey!, forecast.nextEventKey!),
+    });
+  }
+  if (forecast.nextMilestoneKey != null) {
+    return _replace(
+        localized('ui.home.horizon.milestone', 'Next goal · {title}'), {
+      'title':
+          localized(forecast.nextMilestoneKey!, forecast.nextMilestoneKey!),
+    });
+  }
+  return localized('ui.home.horizon.open', 'Next week · open choice');
+}
+
 String localizedActivityResultFromStory(
         Map<String, dynamic> story, String raw) =>
     localizedActivityResult(
