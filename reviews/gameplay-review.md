@@ -123,3 +123,77 @@ P0 두 건과 확인된 P1 화면 문제를 수정·계약·Golden으로 재검�
 - [x] 저장 보관소에서 raw schema/history/hash가 기본 화면에 보이지 않는다.
 - [x] 긴 rival/legacy 효과를 가진 모든 선택 카드가 경계 안에서 읽힌다.
 - [x] 저장 보관소와 운명 기록의 이름/설명이 처음 보는 사용자에게 구분된다.
+
+## 2026-08-09 최신 적대적 재검토 — 동행 장면 폐쇄루프
+
+이번 기록은 위의 초기 플레이 로그를 대체하지 않는다. 새 companion-scene 변경과 102개 Golden, 18개 SSOT 장면, 5,000회 benchmark를 기준으로 현재 위험을 다시 판정한다.
+
+### 통과한 증거
+
+- `resolveCompanionScenes`가 bond·chapter·persisted flag에서 같은 projection을 재생한다.
+- 기록 성공은 `companion-scene:<id>` flag, bondDelta, 시스템 승인 영수증, trace를 함께 남긴다.
+- 잠긴 입력·중복 입력은 fail-closed로 거절되며 중복 보상과 중복 trace가 생기지 않는다.
+- `companion_scene_test.dart`와 `companion_scene_golden_test.dart`가 최초 화면·기록 후 화면·English 전환을 고정한다.
+- CI benchmark는 5,000 campaigns / 565,000 transitions / 18 scenes에서 checksum·forecast checksum·companion-scene checksum replay가 일치했다. Wasm release와 전체 Golden도 같은 실행에서 승인됐다.
+
+### 남은 P1 — “독립 장면”이 사실상 클릭형 수집 체크리스트다
+
+현재 카드에는 제목·대사·`기록하기`가 있지만, 플레이어가 고르는 authored choice나 대립·비용·실패 상태가 없다. 클릭 한 번으로 bond가 +1 되고 완료 색상만 바뀌므로, 18개의 장면이 서사 선택이 아니라 보상 수집으로 축소된다. `gameplay-fun`의 166개 선택 통계에는 이 장면들의 선택 깊이가 포함되지 않는다.
+
+**수정 요구:** 최소한 장면별 2-way question/response 또는 bond·fatigue·flag 중 하나를 선택하는 작은 갈림을 도입하고, 선택 결과가 다음 chapter/ending route에 영향을 주는 Golden과 route-signature 증거를 추가하라. 현재의 단순 기록 보상은 “콘텐츠가 늘었다”는 완전성 증거이지 “재미가 늘었다”는 순수성 증거가 아니다.
+
+### 남은 P1 — 잠긴 카드 탭의 실패 피드백이 화면에 보이지 않는다
+
+도메인 테스트에서는 조건 부족을 거절하고 `lastResult`와 reject receipt를 남기지만, page 13 painter는 카드의 `LOCKED` 상태만 다시 그린다. 잠긴 카드를 눌렀을 때 왜 실패했는지, 현재 막이 부족한지 bond가 부족한지 플레이어가 즉시 알 수 있는 result banner/toast가 없다. 이 문제는 `companion_scene_golden_test.dart`가 available 카드의 성공만 탭하고 locked 카드의 시각적 거절을 캡처하지 않아 놓치기 쉽다.
+
+**수정 요구:** 거절된 scene id와 이유를 localized banner로 page 13에 노출하고, locked tap·chapter 부족·bond 부족·중복 기록을 각각 Golden 또는 widget assertion으로 고정하라.
+
+### 남은 P1 — Golden 범위가 18개 장면 전체를 대표하지 않는다
+
+현재 전용 Golden 3장은 Lumi의 첫 archive·첫 기록·English 기록 후 상태만 고정한다. Bora/Taro, 3·5·7·11막 이후 장면, 마지막 장면, 이전/다음 동행 버튼, 잠김/완료 혼합 행의 layout은 직접 검증하지 않는다. benchmark checksum은 상태 재현을 증명하지만 Canvas clipping·locale overflow·입력 hitbox를 증명하지 않는다.
+
+**수정 요구:** 각 companion의 첫/중간/마지막 장면과 잠김·기록됨·기록 가능 혼합 상태를 최소 한 장씩 추가하고, 이전/다음/관계 기록 back hitbox를 실제 탭으로 검증하라. 특히 한 카드의 prompt·line·reward가 2행 안에 들어가는지 Golden pixel diff로 확인해야 한다.
+
+### 남은 P2 — 성능 증거와 체감 렌더링 증거가 분리되어 있다
+
+campaign benchmark는 domain transition과 replay checksum을 측정하며 24초 상한 안에 통과한다. 그러나 companion archive의 Canvas paint 비용, 이미지 decode, locale 전환 프레임은 benchmark에 포함되지 않는다. 따라서 “성능 통과”를 “page 13이 저사양 브라우저에서도 부드럽다”로 확대 해석하면 안 된다.
+
+**다음 골든 리뷰 기준:** 위 P1 세 항목 중 장면 선택 깊이와 잠긴 입력 피드백이 해결되기 전까지는 전체 완성도·성능 승인을 게임 재미의 최종 승인으로 표현하지 않는다. 현재 상태는 `SYSTEM_APPROVAL`은 통과했지만, 플레이어 경험 관점에서는 조건부 출시 후보이다.
+
+## 2026-08-09 P1 후속 조치 및 폐쇄 판정
+
+위 재검토의 P1 요구사항을 다음 증적으로 구현했다.
+
+- [x] 18개 장면 모두 2-way authored choice를 가지며, stat·fatigue·bond·memory flag를 선택별로 적용한다.
+- [x] 선택 flag가 `resolveEnding(..., flags:)`의 route signature에 반영되고, `companion_scene_test.dart`가 choice 0/1의 divergent state와 ending route를 검증한다.
+- [x] raw SSOT가 아닌 `resolveCompanionScenes` projection으로 UI 입력을 판정한다. 잠금·chapter 부족·bond 부족·중복은 fail-closed stable rejection code와 localized page-13 feedback으로 드러난다.
+- [x] 첫 장면·선택 대기·기록 후·English·Lumi/Bora/Taro 혼합 상태·bond 잠금 화면을 포함한 8개 companion Golden과 실제 pending/choice/back navigation 입력 검증을 추가했다.
+- [x] benchmark가 campaign/scene index로 choice 0/1을 모두 재생하고, choice trace를 `companionSceneChecksum`과 route signature에 포함한다.
+
+최종 판정은 생성 문서와 review manifest를 갱신한 단일 `tool/ci_gate.dart --ci` 결과에 위임한다. Canvas paint/decode/frame-time은 별도 device benchmark가 아니므로, 성능 판정은 deterministic domain throughput 범위로만 해석한다.
+
+## 2026-08-09 최종 게이트 후속 판정
+
+단일 `tool/ci_gate.dart --ci`가 `SYSTEM_APPROVAL: APPROVE`로 완료됐다. 확인된 수치는 5,000 campaigns / 565,000 transitions / 6.33초 / 18 companion scenes / choice modes `[0, 1]`이며 campaign·forecast·companion-scene checksum replay가 각각 일치한다. 전체 164개 Flutter 테스트와 102개 Golden, Wasm release build, 100% completeness dimensions, quality score 1.0도 통과했다.
+
+적대적 판정을 철회하는 범위는 P1 폐쇄루프까지다. 이 결과를 page 13 저사양 60fps 보증으로 확대하지 않으며, Canvas paint/decode/frame-time 계측과 선택 flag의 후속 authored dialogue 회수는 다음 리뷰의 P2로 남긴다. 따라서 현재 판정은 `SYSTEM_APPROVAL` 기준 승인, 체감 성능·서사 회수 기준 조건부 후속 검증이다.
+
+## 2026-08-09 최신 런타임 적대적 재검토 — 관계 기록과 조건 잠금
+
+이번에는 저장된 진행 상태를 실제 Flutter Web에서 다시 열고, 관계 기록 → 동행 장면 → 홈 → 다음 사건까지 1280×720으로 재생했다. 캡처 원본은 `build/audit/2026-08-09-r2/`에 남겼다.
+
+### 확인된 결손과 폐쇄
+
+- [x] **P1 — 긴장 상태 배너가 사실상 읽히지 않았다.** `갈라지는 마음` 화면에서 위험 상태의 밝은 분홍 배경 위에 흰색 제목·후속 대사·본문을 그려 대비를 무너뜨렸다. [`lib/relationship_archive_painter.dart`](/Users/alice/games/princess_maker_like/lib/relationship_archive_painter.dart)의 danger header 전용 어두운 텍스트·accent로 고쳤고, 재캡처에서 제목과 후속 기록이 즉시 읽힌다.
+- [x] **P1 — 잠긴 사건 선택이 잠겼다는 사실을 숨겼다.** 조건 문구만 `기억 단서` 또는 `조건...`으로 보여 카드 상단의 `선택 2`와 실제 상태가 어긋났다. [`lib/main.dart`](/Users/alice/games/princess_maker_like/lib/main.dart)의 잠금 라벨과 조건 문구를 `잠김 · ...`으로 통일하고 `relationship-gate.png`·`memory-gate.png`를 갱신했다.
+- [x] **P1 — locale catalog가 비어 있을 때 잠금 카피가 혼합 언어가 됐다.** `잠김 · Condition: Bond...` 같은 fallback은 플레이어에게 번역 누락을 그대로 노출한다. [`lib/i18n.dart`](/Users/alice/games/princess_maker_like/lib/i18n.dart)가 활성 locale에 맞는 한국어/영어 fallback을 선택하도록 바꾸고 Golden으로 고정했다.
+- [x] **P1 — 동행 장면의 선택 기억이 다음 장면에 보이지 않았다.** 이전 선택을 route flag에만 숨기면 플레이어는 자신의 선택이 소비됐는지 알 수 없다. 현재 page 13은 다음 장면 카드와 하단에 앞선 선택을 회고하고, 저장된 UI 위치·pending choice도 다시 열 때 보존한다. 관련 resolver·save-state·Golden·hitbox 테스트가 통과했다.
+
+### 아직 공격할 지점
+
+- **P2 — Canvas 접근성 표면은 여전히 빈약하다.** 브라우저 DOM에서 확인되는 상호작용은 `Enable accessibility` 버튼 하나뿐이며, 카드 제목·잠금 이유·뒤로가기·동행 선택이 semantic label이나 키보드 focus 순서로 노출되는지 검증하지 못했다. 스크린샷만으로 WCAG 준수를 선언할 수 없다.
+- **P2 — 회고 카피가 선택을 기억하지만, 후속 authored 대사의 깊이는 아직 얕다.** 다음 카드에 선택 label은 보이지만, 그 선택이 후속 대사·퀘스트 목표·엔딩 회고에서 몇 단계 뒤까지 재사용되는지는 현재 Golden과 benchmark만으로 충분히 증명되지 않는다.
+
+### 현재의 적대적 판정
+
+이번 화면 결손 세 가지와 선택 회고 결손은 코드·Golden·타깃 테스트로 폐쇄했다. 그러나 접근성 semantic surface와 장기 서사 회수는 아직 증거가 약하므로, `SYSTEM_APPROVAL`을 플레이어 경험 전체 승인으로 확대해서는 안 된다. 현재 판정은 **핵심 루프 승인, 접근성·장기 회고 조건부**다.

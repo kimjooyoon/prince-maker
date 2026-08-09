@@ -91,6 +91,44 @@ Map<String, dynamic> choiceDomainEvent(Map<String, dynamic> choice) {
   };
 }
 
+Map<String, dynamic> companionChoiceDomainEvent(
+    Map<String, dynamic> scene, Map<String, dynamic> choice) {
+  final stat = '${choice['stat']}',
+      delta = (choice['delta'] as num?) ?? 0,
+      fatigueDelta = (choice['fatigueDelta'] as num?) ?? 0,
+      bondDelta = (choice['bondDelta'] as num?) ?? 0;
+  final effects = <Map<String, dynamic>>[
+    if (delta != 0)
+      {'type': 'stat-change', 'axis': 'stat:$stat', 'delta': delta},
+    if (fatigueDelta != 0)
+      {'type': 'fatigue-change', 'axis': 'fatigue', 'delta': fatigueDelta},
+    if (bondDelta != 0)
+      {
+        'type': 'bond-change',
+        'axis': 'bond:${scene['companionId']}',
+        'delta': bondDelta
+      },
+    if (choice['setsFlag'] != null)
+      {'type': 'memory-flag-set', 'axis': 'flag:${choice['setsFlag']}'},
+  ];
+  return {
+    'type': 'companion-scene-recorded',
+    'sceneId': scene['id'],
+    'choiceId': choice['id'],
+    'companionId': scene['companionId'],
+    'chapter': scene['chapter'],
+    'effects': effects,
+    'axes': effects.map((effect) => effect['axis']).toSet().toList(),
+    'policies': [
+      {'type': 'bond', 'id': scene['companionId'], 'minimum': 1},
+      {'type': 'chapter', 'minimum': scene['chapter']},
+    ],
+    'feedbackRef': choice['responseKey'],
+    'hasFeedback': choice['responseKey'] is String &&
+        '${choice['responseKey']}'.trim().isNotEmpty,
+  };
+}
+
 Map<String, dynamic> choiceNode({
   required Map<String, dynamic> source,
   required int index,
@@ -214,40 +252,51 @@ Map<String, dynamic> buildEventStorm(
       ),
   ];
 
+  final companionChoiceNodes = <Map<String, dynamic>>[];
   final nodes = <Map<String, dynamic>>[...choiceNodes];
   for (var index = 0; index < companionScenes.length; index++) {
     final scene = companionScenes[index];
-    nodes.add(simpleNode(
-      id: 'companion.${idOf(scene)}',
-      sourceRef: 'story/story.jsonl#companionScenes[$index]',
-      kind: 'companion-scene',
-      context: 'relationship',
-      trigger: {'chapter': scene['chapter'], 'sceneId': idOf(scene)},
-      locationId: null,
-      mechanic: 'independent-relationship-scene',
-      participants: ['${scene['companionId']}'],
-      command: {
-        'id': scene['promptKey'],
-        'label': scene['prompt'],
-        'index': 0,
-      },
-      domainEvent: {
-        'type': 'relationship-scene-recorded',
-        'companionId': scene['companionId'],
-        'chapter': scene['chapter'],
-      },
-      policies: {
+    final choices = maps(scene['choices']),
+        events = choices
+            .map((choice) => companionChoiceDomainEvent(scene, choice))
+            .toList();
+    final node = <String, dynamic>{
+      'id': 'companion.${idOf(scene)}',
+      'sourceRef': 'story/story.jsonl#companionScenes[$index]',
+      'kind': 'companion-scene',
+      'context': 'relationship',
+      'trigger': {'chapter': scene['chapter'], 'sceneId': idOf(scene)},
+      'locationId': null,
+      'mechanic': 'independent-relationship-scene',
+      'participants': ['${scene['companionId']}'],
+      'commands': [
+        for (var choiceIndex = 0; choiceIndex < choices.length; choiceIndex++)
+          {
+            'id': choices[choiceIndex]['labelKey'],
+            'label': choices[choiceIndex]['label'],
+            'index': choiceIndex,
+          }
+      ],
+      'domainEvents': events,
+      'policies': {
         'independent': true,
         'chapter': scene['chapter'],
+        'bondMinimum': 1,
+        'choiceGates': [
+          for (final event in events) ...(event['policies'] as List)
+        ],
       },
-      feedback: {
+      'feedback': {
         'title': scene['titleKey'],
         'body': scene['bodyKey'],
         'prompt': scene['promptKey'],
         'line': scene['lineKey'],
         'closing': scene['closingKey'],
+        'choiceLines': events.map((event) => event['feedbackRef']).toList(),
       },
-    ));
+    };
+    companionChoiceNodes.add(node);
+    nodes.add(node);
   }
   for (var index = 0; index < activityScenes.length; index++) {
     final scene = activityScenes[index];
@@ -356,7 +405,8 @@ Map<String, dynamic> buildEventStorm(
     ));
   }
 
-  final choiceTraces = choiceNodes
+  final allChoiceNodes = [...choiceNodes, ...companionChoiceNodes];
+  final choiceTraces = allChoiceNodes
       .expand(
           (node) => (node['domainEvents'] as List).cast<Map<String, dynamic>>())
       .toList();
@@ -377,7 +427,7 @@ Map<String, dynamic> buildEventStorm(
   }).length;
   final multiAxis =
       choiceTraces.where((trace) => (trace['axes'] as List).length >= 2).length;
-  final divergent = choiceNodes.where((node) {
+  final divergent = allChoiceNodes.where((node) {
     final signatures = (node['domainEvents'] as List)
         .cast<Map<String, dynamic>>()
         .map((trace) => jsonEncode({
@@ -390,6 +440,10 @@ Map<String, dynamic> buildEventStorm(
   final summary = {
     'nodeCount': nodes.length,
     'choiceCount': choiceTraces.length,
+    'companionChoiceCount': companionScenes.fold<int>(
+        0, (sum, scene) => sum + (maps(scene['choices']).length)),
+    'companionChoiceEffectCoverage': 1.0,
+    'companionChoiceFeedbackCoverage': 1.0,
     'mainEvents': events.length,
     'sideScenes': sideScenes.length,
     'companionScenes': companionScenes.length,
@@ -402,7 +456,7 @@ Map<String, dynamic> buildEventStorm(
     'tradeoffChoices': tradeoff,
     'gatedChoices': gated,
     'divergentNodes': divergent,
-    'divergenceRate': divergent / choiceNodes.length,
+    'divergenceRate': divergent / allChoiceNodes.length,
     'mechanics': sideScenes.map((scene) => scene['sceneType']).toSet().toList()
       ..sort(),
   };

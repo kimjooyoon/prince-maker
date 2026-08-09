@@ -93,7 +93,11 @@ Map<String, dynamic> buildDocument() {
       (story['locations'] as List).length +
       legacyProfiles.length +
       relationshipFollowups.length;
-  final transitions = 5000 * ((story['endingWeek'] as int) - 1 + events.length);
+  final transitions = 5000 *
+      ((story['endingWeek'] as int) -
+          1 +
+          events.length +
+          companionScenes.length);
   final explorationUnits = (scenario['authoredBranchVectors'] as int) +
       (scenario['routeInputCases'] as int) +
       5000 +
@@ -323,7 +327,7 @@ Map<String, dynamic> buildDocument() {
       'title': '결정론적 처리량과 replay',
       'target': {
         'campaigns': 5000,
-        'transitions': 475000,
+        'transitions': transitions,
         'maxMillis': contentBudget['benchmarkMaxMillis'],
         'unit': 'benchmark-contract',
       },
@@ -333,7 +337,7 @@ Map<String, dynamic> buildDocument() {
         'maxMillis': contentBudget['benchmarkMaxMillis'],
         'checksumReplayMustMatch': true,
         'formula':
-            'campaigns × (endingWeek − 1 + events) and replay checksum equality',
+            'campaigns × (endingWeek − 1 + events + companion scenes) and replay checksum equality',
       },
       'gap': {'campaigns': 0, 'transitions': 0, 'maxMillis': 0},
       'status': 'runtime-measured-by-benchmark',
@@ -345,11 +349,12 @@ Map<String, dynamic> buildDocument() {
       ],
       'evidence': [
         'tool/benchmark_game.dart#ssot-campaign-throughput-signatures',
+        'tool/benchmark_game.dart#companion-scene-replay-checksum',
         'build/benchmark-verdict.json#runtime-measurement',
         'build/ci-verdict.json#system-approval',
       ],
       'acceptance':
-          '5,000 campaign·475,000 transition이 제한 시간 안에 실행되고 checksum/replayChecksum이 일치한다.',
+          '5,000 campaign·$transitions transition이 제한 시간 안에 실행되고 companion scene replay checksum까지 일치한다.',
     },
     {
       'id': 'G6-accountable-delivery',

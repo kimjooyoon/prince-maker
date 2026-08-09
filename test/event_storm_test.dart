@@ -12,7 +12,10 @@ void main() {
     final nodes = (artifact['nodes'] as List).cast<Map<String, dynamic>>();
     expect(artifact['schema'], 'lumen-event-storm-v1');
     expect(nodes, hasLength(133));
-    expect(summary['choiceCount'], 166);
+    expect(summary['choiceCount'], 202);
+    expect(summary['companionChoiceCount'], 36);
+    expect(summary['companionChoiceEffectCoverage'], 1.0);
+    expect(summary['companionChoiceFeedbackCoverage'], 1.0);
     expect(summary['effectCoverage'], 1.0);
     expect(summary['feedbackCoverage'], 1.0);
     expect(summary['tradeoffChoices'], greaterThanOrEqualTo(72));
@@ -37,6 +40,20 @@ void main() {
             reason: '${node['id']} must change a state axis');
         expect(event['hasFeedback'], true,
             reason: '${node['id']} must return authored feedback');
+      }
+    }
+    for (final node
+        in nodes.where((node) => node['kind'] == 'companion-scene')) {
+      final domainEvents =
+          (node['domainEvents'] as List).cast<Map<String, dynamic>>();
+      expect(node['commands'], hasLength(2));
+      expect(domainEvents, hasLength(2));
+      for (final event in domainEvents) {
+        expect(event['type'], 'companion-scene-recorded');
+        expect(event['choiceId'], isNotNull);
+        expect(event['axes'], hasLength(greaterThanOrEqualTo(2)));
+        expect(event['effects'], isNotEmpty);
+        expect(event['hasFeedback'], true);
       }
     }
   });

@@ -27,6 +27,8 @@ import 'canvas_ui_kit.dart';
 import 'canvas_choice_impact.dart';
 import 'event_art.dart';
 import 'legacy_profile_catalog.dart';
+import 'companion_scene_archive_painter.dart';
+import 'companion_scene_layout.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,11 +69,13 @@ class _Game extends State<Game> {
       persona = 0,
       eventIndex = 0,
       sideSceneCursor = 0,
+      companionSceneIndex = 0,
       archiveCharacterIndex = 0,
       archiveEmotionIndex = 0;
   String locale = 'ko';
   bool finished = false;
   String? selectedLegacyId;
+  String? pendingCompanionSceneId;
   final history = <String>[];
   final stats = {'지혜': 4, '공감': 5, '용기': 3},
       bonds = {'lumi': 0, 'bora': 0, 'taro': 0};
@@ -83,11 +87,26 @@ class _Game extends State<Game> {
   final characterEmotionImages = <String, ui.Image>{};
   final eventIllustrationImages = <String, ui.Image>{};
   final sideSceneIllustrationImages = <String, ui.Image>{};
+  bool rosterLoadStarted = false, emotionLoadStarted = false;
   int eventAssetGeneration = 0;
   int sideSceneAssetGeneration = 0;
   late GameSession session;
   late CollectionPort collection;
   LocaleCatalog get catalog => LocaleCatalog(widget.locales);
+  void persistUiState() {
+    if (session.autoPersist) session.save.write(snapshot().encode());
+  }
+
+  void restoreUiState(GameSnapshot value) {
+    sideSceneCursor = value.sideSceneCursor;
+    companionSceneIndex = value.companionSceneIndex;
+    pendingCompanionSceneId = value.pendingCompanionSceneId;
+    archiveCharacterIndex = value.archiveCharacterIndex;
+    archiveEmotionIndex = value.archiveEmotionIndex;
+    selectedLegacyId = value.selectedLegacyId;
+    locale = value.locale == 'en' ? 'en' : 'ko';
+  }
+
   String? legacyProfileId() {
     return defaultLegacyProfileId(widget.story, collectionEntries);
   }
@@ -104,6 +123,7 @@ class _Game extends State<Game> {
   void toggleLocale() => setState(() {
         locale = locale == 'ko' ? 'en' : 'ko';
         setActiveLocale(locale, catalog);
+        persistUiState();
       });
   List<Activity> get activities => activitiesFromStory(widget.story);
   List<Map<String, dynamic>> get sideScenes => session.story.sideScenes;
@@ -118,6 +138,7 @@ class _Game extends State<Game> {
     setState(() {
       sideSceneCursor = firstAvailable < 0 ? 0 : firstAvailable;
       page = 9;
+      persistUiState();
     });
     loadCurrentSideSceneIllustration();
   }
@@ -136,7 +157,54 @@ class _Game extends State<Game> {
       session.chooseSideScene('${scene['id']}', choice);
       sync();
       page = 0;
-      session.persist(page: page);
+      persistUiState();
+    });
+  }
+
+  void openCompanionScenes(int index) => setState(() {
+        companionSceneIndex = index.clamp(0, 2);
+        pendingCompanionSceneId = null;
+        page = 13;
+        persistUiState();
+      });
+
+  List<Map<String, dynamic>> companionScenesForCurrent() {
+    final p = session.world.progress[0]!,
+        currentChapter = ((p.week + 2) ~/ 3).clamp(1, 16);
+    return resolveCompanionScenes(session.story, p.bonds, p.flags,
+            currentChapter: currentChapter)
+        .where((scene) =>
+            '${scene['companionId']}' ==
+            '${session.story.companions[companionSceneIndex]['id']}')
+        .toList();
+  }
+
+  void chooseCompanionScene(int index, {int choiceIndex = -1}) {
+    final scenes = companionScenesForCurrent();
+    if (index < 0 || index >= scenes.length) return;
+    final scene = scenes[index], sceneId = '${scene['id']}';
+    if (scene['available'] == true) {
+      setState(() {
+        pendingCompanionSceneId = sceneId;
+        persistUiState();
+      });
+      return;
+    }
+    setState(() {
+      session.recordCompanionScene(sceneId, choiceIndex: choiceIndex);
+      sync();
+      persistUiState();
+    });
+  }
+
+  void choosePendingCompanionScene(int choiceIndex) {
+    final sceneId = pendingCompanionSceneId;
+    if (sceneId == null) return;
+    setState(() {
+      session.recordCompanionScene(sceneId, choiceIndex: choiceIndex);
+      pendingCompanionSceneId = null;
+      sync();
+      persistUiState();
     });
   }
 
@@ -154,10 +222,14 @@ class _Game extends State<Game> {
     if (widget.initialSnapshot != null) {
       session.world.restore(widget.initialSnapshot!);
       page = widget.initialSnapshot!.page;
+      restoreUiState(widget.initialSnapshot!);
     } else {
       try {
         final restored = session.restore();
-        if (restored != null) page = restored.page;
+        if (restored != null) {
+          page = restored.page;
+          restoreUiState(restored);
+        }
       } catch (_) {}
     }
     sync();
@@ -180,29 +252,15 @@ class _Game extends State<Game> {
         .then((f) {
       if (mounted) setState(() => personaImage = f.image);
     });
-    rootBundle
-        .load('assets/lumen-character-roster.png')
-        .then((b) => ui.instantiateImageCodec(b.buffer.asUint8List()))
-        .then((c) => c.getNextFrame())
-        .then((f) {
-      if (mounted) setState(() => rosterImage = f.image);
-    });
-    final emotionAssets =
-        (widget.story['characterArchive'] as List? ?? const [])
-            .whereType<Map>()
-            .map((entry) => entry['emotionAsset'])
-            .whereType<String>()
-            .toSet();
-    for (final asset in emotionAssets) {
-      rootBundle
-          .load(asset)
-          .then((b) => ui.instantiateImageCodec(b.buffer.asUint8List()))
-          .then((c) => c.getNextFrame())
-          .then((f) {
-        if (mounted) {
-          setState(() => characterEmotionImages[asset] = f.image);
-        }
-      });
+    if (page == 6 || page == 7) {
+      loadRosterImage();
+    }
+    if (page == 7 || page == 10) {
+      loadCharacterEmotionImages();
+    }
+    if (page == 10) {
+      loadRosterImage();
+      loadCharacterEmotionImages();
     }
   }
 
@@ -233,8 +291,12 @@ class _Game extends State<Game> {
     flags
       ..clear()
       ..addAll(s.flags);
-    loadCurrentEventIllustration();
-    loadCurrentSideSceneIllustration();
+    // Keep the next authored event warm on the home/event surface. The Canvas
+    // golden contract captures immediately after the transition, while small
+    // fixture stories (such as the companion archive tests) may not ship an
+    // illustration for their synthetic event.
+    if (page == 0 || page == 3) loadCurrentEventIllustration();
+    if (page == 9) loadCurrentSideSceneIllustration();
   }
 
   void loadCurrentEventIllustration() {
@@ -258,7 +320,47 @@ class _Game extends State<Game> {
         return;
       }
       setState(() => eventIllustrationImages[asset] = f.image);
+    }).catchError((_) {});
+  }
+
+  void loadRosterImage() {
+    if (rosterImage != null || rosterLoadStarted) return;
+    rosterLoadStarted = true;
+    rootBundle
+        .load('assets/lumen-character-roster.png')
+        .then((b) => ui.instantiateImageCodec(b.buffer.asUint8List()))
+        .then((c) => c.getNextFrame())
+        .then((f) {
+      if (!mounted) {
+        f.image.dispose();
+        return;
+      }
+      setState(() => rosterImage = f.image);
     });
+  }
+
+  void loadCharacterEmotionImages() {
+    if (emotionLoadStarted) return;
+    emotionLoadStarted = true;
+    final emotionAssets =
+        (widget.story['characterArchive'] as List? ?? const [])
+            .whereType<Map>()
+            .map((entry) => entry['emotionAsset'])
+            .whereType<String>()
+            .toSet();
+    for (final asset in emotionAssets) {
+      rootBundle
+          .load(asset)
+          .then((b) => ui.instantiateImageCodec(b.buffer.asUint8List()))
+          .then((c) => c.getNextFrame())
+          .then((f) {
+        if (!mounted) {
+          f.image.dispose();
+          return;
+        }
+        setState(() => characterEmotionImages[asset] = f.image);
+      });
+    }
   }
 
   void loadCurrentSideSceneIllustration() {
@@ -309,13 +411,13 @@ class _Game extends State<Game> {
           page = 6;
         }
       }
-      session.persist(page: page);
+      persistUiState();
     });
   }
 
   void recordEnding() {
     final d = resolveEnding(JsonStoryAdapter(widget.story), stats,
-        bonds: bonds, milestones: milestones);
+        bonds: bonds, milestones: milestones, flags: flags);
     final routes = (d['epilogues'] as List? ?? const [])
         .map((route) => '${(route as Map)['id']}')
         .toList();
@@ -366,17 +468,62 @@ class _Game extends State<Game> {
           legacyId: session.legacyId));
       sync();
       page = milestones.length > milestoneCount ? 6 : 0;
-      session.persist(page: page);
+      persistUiState();
     });
   }
 
-  GameSnapshot snapshot() => session.snapshot(page: page);
+  GameSnapshot snapshot() {
+    final state = session.snapshot(page: page);
+    return GameSnapshot(
+      week: state.week,
+      coins: state.coins,
+      fatigue: state.fatigue,
+      selected: state.selected,
+      persona: state.persona,
+      page: state.page,
+      eventIndex: state.eventIndex,
+      stats: state.stats,
+      bonds: state.bonds,
+      milestones: state.milestones,
+      flags: state.flags,
+      lastResult: state.lastResult,
+      lastLine: state.lastLine,
+      history: state.history,
+      sideSceneCursor: sideSceneCursor,
+      companionSceneIndex: companionSceneIndex,
+      pendingCompanionSceneId: pendingCompanionSceneId,
+      archiveCharacterIndex: archiveCharacterIndex,
+      archiveEmotionIndex: archiveEmotionIndex,
+      locale: locale,
+      selectedLegacyId: selectedLegacyId,
+      schema: state.schema,
+    );
+  }
+
   void restore(GameSnapshot s) {
     setState(() {
       session.restoreSnapshot(s);
-      sync();
+      restoreUiState(s);
       page = s.page;
+      sync();
     });
+  }
+
+  @override
+  void dispose() {
+    image?.dispose();
+    personaImage?.dispose();
+    rosterImage?.dispose();
+    for (final asset in characterEmotionImages.values) {
+      asset.dispose();
+    }
+    for (final asset in eventIllustrationImages.values) {
+      asset.dispose();
+    }
+    for (final asset in sideSceneIllustrationImages.values) {
+      asset.dispose();
+    }
+    super.dispose();
   }
 
   void select(int i) {
@@ -423,7 +570,10 @@ class _Game extends State<Game> {
             unlockedLegacyProfiles(widget.story, collectionEntries);
         if (widget.story['legacySelection'] is Map && profiles.isNotEmpty) {
           final index = ((x - 24) ~/ 238).clamp(0, profiles.length - 1);
-          setState(() => selectedLegacyId = '${profiles[index]['id']}');
+          setState(() {
+            selectedLegacyId = '${profiles[index]['id']}';
+            persistUiState();
+          });
         }
       } else if (y >= 535 && y < 600 && x >= 365 && x < 665)
         restart();
@@ -437,7 +587,7 @@ class _Game extends State<Game> {
         toggleLocale();
       } else if (y > 390 && y < 470 && x < 365) {
         Clipboard.setData(ClipboardData(text: snapshot().encode()));
-        session.persist(page: page);
+        persistUiState();
       } else if (y > 390 && y < 470)
         importSave();
       else if (y > 520 && x < 200)
@@ -453,7 +603,7 @@ class _Game extends State<Game> {
       else if (y > 500)
         setState(() {
           page = 0;
-          session.persist(page: page);
+          persistUiState();
         });
     } else if (page == 7) {
       if (y < 100 && x > 590) {
@@ -470,7 +620,10 @@ class _Game extends State<Game> {
             archiveCharacterIndex = index;
             archiveEmotionIndex = 0;
             page = 10;
+            persistUiState();
           });
+          loadRosterImage();
+          loadCharacterEmotionImages();
         }
       }
     } else if (page == 8) {
@@ -487,12 +640,18 @@ class _Game extends State<Game> {
       } else if (y > 285 && y < 510) {
         chooseSideScene((x ~/ 253).clamp(0, 2));
       } else if (y > 575 && x < 210) {
-        setState(() => sideSceneCursor =
-            (sideSceneCursor - 1).clamp(0, sideScenes.length - 1));
+        setState(() {
+          sideSceneCursor =
+              (sideSceneCursor - 1).clamp(0, sideScenes.length - 1);
+          persistUiState();
+        });
         loadCurrentSideSceneIllustration();
       } else if (y > 575 && x > 550) {
-        setState(() => sideSceneCursor =
-            (sideSceneCursor + 1).clamp(0, sideScenes.length - 1));
+        setState(() {
+          sideSceneCursor =
+              (sideSceneCursor + 1).clamp(0, sideScenes.length - 1);
+          persistUiState();
+        });
         loadCurrentSideSceneIllustration();
       } else if (y > 620) {
         setState(() => page = 0);
@@ -502,13 +661,18 @@ class _Game extends State<Game> {
         toggleLocale();
       } else if (y >= 520 && y < 610 && x >= 316 && x < 716) {
         final index = ((x - 316) ~/ 80).clamp(0, 4);
-        setState(() => archiveEmotionIndex = index);
+        setState(() {
+          archiveEmotionIndex = index;
+          persistUiState();
+        });
       } else if (y > 640) {
         setState(() => page = 7);
       }
     } else if (page == 11) {
       if (y < 100 && x > 590) {
         toggleLocale();
+      } else if (y >= 500 && y < 560 && x >= 20 && x < 740) {
+        openCompanionScenes(((x - 24) ~/ 238).clamp(0, 2));
       } else if (y > 640 && x < 220) {
         setState(() => page = 5);
       } else if (y > 640) {
@@ -520,10 +684,62 @@ class _Game extends State<Game> {
       } else if (y > 640) {
         setState(() => page = 0);
       }
+    } else if (page == 13) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
+      } else if (CompanionSceneLayout.containsInclusive(
+          CompanionSceneLayout.backRect, logical)) {
+        setState(() {
+          pendingCompanionSceneId = null;
+          page = 11;
+          persistUiState();
+        });
+      } else if (CompanionSceneLayout.containsInclusive(
+          CompanionSceneLayout.previousHitRect, logical)) {
+        if (pendingCompanionSceneId != null) {
+          setState(() {
+            pendingCompanionSceneId = null;
+            persistUiState();
+          });
+        } else {
+          setState(() {
+            companionSceneIndex = (companionSceneIndex - 1).clamp(0, 2);
+            persistUiState();
+          });
+        }
+      } else if (CompanionSceneLayout.containsInclusive(
+          CompanionSceneLayout.nextHitRect, logical)) {
+        if (pendingCompanionSceneId != null) {
+          setState(() {
+            pendingCompanionSceneId = null;
+            persistUiState();
+          });
+        } else {
+          setState(() {
+            companionSceneIndex = (companionSceneIndex + 1).clamp(0, 2);
+            persistUiState();
+          });
+        }
+      } else if (pendingCompanionSceneId != null) {
+        final scenes = companionScenesForCurrent(),
+            pendingIndex = scenes.indexWhere(
+                (scene) => '${scene['id']}' == pendingCompanionSceneId);
+        final choiceIndex = pendingIndex < 0
+            ? null
+            : CompanionSceneLayout.choiceIndexAt(logical, pendingIndex);
+        if (choiceIndex != null) {
+          choosePendingCompanionScene(choiceIndex);
+        }
+      } else {
+        final scenes = companionScenesForCurrent(),
+            index = CompanionSceneLayout.cardIndexAt(logical, scenes.length);
+        if (index != null) chooseCompanionScene(index);
+      }
     } else if (y > 655 && x >= 590) {
       setState(() => page = 11);
     } else if (y > 655 && x >= 200 && x < 410) {
       setState(() => page = 7);
+      loadRosterImage();
     } else if (y > 655 && x >= 410 && x < 590) {
       setState(() => page = 8);
     } else if (y > 500 && x >= 590) {
@@ -622,7 +838,7 @@ class _Game extends State<Game> {
                 child: Stack(children: [
                   CustomPaint(
                       key: ValueKey(
-                          '$page-$week-$persona-$eventIndex${locale == 'ko' ? '' : '-$locale'}'),
+                          '$page-$week-$persona-$eventIndex${pendingCompanionSceneId == null ? (lastResult.startsWith('companion-scene-rejected:') ? '-rejected-${lastResult.split(':').last}' : '') : '-pending'}${locale == 'ko' ? '' : '-$locale'}'),
                       painter: Scene(
                           widget.story,
                           week,
@@ -653,6 +869,8 @@ class _Game extends State<Game> {
                           collectionEntries,
                           selectedLegacyId,
                           session.legacyId,
+                          companionSceneIndex,
+                          pendingCompanionSceneId,
                           locale,
                           widget.locales),
                       size: viewport),
@@ -695,6 +913,8 @@ class Scene extends CustomPainter {
       this.collectionEntries,
       this.selectedLegacyId,
       this.legacyId,
+      this.companionSceneIndex,
+      this.pendingCompanionSceneId,
       this.locale,
       this.locales) {
     repaintKey = canvasSceneFingerprint([
@@ -735,6 +955,8 @@ class Scene extends CustomPainter {
       collectionEntries,
       selectedLegacyId,
       legacyId,
+      companionSceneIndex,
+      pendingCompanionSceneId,
       locale,
       locales.hashCode,
     ]);
@@ -763,6 +985,8 @@ class Scene extends CustomPainter {
   final List<Map<String, dynamic>> collectionEntries;
   final String? selectedLegacyId;
   final String? legacyId;
+  final int companionSceneIndex;
+  final String? pendingCompanionSceneId;
   final String locale;
   final Map<String, Map<String, String>> locales;
   late final String repaintKey;
@@ -1227,6 +1451,23 @@ class Scene extends CustomPainter {
           .map((item) => item.cast<String, dynamic>())
           .toList();
       ActivityJournalPainter(scenes, history, localized).paint(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
+    if (page == 13) {
+      CompanionSceneArchivePainter(
+        story: s,
+        bonds: bonds,
+        flags: flags,
+        portraitSheet: personaImage,
+        persona: persona,
+        companionIndex: companionSceneIndex,
+        pendingSceneId: pendingCompanionSceneId,
+        lastResult: lastResult,
+        lastLine: lastLine,
+        currentChapter: ((week + 2) ~/ 3).clamp(1, 16),
+      ).paint(c);
       drawLocaleToggle(c, activeLocale, activeCatalog);
       c.restore();
       return;
@@ -2225,6 +2466,8 @@ class Scene extends CustomPainter {
           locked = (req != null && (stats[req] ?? 0) < (min ?? 0)) ||
               (bondReq != null && (bonds[bondReq] ?? 0) < (bondMin ?? 0)) ||
               (flagReq != null && flags[flagReq] != true),
+          lockedLabel = localized(
+              'ui.event.locked', activeLocale == 'ko' ? '잠김' : 'Locked'),
           legacyId = flags.keys
               .where((key) => key.startsWith('legacy:'))
               .map((key) => key.substring('legacy:'.length))
@@ -2243,7 +2486,9 @@ class Scene extends CustomPainter {
           shadow: !locked);
       txt(
           c,
-          formatUi('ui.event.choice', 'Choice {index}', {'index': i + 1}),
+          locked
+              ? lockedLabel
+              : formatUi('ui.event.choice', 'Choice {index}', {'index': i + 1}),
           Offset(x + 22, choiceTop + 24),
           14,
           locked ? ink.withValues(alpha: .45) : teal,
@@ -2259,7 +2504,7 @@ class Scene extends CustomPainter {
       txt(
           c,
           locked
-              ? localizedChoiceCondition(ch)
+              ? '$lockedLabel · ${localizedChoiceCondition(ch)}'
               : '${localizedChoiceEffect(ch)}$legacyText',
           Offset(x + 22, choiceTop + 122),
           13,
@@ -2427,7 +2672,7 @@ class Scene extends CustomPainter {
 
   void ending(Canvas c) {
     final d = resolveEnding(JsonStoryAdapter(s), stats,
-            bonds: bonds, milestones: milestones),
+            bonds: bonds, milestones: milestones, flags: flags),
         rank = (d['rank'] as int?) ?? 1,
         companions = (s['companions'] as List? ?? const []).cast<Map>(),
         routeTitles = companions

@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: beacb8034360aee9fe1d031a4e2f6fb39b1cdcca6f95b1316383cd8238e573e0 -->
+<!-- ssot-sha256: c0db26ce3dbbaae129ee19f8a70df684a53a0144fb3568b9452a52606f235d0c -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -56,8 +56,8 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **1062** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **612**
-- 산식: authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units
+- locale 최소 키: **1159** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **684**
+- 산식: narrative backbone 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; companion choice variants add 72 label/response lines for 684 total authored dialogue units; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
 
@@ -117,7 +117,7 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 | 차원 | 목표 | 현재 증적 | 검증 ref |
 | --- | --- | --- | --- |
 | 장기 아크 | 도입·성장·전환·결산이 반복되며 각 막에 사건과 목표가 있다 | 16 chapters / 47 main events + 24 side scenes = 71 authored scenes / 6 locations / 16 milestones / terminal week 49 | `story/story.jsonl#progression.contract` |
-| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 94 main choices + 72 side-scene choices; crisis, exploration, resource, mini-game and companion-pair mechanics; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
+| 선택의 행위성 | 모든 authored choice가 스탯·은화·유대·조건 중 하나 이상을 바꾸고 trace에 남는다 | 94 main choices + 72 side-scene choices + 36 companion scene choices; crisis, exploration, resource, mini-game and companion-pair mechanics; memory flags carry consequences | `test/story_integration_test.dart#every-authored-ending-and-event-choice-is-reachable` |
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / 18 independent companion scenes (6 each) / rival conflict / deterministic relationship states / 3 bond-route epilogues / 16 chapter relationship beats | `story/story.jsonl#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 16 milestones, 10 activity mini-events, 6 core endings and 18 ending variants | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
@@ -212,8 +212,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `c3bfae02579340c634f16e531c94eef4cf5e19e64c97c578b512ac269458e551`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `041ac4b23fa0165cf148b40696819f7eb63ea165cbe8d5f21c1f9f4a913802bb`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `a84dd1f5ddeb60634756cfde39ee445a8b1e92149a6c0709095b0d4852ab298c`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `df253d39a636fe93fec111fa2eb97ab0efce3a0690a1b84399f2e5b2f01ecaa4`
 
 ## 성격
 

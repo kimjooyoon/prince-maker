@@ -89,6 +89,9 @@ class RelationshipArchivePainter {
         resonance['matched'] == true ? accent : ink.withValues(alpha: .52),
         bold: true,
         width: 190);
+    t(c, tr('ui.relationshipArchive.scenes', '독립 장면 보기 →'), Offset(x + 16, 512),
+        9, teal,
+        bold: true, width: 190);
   }
 
   void paint(Canvas c) {
@@ -103,21 +106,24 @@ class RelationshipArchivePainter {
     t(c, tr('ui.relationshipArchive.subtitle', '유대의 간격과 다음 대화를 같은 규칙에서 읽습니다.'),
         const Offset(25, 60), 12, teal,
         width: 690);
-    CanvasUiKit.statePanel(c, const Rect.fromLTWH(24, 100, 712, 128),
-        state: state['id'] == 'tension'
+    final dangerHeader = state['id'] == 'tension',
+        headerState = dangerHeader
             ? CanvasUiState.danger
             : CanvasUiState.selected,
-        accent: twilight,
-        shadow: true);
+        headerText = dangerHeader ? const Color(0xff7e2f20) : Colors.white,
+        headerMutedText = dangerHeader ? ink.withValues(alpha: .78) : Colors.white70,
+        headerAccent = dangerHeader ? const Color(0xff7e5600) : sun;
+    CanvasUiKit.statePanel(c, const Rect.fromLTWH(24, 100, 712, 128),
+        state: headerState, accent: twilight, shadow: true);
     t(c, tr('${state['key']}', '${state['fallback']}'), const Offset(48, 123),
-        21, Colors.white,
+        21, headerText,
         bold: true, width: 260);
     t(
         c,
         '${tr('ui.relationshipArchive.gap', 'bond gap')} ${state['gap']} · ${tr('ui.relationshipArchive.lead', '앞선 동행')}: ${state['leadId'] ?? '-'}',
         const Offset(48, 160),
         11,
-        sun,
+        headerAccent,
         bold: true,
         width: 300);
     t(
@@ -125,11 +131,11 @@ class RelationshipArchivePainter {
         '${tr('ui.relationshipArchive.followup', '후속 기록')} · ${tr('${follow['titleKey']}', '${follow['title']}')}',
         const Offset(390, 126),
         13,
-        Colors.white,
+        headerText,
         bold: true,
         width: 300);
     t(c, tr('${follow['lineKey']}', '${follow['line']}'),
-        const Offset(390, 157), 10, Colors.white70,
+        const Offset(390, 157), 10, headerMutedText,
         width: 305);
     for (var i = 0; i < people.length && i < 3; i++)
       card(

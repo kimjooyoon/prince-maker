@@ -48,7 +48,7 @@
 
 | PM5에서 관찰한 축 | `프린스 메이커`의 독자적 압축 표본 | 완전성 증적 |
 |---|---|---|
-| 시간 예산 | 48주 × 하루 활동 1회, 사건 47개가 매 주차의 결과와 관계를 갱신 | `tool/benchmark_game.dart` 5,000 campaign / 475,000 transitions |
+| 시간 예산 | 48주 × 하루 활동 1회, 사건 47개와 최대 18개 동료 장면 기록이 결과와 관계를 갱신 | `tool/benchmark_game.dart` 5,000 campaign / 565,000 transitions |
 | 상태 피드백 | 성장 3축·피로·은화·계절 목표가 다음 사건과 엔딩에 되돌아옴 | `test/game_core_test.dart` 규칙·trace |
 | 관계 아크 | 3명 동료, rival bond 손실·상호 중재, bond-gap 긴장/소원함/휴전 상태, 상태별 상호 배타 후속 대화, 임계 유대 에필로그, 관계 게이트 | `relationship-gate.png`·`relationship-tension.png`·`mediation.png`·`relationship-followup.png`·`test/relationship_dynamics_test.dart` |
 | 감정/기억 | 이전 사건의 `setsFlag`가 후속 선택을 열고 회고 보드에 원인으로 남음 | `memory-gate.png`·`ending.png` |
@@ -69,11 +69,11 @@
 | --- | ---: | --- | --- |
 | 시간/막 | 16막, 막당 사건 2개 이상 + 관계 장면 beat + 상태별 후속 대화 | `progression.contract` 16/16 · 47개 사건 · 공개·압력·선택·결산 100% · 16/16 canonical event Golden · 16/16 closure Golden · 16/16 relationship scene binding · 5-state relationship resolver · 5 exclusive follow-ups | 관계별 후속 대화가 조건 선택과 flag를 바꾸는 다음 확장 |
 | 성장축 | 3축, 축당 기본/숙련 엔딩 | 지혜·공감·용기 6 core 엔딩 + 동료 route set 최대 8개 | 축 간 상쇄 또는 혼합 엔딩 추가 |
-| 관계 | 동료 3명, 인사→유대→긴장/소원함→중재/기억→상태별 후속 대화→동행 목표→에필로그 | 3 companion, rival loss, deterministic tension/estrangement/truce state, reciprocal mediation, truce flag, 5 exclusive follow-ups, 3 route goals, epilogue, 3 lineage target companions | 후속 대화가 다음 선택의 bond/flag 조건을 여는 확장 |
+| 관계 | 동료 3명, 인사→유대→긴장/소원함→중재/기억→상태별 후속 대화→동행 2-way 선택→동행 목표→에필로그 | 3 companion, rival loss, deterministic tension/estrangement/truce state, reciprocal mediation, truce flag, 5 exclusive follow-ups, 18 scenes/36 choices, 3 route goals, epilogue, 3 lineage target companions | 후속 대화가 다음 선택의 bond/flag 조건을 여는 확장 |
 | 자원 | 능력·은화·피로 중 2개 이상이 선택에 영향 | 세 자원과 계절 목표 | 외출·아이템·시간 예산을 별도 phase로 확장 |
 | 공개/조건 | 잠금 선택과 목표 gated ending | 조건부 선택 5개(스탯 4·유대 1·기억 1), master ending | 조건 공개 힌트와 실패 후 회복 경로 추가 |
 | 회차 | 동일 입력 동일 trace, 정책 변경 결과 차이 | 5 정책, 4 signature, collection-driven legacy unlock, 3 lineage profiles, week-2 authored bonus, profile별 route signature·target ending·target companion epilogue | 계승 unlock이 다음 회차의 성장축·선택 공간과 profile target ending·관계 회고 분포를 넓히는지 측정 |
-| 장면 | 도입·중반 사건·사이드 장면·막 관계 장면·관계 상태·상태별 후속 대화·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·계승 프로필·엔딩·공통 UI 상태 Golden | 94 Golden, 그중 16막 canonical 사건 16/16·결산 16/16·관계 장면 16/16, home/closure relationship state/follow-up rendering, page 11 relationship archive ko/en, canonical 4주차·48주차 handoff 사건, 6 location discovery flags/traces, 24 side-scene records·10 activity mini-events·18 companion scenes·18 ending variants, rival loss/mediation, outing/bond/memory/legacy feedback, ending picker ko/en with selected next-run profile, next-run home lineage feedback, five-state Canvas UI matrix, 3 companion epilogue endings | 다음 회차 프로필 선택이 `GameSession.legacyId`와 후속 replay trace 및 홈 피드백을 여는 Golden 확장 |
+| 장면 | 도입·중반 사건·사이드 장면·막 관계 장면·관계 상태·상태별 후속 대화·장소 발견·관계 긴장·관계 중재·외출·유대·기억·계승 게이트·계승 프로필·동행 선택/잠금/혼합 상태·엔딩·공통 UI 상태 Golden | 102 Golden, 그중 16막 canonical 사건 16/16·결산 16/16·관계 장면 16/16, home/closure relationship state/follow-up rendering, page 11 relationship archive ko/en, page 13 companion choice/record/locked/mixed ko/en, canonical 4주차·48주차 handoff 사건, 6 location discovery flags/traces, 24 side-scene records·10 activity mini-events·18 companion scenes·36 companion choices·18 ending variants, rival loss/mediation, outing/bond/memory/legacy feedback, ending picker ko/en with selected next-run profile, next-run home lineage feedback, five-state Canvas UI matrix, 3 companion epilogue endings | 다음 회차 프로필 선택이 `GameSession.legacyId`와 후속 replay trace 및 홈 피드백을 여는 Golden 확장 |
 | 종결 | terminal·저장·컬렉션·재시작·원인 회고·다음 회차 가이드 | save v7, terminal, collection, 최대 3개 사건 + 달성 목표 + 미달 목표 2개 회고 | 동료별 관계 변화와 상호 배타 목표의 회고 문구 추가 |
 
 ### 정량 게이트
@@ -85,7 +85,7 @@ chapterClosureRate = 공개·압력·선택·결산을 모두 가진 막 / 전�
 replaySignatureCount = (ending, stats, bonds, goals) 고유 서명 수
 ```
 
-현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 94/94 본편 선택과 72/72 사이드 선택 도달성, 6/6 엔딩 도달성, 6/6 장소 발견 trace, 3/3 회차 계승 프로필, 3/3 프로필별 2주차 authored 보정, 3/3 profile route signature, 3/3 profile target ending, 3/3 profile target companion epilogue, `choiceConsequenceRate = 100%`, `chapterClosureRate = 100%`, `chapterSceneBindingRate = 100%`, 5-state relationship resolver·5 exclusive follow-up과 ECS replay trace, `replaySignatureCount ≥ 3`, 최소 플레이타임 156분(하한 120분) 계약, 시스템 승인 영수증의 replay 보존을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum·replayChecksum·profile별 signature·target ending·target companion 집합을 비교한다.
+현재 릴리스 게이트는 `scenarioCompleteness.dimensions` 8축, 94/94 본편 선택과 72/72 사이드 선택 및 36/36 동행 선택 결과 도달성, 6/6 엔딩 도달성, 6/6 장소 발견 trace, 3/3 회차 계승 프로필, 3/3 프로필별 2주차 authored 보정, 3/3 profile route signature, 3/3 profile target ending, 3/3 profile target companion epilogue, `choiceConsequenceRate = 100%`, `companionSceneChoiceImpactRate = 100%`, `chapterClosureRate = 100%`, `chapterSceneBindingRate = 100%`, 5-state relationship resolver·5 exclusive follow-up과 ECS replay trace, `replaySignatureCount ≥ 3`, 최소 플레이타임 156분(하한 120분) 계약, 시스템 승인 영수증의 replay 보존을 요구한다. 성능 축은 이와 동일한 SSOT 캠페인을 5,000회 재생해 checksum·replayChecksum·profile별 signature·target ending·target companion 집합을 비교한다.
 
 ## 3. 의도적인 차이와 확장 순서
 

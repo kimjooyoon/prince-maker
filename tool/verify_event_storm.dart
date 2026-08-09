@@ -33,7 +33,10 @@ void main() {
   if (nodes.length != 133 || summary['nodeCount'] != 133) {
     fail('expected 133 authored event-storm nodes');
   }
-  if (summary['choiceCount'] != 166 ||
+  if (summary['choiceCount'] != 202 ||
+      summary['companionChoiceCount'] != 36 ||
+      summary['companionChoiceEffectCoverage'] != 1.0 ||
+      summary['companionChoiceFeedbackCoverage'] != 1.0 ||
       summary['mainEvents'] != 47 ||
       summary['sideScenes'] != 24 ||
       summary['companionScenes'] != 18 ||
@@ -76,8 +79,10 @@ void main() {
     if (count != entry.value)
       fail('${entry.key} count $count != ${entry.value}');
   }
-  final choiceNodes = nodes.where(
-      (node) => node['kind'] == 'main-event' || node['kind'] == 'side-scene');
+  final choiceNodes = nodes.where((node) =>
+      node['kind'] == 'main-event' ||
+      node['kind'] == 'side-scene' ||
+      node['kind'] == 'companion-scene');
   var choiceCount = 0;
   for (final node in choiceNodes) {
     final commands = (node['commands'] as List);
@@ -96,7 +101,7 @@ void main() {
       }
     }
   }
-  if (choiceCount != 166) fail('choice node total $choiceCount != 166');
+  if (choiceCount != 202) fail('choice node total $choiceCount != 202');
   if (actual['responsibility'] is! Map ||
       (actual['responsibility'] as Map)['mode'] != 'system-adjudicated' ||
       (actual['responsibility'] as Map)['failureMode'] != 'fail-closed') {

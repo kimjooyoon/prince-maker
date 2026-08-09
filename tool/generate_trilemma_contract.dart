@@ -15,6 +15,21 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       .whereType<File>()
       .where((file) => file.path.endsWith('.png'))
       .length;
+  final companionSceneGoldens = Directory('test/goldens')
+      .listSync()
+      .whereType<File>()
+      .where((file) => [
+            'companion-scenes.png',
+            'companion-scene-choice.png',
+            'companion-scene-recorded.png',
+            'companion-scene-recorded-en.png',
+            'companion-scene-lumi-mixed.png',
+            'companion-scene-bora-mixed.png',
+            'companion-scene-taro-mixed.png',
+            'companion-scene-locked.png',
+            'companion-scene-choice-recall.png',
+          ].contains(file.uri.pathSegments.last))
+      .length;
   final activityForecastGoldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
@@ -41,6 +56,21 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
   final gameplayTargets =
       (gameplay['targets'] as Map? ?? {}).cast<String, dynamic>();
   final quests = (story['companionQuests'] as List? ?? const []).cast<Map>();
+  final companionScenes =
+      (story['companionScenes'] as List? ?? const []).cast<Map>();
+  final companionSceneChoices = companionScenes.fold<int>(0,
+      (sum, scene) => sum + ((scene['choices'] as List? ?? const []).length));
+  final saveUiStateEvidence = File('test/save_state_test.dart')
+          .readAsStringSync()
+          .contains(
+              'save round trip preserves player-facing archive positions') &&
+      File('test/companion_scene_golden_test.dart')
+          .readAsStringSync()
+          .contains('saved companion position resumes the same Golden surface');
+  final companionRenderBudgetEvidence = File('test/companion_scene_test.dart')
+      .readAsStringSync()
+      .contains(
+          'companion archive canvas projection stays within the frame budget');
   final questStages = quests.fold<int>(
       0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
   final eventStormNodes = events.length +
@@ -78,6 +108,18 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'activityForecastGoldens': activityForecastGoldens,
           'activityReflectionGoldens': activityReflectionGoldens,
           'activityJournalGoldens': activityJournalGoldens,
+          'companionScenes': companionScenes.length,
+          'companionSceneChoices': companionSceneChoices,
+          'companionSceneChoiceBranching': companionScenes.isNotEmpty &&
+              companionScenes.every((scene) =>
+                  ((scene['choices'] as List? ?? const []).length) == 2),
+          'companionSceneChoiceImpactRate':
+              gameplayTargets['companionSceneChoiceImpactRate'],
+          'companionSceneGoldens': companionSceneGoldens,
+          'companionSceneBondReward': companionScenes.isNotEmpty &&
+              companionScenes
+                  .every((scene) => (scene['bondDelta'] as int?) == 1),
+          'saveUiStateContinuity': saveUiStateEvidence,
           'goldens': goldens,
           'localeKeys': dialogue['minimumLocaleKeys'],
           'qualityScoreTarget': qualityScoreTarget,
@@ -93,6 +135,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
           'test/activity_reflection_golden_test.dart#event shows localized activity reflection after day spend',
           'test/activity_journal_golden_test.dart#activity journal renders deterministic reflection pages',
+          'test/companion_scene_test.dart#companion scene resolver and record loop',
+          'test/companion_scene_test.dart#companion choice is recalled by the next authored scene',
+          'test/companion_scene_test.dart#companion archive canvas projection stays within the frame budget',
+          'test/companion_scene_golden_test.dart#companion scene archive records a scene',
+          'test/save_state_test.dart#save round trip preserves player-facing archive positions',
+          'test/companion_scene_golden_test.dart#saved companion position resumes the same Golden surface',
           'test/locale_contract_test.dart#ssot-dialogue-contract',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/verify_quality_score.dart#quality-score-99',
@@ -135,6 +183,19 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'activityReflectionDeterminism': true,
           'activityJournalGoldens': activityJournalGoldens,
           'activityJournalDeterminism': true,
+          'companionScenes': companionScenes.length,
+          'companionSceneChoices': companionSceneChoices,
+          'companionSceneChoiceBranching': companionScenes.isNotEmpty &&
+              companionScenes.every((scene) =>
+                  ((scene['choices'] as List? ?? const []).length) == 2),
+          'companionSceneChoiceImpactRate':
+              gameplayTargets['companionSceneChoiceImpactRate'],
+          'companionSceneGoldens': companionSceneGoldens,
+          'companionSceneBondReward': companionScenes.isNotEmpty &&
+              companionScenes
+                  .every((scene) => (scene['bondDelta'] as int?) == 1),
+          'companionSceneDeterminism': true,
+          'saveUiStateContinuity': saveUiStateEvidence,
           'matchedPersonalityCompanionRoutes':
               ((story['personalityCompanionRoutes'] as List? ?? const [])
                   .where((route) => (route as Map)['matched'] == true)
@@ -151,6 +212,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/activity_forecast_test.dart#fatigue and talent forecast is deterministic',
           'test/activity_localization_test.dart#activity result localizes deterministic reflection',
           'test/activity_journal_test.dart#activity journal opens only recorded reflection pages',
+          'test/companion_scene_test.dart#companion scene resolver and record loop',
+          'test/companion_scene_test.dart#companion choice is recalled by the next authored scene',
+          'test/companion_scene_test.dart#companion archive canvas projection stays within the frame budget',
+          'test/companion_scene_golden_test.dart#companion scene archive records a scene',
+          'test/save_state_test.dart#save round trip preserves player-facing archive positions',
+          'test/companion_scene_golden_test.dart#saved companion position resumes the same Golden surface',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/trilemma_verdict.dart#axis-verdict',
           'tool/trilemma_verdict.dart#closed-loop-receipt',
@@ -163,8 +230,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         'unit': 'campaign-throughput',
         'guardrails': {
           'campaigns': 5000,
-          'transitionBudget':
-              5000 * ((story['endingWeek'] as int) - 1 + events.length),
+          'transitionBudget': 5000 *
+              ((story['endingWeek'] as int) -
+                  1 +
+                  events.length +
+                  companionScenes.length),
+          'companionSceneTransitions': 5000 * companionScenes.length,
           'systemApproval': (story['decisionSystem'] as Map?)?['mode'] ==
               'system-adjudicated',
           'failClosed': (story['decisionSystem'] as Map?)?['failureMode'] ==
@@ -178,10 +249,18 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               (story['legacyProfiles'] as List? ?? []).length,
           'checksumReplayMustMatch': true,
           'activityForecastDeterminism': true,
+          'companionSceneReplay': true,
+          'companionSceneChoiceModes': 2,
+          'companionSceneRouteTrace': true,
+          'companionSceneRenderBudgetMicros': 8000,
+          'companionSceneRenderBudgetEvidence': companionRenderBudgetEvidence,
+          'minCompanionScenes': 3,
           'qualityScoreTarget': qualityScoreTarget,
         },
         'evidence': [
           'tool/benchmark_game.dart#ssot-campaign-throughput-signatures',
+          'tool/benchmark_game.dart#companion-scene-replay-checksum',
+          'test/companion_scene_test.dart#companion archive canvas projection stays within the frame budget',
           'lib/activity_forecast.dart#forecastActivity',
           'tool/verify_quality_score.dart#quality-score-99',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
