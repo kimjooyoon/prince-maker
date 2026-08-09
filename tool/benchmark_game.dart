@@ -242,12 +242,8 @@ void main() {
       lineageEvidence = profileIds.every(
           (id) => (first.lineageSignatures[id] ?? const <String>{}).isNotEmpty),
       lineageEndingEvidence = story.legacyProfiles.every((profile) {
-        final id = '${profile['id']}',
-            targets = (profile['endingIds'] as List? ?? const [])
-                .map((ending) => '$ending')
-                .toSet();
-        return (first.lineageEndings[id] ?? const <String>{})
-            .any(targets.contains);
+        final id = '${profile['id']}', target = '${profile['targetEndingId']}';
+        return (first.lineageEndings[id] ?? const <String>{}).contains(target);
       }),
       lineageCompanionEvidence = story.legacyProfiles.every((profile) {
         final id = '${profile['id']}', target = '${profile['companionId']}';

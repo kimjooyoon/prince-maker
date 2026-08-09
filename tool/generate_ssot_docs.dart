@@ -171,7 +171,7 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln('\n## 회차 계승 프로필\n');
   for (final p in legacyProfiles)
     b.writeln(
-        '- **${p['title']}** (`${p['id']}`): 엔딩 ${(p['endingIds'] as List? ?? const []).join(', ')} · ${p['stat']} 시작 보너스 +${p['bonus']} · `${p['titleKey']}`');
+        '- **${p['title']}** (`${p['id']}`): 엔딩 ${(p['endingIds'] as List? ?? const []).join(', ')} · target `${p['targetEndingId']}` · ${p['stat']} 시작 보너스 +${p['bonus']} · `${p['titleKey']}`');
   b.writeln('\n## 활동\n');
   for (final a in acts)
     b.writeln('- **${a['label']}** (`${a['id']}`): ${a['hint']}');

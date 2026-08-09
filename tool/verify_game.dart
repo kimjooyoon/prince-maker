@@ -346,6 +346,9 @@ void main() {
           profile['bonus'] < 1 ||
           !companions
               .any((companion) => companion['id'] == profile['companionId']) ||
+          profile['targetEndingId'] is! String ||
+          !(profile['endingIds'] as List).contains(profile['targetEndingId']) ||
+          !endingIds.contains('${profile['targetEndingId']}') ||
           profile['titleKey'] is! String ||
           (profile['endingIds'] as List? ?? const []).isEmpty ||
           (profile['endingIds'] as List)
@@ -361,8 +364,11 @@ void main() {
       legacySelection['defaultWhenUntouched'] is! String ||
       legacySelection['effect'] is! String ||
       legacySelection['homeFeedback'] is! String ||
+      legacySelection['forecast'] is! String ||
       !legacySelectionEvidence
           .contains('lib/legacy_profile_catalog.dart#unlockedLegacyProfiles') ||
+      !legacySelectionEvidence
+          .contains('lib/legacy_profile_forecast.dart#legacyProfileForecast') ||
       !legacySelectionEvidence.contains('lib/main.dart#legacyProfile') ||
       !legacySelectionEvidence.contains('lib/main.dart#legacyPicker') ||
       !legacySelectionEvidence.contains(

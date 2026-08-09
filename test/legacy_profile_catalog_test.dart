@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prince_maker/legacy_profile_catalog.dart';
+import 'package:prince_maker/legacy_profile_forecast.dart';
 
 void main() {
   test('collection unlocks profiles in stable order', () {
@@ -63,5 +64,35 @@ void main() {
       'fingerprints': 3,
     });
     expect(legacyPolicyForecast(const {})['verified'], false);
+  });
+
+  test('legacy profile forecast resolves the authored target and companion',
+      () {
+    final forecast = legacyProfileForecast(const {
+      'endings': [
+        {
+          'id': 'stargazer-master',
+          'title': '새벽 항해사',
+          'titleKey': 'ending.master'
+        }
+      ],
+      'companions': [
+        {'id': 'lumi', 'name': '루미', 'nameKey': 'companion.lumi.name'}
+      ]
+    }, const {
+      'id': 'stargazer',
+      'targetEndingId': 'stargazer-master',
+      'companionId': 'lumi'
+    });
+    expect(forecast['verified'], true);
+    expect(forecast['targetEndingId'], 'stargazer-master');
+    expect(forecast['companionId'], 'lumi');
+    expect(
+        legacyProfileForecast(const {}, const {
+          'id': 'missing',
+          'targetEndingId': 'unknown',
+          'companionId': 'lumi'
+        })['verified'],
+        false);
   });
 }

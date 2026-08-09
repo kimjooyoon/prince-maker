@@ -630,6 +630,7 @@ void main() {
         {
           'id': 'stargazer',
           'endingIds': ['stargazer'],
+          'targetEndingId': 'stargazer',
           'stat': '지혜',
           'bonus': 0,
           'companionId': 'lumi'
@@ -698,6 +699,7 @@ void main() {
         {
           'id': 'gardener',
           'endingIds': ['stargazer'],
+          'targetEndingId': 'stargazer',
           'stat': '공감',
           'bonus': 2,
           'companionId': 'lumi',
@@ -707,6 +709,7 @@ void main() {
         {
           'id': 'pathfinder',
           'endingIds': ['stargazer'],
+          'targetEndingId': 'stargazer',
           'stat': '용기',
           'bonus': 2,
           'companionId': 'lumi',
