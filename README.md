@@ -21,7 +21,7 @@ git config core.hooksPath .githooks
 
 ## 골든 테스트 증적
 
-`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test --concurrency=1`이 단일 Golden 실행기에서 픽셀 변화를 차단합니다. OS별 Canvas 글꼴 안티앨리어싱 차이는 2.0% 이하의 bounded tolerance만 허용하며, 그 이상은 실패합니다.
+`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test --concurrency=1`이 단일 Golden 실행기에서 픽셀 변화를 차단합니다. OS별 Canvas 글꼴 안티앨리어싱 차이는 2.5% 이하의 bounded tolerance만 허용하며, 그 이상은 실패합니다.
 
 ![골든 기준 화면](test/goldens/home.png)
 ![계절 목표가 보이는 계획 화면](test/goldens/milestone.png)
