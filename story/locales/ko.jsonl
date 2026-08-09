@@ -1151,7 +1151,8 @@
 {"type":"entry","key":"ui.companionScenes.choose","value":"이 장면에서 어떤 기록을 남길까요?"}
 {"type":"entry","key":"ui.companionScenes.chooseHint","value":"두 선택 모두 다음 장면과 엔딩 기록에 흔적을 남깁니다."}
 {"type":"entry","key":"ui.companionScenes.choiceEcho","value":"앞선 선택 · {choice}"}
-{"type":"entry","key":"ui.companionScenes.choiceEchoHint","value":"앞선 선택이 다음 장면에 남아 있습니다 · {choice}"}
+{"type":"entry","key":"ui.companionScenes.choiceEchoHint","value":"앞선 선택이 다음 장면에 남아 있습니다 · {choice} → {response}"}
+{"type":"entry","key":"ui.accessibility.canvas","value":"루멘 게임 화면"}
 {"type":"entry","key":"ui.companionScenes.cancel","value":"← 선택 취소"}
 {"type":"entry","key":"ui.companionScenes.notice.bond","value":"유대가 더 필요합니다."}
 {"type":"entry","key":"ui.companionScenes.notice.chapter","value":"아직 이 막에 도착하지 않았습니다."}

@@ -140,9 +140,15 @@ void main() {
     expect((open['choiceEcho'] as Map)['choiceId'], 'leave-open');
     expect((open['choiceEcho'] as Map)['responseKey'],
         'companionSceneChoice.lumi-first-margin.leave-open.response');
+    expect((open['choiceEcho'] as Map)['response'],
+        '루미와 다음 사람이 다시 물을 자리를 남겼다.');
     expect((sealed['choiceEcho'] as Map)['choiceId'], 'seal-now');
+    expect((sealed['choiceEcho'] as Map)['response'],
+        '루미와 노아는 오늘의 판단을 먼저 굳혔다.');
     expect((sealed['choiceEcho'] as Map)['choiceId'],
         isNot((open['choiceEcho'] as Map)['choiceId']));
+    expect((sealed['choiceEcho'] as Map)['response'],
+        isNot((open['choiceEcho'] as Map)['response']));
   });
 
   test('companion archive paint and tap geometry share one logical contract',

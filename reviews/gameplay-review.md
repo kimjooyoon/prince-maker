@@ -197,3 +197,14 @@ campaign benchmark는 domain transition과 replay checksum을 측정하며 24초
 ### 현재의 적대적 판정
 
 이번 화면 결손 세 가지와 선택 회고 결손은 코드·Golden·타깃 테스트로 폐쇄했다. 그러나 접근성 semantic surface와 장기 서사 회수는 아직 증거가 약하므로, `SYSTEM_APPROVAL`을 플레이어 경험 전체 승인으로 확대해서는 안 된다. 현재 판정은 **핵심 루프 승인, 접근성·장기 회고 조건부**다.
+
+## 2026-08-09 후속 폐쇄 — authored 응답 회수와 semantic action
+
+이번 후속 작업은 위 P2를 현재 증거 범위에서 좁혔다.
+
+- [x] `choiceEcho`가 다음 동행 카드의 이전 선택 label뿐 아니라 authored response까지 `choice → response`로 회고한다. `companion_scene_test.dart`는 open/sealed 경로의 response key와 실제 응답 문장이 서로 다름을 검증하고, `companion-scene-choice-recall.png`는 그 회고 문장을 Canvas에서 고정한다.
+- [x] 선택 flag는 기존 `resolveEnding` route id와 benchmark signature에 계속 포함되며, 다음 장면 화면에도 선택 결과가 남는다. 따라서 선택은 terminal route에만 숨지 않고 후속 대사 표면까지 회수된다.
+- [x] page 13에 parent semantic label과 이전 동행·다음 동행·관계 기록·available scene/choice semantic action을 추가했다. `companion archive exposes semantic navigation and choices`가 실제 semantics tap으로 route/page 변화를 검증한다.
+- [x] 이벤트/도감/막 결산 Golden을 깨뜨리던 자산 lazy-load 경계를 page별 warm-up과 누락 fixture fail-safe로 정리했다. 전체 172개 Flutter 테스트와 103개 Golden이 다시 통과했다.
+
+잔여 한계는 명확하다. semantic action은 이번에 검증한 companion archive 표면부터 시작했으며 모든 Canvas 페이지의 세부 DOM semantics와 키보드 순서까지 WCAG 준수를 선언하는 증거는 아니다. 또한 Canvas projection 평균 약 0.8–0.9ms와 5,000 campaign benchmark는 결정론적 성능 증거이지 특정 저사양 기기의 60fps 보증은 아니다. `tool/ci_gate.dart --ci`의 최종 판정은 이 범위를 넘겨 해석하지 않는다.

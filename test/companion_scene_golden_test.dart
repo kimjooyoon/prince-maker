@@ -139,6 +139,40 @@ void main() {
     expect(scene().page, 11);
   });
 
+  testWidgets('companion archive exposes semantic navigation and choices',
+      (tester) async {
+    final source = await story();
+    await tester.pumpWidget(Game(source,
+        key: const ValueKey('companion-scene-semantics'),
+        locales: await locales(),
+        initialSnapshot: const GameSnapshot(
+          week: 9,
+          coins: 12,
+          fatigue: 0,
+          selected: 0,
+          persona: 0,
+          page: 13,
+          eventIndex: 0,
+          stats: {'지혜': 4, '공감': 5, '용기': 3},
+          bonds: {'lumi': 2, 'bora': 0, 'taro': 0},
+          history: [],
+        )));
+    await tester.pumpAndSettle();
+    expect(find.bySemanticsLabel(RegExp('다음 동행')), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('관계 기록')), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('첫 여백을 접는 법')), findsOneWidget);
+
+    await tester.tap(find.bySemanticsLabel(RegExp('다음 동행')));
+    await tester.pump();
+    Scene scene() =>
+        tester.widget<CustomPaint>(find.byType(CustomPaint)).painter! as Scene;
+    expect(scene().companionSceneIndex, 1);
+
+    await tester.tap(find.bySemanticsLabel(RegExp('관계 기록')));
+    await tester.pump();
+    expect(scene().page, 11);
+  });
+
   testWidgets('companion archive exposes locked feedback and all route pages',
       (tester) async {
     final source = await story();
