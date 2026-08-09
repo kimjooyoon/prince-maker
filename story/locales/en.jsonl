@@ -1061,3 +1061,98 @@
 {"type":"entry","key":"ui.journal.back","value":"← Back to home"}
 {"type":"entry","key":"ui.ending.legacyTitle","value":"Choose a next-run legacy"}
 {"type":"entry","key":"ui.home.legacy","value":"Inherited · {title} · {stat} +{bonus}"}
+{"type":"entry","key":"ui.relationshipArchive.scenes","value":"Open independent scenes →"}
+{"type":"entry","key":"ui.companionScenes.title","value":"Companion scene records"}
+{"type":"entry","key":"ui.companionScenes.subtitle","value":"Independent records opened by bond and chapter"}
+{"type":"entry","key":"ui.companionScenes.hint","value":"Tap an available scene to let the system record it."}
+{"type":"entry","key":"ui.companionScenes.bond","value":"Bond"}
+{"type":"entry","key":"ui.companionScenes.chapter","value":"chapter"}
+{"type":"entry","key":"ui.companionScenes.status.completed","value":"RECORDED"}
+{"type":"entry","key":"ui.companionScenes.status.available","value":"RECORD"}
+{"type":"entry","key":"ui.companionScenes.status.locked","value":"LOCKED"}
+{"type":"entry","key":"ui.companionScenes.lock","value":"Bond or chapter progress is required."}
+{"type":"entry","key":"ui.companionScenes.previous","value":"← Previous companion"}
+{"type":"entry","key":"ui.companionScenes.next","value":"Next companion →"}
+{"type":"entry","key":"ui.companionScenes.back","value":"← Relationship ledger"}
+{"type":"entry","key":"ui.companionScenes.progress","value":"Recorded {done}/{total}"}
+{"type":"entry","key":"ui.companionScenes.reward","value":"Record reward · Bond +{bond}"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-margin.leave-open.label","value":"Leave the blank open"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-margin.leave-open.response","value":"Lumi and the next person kept a place to ask again."}
+{"type":"entry","key":"companionSceneChoice.lumi-first-margin.seal-now.label","value":"Seal the conclusion first"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-margin.seal-now.response","value":"Lumi and Noa fixed today’s judgement first."}
+{"type":"entry","key":"companionSceneChoice.lumi-slow-star.leave-open.label","value":"Leave the blank open"}
+{"type":"entry","key":"companionSceneChoice.lumi-slow-star.leave-open.response","value":"Lumi and the next person kept a place to ask again."}
+{"type":"entry","key":"companionSceneChoice.lumi-slow-star.seal-now.label","value":"Seal the conclusion first"}
+{"type":"entry","key":"companionSceneChoice.lumi-slow-star.seal-now.response","value":"Lumi and Noa fixed today’s judgement first."}
+{"type":"entry","key":"companionSceneChoice.lumi-open-ledger.leave-open.label","value":"Leave the blank open"}
+{"type":"entry","key":"companionSceneChoice.lumi-open-ledger.leave-open.response","value":"Lumi and the next person kept a place to ask again."}
+{"type":"entry","key":"companionSceneChoice.lumi-open-ledger.seal-now.label","value":"Seal the conclusion first"}
+{"type":"entry","key":"companionSceneChoice.lumi-open-ledger.seal-now.response","value":"Lumi and Noa fixed today’s judgement first."}
+{"type":"entry","key":"companionSceneChoice.lumi-cloud-measure.leave-open.label","value":"Leave the blank open"}
+{"type":"entry","key":"companionSceneChoice.lumi-cloud-measure.leave-open.response","value":"Lumi and the next person kept a place to ask again."}
+{"type":"entry","key":"companionSceneChoice.lumi-cloud-measure.seal-now.label","value":"Seal the conclusion first"}
+{"type":"entry","key":"companionSceneChoice.lumi-cloud-measure.seal-now.response","value":"Lumi and Noa fixed today’s judgement first."}
+{"type":"entry","key":"companionSceneChoice.lumi-two-signals.leave-open.label","value":"Leave the blank open"}
+{"type":"entry","key":"companionSceneChoice.lumi-two-signals.leave-open.response","value":"Lumi and the next person kept a place to ask again."}
+{"type":"entry","key":"companionSceneChoice.lumi-two-signals.seal-now.label","value":"Seal the conclusion first"}
+{"type":"entry","key":"companionSceneChoice.lumi-two-signals.seal-now.response","value":"Lumi and Noa fixed today’s judgement first."}
+{"type":"entry","key":"companionSceneChoice.lumi-first-question.leave-open.label","value":"Leave the blank open"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-question.leave-open.response","value":"Lumi and the next person kept a place to ask again."}
+{"type":"entry","key":"companionSceneChoice.lumi-first-question.seal-now.label","value":"Seal the conclusion first"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-question.seal-now.response","value":"Lumi and Noa fixed today’s judgement first."}
+{"type":"entry","key":"companionSceneChoice.bora-shared-water.share-time.label","value":"Share the time"}
+{"type":"entry","key":"companionSceneChoice.bora-shared-water.share-time.response","value":"Bora and Noa made waiting time a shared record."}
+{"type":"entry","key":"companionSceneChoice.bora-shared-water.move-fast.label","value":"Raise the pace first"}
+{"type":"entry","key":"companionSceneChoice.bora-shared-water.move-fast.response","value":"Bora and Noa started the next task without delay."}
+{"type":"entry","key":"companionSceneChoice.bora-waiting-seat.share-time.label","value":"Share the time"}
+{"type":"entry","key":"companionSceneChoice.bora-waiting-seat.share-time.response","value":"Bora and Noa made waiting time a shared record."}
+{"type":"entry","key":"companionSceneChoice.bora-waiting-seat.move-fast.label","value":"Raise the pace first"}
+{"type":"entry","key":"companionSceneChoice.bora-waiting-seat.move-fast.response","value":"Bora and Noa started the next task without delay."}
+{"type":"entry","key":"companionSceneChoice.bora-first-harvest.share-time.label","value":"Share the time"}
+{"type":"entry","key":"companionSceneChoice.bora-first-harvest.share-time.response","value":"Bora and Noa made waiting time a shared record."}
+{"type":"entry","key":"companionSceneChoice.bora-first-harvest.move-fast.label","value":"Raise the pace first"}
+{"type":"entry","key":"companionSceneChoice.bora-first-harvest.move-fast.response","value":"Bora and Noa started the next task without delay."}
+{"type":"entry","key":"companionSceneChoice.bora-care-ledger.share-time.label","value":"Share the time"}
+{"type":"entry","key":"companionSceneChoice.bora-care-ledger.share-time.response","value":"Bora and Noa made waiting time a shared record."}
+{"type":"entry","key":"companionSceneChoice.bora-care-ledger.move-fast.label","value":"Raise the pace first"}
+{"type":"entry","key":"companionSceneChoice.bora-care-ledger.move-fast.response","value":"Bora and Noa started the next task without delay."}
+{"type":"entry","key":"companionSceneChoice.bora-rain-queue.share-time.label","value":"Share the time"}
+{"type":"entry","key":"companionSceneChoice.bora-rain-queue.share-time.response","value":"Bora and Noa made waiting time a shared record."}
+{"type":"entry","key":"companionSceneChoice.bora-rain-queue.move-fast.label","value":"Raise the pace first"}
+{"type":"entry","key":"companionSceneChoice.bora-rain-queue.move-fast.response","value":"Bora and Noa started the next task without delay."}
+{"type":"entry","key":"companionSceneChoice.bora-open-garden.share-time.label","value":"Share the time"}
+{"type":"entry","key":"companionSceneChoice.bora-open-garden.share-time.response","value":"Bora and Noa made waiting time a shared record."}
+{"type":"entry","key":"companionSceneChoice.bora-open-garden.move-fast.label","value":"Raise the pace first"}
+{"type":"entry","key":"companionSceneChoice.bora-open-garden.move-fast.response","value":"Bora and Noa started the next task without delay."}
+{"type":"entry","key":"companionSceneChoice.taro-broken-rope.mark-route.label","value":"Mark the next foothold"}
+{"type":"entry","key":"companionSceneChoice.taro-broken-rope.mark-route.response","value":"Taro and Noa left a route for the person returning."}
+{"type":"entry","key":"companionSceneChoice.taro-broken-rope.push-through.label","value":"Cross right now"}
+{"type":"entry","key":"companionSceneChoice.taro-broken-rope.push-through.response","value":"Taro and Noa crossed first, accepting the fatigue."}
+{"type":"entry","key":"companionSceneChoice.taro-first-workshop.mark-route.label","value":"Mark the next foothold"}
+{"type":"entry","key":"companionSceneChoice.taro-first-workshop.mark-route.response","value":"Taro and Noa left a route for the person returning."}
+{"type":"entry","key":"companionSceneChoice.taro-first-workshop.push-through.label","value":"Cross right now"}
+{"type":"entry","key":"companionSceneChoice.taro-first-workshop.push-through.response","value":"Taro and Noa crossed first, accepting the fatigue."}
+{"type":"entry","key":"companionSceneChoice.taro-roof-line.mark-route.label","value":"Mark the next foothold"}
+{"type":"entry","key":"companionSceneChoice.taro-roof-line.mark-route.response","value":"Taro and Noa left a route for the person returning."}
+{"type":"entry","key":"companionSceneChoice.taro-roof-line.push-through.label","value":"Cross right now"}
+{"type":"entry","key":"companionSceneChoice.taro-roof-line.push-through.response","value":"Taro and Noa crossed first, accepting the fatigue."}
+{"type":"entry","key":"companionSceneChoice.taro-field-marker.mark-route.label","value":"Mark the next foothold"}
+{"type":"entry","key":"companionSceneChoice.taro-field-marker.mark-route.response","value":"Taro and Noa left a route for the person returning."}
+{"type":"entry","key":"companionSceneChoice.taro-field-marker.push-through.label","value":"Cross right now"}
+{"type":"entry","key":"companionSceneChoice.taro-field-marker.push-through.response","value":"Taro and Noa crossed first, accepting the fatigue."}
+{"type":"entry","key":"companionSceneChoice.taro-quarry-weight.mark-route.label","value":"Mark the next foothold"}
+{"type":"entry","key":"companionSceneChoice.taro-quarry-weight.mark-route.response","value":"Taro and Noa left a route for the person returning."}
+{"type":"entry","key":"companionSceneChoice.taro-quarry-weight.push-through.label","value":"Cross right now"}
+{"type":"entry","key":"companionSceneChoice.taro-quarry-weight.push-through.response","value":"Taro and Noa crossed first, accepting the fatigue."}
+{"type":"entry","key":"companionSceneChoice.taro-next-foothold.mark-route.label","value":"Mark the next foothold"}
+{"type":"entry","key":"companionSceneChoice.taro-next-foothold.mark-route.response","value":"Taro and Noa left a route for the person returning."}
+{"type":"entry","key":"companionSceneChoice.taro-next-foothold.push-through.label","value":"Cross right now"}
+{"type":"entry","key":"companionSceneChoice.taro-next-foothold.push-through.response","value":"Taro and Noa crossed first, accepting the fatigue."}
+{"type":"entry","key":"ui.companionScenes.choose","value":"What record will you leave in this scene?"}
+{"type":"entry","key":"ui.companionScenes.chooseHint","value":"Both choices leave a trace in the next scene and ending record."}
+{"type":"entry","key":"ui.companionScenes.cancel","value":"← Cancel choice"}
+{"type":"entry","key":"ui.companionScenes.notice.bond","value":"A stronger bond is required."}
+{"type":"entry","key":"ui.companionScenes.notice.chapter","value":"This chapter has not arrived yet."}
+{"type":"entry","key":"ui.companionScenes.notice.duplicate","value":"This scene is already recorded."}
+{"type":"entry","key":"ui.companionScenes.notice.invalid","value":"The rule engine rejected this input."}
+{"type":"entry","key":"ui.companionScenes.notice.recorded","value":"The selected record was saved."}

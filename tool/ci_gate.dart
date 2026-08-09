@@ -76,7 +76,8 @@ Future<void> main(List<String> args) async {
     const GateCheck(
         'review-manifest', 'dart', ['run', 'tool/verify_review_manifest.dart']),
     const GateCheck('static-analysis', 'flutter', ['analyze']),
-    const GateCheck('tests-and-goldens', 'flutter', ['test']),
+    const GateCheck(
+        'tests-and-goldens', 'flutter', ['test', '--concurrency=1']),
     if (mode == 'ci')
       const GateCheck('wasm-release-build', 'flutter',
           ['build', 'web', '--wasm', '--release']),

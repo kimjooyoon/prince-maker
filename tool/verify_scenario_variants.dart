@@ -95,7 +95,9 @@ String runBranchVector(
     fail('branch vector consumed $branchIndex/${branchWeeks.length} axes');
   final progress = session.world.progress[0]!;
   final ending = resolveEnding(story, session.world.stats[0]!.values,
-      bonds: progress.bonds, milestones: progress.milestones);
+      bonds: progress.bonds,
+      milestones: progress.milestones,
+      flags: progress.flags);
   return replaySignature(session, ending);
 }
 

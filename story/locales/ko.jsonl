@@ -1061,3 +1061,98 @@
 {"type":"entry","key":"ui.journal.back","value":"← 홈으로"}
 {"type":"entry","key":"ui.ending.legacyTitle","value":"다음 회차 계승 선택"}
 {"type":"entry","key":"ui.home.legacy","value":"계승 · {title} · {stat} +{bonus}"}
+{"type":"entry","key":"ui.relationshipArchive.scenes","value":"독립 장면 보기 →"}
+{"type":"entry","key":"ui.companionScenes.title","value":"동행 장면 기록"}
+{"type":"entry","key":"ui.companionScenes.subtitle","value":"유대와 막의 조건이 여는 독립 기록"}
+{"type":"entry","key":"ui.companionScenes.hint","value":"기록 가능한 장면을 눌러 시스템 기록으로 남깁니다."}
+{"type":"entry","key":"ui.companionScenes.bond","value":"유대"}
+{"type":"entry","key":"ui.companionScenes.chapter","value":"막"}
+{"type":"entry","key":"ui.companionScenes.status.completed","value":"기록됨"}
+{"type":"entry","key":"ui.companionScenes.status.available","value":"기록하기"}
+{"type":"entry","key":"ui.companionScenes.status.locked","value":"잠김"}
+{"type":"entry","key":"ui.companionScenes.lock","value":"유대 또는 막 진행이 필요합니다."}
+{"type":"entry","key":"ui.companionScenes.previous","value":"← 이전 동행"}
+{"type":"entry","key":"ui.companionScenes.next","value":"다음 동행 →"}
+{"type":"entry","key":"ui.companionScenes.back","value":"← 관계 기록"}
+{"type":"entry","key":"ui.companionScenes.progress","value":"기록 {done}/{total}"}
+{"type":"entry","key":"ui.companionScenes.reward","value":"기록 보상 · 유대 +{bond}"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-margin.leave-open.label","value":"빈칸을 열어 둔다"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-margin.leave-open.response","value":"루미와 다음 사람이 다시 물을 자리를 남겼다."}
+{"type":"entry","key":"companionSceneChoice.lumi-first-margin.seal-now.label","value":"결론을 먼저 봉인한다"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-margin.seal-now.response","value":"루미와 노아는 오늘의 판단을 먼저 굳혔다."}
+{"type":"entry","key":"companionSceneChoice.lumi-slow-star.leave-open.label","value":"빈칸을 열어 둔다"}
+{"type":"entry","key":"companionSceneChoice.lumi-slow-star.leave-open.response","value":"루미와 다음 사람이 다시 물을 자리를 남겼다."}
+{"type":"entry","key":"companionSceneChoice.lumi-slow-star.seal-now.label","value":"결론을 먼저 봉인한다"}
+{"type":"entry","key":"companionSceneChoice.lumi-slow-star.seal-now.response","value":"루미와 노아는 오늘의 판단을 먼저 굳혔다."}
+{"type":"entry","key":"companionSceneChoice.lumi-open-ledger.leave-open.label","value":"빈칸을 열어 둔다"}
+{"type":"entry","key":"companionSceneChoice.lumi-open-ledger.leave-open.response","value":"루미와 다음 사람이 다시 물을 자리를 남겼다."}
+{"type":"entry","key":"companionSceneChoice.lumi-open-ledger.seal-now.label","value":"결론을 먼저 봉인한다"}
+{"type":"entry","key":"companionSceneChoice.lumi-open-ledger.seal-now.response","value":"루미와 노아는 오늘의 판단을 먼저 굳혔다."}
+{"type":"entry","key":"companionSceneChoice.lumi-cloud-measure.leave-open.label","value":"빈칸을 열어 둔다"}
+{"type":"entry","key":"companionSceneChoice.lumi-cloud-measure.leave-open.response","value":"루미와 다음 사람이 다시 물을 자리를 남겼다."}
+{"type":"entry","key":"companionSceneChoice.lumi-cloud-measure.seal-now.label","value":"결론을 먼저 봉인한다"}
+{"type":"entry","key":"companionSceneChoice.lumi-cloud-measure.seal-now.response","value":"루미와 노아는 오늘의 판단을 먼저 굳혔다."}
+{"type":"entry","key":"companionSceneChoice.lumi-two-signals.leave-open.label","value":"빈칸을 열어 둔다"}
+{"type":"entry","key":"companionSceneChoice.lumi-two-signals.leave-open.response","value":"루미와 다음 사람이 다시 물을 자리를 남겼다."}
+{"type":"entry","key":"companionSceneChoice.lumi-two-signals.seal-now.label","value":"결론을 먼저 봉인한다"}
+{"type":"entry","key":"companionSceneChoice.lumi-two-signals.seal-now.response","value":"루미와 노아는 오늘의 판단을 먼저 굳혔다."}
+{"type":"entry","key":"companionSceneChoice.lumi-first-question.leave-open.label","value":"빈칸을 열어 둔다"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-question.leave-open.response","value":"루미와 다음 사람이 다시 물을 자리를 남겼다."}
+{"type":"entry","key":"companionSceneChoice.lumi-first-question.seal-now.label","value":"결론을 먼저 봉인한다"}
+{"type":"entry","key":"companionSceneChoice.lumi-first-question.seal-now.response","value":"루미와 노아는 오늘의 판단을 먼저 굳혔다."}
+{"type":"entry","key":"companionSceneChoice.bora-shared-water.share-time.label","value":"시간을 함께 나눈다"}
+{"type":"entry","key":"companionSceneChoice.bora-shared-water.share-time.response","value":"보라와 노아는 기다림의 시간을 공동의 기록으로 남겼다."}
+{"type":"entry","key":"companionSceneChoice.bora-shared-water.move-fast.label","value":"속도를 먼저 높인다"}
+{"type":"entry","key":"companionSceneChoice.bora-shared-water.move-fast.response","value":"보라와 노아는 지체하지 않고 다음 일을 시작했다."}
+{"type":"entry","key":"companionSceneChoice.bora-waiting-seat.share-time.label","value":"시간을 함께 나눈다"}
+{"type":"entry","key":"companionSceneChoice.bora-waiting-seat.share-time.response","value":"보라와 노아는 기다림의 시간을 공동의 기록으로 남겼다."}
+{"type":"entry","key":"companionSceneChoice.bora-waiting-seat.move-fast.label","value":"속도를 먼저 높인다"}
+{"type":"entry","key":"companionSceneChoice.bora-waiting-seat.move-fast.response","value":"보라와 노아는 지체하지 않고 다음 일을 시작했다."}
+{"type":"entry","key":"companionSceneChoice.bora-first-harvest.share-time.label","value":"시간을 함께 나눈다"}
+{"type":"entry","key":"companionSceneChoice.bora-first-harvest.share-time.response","value":"보라와 노아는 기다림의 시간을 공동의 기록으로 남겼다."}
+{"type":"entry","key":"companionSceneChoice.bora-first-harvest.move-fast.label","value":"속도를 먼저 높인다"}
+{"type":"entry","key":"companionSceneChoice.bora-first-harvest.move-fast.response","value":"보라와 노아는 지체하지 않고 다음 일을 시작했다."}
+{"type":"entry","key":"companionSceneChoice.bora-care-ledger.share-time.label","value":"시간을 함께 나눈다"}
+{"type":"entry","key":"companionSceneChoice.bora-care-ledger.share-time.response","value":"보라와 노아는 기다림의 시간을 공동의 기록으로 남겼다."}
+{"type":"entry","key":"companionSceneChoice.bora-care-ledger.move-fast.label","value":"속도를 먼저 높인다"}
+{"type":"entry","key":"companionSceneChoice.bora-care-ledger.move-fast.response","value":"보라와 노아는 지체하지 않고 다음 일을 시작했다."}
+{"type":"entry","key":"companionSceneChoice.bora-rain-queue.share-time.label","value":"시간을 함께 나눈다"}
+{"type":"entry","key":"companionSceneChoice.bora-rain-queue.share-time.response","value":"보라와 노아는 기다림의 시간을 공동의 기록으로 남겼다."}
+{"type":"entry","key":"companionSceneChoice.bora-rain-queue.move-fast.label","value":"속도를 먼저 높인다"}
+{"type":"entry","key":"companionSceneChoice.bora-rain-queue.move-fast.response","value":"보라와 노아는 지체하지 않고 다음 일을 시작했다."}
+{"type":"entry","key":"companionSceneChoice.bora-open-garden.share-time.label","value":"시간을 함께 나눈다"}
+{"type":"entry","key":"companionSceneChoice.bora-open-garden.share-time.response","value":"보라와 노아는 기다림의 시간을 공동의 기록으로 남겼다."}
+{"type":"entry","key":"companionSceneChoice.bora-open-garden.move-fast.label","value":"속도를 먼저 높인다"}
+{"type":"entry","key":"companionSceneChoice.bora-open-garden.move-fast.response","value":"보라와 노아는 지체하지 않고 다음 일을 시작했다."}
+{"type":"entry","key":"companionSceneChoice.taro-broken-rope.mark-route.label","value":"다음 발판을 표시한다"}
+{"type":"entry","key":"companionSceneChoice.taro-broken-rope.mark-route.response","value":"타로와 노아는 돌아올 사람을 위한 길을 남겼다."}
+{"type":"entry","key":"companionSceneChoice.taro-broken-rope.push-through.label","value":"지금 바로 건넌다"}
+{"type":"entry","key":"companionSceneChoice.taro-broken-rope.push-through.response","value":"타로와 노아는 피로를 감수하고 먼저 길을 건넜다."}
+{"type":"entry","key":"companionSceneChoice.taro-first-workshop.mark-route.label","value":"다음 발판을 표시한다"}
+{"type":"entry","key":"companionSceneChoice.taro-first-workshop.mark-route.response","value":"타로와 노아는 돌아올 사람을 위한 길을 남겼다."}
+{"type":"entry","key":"companionSceneChoice.taro-first-workshop.push-through.label","value":"지금 바로 건넌다"}
+{"type":"entry","key":"companionSceneChoice.taro-first-workshop.push-through.response","value":"타로와 노아는 피로를 감수하고 먼저 길을 건넜다."}
+{"type":"entry","key":"companionSceneChoice.taro-roof-line.mark-route.label","value":"다음 발판을 표시한다"}
+{"type":"entry","key":"companionSceneChoice.taro-roof-line.mark-route.response","value":"타로와 노아는 돌아올 사람을 위한 길을 남겼다."}
+{"type":"entry","key":"companionSceneChoice.taro-roof-line.push-through.label","value":"지금 바로 건넌다"}
+{"type":"entry","key":"companionSceneChoice.taro-roof-line.push-through.response","value":"타로와 노아는 피로를 감수하고 먼저 길을 건넜다."}
+{"type":"entry","key":"companionSceneChoice.taro-field-marker.mark-route.label","value":"다음 발판을 표시한다"}
+{"type":"entry","key":"companionSceneChoice.taro-field-marker.mark-route.response","value":"타로와 노아는 돌아올 사람을 위한 길을 남겼다."}
+{"type":"entry","key":"companionSceneChoice.taro-field-marker.push-through.label","value":"지금 바로 건넌다"}
+{"type":"entry","key":"companionSceneChoice.taro-field-marker.push-through.response","value":"타로와 노아는 피로를 감수하고 먼저 길을 건넜다."}
+{"type":"entry","key":"companionSceneChoice.taro-quarry-weight.mark-route.label","value":"다음 발판을 표시한다"}
+{"type":"entry","key":"companionSceneChoice.taro-quarry-weight.mark-route.response","value":"타로와 노아는 돌아올 사람을 위한 길을 남겼다."}
+{"type":"entry","key":"companionSceneChoice.taro-quarry-weight.push-through.label","value":"지금 바로 건넌다"}
+{"type":"entry","key":"companionSceneChoice.taro-quarry-weight.push-through.response","value":"타로와 노아는 피로를 감수하고 먼저 길을 건넜다."}
+{"type":"entry","key":"companionSceneChoice.taro-next-foothold.mark-route.label","value":"다음 발판을 표시한다"}
+{"type":"entry","key":"companionSceneChoice.taro-next-foothold.mark-route.response","value":"타로와 노아는 돌아올 사람을 위한 길을 남겼다."}
+{"type":"entry","key":"companionSceneChoice.taro-next-foothold.push-through.label","value":"지금 바로 건넌다"}
+{"type":"entry","key":"companionSceneChoice.taro-next-foothold.push-through.response","value":"타로와 노아는 피로를 감수하고 먼저 길을 건넜다."}
+{"type":"entry","key":"ui.companionScenes.choose","value":"이 장면에서 어떤 기록을 남길까요?"}
+{"type":"entry","key":"ui.companionScenes.chooseHint","value":"두 선택 모두 다음 장면과 엔딩 기록에 흔적을 남깁니다."}
+{"type":"entry","key":"ui.companionScenes.cancel","value":"← 선택 취소"}
+{"type":"entry","key":"ui.companionScenes.notice.bond","value":"유대가 더 필요합니다."}
+{"type":"entry","key":"ui.companionScenes.notice.chapter","value":"아직 이 막에 도착하지 않았습니다."}
+{"type":"entry","key":"ui.companionScenes.notice.duplicate","value":"이 장면은 이미 기록되었습니다."}
+{"type":"entry","key":"ui.companionScenes.notice.invalid","value":"시스템이 이 기록 입력을 거절했습니다."}
+{"type":"entry","key":"ui.companionScenes.notice.recorded","value":"선택한 기록이 저장되었습니다."}

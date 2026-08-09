@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_event_storm.dart -->
-<!-- source-sha256: beacb8034360aee9fe1d031a4e2f6fb39b1cdcca6f95b1316383cd8238e573e0 -->
+<!-- source-sha256: 1058e928fc80b47b7b6507883497c1617eddfdcb49d99ee1a1e2d4e0375e0d0f -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # Lumen Event Storm
@@ -11,13 +11,13 @@
 | 지표 | 현재 | 증적 기준 |
 | --- | ---: | --- |
 | 전체 노드 | 133 | 47 본편 + 24 사이드 + 18 동료 + 10 활동 + 18 엔딩 변형 + 16 막 결산 |
-| 선택 명령 | 166 | 본편 94 + 사이드 72 |
+| 선택 명령 | 202 | 본편 94 + 사이드 72 |
 | 효과 연결률 | 1.0 | 모든 authored choice가 상태 축 또는 기억 flag를 기록 |
 | 피드백 연결률 | 1.0 | 모든 authored choice가 lineKey를 갖고 다음 화면에 반환 |
-| 다축 선택 | 166 | stat·coin·bond·flag 중 2축 이상 |
+| 다축 선택 | 202 | stat·coin·bond·flag 중 2축 이상 |
 | 교환 선택 | 72 | 양의 변화와 음의 변화를 동시에 보유 |
-| 조건부 선택 | 29 | stat·bond·memory 정책 gate |
-| 분기 노드 | 71 / 71 | 서로 다른 domain event signature |
+| 조건부 선택 | 65 | stat·bond·memory 정책 gate |
+| 분기 노드 | 89 / 71 | 서로 다른 domain event signature |
 
 ## 책임 경계
 

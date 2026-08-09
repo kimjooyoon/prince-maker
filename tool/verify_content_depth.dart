@@ -95,7 +95,13 @@ void main() {
       0,
       (sum, scene) =>
           sum +
-          textUnits(scene, ['title', 'body', 'prompt', 'line', 'closing']));
+          textUnits(scene, ['title', 'body', 'prompt', 'line', 'closing']) +
+          (scene['choices'] as List? ?? const [])
+              .cast<Map<String, dynamic>>()
+              .fold<int>(
+                  0,
+                  (choiceSum, choice) =>
+                      choiceSum + textUnits(choice, ['label', 'response'])));
   final activityDialogue = activityScenes.fold<int>(
       0, (sum, scene) => sum + textUnits(scene, ['title', 'moment', 'line']));
   final endingDialogue = endingVariants.fold<int>(

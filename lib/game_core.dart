@@ -308,13 +308,29 @@ List<Map<String, dynamic>> resolveCompanionQuests(
 /// A scene is unlocked by the first bond point with its companion and is
 /// marked complete by a persisted `companion-scene:<id>` memory flag.
 List<Map<String, dynamic>> resolveCompanionScenes(
-    StoryPort story, Map<String, int> bonds, Map<String, bool> flags) {
+    StoryPort story, Map<String, int> bonds, Map<String, bool> flags,
+    {int? currentChapter}) {
+  final chapter = currentChapter ?? 999;
   return story.companionScenes.map((scene) {
     final companionId = '${scene['companionId']}', id = '${scene['id']}';
+    final bonded = (bonds[companionId] ?? 0) > 0,
+        completed = flags['companion-scene:$id'] == true,
+        chapterReady = (scene['chapter'] as int? ?? 1) <= chapter;
+    final choices = (scene['choices'] as List? ?? const [])
+        .whereType<Map>()
+        .map((choice) => choice.cast<String, dynamic>())
+        .toList();
+    final selected = choices.where((choice) {
+      final flag = choice['setsFlag'] as String?;
+      return flag != null && flags[flag] == true;
+    }).firstOrNull;
     return {
       ...scene,
-      'unlocked': (bonds[companionId] ?? 0) > 0,
-      'completed': flags['companion-scene:$id'] == true,
+      'unlocked': bonded,
+      'chapterReady': chapterReady,
+      'available': bonded && chapterReady && !completed,
+      'completed': completed,
+      'selectedChoice': selected,
     };
   }).toList();
 }
@@ -345,7 +361,9 @@ Map<String, dynamic> resolvePersonalityCompanionRoute(
 }
 
 Map<String, dynamic> resolveEnding(StoryPort story, Map<String, int> stats,
-    {Map<String, int>? bonds, Map<String, bool>? milestones}) {
+    {Map<String, int>? bonds,
+    Map<String, bool>? milestones,
+    Map<String, bool>? flags}) {
   final winner = stats.entries.reduce((a, b) => a.value > b.value ? a : b);
   final options = story.endings.where((e) => e['stat'] == winner.key).toList()
     ..sort(
@@ -418,6 +436,21 @@ Map<String, dynamic> resolveEnding(StoryPort story, Map<String, int> stats,
   result['companionRouteIds'] = routeIds;
   result['routeId'] =
       '${result['id']}::${routeIds.isEmpty ? 'solo' : routeIds.join('+')}';
+  if (flags != null) {
+    final choiceFlags = flags.entries
+        .where((entry) =>
+            entry.key.startsWith('companion-choice:') && entry.value == true)
+        .toSet()
+        .toList()
+      ..sort();
+    final choiceRoute =
+        choiceFlags.map((entry) => entry.key.split(':').last).toList();
+    result['companionChoiceRoute'] =
+        choiceRoute.isEmpty ? 'none' : choiceRoute.join('+');
+    if (choiceFlags.isNotEmpty)
+      result['routeId'] =
+          '${result['routeId']}|companion-choice:${choiceFlags.map((entry) => entry.key.substring('companion-choice:'.length)).join('+')}';
+  }
   return result;
 }
 
@@ -492,6 +525,24 @@ class RelationshipStateResolved extends GameEvent {
 class RelationshipFollowupResolved extends GameEvent {
   const RelationshipFollowupResolved(this.id);
   final String id;
+}
+
+class CompanionSceneRecorded extends GameEvent {
+  const CompanionSceneRecorded(
+      this.id,
+      this.companionId,
+      this.title,
+      this.choiceId,
+      this.choiceLabel,
+      this.response,
+      this.stat,
+      this.statDelta,
+      this.fatigueDelta,
+      this.bondDelta,
+      this.setsFlag);
+  final String id, companionId, title, choiceId, choiceLabel, response, stat;
+  final int statDelta, fatigueDelta, bondDelta;
+  final String? setsFlag;
 }
 
 class PersonalityCompanionResonanceApplied extends GameEvent {
@@ -609,6 +660,32 @@ class GameWorld {
         p.trace.add('relationship:$id|gap:$gap');
       case RelationshipFollowupResolved(:final id):
         p.trace.add('relationship-followup:$id');
+      case CompanionSceneRecorded(
+          :final id,
+          :final companionId,
+          :final title,
+          :final choiceId,
+          :final choiceLabel,
+          :final response,
+          :final stat,
+          :final statDelta,
+          :final fatigueDelta,
+          :final bondDelta,
+          :final setsFlag
+        ):
+        s[stat] = (s[stat] ?? 0) + statDelta;
+        p.flags['companion-scene:$id'] = true;
+        if (setsFlag != null) p.flags[setsFlag] = true;
+        p.bonds[companionId] =
+            ((p.bonds[companionId] ?? 0) + bondDelta).clamp(0, 100).toInt();
+        p.fatigue = (p.fatigue + fatigueDelta).clamp(0, 12).toInt();
+        p.lastResult =
+            '$title · $choiceLabel · $stat ${statDelta >= 0 ? '+' : ''}$statDelta · 동행 장면 기록';
+        p.lastLine = response;
+        p.trace
+            .add('companion-scene:$id|companion:$companionId|bond+$bondDelta');
+        p.trace.add(
+            'companion-choice:$id|choice:$choiceId|stat:$stat${statDelta >= 0 ? '+' : ''}$statDelta|fatigue:${fatigueDelta >= 0 ? '+' : ''}$fatigueDelta${setsFlag == null ? '' : '|flag:$setsFlag'}');
       case PersonalityCompanionResonanceApplied(
           :final routeId,
           :final companionId,
@@ -913,6 +990,51 @@ class GameSession {
       p.trace.add('side-scene:$sceneId');
       persist();
     }
+  }
+
+  void recordCompanionScene(String sceneId, {int choiceIndex = 0}) {
+    final scene = story.companionScenes
+        .where((candidate) => '${candidate['id']}' == sceneId)
+        .firstOrNull;
+    if (scene == null) return;
+    final p = world.progress[0]!;
+    final bonded = (p.bonds['${scene['companionId']}'] ?? 0) > 0;
+    final currentChapter = ((p.week + 2) ~/ 3).clamp(1, 16);
+    final chapterReady = (scene['chapter'] as int? ?? 1) <= currentChapter;
+    final ready =
+        bonded && chapterReady && p.flags['companion-scene:$sceneId'] != true;
+    final choices =
+        (scene['choices'] as List? ?? const []).cast<Map<String, dynamic>>();
+    final validChoice = choiceIndex >= 0 && choiceIndex < choices.length;
+    final receipt = _decision('companion-scene-choice',
+        '$sceneId:${validChoice ? choices[choiceIndex]['id'] : 'invalid'}',
+        conditions: ready && validChoice);
+    if (!receipt.approved) {
+      final reason = !bonded
+          ? 'companion-scene-rejected:bond'
+          : !chapterReady
+              ? 'companion-scene-rejected:chapter'
+              : p.flags['companion-scene:$sceneId'] == true
+                  ? 'companion-scene-rejected:duplicate'
+                  : 'companion-scene-rejected:invalid';
+      _recordRejected(receipt, reason);
+      return;
+    }
+    final choice = choices[choiceIndex];
+    world.dispatch(SystemDecisionApproved(receipt));
+    world.dispatch(CompanionSceneRecorded(
+        sceneId,
+        '${scene['companionId']}',
+        '${scene['title']}',
+        '${choice['id']}',
+        '${choice['label']}',
+        '${choice['response']}',
+        '${choice['stat']}',
+        (choice['delta'] as int?) ?? 0,
+        (choice['fatigueDelta'] as int?) ?? 0,
+        (choice['bondDelta'] as int?) ?? (scene['bondDelta'] as int? ?? 1),
+        choice['setsFlag'] as String?));
+    persist();
   }
 
   void _resolveMilestone() {

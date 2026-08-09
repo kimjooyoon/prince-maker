@@ -112,6 +112,39 @@ void main() {
     requireText('test/relationship_archive_golden_test.dart',
         relationshipArchiveGoldenTest, name);
   }
+  final companionSceneGoldenTest =
+      read('test/companion_scene_golden_test.dart');
+  requireText('lib/main.dart', main, 'CompanionSceneArchivePainter');
+  requireText('lib/main.dart', main, 'page == 13');
+  requireText('test/companion_scene_golden_test.dart', companionSceneGoldenTest,
+      'companion scene archive records a scene');
+  for (final name in [
+    'goldens/companion-scenes.png',
+    'goldens/companion-scene-choice.png',
+    'goldens/companion-scene-recorded.png',
+    'goldens/companion-scene-recorded-en.png',
+    'goldens/companion-scene-lumi-mixed.png',
+    'goldens/companion-scene-bora-mixed.png',
+    'goldens/companion-scene-taro-mixed.png',
+    'goldens/companion-scene-locked.png',
+  ]) {
+    requireText('test/companion_scene_golden_test.dart',
+        companionSceneGoldenTest, name);
+  }
+  final companionScenePainter =
+      read('lib/companion_scene_archive_painter.dart');
+  requireText('lib/companion_scene_archive_painter.dart', companionScenePainter,
+      'CanvasUiKit.progress');
+  requireText('lib/companion_scene_archive_painter.dart', companionScenePainter,
+      'ui.companionScenes.reward');
+  final closureEvidence =
+      (contract['closureEvidence'] as Map? ?? const {}).cast<String, dynamic>();
+  if (closureEvidence['id'] != 'companion-scenes' ||
+      closureEvidence['goldens'] != 8 ||
+      closureEvidence['test'] !=
+          'test/companion_scene_golden_test.dart#companion scene archive records a scene') {
+    fail('render quality contract must bind the companion scene Golden loop');
+  }
   requireText(
       'test/activity_forecast_golden_test.dart',
       activityForecastGoldenTest,
@@ -180,6 +213,23 @@ void main() {
   if (chapterClosureGoldens != 16)
     fail(
         'expected exactly 16 chapter closure golden evidence files, found $chapterClosureGoldens');
+  final companionSceneGoldens = Directory('test/goldens')
+      .listSync()
+      .whereType<File>()
+      .where((file) => [
+            'companion-scenes.png',
+            'companion-scene-choice.png',
+            'companion-scene-recorded.png',
+            'companion-scene-recorded-en.png',
+            'companion-scene-lumi-mixed.png',
+            'companion-scene-bora-mixed.png',
+            'companion-scene-taro-mixed.png',
+            'companion-scene-locked.png',
+          ].contains(file.uri.pathSegments.last))
+      .length;
+  if (companionSceneGoldens != 8)
+    fail(
+        'expected exactly 8 companion scene golden evidence files, found $companionSceneGoldens');
   stdout.writeln(
-      'RENDER_QUALITY_PRECONDITIONS_OK: preconditions=${preconditions.length} proofs=${proofs.length} goldens=$goldens chapterGoldens=$chapterGoldens chapterClosureGoldens=$chapterClosureGoldens');
+      'RENDER_QUALITY_PRECONDITIONS_OK: preconditions=${preconditions.length} proofs=${proofs.length} goldens=$goldens chapterGoldens=$chapterGoldens chapterClosureGoldens=$chapterClosureGoldens companionSceneGoldens=$companionSceneGoldens');
 }

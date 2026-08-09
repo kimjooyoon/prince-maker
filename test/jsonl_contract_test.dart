@@ -24,7 +24,7 @@ void main() {
         (await rootBundle.load('story/locales/ko.jsonl')).buffer.asUint8List());
     final catalog = decodeJsonlCatalog(raw);
     expect(raw.split('\n').first, contains('lumen-locale-jsonl-v1'));
-    expect(catalog.length, 1062);
+    expect(catalog.length, 1157);
     expect(catalog['ui.relationship.followup.estranged.title'], '늦은 답장');
     expect(catalog['ui.characterArt.title'], '루멘 사람들');
     expect(encodeJsonlCatalog(catalog, locale: 'ko'), raw);

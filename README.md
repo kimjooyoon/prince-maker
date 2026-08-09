@@ -1,6 +1,6 @@
 # 프린스 메이커
 
-독자 세계관 ‘루멘’에서 48주 동안 노아의 방향을 함께 고르는 결정론적 육성 시뮬레이션입니다. 한 회차는 48회 일정, 47개 본편 사건과 24개 사이드 장면, 16막 결산, 16개 막 관계 장면으로 구성되어 보수적 페이싱 기준 156분의 서사 분량을 계산합니다. 원작의 캐릭터·문구·화면을 사용하지 않고, **일정 선택 → 수치 변화 → 서사 판정**이라는 장르의 구조만 새 규칙과 시각 언어로 재구성했습니다.
+독자 세계관 ‘루멘’에서 48주 동안 노아의 방향을 함께 고르는 결정론적 육성 시뮬레이션입니다. 한 회차는 48회 일정, 47개 본편 사건과 24개 사이드 장면, 16막 결산, 16개 막 관계 장면으로 구성되어 보수적 페이싱 기준 156분의 서사 분량을 계산합니다. 동료 유대와 막 진행은 18개 독립 동행 장면을 실제 시스템 기록으로 열고 저장합니다. 원작의 캐릭터·문구·화면을 사용하지 않고, **일정 선택 → 수치 변화 → 서사 판정**이라는 장르의 구조만 새 규칙과 시각 언어로 재구성했습니다.
 
 장편 분량의 권위 있는 기준은 `story/story.jsonl#contentBudget`이며, `tool/verify_game.dart`가 최소 120분·사건/선택지/막 결산 수를 함께 판정합니다.
 
@@ -21,7 +21,7 @@ git config core.hooksPath .githooks
 
 ## 골든 테스트 증적
 
-`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test`가 픽셀 변화를 차단합니다. OS별 Canvas 글꼴 안티앨리어싱 차이는 2.0% 이하의 bounded tolerance만 허용하며, 그 이상은 실패합니다.
+`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test --concurrency=1`이 단일 Golden 실행기에서 픽셀 변화를 차단합니다. OS별 Canvas 글꼴 안티앨리어싱 차이는 2.0% 이하의 bounded tolerance만 허용하며, 그 이상은 실패합니다.
 
 ![골든 기준 화면](test/goldens/home.png)
 ![계절 목표가 보이는 계획 화면](test/goldens/milestone.png)
@@ -61,6 +61,9 @@ git config core.hooksPath .githooks
 ![16막 canonical 결산 Golden 행렬 대표](test/goldens/chapter-closure-handoff.png)
 ![막 결산 관계 장면 Golden](test/goldens/chapter-closure-arrival.png)
 ![상태별 관계 후속 대화 Golden](test/goldens/relationship-followup.png)
+![동행 독립 장면 잠금·기록 Golden](test/goldens/companion-scenes.png)
+![동행 장면 기록 완료 Golden](test/goldens/companion-scene-recorded.png)
+![English 동행 장면 기록 완료 Golden](test/goldens/companion-scene-recorded-en.png)
 
 전체 행렬은 [`test/chapter_golden_test.dart`](test/chapter_golden_test.dart), [`test/chapter_closure_golden_test.dart`](test/chapter_closure_golden_test.dart)와 [`test/goldens/chapter-*.png`](test/goldens/)에서 확인할 수 있습니다.
 
@@ -92,7 +95,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 
 ## SSOT와 게임성 지표
 
-게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 166/166 effectful choice, 71/71 divergent scene, 166/166 multi-axis choice, 72/166 trade-off choice(0.4337), 29 gated choice이며, 결과 피드백 Golden·5-state 관계 resolver/replay trace·상태별 상호 배타 후속 대화까지 purity 축의 fail-closed 게이트로 연결됩니다. 상세 계약은 story/story.jsonl의 gameplayKpis·relationshipDesign와 lib/choice_impact.dart·tool/verify_gameplay_fun.dart에 있습니다.
+게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 166/166 effectful choice, 71/71 divergent scene, 166/166 multi-axis choice, 72/166 trade-off choice(0.4337), 29 gated choice, 36/36 companion choice impact이며, 결과 피드백 Golden·5-state 관계 resolver/replay trace·상태별 상호 배타 후속 대화까지 purity 축의 fail-closed 게이트로 연결됩니다. 상세 계약은 story/story.jsonl의 gameplayKpis·relationshipDesign와 lib/choice_impact.dart·tool/verify_gameplay_fun.dart에 있습니다.
 
 스토리와 활동 정의의 단일 원천은 [`story/story.jsonl`](story/story.jsonl)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `characters`는 노아와 세 동료의 역할·이름 key·portrait asset/frame을 선언하며, 94개 사건 선택은 `speakerId → locale key → portrait frame`으로 같은 상반신 대화 컴포넌트를 재사용합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, `assets/lumen-personality-sheet.png`는 고요·다정·용감 성격의 3프레임 상반신 시트입니다. 두 PNG는 SSOT의 `assetRefs`와 각 personality/character의 `portraitAsset`/`portraitFrame`으로 연결되어 Canvas 일러스트와 사건 대화에서 표시됩니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
@@ -111,15 +114,17 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
 ![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
 
-캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 94장입니다.
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 102장입니다.
 
 ### 감정·이벤트 일러스트 매트릭스
 
 전체 디자인 이미지 수량은 [`design/image-design-matrix.jsonl`](design/image-design-matrix.jsonl)에 고정합니다. `5종 감정 × 20명 = 100프레임`에 `4명 주요 캐릭터 × 47개 메인 이벤트 = 188프레임`, `6개 위치 × 4개 사이드 씬 = 24프레임`을 더해 총 `312프레임`입니다. 실제 파일은 캐릭터 감정 시트 20장, 이벤트 시트 47장, 재활용 가능한 사이드 씬 위치 시트 6장으로 병합됩니다. 사건 화면은 [`lib/event_art.dart`](lib/event_art.dart)가 SSOT의 `illustrationAsset + illustrationFrame`을 읽어 Canvas에 현재 프레임만 표시합니다. [`test/image_design_matrix_test.dart`](test/image_design_matrix_test.dart)와 [`test/side_scene_art_test.dart`](test/side_scene_art_test.dart)가 73개 PNG 시트의 존재·규격·프레임 수와 312 산식을 검증하고, [`test/goldens/side-scene.png`](test/goldens/side-scene.png) 및 [`test/goldens/side-scene-en.png`](test/goldens/side-scene-en.png)가 한글·영문 화면을 증적합니다.
 
-홈 하단의 `동행 기록`은 `page == 11`에서 `resolveRelationshipDynamics`·`resolveRelationshipFollowup`·`resolveCompanionQuests`를 동일 입력으로 투영합니다. 현재 관계 상태·유대 간격·상태별 후속 기록·루미/보라/타로의 상반신·퀘스트 진행을 [`lib/relationship_archive_painter.dart`](lib/relationship_archive_painter.dart)가 재사용 가능한 패널로 렌더링하고, ko/en 화면과 고요·다정·용감 세 성격의 공명 결과를 [`test/goldens/relationship-archive.png`](test/goldens/relationship-archive.png)·[`test/goldens/relationship-archive-en.png`](test/goldens/relationship-archive-en.png)·[`test/goldens/relationship-archive-kind.png`](test/goldens/relationship-archive-kind.png)·[`test/goldens/relationship-archive-bold.png`](test/goldens/relationship-archive-bold.png)으로 고정합니다.
+홈 하단의 `동행 기록`은 `page == 11`에서 `resolveRelationshipDynamics`·`resolveRelationshipFollowup`·`resolveCompanionQuests`를 동일 입력으로 투영합니다. 현재 관계 상태·유대 간격·상태별 후속 기록·루미/보라/타로의 상반신·퀘스트 진행을 [`lib/relationship_archive_painter.dart`](lib/relationship_archive_painter.dart)가 재사용 가능한 패널로 렌더링하고, ko/en 화면과 고요·다정·용감 세 성격의 공명 결과를 [`test/goldens/relationship-archive.png`](test/goldens/relationship-archive.png)·[`test/goldens/relationship-archive-en.png`](test/goldens/relationship-archive-en.png)·[`test/goldens/relationship-archive-kind.png`](test/goldens/relationship-archive-kind.png)·[`test/goldens/relationship-archive-bold.png`](test/goldens/relationship-archive-bold.png)으로 고정합니다. 각 동료 카드는 `page == 13` 독립 장면 기록으로 이어지며, `resolveCompanionScenes`가 `bond > 0 ∧ chapter ≤ currentChapter ∧ not recorded`를 순수하게 계산하고 `GameSession.recordCompanionScene`이 시스템 승인·memory flag·trace·save를 한 번에 남깁니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·English 활동 reflection·ko/en 활동 회고 일지·엔딩 뒤 계승 프로필 선택·새 회차 적용 피드백도 각각 Golden으로 고정하며, 전체 Golden 증적은 94장입니다.
+동행 장면은 카드 첫 탭에서 선택을 열고 두 번째 탭에서 2-way 선택을 확정합니다. 선택은 성장축·피로·유대·memory flag·응답 대사와 엔딩 route signature에 반영되며, 잠금·중복·잘못된 입력은 localized reject banner로 남습니다. 대표 Canvas 증거는 [`companion-scenes.png`](test/goldens/companion-scenes.png)·[`companion-scene-choice.png`](test/goldens/companion-scene-choice.png)·[`companion-scene-recorded.png`](test/goldens/companion-scene-recorded.png)·[`companion-scene-recorded-en.png`](test/goldens/companion-scene-recorded-en.png)·세 동료 혼합 상태 [`companion-scene-lumi-mixed.png`](test/goldens/companion-scene-lumi-mixed.png)·[`companion-scene-bora-mixed.png`](test/goldens/companion-scene-bora-mixed.png)·[`companion-scene-taro-mixed.png`](test/goldens/companion-scene-taro-mixed.png)·잠금 피드백 [`companion-scene-locked.png`](test/goldens/companion-scene-locked.png)로 고정합니다.
+
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·English 활동 reflection·ko/en 활동 회고 일지·엔딩 뒤 계승 프로필 선택·새 회차 적용 피드백·동행 장면의 선택·잠금·혼합 상태도 각각 Golden으로 고정하며, 전체 Golden 증적은 102장입니다.
 
 ### 캐릭터 일러스트·감정표현 설계
 
@@ -135,7 +140,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 authored 대사 612줄, ko/en locale 1062키, 성격×동료 3×3 공명 matrix(매칭 3개·선택 유대 +1), 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
+현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개 + 동행 선택 36개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6, 장면당 2-way 기록 루프), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 narrative backbone 612줄 + 동행 선택 label/response 72줄 = authored dialogue unit 684개, ko/en locale 1157키, 성격×동료 3×3 공명 matrix(매칭 3개·선택 유대 +1), 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다.
 
@@ -150,6 +155,8 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 게임 요소 분석과 정량 게이트는 [`docs/game-completeness.md`](docs/game-completeness.md), 시나리오 표본은 [`docs/scenario-completeness.md`](docs/scenario-completeness.md), 정량 개발목표 원장은 [`docs/development-goals.md`](docs/development-goals.md)·[`docs/development-goals.jsonl`](docs/development-goals.jsonl), 결정 증명 계약은 [`docs/decision-proof-contract.jsonl`](docs/decision-proof-contract.jsonl), 기계 판정 계약은 [`docs/trilemma-contract.jsonl`](docs/trilemma-contract.jsonl), 트릴레마 폐쇄루프는 [`docs/trilemma.md`](docs/trilemma.md), CI 강제 검사는 [`tool/ci_gate.dart`](tool/ci_gate.dart), [`tool/trilemma_verdict.dart`](tool/trilemma_verdict.dart), [`tool/verify_game.dart`](tool/verify_game.dart), [`tool/verify_scenario_variants.dart`](tool/verify_scenario_variants.dart), [`tool/verify_decision_proof.dart`](tool/verify_decision_proof.dart), [`tool/verify_development_goals.dart`](tool/verify_development_goals.dart)와 [`tool/benchmark_game.dart`](tool/benchmark_game.dart)에 있습니다. 게이트는 완전성·순수성·성능을 축별로 기록하며, `build/trilemma-verdict.json`에서 하나라도 실패하면 전체 변경을 거부합니다. 완전성 점수가 95% 미만이거나 2,000개 scenario vector·실제 SSOT campaign benchmark·정량 목표 증적·결정 chain 증명이 실패해도 변경을 거부합니다. 각 막은 SSOT의 `reveal → pressureAxes → choiceWeeks → closureMilestone` 계약을 실제 사건·막 목표와 대조합니다. 동일한 일정 예산으로 지혜·공감 경로가 서로 다른 authored 엔딩과 유대를 만드는 순수성 회귀도 고정합니다. SSOT 검사 → 결정 증명 → 시나리오 경우의 수 열거 → 독창성 계약 → 트릴레마 계약 → 해시 매니페스트 → 정적 분석 → 상태/Golden 테스트 → 실제 SSOT campaign benchmark → 정량 개발목표 verdict → Wasm 빌드 순서가 모두 통과해야 저장소 변경이 검증됩니다.
 
 SSOT에서 생성된 문서는 [`docs/story-ssot.md`](docs/story-ssot.md)와 [`docs/ssot-metrics.md`](docs/ssot-metrics.md)이며, 문서 헤더의 SHA-256과 `source-ref`를 CI가 검사합니다. 시나리오 verifier는 2,048개 authored branch vector를 실제 코어에서 재생하고, 성능 benchmark는 `story/story.jsonl`을 실제 `GameSession`에 주입해 47개 사건을 포함한 같은 5,000 campaign workload를 재실행하며 checksum·replayChecksum·3개 이상 결과 signature·3개 계승 프로필의 target ending·target companion epilogue까지 일치해야 통과합니다. 핵심 변경 파일은 [`docs/review-manifest.jsonl`](docs/review-manifest.jsonl)에 해시와 ref가 있어, 파일을 다시 읽고 검토하지 않은 변경은 통합되지 않습니다. 사람의 승인 대신 [`docs/decision-proof-contract.jsonl`](docs/decision-proof-contract.jsonl)과 [`tool/verify_decision_proof.dart`](tool/verify_decision_proof.dart)가 SSOT·현재 precondition·직전 parent hash를 먼저 검증하고, 이후 `SystemDecisionPolicy`와 `tool/ci_gate.dart`가 terminal 상태·Golden·scenario vector enumeration·benchmark를 fail-closed로 판정해 결정 영수증을 trace에 남깁니다. 운영 규칙은 [`docs/automation-policy.md`](docs/automation-policy.md), 외부 게임의 규칙 단위 분석과 루멘의 독창성 차이는 [`docs/originality-contract.jsonl`](docs/originality-contract.jsonl)에 기록합니다.
+
+성능 폐쇄루프의 benchmark는 5,000 campaign·565,000 transition을 실행하고 `checksum`·`replayChecksum`·`companionSceneChecksum` 재현까지 시스템 판정합니다. 독립 동료 장면은 8개 Golden(선택 대기·기록 후·ko/en·3명 혼합 상태·잠금 피드백)과 코어 기록 테스트를 함께 통과해야 합니다.
 
 런타임 구조는 [architecture.md](docs/architecture.md)에 정의된 ECS/DOD + EDA + Hexagonal 경계를 따릅니다. Canvas는 어댑터이고, `GameSession`은 애플리케이션 포트이며, `GameWorld`는 결정론적 이벤트 시스템입니다.
 

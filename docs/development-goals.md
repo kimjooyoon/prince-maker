@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_development_goals.dart -->
-<!-- source-sha256: beacb8034360aee9fe1d031a4e2f6fb39b1cdcca6f95b1316383cd8238e573e0|746463bdae1e4d4e8950e873068f0b05f8ae7f69dd67ee4d07e4f99ac015bbeb|74ba654bc5102848bcb4fd6100254f01819e140415f7ae32308aa46254179626|9827022ec8ca61c05700f9733171f77d34b3567aa7791d749a75b89f0cfba471 -->
+<!-- source-sha256: 1058e928fc80b47b7b6507883497c1617eddfdcb49d99ee1a1e2d4e0375e0d0f|f36572b6c74650142fc50434cd038aa9564a59121164e387f595fe9de64be154|86e02276033a18c081ba49a292145c0710b488f6fde7c8c03ad5058447513dd1|9183df0357d51d69fbdfccf49b09eb70cb0bb1b667fcf61c8423fd2ab843da39 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 정량 개발목표 원장
@@ -35,9 +35,9 @@
 | `G1-completeness` | completeness | P0 | 장편 캠페인 완전성 · `{"value":0.99,"unit":"gate-score","display":"≥99%"}` | `{"value":1.0,"unit":"gate-score","formula":"8/8 scenario dimensions declared with target/current/evidence"}` | `0` | contract-satisfied; runtime-proof-required |
 | `G2-agency-replay` | purity | P0 | 선택 행위성과 재플레이 공간 · `{"scenarioCases":2000,"routeInputs":122880,"unit":"deterministic-replay-cases"}` | `{"scenarioCases":2048,"routeInputs":122880,"branchVectors":2048,"formula":"2^11 unconditional authored branch vectors × 5 activity policies × 3 personality routes × 4 legacy contexts = 122,880 route inputs; the CI enumerator replays all 2,048 branch vectors and requires at least 2,000 distinct deterministic scenario traces."}` | `{scenarioCases: 0, routeInputs: 0}` | contract-satisfied; runtime-proof-required |
 | `G3-narrative-depth` | completeness | P1 | 관계·기억·계승 서사 깊이 · `{"fateThreads":6,"companionQuestStages":9,"endings":6,"legacyProfiles":3,"unit":"authored-narrative-units"}` | `{"fateThreads":6,"companionQuestStages":9,"endings":6,"legacyProfiles":3}` | `{fateThreads: 0, companionQuestStages: 0, endings: 0, legacyProfiles: 0}` | contract-satisfied; runtime-proof-required |
-| `G4-presentation` | completeness | P1 | 시각·locale 품질 증적 · `{"goldens":30,"locales":2,"keysPerLocale":1062,"renderPreconditions":3,"renderProofs":3,"unit":"presentation-proof-units"}` | `{"goldens":94,"locales":2,"keysPerLocale":1062,"renderPreconditions":3,"renderProofs":3}` | `{goldens: 0, locales: 0, keysPerLocale: 0, renderPreconditions: 0, renderProofs: 0}` | contract-satisfied; runtime-proof-required |
-| `G5-deterministic-throughput` | performance | P0 | 결정론적 처리량과 replay · `{"campaigns":5000,"transitions":475000,"maxMillis":24000,"unit":"benchmark-contract"}` | `{"campaigns":5000,"transitions":475000,"maxMillis":24000,"checksumReplayMustMatch":true,"formula":"campaigns × (endingWeek − 1 + events) and replay checksum equality"}` | `{campaigns: 0, transitions: 0, maxMillis: 0}` | runtime-measured-by-benchmark |
-| `G6-accountable-delivery` | performance | P0 | 책임 추적 가능한 납품 · `{"ciChecks":22,"codeRefs":24,"decisionProofFields":14,"unit":"delivery-proof-units"}` | `{"ciChecks":22,"localCiChecks":21,"wasmCiChecks":1,"codeRefs":105,"decisionProofFields":14,"assetRefs":78,"fontRefs":1,"localeRefs":2,"systemAdjudicated":true,"failClosed":true}` | `{ciChecks: 0, codeRefs: 0, decisionProofFields: 0}` | contract-satisfied; runtime-proof-required |
+| `G4-presentation` | completeness | P1 | 시각·locale 품질 증적 · `{"goldens":30,"locales":2,"keysPerLocale":1157,"renderPreconditions":3,"renderProofs":3,"unit":"presentation-proof-units"}` | `{"goldens":102,"locales":2,"keysPerLocale":1157,"renderPreconditions":3,"renderProofs":3}` | `{goldens: 0, locales: 0, keysPerLocale: 0, renderPreconditions: 0, renderProofs: 0}` | contract-satisfied; runtime-proof-required |
+| `G5-deterministic-throughput` | performance | P0 | 결정론적 처리량과 replay · `{"campaigns":5000,"transitions":565000,"maxMillis":24000,"unit":"benchmark-contract"}` | `{"campaigns":5000,"transitions":565000,"maxMillis":24000,"checksumReplayMustMatch":true,"formula":"campaigns × (endingWeek − 1 + events + companion scenes) and replay checksum equality"}` | `{campaigns: 0, transitions: 0, maxMillis: 0}` | runtime-measured-by-benchmark |
+| `G6-accountable-delivery` | performance | P0 | 책임 추적 가능한 납품 · `{"ciChecks":22,"codeRefs":24,"decisionProofFields":14,"unit":"delivery-proof-units"}` | `{"ciChecks":22,"localCiChecks":21,"wasmCiChecks":1,"codeRefs":108,"decisionProofFields":14,"assetRefs":78,"fontRefs":1,"localeRefs":2,"systemAdjudicated":true,"failClosed":true}` | `{ciChecks: 0, codeRefs: 0, decisionProofFields: 0}` | contract-satisfied; runtime-proof-required |
 
 ## 투입·증적 원장
 
@@ -45,9 +45,9 @@
 | --- | --- | ---: | --- | --- |
 | `authored-content-units` | content-unit | **369** | 48 weeks + 16 chapters + 47 main events + 24 side scenes + 94 main choices + 72 side choices + 10 activity mini-events + 18 companion scenes + 18 ending variants + 16 milestones + 6 core endings | authored campaign content and closure work |
 | `narrative-relationship-units` | narrative-unit | **32** | 3 companions + 6 fate threads + 9 quest stages + 6 locations + 3 legacy profiles + 5 exclusive follow-ups | relationship, memory, discovery and replay depth |
-| `exploration-units` | replay-unit | **604928** | 2048 branch vectors + 122880 route inputs + 5,000 campaigns + 475000 transitions | branch enumeration, route variety and deterministic throughput |
-| `visual-locale-units` | presentation-unit | **2402** | 94 Goldens + 2 locales × 1062 keys + 105 code refs + 78 asset refs + 1 font refs | visual regression, localization and traceable production assets |
-| `verification-units` | proof-unit | **98** | 21 local CI checks + 1 Wasm CI check + 61 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
+| `exploration-units` | replay-unit | **694928** | 2048 branch vectors + 122880 route inputs + 5,000 campaigns + 565000 transitions | branch enumeration, route variety and deterministic throughput |
+| `visual-locale-units` | presentation-unit | **2603** | 102 Goldens + 2 locales × 1157 keys + 108 code refs + 78 asset refs + 1 font refs | visual regression, localization and traceable production assets |
+| `verification-units` | proof-unit | **100** | 21 local CI checks + 1 Wasm CI check + 63 Dart test files + 3 render preconditions + 3 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
 
 ## 선행조건과 증거
 
@@ -76,14 +76,14 @@
 
 - 선행조건: `render-quality-preconditions` · `static-analysis` · `tests-and-goldens`
 - 증거: `docs/render-quality-contract.jsonl#preconditions` · `tool/verify_render_quality.dart#render-quality-preconditions` · `test/golden_test.dart#all` · `test/locale_contract_test.dart#ssot-dialogue-contract`
-- 승인 조건: Canvas 좌표·입력 역변환·94개 Golden·ko/en locale 계약이 전부 통과한다.
+- 승인 조건: Canvas 좌표·입력 역변환·102개 Golden·ko/en locale 계약이 전부 통과한다.
 - 사용 원장: `visual-locale-units` · `verification-units`
 
 ### `G5-deterministic-throughput` · 결정론적 처리량과 replay
 
 - 선행조건: `campaign-benchmark` · `tests-and-goldens` · `wasm-release-build`
-- 증거: `tool/benchmark_game.dart#ssot-campaign-throughput-signatures` · `build/benchmark-verdict.json#runtime-measurement` · `build/ci-verdict.json#system-approval`
-- 승인 조건: 5,000 campaign·475,000 transition이 제한 시간 안에 실행되고 checksum/replayChecksum이 일치한다.
+- 증거: `tool/benchmark_game.dart#ssot-campaign-throughput-signatures` · `tool/benchmark_game.dart#companion-scene-replay-checksum` · `build/benchmark-verdict.json#runtime-measurement` · `build/ci-verdict.json#system-approval`
+- 승인 조건: 5,000 campaign·565000 transition이 제한 시간 안에 실행되고 companion scene replay checksum까지 일치한다.
 - 사용 원장: `exploration-units` · `verification-units`
 
 ### `G6-accountable-delivery` · 책임 추적 가능한 납품

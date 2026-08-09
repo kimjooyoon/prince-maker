@@ -9,13 +9,18 @@ class CampaignMetrics {
   CampaignMetrics(
       this.checksum,
       this.forecastChecksum,
+      this.companionSceneChecksum,
+      this.companionScenes,
+      this.companionChoiceModes,
       this.endings,
       this.signatures,
       this.locations,
       this.lineageEndings,
       this.lineageSignatures,
       this.lineageCompanions);
-  final int checksum, forecastChecksum;
+  final int checksum, forecastChecksum, companionSceneChecksum;
+  final Set<String> companionScenes;
+  final Set<int> companionChoiceModes;
   final Set<String> endings, signatures, locations;
   final Map<String, Set<String>> lineageEndings,
       lineageSignatures,
@@ -25,6 +30,9 @@ class CampaignMetrics {
 CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   var checksum = 0;
   var forecastChecksum = 0;
+  var companionSceneChecksum = 0;
+  final companionScenes = <String>{};
+  final companionChoiceModes = <int>{};
   final endings = <String>{}, signatures = <String>{}, locations = <String>{};
   final lineageEndings = <String, Set<String>>{},
       lineageSignatures = <String, Set<String>>{},
@@ -120,12 +128,44 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
       }
     }
     final p = session.world.progress[0]!;
+    final currentChapter = ((p.week + 2) ~/ 3).clamp(1, 16);
+    final availableCompanionScenes = resolveCompanionScenes(
+            story, p.bonds, p.flags,
+            currentChapter: currentChapter)
+        .where((scene) => scene['available'] == true)
+        .toList();
+    for (var sceneIndex = 0;
+        sceneIndex < availableCompanionScenes.length;
+        sceneIndex++) {
+      final scene = availableCompanionScenes[sceneIndex];
+      final sceneId = '${scene['id']}';
+      final choiceIndex = (i + sceneIndex + currentChapter) % 2,
+          before = session.world.progress[0]!.trace.length;
+      session.recordCompanionScene(sceneId, choiceIndex: choiceIndex);
+      final choiceTrace = session.world.progress[0]!.trace
+          .skip(before)
+          .where((entry) => entry.startsWith('companion-choice:'))
+          .join('|');
+      companionChoiceModes.add(choiceIndex);
+      companionScenes.add(sceneId);
+      companionSceneChecksum = companionSceneChecksum * 31 +
+          sceneId.codeUnits.fold<int>(0, (sum, code) => sum * 31 + code) +
+          choiceIndex * 17 +
+          choiceTrace.codeUnits.fold<int>(0, (sum, code) => sum * 31 + code) +
+          session.world.progress[0]!.trace.length;
+    }
+    final completed = session.world.progress[0]!;
     final ending = resolveEnding(story, session.world.stats[0]!.values,
-        bonds: p.bonds, milestones: p.milestones);
+        bonds: completed.bonds,
+        milestones: completed.milestones,
+        flags: completed.flags);
     endings.add('${ending['id']}');
     locations.addAll(p.flags.keys.where((key) => key.startsWith('place:')));
+    final companionChoiceTrace = completed.trace
+        .where((entry) => entry.startsWith('companion-choice:'))
+        .join(';');
     final signature =
-            '${ending['id']}|${session.world.stats[0]!.values}|${p.bonds}|${p.milestones.values.where((v) => v).length}|${p.flags}',
+            '${ending['routeId']}|${session.world.stats[0]!.values}|${completed.bonds}|${completed.milestones.values.where((v) => v).length}|${completed.flags}|$companionChoiceTrace',
         lineage = session.legacyId ?? 'none';
     signatures.add(signature);
     lineageEndings
@@ -135,13 +175,23 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
     lineageCompanions.putIfAbsent(lineage, () => <String>{}).addAll(
         ((ending['epilogues'] as List?) ?? const [])
             .map((route) => '${(route as Map)['id']}'));
-    checksum += p.week +
+    checksum += completed.week +
         session.world.stats[0]!.values.values.reduce((a, b) => a + b) +
-        p.bonds.values.reduce((a, b) => a + b) +
-        p.trace.length;
+        completed.bonds.values.reduce((a, b) => a + b) +
+        completed.trace.length;
   }
-  return CampaignMetrics(checksum, forecastChecksum, endings, signatures,
-      locations, lineageEndings, lineageSignatures, lineageCompanions);
+  return CampaignMetrics(
+      checksum,
+      forecastChecksum,
+      companionSceneChecksum,
+      companionScenes,
+      companionChoiceModes,
+      endings,
+      signatures,
+      locations,
+      lineageEndings,
+      lineageSignatures,
+      lineageCompanions);
 }
 
 void main() {
@@ -154,7 +204,10 @@ void main() {
   final replay = runCampaigns(source, campaigns);
   final millis = watch.elapsedMicroseconds / 1000;
   final transitions = campaigns *
-      ((source['endingWeek'] as int) - 1 + (source['events'] as List).length);
+      ((source['endingWeek'] as int) -
+          1 +
+          (source['events'] as List).length +
+          (source['companionScenes'] as List? ?? const []).length);
   final profileIds = story.legacyProfiles.map((p) => '${p['id']}').toSet(),
       lineageEvidence = profileIds.every(
           (id) => (first.lineageSignatures[id] ?? const <String>{}).isNotEmpty),
@@ -184,11 +237,16 @@ void main() {
       first.checksum > campaigns &&
       replay.checksum == first.checksum &&
       replay.forecastChecksum == first.forecastChecksum &&
+      replay.companionSceneChecksum == first.companionSceneChecksum &&
+      replay.companionChoiceModes.length == first.companionChoiceModes.length &&
+      first.companionChoiceModes.containsAll({0, 1}) &&
+      replay.companionScenes.length == first.companionScenes.length &&
       replay.endings.length == first.endings.length &&
       replay.signatures.length == first.signatures.length &&
       replay.locations.length == first.locations.length &&
       first.locations.length >= 4 &&
       first.signatures.length >= 3 &&
+      first.companionScenes.length >= 3 &&
       lineageEvidence &&
       lineageEndingEvidence &&
       lineageCompanionEvidence &&
@@ -208,6 +266,11 @@ void main() {
     'replayChecksum': replay.checksum,
     'forecastChecksum': first.forecastChecksum,
     'replayForecastChecksum': replay.forecastChecksum,
+    'companionScenes': first.companionScenes.length,
+    'companionSceneChecksum': first.companionSceneChecksum,
+    'replayCompanionSceneChecksum': replay.companionSceneChecksum,
+    'companionSceneChoiceModes': first.companionChoiceModes.toList()..sort(),
+    'companionSceneRouteTrace': true,
     'lineageProfiles': profileIds.length,
     'lineageEvidence': lineageEvidence,
     'lineageEndingEvidence': lineageEndingEvidence,
@@ -218,7 +281,7 @@ void main() {
   reportFile.writeAsStringSync(
       '${const JsonEncoder.withIndent('  ').convert(report)}\n');
   stdout.writeln(
-      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} checksum=${first.checksum} replayChecksum=${replay.checksum} forecastChecksum=${first.forecastChecksum} replayForecastChecksum=${replay.forecastChecksum}');
+      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} companionScenes=${first.companionScenes.length} choiceModes=${first.companionChoiceModes.toList()..sort()} checksum=${first.checksum} replayChecksum=${replay.checksum} forecastChecksum=${first.forecastChecksum} replayForecastChecksum=${replay.forecastChecksum} companionSceneChecksum=${first.companionSceneChecksum} replayCompanionSceneChecksum=${replay.companionSceneChecksum}');
   if (!approved) {
     stderr.writeln(
         'TRILEMMA_PERFORMANCE_FAIL: deterministic core budget or checksum drift');

@@ -118,6 +118,7 @@ Map<String, dynamic> companionScene({
   required String id,
   required String companionId,
   required int chapter,
+  int bondDelta = 1,
   required String titleKo,
   required String titleEn,
   required String bodyKo,
@@ -128,11 +129,13 @@ Map<String, dynamic> companionScene({
   required String lineEn,
   required String closingKo,
   required String closingEn,
+  required List<Map<String, dynamic>> choices,
 }) =>
     {
       'id': id,
       'companionId': companionId,
       'chapter': chapter,
+      'bondDelta': bondDelta,
       'title': titleKo,
       'titleKey': 'companionScene.$id.title',
       'body': bodyKo,
@@ -148,6 +151,35 @@ Map<String, dynamic> companionScene({
       'promptEn': promptEn,
       'lineEn': lineEn,
       'closingEn': closingEn,
+      'choices': choices,
+    };
+
+Map<String, dynamic> companionSceneChoice({
+  required String sceneId,
+  required String id,
+  required String labelKo,
+  required String labelEn,
+  required String responseKo,
+  required String responseEn,
+  required String stat,
+  required int delta,
+  required int fatigueDelta,
+  required int bondDelta,
+  required String setsFlag,
+}) =>
+    {
+      'id': id,
+      'label': labelKo,
+      'labelKey': 'companionSceneChoice.$sceneId.$id.label',
+      'labelEn': labelEn,
+      'response': responseKo,
+      'responseKey': 'companionSceneChoice.$sceneId.$id.response',
+      'responseEn': responseEn,
+      'stat': stat,
+      'delta': delta,
+      'fatigueDelta': fatigueDelta,
+      'bondDelta': bondDelta,
+      'setsFlag': setsFlag,
     };
 
 Map<String, dynamic> activityScene({
@@ -322,6 +354,9 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/game_core.dart#resolvePersonalityCompanionRoute',
     'test/personality_companion_route_test.dart#personality-companion matrix and resonance',
     'lib/relationship_archive_painter.dart#personality-companion resonance card',
+    'lib/companion_scene_archive_painter.dart#CompanionSceneArchivePainter',
+    'test/companion_scene_test.dart#companion scene resolver and record loop',
+    'test/companion_scene_golden_test.dart#companion scene archive records a scene',
     'tool/verify_content_depth.dart#content-depth-gate',
     'test/content_depth_test.dart#SSOT exposes depth targets and all non-binary scene mechanics',
     'tool/generate_event_storm.dart#event-storm-generator',
@@ -4081,6 +4116,91 @@ void main() {
         companionId = '${raw['companionId']}',
         nameKo = companionNames[companionId]!,
         nameEn = companionNamesEn[companionId]!;
+    final choices = companionId == 'lumi'
+        ? [
+            companionSceneChoice(
+                sceneId: id,
+                id: 'leave-open',
+                labelKo: '빈칸을 열어 둔다',
+                labelEn: 'Leave the blank open',
+                responseKo: '$nameKo와 다음 사람이 다시 물을 자리를 남겼다.',
+                responseEn:
+                    '$nameEn and the next person kept a place to ask again.',
+                stat: '지혜',
+                delta: 1,
+                fatigueDelta: 0,
+                bondDelta: 1,
+                setsFlag: 'companion-choice:$id:open'),
+            companionSceneChoice(
+                sceneId: id,
+                id: 'seal-now',
+                labelKo: '결론을 먼저 봉인한다',
+                labelEn: 'Seal the conclusion first',
+                responseKo: '$nameKo와 노아는 오늘의 판단을 먼저 굳혔다.',
+                responseEn: '$nameEn and Noa fixed today’s judgement first.',
+                stat: '용기',
+                delta: 2,
+                fatigueDelta: 1,
+                bondDelta: 0,
+                setsFlag: 'companion-choice:$id:sealed'),
+          ]
+        : companionId == 'bora'
+            ? [
+                companionSceneChoice(
+                    sceneId: id,
+                    id: 'share-time',
+                    labelKo: '시간을 함께 나눈다',
+                    labelEn: 'Share the time',
+                    responseKo: '$nameKo와 노아는 기다림의 시간을 공동의 기록으로 남겼다.',
+                    responseEn:
+                        '$nameEn and Noa made waiting time a shared record.',
+                    stat: '공감',
+                    delta: 1,
+                    fatigueDelta: 0,
+                    bondDelta: 1,
+                    setsFlag: 'companion-choice:$id:care'),
+                companionSceneChoice(
+                    sceneId: id,
+                    id: 'move-fast',
+                    labelKo: '속도를 먼저 높인다',
+                    labelEn: 'Raise the pace first',
+                    responseKo: '$nameKo와 노아는 지체하지 않고 다음 일을 시작했다.',
+                    responseEn:
+                        '$nameEn and Noa started the next task without delay.',
+                    stat: '용기',
+                    delta: 2,
+                    fatigueDelta: 1,
+                    bondDelta: 0,
+                    setsFlag: 'companion-choice:$id:pace'),
+              ]
+            : [
+                companionSceneChoice(
+                    sceneId: id,
+                    id: 'mark-route',
+                    labelKo: '다음 발판을 표시한다',
+                    labelEn: 'Mark the next foothold',
+                    responseKo: '$nameKo와 노아는 돌아올 사람을 위한 길을 남겼다.',
+                    responseEn:
+                        '$nameEn and Noa left a route for the person returning.',
+                    stat: '용기',
+                    delta: 1,
+                    fatigueDelta: 0,
+                    bondDelta: 1,
+                    setsFlag: 'companion-choice:$id:route'),
+                companionSceneChoice(
+                    sceneId: id,
+                    id: 'push-through',
+                    labelKo: '지금 바로 건넌다',
+                    labelEn: 'Cross right now',
+                    responseKo: '$nameKo와 노아는 피로를 감수하고 먼저 길을 건넜다.',
+                    responseEn:
+                        '$nameEn and Noa crossed first, accepting the fatigue.',
+                    stat: '지혜',
+                    delta: 2,
+                    fatigueDelta: 1,
+                    bondDelta: 0,
+                    setsFlag: 'companion-choice:$id:rush'),
+              ];
     return companionScene(
       id: id,
       companionId: companionId,
@@ -4097,6 +4217,7 @@ void main() {
       closingKo: '$nameKo의 독립 장면은 다음 막의 조건으로 기록되었다.',
       closingEn:
           '$nameEn’s independent scene was recorded as a condition for the next chapter.',
+      choices: choices,
     );
   }).toList();
   story['companionScenes'] = companionScenes;
@@ -4104,6 +4225,13 @@ void main() {
     for (final field in ['title', 'body', 'prompt', 'line', 'closing']) {
       ko['${scene['${field}Key']}'] = '${scene[field]}';
       en['${scene['${field}Key']}'] = '${scene['${field}En']}';
+    }
+    for (final choice
+        in (scene['choices'] as List).cast<Map<String, dynamic>>()) {
+      ko['${choice['labelKey']}'] = '${choice['label']}';
+      en['${choice['labelKey']}'] = '${choice['labelEn']}';
+      ko['${choice['responseKey']}'] = '${choice['response']}';
+      en['${choice['responseKey']}'] = '${choice['responseEn']}';
     }
   }
 
@@ -4444,6 +4572,7 @@ void main() {
     'authoredScenes': 71,
     'activityMiniEvents': 10,
     'companionScenes': 18,
+    'companionSceneChoices': 36,
     'endingVariants': 18,
     'locations': 6,
     'chapterClosures': 16,
@@ -4735,7 +4864,30 @@ void main() {
     'ui.relationshipArchive.quest': '퀘스트',
     'ui.relationshipArchive.resonance.matched': '성격 공명 · 유대 +1',
     'ui.relationshipArchive.resonance.neutral': '서로 다른 결 · 기본 유대',
+    'ui.relationshipArchive.scenes': '독립 장면 보기 →',
     'ui.relationshipArchive.back': '← 운명 기록',
+    'ui.companionScenes.title': '동행 장면 기록',
+    'ui.companionScenes.subtitle': '유대와 막의 조건이 여는 독립 기록',
+    'ui.companionScenes.hint': '기록 가능한 장면을 눌러 시스템 기록으로 남깁니다.',
+    'ui.companionScenes.choose': '이 장면에서 어떤 기록을 남길까요?',
+    'ui.companionScenes.chooseHint': '두 선택 모두 다음 장면과 엔딩 기록에 흔적을 남깁니다.',
+    'ui.companionScenes.cancel': '← 선택 취소',
+    'ui.companionScenes.notice.bond': '유대가 더 필요합니다.',
+    'ui.companionScenes.notice.chapter': '아직 이 막에 도착하지 않았습니다.',
+    'ui.companionScenes.notice.duplicate': '이 장면은 이미 기록되었습니다.',
+    'ui.companionScenes.notice.invalid': '시스템이 이 기록 입력을 거절했습니다.',
+    'ui.companionScenes.notice.recorded': '선택한 기록이 저장되었습니다.',
+    'ui.companionScenes.progress': '기록 {done}/{total}',
+    'ui.companionScenes.reward': '기록 보상 · 유대 +{bond}',
+    'ui.companionScenes.bond': '유대',
+    'ui.companionScenes.chapter': '막',
+    'ui.companionScenes.status.completed': '기록됨',
+    'ui.companionScenes.status.available': '기록하기',
+    'ui.companionScenes.status.locked': '잠김',
+    'ui.companionScenes.lock': '유대 또는 막 진행이 필요합니다.',
+    'ui.companionScenes.previous': '← 이전 동행',
+    'ui.companionScenes.next': '다음 동행 →',
+    'ui.companionScenes.back': '← 관계 기록',
     'ui.characterArt.title': '루멘 사람들',
     'ui.characterArt.lead': '선택으로 가까워진 루멘 사람들의 하루를 만나 보세요.',
     'ui.characterArt.focus': '자주 보여 주는 모습',
@@ -4902,7 +5054,33 @@ void main() {
     'ui.relationshipArchive.resonance.matched':
         'Personality resonance · Bond +1',
     'ui.relationshipArchive.resonance.neutral': 'Different grain · Base bond',
+    'ui.relationshipArchive.scenes': 'Open independent scenes →',
     'ui.relationshipArchive.back': '← Fate ledger',
+    'ui.companionScenes.title': 'Companion scene records',
+    'ui.companionScenes.subtitle':
+        'Independent records opened by bond and chapter',
+    'ui.companionScenes.hint':
+        'Tap an available scene to let the system record it.',
+    'ui.companionScenes.choose': 'What record will you leave in this scene?',
+    'ui.companionScenes.chooseHint':
+        'Both choices leave a trace in the next scene and ending record.',
+    'ui.companionScenes.cancel': '← Cancel choice',
+    'ui.companionScenes.notice.bond': 'A stronger bond is required.',
+    'ui.companionScenes.notice.chapter': 'This chapter has not arrived yet.',
+    'ui.companionScenes.notice.duplicate': 'This scene is already recorded.',
+    'ui.companionScenes.notice.invalid': 'The rule engine rejected this input.',
+    'ui.companionScenes.notice.recorded': 'The selected record was saved.',
+    'ui.companionScenes.progress': 'Recorded {done}/{total}',
+    'ui.companionScenes.reward': 'Record reward · Bond +{bond}',
+    'ui.companionScenes.bond': 'Bond',
+    'ui.companionScenes.chapter': 'chapter',
+    'ui.companionScenes.status.completed': 'RECORDED',
+    'ui.companionScenes.status.available': 'RECORD',
+    'ui.companionScenes.status.locked': 'LOCKED',
+    'ui.companionScenes.lock': 'Bond or chapter progress is required.',
+    'ui.companionScenes.previous': '← Previous companion',
+    'ui.companionScenes.next': 'Next companion →',
+    'ui.companionScenes.back': '← Relationship ledger',
     'ui.characterArt.title': 'People of Lumen',
     'ui.characterArt.lead':
         'Meet the people of Lumen your choices bring closer.',
@@ -5034,22 +5212,33 @@ void main() {
       'lib/main.dart#relationshipFollowup',
       'lib/game_core.dart#resolveRelationshipFollowup',
       'test/relationship_dynamics_test.dart#deterministic relationship followups',
+      'lib/game_core.dart#resolveCompanionScenes',
+      'lib/game_core.dart#GameSession.recordCompanionScene',
+      'test/companion_scene_test.dart#companion scene resolver and record loop',
     ],
   };
   story['narrativeLoop'] = {
     'schema': 'lumen-memory-companion-loop-v1',
     'fateThreadCount': (story['fateThreads'] as List).length,
     'companionQuestCount': (story['companionQuests'] as List).length,
+    'companionSceneCount': (story['companionScenes'] as List).length,
     'stagesPerQuest': 3,
-    'derivedFrom': 'event choice flags + deterministic companion bonds',
+    'derivedFrom':
+        'event choice flags + deterministic companion bonds + chapter-gated independent scenes + SSOT bond rewards',
+    'companionSceneReward':
+        'recording a ready scene applies its bondDelta, persists a memory flag, and contributes to the ending companion route',
     'resolver':
-        'lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests,lib/game_core.dart#resolveRelationshipDynamics,lib/game_core.dart#resolveRelationshipFollowup',
+        'lib/game_core.dart#resolveFateThreads,lib/game_core.dart#resolveCompanionQuests,lib/game_core.dart#resolveCompanionScenes,lib/game_core.dart#resolveRelationshipDynamics,lib/game_core.dart#resolveRelationshipFollowup',
     'relationshipStateContract': 'lumen-relationship-dynamics-v1',
     'relationshipFollowupCount': 5,
     'relationshipFollowupContract':
         'one exclusive follow-up per resolved state',
     'systemOwner': 'lumen-rule-engine',
-    'evidence': 'test/narrative_ledger_test.dart#deterministic-projection',
+    'evidence': [
+      'test/narrative_ledger_test.dart#deterministic-projection',
+      'test/companion_scene_test.dart#companion scene resolver and record loop',
+      'test/companion_scene_golden_test.dart#companion scene archive records a scene',
+    ],
   };
   story['scenarioVariantBudget'] = {
     'schema': 'lumen-scenario-cases-v1',
@@ -5144,14 +5333,16 @@ void main() {
     'minimumLocaleKeys': ko.length,
     'minimumVisibleDialogueLines': 63,
     'minimumVisibleNarrativeUnits': 240,
-    'authoredDialogueLines': 612,
+    'authoredDialogueLines': 684,
     'baseAuthoredDialogueLines': 216,
     'sideSceneDialogueLines': 240,
     'companionSceneDialogueLines': 90,
+    'companionChoiceDialogueLines': 72,
+    'totalAuthoredDialogueUnits': 684,
     'activityMiniEventDialogueLines': 30,
     'endingVariantDialogueLines': 36,
     'formula':
-        'authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines (title/body/prompt/consequence + 3 choice labels + 3 response lines) + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units',
+        'narrative backbone 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; companion choice variants add 18 scenes × 2 choices × 2 label/response lines = 72, for 684 total authored dialogue units; mandatory route exposes 63 authored dialogue lines and 240 narrative units',
   };
   final mainChoices = (story['events'] as List)
       .cast<Map<String, dynamic>>()
@@ -5159,6 +5350,11 @@ void main() {
           (event) => (event['choices'] as List).cast<Map<String, dynamic>>())
       .toList();
   final sideChoices = (story['sideScenes'] as List)
+      .cast<Map<String, dynamic>>()
+      .expand(
+          (scene) => (scene['choices'] as List).cast<Map<String, dynamic>>())
+      .toList();
+  final companionChoices = (story['companionScenes'] as List)
       .cast<Map<String, dynamic>>()
       .expand(
           (scene) => (scene['choices'] as List).cast<Map<String, dynamic>>())
@@ -5219,6 +5415,8 @@ void main() {
       'multiAxisImpactRate': 0.9,
       'minimumTradeoffRate': 0.4,
       'minimumGatedChoices': 20,
+      'companionSceneChoiceImpactRate': 1.0,
+      'companionSceneChoiceCount': 36,
     },
     'current': {
       'authoredChoices': choices.length,
@@ -5237,6 +5435,16 @@ void main() {
           (story['personalityCompanionRoutes'] as List)
               .where((route) => (route as Map)['matched'] == true)
               .length,
+      'companionSceneChoices': companionChoices.length,
+      'companionSceneChoiceImpactRate': companionChoices.isEmpty
+          ? 0.0
+          : companionChoices
+                  .where((choice) =>
+                      choice['stat'] is String &&
+                      (choice['delta'] as int? ?? 0) != 0 &&
+                      choice['setsFlag'] is String)
+                  .length /
+              companionChoices.length,
     },
     'definitions': {
       'choiceImpactRate': 'effectful authored choices / authored choices',
@@ -5249,6 +5457,8 @@ void main() {
       'feedbackGolden': 'authored result banner is fixed by Canvas Golden',
       'personalityCompanionResonance':
           'matching personality and companion add one deterministic bond point',
+      'companionSceneChoiceImpactRate':
+          'companion choices with a stat delta and persisted memory flag / companion choices',
     },
     'evidence': [
       'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
@@ -5263,7 +5473,7 @@ void main() {
   byId['arc']!['current'] =
       '16 chapters / 47 main events + 24 side scenes = 71 authored scenes / 6 locations / 16 milestones / terminal week 49';
   byId['agency']!['current'] =
-      '94 main choices + 72 side-scene choices; crisis, exploration, resource, mini-game and companion-pair mechanics; memory flags carry consequences';
+      '94 main choices + 72 side-scene choices + 36 companion scene choices; crisis, exploration, resource, mini-game and companion-pair mechanics; memory flags carry consequences';
   byId['relationship']!['current'] =
       '3 companions / 18 independent companion scenes (6 each) / rival conflict / deterministic relationship states / 3 bond-route epilogues / 16 chapter relationship beats';
   byId['feedback']!['current'] =
@@ -5295,10 +5505,11 @@ void main() {
       (story['dialogueMetrics']['baseAuthoredDialogueLines'] as int) +
           (story['dialogueMetrics']['sideSceneDialogueLines'] as int) +
           (story['dialogueMetrics']['companionSceneDialogueLines'] as int) +
+          (story['dialogueMetrics']['companionChoiceDialogueLines'] as int) +
           (story['dialogueMetrics']['activityMiniEventDialogueLines'] as int) +
           (story['dialogueMetrics']['endingVariantDialogueLines'] as int);
   story['dialogueMetrics']['formula'] =
-      'authored dialogue 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; mandatory route exposes 63 authored dialogue lines and 240 narrative units';
+      'narrative backbone 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; companion choice variants add 72 label/response lines for 684 total authored dialogue units; mandatory route exposes 63 authored dialogue lines and 240 narrative units';
 
   koFile.writeAsStringSync(encodeJsonlCatalog(
       ko.map((key, value) => MapEntry(key, '$value')),

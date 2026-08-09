@@ -65,8 +65,38 @@ String render(String source) {
           '세 성격의 관계 공명 archive 화면과 활동 forecast·활동 회고 일지(ko/en)·세 성격별')
       .replaceAll('세 성격의 관계 공명 archive 화면과 세 성격별 page 1 상반신 일러스트 화면을 추가해',
           '세 성격의 관계 공명 archive 화면과 활동 forecast·활동 회고 일지(ko/en)·세 성격별 page 1 상반신 일러스트 화면을 추가해');
-  output = output.replaceAll('`replayChecksum`, signature cardinality',
-      '`replayChecksum`·activity forecast checksum, signature cardinality');
+  output = output
+      .replaceAll('`replayChecksum`, signature cardinality',
+          '`replayChecksum`·activity forecast checksum·companionSceneChecksum, signature cardinality')
+      .replaceAll(
+          '`replayChecksum`·activity forecast checksum, signature cardinality',
+          '`replayChecksum`·activity forecast checksum·companionSceneChecksum, signature cardinality')
+      .replaceAll('475,000', '565,000')
+      .replaceAll('475000', '565000')
+      .replaceAll('47개 사건 선택을 처리하는 시간을 측정한다.',
+          '47개 사건 선택과 최대 18개 동료 독립 장면 기록을 처리하는 시간을 측정한다.');
+  output = output
+      .replaceAll(
+          '18개 동료 독립 장면·10개 활동 미니 이벤트', '18개 동료 독립 장면·36개 동행 선택·10개 활동 미니 이벤트')
+      .replaceAll('18 companion scenes·10개 activity mini-events',
+          '18 companion scenes·36 companion choices·10개 activity mini-events')
+      .replaceAll('page 13 companion scene record ko/en',
+          'page 13 companion choice/record/locked/mixed ko/en')
+      .replaceAll(
+          '`companion-scenes.png`·`companion-scene-recorded.png`·`companion-scene-recorded-en.png`',
+          '`companion-scenes.png`·`companion-scene-choice.png`·`companion-scene-recorded.png`·`companion-scene-recorded-en.png`·3개 동료 mixed/locked Golden')
+      .replaceAll('72/166(0.4337) trade-off 선택',
+          '72/166(0.4337) trade-off 선택과 36/36 companion choice impact')
+      .replaceAll('72/166 trade-off choices',
+          '72/166 trade-off choices·36/36 companion choices');
+  output = output
+      .replaceAll(
+          RegExp(
+              r'72/166\(0\.4337\) trade-off 선택(?:과 36/36 companion choice impact)+'),
+          '72/166(0.4337) trade-off 선택과 36/36 companion choice impact')
+      .replaceAll(
+          RegExp(r'72/166 trade-off choices(?:·36/36 companion choices)+'),
+          '72/166 trade-off choices·36/36 companion choices');
   return output;
 }
 

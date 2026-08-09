@@ -4,7 +4,9 @@ import 'package:crypto/crypto.dart';
 import 'package:prince_maker/quality_score.dart';
 
 void verifyTrilemmaContract(String storyHash,
-    {required int endingWeek, required int eventCount}) {
+    {required int endingWeek,
+    required int eventCount,
+    required int companionSceneCount}) {
   final file = File('docs/trilemma-contract.jsonl');
   if (!file.existsSync()) fail('missing trilemma contract');
   final contract = decodeJsonl(file.readAsStringSync());
@@ -35,6 +37,13 @@ void verifyTrilemmaContract(String storyHash,
       (complete['activityForecastGoldens'] as int? ?? 0) < 1 ||
       (complete['activityReflectionGoldens'] as int? ?? 0) < 1 ||
       (complete['activityJournalGoldens'] as int? ?? 0) < 2 ||
+      (complete['companionScenes'] as int? ?? 0) < 18 ||
+      (complete['companionSceneChoices'] as int? ?? 0) < 36 ||
+      complete['companionSceneChoiceBranching'] != true ||
+      (complete['companionSceneChoiceImpactRate'] as num? ?? 0) < 1.0 ||
+      (complete['companionSceneChoiceImpactRate'] as num? ?? 0) < 1.0 ||
+      (complete['companionSceneGoldens'] as int? ?? 0) < 8 ||
+      complete['companionSceneBondReward'] != true ||
       complete['goldens'] < 20 ||
       complete['localeKeys'] < 118 ||
       complete['qualityScoreTarget'] != qualityScoreTarget ||
@@ -59,15 +68,29 @@ void verifyTrilemmaContract(String storyHash,
       purity['activityReflectionDeterminism'] != true ||
       (purity['activityJournalGoldens'] as int? ?? 0) < 2 ||
       purity['activityJournalDeterminism'] != true ||
+      (purity['companionScenes'] as int? ?? 0) < 18 ||
+      (purity['companionSceneChoices'] as int? ?? 0) < 36 ||
+      purity['companionSceneChoiceBranching'] != true ||
+      (purity['companionSceneChoiceImpactRate'] as num? ?? 0) < 1.0 ||
+      (purity['companionSceneChoiceImpactRate'] as num? ?? 0) < 1.0 ||
+      (purity['companionSceneGoldens'] as int? ?? 0) < 8 ||
+      purity['companionSceneBondReward'] != true ||
+      purity['companionSceneDeterminism'] != true ||
       purity['qualityScoreTarget'] != qualityScoreTarget ||
       performance['campaigns'] != 5000 ||
-      performance['transitionBudget'] != 5000 * (endingWeek - 1 + eventCount) ||
+      performance['transitionBudget'] !=
+          5000 * (endingWeek - 1 + eventCount + companionSceneCount) ||
+      performance['companionSceneTransitions'] != 5000 * companionSceneCount ||
       performance['maxMillis'] != 24000 ||
       performance['minSignatures'] < 3 ||
       performance['lineageTargetEndings'] < 3 ||
       performance['lineageTargetCompanions'] < 3 ||
       performance['checksumReplayMustMatch'] != true ||
       performance['activityForecastDeterminism'] != true ||
+      performance['companionSceneReplay'] != true ||
+      (performance['companionSceneChoiceModes'] as int? ?? 0) < 2 ||
+      performance['companionSceneRouteTrace'] != true ||
+      (performance['minCompanionScenes'] as int? ?? 0) < 3 ||
       performance['qualityScoreTarget'] != qualityScoreTarget ||
       performance['systemApproval'] != true ||
       performance['failClosed'] != true) {
@@ -100,7 +123,9 @@ void main() {
   verifyTrilemmaContract(
       sha256.convert(File('story/story.jsonl').readAsBytesSync()).toString(),
       endingWeek: story['endingWeek'] as int,
-      eventCount: (story['events'] as List).length);
+      eventCount: (story['events'] as List).length,
+      companionSceneCount:
+          (story['companionScenes'] as List? ?? const []).length);
   final activities = (story['activities'] as List).cast<Map<String, dynamic>>();
   final people = (story['personalities'] as List).cast<Map<String, dynamic>>();
   final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
@@ -153,6 +178,8 @@ void main() {
       (story['fateThreads'] as List? ?? []).cast<Map<String, dynamic>>();
   final companionQuests =
       (story['companionQuests'] as List? ?? []).cast<Map<String, dynamic>>();
+  final companionScenes =
+      (story['companionScenes'] as List? ?? []).cast<Map<String, dynamic>>();
   final companionQuestStages = companionQuests.fold<int>(
       0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
   if (campaignWeeks < 48 || story['endingWeek'] != campaignWeeks + 1)
@@ -165,6 +192,10 @@ void main() {
       contentBudget['authoredEvents'] != events.length ||
       contentBudget['authoredChoices'] != events.length * 2 ||
       contentBudget['sideScenes'] != sideScenes.length ||
+      contentBudget['companionScenes'] != companionScenes.length ||
+      contentBudget['companionSceneChoices'] !=
+          companionScenes.fold<int>(
+              0, (sum, scene) => sum + ((scene['choices'] as List).length)) ||
       contentBudget['activityMiniEvents'] != activityScenes.length ||
       contentBudget['chapterClosures'] != progression.length ||
       contentBudget['chapterSceneBeats'] != progression.length ||
@@ -749,9 +780,14 @@ void main() {
     if (trackedLocaleKeys.any((key) => !catalog.containsKey(key)))
       fail('butterfly/companion locale ref missing in ${ref['ref']}');
   }
+  final narrativeContractEvidence =
+      (narrativeLoop['evidence'] as List? ?? const [])
+          .map((entry) => '$entry')
+          .toSet();
   if (narrativeLoop['schema'] != 'lumen-memory-companion-loop-v1' ||
       narrativeLoop['fateThreadCount'] != fateThreads.length ||
       narrativeLoop['companionQuestCount'] != companionQuests.length ||
+      narrativeLoop['companionSceneCount'] != companionScenes.length ||
       narrativeLoop['stagesPerQuest'] != 3 ||
       narrativeLoop['systemOwner'] != 'lumen-rule-engine' ||
       narrativeLoop['resolver'] is! String ||
@@ -759,8 +795,15 @@ void main() {
           .contains('lib/game_core.dart#resolveFateThreads') ||
       !(narrativeLoop['resolver'] as String)
           .contains('lib/game_core.dart#resolveCompanionQuests') ||
-      narrativeLoop['evidence'] !=
-          'test/narrative_ledger_test.dart#deterministic-projection') {
+      !(narrativeLoop['resolver'] as String)
+          .contains('lib/game_core.dart#resolveCompanionScenes') ||
+      narrativeLoop['evidence'] is! List ||
+      !narrativeContractEvidence.contains(
+          'test/narrative_ledger_test.dart#deterministic-projection') ||
+      !narrativeContractEvidence.contains(
+          'test/companion_scene_test.dart#companion scene resolver and record loop') ||
+      !narrativeContractEvidence.contains(
+          'test/companion_scene_golden_test.dart#companion scene archive records a scene')) {
     fail('narrative loop contract must be system-owned and deterministic');
   }
   final uiEvidence = File('test/golden_test.dart').existsSync()
@@ -813,6 +856,10 @@ void main() {
       File('test/relationship_archive_golden_test.dart').existsSync()
           ? File('test/relationship_archive_golden_test.dart')
               .readAsStringSync()
+          : '';
+  final companionSceneGoldenEvidence =
+      File('test/companion_scene_golden_test.dart').existsSync()
+          ? File('test/companion_scene_golden_test.dart').readAsStringSync()
           : '';
   final playerFacingGoldenEvidence =
       File('test/player_facing_golden_test.dart').existsSync()
@@ -887,7 +934,15 @@ void main() {
     'activity-journal-en.png',
     'english-illustration.png',
     'english-event.png',
-    'english-ending.png'
+    'english-ending.png',
+    'companion-scenes.png',
+    'companion-scene-choice.png',
+    'companion-scene-recorded.png',
+    'companion-scene-recorded-en.png',
+    'companion-scene-lumi-mixed.png',
+    'companion-scene-bora-mixed.png',
+    'companion-scene-taro-mixed.png',
+    'companion-scene-locked.png'
   };
   final goldenFiles = Directory('test/goldens').existsSync()
       ? Directory('test/goldens')
@@ -978,25 +1033,37 @@ void main() {
             .contains("goldens/relationship-archive-kind.png") &&
         relationshipArchiveGoldenEvidence
             .contains("goldens/relationship-archive-bold.png") &&
-        playerFacingGoldenEvidence.contains(
-            'all personality illustration pages render deterministic portraits') &&
+        companionSceneGoldenEvidence
+            .contains('companion scene archive records a scene') &&
+        companionSceneGoldenEvidence.contains("goldens/companion-scenes.png") &&
+        companionSceneGoldenEvidence
+            .contains("goldens/companion-scene-recorded.png") &&
+        companionSceneGoldenEvidence
+            .contains("goldens/companion-scene-recorded-en.png") &&
+        companionSceneGoldenEvidence
+            .contains("goldens/companion-scene-choice.png") &&
+        companionSceneGoldenEvidence
+            .contains("goldens/companion-scene-bora-mixed.png") &&
+        companionSceneGoldenEvidence
+            .contains("goldens/companion-scene-taro-mixed.png") &&
+        companionSceneGoldenEvidence
+            .contains("goldens/companion-scene-lumi-mixed.png") &&
+        companionSceneGoldenEvidence
+            .contains("goldens/companion-scene-locked.png") &&
+        companionSceneGoldenEvidence.contains('Offset(190, 300)') &&
+        companionSceneGoldenEvidence
+            .contains('companion scene archive records a scene') &&
+        playerFacingGoldenEvidence.contains('all personality illustration pages render deterministic portraits') &&
         playerFacingGoldenEvidence.contains("goldens/personality-quiet.png") &&
         playerFacingGoldenEvidence.contains("goldens/personality-kind.png") &&
         playerFacingGoldenEvidence.contains("goldens/personality-bold.png") &&
-        activityForecastGoldenEvidence
-            .contains('home shows deterministic activity forecasts') &&
-        activityForecastGoldenEvidence
-            .contains("goldens/activity-forecast.png") &&
-        activityReflectionGoldenEvidence.contains(
-            'event shows localized activity reflection after day spend') &&
-        activityReflectionGoldenEvidence
-            .contains("goldens/activity-reflection-en.png") &&
-        activityJournalGoldenEvidence.contains(
-            'activity journal renders deterministic reflection pages') &&
-        activityJournalGoldenEvidence
-            .contains("goldens/activity-journal-en.png") &&
-        activityJournalGoldenEvidence
-            .contains("goldens/activity-journal-ko.png") &&
+        activityForecastGoldenEvidence.contains('home shows deterministic activity forecasts') &&
+        activityForecastGoldenEvidence.contains("goldens/activity-forecast.png") &&
+        activityReflectionGoldenEvidence.contains('event shows localized activity reflection after day spend') &&
+        activityReflectionGoldenEvidence.contains("goldens/activity-reflection-en.png") &&
+        activityJournalGoldenEvidence.contains('activity journal renders deterministic reflection pages') &&
+        activityJournalGoldenEvidence.contains("goldens/activity-journal-en.png") &&
+        activityJournalGoldenEvidence.contains("goldens/activity-journal-ko.png") &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
     'localeContract': localeEvidence.contains(
@@ -1059,7 +1126,9 @@ void main() {
   final score =
       (dimensions.values.where((v) => v).length * 100 / dimensions.length)
           .round();
-  if (score < 99) fail('completeness score below 99%: $score%');
+  if (score < 99)
+    fail(
+        'completeness score below 99%: $score% · failed=${dimensions.entries.where((entry) => !entry.value).map((entry) => entry.key).join(',')}');
   stdout.writeln(
       'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} companions=${companions.length} personalityCompanionRoutes=${personalityCompanionRoutes.length} events=${events.length} endings=${endings.length} fateThreads=${fateThreads.length} questStages=$companionQuestStages codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
 }

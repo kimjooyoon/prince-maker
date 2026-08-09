@@ -89,6 +89,9 @@ class RelationshipArchivePainter {
         resonance['matched'] == true ? accent : ink.withValues(alpha: .52),
         bold: true,
         width: 190);
+    t(c, tr('ui.relationshipArchive.scenes', '독립 장면 보기 →'), Offset(x + 16, 512),
+        9, teal,
+        bold: true, width: 190);
   }
 
   void paint(Canvas c) {

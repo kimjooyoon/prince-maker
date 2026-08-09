@@ -13,11 +13,17 @@ void main() {
   final events = (story['events'] as List).cast<Map<String, dynamic>>(),
       sideScenes = (story['sideScenes'] as List? ?? const [])
           .cast<Map<String, dynamic>>(),
+      companionScenes = (story['companionScenes'] as List? ?? const [])
+          .cast<Map<String, dynamic>>(),
       authoredScenes = [...events, ...sideScenes],
       choices = authoredScenes
           .expand((event) =>
               (event['choices'] as List).cast<Map<String, dynamic>>())
           .toList();
+  final companionChoices = companionScenes
+      .expand((scene) =>
+          (scene['choices'] as List? ?? const []).cast<Map<String, dynamic>>())
+      .toList();
   final personalityCompanionRoutes =
       (story['personalityCompanionRoutes'] as List? ?? const [])
           .cast<Map<String, dynamic>>();
@@ -76,6 +82,16 @@ void main() {
         File('test/golden_test.dart')
             .readAsStringSync()
             .contains('event choice shows a separated result banner'),
+    'companionSceneChoices': companionChoices.length,
+    'companionSceneChoiceImpactRate': companionChoices.isEmpty
+        ? 0.0
+        : companionChoices
+                .where((choice) =>
+                    choice['stat'] is String &&
+                    (choice['delta'] as int? ?? 0) != 0 &&
+                    choice['setsFlag'] is String)
+                .length /
+            companionChoices.length,
   };
   final contract = (story['gameplayKpis'] as Map).cast<String, dynamic>(),
       current = (contract['current'] as Map).cast<String, dynamic>();
@@ -87,7 +103,10 @@ void main() {
       current['personalityCompanionRoutes'] !=
           metrics['personalityCompanionRoutes'] ||
       current['matchedPersonalityCompanionRoutes'] !=
-          metrics['matchedPersonalityCompanionRoutes']) {
+          metrics['matchedPersonalityCompanionRoutes'] ||
+      current['companionSceneChoices'] != metrics['companionSceneChoices'] ||
+      current['companionSceneChoiceImpactRate'] !=
+          metrics['companionSceneChoiceImpactRate']) {
     fail('SSOT gameplay KPI drift');
   }
   final approved = choices.length >= 166 &&
@@ -100,9 +119,11 @@ void main() {
       personalityCompanionRoutes.length == 9 &&
       matchedPersonalityCompanionRoutes == 3 &&
       metrics['feedbackGolden'] == true;
+  final companionApproved = companionChoices.length == 36 &&
+      metrics['companionSceneChoiceImpactRate'] == 1.0;
   final report = {
     'schema': 'lumen-gameplay-fun-verdict-v1',
-    'decision': approved ? 'approve' : 'reject',
+    'decision': approved && companionApproved ? 'approve' : 'reject',
     'source': 'story/story.jsonl#gameplayKpis',
     'metrics': metrics,
     'targets': contract['targets'],
@@ -118,5 +139,5 @@ void main() {
   file.writeAsStringSync(
       const JsonEncoder.withIndent('  ').convert(report) + '\n');
   stdout.writeln('GAMEPLAY_FUN_OK: ' + jsonEncode(metrics));
-  if (!approved) exit(1);
+  if (!(approved && companionApproved)) exit(1);
 }

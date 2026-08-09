@@ -27,6 +27,7 @@ import 'canvas_ui_kit.dart';
 import 'canvas_choice_impact.dart';
 import 'event_art.dart';
 import 'legacy_profile_catalog.dart';
+import 'companion_scene_archive_painter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,11 +68,13 @@ class _Game extends State<Game> {
       persona = 0,
       eventIndex = 0,
       sideSceneCursor = 0,
+      companionSceneIndex = 0,
       archiveCharacterIndex = 0,
       archiveEmotionIndex = 0;
   String locale = 'ko';
   bool finished = false;
   String? selectedLegacyId;
+  String? pendingCompanionSceneId;
   final history = <String>[];
   final stats = {'지혜': 4, '공감': 5, '용기': 3},
       bonds = {'lumi': 0, 'bora': 0, 'taro': 0};
@@ -136,6 +139,49 @@ class _Game extends State<Game> {
       session.chooseSideScene('${scene['id']}', choice);
       sync();
       page = 0;
+      session.persist(page: page);
+    });
+  }
+
+  void openCompanionScenes(int index) => setState(() {
+        companionSceneIndex = index.clamp(0, 2);
+        pendingCompanionSceneId = null;
+        page = 13;
+      });
+
+  List<Map<String, dynamic>> companionScenesForCurrent() {
+    final p = session.world.progress[0]!,
+        currentChapter = ((p.week + 2) ~/ 3).clamp(1, 16);
+    return resolveCompanionScenes(session.story, p.bonds, p.flags,
+            currentChapter: currentChapter)
+        .where((scene) =>
+            '${scene['companionId']}' ==
+            '${session.story.companions[companionSceneIndex]['id']}')
+        .toList();
+  }
+
+  void chooseCompanionScene(int index, {int choiceIndex = -1}) {
+    final scenes = companionScenesForCurrent();
+    if (index < 0 || index >= scenes.length) return;
+    final scene = scenes[index], sceneId = '${scene['id']}';
+    if (scene['available'] == true) {
+      setState(() => pendingCompanionSceneId = sceneId);
+      return;
+    }
+    setState(() {
+      session.recordCompanionScene(sceneId, choiceIndex: choiceIndex);
+      sync();
+      session.persist(page: page);
+    });
+  }
+
+  void choosePendingCompanionScene(int choiceIndex) {
+    final sceneId = pendingCompanionSceneId;
+    if (sceneId == null) return;
+    setState(() {
+      session.recordCompanionScene(sceneId, choiceIndex: choiceIndex);
+      pendingCompanionSceneId = null;
+      sync();
       session.persist(page: page);
     });
   }
@@ -315,7 +361,7 @@ class _Game extends State<Game> {
 
   void recordEnding() {
     final d = resolveEnding(JsonStoryAdapter(widget.story), stats,
-        bonds: bonds, milestones: milestones);
+        bonds: bonds, milestones: milestones, flags: flags);
     final routes = (d['epilogues'] as List? ?? const [])
         .map((route) => '${(route as Map)['id']}')
         .toList();
@@ -509,6 +555,8 @@ class _Game extends State<Game> {
     } else if (page == 11) {
       if (y < 100 && x > 590) {
         toggleLocale();
+      } else if (y >= 500 && y < 560 && x >= 20 && x < 740) {
+        openCompanionScenes(((x - 24) ~/ 238).clamp(0, 2));
       } else if (y > 640 && x < 220) {
         setState(() => page = 5);
       } else if (y > 640) {
@@ -519,6 +567,49 @@ class _Game extends State<Game> {
         toggleLocale();
       } else if (y > 640) {
         setState(() => page = 0);
+      }
+    } else if (page == 13) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
+      } else if (y >= 216 && y < 588) {
+        if (pendingCompanionSceneId != null) {
+          final scenes = companionScenesForCurrent(),
+              pendingIndex = scenes.indexWhere(
+                  (scene) => '${scene['id']}' == pendingCompanionSceneId),
+              pendingRow = pendingIndex < 0 ? -1 : pendingIndex ~/ 2,
+              pendingCol = pendingIndex < 0 ? -1 : pendingIndex % 2,
+              cardLeft = 24 + pendingCol * 356.0,
+              cardTop = 216 + pendingRow * 124.0;
+          if (pendingIndex >= 0 &&
+              x >= cardLeft &&
+              x < cardLeft + 340 &&
+              y >= cardTop + 48 &&
+              y < cardTop + 150) {
+            choosePendingCompanionScene(x < cardLeft + 170 ? 0 : 1);
+          }
+        } else {
+          final col = x < 380 ? 0 : 1, row = ((y - 216) ~/ 124).clamp(0, 2);
+          chooseCompanionScene(row * 2 + col);
+        }
+      } else if (y >= 600 && y < 650 && x < 220) {
+        if (pendingCompanionSceneId != null) {
+          setState(() => pendingCompanionSceneId = null);
+        } else {
+          setState(() =>
+              companionSceneIndex = (companionSceneIndex - 1).clamp(0, 2));
+        }
+      } else if (y >= 600 && y < 650 && x > 540) {
+        if (pendingCompanionSceneId != null) {
+          setState(() => pendingCompanionSceneId = null);
+        } else {
+          setState(() =>
+              companionSceneIndex = (companionSceneIndex + 1).clamp(0, 2));
+        }
+      } else if (y > 640) {
+        setState(() {
+          pendingCompanionSceneId = null;
+          page = 11;
+        });
       }
     } else if (y > 655 && x >= 590) {
       setState(() => page = 11);
@@ -622,7 +713,7 @@ class _Game extends State<Game> {
                 child: Stack(children: [
                   CustomPaint(
                       key: ValueKey(
-                          '$page-$week-$persona-$eventIndex${locale == 'ko' ? '' : '-$locale'}'),
+                          '$page-$week-$persona-$eventIndex${pendingCompanionSceneId == null ? (lastResult.startsWith('companion-scene-rejected:') ? '-rejected-${lastResult.split(':').last}' : '') : '-pending'}${locale == 'ko' ? '' : '-$locale'}'),
                       painter: Scene(
                           widget.story,
                           week,
@@ -653,6 +744,8 @@ class _Game extends State<Game> {
                           collectionEntries,
                           selectedLegacyId,
                           session.legacyId,
+                          companionSceneIndex,
+                          pendingCompanionSceneId,
                           locale,
                           widget.locales),
                       size: viewport),
@@ -695,6 +788,8 @@ class Scene extends CustomPainter {
       this.collectionEntries,
       this.selectedLegacyId,
       this.legacyId,
+      this.companionSceneIndex,
+      this.pendingCompanionSceneId,
       this.locale,
       this.locales) {
     repaintKey = canvasSceneFingerprint([
@@ -735,6 +830,8 @@ class Scene extends CustomPainter {
       collectionEntries,
       selectedLegacyId,
       legacyId,
+      companionSceneIndex,
+      pendingCompanionSceneId,
       locale,
       locales.hashCode,
     ]);
@@ -763,6 +860,8 @@ class Scene extends CustomPainter {
   final List<Map<String, dynamic>> collectionEntries;
   final String? selectedLegacyId;
   final String? legacyId;
+  final int companionSceneIndex;
+  final String? pendingCompanionSceneId;
   final String locale;
   final Map<String, Map<String, String>> locales;
   late final String repaintKey;
@@ -1227,6 +1326,23 @@ class Scene extends CustomPainter {
           .map((item) => item.cast<String, dynamic>())
           .toList();
       ActivityJournalPainter(scenes, history, localized).paint(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
+    if (page == 13) {
+      CompanionSceneArchivePainter(
+        story: s,
+        bonds: bonds,
+        flags: flags,
+        portraitSheet: personaImage,
+        persona: persona,
+        companionIndex: companionSceneIndex,
+        pendingSceneId: pendingCompanionSceneId,
+        lastResult: lastResult,
+        lastLine: lastLine,
+        currentChapter: ((week + 2) ~/ 3).clamp(1, 16),
+      ).paint(c);
       drawLocaleToggle(c, activeLocale, activeCatalog);
       c.restore();
       return;
@@ -2427,7 +2543,7 @@ class Scene extends CustomPainter {
 
   void ending(Canvas c) {
     final d = resolveEnding(JsonStoryAdapter(s), stats,
-            bonds: bonds, milestones: milestones),
+            bonds: bonds, milestones: milestones, flags: flags),
         rank = (d['rank'] as int?) ?? 1,
         companions = (s['companions'] as List? ?? const []).cast<Map>(),
         routeTitles = companions

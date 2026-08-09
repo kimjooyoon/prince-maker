@@ -50,7 +50,12 @@ void main() {
     expect((story['companionScenes'] as List), hasLength(18));
     expect((story['activityScenes'] as List), hasLength(10));
     expect((story['endingVariants'] as List), hasLength(18));
-    expect((story['dialogueMetrics'] as Map)['authoredDialogueLines'], 612);
+    expect((story['dialogueMetrics'] as Map)['authoredDialogueLines'], 684);
+    expect(
+        (story['companionScenes'] as List)
+            .cast<Map<String, dynamic>>()
+            .every((scene) => (scene['choices'] as List).length == 2),
+        true);
   });
 
   test('side scene and activity mini-event leave deterministic core traces',

@@ -140,11 +140,18 @@ void main() {
   }
 
   final benchmark = readJson('build/benchmark-verdict.json');
+  final story = readJson('story/story.jsonl');
+  final expectedTransitions = 5000 *
+      ((story['endingWeek'] as int) -
+          1 +
+          (story['events'] as List).length +
+          (story['companionScenes'] as List? ?? const []).length);
   requireEqual(benchmark['schema'], 'lumen-campaign-benchmark-v1',
       'benchmark schema drift');
   requireEqual(benchmark['decision'], 'approve', 'benchmark did not approve');
   requireEqual(benchmark['campaigns'], 5000, 'campaign workload drift');
-  requireEqual(benchmark['transitions'], 475000, 'transition workload drift');
+  requireEqual(benchmark['transitions'], expectedTransitions,
+      'transition workload drift');
   if ((benchmark['elapsedMillis'] as num) > 24000) {
     fail('benchmark exceeded 24,000ms: ${benchmark['elapsedMillis']}');
   }
@@ -154,6 +161,22 @@ void main() {
       benchmark['forecastChecksum'],
       benchmark['replayForecastChecksum'],
       'activity forecast replay checksum drift');
+  requireEqual(
+      benchmark['companionSceneChecksum'],
+      benchmark['replayCompanionSceneChecksum'],
+      'companion scene replay checksum drift');
+  if ((benchmark['companionScenes'] as int? ?? 0) < 3) {
+    fail('companion scene benchmark evidence is below target');
+  }
+  final choiceModes =
+      (benchmark['companionSceneChoiceModes'] as List? ?? const [])
+          .map((mode) => mode as int)
+          .toSet();
+  if (!choiceModes.containsAll({0, 1}) ||
+      benchmark['companionSceneRouteTrace'] != true) {
+    fail(
+        'companion scene benchmark must replay both choice modes and route trace');
+  }
   if ((benchmark['forecastChecksum'] as int? ?? 0) <= 0) {
     fail('activity forecast benchmark did not execute');
   }
