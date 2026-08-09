@@ -271,16 +271,18 @@ class CompanionSceneArchivePainter {
       t(
           c,
           format('ui.companionScenes.choiceEchoHint',
-              '앞선 선택이 다음 장면에 남아 있습니다 · {choice}', {
+              '앞선 선택이 다음 장면에 남아 있습니다 · {choice} → {response}', {
             'choice': tr('${priorChoice['labelKey']}',
                 '${priorChoice['label'] ?? priorChoice['choiceId']}'),
+            'response': tr('${priorChoice['responseKey']}',
+                '${priorChoice['response'] ?? ''}'),
           }),
           const Offset(216, 665),
-          9,
+          8,
           teal,
           bold: true,
           width: 490,
-          lines: 1);
+          lines: 2);
     }
     t(c, tr('ui.companionScenes.back', '← 관계 기록'), const Offset(24, 665), 13,
         teal,

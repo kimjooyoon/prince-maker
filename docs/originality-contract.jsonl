@@ -1,6 +1,6 @@
 {"type":"header","schema":"lumen-document-jsonl-v1","document":"docs/originality-contract.jsonl"}
 {"type":"field","key":"schema","value":"lumen-originality-v1"}
-{"type":"field","key":"source","value":{"ref":"story/story.jsonl#root","sha256":"c0db26ce3dbbaae129ee19f8a70df684a53a0144fb3568b9452a52606f235d0c"}}
+{"type":"field","key":"source","value":{"ref":"story/story.jsonl#root","sha256":"2177dd700e22b1af0609cd395d5f7b07379a4e6e383ea2ce5c7a4448de813287"}}
 {"type":"field","key":"designIntent","value":"황혼 운명 기록: 주간 선택의 결과를 수치가 아니라 관계·기억·다음 회차의 기록으로 되돌려주는 독자 생활 시뮬레이션"}
 {"type":"item","section":"referencePrinciples","index":0,"id":"scheduled-raising","value":{"id":"scheduled-raising","sources":[{"title":"Princess Maker 1 mechanics overview","url":"https://princessmaker.fandom.com/wiki/Princess_Maker_1"}],"observed":"시간 단위의 일정 선택과 성장 수치가 결산 결과를 만든다.","adoptedAs":"48주 일정 선택과 지혜·공감·용기 성장축","notCopied":"왕녀 양육, 원작 인물·문구·엔딩 조건·화면을 사용하지 않는다."}}
 {"type":"item","section":"referencePrinciples","index":1,"id":"visible-choice-tradeoffs","value":{"id":"visible-choice-tradeoffs","sources":[{"title":"Reigns official game site","url":"https://www.reignsgames.com/"}],"observed":"단순한 선택이 여러 자원의 균형을 움직이고 이후 결과를 만든다.","adoptedAs":"사건 선택이 스탯·은화·유대·기억을 동시에 바꾸는 기록 trace","notCopied":"카드 스와이프, 왕국 파벌, 왕조 설정과 이벤트 구조는 사용하지 않는다."}}

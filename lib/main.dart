@@ -819,6 +819,97 @@ class _Game extends State<Game> {
     });
   }
 
+  String semanticCanvasLabel() {
+    if (page == 13) {
+      final scenes = companionScenesForCurrent(),
+          person = session.story.companions[companionSceneIndex
+              .clamp(0, session.story.companions.length - 1)],
+          done = scenes.where((scene) => scene['completed'] == true).length;
+      return '${tr('${person['nameKey']}', '${person['name']}')} · ${tr('ui.companionScenes.title', '동행 장면 기록')} · ${formatUi('ui.companionScenes.progress', '기록 {done}/{total}', {'done': done, 'total': scenes.length})}';
+    }
+    if (page == 3) {
+      final event = session.story.events[eventIndex.clamp(
+          0, session.story.events.isEmpty ? 0 : session.story.events.length - 1)];
+      return '${tr('${event['titleKey']}', '${event['title']}')} · ${tr('ui.event.small', 'A small event · week {week}').replaceAll('{week}', '${event['week']}')}';
+    }
+    return tr('ui.accessibility.canvas', 'Lumen game screen');
+  }
+
+  Rect semanticPhysicalRect(ui.Rect logical, Size viewport) {
+    final frame = CanvasViewport.frame(viewport);
+    return Rect.fromLTWH(frame.offset.dx + logical.left * frame.scale,
+        frame.offset.dy + logical.top * frame.scale,
+        logical.width * frame.scale, logical.height * frame.scale);
+  }
+
+  Widget semanticButton(Size viewport, ui.Rect logical, String label,
+          VoidCallback onTap) =>
+      Positioned.fromRect(
+          rect: semanticPhysicalRect(logical, viewport),
+          child: Semantics(
+              button: true,
+              label: label,
+              onTap: onTap,
+              child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: onTap,
+                  child: const SizedBox.expand())));
+
+  List<Widget> semanticControls(Size viewport) {
+    if (page != 13 || session.story.companions.isEmpty) return const [];
+    final controls = <Widget>[], scenes = companionScenesForCurrent();
+    controls.add(semanticButton(
+        viewport,
+        CompanionSceneLayout.previousRect,
+        tr('ui.companionScenes.previous', '← 이전 동행'),
+        () => setState(() {
+              pendingCompanionSceneId = null;
+              companionSceneIndex = (companionSceneIndex - 1).clamp(0, 2);
+              persistUiState();
+            })));
+    controls.add(semanticButton(
+        viewport,
+        CompanionSceneLayout.nextRect,
+        tr('ui.companionScenes.next', '다음 동행 →'),
+        () => setState(() {
+              pendingCompanionSceneId = null;
+              companionSceneIndex = (companionSceneIndex + 1).clamp(0, 2);
+              persistUiState();
+            })));
+    controls.add(semanticButton(
+        viewport,
+        CompanionSceneLayout.backRect,
+        tr('ui.companionScenes.back', '← 관계 기록'),
+        () => setState(() {
+              pendingCompanionSceneId = null;
+              page = 11;
+              persistUiState();
+            })));
+    for (var i = 0; i < scenes.length && i < 6; i++) {
+      final scene = scenes[i], id = '${scene['id']}';
+      if (scene['available'] != true) continue;
+      final choices =
+          (scene['choices'] as List? ?? const []).cast<Map<String, dynamic>>();
+      if (pendingCompanionSceneId == id && choices.length >= 2) {
+        for (var choiceIndex = 0; choiceIndex < 2; choiceIndex++) {
+          final choice = choices[choiceIndex];
+          controls.add(semanticButton(
+              viewport,
+              CompanionSceneLayout.choiceRect(i, choiceIndex),
+              '${tr('${scene['titleKey']}', '${scene['title']}')} · ${tr('${choice['labelKey']}', '${choice['label']}')}',
+              () => choosePendingCompanionScene(choiceIndex)));
+        }
+      } else {
+        controls.add(semanticButton(
+            viewport,
+            CompanionSceneLayout.cardRect(i),
+            '${tr('${scene['titleKey']}', '${scene['title']}')} · ${tr('ui.companionScenes.status.available', '기록하기')}',
+            () => chooseCompanionScene(i)));
+      }
+    }
+    return controls;
+  }
+
   @override
   Widget build(BuildContext c) => MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -835,7 +926,12 @@ class _Game extends State<Game> {
             return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTapUp: (d) => handleTap(d.localPosition, viewport),
-                child: Stack(children: [
+                child: Semantics(
+                    container: true,
+                    explicitChildNodes: true,
+                    label: semanticCanvasLabel(),
+                    liveRegion: lastResult.isNotEmpty,
+                    child: Stack(children: [
                   CustomPaint(
                       key: ValueKey(
                           '$page-$week-$persona-$eventIndex${pendingCompanionSceneId == null ? (lastResult.startsWith('companion-scene-rejected:') ? '-rejected-${lastResult.split(':').last}' : '') : '-pending'}${locale == 'ko' ? '' : '-$locale'}'),
@@ -878,7 +974,8 @@ class _Game extends State<Game> {
                     const SizedBox(key: ValueKey('roster-ready')),
                   if (characterEmotionImages.isNotEmpty)
                     const SizedBox(key: ValueKey('character-emotion-ready')),
-                ]));
+                  ...semanticControls(viewport),
+                ])));
           }))));
 }
 

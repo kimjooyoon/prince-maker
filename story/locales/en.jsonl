@@ -1151,7 +1151,8 @@
 {"type":"entry","key":"ui.companionScenes.choose","value":"What record will you leave in this scene?"}
 {"type":"entry","key":"ui.companionScenes.chooseHint","value":"Both choices leave a trace in the next scene and ending record."}
 {"type":"entry","key":"ui.companionScenes.choiceEcho","value":"Earlier choice · {choice}"}
-{"type":"entry","key":"ui.companionScenes.choiceEchoHint","value":"An earlier choice remains in the next scene · {choice}"}
+{"type":"entry","key":"ui.companionScenes.choiceEchoHint","value":"An earlier choice remains in the next scene · {choice} → {response}"}
+{"type":"entry","key":"ui.accessibility.canvas","value":"Lumen game screen"}
 {"type":"entry","key":"ui.companionScenes.cancel","value":"← Cancel choice"}
 {"type":"entry","key":"ui.companionScenes.notice.bond","value":"A stronger bond is required."}
 {"type":"entry","key":"ui.companionScenes.notice.chapter","value":"This chapter has not arrived yet."}
