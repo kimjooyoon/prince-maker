@@ -1,5 +1,13 @@
 import 'activity_catalog.dart';
 
+const activityFatigueGuard = 8;
+
+int recoveryDaysToClearFatigue(int fatigue, {int recoveryFatigueDelta = -2}) {
+  final step = -recoveryFatigueDelta;
+  if (fatigue < activityFatigueGuard || step <= 0) return 0;
+  return (fatigue - (activityFatigueGuard - 1) + step - 1) ~/ step;
+}
+
 /// Shared forecast semantics: UI previews and the ECS growth system use this
 /// exact fatigue/talent rule, so a preview cannot promise a different game.
 int resolveActivityGrowth({
@@ -8,7 +16,8 @@ int resolveActivityGrowth({
   required int bonus,
 }) {
   final raw = delta + bonus;
-  return (fatigue >= 8 ? (raw - 1).clamp(0, raw) : raw).toInt();
+  return (fatigue >= activityFatigueGuard ? (raw - 1).clamp(0, raw) : raw)
+      .toInt();
 }
 
 class ActivityForecast {
@@ -21,6 +30,7 @@ class ActivityForecast {
     required this.coinsDelta,
     required this.fatigueDelta,
     required this.fatigueAfter,
+    required this.recoveryDays,
     required this.nextCoins,
     required this.nextWeek,
     this.nextEventKey,
@@ -35,6 +45,7 @@ class ActivityForecast {
       coinsDelta,
       fatigueDelta,
       fatigueAfter,
+      recoveryDays,
       nextCoins,
       nextWeek;
   final String? nextEventKey, nextMilestoneId, nextMilestoneKey;
@@ -48,6 +59,7 @@ class ActivityForecast {
         'coinsDelta': coinsDelta,
         'fatigueDelta': fatigueDelta,
         'fatigueAfter': fatigueAfter,
+        'recoveryDays': recoveryDays,
         'nextCoins': nextCoins,
         'nextWeek': nextWeek,
         'nextEventKey': nextEventKey,
@@ -63,6 +75,7 @@ ActivityForecast forecastActivity(
   required int coins,
   String? focusStat,
   int focusBonus = 0,
+  int recoveryFatigueDelta = -2,
   List<Map<String, dynamic>> events = const [],
   List<Map<String, dynamic>> milestones = const [],
 }) {
@@ -73,7 +86,10 @@ ActivityForecast forecastActivity(
           delta: activity.delta, fatigue: fatigue, bonus: bonus),
       growthPenalty =
           rawGrowth > 0 ? (rawGrowth - growth).clamp(0, rawGrowth).toInt() : 0,
-      nextWeek = week + 1;
+      nextWeek = week + 1,
+      fatigueAfter = (fatigue + activity.fatigue).clamp(0, 12).toInt(),
+      recoveryDays = recoveryDaysToClearFatigue(fatigueAfter,
+          recoveryFatigueDelta: recoveryFatigueDelta);
   final nextEvent =
       events.where((event) => event['week'] == nextWeek).firstOrNull;
   final nextMilestone = nextEvent == null
@@ -89,7 +105,8 @@ ActivityForecast forecastActivity(
     growthPenalty: growthPenalty,
     coinsDelta: activity.coins,
     fatigueDelta: activity.fatigue,
-    fatigueAfter: (fatigue + activity.fatigue).clamp(0, 12).toInt(),
+    fatigueAfter: fatigueAfter,
+    recoveryDays: recoveryDays,
     nextCoins: (coins + activity.coins).clamp(0, 999).toInt(),
     nextWeek: nextWeek,
     nextEventKey: nextEvent?['titleKey'] as String?,

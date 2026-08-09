@@ -1163,7 +1163,7 @@
 {"type":"entry","key":"ui.companionScenes.notice.invalid","value":"시스템이 이 기록 입력을 거절했습니다."}
 {"type":"entry","key":"ui.companionScenes.notice.recorded","value":"선택한 기록이 저장되었습니다."}
 {"type":"entry","key":"ui.ending.legacyForecast","value":"정책 {policies} · 검증 엔딩 {endings} · 서명 {signatures}"}
-{"type":"entry","key":"ui.home.risk.penalty","value":"피로 경고 · 성장 -{loss}"}
-{"type":"entry","key":"ui.home.risk.strained","value":"높은 피로 · 회복 권장"}
-{"type":"entry","key":"ui.home.risk.recovery","value":"회복 선택 · 피로 {delta}"}
+{"type":"entry","key":"ui.home.risk.penalty","value":"피로 경고 · 성장 -{loss} · 휴식 {days}일"}
+{"type":"entry","key":"ui.home.risk.strained","value":"높은 피로 · 휴식 {days}일"}
+{"type":"entry","key":"ui.home.risk.recovery","value":"회복 선택 · 피로 {delta} · {days}일"}
 {"type":"entry","key":"ui.home.risk.steady","value":"안정적인 속도"}

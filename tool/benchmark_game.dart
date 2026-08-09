@@ -54,7 +54,11 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   };
   final legacyIds = story.legacyProfiles.map((p) => '${p['id']}').toList();
   final activities = activitiesFromStory(source),
-      personality = story.personalities.firstOrNull;
+      personality = story.personalities.firstOrNull,
+      recoveryFatigueDelta = activities
+          .firstWhere((activity) => activity.id == 'rest',
+              orElse: () => activities[3])
+          .fatigue;
   for (var i = 0; i < campaigns; i++) {
     final legacyId = i.isEven && legacyIds.isNotEmpty
         ? legacyIds[i % legacyIds.length]
@@ -73,11 +77,13 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
             coins: p.coins,
             focusStat: personality?['focusStat'] as String?,
             focusBonus: personality?['focusBonus'] as int? ?? 0,
+            recoveryFatigueDelta: recoveryFatigueDelta,
             events: story.events,
             milestones: story.milestones);
         forecastChecksum += forecast.growth * 31 +
             forecast.nextCoins * 7 +
             forecast.fatigueAfter * 5 +
+            forecast.recoveryDays * 11 +
             forecast.nextWeek;
       }
       final week = session.world.progress[0]!.week;

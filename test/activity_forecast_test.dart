@@ -28,6 +28,7 @@ void main() {
     expect(first.growth, 3); // (3 + talent 1) - fatigue guard 1
     expect(first.growthPenalty, 1);
     expect(first.fatigueAfter, 9);
+    expect(first.recoveryDays, 1);
     expect(first.nextEventKey, 'event.mail.title');
   });
 
@@ -43,6 +44,7 @@ void main() {
     expect(forecast.nextMilestoneId, 'spring');
     expect(forecast.nextMilestoneKey, 'milestone.spring.title');
     expect(forecast.fatigueAfter, 2);
+    expect(forecast.recoveryDays, 0);
   });
 
   test('activity horizon prioritizes the next authored event', () {
@@ -63,12 +65,29 @@ void main() {
         week: 8, fatigue: 8, coins: 12);
     final recovery =
         forecastActivity(defaultActivities[3], week: 8, fatigue: 8, coins: 12);
-    expect(localizedActivityRisk(strained), 'Fatigue guard · growth -1');
-    expect(localizedActivityRisk(recovery), 'Recovery · fatigue -2');
+    expect(
+        localizedActivityRisk(strained), 'Fatigue guard · growth -1 · rest 1d');
+    expect(
+        localizedActivityRisk(recovery), 'Recovery · fatigue -2 · ready in 0d');
     expect(
         strained.toMap(),
         equals(forecastActivity(defaultActivities.first,
                 week: 8, fatigue: 8, coins: 12)
+            .toMap()));
+  });
+
+  test('recovery window follows the injected SSOT rest delta', () {
+    expect(recoveryDaysToClearFatigue(7), 0);
+    expect(recoveryDaysToClearFatigue(10), 2);
+    expect(recoveryDaysToClearFatigue(10, recoveryFatigueDelta: -1), 3);
+    final forecast = forecastActivity(defaultActivities.first,
+        week: 8, fatigue: 10, coins: 12, recoveryFatigueDelta: -1);
+    expect(forecast.fatigueAfter, 11);
+    expect(forecast.recoveryDays, 4);
+    expect(
+        forecast.toMap(),
+        equals(forecastActivity(defaultActivities.first,
+                week: 8, fatigue: 10, coins: 12, recoveryFatigueDelta: -1)
             .toMap()));
   });
 }

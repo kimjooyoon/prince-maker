@@ -40,7 +40,7 @@
 | 분기 사건 | 47개 사건 × 선택 2개 | 47 × 2 |
 | 분기 도달성 | SSOT의 6개 엔딩·94개 사건 선택 계약 테스트 + 11개 authored branch 축 전수 열거 | 100/100 + 2,048 vectors |
 | 조건부 선택 | 스탯·동료 유대·동료 조합·이전 선택 기억·계승을 사용하는 잠금 선택지 | 29 |
-| 시각 회귀 | 한국어 fixture·English locale·사건 피드백·관계 상태·관계 긴장·관계 중재·관계 후속 대화·외출·유대 게이트·기억 게이트·계승 게이트·나비효과/동료 퀘스트 기록 보관소(ko/en)·시스템 승인/거절 영수증·동행 장면 선택/잠금/혼합 상태(ko/en) + canonical SSOT 홈·사이드 장면·6개 장소 atlas·48주 handoff 사건·엔딩·원인 회고·엔딩 도감·16막 canonical 사건·실제 16막 chapter-closure 관계 장면·활동 forecast·다음 사건/목표 horizon·피로 위험/회복 예고·활동 회고 일지(ko/en)·엔딩 뒤 다음 회차 계승 선택(ko/en)·선택 프로필 상태·새 회차 적용 프로필 피드백·Canvas UI 다섯 상태 행렬 Golden | 104 |
+| 시각 회귀 | 한국어 fixture·English locale·사건 피드백·관계 상태·관계 긴장·관계 중재·관계 후속 대화·외출·유대 게이트·기억 게이트·계승 게이트·나비효과/동료 퀘스트 기록 보관소(ko/en)·시스템 승인/거절 영수증·동행 장면 선택/잠금/혼합 상태(ko/en) + canonical SSOT 홈·사이드 장면·6개 장소 atlas·48주 handoff 사건·엔딩·원인 회고·엔딩 도감·16막 canonical 사건·실제 16막 chapter-closure 관계 장면·활동 forecast·다음 사건/목표 horizon·피로 위험·결정론적 회복 소요일 예고·활동 회고 일지(ko/en)·엔딩 뒤 다음 회차 계승 선택(ko/en)·선택 프로필 상태·새 회차 적용 프로필 피드백·Canvas UI 다섯 상태 행렬 Golden | 104 |
 | canonical 통합 경로 | 실제 `story/story.jsonl` 48주 완주·사건 47개·목표 16개·에필로그·승인 영수증·48주 handoff·16막 사건·16막 결산 Golden 행렬 | 1 |
 | 최소 1회차 분량 | 48회 일정 + 47회 본편 사건 선택 + 24개 사이드 장면 + 16회 막 결산 + 16회 관계 장면 + 활동 미니 이벤트, SSOT 페이싱 계약 | 156분 (최소 120분) |
 | 종료 불변식 | 48주 완료 뒤 49주 terminal에서 추가 활동/사건 입력 차단 + 새 세션 재시작 | 1 |
@@ -48,7 +48,7 @@
 | personality campaign 경로 | 지혜·공감·용기 각 성격의 숙련 엔딩 재현 | 3 |
 | 글리프 안정성 | 번들 Noto Sans KR + Canvas 벡터 활동 아이콘 | 1 |
 | i18n 대사 | `key → locale catalog → Canvas` 한국어/English 대사·엔딩·동료·장소 결산 경로 | 2 locale |
-| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 800키 이상(실제 1168) 및 character speaker·엔딩·사이드 장면·activity reflection·activity horizon·activity risk·activity journal·relationship state/follow-up·companion scene choice/rejection UI 키 검사 | 1 |
+| locale 계약 | SSOT `*Key` 전수 존재·비공백·ko/en 각 800키 이상(실제 1168) 및 character speaker·엔딩·사이드 장면·activity reflection·activity horizon·activity risk/recovery window·activity journal·relationship state/follow-up·companion scene choice/rejection UI 키 검사 | 1 |
 | 스토리 진행도 | 1–3부터 46–48주까지 16막, 47개 사건·막 목표 연결 | 16 chapters |
 | 순수성 분기 | 동일 일정 예산의 지혜·공감 경로 + 5개 SSOT 일정 정책 + 동료 8 route set + 6개 fate thread·9개 퀘스트 stage가 서로 다른 authored 엔딩·유대·목표 서명을 생성 | 2,048 vectors + 8 route sets + 6/9 narrative |
 | 자동 게이트 | SSOT 검사·시나리오 vector 열거·해시 매니페스트·정적 분석·Flutter test·Golden·코어 benchmark·Wasm | 8 |
