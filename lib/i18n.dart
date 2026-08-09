@@ -128,13 +128,20 @@ String localizedChoiceEffect(Map choice) {
 }
 
 String localizedChoiceCondition(Map choice) {
+  final koreanFallback = activeLocale == 'ko';
   final flag = choice['requiresFlag'];
-  if (flag != null) return localized('ui.event.memoryNeeded', 'memory clue');
+  if (flag != null) {
+    return localized('ui.event.memoryNeeded',
+        koreanFallback ? '기억 단서' : 'memory clue');
+  }
   final bond = choice['requiresBondId'];
   if (bond != null) {
     return _replace(
-        localized('ui.event.condition', 'Condition: {value} required'), {
-      'value': _replace(localized('ui.event.bondNeeded', 'Bond {name} {min}'), {
+        localized('ui.event.condition',
+            koreanFallback ? '조건: {value} 필요' : 'Condition: {value} required'), {
+      'value': _replace(
+          localized('ui.event.bondNeeded',
+              koreanFallback ? '유대 {name} {min}' : 'Bond {name} {min}'), {
         'name': localized('companion.$bond.name', '$bond'),
         'min': choice['requiresBondMin'] ?? 0,
       })
@@ -143,14 +150,17 @@ String localizedChoiceCondition(Map choice) {
   final stat = choice['requiresStat'];
   if (stat != null) {
     return _replace(
-        localized('ui.event.condition', 'Condition: {value} required'), {
-      'value': _replace(localized('ui.event.statNeeded', '{stat} {min}'), {
+        localized('ui.event.condition',
+            koreanFallback ? '조건: {value} 필요' : 'Condition: {value} required'), {
+      'value': _replace(
+          localized('ui.event.statNeeded', '{stat} {min}'), {
         'stat': localizedStat('$stat'),
         'min': choice['requiresMin'] ?? 0,
       })
     });
   }
-  return localized('ui.event.condition.none', 'No condition');
+  return localized('ui.event.condition.none',
+      koreanFallback ? '조건 없음' : 'No condition');
 }
 
 String localizedHistoryLabel(Map<String, dynamic> story, String raw) {

@@ -34,7 +34,8 @@ void main() {
   const requiredProofs = {
     'viewport-mapping',
     'visual-regression',
-    'static-analysis'
+    'static-analysis',
+    'canvas-paint-budget',
   };
   final actualPreconditions = preconditions.map((entry) => entry['id']).toSet(),
       actualProofs = proofs.map((entry) => entry['id']).toSet();
@@ -118,6 +119,11 @@ void main() {
   requireText('lib/main.dart', main, 'page == 13');
   requireText('test/companion_scene_golden_test.dart', companionSceneGoldenTest,
       'companion scene archive records a scene');
+  final companionSceneTest = read('test/companion_scene_test.dart');
+  requireText('test/companion_scene_test.dart', companionSceneTest,
+      'companion archive canvas projection stays within the frame budget');
+  requireText('test/companion_scene_test.dart', companionSceneTest,
+      'COMPANION_RENDER_PERF_OK');
   for (final name in [
     'goldens/companion-scenes.png',
     'goldens/companion-scene-choice.png',
@@ -127,6 +133,7 @@ void main() {
     'goldens/companion-scene-bora-mixed.png',
     'goldens/companion-scene-taro-mixed.png',
     'goldens/companion-scene-locked.png',
+    'goldens/companion-scene-choice-recall.png',
   ]) {
     requireText('test/companion_scene_golden_test.dart',
         companionSceneGoldenTest, name);
@@ -140,7 +147,7 @@ void main() {
   final closureEvidence =
       (contract['closureEvidence'] as Map? ?? const {}).cast<String, dynamic>();
   if (closureEvidence['id'] != 'companion-scenes' ||
-      closureEvidence['goldens'] != 8 ||
+      closureEvidence['goldens'] != 9 ||
       closureEvidence['test'] !=
           'test/companion_scene_golden_test.dart#companion scene archive records a scene') {
     fail('render quality contract must bind the companion scene Golden loop');
@@ -225,11 +232,12 @@ void main() {
             'companion-scene-bora-mixed.png',
             'companion-scene-taro-mixed.png',
             'companion-scene-locked.png',
+            'companion-scene-choice-recall.png',
           ].contains(file.uri.pathSegments.last))
       .length;
-  if (companionSceneGoldens != 8)
+  if (companionSceneGoldens != 9)
     fail(
-        'expected exactly 8 companion scene golden evidence files, found $companionSceneGoldens');
+        'expected exactly 9 companion scene golden evidence files, found $companionSceneGoldens');
   stdout.writeln(
       'RENDER_QUALITY_PRECONDITIONS_OK: preconditions=${preconditions.length} proofs=${proofs.length} goldens=$goldens chapterGoldens=$chapterGoldens chapterClosureGoldens=$chapterClosureGoldens companionSceneGoldens=$companionSceneGoldens');
 }

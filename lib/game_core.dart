@@ -311,19 +311,46 @@ List<Map<String, dynamic>> resolveCompanionScenes(
     StoryPort story, Map<String, int> bonds, Map<String, bool> flags,
     {int? currentChapter}) {
   final chapter = currentChapter ?? 999;
-  return story.companionScenes.map((scene) {
+  Map<String, dynamic>? selectedChoice(Map<String, dynamic> scene) {
+    final choices = (scene['choices'] as List? ?? const [])
+        .whereType<Map>()
+        .map((choice) => choice.cast<String, dynamic>());
+    for (final choice in choices) {
+      final flag = choice['setsFlag'] as String?;
+      if (flag != null && flags[flag] == true) return choice;
+    }
+    return null;
+  }
+
+  Map<String, dynamic>? previousChoiceFor(int index, String companionId) {
+    Map<String, dynamic>? previous;
+    for (var i = 0; i < index; i++) {
+      final candidate = story.companionScenes[i];
+      if ('${candidate['companionId']}' != companionId ||
+          flags['companion-scene:${candidate['id']}'] != true) continue;
+      final choice = selectedChoice(candidate);
+      if (choice != null) {
+        previous = {
+          'sceneId': '${candidate['id']}',
+          'choiceId': '${choice['id']}',
+          'labelKey': choice['labelKey'],
+          'label': choice['label'],
+          'responseKey': choice['responseKey'],
+          'response': choice['response'],
+        };
+      }
+    }
+    return previous;
+  }
+
+  return story.companionScenes.asMap().entries.map((entry) {
+    final index = entry.key, scene = entry.value;
     final companionId = '${scene['companionId']}', id = '${scene['id']}';
     final bonded = (bonds[companionId] ?? 0) > 0,
         completed = flags['companion-scene:$id'] == true,
         chapterReady = (scene['chapter'] as int? ?? 1) <= chapter;
-    final choices = (scene['choices'] as List? ?? const [])
-        .whereType<Map>()
-        .map((choice) => choice.cast<String, dynamic>())
-        .toList();
-    final selected = choices.where((choice) {
-      final flag = choice['setsFlag'] as String?;
-      return flag != null && flags[flag] == true;
-    }).firstOrNull;
+    final selected = selectedChoice(scene),
+        previousChoice = previousChoiceFor(index, companionId);
     return {
       ...scene,
       'unlocked': bonded,
@@ -331,6 +358,9 @@ List<Map<String, dynamic>> resolveCompanionScenes(
       'available': bonded && chapterReady && !completed,
       'completed': completed,
       'selectedChoice': selected,
+      // Choice flags are recalled by the next scene as authored memory, not
+      // only appended to the terminal route id.
+      'choiceEcho': previousChoice,
     };
   }).toList();
 }

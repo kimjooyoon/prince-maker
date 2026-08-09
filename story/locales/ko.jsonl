@@ -1150,6 +1150,8 @@
 {"type":"entry","key":"companionSceneChoice.taro-next-foothold.push-through.response","value":"타로와 노아는 피로를 감수하고 먼저 길을 건넜다."}
 {"type":"entry","key":"ui.companionScenes.choose","value":"이 장면에서 어떤 기록을 남길까요?"}
 {"type":"entry","key":"ui.companionScenes.chooseHint","value":"두 선택 모두 다음 장면과 엔딩 기록에 흔적을 남깁니다."}
+{"type":"entry","key":"ui.companionScenes.choiceEcho","value":"앞선 선택 · {choice}"}
+{"type":"entry","key":"ui.companionScenes.choiceEchoHint","value":"앞선 선택이 다음 장면에 남아 있습니다 · {choice}"}
 {"type":"entry","key":"ui.companionScenes.cancel","value":"← 선택 취소"}
 {"type":"entry","key":"ui.companionScenes.notice.bond","value":"유대가 더 필요합니다."}
 {"type":"entry","key":"ui.companionScenes.notice.chapter","value":"아직 이 막에 도착하지 않았습니다."}

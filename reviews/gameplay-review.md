@@ -177,3 +177,23 @@ campaign benchmark는 domain transition과 replay checksum을 측정하며 24초
 단일 `tool/ci_gate.dart --ci`가 `SYSTEM_APPROVAL: APPROVE`로 완료됐다. 확인된 수치는 5,000 campaigns / 565,000 transitions / 6.33초 / 18 companion scenes / choice modes `[0, 1]`이며 campaign·forecast·companion-scene checksum replay가 각각 일치한다. 전체 164개 Flutter 테스트와 102개 Golden, Wasm release build, 100% completeness dimensions, quality score 1.0도 통과했다.
 
 적대적 판정을 철회하는 범위는 P1 폐쇄루프까지다. 이 결과를 page 13 저사양 60fps 보증으로 확대하지 않으며, Canvas paint/decode/frame-time 계측과 선택 flag의 후속 authored dialogue 회수는 다음 리뷰의 P2로 남긴다. 따라서 현재 판정은 `SYSTEM_APPROVAL` 기준 승인, 체감 성능·서사 회수 기준 조건부 후속 검증이다.
+
+## 2026-08-09 최신 런타임 적대적 재검토 — 관계 기록과 조건 잠금
+
+이번에는 저장된 진행 상태를 실제 Flutter Web에서 다시 열고, 관계 기록 → 동행 장면 → 홈 → 다음 사건까지 1280×720으로 재생했다. 캡처 원본은 `build/audit/2026-08-09-r2/`에 남겼다.
+
+### 확인된 결손과 폐쇄
+
+- [x] **P1 — 긴장 상태 배너가 사실상 읽히지 않았다.** `갈라지는 마음` 화면에서 위험 상태의 밝은 분홍 배경 위에 흰색 제목·후속 대사·본문을 그려 대비를 무너뜨렸다. [`lib/relationship_archive_painter.dart`](/Users/alice/games/princess_maker_like/lib/relationship_archive_painter.dart)의 danger header 전용 어두운 텍스트·accent로 고쳤고, 재캡처에서 제목과 후속 기록이 즉시 읽힌다.
+- [x] **P1 — 잠긴 사건 선택이 잠겼다는 사실을 숨겼다.** 조건 문구만 `기억 단서` 또는 `조건...`으로 보여 카드 상단의 `선택 2`와 실제 상태가 어긋났다. [`lib/main.dart`](/Users/alice/games/princess_maker_like/lib/main.dart)의 잠금 라벨과 조건 문구를 `잠김 · ...`으로 통일하고 `relationship-gate.png`·`memory-gate.png`를 갱신했다.
+- [x] **P1 — locale catalog가 비어 있을 때 잠금 카피가 혼합 언어가 됐다.** `잠김 · Condition: Bond...` 같은 fallback은 플레이어에게 번역 누락을 그대로 노출한다. [`lib/i18n.dart`](/Users/alice/games/princess_maker_like/lib/i18n.dart)가 활성 locale에 맞는 한국어/영어 fallback을 선택하도록 바꾸고 Golden으로 고정했다.
+- [x] **P1 — 동행 장면의 선택 기억이 다음 장면에 보이지 않았다.** 이전 선택을 route flag에만 숨기면 플레이어는 자신의 선택이 소비됐는지 알 수 없다. 현재 page 13은 다음 장면 카드와 하단에 앞선 선택을 회고하고, 저장된 UI 위치·pending choice도 다시 열 때 보존한다. 관련 resolver·save-state·Golden·hitbox 테스트가 통과했다.
+
+### 아직 공격할 지점
+
+- **P2 — Canvas 접근성 표면은 여전히 빈약하다.** 브라우저 DOM에서 확인되는 상호작용은 `Enable accessibility` 버튼 하나뿐이며, 카드 제목·잠금 이유·뒤로가기·동행 선택이 semantic label이나 키보드 focus 순서로 노출되는지 검증하지 못했다. 스크린샷만으로 WCAG 준수를 선언할 수 없다.
+- **P2 — 회고 카피가 선택을 기억하지만, 후속 authored 대사의 깊이는 아직 얕다.** 다음 카드에 선택 label은 보이지만, 그 선택이 후속 대사·퀘스트 목표·엔딩 회고에서 몇 단계 뒤까지 재사용되는지는 현재 Golden과 benchmark만으로 충분히 증명되지 않는다.
+
+### 현재의 적대적 판정
+
+이번 화면 결손 세 가지와 선택 회고 결손은 코드·Golden·타깃 테스트로 폐쇄했다. 그러나 접근성 semantic surface와 장기 서사 회수는 아직 증거가 약하므로, `SYSTEM_APPROVAL`을 플레이어 경험 전체 승인으로 확대해서는 안 된다. 현재 판정은 **핵심 루프 승인, 접근성·장기 회고 조건부**다.

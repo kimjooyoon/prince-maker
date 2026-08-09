@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:prince_maker/companion_scene_archive_painter.dart';
+import 'package:prince_maker/companion_scene_layout.dart';
 import 'package:prince_maker/decision_receipt.dart';
 import 'package:prince_maker/game_core.dart';
 import 'package:prince_maker/jsonl.dart';
@@ -114,5 +118,97 @@ void main() {
         milestones: right.snapshot().milestones,
         flags: right.snapshot().flags);
     expect(leftRoute['routeId'], isNot(equals(rightRoute['routeId'])));
+  });
+
+  test('companion choice is recalled by the next authored scene', () async {
+    final source = await loadStory(), model = JsonStoryAdapter(source);
+    Map<String, bool> flagsFor(String choiceFlag) => {
+          'companion-scene:lumi-first-margin': true,
+          choiceFlag: true,
+        };
+
+    final open = resolveCompanionScenes(model, {'lumi': 2},
+            flagsFor('companion-choice:lumi-first-margin:open'),
+            currentChapter: 3)
+        .firstWhere((scene) => scene['id'] == 'lumi-slow-star');
+    final sealed = resolveCompanionScenes(model, {'lumi': 1},
+            flagsFor('companion-choice:lumi-first-margin:sealed'),
+            currentChapter: 3)
+        .firstWhere((scene) => scene['id'] == 'lumi-slow-star');
+
+    expect(open['available'], true);
+    expect((open['choiceEcho'] as Map)['choiceId'], 'leave-open');
+    expect((open['choiceEcho'] as Map)['responseKey'],
+        'companionSceneChoice.lumi-first-margin.leave-open.response');
+    expect((sealed['choiceEcho'] as Map)['choiceId'], 'seal-now');
+    expect((sealed['choiceEcho'] as Map)['choiceId'],
+        isNot((open['choiceEcho'] as Map)['choiceId']));
+  });
+
+  test('companion archive paint and tap geometry share one logical contract',
+      () {
+    for (var index = 0; index < CompanionSceneLayout.maxVisibleCards; index++) {
+      final card = CompanionSceneLayout.cardRect(index);
+      expect(CompanionSceneLayout.cardIndexAt(card.center, 6), index);
+      for (var choice = 0; choice < 2; choice++) {
+        final button = CompanionSceneLayout.choiceRect(index, choice);
+        final hit = CompanionSceneLayout.choiceHitRect(index, choice);
+        expect(card.contains(button.center), isTrue);
+        expect(hit.contains(button.center), isTrue);
+        expect(CompanionSceneLayout.choiceIndexAt(hit.center, index), choice);
+      }
+    }
+    expect(
+        CompanionSceneLayout.cardIndexAt(const ui.Offset(372, 250), 6), isNull,
+        reason: 'the column gap must not activate an adjacent card');
+    expect(
+        CompanionSceneLayout.previousRect
+            .overlaps(CompanionSceneLayout.nextRect),
+        isFalse);
+    expect(
+        CompanionSceneLayout.backRect
+            .overlaps(CompanionSceneLayout.previousRect),
+        isFalse);
+    expect(
+        CompanionSceneLayout.backRect.overlaps(CompanionSceneLayout.nextRect),
+        isFalse);
+    expect(
+        CompanionSceneLayout.containsInclusive(
+            CompanionSceneLayout.nextHitRect, const ui.Offset(672, 700)),
+        isTrue);
+    expect(
+        CompanionSceneLayout.containsInclusive(
+            CompanionSceneLayout.backRect, const ui.Offset(80, 700)),
+        isTrue);
+  });
+
+  test('companion archive canvas projection stays within the frame budget',
+      () async {
+    final source = await loadStory();
+    final painter = CompanionSceneArchivePainter(
+      story: source,
+      bonds: const {'lumi': 1, 'bora': 1, 'taro': 1},
+      flags: const {},
+      portraitSheet: null,
+      persona: 0,
+      companionIndex: 0,
+      currentChapter: 16,
+      pendingSceneId: null,
+      lastResult: '',
+    );
+    const iterations = 250;
+    final watch = Stopwatch()..start();
+    for (var i = 0; i < iterations; i++) {
+      final recorder = ui.PictureRecorder();
+      painter.paint(ui.Canvas(recorder));
+      recorder.endRecording().dispose();
+    }
+    watch.stop();
+    final averageMicros = watch.elapsedMicroseconds / iterations;
+    stdout.writeln(
+        'COMPANION_RENDER_PERF_OK: iterations=$iterations elapsedMillis=${watch.elapsedMilliseconds} averageMicros=${averageMicros.toStringAsFixed(1)}');
+    expect(averageMicros, lessThan(8000),
+        reason:
+            'page 13 Canvas projection should remain below half a 60fps frame');
   });
 }

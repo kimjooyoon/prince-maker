@@ -1,13 +1,14 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'canvas_ui_kit.dart';
+import 'companion_scene_layout.dart';
 import 'design_tokens.dart';
 import 'game_core.dart';
 import 'i18n.dart';
 
 /// Canvas projection for the authored companion-scene record loop.
 class CompanionSceneArchivePainter {
-  const CompanionSceneArchivePainter(
+  CompanionSceneArchivePainter(
       {required this.story,
       required this.bonds,
       required this.flags,
@@ -25,6 +26,13 @@ class CompanionSceneArchivePainter {
   final int persona, companionIndex, currentChapter;
   final String? pendingSceneId;
   final String lastResult, lastLine;
+  // A painter is reused for every frame while the archive state is stable.
+  // Keep the immutable SSOT projection outside paint() so frame cost measures
+  // Canvas work rather than rebuilding the story adapter and route state.
+  late final JsonStoryAdapter _model = JsonStoryAdapter(story);
+  late final List<Map<String, dynamic>> _resolvedScenes =
+      resolveCompanionScenes(_model, bonds, flags,
+          currentChapter: currentChapter);
   String tr(String key, String fallback) => localized(key, fallback);
   String format(String key, String fallback, Map<String, Object?> values) {
     var value = tr(key, fallback);
@@ -62,13 +70,12 @@ class CompanionSceneArchivePainter {
   }
 
   void paint(Canvas c) {
-    final model = JsonStoryAdapter(story), people = model.companions;
+    final model = _model, people = model.companions;
     if (people.isEmpty) return;
     final index = companionIndex.clamp(0, people.length - 1),
         person = people[index],
         id = '${person['id']}';
-    final scenes = resolveCompanionScenes(model, bonds, flags,
-            currentChapter: currentChapter)
+    final scenes = _resolvedScenes
         .where((scene) => '${scene['companionId']}' == id)
         .toList();
     final completedCount =
@@ -109,6 +116,11 @@ class CompanionSceneArchivePainter {
                         ? tr('ui.companionScenes.notice.recorded',
                             '선택한 기록이 저장되었습니다.')
                         : '';
+    final priorChoice = scenes
+        .map((scene) => scene['choiceEcho'])
+        .whereType<Map>()
+        .map((choice) => choice.cast<String, dynamic>())
+        .lastOrNull;
     if (feedback.isEmpty) {
       t(
           c,
@@ -142,10 +154,13 @@ class CompanionSceneArchivePainter {
         width: 160);
     CanvasUiKit.progress(c, const Rect.fromLTWH(410, 185, 280, 7), progress,
         accent: sun);
-    for (var i = 0; i < scenes.length && i < 6; i++) {
+    for (var i = 0;
+        i < scenes.length && i < CompanionSceneLayout.maxVisibleCards;
+        i++) {
       final scene = scenes[i],
-          x = 24 + (i % 2) * 356.0,
-          y = 216 + (i ~/ 2) * 124.0,
+          card = CompanionSceneLayout.cardRect(i),
+          x = card.left,
+          y = card.top,
           done = scene['completed'] == true,
           available = scene['available'] == true,
           unlocked = scene['unlocked'] == true,
@@ -163,7 +178,7 @@ class CompanionSceneArchivePainter {
               : available
                   ? tr('ui.companionScenes.status.available', '기록하기')
                   : tr('ui.companionScenes.status.locked', '잠김');
-      CanvasUiKit.statePanel(c, Rect.fromLTWH(x, y, 340, 104),
+      CanvasUiKit.statePanel(c, card,
           state: state,
           accent: pending ? sun : teal,
           shadow: available || done);
@@ -181,8 +196,11 @@ class CompanionSceneArchivePainter {
       final choices =
           (scene['choices'] as List? ?? const []).cast<Map<String, dynamic>>();
       final selectedChoice = scene['selectedChoice'] is Map
-          ? (scene['selectedChoice'] as Map).cast<String, dynamic>()
-          : null;
+              ? (scene['selectedChoice'] as Map).cast<String, dynamic>()
+              : null,
+          choiceEcho = scene['choiceEcho'] is Map
+              ? (scene['choiceEcho'] as Map).cast<String, dynamic>()
+              : null;
       final lockCopy = !unlocked
           ? tr('ui.companionScenes.notice.bond', 'A stronger bond is required.')
           : !chapterReady
@@ -190,42 +208,80 @@ class CompanionSceneArchivePainter {
                   'This chapter has not arrived yet.')
               : tr('ui.companionScenes.notice.duplicate',
                   'This scene is already recorded.');
-      t(
-          c,
-          done
-              ? '${selectedChoice == null ? tr('${scene['lineKey']}', '${scene['line']}') : tr('${selectedChoice['responseKey']}', '${selectedChoice['response']}')} · ${format('ui.companionScenes.reward', '기록 보상 · 유대 +{bond}', {
-                      'bond': (selectedChoice?['bondDelta'] as int?) ??
-                          (scene['bondDelta'] as int?) ??
-                          1
-                    })}'
-              : available
-                  ? pending
-                      ? tr('ui.companionScenes.choose', '이 장면에서 어떤 기록을 남길까요?')
-                      : tr('${scene['promptKey']}', '${scene['prompt']}')
-                  : lockCopy,
-          Offset(x + 18, y + 62),
-          9,
-          available || done ? teal : ink.withValues(alpha: .45),
-          width: 300,
-          lines: available ? 1 : 2);
+      if (done) {
+        t(
+            c,
+            '${selectedChoice == null ? tr('${scene['lineKey']}', '${scene['line']}') : tr('${selectedChoice['responseKey']}', '${selectedChoice['response']}')} · ${format('ui.companionScenes.reward', '기록 보상 · 유대 +{bond}', {
+                  'bond': (selectedChoice?['bondDelta'] as int?) ??
+                      (scene['bondDelta'] as int?) ??
+                      1
+                })}',
+            Offset(x + 18, y + 62),
+            9,
+            teal,
+            width: 300,
+            lines: 2);
+      } else if (available && !pending && choiceEcho != null) {
+        t(
+            c,
+            format('ui.companionScenes.choiceEcho', '앞선 선택 · {choice}', {
+              'choice': tr('${choiceEcho['labelKey']}',
+                  '${choiceEcho['label'] ?? choiceEcho['choiceId']}'),
+            }),
+            Offset(x + 18, y + 58),
+            8,
+            sun,
+            bold: true,
+            width: 300,
+            lines: 1);
+        t(c, tr('${scene['promptKey']}', '${scene['prompt']}'),
+            Offset(x + 18, y + 72), 8, teal,
+            width: 300, lines: 1);
+      } else {
+        t(
+            c,
+            available
+                ? tr('ui.companionScenes.choose', '이 장면에서 어떤 기록을 남길까요?')
+                : lockCopy,
+            Offset(x + 18, y + 62),
+            9,
+            available ? teal : ink.withValues(alpha: .45),
+            width: 300,
+            lines: available ? 1 : 2);
+      }
       if (available && choices.length >= 2) {
-        CanvasUiKit.button(c, Rect.fromLTWH(x + 12, y + 78, 154, 20),
+        CanvasUiKit.button(c, CompanionSceneLayout.choiceRect(i, 0),
             tr('${choices[0]['labelKey']}', '${choices[0]['label']}'),
             state: pending ? CanvasUiState.selected : CanvasUiState.idle,
             accent: teal,
             fontSize: 8,
             radius: 5);
-        CanvasUiKit.button(c, Rect.fromLTWH(x + 174, y + 78, 154, 20),
+        CanvasUiKit.button(c, CompanionSceneLayout.choiceRect(i, 1),
             tr('${choices[1]['labelKey']}', '${choices[1]['label']}'),
             accent: teal, fontSize: 8, radius: 5);
       }
     }
-    CanvasUiKit.button(c, const Rect.fromLTWH(24, 604, 176, 38),
+    CanvasUiKit.button(c, CompanionSceneLayout.previousRect,
         tr('ui.companionScenes.previous', '← 이전 동행'));
     t(c, '${index + 1}/${people.length}', const Offset(354, 616), 11, teal,
         bold: true, width: 60);
-    CanvasUiKit.button(c, const Rect.fromLTWH(560, 604, 176, 38),
+    CanvasUiKit.button(c, CompanionSceneLayout.nextRect,
         tr('ui.companionScenes.next', '다음 동행 →'));
+    if (priorChoice != null) {
+      t(
+          c,
+          format('ui.companionScenes.choiceEchoHint',
+              '앞선 선택이 다음 장면에 남아 있습니다 · {choice}', {
+            'choice': tr('${priorChoice['labelKey']}',
+                '${priorChoice['label'] ?? priorChoice['choiceId']}'),
+          }),
+          const Offset(216, 665),
+          9,
+          teal,
+          bold: true,
+          width: 490,
+          lines: 1);
+    }
     t(c, tr('ui.companionScenes.back', '← 관계 기록'), const Offset(24, 665), 13,
         teal,
         bold: true);

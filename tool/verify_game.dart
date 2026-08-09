@@ -44,6 +44,7 @@ void verifyTrilemmaContract(String storyHash,
       (complete['companionSceneChoiceImpactRate'] as num? ?? 0) < 1.0 ||
       (complete['companionSceneGoldens'] as int? ?? 0) < 8 ||
       complete['companionSceneBondReward'] != true ||
+      complete['saveUiStateContinuity'] != true ||
       complete['goldens'] < 20 ||
       complete['localeKeys'] < 118 ||
       complete['qualityScoreTarget'] != qualityScoreTarget ||
@@ -76,6 +77,7 @@ void verifyTrilemmaContract(String storyHash,
       (purity['companionSceneGoldens'] as int? ?? 0) < 8 ||
       purity['companionSceneBondReward'] != true ||
       purity['companionSceneDeterminism'] != true ||
+      purity['saveUiStateContinuity'] != true ||
       purity['qualityScoreTarget'] != qualityScoreTarget ||
       performance['campaigns'] != 5000 ||
       performance['transitionBudget'] !=
@@ -90,6 +92,8 @@ void verifyTrilemmaContract(String storyHash,
       performance['companionSceneReplay'] != true ||
       (performance['companionSceneChoiceModes'] as int? ?? 0) < 2 ||
       performance['companionSceneRouteTrace'] != true ||
+      (performance['companionSceneRenderBudgetMicros'] as int? ?? 0) > 8000 ||
+      performance['companionSceneRenderBudgetEvidence'] != true ||
       (performance['minCompanionScenes'] as int? ?? 0) < 3 ||
       performance['qualityScoreTarget'] != qualityScoreTarget ||
       performance['systemApproval'] != true ||
@@ -1050,9 +1054,11 @@ void main() {
             .contains("goldens/companion-scene-lumi-mixed.png") &&
         companionSceneGoldenEvidence
             .contains("goldens/companion-scene-locked.png") &&
-        companionSceneGoldenEvidence.contains('Offset(190, 300)') &&
         companionSceneGoldenEvidence
-            .contains('companion scene archive records a scene') &&
+            .contains('CompanionSceneLayout.choiceRect(0, 0).center') &&
+        companionSceneGoldenEvidence.contains('companion choice recall and archive navigation keep their hitboxes') &&
+        companionSceneGoldenEvidence.contains("goldens/companion-scene-choice-recall.png") &&
+        companionSceneGoldenEvidence.contains('companion scene archive records a scene') &&
         playerFacingGoldenEvidence.contains('all personality illustration pages render deterministic portraits') &&
         playerFacingGoldenEvidence.contains("goldens/personality-quiet.png") &&
         playerFacingGoldenEvidence.contains("goldens/personality-kind.png") &&

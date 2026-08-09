@@ -13,11 +13,16 @@ class GateCheck {
 Future<int> runCheck(GateCheck check) async {
   stdout.writeln('SYSTEM_GATE_START: ${check.id}');
   try {
-    final result =
-        await Process.run(check.executable, check.arguments, runInShell: true);
-    final output = '${result.stdout}${result.stderr}';
-    if (output.trim().isNotEmpty) stdout.write(output);
-    final code = result.exitCode;
+    final process = await Process.start(
+      check.executable,
+      check.arguments,
+      runInShell: true,
+    );
+    process.stdout.transform(utf8.decoder).listen(stdout.write);
+    process.stderr.transform(utf8.decoder).listen(stderr.write);
+    final code = await process.exitCode;
+    // The subscriptions keep long-running gate progress streaming without
+    // buffering; exitCode is the authoritative gate result.
     stdout.writeln('SYSTEM_GATE_${code == 0 ? 'PASS' : 'FAIL'}: ${check.id}');
     return code;
   } on Object catch (error) {
