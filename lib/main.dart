@@ -2626,7 +2626,7 @@ class Scene extends CustomPainter {
           maxLines: 2);
       dialoguePortrait(c, Rect.fromLTWH(x + 230, choiceTop + 28, 82, 102), ch);
       drawChoiceEcho(c, ch, Offset(x + 22, choiceTop + 170));
-      drawChoiceImpact(c, Rect.fromLTWH(x + 22, choiceTop + 188, 198, 8), ch);
+      drawChoiceImpact(c, Rect.fromLTWH(x + 22, choiceTop + 202, 198, 8), ch);
     }
     final reflection = activityReflectionForLine(
         (s['activityScenes'] as List? ?? const [])
