@@ -24,18 +24,19 @@ void main() {
   }
   final preconditions = (contract['preconditions'] as List? ?? const [])
       .cast<Map<String, dynamic>>();
-  final proofs =
-      (contract['proofs'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final proofs = (contract['proofs'] as List? ?? const [])
+      .cast<Map<String, dynamic>>();
   const requiredPreconditions = {
     'viewport-geometry',
     'tap-inverse',
-    'single-render-path'
+    'single-render-path',
   };
   const requiredProofs = {
     'viewport-mapping',
     'visual-regression',
     'static-analysis',
     'canvas-paint-budget',
+    'golden-tolerance-boundary',
   };
   final actualPreconditions = preconditions.map((entry) => entry['id']).toSet(),
       actualProofs = proofs.map((entry) => entry['id']).toSet();
@@ -56,82 +57,163 @@ void main() {
   }
 
   final viewport = read('lib/canvas_surface.dart'),
-      main = read('lib/main.dart');
-  requireText('lib/canvas_surface.dart', viewport,
-      'min(viewport.width / logicalSize.width,');
+      main = read('lib/main.dart'),
+      goldenTolerance = read('lib/golden_tolerance.dart');
+  requireText(
+    'lib/canvas_surface.dart',
+    viewport,
+    'min(viewport.width / logicalSize.width,',
+  );
   requireText('lib/canvas_surface.dart', viewport, 'logicalTap');
   requireText('lib/main.dart', main, 'CanvasViewport.logicalTap');
   requireText('lib/main.dart', main, 'CanvasViewport.frame');
   requireText('lib/main.dart', main, 'LayoutBuilder');
   requireText('lib/main.dart', main, 'size: viewport');
   final surfaceTest = read('test/canvas_surface_test.dart');
-  requireText('test/canvas_surface_test.dart', surfaceTest,
-      'maps centered taps deterministically');
+  requireText(
+    'test/canvas_surface_test.dart',
+    surfaceTest,
+    'maps centered taps deterministically',
+  );
   final goldenTest = read('test/golden_test.dart');
   requireText('test/golden_test.dart', goldenTest, 'matchesGoldenFile');
+  final goldenToleranceTest = read('test/golden_tolerance_test.dart');
+  requireText(
+    'lib/golden_tolerance.dart',
+    goldenTolerance,
+    'canvasGoldenTolerance = 0.025',
+  );
+  requireText(
+    'lib/golden_tolerance.dart',
+    goldenTolerance,
+    'diffPercent.isFinite',
+  );
+  requireText(
+    'test/golden_tolerance_test.dart',
+    goldenToleranceTest,
+    'golden tolerance accepts exact and boundary diff',
+  );
+  requireText(
+    'test/golden_tolerance_test.dart',
+    goldenToleranceTest,
+    'golden tolerance fails closed above boundary and for non-finite diff',
+  );
   final chapterGoldenTest = read('test/chapter_golden_test.dart');
-  requireText('test/chapter_golden_test.dart', chapterGoldenTest,
-      'all sixteen SSOT chapters have deterministic event Goldens');
-  requireText('test/chapter_golden_test.dart', chapterGoldenTest,
-      'goldens/chapter-\$id.png');
-  final chapterClosureGoldenTest =
-      read('test/chapter_closure_golden_test.dart');
-  final relationshipArchiveGoldenTest =
-      read('test/relationship_archive_golden_test.dart');
+  requireText(
+    'test/chapter_golden_test.dart',
+    chapterGoldenTest,
+    'all sixteen SSOT chapters have deterministic event Goldens',
+  );
+  requireText(
+    'test/chapter_golden_test.dart',
+    chapterGoldenTest,
+    'goldens/chapter-\$id.png',
+  );
+  final chapterClosureGoldenTest = read(
+    'test/chapter_closure_golden_test.dart',
+  );
+  final relationshipArchiveGoldenTest = read(
+    'test/relationship_archive_golden_test.dart',
+  );
   final playerFacingGoldenTest = read('test/player_facing_golden_test.dart');
-  final activityForecastGoldenTest =
-      read('test/activity_forecast_golden_test.dart');
+  final activityForecastGoldenTest = read(
+    'test/activity_forecast_golden_test.dart',
+  );
   final activityRiskGoldenTest = read('test/activity_risk_golden_test.dart');
-  final memoryForecastGoldenTest =
-      read('test/memory_forecast_golden_test.dart');
-  final activityReflectionGoldenTest =
-      read('test/activity_reflection_golden_test.dart');
-  final activityJournalGoldenTest =
-      read('test/activity_journal_golden_test.dart');
-  final characterRosterGoldenTest =
-      read('test/character_roster_golden_test.dart');
+  final memoryForecastGoldenTest = read(
+    'test/memory_forecast_golden_test.dart',
+  );
+  final activityReflectionGoldenTest = read(
+    'test/activity_reflection_golden_test.dart',
+  );
+  final activityJournalGoldenTest = read(
+    'test/activity_journal_golden_test.dart',
+  );
+  final characterRosterGoldenTest = read(
+    'test/character_roster_golden_test.dart',
+  );
   final environmentAtlasGoldenTest = read('test/environment_golden_test.dart');
-  requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
-      'all sixteen SSOT chapter closures have deterministic goal Goldens');
-  requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
-      'goldens/chapter-closure-\$id.png');
+  requireText(
+    'test/chapter_closure_golden_test.dart',
+    chapterClosureGoldenTest,
+    'all sixteen SSOT chapter closures have deterministic goal Goldens',
+  );
+  requireText(
+    'test/chapter_closure_golden_test.dart',
+    chapterClosureGoldenTest,
+    'goldens/chapter-closure-\$id.png',
+  );
   requireText('lib/main.dart', main, 'chapterClosure(c)');
   requireText('lib/main.dart', main, 'page == 6');
   requireText('lib/main.dart', main, "ui.closure.scene");
-  requireText('test/chapter_closure_golden_test.dart', chapterClosureGoldenTest,
-      'relationship scene must bind a speaker');
-  requireText('test/character_roster_golden_test.dart',
-      characterRosterGoldenTest, 'goldens/character-roster.png');
-  requireText('test/character_roster_golden_test.dart',
-      characterRosterGoldenTest, 'goldens/character-roster-en.png');
-  requireText('test/environment_golden_test.dart', environmentAtlasGoldenTest,
-      'goldens/environment-atlas.png');
-  requireText('test/environment_golden_test.dart', environmentAtlasGoldenTest,
-      'goldens/environment-atlas-en.png');
+  requireText(
+    'test/chapter_closure_golden_test.dart',
+    chapterClosureGoldenTest,
+    'relationship scene must bind a speaker',
+  );
+  requireText(
+    'test/character_roster_golden_test.dart',
+    characterRosterGoldenTest,
+    'goldens/character-roster.png',
+  );
+  requireText(
+    'test/character_roster_golden_test.dart',
+    characterRosterGoldenTest,
+    'goldens/character-roster-en.png',
+  );
+  requireText(
+    'test/environment_golden_test.dart',
+    environmentAtlasGoldenTest,
+    'goldens/environment-atlas.png',
+  );
+  requireText(
+    'test/environment_golden_test.dart',
+    environmentAtlasGoldenTest,
+    'goldens/environment-atlas-en.png',
+  );
   for (final name in [
     'goldens/relationship-archive.png',
     'goldens/relationship-archive-kind.png',
     'goldens/relationship-archive-bold.png',
   ]) {
-    requireText('test/relationship_archive_golden_test.dart',
-        relationshipArchiveGoldenTest, name);
+    requireText(
+      'test/relationship_archive_golden_test.dart',
+      relationshipArchiveGoldenTest,
+      name,
+    );
   }
-  final companionSceneGoldenTest =
-      read('test/companion_scene_golden_test.dart');
+  final companionSceneGoldenTest = read(
+    'test/companion_scene_golden_test.dart',
+  );
   requireText('lib/main.dart', main, 'CompanionSceneArchivePainter');
   requireText('lib/main.dart', main, 'page == 13');
-  requireText('test/companion_scene_golden_test.dart', companionSceneGoldenTest,
-      'companion scene archive records a scene');
+  requireText(
+    'test/companion_scene_golden_test.dart',
+    companionSceneGoldenTest,
+    'companion scene archive records a scene',
+  );
   final companionSceneTest = read('test/companion_scene_test.dart');
   final canvasRenderPerfTest = read('test/canvas_render_perf_test.dart');
-  requireText('test/companion_scene_test.dart', companionSceneTest,
-      'companion archive canvas projection stays within the frame budget');
-  requireText('test/companion_scene_test.dart', companionSceneTest,
-      'COMPANION_RENDER_PERF_OK');
-  requireText('test/canvas_render_perf_test.dart', canvasRenderPerfTest,
-      'full Canvas pages stay within the deterministic frame budget');
-  requireText('test/canvas_render_perf_test.dart', canvasRenderPerfTest,
-      'CANVAS_RENDER_PERF_OK');
+  requireText(
+    'test/companion_scene_test.dart',
+    companionSceneTest,
+    'companion archive canvas projection stays within the frame budget',
+  );
+  requireText(
+    'test/companion_scene_test.dart',
+    companionSceneTest,
+    'COMPANION_RENDER_PERF_OK',
+  );
+  requireText(
+    'test/canvas_render_perf_test.dart',
+    canvasRenderPerfTest,
+    'full Canvas pages stay within the deterministic frame budget',
+  );
+  requireText(
+    'test/canvas_render_perf_test.dart',
+    canvasRenderPerfTest,
+    'CANVAS_RENDER_PERF_OK',
+  );
   for (final name in [
     'goldens/companion-scenes.png',
     'goldens/companion-scene-choice.png',
@@ -143,17 +225,27 @@ void main() {
     'goldens/companion-scene-locked.png',
     'goldens/companion-scene-choice-recall.png',
   ]) {
-    requireText('test/companion_scene_golden_test.dart',
-        companionSceneGoldenTest, name);
+    requireText(
+      'test/companion_scene_golden_test.dart',
+      companionSceneGoldenTest,
+      name,
+    );
   }
-  final companionScenePainter =
-      read('lib/companion_scene_archive_painter.dart');
-  requireText('lib/companion_scene_archive_painter.dart', companionScenePainter,
-      'CanvasUiKit.progress');
-  requireText('lib/companion_scene_archive_painter.dart', companionScenePainter,
-      'ui.companionScenes.reward');
-  final closureEvidence =
-      (contract['closureEvidence'] as Map? ?? const {}).cast<String, dynamic>();
+  final companionScenePainter = read(
+    'lib/companion_scene_archive_painter.dart',
+  );
+  requireText(
+    'lib/companion_scene_archive_painter.dart',
+    companionScenePainter,
+    'CanvasUiKit.progress',
+  );
+  requireText(
+    'lib/companion_scene_archive_painter.dart',
+    companionScenePainter,
+    'ui.companionScenes.reward',
+  );
+  final closureEvidence = (contract['closureEvidence'] as Map? ?? const {})
+      .cast<String, dynamic>();
   if (closureEvidence['id'] != 'companion-scenes' ||
       closureEvidence['goldens'] != 9 ||
       closureEvidence['test'] !=
@@ -161,35 +253,65 @@ void main() {
     fail('render quality contract must bind the companion scene Golden loop');
   }
   requireText(
-      'test/activity_forecast_golden_test.dart',
-      activityForecastGoldenTest,
-      'home shows deterministic activity forecasts');
-  requireText('test/activity_forecast_golden_test.dart',
-      activityForecastGoldenTest, 'goldens/activity-forecast.png');
-  requireText('test/activity_risk_golden_test.dart', activityRiskGoldenTest,
-      'home explains deterministic fatigue risk before spending the day');
-  requireText('test/activity_risk_golden_test.dart', activityRiskGoldenTest,
-      'goldens/activity-risk.png');
-  requireText('test/memory_forecast_golden_test.dart', memoryForecastGoldenTest,
-      'event shows the authored memory impact before commit');
-  requireText('test/memory_forecast_golden_test.dart', memoryForecastGoldenTest,
-      'goldens/memory-forecast.png');
+    'test/activity_forecast_golden_test.dart',
+    activityForecastGoldenTest,
+    'home shows deterministic activity forecasts',
+  );
   requireText(
-      'test/activity_reflection_golden_test.dart',
-      activityReflectionGoldenTest,
-      'event shows localized activity reflection after day spend');
-  requireText('test/activity_reflection_golden_test.dart',
-      activityReflectionGoldenTest, 'goldens/activity-reflection-en.png');
+    'test/activity_forecast_golden_test.dart',
+    activityForecastGoldenTest,
+    'goldens/activity-forecast.png',
+  );
   requireText(
-      'test/activity_journal_golden_test.dart',
-      activityJournalGoldenTest,
-      'activity journal renders deterministic reflection pages');
-  requireText('test/activity_journal_golden_test.dart',
-      activityJournalGoldenTest, 'goldens/activity-journal-en.png');
-  requireText('test/activity_journal_golden_test.dart',
-      activityJournalGoldenTest, 'goldens/activity-journal-ko.png');
-  requireText('test/golden_test.dart', goldenTest,
-      'ending exposes deterministic next-run legacy picker');
+    'test/activity_risk_golden_test.dart',
+    activityRiskGoldenTest,
+    'home explains deterministic fatigue risk before spending the day',
+  );
+  requireText(
+    'test/activity_risk_golden_test.dart',
+    activityRiskGoldenTest,
+    'goldens/activity-risk.png',
+  );
+  requireText(
+    'test/memory_forecast_golden_test.dart',
+    memoryForecastGoldenTest,
+    'event shows the authored memory impact before commit',
+  );
+  requireText(
+    'test/memory_forecast_golden_test.dart',
+    memoryForecastGoldenTest,
+    'goldens/memory-forecast.png',
+  );
+  requireText(
+    'test/activity_reflection_golden_test.dart',
+    activityReflectionGoldenTest,
+    'event shows localized activity reflection after day spend',
+  );
+  requireText(
+    'test/activity_reflection_golden_test.dart',
+    activityReflectionGoldenTest,
+    'goldens/activity-reflection-en.png',
+  );
+  requireText(
+    'test/activity_journal_golden_test.dart',
+    activityJournalGoldenTest,
+    'activity journal renders deterministic reflection pages',
+  );
+  requireText(
+    'test/activity_journal_golden_test.dart',
+    activityJournalGoldenTest,
+    'goldens/activity-journal-en.png',
+  );
+  requireText(
+    'test/activity_journal_golden_test.dart',
+    activityJournalGoldenTest,
+    'goldens/activity-journal-ko.png',
+  );
+  requireText(
+    'test/golden_test.dart',
+    goldenTest,
+    'ending exposes deterministic next-run legacy picker',
+  );
   for (final name in [
     'goldens/legacy-picker.png',
     'goldens/legacy-picker-en.png',
@@ -198,15 +320,21 @@ void main() {
   ]) {
     requireText('test/golden_test.dart', goldenTest, name);
   }
-  requireText('test/player_facing_golden_test.dart', playerFacingGoldenTest,
-      'all personality illustration pages render deterministic portraits');
+  requireText(
+    'test/player_facing_golden_test.dart',
+    playerFacingGoldenTest,
+    'all personality illustration pages render deterministic portraits',
+  );
   for (final name in [
     'goldens/personality-quiet.png',
     'goldens/personality-kind.png',
     'goldens/personality-bold.png',
   ]) {
     requireText(
-        'test/player_facing_golden_test.dart', playerFacingGoldenTest, name);
+      'test/player_facing_golden_test.dart',
+      playerFacingGoldenTest,
+      name,
+    );
   }
   final goldens = Directory('test/goldens')
       .listSync()
@@ -219,41 +347,50 @@ void main() {
       .listSync()
       .whereType<File>()
       .where((file) => file.path.endsWith('.png'))
-      .where((file) =>
-          file.uri.pathSegments.last.startsWith('chapter-') &&
-          !file.uri.pathSegments.last.startsWith('chapter-closure-'))
+      .where(
+        (file) =>
+            file.uri.pathSegments.last.startsWith('chapter-') &&
+            !file.uri.pathSegments.last.startsWith('chapter-closure-'),
+      )
       .length;
   if (chapterGoldens != 16)
     fail(
-        'expected exactly 16 chapter golden evidence files, found $chapterGoldens');
+      'expected exactly 16 chapter golden evidence files, found $chapterGoldens',
+    );
   final chapterClosureGoldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
       .where((file) => file.path.endsWith('.png'))
       .where(
-          (file) => file.uri.pathSegments.last.startsWith('chapter-closure-'))
+        (file) => file.uri.pathSegments.last.startsWith('chapter-closure-'),
+      )
       .length;
   if (chapterClosureGoldens != 16)
     fail(
-        'expected exactly 16 chapter closure golden evidence files, found $chapterClosureGoldens');
+      'expected exactly 16 chapter closure golden evidence files, found $chapterClosureGoldens',
+    );
   final companionSceneGoldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
-      .where((file) => [
-            'companion-scenes.png',
-            'companion-scene-choice.png',
-            'companion-scene-recorded.png',
-            'companion-scene-recorded-en.png',
-            'companion-scene-lumi-mixed.png',
-            'companion-scene-bora-mixed.png',
-            'companion-scene-taro-mixed.png',
-            'companion-scene-locked.png',
-            'companion-scene-choice-recall.png',
-          ].contains(file.uri.pathSegments.last))
+      .where(
+        (file) => [
+          'companion-scenes.png',
+          'companion-scene-choice.png',
+          'companion-scene-recorded.png',
+          'companion-scene-recorded-en.png',
+          'companion-scene-lumi-mixed.png',
+          'companion-scene-bora-mixed.png',
+          'companion-scene-taro-mixed.png',
+          'companion-scene-locked.png',
+          'companion-scene-choice-recall.png',
+        ].contains(file.uri.pathSegments.last),
+      )
       .length;
   if (companionSceneGoldens != 9)
     fail(
-        'expected exactly 9 companion scene golden evidence files, found $companionSceneGoldens');
+      'expected exactly 9 companion scene golden evidence files, found $companionSceneGoldens',
+    );
   stdout.writeln(
-      'RENDER_QUALITY_PRECONDITIONS_OK: preconditions=${preconditions.length} proofs=${proofs.length} goldens=$goldens chapterGoldens=$chapterGoldens chapterClosureGoldens=$chapterClosureGoldens companionSceneGoldens=$companionSceneGoldens');
+    'RENDER_QUALITY_PRECONDITIONS_OK: preconditions=${preconditions.length} proofs=${proofs.length} goldens=$goldens chapterGoldens=$chapterGoldens chapterClosureGoldens=$chapterClosureGoldens companionSceneGoldens=$companionSceneGoldens',
+  );
 }

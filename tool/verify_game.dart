@@ -3,16 +3,18 @@ import 'package:prince_maker/jsonl.dart';
 import 'package:crypto/crypto.dart';
 import 'package:prince_maker/quality_score.dart';
 
-void verifyTrilemmaContract(String storyHash,
-    {required int endingWeek,
-    required int eventCount,
-    required int companionSceneCount}) {
+void verifyTrilemmaContract(
+  String storyHash, {
+  required int endingWeek,
+  required int eventCount,
+  required int companionSceneCount,
+}) {
   final file = File('docs/trilemma-contract.jsonl');
   if (!file.existsSync()) fail('missing trilemma contract');
   final contract = decodeJsonl(file.readAsStringSync());
   final source = (contract['source'] as Map).cast<String, dynamic>();
-  final axes =
-      (contract['axes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final axes = (contract['axes'] as List? ?? const [])
+      .cast<Map<String, dynamic>>();
   const ids = {'completeness', 'purity', 'performance'};
   if (contract['schema'] != 'prince-maker-trilemma-v1' ||
       source['ref'] != 'story/story.jsonl#root' ||
@@ -23,11 +25,11 @@ void verifyTrilemmaContract(String storyHash,
     fail('trilemma contract schema/source drift');
   }
   final byId = {for (final axis in axes) axis['id'] as String: axis};
-  final complete =
-      (byId['completeness']!['guardrails'] as Map).cast<String, dynamic>();
+  final complete = (byId['completeness']!['guardrails'] as Map)
+      .cast<String, dynamic>();
   final purity = (byId['purity']!['guardrails'] as Map).cast<String, dynamic>();
-  final performance =
-      (byId['performance']!['guardrails'] as Map).cast<String, dynamic>();
+  final performance = (byId['performance']!['guardrails'] as Map)
+      .cast<String, dynamic>();
   if ((byId['completeness']!['targetScore'] as num) < qualityScoreTarget ||
       complete['scenarioDimensions'] != 8 ||
       (complete['scenarioCases'] as int? ?? 0) < 2000 ||
@@ -41,6 +43,7 @@ void verifyTrilemmaContract(String storyHash,
       (complete['activityJournalGoldens'] as int? ?? 0) < 2 ||
       (complete['systemDecisionReceiptGoldens'] as int? ?? 0) < 1 ||
       complete['systemDecisionReceiptEvidence'] != true ||
+      complete['goldenToleranceBoundaryEvidence'] != true ||
       (complete['companionScenes'] as int? ?? 0) < 18 ||
       (complete['companionSceneChoices'] as int? ?? 0) < 36 ||
       complete['companionSceneChoiceBranching'] != true ||
@@ -139,7 +142,8 @@ Set<String> authoredLocaleKeys(dynamic node) {
     for (final entry in node.entries) {
       if (entry.key is String &&
           entry.key.toString().endsWith('Key') &&
-          entry.value is String) keys.add(entry.value as String);
+          entry.value is String)
+        keys.add(entry.value as String);
       keys.addAll(authoredLocaleKeys(entry.value));
     }
   } else if (node is List) {
@@ -156,11 +160,11 @@ Never fail(String message) {
 void main() {
   final story = decodeJsonl(File('story/story.jsonl').readAsStringSync());
   verifyTrilemmaContract(
-      sha256.convert(File('story/story.jsonl').readAsBytesSync()).toString(),
-      endingWeek: story['endingWeek'] as int,
-      eventCount: (story['events'] as List).length,
-      companionSceneCount:
-          (story['companionScenes'] as List? ?? const []).length);
+    sha256.convert(File('story/story.jsonl').readAsBytesSync()).toString(),
+    endingWeek: story['endingWeek'] as int,
+    eventCount: (story['events'] as List).length,
+    companionSceneCount: (story['companionScenes'] as List? ?? const []).length,
+  );
   final activities = (story['activities'] as List).cast<Map<String, dynamic>>();
   final people = (story['personalities'] as List).cast<Map<String, dynamic>>();
   final companions = (story['companions'] as List).cast<Map<String, dynamic>>();
@@ -170,53 +174,56 @@ void main() {
   final characterArchive = (story['characterArchive'] as List? ?? const [])
       .cast<Map<String, dynamic>>();
   final locations = (story['locations'] as List).cast<Map<String, dynamic>>();
-  final legacyProfiles =
-      (story['legacyProfiles'] as List).cast<Map<String, dynamic>>();
+  final legacyProfiles = (story['legacyProfiles'] as List)
+      .cast<Map<String, dynamic>>();
   final events = (story['events'] as List).cast<Map<String, dynamic>>();
   final endings = (story['endings'] as List).cast<Map<String, dynamic>>();
   final endingIds = endings.map((ending) => '${ending['id']}').toSet();
   final refs = (story['codeRefs'] as List).cast<Map<String, dynamic>>();
   final assetRefs = (story['assetRefs'] as List).cast<Map<String, dynamic>>();
-  final fontRefs =
-      (story['fontRefs'] as List? ?? []).cast<Map<String, dynamic>>();
-  final localeRefs =
-      (story['localeRefs'] as List? ?? []).cast<Map<String, dynamic>>();
-  final progression =
-      (story['progression'] as List? ?? []).cast<Map<String, dynamic>>();
-  final dialogueMetrics =
-      (story['dialogueMetrics'] as Map? ?? {}).cast<String, dynamic>();
-  final scenario =
-      (story['scenarioCompleteness'] as Map? ?? {}).cast<String, dynamic>();
-  final decisionSystem =
-      (story['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
-  final campaignWeeks = story['campaignWeeks'] as int? ??
+  final fontRefs = (story['fontRefs'] as List? ?? [])
+      .cast<Map<String, dynamic>>();
+  final localeRefs = (story['localeRefs'] as List? ?? [])
+      .cast<Map<String, dynamic>>();
+  final progression = (story['progression'] as List? ?? [])
+      .cast<Map<String, dynamic>>();
+  final dialogueMetrics = (story['dialogueMetrics'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final scenario = (story['scenarioCompleteness'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final decisionSystem = (story['decisionSystem'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final campaignWeeks =
+      story['campaignWeeks'] as int? ??
       ((story['endingWeek'] as int) - 1).clamp(1, 999).toInt();
-  final contentBudget =
-      (story['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
-  final sideScenes =
-      (story['sideScenes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final contentBudget = (story['contentBudget'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final sideScenes = (story['sideScenes'] as List? ?? const [])
+      .cast<Map<String, dynamic>>();
   final activityScenes = (story['activityScenes'] as List? ?? const [])
       .cast<Map<String, dynamic>>();
-  final scenarioVariantBudget =
-      (story['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
-  final endingDesign =
-      (story['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
-  final narrativeLoop =
-      (story['narrativeLoop'] as Map? ?? {}).cast<String, dynamic>();
-  final legacySelection =
-      (story['legacySelection'] as Map? ?? {}).cast<String, dynamic>();
-  final chapterSceneContract =
-      (story['chapterSceneContract'] as Map? ?? {}).cast<String, dynamic>();
-  final relationshipDesign =
-      (story['relationshipDesign'] as Map? ?? {}).cast<String, dynamic>();
-  final fateThreads =
-      (story['fateThreads'] as List? ?? []).cast<Map<String, dynamic>>();
-  final companionQuests =
-      (story['companionQuests'] as List? ?? []).cast<Map<String, dynamic>>();
-  final companionScenes =
-      (story['companionScenes'] as List? ?? []).cast<Map<String, dynamic>>();
+  final scenarioVariantBudget = (story['scenarioVariantBudget'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final endingDesign = (story['endingDesign'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final narrativeLoop = (story['narrativeLoop'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final legacySelection = (story['legacySelection'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final chapterSceneContract = (story['chapterSceneContract'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final relationshipDesign = (story['relationshipDesign'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final fateThreads = (story['fateThreads'] as List? ?? [])
+      .cast<Map<String, dynamic>>();
+  final companionQuests = (story['companionQuests'] as List? ?? [])
+      .cast<Map<String, dynamic>>();
+  final companionScenes = (story['companionScenes'] as List? ?? [])
+      .cast<Map<String, dynamic>>();
   final companionQuestStages = companionQuests.fold<int>(
-      0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
+    0,
+    (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length),
+  );
   if (campaignWeeks < 48 || story['endingWeek'] != campaignWeeks + 1)
     fail('campaign must expose a 48-week route and one terminal week');
   if (contentBudget['schema'] != 'lumen-playtime-v1' ||
@@ -230,7 +237,9 @@ void main() {
       contentBudget['companionScenes'] != companionScenes.length ||
       contentBudget['companionSceneChoices'] !=
           companionScenes.fold<int>(
-              0, (sum, scene) => sum + ((scene['choices'] as List).length)) ||
+            0,
+            (sum, scene) => sum + ((scene['choices'] as List).length),
+          ) ||
       contentBudget['activityMiniEvents'] != activityScenes.length ||
       contentBudget['chapterClosures'] != progression.length ||
       contentBudget['chapterSceneBeats'] != progression.length ||
@@ -249,27 +258,30 @@ void main() {
           is! int) {
     fail('content budget must prove the minimum 120-minute campaign');
   }
-  final pacing =
-      (contentBudget['pacingSeconds'] as Map).cast<String, dynamic>();
+  final pacing = (contentBudget['pacingSeconds'] as Map)
+      .cast<String, dynamic>();
   final estimatedSeconds =
       campaignWeeks * (pacing['activityReflection'] as int) +
-          events.length * (pacing['storyChoice'] as int) +
-          sideScenes.length * (pacing['sideScene'] as int) +
-          progression.length * (pacing['chapterClosure'] as int) +
-          progression.length * (pacing['chapterSceneBeat'] as int) +
-          activityScenes.length * (pacing['activityMiniEvent'] as int);
+      events.length * (pacing['storyChoice'] as int) +
+      sideScenes.length * (pacing['sideScene'] as int) +
+      progression.length * (pacing['chapterClosure'] as int) +
+      progression.length * (pacing['chapterSceneBeat'] as int) +
+      activityScenes.length * (pacing['activityMiniEvent'] as int);
   if (contentBudget['estimatedFirstPlaythroughMinutes'] !=
       estimatedSeconds ~/ 60)
     fail(
-        'content budget estimated minutes do not match the authored pacing formula');
+      'content budget estimated minutes do not match the authored pacing formula',
+    );
   if (estimatedSeconds < (contentBudget['minimumMinutes'] as int) * 60)
     fail('content budget pacing is below the minimum playtime');
   final branchWeeks =
       (scenarioVariantBudget['branchWeeks'] as List? ?? const []).cast<int>();
-  final branchEvents =
-      events.where((event) => branchWeeks.contains(event['week'])).toList();
+  final branchEvents = events
+      .where((event) => branchWeeks.contains(event['week']))
+      .toList();
   final branchVectors = branchWeeks.isEmpty ? 0 : 1 << branchWeeks.length;
-  final routeInputCases = activities.length *
+  final routeInputCases =
+      activities.length *
       people.length *
       (legacyProfiles.length + 1) *
       branchVectors;
@@ -278,13 +290,16 @@ void main() {
       branchWeeks.length < 11 ||
       branchWeeks.toSet().length != branchWeeks.length ||
       branchEvents.length != branchWeeks.length ||
-      branchEvents.any((event) =>
-          (event['choices'] as List).length != 2 ||
-          (event['choices'] as List).cast<Map<String, dynamic>>().any(
+      branchEvents.any(
+        (event) =>
+            (event['choices'] as List).length != 2 ||
+            (event['choices'] as List).cast<Map<String, dynamic>>().any(
               (choice) =>
                   choice['requiresStat'] != null ||
                   choice['requiresBondId'] != null ||
-                  choice['requiresFlag'] != null)) ||
+                  choice['requiresFlag'] != null,
+            ),
+      ) ||
       scenarioVariantBudget['branchChoicesPerWeek'] != 2 ||
       scenarioVariantBudget['authoredBranchVectors'] != branchVectors ||
       scenarioVariantBudget['activityPolicies'] != activities.length ||
@@ -296,10 +311,11 @@ void main() {
       scenarioVariantBudget['evidence'] !=
           'tool/verify_scenario_variants.dart#scenario-case-enumerator') {
     fail(
-        'scenario variant budget must define and exceed 2,000 reachable cases');
+      'scenario variant budget must define and exceed 2,000 reachable cases',
+    );
   }
-  final resolutionOrder =
-      (endingDesign['resolutionOrder'] as List? ?? const []).cast<String>();
+  final resolutionOrder = (endingDesign['resolutionOrder'] as List? ?? const [])
+      .cast<String>();
   final coreFamilies = (endingDesign['coreFamilies'] as List? ?? const [])
       .cast<Map<String, dynamic>>();
   final companionRouteModifiers =
@@ -311,17 +327,20 @@ void main() {
       !resolutionOrder.contains('highest-eligible-authored-tier') ||
       !resolutionOrder.contains('companion-route-set') ||
       coreFamilies.length != growthAxes.length ||
-      coreFamilies.any((family) =>
-          !growthAxes.contains(family['stat']) ||
-          (family['tiers'] as List? ?? const []).length < 2 ||
-          (family['masterRequires'] as List? ?? const []).isEmpty) ||
+      coreFamilies.any(
+        (family) =>
+            !growthAxes.contains(family['stat']) ||
+            (family['tiers'] as List? ?? const []).length < 2 ||
+            (family['masterRequires'] as List? ?? const []).isEmpty,
+      ) ||
       companionRouteModifiers.length != companions.length ||
       (endingDesign['maximumCompanionRouteSets'] as int? ?? 0) < 8 ||
       (endingDesign['maximumTerminalRouteCards'] as int? ?? 0) < 48 ||
       (endingDesign['minimumCoreEndings'] as int? ?? 0) < 6 ||
       endingDesign['evidence'] != 'lib/game_core.dart#resolveEnding') {
     fail(
-        'ending matrix must define authored tiers and companion route modifiers');
+      'ending matrix must define authored tiers and companion route modifiers',
+    );
   }
   if (decisionSystem['schema'] != 'lumen-ledger-v1' ||
       decisionSystem['mode'] != 'system-adjudicated' ||
@@ -334,8 +353,10 @@ void main() {
   }
   if (locations.length != 6 ||
       locations.map((location) => location['id']).toSet().length != 6 ||
-      locations.any((location) =>
-          location['name'] is! String || location['nameKey'] is! String)) {
+      locations.any(
+        (location) =>
+            location['name'] is! String || location['nameKey'] is! String,
+      )) {
     fail('location registry must contain six localized unique places');
   }
   final locationIds = locations.map((location) => location['id']).toSet();
@@ -344,20 +365,28 @@ void main() {
   }
   if (legacyProfiles.length != 3 ||
       legacyProfiles.map((profile) => profile['id']).toSet().length != 3 ||
-      legacyProfiles.any((profile) =>
-          profile['stat'] is! String ||
-          !activities.any((activity) => activity['stat'] == profile['stat']) ||
-          profile['bonus'] is! int ||
-          profile['bonus'] < 1 ||
-          !companions
-              .any((companion) => companion['id'] == profile['companionId']) ||
-          profile['targetEndingId'] is! String ||
-          !(profile['endingIds'] as List).contains(profile['targetEndingId']) ||
-          !endingIds.contains('${profile['targetEndingId']}') ||
-          profile['titleKey'] is! String ||
-          (profile['endingIds'] as List? ?? const []).isEmpty ||
-          (profile['endingIds'] as List)
-              .any((ending) => !endingIds.contains('$ending')))) {
+      legacyProfiles.any(
+        (profile) =>
+            profile['stat'] is! String ||
+            !activities.any(
+              (activity) => activity['stat'] == profile['stat'],
+            ) ||
+            profile['bonus'] is! int ||
+            profile['bonus'] < 1 ||
+            !companions.any(
+              (companion) => companion['id'] == profile['companionId'],
+            ) ||
+            profile['targetEndingId'] is! String ||
+            !(profile['endingIds'] as List).contains(
+              profile['targetEndingId'],
+            ) ||
+            !endingIds.contains('${profile['targetEndingId']}') ||
+            profile['titleKey'] is! String ||
+            (profile['endingIds'] as List? ?? const []).isEmpty ||
+            (profile['endingIds'] as List).any(
+              (ending) => !endingIds.contains('$ending'),
+            ),
+      )) {
     fail('legacy profile contract must map three authored growth lineages');
   }
   final legacySelectionEvidence =
@@ -370,22 +399,26 @@ void main() {
       legacySelection['effect'] is! String ||
       legacySelection['homeFeedback'] is! String ||
       legacySelection['forecast'] is! String ||
-      !legacySelectionEvidence
-          .contains('lib/legacy_profile_catalog.dart#unlockedLegacyProfiles') ||
-      !legacySelectionEvidence
-          .contains('lib/legacy_profile_forecast.dart#legacyProfileForecast') ||
+      !legacySelectionEvidence.contains(
+        'lib/legacy_profile_catalog.dart#unlockedLegacyProfiles',
+      ) ||
+      !legacySelectionEvidence.contains(
+        'lib/legacy_profile_forecast.dart#legacyProfileForecast',
+      ) ||
       !legacySelectionEvidence.contains('lib/main.dart#legacyProfile') ||
       !legacySelectionEvidence.contains('lib/main.dart#legacyPicker') ||
       !legacySelectionEvidence.contains(
-          'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order') ||
+        'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order',
+      ) ||
       !legacySelectionEvidence.contains(
-          'test/golden_test.dart#ending exposes deterministic next-run legacy picker')) {
+        'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
+      )) {
     fail('legacy selection must be an explicit deterministic SSOT contract');
   }
-  final lineageDistribution =
-      (story['lineageDistribution'] as Map? ?? {}).cast<String, dynamic>();
-  final lineageEvidence =
-      (lineageDistribution['evidence'] as List? ?? const []).cast<String>();
+  final lineageDistribution = (story['lineageDistribution'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final lineageEvidence = (lineageDistribution['evidence'] as List? ?? const [])
+      .cast<String>();
   if (lineageDistribution['schema'] != 'lumen-lineage-distribution-v1' ||
       lineageDistribution['policyCount'] != activities.length ||
       lineageDistribution['profileCount'] != legacyProfiles.length ||
@@ -400,17 +433,21 @@ void main() {
               0) <
           4 ||
       (lineageDistribution['distinctProfileFingerprints'] as int? ?? 0) < 3 ||
-      !lineageEvidence
-          .contains('tool/benchmark_game.dart#profile-policy-distribution') ||
       !lineageEvidence.contains(
-          'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies') ||
+        'tool/benchmark_game.dart#profile-policy-distribution',
+      ) ||
       !lineageEvidence.contains(
-          'test/golden_test.dart#ending exposes deterministic next-run legacy picker')) {
+        'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies',
+      ) ||
+      !lineageEvidence.contains(
+        'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
+      )) {
     fail(
-        'legacy profile policy distribution must be an explicit SSOT contract');
+      'legacy profile policy distribution must be an explicit SSOT contract',
+    );
   }
-  final scenarioDimensions =
-      (scenario['dimensions'] as List? ?? []).cast<Map<String, dynamic>>();
+  final scenarioDimensions = (scenario['dimensions'] as List? ?? [])
+      .cast<Map<String, dynamic>>();
   const scenarioIds = {
     'arc',
     'agency',
@@ -419,7 +456,7 @@ void main() {
     'gating',
     'replay',
     'presentation',
-    'closure'
+    'closure',
   };
   if (scenario['schema'] != 'life-sim-scenario-v1' ||
       scenarioDimensions.length != scenarioIds.length ||
@@ -429,11 +466,13 @@ void main() {
           .map((d) => d['id'])
           .toSet()
           .containsAll(scenarioIds) ||
-      scenarioDimensions.any((d) =>
-          d['name'] is! String ||
-          d['target'] is! String ||
-          d['current'] is! String ||
-          d['evidence'] is! String)) {
+      scenarioDimensions.any(
+        (d) =>
+            d['name'] is! String ||
+            d['target'] is! String ||
+            d['current'] is! String ||
+            d['evidence'] is! String,
+      )) {
     fail('scenario completeness contract invalid');
   }
   if (activities.length != 5 || people.length != 3 || companions.length != 3)
@@ -447,10 +486,11 @@ void main() {
     fail('companion ids are not unique');
   final expectedRouteIds = {
     for (final person in people)
-      for (final companion in companions) '${person['id']}:${companion['id']}'
+      for (final companion in companions) '${person['id']}:${companion['id']}',
   };
-  final routeIds =
-      personalityCompanionRoutes.map((route) => '${route['id']}').toSet();
+  final routeIds = personalityCompanionRoutes
+      .map((route) => '${route['id']}')
+      .toSet();
   if (personalityCompanionRoutes.length != expectedRouteIds.length ||
       routeIds.length != expectedRouteIds.length ||
       !routeIds.containsAll(expectedRouteIds) ||
@@ -458,80 +498,98 @@ void main() {
               .where((route) => route['matched'] == true)
               .length !=
           people.length ||
-      personalityCompanionRoutes.any((route) =>
-          route['bondBonus'] is! int ||
-          (route['matched'] == true && route['bondBonus'] < 1) ||
-          (route['matched'] != true && route['bondBonus'] != 0))) {
+      personalityCompanionRoutes.any(
+        (route) =>
+            route['bondBonus'] is! int ||
+            (route['matched'] == true && route['bondBonus'] < 1) ||
+            (route['matched'] != true && route['bondBonus'] != 0),
+      )) {
     fail(
-        'personality-companion route matrix must cover matched and neutral pairs');
+      'personality-companion route matrix must cover matched and neutral pairs',
+    );
   }
-  if (people.any((e) =>
-      e['focusStat'] is! String ||
-      e['focusBonus'] is! int ||
-      e['focusBonus'] < 1)) fail('personality talent contract invalid');
-  if (companions.any((e) =>
-      e['bondThreshold'] is! int ||
-      e['bondThreshold'] < 1 ||
-      e['epilogue'] is! String ||
-      (e['epilogue'] as String).isEmpty))
+  if (people.any(
+    (e) =>
+        e['focusStat'] is! String ||
+        e['focusBonus'] is! int ||
+        e['focusBonus'] < 1,
+  ))
+    fail('personality talent contract invalid');
+  if (companions.any(
+    (e) =>
+        e['bondThreshold'] is! int ||
+        e['bondThreshold'] < 1 ||
+        e['epilogue'] is! String ||
+        (e['epilogue'] as String).isEmpty,
+  ))
     fail('companion epilogue contract invalid');
   final expectedEventWeeks = [
-    for (var week = 2; week <= campaignWeeks; week++) week
+    for (var week = 2; week <= campaignWeeks; week++) week,
   ];
   if (events.length != campaignWeeks - 1 ||
       events.map((e) => e['week']).toList().join(',') !=
           expectedEventWeeks.join(','))
     fail(
-        'events must cover every authored week from 2 through the terminal campaign week');
+      'events must cover every authored week from 2 through the terminal campaign week',
+    );
   final expectedChapterRanges = [
     for (var start = 1; start <= campaignWeeks; start += 3)
-      '${start}-${start + 2}'
+      '${start}-${start + 2}',
   ];
   if (progression.length != campaignWeeks ~/ 3 ||
       progression.map((c) => '${c['weekStart']}-${c['weekEnd']}').join(',') !=
           expectedChapterRanges.join(','))
     fail(
-        'progression must cover contiguous three-week chapters through the campaign');
+      'progression must cover contiguous three-week chapters through the campaign',
+    );
   final eventWeeks = events.map((e) => e['week']).toSet();
-  if (progression.any((c) =>
-      c['titleKey'] is! String ||
-      c['premiseKey'] is! String ||
-      c['payoffKey'] is! String ||
-      ((c['relationshipScene'] as Map? ?? {})['speakerId'] is! String) ||
-      ((c['relationshipScene'] as Map? ?? {})['titleKey'] is! String) ||
-      ((c['relationshipScene'] as Map? ?? {})['lineKey'] is! String) ||
-      (c['eventWeeks'] as List? ?? [])
-          .any((week) => !eventWeeks.contains(week))))
+  if (progression.any(
+    (c) =>
+        c['titleKey'] is! String ||
+        c['premiseKey'] is! String ||
+        c['payoffKey'] is! String ||
+        ((c['relationshipScene'] as Map? ?? {})['speakerId'] is! String) ||
+        ((c['relationshipScene'] as Map? ?? {})['titleKey'] is! String) ||
+        ((c['relationshipScene'] as Map? ?? {})['lineKey'] is! String) ||
+        (c['eventWeeks'] as List? ?? []).any(
+          (week) => !eventWeeks.contains(week),
+        ),
+  ))
     fail('chapter progression contract invalid');
-  final milestones =
-      (story['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
+  final milestones = (story['milestones'] as List? ?? [])
+      .cast<Map<String, dynamic>>();
   final expectedMilestoneWeeks = [
-    for (var week = 3; week <= campaignWeeks; week += 3) week
+    for (var week = 3; week <= campaignWeeks; week += 3) week,
   ];
   if (milestones.length != expectedMilestoneWeeks.length ||
       milestones.map((m) => m['week']).join(',') !=
           expectedMilestoneWeeks.join(','))
     fail('milestones must cover every chapter closure');
-  if (milestones.any((m) =>
-      m['id'] is! String ||
-      m['title'] is! String ||
-      m['stat'] is! String ||
-      m['min'] is! int ||
-      m['coins'] is! int ||
-      m['pass'] is! String ||
-      m['fail'] is! String)) fail('milestone contract invalid');
+  if (milestones.any(
+    (m) =>
+        m['id'] is! String ||
+        m['title'] is! String ||
+        m['stat'] is! String ||
+        m['min'] is! int ||
+        m['coins'] is! int ||
+        m['pass'] is! String ||
+        m['fail'] is! String,
+  ))
+    fail('milestone contract invalid');
   const pressureAxes = {'stat', 'coins', 'fatigue', 'bond'};
   final chapterContractsValid = progression.every((chapter) {
-    final contract =
-        (chapter['contract'] as Map? ?? {}).cast<String, dynamic>();
+    final contract = (chapter['contract'] as Map? ?? {})
+        .cast<String, dynamic>();
     final eventWeeks = (chapter['eventWeeks'] as List? ?? []).cast<int>();
     final choiceWeeks = (contract['choiceWeeks'] as List? ?? []).cast<int>();
     final axes = (contract['pressureAxes'] as List? ?? []).cast<String>();
     final closure = contract['closureMilestone'];
     final closureGoal = milestones.where((m) => m['id'] == closure).firstOrNull;
-    final chapterEvents = events.where((event) =>
-        (event['week'] as int) >= (chapter['weekStart'] as int) &&
-        (event['week'] as int) <= (chapter['weekEnd'] as int));
+    final chapterEvents = events.where(
+      (event) =>
+          (event['week'] as int) >= (chapter['weekStart'] as int) &&
+          (event['week'] as int) <= (chapter['weekEnd'] as int),
+    );
     return contract['reveal'] is String &&
         (contract['reveal'] as String).trim().isNotEmpty &&
         axes.length >= 2 &&
@@ -539,17 +597,20 @@ void main() {
         axes.every(pressureAxes.contains) &&
         choiceWeeks.toSet().length == eventWeeks.toSet().length &&
         choiceWeeks.toSet().containsAll(eventWeeks) &&
-        choiceWeeks
-            .every((week) => events.any((event) => event['week'] == week)) &&
+        choiceWeeks.every(
+          (week) => events.any((event) => event['week'] == week),
+        ) &&
         chapterEvents.isNotEmpty &&
-        chapterEvents
-            .every((event) => (event['choices'] as List).length == 2) &&
+        chapterEvents.every(
+          (event) => (event['choices'] as List).length == 2,
+        ) &&
         closureGoal != null &&
         closureGoal['week'] == chapter['weekEnd'];
   });
   if (!chapterContractsValid)
     fail(
-        'each chapter needs reveal, two pressure axes, authored choices and a closing milestone');
+      'each chapter needs reveal, two pressure axes, authored choices and a closing milestone',
+    );
   if (chapterSceneContract['schema'] != 'lumen-chapter-scene-v1' ||
       chapterSceneContract['count'] != progression.length ||
       narrativeLoop['chapterSceneCount'] != progression.length) {
@@ -564,17 +625,20 @@ void main() {
     'balanced',
     'tension',
     'estranged',
-    'truce'
+    'truce',
   };
-  final actualRelationshipStateIds =
-      relationshipStates.map((state) => '${state['id']}').toSet();
+  final actualRelationshipStateIds = relationshipStates
+      .map((state) => '${state['id']}')
+      .toSet();
   final relationshipFollowups =
       (relationshipDesign['followups'] as List? ?? const [])
           .cast<Map<String, dynamic>>();
-  final followupStateIds =
-      relationshipFollowups.map((followup) => '${followup['stateId']}').toSet();
-  final companionIds =
-      companions.map((companion) => '${companion['id']}').toSet();
+  final followupStateIds = relationshipFollowups
+      .map((followup) => '${followup['stateId']}')
+      .toSet();
+  final companionIds = companions
+      .map((companion) => '${companion['id']}')
+      .toSet();
   if (relationshipDesign['schema'] != 'lumen-relationship-dynamics-v1' ||
       relationshipDesign['truceFlag'] is! String ||
       relationshipThresholds['tensionGap'] is! int ||
@@ -585,19 +649,22 @@ void main() {
       actualRelationshipStateIds.length != relationshipStateIds.length ||
       !actualRelationshipStateIds.containsAll(relationshipStateIds) ||
       relationshipStates.any(
-          (state) => state['key'] is! String || state['fallback'] is! String) ||
+        (state) => state['key'] is! String || state['fallback'] is! String,
+      ) ||
       relationshipDesign['followupExclusiveGroup'] != 'relationship-followup' ||
       relationshipFollowups.length != relationshipStateIds.length ||
       followupStateIds.length != relationshipStateIds.length ||
       !followupStateIds.containsAll(relationshipStateIds) ||
-      relationshipFollowups.any((followup) =>
-          followup['exclusiveGroup'] != 'relationship-followup' ||
-          followup['speakerId'] is! String ||
-          !companionIds.contains(followup['speakerId']) ||
-          followup['titleKey'] is! String ||
-          followup['lineKey'] is! String ||
-          followup['title'] is! String ||
-          followup['line'] is! String) ||
+      relationshipFollowups.any(
+        (followup) =>
+            followup['exclusiveGroup'] != 'relationship-followup' ||
+            followup['speakerId'] is! String ||
+            !companionIds.contains(followup['speakerId']) ||
+            followup['titleKey'] is! String ||
+            followup['lineKey'] is! String ||
+            followup['title'] is! String ||
+            followup['line'] is! String,
+      ) ||
       narrativeLoop['relationshipStateContract'] !=
           'lumen-relationship-dynamics-v1' ||
       narrativeLoop['relationshipFollowupCount'] !=
@@ -618,16 +685,19 @@ void main() {
     final actual = sha256.convert(File(path).readAsBytesSync()).toString();
     if (actual != ref['sha256']) fail('asset ref hash drift: $path');
   }
-  final assetPaths =
-      assetRefs.map((r) => (r['ref'] as String).split('#').first).toSet();
+  final assetPaths = assetRefs
+      .map((r) => (r['ref'] as String).split('#').first)
+      .toSet();
   if (!assetPaths.contains('assets/noa-sprite-sheet.png') ||
       !assetPaths.contains('assets/lumen-personality-sheet.png'))
     fail('hero/personality PNGs must be declared in assetRefs');
-  if (people.any((p) =>
-      !assetPaths.contains(p['portraitAsset']) ||
-      (p['design'] as Map?)?['palette'] is! String ||
-      (p['design'] as Map?)?['motif'] is! String ||
-      (p['design'] as Map?)?['silhouette'] is! String))
+  if (people.any(
+    (p) =>
+        !assetPaths.contains(p['portraitAsset']) ||
+        (p['design'] as Map?)?['palette'] is! String ||
+        (p['design'] as Map?)?['motif'] is! String ||
+        (p['design'] as Map?)?['silhouette'] is! String,
+  ))
     fail('personality design-to-PNG contract invalid');
   for (final character in characterArchive) {
     final emotionAsset = character['emotionAsset'];
@@ -635,10 +705,12 @@ void main() {
       fail('character emotion asset is not declared: ${character['id']}');
     }
   }
-  if (!characterArchive.any((character) =>
-      character['id'] == 'doran' &&
-      character['emotionAsset'] ==
-          'assets/generated/character-emotions/doran.png')) {
+  if (!characterArchive.any(
+    (character) =>
+        character['id'] == 'doran' &&
+        character['emotionAsset'] ==
+            'assets/generated/character-emotions/doran.png',
+  )) {
     fail('doran emotion sheet contract is missing');
   }
   final emotionAssets = characterArchive
@@ -689,7 +761,8 @@ void main() {
     final catalog = decodeJsonlCatalog(File(path).readAsStringSync());
     final missing = requiredLocaleKeys
         .where(
-            (key) => !catalog.containsKey(key) || catalog[key]!.trim().isEmpty)
+          (key) => !catalog.containsKey(key) || catalog[key]!.trim().isEmpty,
+        )
         .toList();
     if (missing.isNotEmpty)
       fail('locale contract missing keys in $path: ${missing.join(',')}');
@@ -701,30 +774,38 @@ void main() {
           'ui.ending.subtitle',
           'ui.ending.record',
           'ui.ending.restart',
-        ])) fail('locale catalog size/UI contract invalid: $path');
+        ]))
+      fail('locale catalog size/UI contract invalid: $path');
   }
   final stats = activities.map((e) => e['stat']).toSet();
-  if (endings.any((e) =>
-      !stats.contains(e['stat']) ||
-      e['min'] is! int ||
-      e['min'] < 1 ||
-      ((e['requiresMilestones'] as List? ?? [])
-          .any((id) => !milestones.any((m) => m['id'] == id)))))
+  if (endings.any(
+    (e) =>
+        !stats.contains(e['stat']) ||
+        e['min'] is! int ||
+        e['min'] < 1 ||
+        ((e['requiresMilestones'] as List? ?? []).any(
+          (id) => !milestones.any((m) => m['id'] == id),
+        )),
+  ))
     fail('ending stat/min/milestone contract invalid');
   if ({...endings.map((e) => e['id'])}.length != endings.length)
     fail('ending ids are not unique');
   if (endings.map((e) => e['stat']).toSet().length != stats.length)
     fail('every growth axis needs an ending');
-  final masters =
-      endings.where((e) => (e['id'] as String).endsWith('-master')).toList();
+  final masters = endings
+      .where((e) => (e['id'] as String).endsWith('-master'))
+      .toList();
   if (masters.length != stats.length ||
       masters.any((e) => (e['requiresMilestones'] as List? ?? []).isEmpty))
     fail('every growth axis needs a milestone-gated master ending');
-  if (activities.any((e) =>
-      e['fatigue'] is! int ||
-      e['fatigue'] < -2 ||
-      e['fatigue'] > 2 ||
-      e['coins'] is! int)) fail('activity risk/reward contract invalid');
+  if (activities.any(
+    (e) =>
+        e['fatigue'] is! int ||
+        e['fatigue'] < -2 ||
+        e['fatigue'] > 2 ||
+        e['coins'] is! int,
+  ))
+    fail('activity risk/reward contract invalid');
   for (final event in events) {
     final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
     if (choices.length != 2) fail('each event needs exactly 2 choices');
@@ -735,7 +816,8 @@ void main() {
         fail('event deltas must be ints');
       if (!companions.any((c) => c['id'] == choice['bondId']) ||
           choice['bondDelta'] is! int ||
-          choice['bondDelta'] < 0) fail('event bond contract invalid');
+          choice['bondDelta'] < 0)
+        fail('event bond contract invalid');
       if (choice['rivalId'] != null &&
           (!companions.any((c) => c['id'] == choice['rivalId']) ||
               choice['rivalId'] == choice['bondId'] ||
@@ -759,17 +841,20 @@ void main() {
               (choice['setsFlag'] as String).isEmpty))
         fail('event memory output contract invalid');
       if (choice['legacyBonuses'] != null) {
-        final bonuses =
-            (choice['legacyBonuses'] as Map).cast<String, dynamic>();
-        final profileIds =
-            legacyProfiles.map((profile) => '${profile['id']}').toSet();
+        final bonuses = (choice['legacyBonuses'] as Map)
+            .cast<String, dynamic>();
+        final profileIds = legacyProfiles
+            .map((profile) => '${profile['id']}')
+            .toSet();
         if (!bonuses.keys.toSet().containsAll(profileIds) ||
             bonuses.length != profileIds.length ||
-            bonuses.values.any((bonus) =>
-                bonus is! Map ||
-                !stats.contains(bonus['stat']) ||
-                bonus['delta'] is! int ||
-                bonus['delta'] < 1)) {
+            bonuses.values.any(
+              (bonus) =>
+                  bonus is! Map ||
+                  !stats.contains(bonus['stat']) ||
+                  bonus['delta'] is! int ||
+                  bonus['delta'] < 1,
+            )) {
           fail('legacy choice must define one valid bonus for every lineage');
         }
       }
@@ -790,50 +875,59 @@ void main() {
       !requiredFlags.contains('legacy-star') ||
       !writtenFlags.containsAll(requiredFlags.difference(seededFlags)))
     fail('every event memory gate needs an authored prior flag');
-  if (!events.any((event) => (event['choices'] as List)
-      .cast<Map<String, dynamic>>()
-      .any((choice) => choice['legacyBonuses'] is Map))) {
+  if (!events.any(
+    (event) => (event['choices'] as List).cast<Map<String, dynamic>>().any(
+      (choice) => choice['legacyBonuses'] is Map,
+    ),
+  )) {
     fail('scenario needs an authored lineage-specific choice bonus');
   }
-  if (!events.any((e) => (e['choices'] as List)
-      .cast<Map<String, dynamic>>()
-      .any((choice) => choice['rivalId'] != null))) {
+  if (!events.any(
+    (e) => (e['choices'] as List).cast<Map<String, dynamic>>().any(
+      (choice) => choice['rivalId'] != null,
+    ),
+  )) {
     fail('scenario needs at least one rival-bond choice');
   }
   if (fateThreads.length < 6 ||
       fateThreads.map((thread) => thread['id']).toSet().length !=
           fateThreads.length ||
-      fateThreads.any((thread) =>
-          thread['id'] is! String ||
-          thread['flag'] is! String ||
-          thread['titleRef'] is! String ||
-          thread['detailKey'] is! String ||
-          thread['detail'] is! String ||
-          thread['detailEn'] is! String ||
-          !writtenFlags.contains(thread['flag']))) {
+      fateThreads.any(
+        (thread) =>
+            thread['id'] is! String ||
+            thread['flag'] is! String ||
+            thread['titleRef'] is! String ||
+            thread['detailKey'] is! String ||
+            thread['detail'] is! String ||
+            thread['detailEn'] is! String ||
+            !writtenFlags.contains(thread['flag']),
+      )) {
     fail('butterfly ledger must use unique authored memory flags');
   }
-  final companionIdSet =
-      companions.map((companion) => '${companion['id']}').toSet();
+  final companionIdSet = companions
+      .map((companion) => '${companion['id']}')
+      .toSet();
   if (companionQuests.length != companions.length ||
       companionQuests.map((quest) => quest['companionId']).toSet().length !=
           companionQuests.length ||
       companionQuests.any((quest) {
-        final stages =
-            (quest['stages'] as List? ?? const []).cast<Map<String, dynamic>>();
+        final stages = (quest['stages'] as List? ?? const [])
+            .cast<Map<String, dynamic>>();
         return quest['id'] is! String ||
             !companionIdSet.contains('${quest['companionId']}') ||
             quest['titleRef'] is! String ||
             stages.length < 3 ||
             stages.map((stage) => stage['id']).toSet().length !=
                 stages.length ||
-            stages.any((stage) =>
-                stage['id'] is! String ||
-                stage['flag'] is! String ||
-                !writtenFlags.contains(stage['flag']) ||
-                stage['bondMin'] is! int ||
-                stage['bondMin'] < 0 ||
-                stage['eventRef'] is! String);
+            stages.any(
+              (stage) =>
+                  stage['id'] is! String ||
+                  stage['flag'] is! String ||
+                  !writtenFlags.contains(stage['flag']) ||
+                  stage['bondMin'] is! int ||
+                  stage['bondMin'] < 0 ||
+                  stage['eventRef'] is! String,
+            );
       })) {
     fail('companion quests must define three authored stages per companion');
   }
@@ -841,13 +935,16 @@ void main() {
     ...fateThreads.map((thread) => '${thread['titleRef']}'),
     ...fateThreads.map((thread) => '${thread['detailKey']}'),
     ...companionQuests.map((quest) => '${quest['titleRef']}'),
-    ...companionQuests.expand((quest) => (quest['stages'] as List)
-        .cast<Map<String, dynamic>>()
-        .map((stage) => '${stage['eventRef']}')),
+    ...companionQuests.expand(
+      (quest) => (quest['stages'] as List).cast<Map<String, dynamic>>().map(
+        (stage) => '${stage['eventRef']}',
+      ),
+    ),
   };
   for (final ref in localeRefs) {
     final catalog = decodeJsonlCatalog(
-        File((ref['ref'] as String).split('#').first).readAsStringSync());
+      File((ref['ref'] as String).split('#').first).readAsStringSync(),
+    );
     if (trackedLocaleKeys.any((key) => !catalog.containsKey(key)))
       fail('butterfly/companion locale ref missing in ${ref['ref']}');
   }
@@ -862,19 +959,25 @@ void main() {
       narrativeLoop['stagesPerQuest'] != 3 ||
       narrativeLoop['systemOwner'] != 'lumen-rule-engine' ||
       narrativeLoop['resolver'] is! String ||
-      !(narrativeLoop['resolver'] as String)
-          .contains('lib/game_core.dart#resolveFateThreads') ||
-      !(narrativeLoop['resolver'] as String)
-          .contains('lib/game_core.dart#resolveCompanionQuests') ||
-      !(narrativeLoop['resolver'] as String)
-          .contains('lib/game_core.dart#resolveCompanionScenes') ||
+      !(narrativeLoop['resolver'] as String).contains(
+        'lib/game_core.dart#resolveFateThreads',
+      ) ||
+      !(narrativeLoop['resolver'] as String).contains(
+        'lib/game_core.dart#resolveCompanionQuests',
+      ) ||
+      !(narrativeLoop['resolver'] as String).contains(
+        'lib/game_core.dart#resolveCompanionScenes',
+      ) ||
       narrativeLoop['evidence'] is! List ||
       !narrativeContractEvidence.contains(
-          'test/narrative_ledger_test.dart#deterministic-projection') ||
+        'test/narrative_ledger_test.dart#deterministic-projection',
+      ) ||
       !narrativeContractEvidence.contains(
-          'test/companion_scene_test.dart#companion scene resolver and record loop') ||
+        'test/companion_scene_test.dart#companion scene resolver and record loop',
+      ) ||
       !narrativeContractEvidence.contains(
-          'test/companion_scene_golden_test.dart#companion scene archive records a scene')) {
+        'test/companion_scene_golden_test.dart#companion scene archive records a scene',
+      )) {
     fail('narrative loop contract must be system-owned and deterministic');
   }
   final uiEvidence = File('test/golden_test.dart').existsSync()
@@ -882,8 +985,8 @@ void main() {
       : '';
   final canonicalUiEvidence =
       File('test/canonical_golden_test.dart').existsSync()
-          ? File('test/canonical_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/canonical_golden_test.dart').readAsStringSync()
+      : '';
   final i18nEvidence = File('test/i18n_golden_test.dart').existsSync()
       ? File('test/i18n_golden_test.dart').readAsStringSync()
       : '';
@@ -892,8 +995,8 @@ void main() {
       : '';
   final progressionEvidence =
       File('test/progression_contract_test.dart').existsSync()
-          ? File('test/progression_contract_test.dart').readAsStringSync()
-          : '';
+      ? File('test/progression_contract_test.dart').readAsStringSync()
+      : '';
   final gameplayEvidence = File('test/gameplay_metrics_test.dart').existsSync()
       ? File('test/gameplay_metrics_test.dart').readAsStringSync()
       : '';
@@ -905,61 +1008,60 @@ void main() {
       : '';
   final narrativeGoldenEvidence =
       File('test/narrative_ledger_golden_test.dart').existsSync()
-          ? File('test/narrative_ledger_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/narrative_ledger_golden_test.dart').readAsStringSync()
+      : '';
   final receiptGoldenEvidence =
       File('test/system_receipt_golden_test.dart').existsSync()
-          ? File('test/system_receipt_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/system_receipt_golden_test.dart').readAsStringSync()
+      : '';
   final characterRosterGoldenEvidence =
       File('test/character_roster_golden_test.dart').existsSync()
-          ? File('test/character_roster_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/character_roster_golden_test.dart').readAsStringSync()
+      : '';
   final environmentAtlasGoldenEvidence =
       File('test/environment_golden_test.dart').existsSync()
-          ? File('test/environment_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/environment_golden_test.dart').readAsStringSync()
+      : '';
   final sideSceneGoldenEvidence =
       File('test/side_scene_golden_test.dart').existsSync()
-          ? File('test/side_scene_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/side_scene_golden_test.dart').readAsStringSync()
+      : '';
   final relationshipArchiveGoldenEvidence =
       File('test/relationship_archive_golden_test.dart').existsSync()
-          ? File('test/relationship_archive_golden_test.dart')
-              .readAsStringSync()
-          : '';
+      ? File('test/relationship_archive_golden_test.dart').readAsStringSync()
+      : '';
   final companionSceneGoldenEvidence =
       File('test/companion_scene_golden_test.dart').existsSync()
-          ? File('test/companion_scene_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/companion_scene_golden_test.dart').readAsStringSync()
+      : '';
   final playerFacingGoldenEvidence =
       File('test/player_facing_golden_test.dart').existsSync()
-          ? File('test/player_facing_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/player_facing_golden_test.dart').readAsStringSync()
+      : '';
   final activityForecastGoldenEvidence =
       File('test/activity_forecast_golden_test.dart').existsSync()
-          ? File('test/activity_forecast_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/activity_forecast_golden_test.dart').readAsStringSync()
+      : '';
   final activityRiskGoldenEvidence =
       File('test/activity_risk_golden_test.dart').existsSync()
-          ? File('test/activity_risk_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/activity_risk_golden_test.dart').readAsStringSync()
+      : '';
   final memoryForecastGoldenEvidence =
       File('test/memory_forecast_golden_test.dart').existsSync()
-          ? File('test/memory_forecast_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/memory_forecast_golden_test.dart').readAsStringSync()
+      : '';
   final activityReflectionGoldenEvidence =
       File('test/activity_reflection_golden_test.dart').existsSync()
-          ? File('test/activity_reflection_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/activity_reflection_golden_test.dart').readAsStringSync()
+      : '';
   final activityJournalGoldenEvidence =
       File('test/activity_journal_golden_test.dart').existsSync()
-          ? File('test/activity_journal_golden_test.dart').readAsStringSync()
-          : '';
+      ? File('test/activity_journal_golden_test.dart').readAsStringSync()
+      : '';
   final scenarioVariantEvidence =
       File('tool/verify_scenario_variants.dart').existsSync()
-          ? File('tool/verify_scenario_variants.dart').readAsStringSync()
-          : '';
+      ? File('tool/verify_scenario_variants.dart').readAsStringSync()
+      : '';
   final readmeEvidence = File('README.md').existsSync()
       ? File('README.md').readAsStringSync()
       : '';
@@ -1023,15 +1125,15 @@ void main() {
     'companion-scene-lumi-mixed.png',
     'companion-scene-bora-mixed.png',
     'companion-scene-taro-mixed.png',
-    'companion-scene-locked.png'
+    'companion-scene-locked.png',
   };
   final goldenFiles = Directory('test/goldens').existsSync()
       ? Directory('test/goldens')
-          .listSync()
-          .whereType<File>()
-          .where((file) => file.path.endsWith('.png'))
-          .map((f) => f.uri.pathSegments.last)
-          .toSet()
+            .listSync()
+            .whereType<File>()
+            .where((file) => file.path.endsWith('.png'))
+            .map((f) => f.uri.pathSegments.last)
+            .toSet()
       : <String>{};
   final storyEvidence = File('test/story_integration_test.dart').existsSync()
       ? File('test/story_integration_test.dart').readAsStringSync()
@@ -1053,180 +1155,261 @@ void main() {
       !completenessEvidence.contains('Golden | $goldenCount |') ||
       !scenarioEvidence.contains('$goldenCount Golden,')) {
     fail(
-        'Golden inventory is out of sync: files=$goldenCount, README/docs/scenario evidence must agree');
+      'Golden inventory is out of sync: files=$goldenCount, README/docs/scenario evidence must agree',
+    );
   }
   final mainEvidence = File('lib/main.dart').existsSync()
       ? File('lib/main.dart').readAsStringSync()
       : '';
   final collectionEvidence =
       File('lib/collection_adapter_web.dart').existsSync()
-          ? File('lib/collection_adapter_web.dart').readAsStringSync()
-          : '';
+      ? File('lib/collection_adapter_web.dart').readAsStringSync()
+      : '';
   final dimensions = <String, bool>{
-    'content': activities.length >= 5 &&
+    'content':
+        activities.length >= 5 &&
         people.length >= 3 &&
         companions.length >= 3 &&
         locations.length == 6 &&
         legacyProfiles.length == 3 &&
         milestones.length == progression.length,
-    'branching': events.length >= 4 &&
+    'branching':
+        events.length >= 4 &&
         events.every((e) => (e['choices'] as List).length == 2) &&
         endings.length >= 6 &&
-        storyEvidence
-            .contains('every authored ending and event choice is reachable'),
-    'determinism': File('test/game_core_test.dart').existsSync() &&
+        storyEvidence.contains(
+          'every authored ending and event choice is reachable',
+        ),
+    'determinism':
+        File('test/game_core_test.dart').existsSync() &&
         File('test/story_integration_test.dart').existsSync() &&
         File('test/save_state_test.dart').existsSync(),
-    'visual': goldenFiles.containsAll(goldenNames) &&
-        goldenNames
-            .every((name) => readmeEvidence.contains('test/goldens/$name')) &&
-        (uiEvidence + canonicalUiEvidence + i18nEvidence)
-            .contains('matchesGoldenFile') &&
-        canonicalUiEvidence
-            .contains('canonical SSOT renders a stable Canvas ending') &&
+    'visual':
+        goldenFiles.containsAll(goldenNames) &&
+        goldenNames.every(
+          (name) => readmeEvidence.contains('test/goldens/$name'),
+        ) &&
+        (uiEvidence + canonicalUiEvidence + i18nEvidence).contains(
+          'matchesGoldenFile',
+        ) &&
         canonicalUiEvidence.contains(
-            "matchesGoldenFile('goldens/canonical-handoff-event.png')") &&
+          'canonical SSOT renders a stable Canvas ending',
+        ) &&
+        canonicalUiEvidence.contains(
+          "matchesGoldenFile('goldens/canonical-handoff-event.png')",
+        ) &&
         uiEvidence.contains("matchesGoldenFile('goldens/outing.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/memory-gate.png')") &&
         uiEvidence.contains("matchesGoldenFile('goldens/legacy-gate.png')") &&
-        uiEvidence
-            .contains('ending exposes deterministic next-run legacy picker') &&
+        uiEvidence.contains(
+          'ending exposes deterministic next-run legacy picker',
+        ) &&
         uiEvidence.contains("goldens/legacy-picker.png") &&
         uiEvidence.contains("goldens/legacy-picker-en.png") &&
         uiEvidence.contains("goldens/legacy-picker-selected.png") &&
         uiEvidence.contains("goldens/legacy-home.png") &&
-        uiEvidence
-            .contains("matchesGoldenFile('goldens/companion-epilogue.png')") &&
         uiEvidence.contains(
-            'all lineage companion epilogues have distinct Canvas evidence') &&
+          "matchesGoldenFile('goldens/companion-epilogue.png')",
+        ) &&
+        uiEvidence.contains(
+          'all lineage companion epilogues have distinct Canvas evidence',
+        ) &&
         i18nEvidence.contains(
-            'English locale renders original dialogue and authored ending epilogue') &&
+          'English locale renders original dialogue and authored ending epilogue',
+        ) &&
         narrativeEvidence.contains('deterministic-projection') &&
         narrativeEvidence.contains('NARRATIVE_LEDGER_OK') &&
-        narrativeGoldenEvidence
-            .contains("matchesGoldenFile('goldens/narrative-ledger.png')") &&
-        narrativeGoldenEvidence
-            .contains("matchesGoldenFile('goldens/narrative-ledger-en.png')") &&
-        receiptGoldenEvidence
-            .contains("matchesGoldenFile('goldens/system-receipt.png')") &&
-        characterRosterGoldenEvidence
-            .contains("goldens/character-roster.png") &&
-        characterRosterGoldenEvidence
-            .contains("goldens/character-roster-en.png") &&
-        environmentAtlasGoldenEvidence
-            .contains("goldens/environment-atlas.png") &&
-        environmentAtlasGoldenEvidence
-            .contains("goldens/environment-atlas-en.png") &&
+        narrativeGoldenEvidence.contains(
+          "matchesGoldenFile('goldens/narrative-ledger.png')",
+        ) &&
+        narrativeGoldenEvidence.contains(
+          "matchesGoldenFile('goldens/narrative-ledger-en.png')",
+        ) &&
+        receiptGoldenEvidence.contains(
+          "matchesGoldenFile('goldens/system-receipt.png')",
+        ) &&
+        characterRosterGoldenEvidence.contains(
+          "goldens/character-roster.png",
+        ) &&
+        characterRosterGoldenEvidence.contains(
+          "goldens/character-roster-en.png",
+        ) &&
+        environmentAtlasGoldenEvidence.contains(
+          "goldens/environment-atlas.png",
+        ) &&
+        environmentAtlasGoldenEvidence.contains(
+          "goldens/environment-atlas-en.png",
+        ) &&
         sideSceneGoldenEvidence.contains("goldens/side-scene.png") &&
         sideSceneGoldenEvidence.contains("goldens/side-scene-en.png") &&
         relationshipArchiveGoldenEvidence.contains(
-            'relationship archive renders all personality resonance states') &&
-        relationshipArchiveGoldenEvidence
-            .contains("goldens/relationship-archive-kind.png") &&
-        relationshipArchiveGoldenEvidence
-            .contains("goldens/relationship-archive-bold.png") &&
-        companionSceneGoldenEvidence
-            .contains('companion scene archive records a scene') &&
+          'relationship archive renders all personality resonance states',
+        ) &&
+        relationshipArchiveGoldenEvidence.contains(
+          "goldens/relationship-archive-kind.png",
+        ) &&
+        relationshipArchiveGoldenEvidence.contains(
+          "goldens/relationship-archive-bold.png",
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          'companion scene archive records a scene',
+        ) &&
         companionSceneGoldenEvidence.contains("goldens/companion-scenes.png") &&
-        companionSceneGoldenEvidence
-            .contains("goldens/companion-scene-recorded.png") &&
-        companionSceneGoldenEvidence
-            .contains("goldens/companion-scene-recorded-en.png") &&
-        companionSceneGoldenEvidence
-            .contains("goldens/companion-scene-choice.png") &&
-        companionSceneGoldenEvidence
-            .contains("goldens/companion-scene-bora-mixed.png") &&
-        companionSceneGoldenEvidence
-            .contains("goldens/companion-scene-taro-mixed.png") &&
-        companionSceneGoldenEvidence
-            .contains("goldens/companion-scene-lumi-mixed.png") &&
-        companionSceneGoldenEvidence
-            .contains("goldens/companion-scene-locked.png") &&
-        companionSceneGoldenEvidence
-            .contains('CompanionSceneLayout.choiceRect(0, 0).center') &&
-        companionSceneGoldenEvidence.contains('companion choice recall and archive navigation keep their hitboxes') &&
-        companionSceneGoldenEvidence.contains("goldens/companion-scene-choice-recall.png") &&
-        companionSceneGoldenEvidence.contains('companion scene archive records a scene') &&
-        playerFacingGoldenEvidence.contains('all personality illustration pages render deterministic portraits') &&
+        companionSceneGoldenEvidence.contains(
+          "goldens/companion-scene-recorded.png",
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          "goldens/companion-scene-recorded-en.png",
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          "goldens/companion-scene-choice.png",
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          "goldens/companion-scene-bora-mixed.png",
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          "goldens/companion-scene-taro-mixed.png",
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          "goldens/companion-scene-lumi-mixed.png",
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          "goldens/companion-scene-locked.png",
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          'CompanionSceneLayout.choiceRect(0, 0).center',
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          'companion choice recall and archive navigation keep their hitboxes',
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          "goldens/companion-scene-choice-recall.png",
+        ) &&
+        companionSceneGoldenEvidence.contains(
+          'companion scene archive records a scene',
+        ) &&
+        playerFacingGoldenEvidence.contains(
+          'all personality illustration pages render deterministic portraits',
+        ) &&
         playerFacingGoldenEvidence.contains("goldens/personality-quiet.png") &&
         playerFacingGoldenEvidence.contains("goldens/personality-kind.png") &&
         playerFacingGoldenEvidence.contains("goldens/personality-bold.png") &&
-        activityForecastGoldenEvidence.contains('home shows deterministic activity forecasts') &&
-        activityForecastGoldenEvidence.contains("goldens/activity-forecast.png") &&
-        activityRiskGoldenEvidence.contains('home explains deterministic fatigue risk before spending the day') &&
+        activityForecastGoldenEvidence.contains(
+          'home shows deterministic activity forecasts',
+        ) &&
+        activityForecastGoldenEvidence.contains(
+          "goldens/activity-forecast.png",
+        ) &&
+        activityRiskGoldenEvidence.contains(
+          'home explains deterministic fatigue risk before spending the day',
+        ) &&
         activityRiskGoldenEvidence.contains("goldens/activity-risk.png") &&
-        memoryForecastGoldenEvidence.contains('event shows the authored memory impact before commit') &&
+        memoryForecastGoldenEvidence.contains(
+          'event shows the authored memory impact before commit',
+        ) &&
         memoryForecastGoldenEvidence.contains("goldens/memory-forecast.png") &&
-        activityReflectionGoldenEvidence.contains('event shows localized activity reflection after day spend') &&
-        activityReflectionGoldenEvidence.contains("goldens/activity-reflection-en.png") &&
-        activityJournalGoldenEvidence.contains('activity journal renders deterministic reflection pages') &&
-        activityJournalGoldenEvidence.contains("goldens/activity-journal-en.png") &&
-        activityJournalGoldenEvidence.contains("goldens/activity-journal-ko.png") &&
+        activityReflectionGoldenEvidence.contains(
+          'event shows localized activity reflection after day spend',
+        ) &&
+        activityReflectionGoldenEvidence.contains(
+          "goldens/activity-reflection-en.png",
+        ) &&
+        activityJournalGoldenEvidence.contains(
+          'activity journal renders deterministic reflection pages',
+        ) &&
+        activityJournalGoldenEvidence.contains(
+          "goldens/activity-journal-en.png",
+        ) &&
+        activityJournalGoldenEvidence.contains(
+          "goldens/activity-journal-ko.png",
+        ) &&
         File('story/locales/ko.jsonl').existsSync() &&
         File('story/locales/en.jsonl').existsSync(),
-    'localeContract': localeEvidence.contains(
-            'all SSOT dialogue keys exist and are non-empty in every locale') &&
+    'localeContract':
+        localeEvidence.contains(
+          'all SSOT dialogue keys exist and are non-empty in every locale',
+        ) &&
         localeRefs.length >= 2,
-    'progression': progressionEvidence.contains(
-            'sixteen SSOT chapters cover the complete 48-week progression') &&
+    'progression':
+        progressionEvidence.contains(
+          'sixteen SSOT chapters cover the complete 48-week progression',
+        ) &&
         progression.length == campaignWeeks ~/ 3 &&
         dialogueMetrics['minimumVisibleDialogueLines'] ==
             events.length + progression.length &&
         dialogueMetrics['minimumVisibleNarrativeUnits'] >= 160,
-    'assets': assetRefs.length >= 5 &&
+    'assets':
+        assetRefs.length >= 5 &&
         assetPaths.contains('assets/lumen-character-roster.png') &&
         fontRefs.isNotEmpty,
-    'traceability': refs.length >= 3 &&
+    'traceability':
+        refs.length >= 3 &&
         File('docs/review-manifest.jsonl').existsSync() &&
         File('docs/ssot-metrics.md').existsSync(),
-    'delivery': File('.github/workflows/verify.yml').existsSync() &&
+    'delivery':
+        File('.github/workflows/verify.yml').existsSync() &&
         File('.githooks/pre-commit').existsSync(),
-    'inputContract': uiEvidence.contains('750, 580') &&
+    'inputContract':
+        uiEvidence.contains('750, 580') &&
         uiEvidence.contains('300, 580') &&
         uiEvidence.contains('650, 550'),
-    'saveContinuity': coreEvidence
-            .contains('restore returns the saved page for reload continuity') &&
+    'saveContinuity':
+        coreEvidence.contains(
+          'restore returns the saved page for reload continuity',
+        ) &&
         File('lib/save_adapter_web.dart').existsSync(),
-    'terminalSafety': coreEvidence
-            .contains('completed campaign rejects stale event input too') &&
+    'terminalSafety':
+        coreEvidence.contains(
+          'completed campaign rejects stale event input too',
+        ) &&
         storyEvidence.contains('48-week route') &&
         coreEvidence.contains('SystemDecisionPolicy'),
-    'purity': purityEvidence.contains(
-            'same schedule budget yields distinct authored outcomes') &&
+    'purity':
+        purityEvidence.contains(
+          'same schedule budget yields distinct authored outcomes',
+        ) &&
         purityEvidence.contains("'stargazer-master'") &&
         purityEvidence.contains("'gardener-master'") &&
         gameplayEvidence.contains(
-            'five SSOT schedule policies produce measurable route variety') &&
+          'five SSOT schedule policies produce measurable route variety',
+        ) &&
         gameplayEvidence.contains(
-            'three legacy profiles produce distinct deterministic route signatures') &&
+          'three legacy profiles produce distinct deterministic route signatures',
+        ) &&
         endingMatrixEvidence.contains(
-            'ending matrix materializes all eight companion route sets') &&
+          'ending matrix materializes all eight companion route sets',
+        ) &&
         scenarioVariantEvidence.contains('SCENARIO_VARIANTS_OK') &&
         gameplayEvidence.contains('endings.length, greaterThanOrEqualTo(3)') &&
         File('test/collection_test.dart').existsSync() &&
         uiEvidence.contains('ending collection survives a restart') &&
-        uiEvidence
-            .contains('ending exposes deterministic next-run legacy picker') &&
+        uiEvidence.contains(
+          'ending exposes deterministic next-run legacy picker',
+        ) &&
         mainEvidence.contains('selectedLegacyId') &&
         mainEvidence.contains('legacyPicker(c)') &&
         mainEvidence.contains('createCollectionAdapter') &&
         collectionEvidence.contains('lumen-collection-v1'),
-    'scenarioCompleteness': scenarioDimensions.length == 8 &&
+    'scenarioCompleteness':
+        scenarioDimensions.length == 8 &&
         chapterContractsValid &&
         scenarioEvidence.contains('막 단위 계약') &&
         scenarioEvidence.contains('장소 발견') &&
         scenarioEvidence.contains('회차 계승') &&
         scenarioEvidence.contains('choiceConsequenceRate') &&
         scenarioEvidence.contains('나비효과') &&
-        storyEvidence
-            .contains('every authored ending and event choice is reachable'),
+        storyEvidence.contains(
+          'every authored ending and event choice is reachable',
+        ),
   };
   final score =
       (dimensions.values.where((v) => v).length * 100 / dimensions.length)
           .round();
   if (score < 99)
     fail(
-        'completeness score below 99%: $score% · failed=${dimensions.entries.where((entry) => !entry.value).map((entry) => entry.key).join(',')}');
+      'completeness score below 99%: $score% · failed=${dimensions.entries.where((entry) => !entry.value).map((entry) => entry.key).join(',')}',
+    );
   stdout.writeln(
-      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} companions=${companions.length} personalityCompanionRoutes=${personalityCompanionRoutes.length} events=${events.length} endings=${endings.length} fateThreads=${fateThreads.length} questStages=$companionQuestStages codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} goldens=$goldenCount scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
+    'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} companions=${companions.length} personalityCompanionRoutes=${personalityCompanionRoutes.length} events=${events.length} endings=${endings.length} fateThreads=${fateThreads.length} questStages=$companionQuestStages codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} goldens=$goldenCount scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}',
+  );
 }
