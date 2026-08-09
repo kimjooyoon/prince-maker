@@ -84,18 +84,27 @@ String localizedActivityHorizon(ActivityForecast forecast) {
 String localizedActivityRisk(ActivityForecast forecast) {
   if (forecast.growthPenalty > 0) {
     return _replace(
-        localized('ui.home.risk.penalty', 'Fatigue guard · growth -{loss}'), {
-      'loss': forecast.growthPenalty,
-    });
+        localized('ui.home.risk.penalty',
+            'Fatigue guard · growth -{loss} · rest {days}d'),
+        {
+          'loss': forecast.growthPenalty,
+          'days': forecast.recoveryDays,
+        });
   }
   if (forecast.fatigueAfter >= 10 && forecast.fatigueDelta > 0) {
-    return localized('ui.home.risk.strained', 'High fatigue · recover first');
+    return _replace(
+        localized('ui.home.risk.strained', 'High fatigue · rest {days}d'), {
+      'days': forecast.recoveryDays,
+    });
   }
   if (forecast.fatigueDelta < 0) {
     return _replace(
-        localized('ui.home.risk.recovery', 'Recovery · fatigue {delta}'), {
-      'delta': _signed(forecast.fatigueDelta),
-    });
+        localized('ui.home.risk.recovery',
+            'Recovery · fatigue {delta} · ready in {days}d'),
+        {
+          'delta': _signed(forecast.fatigueDelta),
+          'days': forecast.recoveryDays,
+        });
   }
   return localized('ui.home.risk.steady', 'Steady pace');
 }

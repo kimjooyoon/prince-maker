@@ -85,7 +85,13 @@ void main() {
       File('lib/main.dart')
           .readAsStringSync()
           .contains('localizedActivityRisk') &&
-      File('lib/i18n.dart').readAsStringSync().contains('ui.home.risk.penalty');
+      File('lib/i18n.dart').readAsStringSync().contains('ui.home.risk.penalty') &&
+      File('lib/activity_forecast.dart')
+          .readAsStringSync()
+          .contains('recoveryDaysToClearFatigue') &&
+      File('test/activity_forecast_test.dart')
+          .readAsStringSync()
+          .contains('recovery window follows the injected SSOT rest delta');
   final metrics = {
     'authoredChoices': choices.length,
     'effectfulChoices': impactful,

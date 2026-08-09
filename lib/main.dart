@@ -1639,7 +1639,11 @@ class Scene extends CustomPainter {
         talent =
             people.isEmpty ? null : people[persona.clamp(0, people.length - 1)],
         relation = relationshipState,
-        lineage = legacyProfile();
+        lineage = legacyProfile(),
+        recoveryFatigueDelta = activities
+            .firstWhere((activity) => activity.id == 'rest',
+                orElse: () => defaultActivities[3])
+            .fatigue;
     txt(c, localized('ui.home.title', '${s['title']}'), const Offset(24, 24),
         30, ink,
         bold: true);
@@ -1750,6 +1754,7 @@ class Scene extends CustomPainter {
               coins: coins,
               focusStat: talent?['focusStat'] as String?,
               focusBonus: (talent?['focusBonus'] as int?) ?? 0,
+              recoveryFatigueDelta: recoveryFatigueDelta,
               events: (s['events'] as List? ?? const [])
                   .whereType<Map>()
                   .map((event) => event.cast<String, dynamic>())

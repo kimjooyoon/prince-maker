@@ -100,7 +100,7 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln(
       '- 활동 선택 horizon: Golden `${gameplay['current']['activityForecastHorizonGolden']}` · ${gameplay['definitions']['activityForecastHorizonGolden']}');
   b.writeln(
-      '- 활동 피로 위험: Golden `${gameplay['current']['activityRiskForecastGolden']}` · ${gameplay['definitions']['activityRiskForecastGolden']}');
+      '- 활동 피로 위험/회복 창: Golden `${gameplay['current']['activityRiskForecastGolden']}` · ${gameplay['definitions']['activityRiskForecastGolden']}');
   b.writeln('\n## 이벤트 스토밍 증적\n');
   b.writeln(
       '전체 authored 단위는 **${eventStormNodes}개 노드**로 `Trigger → Command → Policy → Domain event → Feedback` 원장에 생성된다. 본편·사이드 선택 ${gameplay['current']['authoredChoices']}개는 효과·피드백 연결률 1.0을 만족하며, 상세 원장은 [`docs/event-storm.jsonl`](event-storm.jsonl), 기계 판정은 `tool/verify_event_storm.dart#event-storm-gate`가 담당한다.');
