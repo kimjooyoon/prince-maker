@@ -27,6 +27,18 @@ class CampaignMetrics {
       lineageCompanions;
 }
 
+bool sameSet<T>(Set<T> left, Set<T> right) =>
+    left.length == right.length && left.containsAll(right);
+
+bool sameSetMap(Map<String, Set<String>> left,
+    Map<String, Set<String>> right) {
+  if (!sameSet(left.keys.toSet(), right.keys.toSet())) return false;
+  for (final key in left.keys) {
+    if (!sameSet(left[key]!, right[key]!)) return false;
+  }
+  return true;
+}
+
 CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
   var checksum = 0;
   var forecastChecksum = 0;
@@ -201,8 +213,12 @@ void main() {
   final watch = Stopwatch()..start();
   final first = runCampaigns(source, campaigns);
   watch.stop();
+  final replayWatch = Stopwatch()..start();
   final replay = runCampaigns(source, campaigns);
-  final millis = watch.elapsedMicroseconds / 1000;
+  replayWatch.stop();
+  final millis = watch.elapsedMicroseconds / 1000,
+      replayMillis = replayWatch.elapsedMicroseconds / 1000,
+      maxMillis = millis > replayMillis ? millis : replayMillis;
   final transitions = campaigns *
       ((source['endingWeek'] as int) -
           1 +
@@ -233,32 +249,36 @@ void main() {
             (first.lineageCompanions[id] ?? const <String>{}).toList()..sort();
         return '$id:${endingIds.join('+')}|target:$target|routes:${companions.join('+')}/${first.lineageSignatures[id]?.length ?? 0}sig';
       }).join(',');
-  final approved = millis <= 24000 &&
+  final approved = maxMillis <= 24000 &&
       first.checksum > campaigns &&
       replay.checksum == first.checksum &&
       replay.forecastChecksum == first.forecastChecksum &&
       replay.companionSceneChecksum == first.companionSceneChecksum &&
-      replay.companionChoiceModes.length == first.companionChoiceModes.length &&
+      sameSet(replay.companionChoiceModes, first.companionChoiceModes) &&
       first.companionChoiceModes.containsAll({0, 1}) &&
-      replay.companionScenes.length == first.companionScenes.length &&
-      replay.endings.length == first.endings.length &&
-      replay.signatures.length == first.signatures.length &&
-      replay.locations.length == first.locations.length &&
+      sameSet(replay.companionScenes, first.companionScenes) &&
+      sameSet(replay.endings, first.endings) &&
+      sameSet(replay.signatures, first.signatures) &&
+      sameSet(replay.locations, first.locations) &&
       first.locations.length >= 4 &&
       first.signatures.length >= 3 &&
       first.companionScenes.length >= 3 &&
       lineageEvidence &&
       lineageEndingEvidence &&
       lineageCompanionEvidence &&
-      replay.lineageSignatures.toString() ==
-          first.lineageSignatures.toString() &&
-      replay.lineageCompanions.toString() == first.lineageCompanions.toString();
+      sameSetMap(replay.lineageEndings, first.lineageEndings) &&
+      sameSetMap(replay.lineageSignatures, first.lineageSignatures) &&
+      sameSetMap(replay.lineageCompanions, first.lineageCompanions);
   final report = {
     'schema': 'lumen-campaign-benchmark-v1',
     'decision': approved ? 'approve' : 'reject',
     'campaigns': campaigns,
     'transitions': transitions,
     'elapsedMillis': double.parse(millis.toStringAsFixed(1)),
+    'replayElapsedMillis': double.parse(replayMillis.toStringAsFixed(1)),
+    'maxElapsedMillis': double.parse(maxMillis.toStringAsFixed(1)),
+    'averageMicrosPerTransition':
+        double.parse((maxMillis * 1000 / transitions).toStringAsFixed(2)),
     'endings': first.endings.length,
     'signatures': first.signatures.length,
     'locations': first.locations.length,
@@ -281,10 +301,10 @@ void main() {
   reportFile.writeAsStringSync(
       '${const JsonEncoder.withIndent('  ').convert(report)}\n');
   stdout.writeln(
-      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} endings=${first.endings.length} signatures=${first.signatures.length} companionScenes=${first.companionScenes.length} choiceModes=${first.companionChoiceModes.toList()..sort()} checksum=${first.checksum} replayChecksum=${replay.checksum} forecastChecksum=${first.forecastChecksum} replayForecastChecksum=${replay.forecastChecksum} companionSceneChecksum=${first.companionSceneChecksum} replayCompanionSceneChecksum=${replay.companionSceneChecksum}');
+      'TRILEMMA_PERFORMANCE_OK: campaigns=$campaigns transitions=$transitions events=${(source['events'] as List).length} locations=${first.locations.length} lineages=$lineageSummary ms=${millis.toStringAsFixed(1)} replayMs=${replayMillis.toStringAsFixed(1)} maxMs=${maxMillis.toStringAsFixed(1)} avgMicros=${(maxMillis * 1000 / transitions).toStringAsFixed(2)} endings=${first.endings.length} signatures=${first.signatures.length} companionScenes=${first.companionScenes.length} choiceModes=${first.companionChoiceModes.toList()..sort()} checksum=${first.checksum} replayChecksum=${replay.checksum} forecastChecksum=${first.forecastChecksum} replayForecastChecksum=${replay.forecastChecksum} companionSceneChecksum=${first.companionSceneChecksum} replayCompanionSceneChecksum=${replay.companionSceneChecksum}');
   if (!approved) {
     stderr.writeln(
-        'TRILEMMA_PERFORMANCE_FAIL: deterministic core budget or checksum drift');
+        'TRILEMMA_PERFORMANCE_FAIL: deterministic core budget, set coverage, or checksum drift');
     exit(1);
   }
 }
