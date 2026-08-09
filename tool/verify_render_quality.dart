@@ -120,10 +120,15 @@ void main() {
   requireText('test/companion_scene_golden_test.dart', companionSceneGoldenTest,
       'companion scene archive records a scene');
   final companionSceneTest = read('test/companion_scene_test.dart');
+  final canvasRenderPerfTest = read('test/canvas_render_perf_test.dart');
   requireText('test/companion_scene_test.dart', companionSceneTest,
       'companion archive canvas projection stays within the frame budget');
   requireText('test/companion_scene_test.dart', companionSceneTest,
       'COMPANION_RENDER_PERF_OK');
+  requireText('test/canvas_render_perf_test.dart', canvasRenderPerfTest,
+      'full Canvas pages stay within the deterministic frame budget');
+  requireText('test/canvas_render_perf_test.dart', canvasRenderPerfTest,
+      'CANVAS_RENDER_PERF_OK');
   for (final name in [
     'goldens/companion-scenes.png',
     'goldens/companion-scene-choice.png',

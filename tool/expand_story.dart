@@ -356,6 +356,7 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/relationship_archive_painter.dart#personality-companion resonance card',
     'lib/companion_scene_archive_painter.dart#CompanionSceneArchivePainter',
     'test/companion_scene_test.dart#companion scene resolver and record loop',
+    'test/canvas_render_perf_test.dart#full Canvas pages stay within the deterministic frame budget',
     'test/companion_scene_golden_test.dart#companion scene archive records a scene',
     'tool/verify_content_depth.dart#content-depth-gate',
     'test/content_depth_test.dart#SSOT exposes depth targets and all non-binary scene mechanics',
@@ -4563,6 +4564,15 @@ void main() {
     'minimumMinutes': 120,
     'estimatedFirstPlaythroughMinutes': 156,
     'benchmarkMaxMillis': 24000,
+    'canvasPaintBudgetMicros': 8000,
+    'canvasRenderPages': [
+      'home',
+      'event',
+      'ending',
+      'ledger',
+      'relationshipArchive',
+      'companionArchive',
+    ],
     'campaignWeeks': 48,
     'terminalWeek': 49,
     'authoredEvents': 47,
@@ -4833,7 +4843,8 @@ void main() {
     'ui.closure.nextPage': '다음 장으로 →',
     'ui.closure.link': '결과는 시스템 영수증과 다음 선택에 연결됩니다.',
     'ui.ending.legacyTitle': '다음 회차 계승 선택',
-    'ui.ending.legacyForecast': '정책 {policies} · 검증 엔딩 {endings} · 서명 {signatures}',
+    'ui.ending.legacyForecast':
+        '정책 {policies} · 검증 엔딩 {endings} · 서명 {signatures}',
     'ui.relationship.label': '관계 상태',
     'ui.relationship.state.unformed': '아직 얽히지 않음',
     'ui.relationship.state.balanced': '나란한 동행',
@@ -5020,7 +5031,8 @@ void main() {
     'ui.closure.link':
         'The result is linked to the system receipt and next choice.',
     'ui.ending.legacyTitle': 'Choose a next-run legacy',
-    'ui.ending.legacyForecast': 'Policies {policies} · verified endings {endings} · signatures {signatures}',
+    'ui.ending.legacyForecast':
+        'Policies {policies} · verified endings {endings} · signatures {signatures}',
     'ui.relationship.label': 'Relationship state',
     'ui.relationship.state.unformed': 'Not yet woven',
     'ui.relationship.state.balanced': 'Side-by-side',
