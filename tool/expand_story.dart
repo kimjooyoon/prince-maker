@@ -5277,6 +5277,20 @@ void main() {
       'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
     ],
   };
+  story['lineageDistribution'] = {
+    'schema': 'lumen-lineage-distribution-v1',
+    'policyCount': (story['activities'] as List).length,
+    'profileCount': (story['legacyProfiles'] as List).length,
+    'minimumDistinctEndingsPerProfile': 3,
+    'minimumDistinctSignaturesPerProfile': 3,
+    'rule':
+        'replay every legacy profile under every SSOT activity policy; preserve the ending and route-signature sets and include a declared target ending',
+    'evidence': [
+      'tool/benchmark_game.dart#profile-policy-distribution',
+      'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies',
+      'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
+    ],
+  };
   story['endingDesign'] = {
     'schema': 'lumen-ending-matrix-v1',
     'resolutionOrder': [
@@ -5499,7 +5513,9 @@ void main() {
   byId['closure']!['current'] =
       '48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark';
   byId['replay']!['current'] =
-      '5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / explicit deterministic next-run profile selection / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues';
+      '5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / explicit deterministic next-run profile selection / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues / profile × policy ending and signature distributions';
+  byId['replay']!['evidence'] =
+      'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies';
   story['scenarioCompleteness']['dimensions'] = dimensions;
   story['engineDecision'] = engineDecisionContract();
 

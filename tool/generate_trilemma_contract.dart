@@ -55,6 +55,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       (story['gameplayKpis'] as Map? ?? {}).cast<String, dynamic>();
   final gameplayTargets =
       (gameplay['targets'] as Map? ?? {}).cast<String, dynamic>();
+  final lineageDistribution =
+      (story['lineageDistribution'] as Map? ?? {}).cast<String, dynamic>();
   final quests = (story['companionQuests'] as List? ?? const []).cast<Map>();
   final companionScenes =
       (story['companionScenes'] as List? ?? const []).cast<Map>();
@@ -167,6 +169,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               (story['legacyProfiles'] as List? ?? []).length,
           'minLegacyTargetCompanions':
               (story['legacyProfiles'] as List? ?? []).length,
+          'lineageDistributionPolicies': lineageDistribution['policyCount'],
+          'lineageDistributionMinEndings':
+              lineageDistribution['minimumDistinctEndingsPerProfile'],
+          'lineageDistributionMinSignatures':
+              lineageDistribution['minimumDistinctSignaturesPerProfile'],
+          'lineageDistributionReplay': true,
           'deterministicReplay': true,
           'choiceImpactRate': gameplayTargets['choiceImpactRate'],
           'eventDivergenceRate': gameplayTargets['eventDivergenceRate'],
@@ -204,6 +212,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         },
         'evidence': [
           'test/gameplay_metrics_test.dart#route-variety',
+          'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies',
           'test/purity_integration_test.dart#same-schedule-budget-outcomes',
           'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
           'tool/verify_quality_score.dart#quality-score-99',
@@ -247,6 +256,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               (story['legacyProfiles'] as List? ?? []).length,
           'lineageTargetCompanions':
               (story['legacyProfiles'] as List? ?? []).length,
+          'lineageDistributionPolicies': lineageDistribution['policyCount'],
+          'lineageDistributionMinEndings':
+              lineageDistribution['minimumDistinctEndingsPerProfile'],
+          'lineageDistributionMinSignatures':
+              lineageDistribution['minimumDistinctSignaturesPerProfile'],
+          'lineageDistributionReplay': true,
           'checksumReplayMustMatch': true,
           'activityForecastDeterminism': true,
           'companionSceneReplay': true,
@@ -259,6 +274,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         },
         'evidence': [
           'tool/benchmark_game.dart#ssot-campaign-throughput-signatures',
+          'tool/benchmark_game.dart#profile-policy-distribution',
           'tool/benchmark_game.dart#companion-scene-replay-checksum',
           'test/companion_scene_test.dart#companion archive canvas projection stays within the frame budget',
           'lib/activity_forecast.dart#forecastActivity',

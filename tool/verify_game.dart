@@ -58,6 +58,10 @@ void verifyTrilemmaContract(String storyHash,
       purity['minLegacyProfiles'] < 3 ||
       purity['minLegacyTargetEndings'] < 3 ||
       purity['minLegacyTargetCompanions'] < 3 ||
+      purity['lineageDistributionPolicies'] != 5 ||
+      (purity['lineageDistributionMinEndings'] as int? ?? 0) < 3 ||
+      (purity['lineageDistributionMinSignatures'] as int? ?? 0) < 3 ||
+      purity['lineageDistributionReplay'] != true ||
       purity['deterministicReplay'] != true ||
       (purity['choiceImpactRate'] as num? ?? 0) < 1.0 ||
       (purity['eventDivergenceRate'] as num? ?? 0) < 1.0 ||
@@ -87,6 +91,10 @@ void verifyTrilemmaContract(String storyHash,
       performance['minSignatures'] < 3 ||
       performance['lineageTargetEndings'] < 3 ||
       performance['lineageTargetCompanions'] < 3 ||
+      performance['lineageDistributionPolicies'] != 5 ||
+      (performance['lineageDistributionMinEndings'] as int? ?? 0) < 3 ||
+      (performance['lineageDistributionMinSignatures'] as int? ?? 0) < 3 ||
+      performance['lineageDistributionReplay'] != true ||
       performance['checksumReplayMustMatch'] != true ||
       performance['activityForecastDeterminism'] != true ||
       performance['companionSceneReplay'] != true ||
@@ -341,6 +349,25 @@ void main() {
       !legacySelectionEvidence.contains(
           'test/golden_test.dart#ending exposes deterministic next-run legacy picker')) {
     fail('legacy selection must be an explicit deterministic SSOT contract');
+  }
+  final lineageDistribution =
+      (story['lineageDistribution'] as Map? ?? {}).cast<String, dynamic>();
+  final lineageEvidence =
+      (lineageDistribution['evidence'] as List? ?? const []).cast<String>();
+  if (lineageDistribution['schema'] != 'lumen-lineage-distribution-v1' ||
+      lineageDistribution['policyCount'] != activities.length ||
+      lineageDistribution['profileCount'] != legacyProfiles.length ||
+      (lineageDistribution['minimumDistinctEndingsPerProfile'] as int? ?? 0) <
+          3 ||
+      (lineageDistribution['minimumDistinctSignaturesPerProfile'] as int? ??
+              0) <
+          3 ||
+      !lineageEvidence
+          .contains('tool/benchmark_game.dart#profile-policy-distribution') ||
+      !lineageEvidence.contains(
+          'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies')) {
+    fail(
+        'legacy profile policy distribution must be an explicit SSOT contract');
   }
   final scenarioDimensions =
       (scenario['dimensions'] as List? ?? []).cast<Map<String, dynamic>>();
