@@ -15,27 +15,36 @@ class ActivityForecast {
   const ActivityForecast({
     required this.activityId,
     required this.stat,
+    required this.rawGrowth,
     required this.growth,
+    required this.growthPenalty,
     required this.coinsDelta,
     required this.fatigueDelta,
     required this.fatigueAfter,
     required this.nextCoins,
     required this.nextWeek,
-      this.nextEventKey,
-      this.nextMilestoneId,
-      this.nextMilestoneKey,
+    this.nextEventKey,
+    this.nextMilestoneId,
+    this.nextMilestoneKey,
   });
 
   final String activityId, stat;
-  final int growth, coinsDelta, fatigueDelta, fatigueAfter, nextCoins, nextWeek;
-  final String? nextEventKey,
-      nextMilestoneId,
-      nextMilestoneKey;
+  final int rawGrowth,
+      growth,
+      growthPenalty,
+      coinsDelta,
+      fatigueDelta,
+      fatigueAfter,
+      nextCoins,
+      nextWeek;
+  final String? nextEventKey, nextMilestoneId, nextMilestoneKey;
 
   Map<String, Object?> toMap() => {
         'activityId': activityId,
         'stat': stat,
+        'rawGrowth': rawGrowth,
         'growth': growth,
+        'growthPenalty': growthPenalty,
         'coinsDelta': coinsDelta,
         'fatigueDelta': fatigueDelta,
         'fatigueAfter': fatigueAfter,
@@ -59,7 +68,12 @@ ActivityForecast forecastActivity(
 }) {
   final bonus =
       activity.delta > 0 && focusStat == activity.stat ? focusBonus : 0;
-  final nextWeek = week + 1;
+  final rawGrowth = activity.delta + bonus,
+      growth = resolveActivityGrowth(
+          delta: activity.delta, fatigue: fatigue, bonus: bonus),
+      growthPenalty =
+          rawGrowth > 0 ? (rawGrowth - growth).clamp(0, rawGrowth).toInt() : 0,
+      nextWeek = week + 1;
   final nextEvent =
       events.where((event) => event['week'] == nextWeek).firstOrNull;
   final nextMilestone = nextEvent == null
@@ -70,8 +84,9 @@ ActivityForecast forecastActivity(
   return ActivityForecast(
     activityId: activity.id,
     stat: activity.stat,
-    growth: resolveActivityGrowth(
-        delta: activity.delta, fatigue: fatigue, bonus: bonus),
+    rawGrowth: rawGrowth,
+    growth: growth,
+    growthPenalty: growthPenalty,
     coinsDelta: activity.coins,
     fatigueDelta: activity.fatigue,
     fatigueAfter: (fatigue + activity.fatigue).clamp(0, 12).toInt(),

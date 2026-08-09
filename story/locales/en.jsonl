@@ -1163,3 +1163,7 @@
 {"type":"entry","key":"ui.companionScenes.notice.invalid","value":"The rule engine rejected this input."}
 {"type":"entry","key":"ui.companionScenes.notice.recorded","value":"The selected record was saved."}
 {"type":"entry","key":"ui.ending.legacyForecast","value":"Policies {policies} · verified endings {endings} · signatures {signatures}"}
+{"type":"entry","key":"ui.home.risk.penalty","value":"Fatigue guard · growth -{loss}"}
+{"type":"entry","key":"ui.home.risk.strained","value":"High fatigue · recover first"}
+{"type":"entry","key":"ui.home.risk.recovery","value":"Recovery · fatigue {delta}"}
+{"type":"entry","key":"ui.home.risk.steady","value":"Steady pace"}

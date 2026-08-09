@@ -753,8 +753,8 @@ class _Game extends State<Game> {
       next();
     } else if (y > 640 && x < 220) {
       setState(() => page = 5);
-    } else if (y > 260 && y < 470) {
-      final row = y < 350 ? 0 : 1,
+    } else if (y > 260 && y < 452) {
+      final row = y < 358 ? 0 : 1,
           col = (x ~/ 245).clamp(0, 2),
           i = row == 0 ? col : 3 + col;
       if (i < activities.length) select(i);
@@ -1735,7 +1735,7 @@ class Scene extends CustomPainter {
           row = i < 3 ? 0 : 1,
           col = i < 3 ? i : i - 3,
           x = 24 + col * 236.0,
-          y = row == 0 ? 275.0 : 370.0,
+          y = row == 0 ? 270.0 : 363.0,
           on = i == selected,
           bonus = talent?['focusStat'] == a.stat && a.delta > 0
               ? ' · ${formatUi('ui.home.talent', 'Talent +{bonus}', {
@@ -1759,7 +1759,8 @@ class Scene extends CustomPainter {
                   .map((goal) => goal.cast<String, dynamic>())
                   .toList()),
           forecastText = localizedActivityForecast(forecast),
-          horizonText = localizedActivityHorizon(forecast);
+          horizonText = localizedActivityHorizon(forecast),
+          riskText = localizedActivityRisk(forecast);
       CanvasUiKit.statePanel(
           c,
           Rect.fromLTWH(x, y, DesignTokens.activityCardWidth,
@@ -1777,6 +1778,9 @@ class Scene extends CustomPainter {
           on ? Colors.white70 : teal,
           maxWidth: 160, maxLines: 1);
       txt(c, horizonText, Offset(x + 52, y + 73), 7,
+          on ? Colors.white60 : ink.withValues(alpha: .48),
+          maxWidth: 160, maxLines: 1);
+      txt(c, riskText, Offset(x + 52, y + 80), 6.5,
           on ? Colors.white60 : ink.withValues(alpha: .48),
           maxWidth: 160, maxLines: 1);
     }
