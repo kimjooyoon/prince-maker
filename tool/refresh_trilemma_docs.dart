@@ -69,6 +69,9 @@ String render(String source) {
           '세 성격의 관계 공명 archive 화면과 활동 forecast·활동 회고 일지(ko/en)·세 성격별')
       .replaceAll('세 성격의 관계 공명 archive 화면과 세 성격별 page 1 상반신 일러스트 화면을 추가해',
           '세 성격의 관계 공명 archive 화면과 활동 forecast·활동 회고 일지(ko/en)·세 성격별 page 1 상반신 일러스트 화면을 추가해');
+  output = output.replaceAll(
+      '활동 forecast·활동 회고 일지(ko/en)',
+      '활동 forecast·활동 horizon·활동 피로 위험·활동 회고 일지(ko/en)');
   output = output
       .replaceAll('`replayChecksum`, signature cardinality',
           '`replayChecksum`·activity forecast checksum·companionSceneChecksum, signature cardinality')
@@ -126,6 +129,10 @@ String render(String source) {
   if (!output.contains('활동 horizon Golden')) {
     output = output.replaceAll(
         '활동 forecast Golden', '활동 forecast Golden·활동 horizon Golden');
+  }
+  if (!output.contains('활동 피로 위험 Golden')) {
+    output = output.replaceAll(
+        '활동 horizon Golden', '활동 horizon Golden·활동 피로 위험 Golden');
   }
   return output;
 }

@@ -35,6 +35,7 @@ void verifyTrilemmaContract(String storyHash,
       (complete['narrativeFateThreads'] as int? ?? 0) < 6 ||
       (complete['companionQuestStages'] as int? ?? 0) < 9 ||
       (complete['activityForecastGoldens'] as int? ?? 0) < 1 ||
+      (complete['activityRiskForecastGoldens'] as int? ?? 0) < 1 ||
       (complete['activityReflectionGoldens'] as int? ?? 0) < 1 ||
       (complete['activityJournalGoldens'] as int? ?? 0) < 2 ||
       (complete['companionScenes'] as int? ?? 0) < 18 ||
@@ -72,6 +73,9 @@ void verifyTrilemmaContract(String storyHash,
       (purity['minimumGatedChoices'] as int? ?? 0) < 20 ||
       (purity['activityForecastGoldens'] as int? ?? 0) < 1 ||
       purity['activityForecastDeterminism'] != true ||
+      (purity['activityRiskForecastGoldens'] as int? ?? 0) < 1 ||
+      purity['activityRiskForecastDeterminism'] != true ||
+      purity['activityRiskForecastGolden'] != true ||
       (purity['activityReflectionGoldens'] as int? ?? 0) < 1 ||
       purity['activityReflectionDeterminism'] != true ||
       (purity['activityJournalGoldens'] as int? ?? 0) < 2 ||
@@ -103,6 +107,7 @@ void verifyTrilemmaContract(String storyHash,
       performance['lineageDistributionReplay'] != true ||
       performance['checksumReplayMustMatch'] != true ||
       performance['activityForecastDeterminism'] != true ||
+      performance['activityRiskForecastDeterminism'] != true ||
       performance['companionSceneReplay'] != true ||
       (performance['companionSceneChoiceModes'] as int? ?? 0) < 2 ||
       performance['companionSceneRouteTrace'] != true ||
@@ -920,6 +925,10 @@ void main() {
       File('test/activity_forecast_golden_test.dart').existsSync()
           ? File('test/activity_forecast_golden_test.dart').readAsStringSync()
           : '';
+  final activityRiskGoldenEvidence =
+      File('test/activity_risk_golden_test.dart').existsSync()
+          ? File('test/activity_risk_golden_test.dart').readAsStringSync()
+          : '';
   final activityReflectionGoldenEvidence =
       File('test/activity_reflection_golden_test.dart').existsSync()
           ? File('test/activity_reflection_golden_test.dart').readAsStringSync()
@@ -980,6 +989,7 @@ void main() {
     'personality-kind.png',
     'personality-bold.png',
     'activity-forecast.png',
+    'activity-risk.png',
     'activity-reflection-en.png',
     'activity-journal-ko.png',
     'activity-journal-en.png',
@@ -1123,6 +1133,8 @@ void main() {
         playerFacingGoldenEvidence.contains("goldens/personality-bold.png") &&
         activityForecastGoldenEvidence.contains('home shows deterministic activity forecasts') &&
         activityForecastGoldenEvidence.contains("goldens/activity-forecast.png") &&
+        activityRiskGoldenEvidence.contains('home explains deterministic fatigue risk before spending the day') &&
+        activityRiskGoldenEvidence.contains("goldens/activity-risk.png") &&
         activityReflectionGoldenEvidence.contains('event shows localized activity reflection after day spend') &&
         activityReflectionGoldenEvidence.contains("goldens/activity-reflection-en.png") &&
         activityJournalGoldenEvidence.contains('activity journal renders deterministic reflection pages') &&

@@ -81,6 +81,25 @@ String localizedActivityHorizon(ActivityForecast forecast) {
   return localized('ui.home.horizon.open', 'Next week · open choice');
 }
 
+String localizedActivityRisk(ActivityForecast forecast) {
+  if (forecast.growthPenalty > 0) {
+    return _replace(
+        localized('ui.home.risk.penalty', 'Fatigue guard · growth -{loss}'), {
+      'loss': forecast.growthPenalty,
+    });
+  }
+  if (forecast.fatigueAfter >= 10 && forecast.fatigueDelta > 0) {
+    return localized('ui.home.risk.strained', 'High fatigue · recover first');
+  }
+  if (forecast.fatigueDelta < 0) {
+    return _replace(
+        localized('ui.home.risk.recovery', 'Recovery · fatigue {delta}'), {
+      'delta': _signed(forecast.fatigueDelta),
+    });
+  }
+  return localized('ui.home.risk.steady', 'Steady pace');
+}
+
 String localizedActivityResultFromStory(
         Map<String, dynamic> story, String raw) =>
     localizedActivityResult(

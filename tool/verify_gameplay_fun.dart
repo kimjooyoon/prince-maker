@@ -76,6 +76,16 @@ void main() {
           File('lib/main.dart')
               .readAsStringSync()
               .contains('localizedActivityHorizon');
+  final activityRiskForecastGolden = File('test/goldens/activity-risk.png')
+          .existsSync() &&
+      File('test/activity_risk_golden_test.dart').existsSync() &&
+      File('test/activity_risk_golden_test.dart')
+          .readAsStringSync()
+          .contains('home explains deterministic fatigue risk') &&
+      File('lib/main.dart')
+          .readAsStringSync()
+          .contains('localizedActivityRisk') &&
+      File('lib/i18n.dart').readAsStringSync().contains('ui.home.risk.penalty');
   final metrics = {
     'authoredChoices': choices.length,
     'effectfulChoices': impactful,
@@ -118,6 +128,7 @@ void main() {
                 .readAsStringSync()
                 .contains('drawChoiceImpact'),
     'activityForecastHorizonGolden': activityForecastHorizonGolden,
+    'activityRiskForecastGolden': activityRiskForecastGolden,
   };
   final contract = (story['gameplayKpis'] as Map).cast<String, dynamic>(),
       current = (contract['current'] as Map).cast<String, dynamic>();
@@ -138,7 +149,9 @@ void main() {
       current['companionSceneChoiceForesightGolden'] !=
           metrics['companionSceneChoiceForesightGolden'] ||
       current['activityForecastHorizonGolden'] !=
-          metrics['activityForecastHorizonGolden']) {
+          metrics['activityForecastHorizonGolden'] ||
+      current['activityRiskForecastGolden'] !=
+          metrics['activityRiskForecastGolden']) {
     fail('SSOT gameplay KPI drift');
   }
   final approved = choices.length >= 166 &&
@@ -155,7 +168,8 @@ void main() {
       metrics['companionSceneChoiceImpactRate'] == 1.0 &&
       metrics['companionSceneChoiceForesightRate'] == 1.0 &&
       metrics['companionSceneChoiceForesightGolden'] == true;
-  final horizonApproved = metrics['activityForecastHorizonGolden'] == true;
+  final horizonApproved = metrics['activityForecastHorizonGolden'] == true &&
+      metrics['activityRiskForecastGolden'] == true;
   final report = {
     'schema': 'lumen-gameplay-fun-verdict-v1',
     'decision':

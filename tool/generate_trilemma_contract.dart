@@ -35,6 +35,11 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       .whereType<File>()
       .where((file) => file.uri.pathSegments.last == 'activity-forecast.png')
       .length;
+  final activityRiskForecastGoldens = Directory('test/goldens')
+      .listSync()
+      .whereType<File>()
+      .where((file) => file.uri.pathSegments.last == 'activity-risk.png')
+      .length;
   final activityReflectionGoldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
@@ -113,6 +118,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'personalityIllustrationGoldens':
               (story['personalities'] as List? ?? const []).length,
           'activityForecastGoldens': activityForecastGoldens,
+          'activityRiskForecastGoldens': activityRiskForecastGoldens,
           'activityReflectionGoldens': activityReflectionGoldens,
           'activityJournalGoldens': activityJournalGoldens,
           'companionScenes': companionScenes.length,
@@ -140,6 +146,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/golden_test.dart#all',
           'test/player_facing_golden_test.dart#all personality illustration pages render deterministic portraits',
           'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
+          'test/activity_risk_golden_test.dart#home explains deterministic fatigue risk before spending the day',
           'test/activity_reflection_golden_test.dart#event shows localized activity reflection after day spend',
           'test/activity_journal_golden_test.dart#activity journal renders deterministic reflection pages',
           'test/companion_scene_test.dart#companion scene resolver and record loop',
@@ -200,6 +207,10 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'activityForecastDeterminism': true,
           'activityForecastHorizonGolden':
               gameplayTargets['activityForecastHorizonGolden'],
+          'activityRiskForecastGoldens': activityRiskForecastGoldens,
+          'activityRiskForecastDeterminism': true,
+          'activityRiskForecastGolden':
+              gameplayTargets['activityRiskForecastGolden'],
           'activityReflectionGoldens': activityReflectionGoldens,
           'activityReflectionDeterminism': true,
           'activityJournalGoldens': activityJournalGoldens,
@@ -234,6 +245,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/player_facing_golden_test.dart#all personality illustration pages render deterministic portraits',
           'test/activity_forecast_test.dart#fatigue and talent forecast is deterministic',
           'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
+          'test/activity_risk_golden_test.dart#home explains deterministic fatigue risk before spending the day',
           'test/activity_localization_test.dart#activity result localizes deterministic reflection',
           'test/activity_journal_test.dart#activity journal opens only recorded reflection pages',
           'test/companion_scene_test.dart#companion scene resolver and record loop',
@@ -285,6 +297,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'lineageDistributionReplay': true,
           'checksumReplayMustMatch': true,
           'activityForecastDeterminism': true,
+          'activityRiskForecastDeterminism': true,
           'companionSceneReplay': true,
           'companionSceneChoiceModes': 2,
           'companionSceneRouteTrace': true,
@@ -305,6 +318,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/companion_scene_test.dart#companion archive canvas projection stays within the frame budget',
           'test/canvas_render_perf_test.dart#full Canvas pages stay within the deterministic frame budget',
           'lib/activity_forecast.dart#forecastActivity',
+          'lib/i18n.dart#localizedActivityRisk',
           'tool/verify_quality_score.dart#quality-score-99',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/trilemma_verdict.dart#axis-verdict',

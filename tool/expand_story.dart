@@ -337,9 +337,11 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/activity_catalog.dart#activitiesFromStory',
     'lib/activity_forecast.dart#forecastActivity',
     'lib/activity_localization.dart#localizedActivityResult',
+    'lib/i18n.dart#localizedActivityRisk',
     'lib/activity_journal_painter.dart#activityJournalEntries',
     'test/activity_forecast_test.dart#fatigue and talent forecast is deterministic',
     'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
+    'test/activity_risk_golden_test.dart#home explains deterministic fatigue risk before spending the day',
     'test/activity_localization_test.dart#activity result localizes deterministic reflection',
     'test/activity_reflection_golden_test.dart#event shows localized activity reflection after day spend',
     'test/activity_journal_test.dart#activity journal opens only recorded reflection pages',
@@ -4746,6 +4748,10 @@ void main() {
     'ui.home.forecast': '예상 · {effects}',
     'ui.home.forecast.none': '변화 없음',
     'ui.home.fatigueDelta': '피로 {delta}',
+    'ui.home.risk.penalty': '피로 경고 · 성장 -{loss}',
+    'ui.home.risk.strained': '높은 피로 · 회복 권장',
+    'ui.home.risk.recovery': '회복 선택 · 피로 {delta}',
+    'ui.home.risk.steady': '안정적인 속도',
     'ui.home.save': '저장/복원',
     'ui.home.illustration': '일러스트',
     'ui.home.spend': '하루 보내기 →',
@@ -4926,6 +4932,10 @@ void main() {
     'ui.home.forecast': 'Forecast · {effects}',
     'ui.home.forecast.none': 'No numeric change',
     'ui.home.fatigueDelta': 'Fatigue {delta}',
+    'ui.home.risk.penalty': 'Fatigue guard · growth -{loss}',
+    'ui.home.risk.strained': 'High fatigue · recover first',
+    'ui.home.risk.recovery': 'Recovery · fatigue {delta}',
+    'ui.home.risk.steady': 'Steady pace',
     'ui.home.save': 'Save / restore',
     'ui.home.illustration': 'Illustration',
     'ui.home.spend': 'Spend the day →',
@@ -5454,6 +5464,7 @@ void main() {
       'companionSceneChoiceForesightRate': 1.0,
       'companionSceneChoiceForesightGolden': true,
       'activityForecastHorizonGolden': true,
+      'activityRiskForecastGolden': true,
     },
     'current': {
       'authoredChoices': choices.length,
@@ -5487,6 +5498,7 @@ void main() {
           : companionChoiceForesight / companionChoices.length,
       'companionSceneChoiceForesightGolden': true,
       'activityForecastHorizonGolden': true,
+      'activityRiskForecastGolden': true,
     },
     'definitions': {
       'choiceImpactRate': 'effectful authored choices / authored choices',
@@ -5507,6 +5519,8 @@ void main() {
           'companion-scene-choice.png fixes the pre-commit forecast surface and the painter must call both localizedChoiceEffect and drawChoiceImpact',
       'activityForecastHorizonGolden':
           'activity-forecast.png fixes immediate effects plus the next authored event or milestone on every activity card',
+      'activityRiskForecastGolden':
+          'activity-risk.png fixes fatigue guard, strained threshold, recovery and steady-pace risk copy before a day is spent',
     },
     'evidence': [
       'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
@@ -5515,6 +5529,7 @@ void main() {
       'test/golden_test.dart#event choice shows a separated result banner',
       'test/companion_scene_golden_test.dart#companion scene archive records a scene',
       'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
+      'test/activity_risk_golden_test.dart#home explains deterministic fatigue risk before spending the day',
     ],
   };
   final dimensions = (story['scenarioCompleteness']['dimensions'] as List)

@@ -81,6 +81,7 @@ void main() {
   final playerFacingGoldenTest = read('test/player_facing_golden_test.dart');
   final activityForecastGoldenTest =
       read('test/activity_forecast_golden_test.dart');
+  final activityRiskGoldenTest = read('test/activity_risk_golden_test.dart');
   final activityReflectionGoldenTest =
       read('test/activity_reflection_golden_test.dart');
   final activityJournalGoldenTest =
@@ -163,6 +164,10 @@ void main() {
       'home shows deterministic activity forecasts');
   requireText('test/activity_forecast_golden_test.dart',
       activityForecastGoldenTest, 'goldens/activity-forecast.png');
+  requireText('test/activity_risk_golden_test.dart', activityRiskGoldenTest,
+      'home explains deterministic fatigue risk before spending the day');
+  requireText('test/activity_risk_golden_test.dart', activityRiskGoldenTest,
+      'goldens/activity-risk.png');
   requireText(
       'test/activity_reflection_golden_test.dart',
       activityReflectionGoldenTest,

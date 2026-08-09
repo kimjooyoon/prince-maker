@@ -24,7 +24,9 @@ void main() {
             focusBonus: 1,
             events: events);
     expect(first.toMap(), equals(replay.toMap()));
+    expect(first.rawGrowth, 4);
     expect(first.growth, 3); // (3 + talent 1) - fatigue guard 1
+    expect(first.growthPenalty, 1);
     expect(first.fatigueAfter, 9);
     expect(first.nextEventKey, 'event.mail.title');
   });
@@ -53,5 +55,20 @@ void main() {
           {'week': 2, 'titleKey': 'event.mail.title'}
         ]);
     expect(localizedActivityHorizon(forecast), 'Next event · event.mail.title');
+  });
+
+  test('activity risk explains fatigue guard and recovery choices', () {
+    setActiveLocale('en', const LocaleCatalog({}));
+    final strained = forecastActivity(defaultActivities.first,
+        week: 8, fatigue: 8, coins: 12);
+    final recovery =
+        forecastActivity(defaultActivities[3], week: 8, fatigue: 8, coins: 12);
+    expect(localizedActivityRisk(strained), 'Fatigue guard · growth -1');
+    expect(localizedActivityRisk(recovery), 'Recovery · fatigue -2');
+    expect(
+        strained.toMap(),
+        equals(forecastActivity(defaultActivities.first,
+                week: 8, fatigue: 8, coins: 12)
+            .toMap()));
   });
 }
