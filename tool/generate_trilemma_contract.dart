@@ -57,6 +57,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       (gameplay['targets'] as Map? ?? {}).cast<String, dynamic>();
   final lineageDistribution =
       (story['lineageDistribution'] as Map? ?? {}).cast<String, dynamic>();
+  final contentBudget =
+      (story['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
   final quests = (story['companionQuests'] as List? ?? const []).cast<Map>();
   final companionScenes =
       (story['companionScenes'] as List? ?? const []).cast<Map>();
@@ -73,6 +75,9 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       .readAsStringSync()
       .contains(
           'companion archive canvas projection stays within the frame budget');
+  final canvasRenderBudgetEvidence = File('test/canvas_render_perf_test.dart')
+      .readAsStringSync()
+      .contains('full Canvas pages stay within the deterministic frame budget');
   final questStages = quests.fold<int>(
       0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
   final eventStormNodes = events.length +
@@ -282,6 +287,10 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'companionSceneRouteTrace': true,
           'companionSceneRenderBudgetMicros': 8000,
           'companionSceneRenderBudgetEvidence': companionRenderBudgetEvidence,
+          'canvasRenderBudgetMicros': contentBudget['canvasPaintBudgetMicros'],
+          'canvasRenderPages':
+              (contentBudget['canvasRenderPages'] as List? ?? const []).length,
+          'canvasRenderBudgetEvidence': canvasRenderBudgetEvidence,
           'minCompanionScenes': 3,
           'qualityScoreTarget': qualityScoreTarget,
         },
@@ -291,6 +300,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
           'tool/benchmark_game.dart#companion-scene-replay-checksum',
           'test/companion_scene_test.dart#companion archive canvas projection stays within the frame budget',
+          'test/canvas_render_perf_test.dart#full Canvas pages stay within the deterministic frame budget',
           'lib/activity_forecast.dart#forecastActivity',
           'tool/verify_quality_score.dart#quality-score-99',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',

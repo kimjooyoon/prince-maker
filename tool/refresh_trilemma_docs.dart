@@ -94,6 +94,10 @@ String render(String source) {
     output = output.replaceAll('3개 lineage 분포·계승 프로필 순환을 계약으로 고정한다.',
         '3개 lineage 분포·5개 정책 × 3개 프로필 ending/signature 분포·계승 프로필 순환을 계약으로 고정한다.');
   }
+  if (!output.contains('6개 대표 Canvas page')) {
+    output = output.replaceAll('따라서 네트워크·폰트·브라우저 상태와 무관하게',
+        '별도 Canvas paint budget은 home/event/ending/ledger/relationship/companion 6개 대표 Canvas page를 동일 Scene.paint 경로로 24회씩 렌더링해 평균 8,000µs 미만을 강제한다. 따라서 네트워크·폰트·브라우저 상태와 무관하게');
+  }
   output = output
       .replaceAll(
           '18개 동료 독립 장면·10개 활동 미니 이벤트', '18개 동료 독립 장면·36개 동행 선택·10개 활동 미니 이벤트')

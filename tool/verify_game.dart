@@ -108,6 +108,9 @@ void verifyTrilemmaContract(String storyHash,
       performance['companionSceneRouteTrace'] != true ||
       (performance['companionSceneRenderBudgetMicros'] as int? ?? 0) > 8000 ||
       performance['companionSceneRenderBudgetEvidence'] != true ||
+      (performance['canvasRenderBudgetMicros'] as int? ?? 0) > 8000 ||
+      (performance['canvasRenderPages'] as int? ?? 0) < 6 ||
+      performance['canvasRenderBudgetEvidence'] != true ||
       (performance['minCompanionScenes'] as int? ?? 0) < 3 ||
       performance['qualityScoreTarget'] != qualityScoreTarget ||
       performance['systemApproval'] != true ||
@@ -217,6 +220,9 @@ void main() {
       contentBudget['activityMiniEvents'] != activityScenes.length ||
       contentBudget['chapterClosures'] != progression.length ||
       contentBudget['chapterSceneBeats'] != progression.length ||
+      contentBudget['canvasPaintBudgetMicros'] is! int ||
+      (contentBudget['canvasPaintBudgetMicros'] as int) > 8000 ||
+      (contentBudget['canvasRenderPages'] as List? ?? const []).length != 6 ||
       (contentBudget['pacingSeconds'] as Map? ?? {})['activityReflection']
           is! int ||
       (contentBudget['pacingSeconds'] as Map? ?? {})['storyChoice'] is! int ||
