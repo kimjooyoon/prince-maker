@@ -132,4 +132,54 @@ void main() {
     print(
         'LEGACY_METRICS_OK: profiles=${ids.length} distinctEndings=${endings.length} targetCompanionEpilogues=3 distinctSignatures=${signatures.length}');
   });
+
+  test('each legacy profile keeps a deterministic distribution across policies',
+      () async {
+    final source = decodeJsonl(utf8.decode(
+        (await rootBundle.load('story/story.jsonl')).buffer.asUint8List()));
+    final story = JsonStoryAdapter(source),
+        activities =
+            (source['activities'] as List).cast<Map<String, dynamic>>();
+    final contract =
+        (source['lineageDistribution'] as Map).cast<String, dynamic>();
+    Future<Map<String, Map<String, Set<String>>>> collect() async {
+      final result = <String, Map<String, Set<String>>>{};
+      for (final profile in story.legacyProfiles) {
+        final id = '${profile['id']}',
+            endings = <String>{},
+            signatures = <String>{};
+        for (final activity in activities) {
+          final route = await play(story, activity, legacyId: id);
+          endings.add('${route['ending']}');
+          signatures
+              .add('${route['ending']}|${route['stats']}|${route['bonds']}');
+        }
+        result[id] = {'endings': endings, 'signatures': signatures};
+      }
+      return result;
+    }
+
+    final distributions = await collect(), replay = await collect();
+    final minimumEndings = contract['minimumDistinctEndingsPerProfile'] as int;
+    final minimumSignatures =
+        contract['minimumDistinctSignaturesPerProfile'] as int;
+    expect(activities.length, contract['policyCount']);
+    expect(distributions.keys, hasLength(contract['profileCount']));
+    for (final profile in story.legacyProfiles) {
+      final id = '${profile['id']}', result = distributions[id]!;
+      final targets = (profile['endingIds'] as List).map((id) => '$id').toSet();
+      expect(result['endings']!.length, greaterThanOrEqualTo(minimumEndings));
+      expect(result['signatures']!.length,
+          greaterThanOrEqualTo(minimumSignatures));
+      expect(result['endings']!.any(targets.contains), isTrue);
+      expect(replay[id]!['endings'], equals(result['endings']));
+      expect(replay[id]!['signatures'], equals(result['signatures']));
+    }
+    final fingerprints = distributions.values
+        .map((result) => (result['endings']!.toList()..sort()).join('|'))
+        .toSet();
+    expect(fingerprints, hasLength(story.legacyProfiles.length));
+    print('LEGACY_DISTRIBUTION_OK: policies=${activities.length} '
+        'profiles=${distributions.length} fingerprints=${fingerprints.length}');
+  });
 }

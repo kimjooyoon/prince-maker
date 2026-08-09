@@ -30,8 +30,7 @@ class CampaignMetrics {
 bool sameSet<T>(Set<T> left, Set<T> right) =>
     left.length == right.length && left.containsAll(right);
 
-bool sameSetMap(Map<String, Set<String>> left,
-    Map<String, Set<String>> right) {
+bool sameSetMap(Map<String, Set<String>> left, Map<String, Set<String>> right) {
   if (!sameSet(left.keys.toSet(), right.keys.toSet())) return false;
   for (final key in left.keys) {
     if (!sameSet(left[key]!, right[key]!)) return false;
@@ -82,9 +81,14 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
             forecast.nextWeek;
       }
       final week = session.world.progress[0]!.week;
-      final stat = legacyProfile?['stat'] as String? ??
+      final policy = legacyProfile == null
+          ? null
+          : activities[(i ~/ 2) % activities.length];
+      final stat = policy?.stat ??
           switch ((i + week) % 3) { 0 => '지혜', 1 => '공감', _ => '용기' };
-      session.choose(ActivityChosen(stat, 2, 1, 1, label: 'benchmark:$stat'));
+      session.choose(ActivityChosen(
+          stat, policy?.delta ?? 2, policy?.coins ?? 1, policy?.fatigue ?? 1,
+          label: 'benchmark:$stat'));
       final event = eventsByWeek[session.world.progress[0]!.week];
       if (event != null) {
         final choices = (event['choices'] as List).cast<Map<String, dynamic>>();
@@ -224,6 +228,8 @@ void main() {
           1 +
           (source['events'] as List).length +
           (source['companionScenes'] as List? ?? const []).length);
+  final lineageDistribution =
+      (source['lineageDistribution'] as Map? ?? {}).cast<String, dynamic>();
   final profileIds = story.legacyProfiles.map((p) => '${p['id']}').toSet(),
       lineageEvidence = profileIds.every(
           (id) => (first.lineageSignatures[id] ?? const <String>{}).isNotEmpty),
@@ -239,16 +245,26 @@ void main() {
         final id = '${profile['id']}', target = '${profile['companionId']}';
         return (first.lineageCompanions[id] ?? const <String>{})
             .contains(target);
-      }),
-      lineageSummary = profileIds.map((id) {
-        final target = story.legacyProfiles
-            .firstWhere((profile) => profile['id'] == id)['companionId'];
-        final endingIds =
-            (first.lineageEndings[id] ?? const <String>{}).toList()..sort();
-        final companions =
-            (first.lineageCompanions[id] ?? const <String>{}).toList()..sort();
-        return '$id:${endingIds.join('+')}|target:$target|routes:${companions.join('+')}/${first.lineageSignatures[id]?.length ?? 0}sig';
-      }).join(',');
+      });
+  final lineageDistributionEvidence = story.legacyProfiles.every((profile) {
+    final id = '${profile['id']}';
+    return (first.lineageEndings[id]?.length ?? 0) >=
+            (lineageDistribution['minimumDistinctEndingsPerProfile'] as int? ??
+                3) &&
+        (first.lineageSignatures[id]?.length ?? 0) >=
+            (lineageDistribution['minimumDistinctSignaturesPerProfile']
+                    as int? ??
+                3);
+  });
+  final lineageSummary = profileIds.map((id) {
+    final target = story.legacyProfiles
+        .firstWhere((profile) => profile['id'] == id)['companionId'];
+    final endingIds = (first.lineageEndings[id] ?? const <String>{}).toList()
+      ..sort();
+    final companions =
+        (first.lineageCompanions[id] ?? const <String>{}).toList()..sort();
+    return '$id:${endingIds.join('+')}|target:$target|routes:${companions.join('+')}/${first.lineageSignatures[id]?.length ?? 0}sig';
+  }).join(',');
   final approved = maxMillis <= 24000 &&
       first.checksum > campaigns &&
       replay.checksum == first.checksum &&
@@ -266,6 +282,8 @@ void main() {
       lineageEvidence &&
       lineageEndingEvidence &&
       lineageCompanionEvidence &&
+      lineageDistribution['policyCount'] == 5 &&
+      lineageDistributionEvidence &&
       sameSetMap(replay.lineageEndings, first.lineageEndings) &&
       sameSetMap(replay.lineageSignatures, first.lineageSignatures) &&
       sameSetMap(replay.lineageCompanions, first.lineageCompanions);
@@ -295,6 +313,8 @@ void main() {
     'lineageEvidence': lineageEvidence,
     'lineageEndingEvidence': lineageEndingEvidence,
     'lineageCompanionEvidence': lineageCompanionEvidence,
+    'lineageDistributionPolicies': lineageDistribution['policyCount'],
+    'lineageDistributionEvidence': lineageDistributionEvidence,
   };
   final reportFile = File('build/benchmark-verdict.json')
     ..parent.createSync(recursive: true);

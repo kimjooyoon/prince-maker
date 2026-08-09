@@ -75,6 +75,15 @@ String render(String source) {
       .replaceAll('475000', '565000')
       .replaceAll('47개 사건 선택을 처리하는 시간을 측정한다.',
           '47개 사건 선택과 최대 18개 동료 독립 장면 기록을 처리하는 시간을 측정한다.');
+  if (!output.contains('`lineageDistribution`은')) {
+    output = output.replaceAll(
+        '프로필의 성장축을 결정론적으로 선택하고 시작 스탯 변형을 적용한다.',
+        '프로필의 성장축을 결정론적으로 선택하고 시작 스탯 변형을 적용한다. `lineageDistribution`은 각 프로필을 5개 SSOT 일정 정책으로 재생해 최소 3개 ending·3개 signature와 서로 다른 fingerprint를 요구한다.');
+  }
+  if (!output.contains('5개 정책 × 3개 프로필 ending/signature 분포')) {
+    output = output.replaceAll('3개 lineage 분포·계승 프로필 순환을 계약으로 고정한다.',
+        '3개 lineage 분포·5개 정책 × 3개 프로필 ending/signature 분포·계승 프로필 순환을 계약으로 고정한다.');
+  }
   output = output
       .replaceAll(
           '18개 동료 독립 장면·10개 활동 미니 이벤트', '18개 동료 독립 장면·36개 동행 선택·10개 활동 미니 이벤트')

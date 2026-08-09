@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 70eb0e11c634da76024c3103024067e8cea621b453f98322da3abeab0902e43c -->
+<!-- ssot-sha256: 7c8d7f5b032e37c63438e07a8a850ca29625fb3153b7bc5e5e43baddddb23c4e -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -122,7 +122,7 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 | 관계 아크 | 등장·대화·유대 임계·엔딩 에필로그의 계층이 존재한다 | 3 companions / 18 independent companion scenes (6 each) / rival conflict / deterministic relationship states / 3 bond-route epilogues / 16 chapter relationship beats | `story/story.jsonl#companions` |
 | 상태 피드백 | 일정의 결과가 다음 선택·막 목표·엔딩 조건에 되돌아온다 | stats, coins, fatigue, 16 milestones, 10 activity mini-events, 6 core endings and 18 ending variants | `test/game_core_test.dart#rules` |
 | 조건과 공개 | 조건부 사건과 목표가 숨은 단절이 아니라 재플레이할 실마리로 기능한다 | 16 closing milestones / 16 chapter contracts / locked stat, bond, memory and legacy gates / milestone-gated master endings | `tool/verify_game.dart#scenario-contract` |
-| 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / explicit deterministic next-run profile selection / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues | `test/gameplay_metrics_test.dart#three-legacy-profiles-produce-distinct-deterministic-route-signatures` |
+| 재플레이 가치 | 동일 입력은 동일 결과, 다른 성장축·정책은 다른 authored 결과를 만든다 | 5 schedule policies / 4 distinct signatures / 6 endings / 3 bond route goals / 3 ending-based legacy profiles / explicit deterministic next-run profile selection / profile-specific week-2 authored bonus / 3 profile route signatures / 3 profile target endings / 3 target companion epilogues / profile × policy ending and signature distributions | `test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies` |
 | 장면 결산 | 도입·중반 사건·엔딩을 Canvas Golden으로 고정하고 대사 locale을 통과한다 | Canvas event and closure evidence plus 6-location route atlas, 18 companion scenes, 24 side-scene records, 10 activity reflections, 18 ending variants, ko+en catalogs, speaker portrait bindings and system decision receipts | `test/golden_test.dart#all-lineage-companion-epilogues-have-distinct-Canvas-evidence` |
 | 종결과 회고 | 엔딩이 terminal 상태·기록·새 캠페인으로 닫히며 성능 benchmark가 같은 루프를 재생한다 | 48-week terminal campaign / system decision receipts / save v7 with memory flags / butterfly ledger / route atlas / collection / deterministic event-cause retrospective / target companion quests and epilogues / SSOT campaign benchmark | `test/golden_test.dart#twenty-four-week-loop-resolves-to-an-ending` |
 
