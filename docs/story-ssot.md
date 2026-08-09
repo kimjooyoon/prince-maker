@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 3c8dc1cfec3736ae1227bd04faf89c5d70493c8081313bd101d4da3f7a81c8eb -->
+<!-- ssot-sha256: fdf555117d943b950d29dff0ccc155fb6c2e8d46bc3412282497cd845aa430ca -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -56,7 +56,7 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **1161** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **684**
+- locale 최소 키: **1164** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **684**
 - 산식: narrative backbone 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; companion choice variants add 72 label/response lines for 684 total authored dialogue units; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
@@ -76,6 +76,7 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 - 교환 선택 비율: **0.43373493975903615** · 목표 **0.4** · `choices with at least one positive and one negative numeric axis / choices`
 - 선택 영향 1.0 · 사건 분기 1.0 · 다축 영향 1.0 · 조건부 선택 29
 - 동행 선택 사전 예고: 1.0 · Golden `companion-scene-choice.png fixes the pre-commit forecast surface and the painter must call both localizedChoiceEffect and drawChoiceImpact`
+- 활동 선택 horizon: Golden `true` · activity-forecast.png fixes immediate effects plus the next authored event or milestone on every activity card
 
 ## 이벤트 스토밍 증적
 
@@ -213,8 +214,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `20d10697cf553a4aa69cbf4532c6f99a03bc77e2679cef6588fca00ffa251f0c`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `698dce68ebddaecaffcfe9568b6ccf109865ff04ad0b3e9e1df5b2ce7a5001bd`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `f9f29241951a0ef964d91aa8b07a1af6a765c3cf61749c7d0b512bebfccf1889`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `57722cc3d0df06f7950a7f47519eeb31a2e9413f1cf2513971adc55a3f8e8cee`
 
 ## 성격
 

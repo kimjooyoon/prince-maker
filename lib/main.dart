@@ -1758,7 +1758,8 @@ class Scene extends CustomPainter {
                   .whereType<Map>()
                   .map((goal) => goal.cast<String, dynamic>())
                   .toList()),
-          forecastText = localizedActivityForecast(forecast);
+          forecastText = localizedActivityForecast(forecast),
+          horizonText = localizedActivityHorizon(forecast);
       CanvasUiKit.statePanel(
           c,
           Rect.fromLTWH(x, y, DesignTokens.activityCardWidth,
@@ -1774,6 +1775,9 @@ class Scene extends CustomPainter {
           on ? Colors.white70 : ink.withValues(alpha: .55));
       txt(c, forecastText, Offset(x + 52, y + 62), 8,
           on ? Colors.white70 : teal,
+          maxWidth: 160, maxLines: 1);
+      txt(c, horizonText, Offset(x + 52, y + 73), 7,
+          on ? Colors.white60 : ink.withValues(alpha: .48),
           maxWidth: 160, maxLines: 1);
     }
     box(c, const Rect.fromLTWH(260, 500, 150, 54), Colors.white,

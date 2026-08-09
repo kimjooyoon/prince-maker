@@ -43,8 +43,7 @@ String render(String source) {
         '3개 계승 프로필·엔딩 뒤 계승 프로필 선택 Golden(ko/en)·3개 프로필별 선택 보정');
   }
   if (!output.contains('계승 policy forecast Canvas Golden')) {
-    output = output.replaceAll(
-        '엔딩 뒤 계승 프로필 선택 Golden(ko/en)·3개 프로필별 선택 보정',
+    output = output.replaceAll('엔딩 뒤 계승 프로필 선택 Golden(ko/en)·3개 프로필별 선택 보정',
         '엔딩 뒤 계승 프로필 선택 Golden(ko/en)·계승 policy forecast Canvas Golden·3개 프로필별 선택 보정');
   }
   if (!output.contains('explicit ending picker')) {
@@ -81,8 +80,7 @@ String render(String source) {
       .replaceAll('47개 사건 선택을 처리하는 시간을 측정한다.',
           '47개 사건 선택과 최대 18개 동료 독립 장면 기록을 처리하는 시간을 측정한다.');
   if (!output.contains('`lineageDistribution`은')) {
-    output = output.replaceAll(
-        '프로필의 성장축을 결정론적으로 선택하고 시작 스탯 변형을 적용한다.',
+    output = output.replaceAll('프로필의 성장축을 결정론적으로 선택하고 시작 스탯 변형을 적용한다.',
         '프로필의 성장축을 결정론적으로 선택하고 시작 스탯 변형을 적용한다. `lineageDistribution`은 각 프로필을 5개 SSOT 일정 정책으로 재생해 최소 3개 ending·3개 signature와 서로 다른 fingerprint를 요구한다.');
   }
   if (!output.contains('관측 4개 ending·4개 signature')) {
@@ -124,6 +122,10 @@ String render(String source) {
     output = output.replaceAll(
         '72/166(0.4337) trade-off 선택과 36/36 companion choice impact',
         '72/166(0.4337) trade-off 선택과 36/36 companion choice impact·36/36 companion choice foresight');
+  }
+  if (!output.contains('활동 horizon Golden')) {
+    output = output.replaceAll(
+        '활동 forecast Golden', '활동 forecast Golden·활동 horizon Golden');
   }
   return output;
 }

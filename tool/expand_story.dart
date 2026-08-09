@@ -5453,6 +5453,7 @@ void main() {
       'companionSceneChoiceCount': 36,
       'companionSceneChoiceForesightRate': 1.0,
       'companionSceneChoiceForesightGolden': true,
+      'activityForecastHorizonGolden': true,
     },
     'current': {
       'authoredChoices': choices.length,
@@ -5485,6 +5486,7 @@ void main() {
           ? 0.0
           : companionChoiceForesight / companionChoices.length,
       'companionSceneChoiceForesightGolden': true,
+      'activityForecastHorizonGolden': true,
     },
     'definitions': {
       'choiceImpactRate': 'effectful authored choices / authored choices',
@@ -5503,6 +5505,8 @@ void main() {
           'companion choices with a visible numeric forecast / companion choices',
       'companionSceneChoiceForesightGolden':
           'companion-scene-choice.png fixes the pre-commit forecast surface and the painter must call both localizedChoiceEffect and drawChoiceImpact',
+      'activityForecastHorizonGolden':
+          'activity-forecast.png fixes immediate effects plus the next authored event or milestone on every activity card',
     },
     'evidence': [
       'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
@@ -5510,6 +5514,7 @@ void main() {
       'test/purity_integration_test.dart#same-schedule-budget-outcomes',
       'test/golden_test.dart#event choice shows a separated result banner',
       'test/companion_scene_golden_test.dart#companion scene archive records a scene',
+      'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
     ],
   };
   final dimensions = (story['scenarioCompleteness']['dimensions'] as List)

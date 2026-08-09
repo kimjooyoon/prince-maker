@@ -198,6 +198,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               (story['personalities'] as List? ?? const []).length,
           'activityForecastGoldens': activityForecastGoldens,
           'activityForecastDeterminism': true,
+          'activityForecastHorizonGolden':
+              gameplayTargets['activityForecastHorizonGolden'],
           'activityReflectionGoldens': activityReflectionGoldens,
           'activityReflectionDeterminism': true,
           'activityJournalGoldens': activityJournalGoldens,
@@ -231,6 +233,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/golden_test.dart#event choice shows a separated result banner',
           'test/player_facing_golden_test.dart#all personality illustration pages render deterministic portraits',
           'test/activity_forecast_test.dart#fatigue and talent forecast is deterministic',
+          'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
           'test/activity_localization_test.dart#activity result localizes deterministic reflection',
           'test/activity_journal_test.dart#activity journal opens only recorded reflection pages',
           'test/companion_scene_test.dart#companion scene resolver and record loop',

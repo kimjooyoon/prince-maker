@@ -21,13 +21,16 @@ class ActivityForecast {
     required this.fatigueAfter,
     required this.nextCoins,
     required this.nextWeek,
-    this.nextEventKey,
-    this.nextMilestoneId,
+      this.nextEventKey,
+      this.nextMilestoneId,
+      this.nextMilestoneKey,
   });
 
   final String activityId, stat;
   final int growth, coinsDelta, fatigueDelta, fatigueAfter, nextCoins, nextWeek;
-  final String? nextEventKey, nextMilestoneId;
+  final String? nextEventKey,
+      nextMilestoneId,
+      nextMilestoneKey;
 
   Map<String, Object?> toMap() => {
         'activityId': activityId,
@@ -40,6 +43,7 @@ class ActivityForecast {
         'nextWeek': nextWeek,
         'nextEventKey': nextEventKey,
         'nextMilestoneId': nextMilestoneId,
+        'nextMilestoneKey': nextMilestoneKey,
       };
 }
 
@@ -75,5 +79,6 @@ ActivityForecast forecastActivity(
     nextWeek: nextWeek,
     nextEventKey: nextEvent?['titleKey'] as String?,
     nextMilestoneId: nextMilestone?['id'] as String?,
+    nextMilestoneKey: nextMilestone?['titleKey'] as String?,
   );
 }

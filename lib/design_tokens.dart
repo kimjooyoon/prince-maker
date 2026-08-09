@@ -23,7 +23,7 @@ abstract final class DesignTokens {
   static const statPillWidth = 104.0;
   static const statPillHeight = 28.0;
   static const activityCardWidth = 220.0;
-  static const activityCardHeight = 80.0;
+  static const activityCardHeight = 88.0;
   static const choiceCardWidth = 332.0;
   static const choiceCardHeight = 190.0;
   static const hudHeight = 120.0;

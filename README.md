@@ -87,7 +87,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![English locale 사건 선택](test/goldens/english-event.png)
 ![English locale 엔딩·동료 에필로그](test/goldens/english-ending.png)
 
-플레이어 표면의 English core-loop·활동 reflection·ko/en 활동 회고 일지·저장 보관소·세 성격별 상반신 일러스트와 활동 forecast는 [`test/player_facing_golden_test.dart`](test/player_facing_golden_test.dart)·[`test/activity_forecast_golden_test.dart`](test/activity_forecast_golden_test.dart)·[`test/activity_reflection_golden_test.dart`](test/activity_reflection_golden_test.dart)·[`test/activity_journal_golden_test.dart`](test/activity_journal_golden_test.dart)가 실제 Canvas 상태를 재생해 고정합니다. 저장 화면은 raw schema/history/hash를 기본 화면에 표시하지 않고, 사람이 읽는 기록 요약과 복사·복원 동작만 노출합니다.
+플레이어 표면의 English core-loop·활동 reflection·ko/en 활동 회고 일지·저장 보관소·세 성격별 상반신 일러스트와 활동 forecast/horizon은 [`test/player_facing_golden_test.dart`](test/player_facing_golden_test.dart)·[`test/activity_forecast_golden_test.dart`](test/activity_forecast_golden_test.dart)·[`test/activity_reflection_golden_test.dart`](test/activity_reflection_golden_test.dart)·[`test/activity_journal_golden_test.dart`](test/activity_journal_golden_test.dart)가 실제 Canvas 상태를 재생해 고정합니다. 저장 화면은 raw schema/history/hash를 기본 화면에 표시하지 않고, 사람이 읽는 기록 요약과 복사·복원 동작만 노출합니다.
 
 ![English core-loop home Golden](test/goldens/player-home-en.png)
 ![저장 보관소 요약 Golden](test/goldens/player-save.png)
@@ -95,7 +95,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 
 ## SSOT와 게임성 지표
 
-게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 166/166 effectful choice, 71/71 divergent scene, 166/166 multi-axis choice, 72/166 trade-off choice(0.4337), 29 gated choice, 36/36 companion choice impact와 36/36 companion choice foresight이며, 결과 피드백 Golden·사전 결과 예고·5-state 관계 resolver/replay trace·상태별 상호 배타 후속 대화까지 purity 축의 fail-closed 게이트로 연결됩니다. 계승 프로필은 5개 SSOT 일정 정책을 각각 재생해 프로필당 관측 4개 엔딩·4개 route signature와 3개 서로 다른 fingerprint를 만들며, 이 증적은 `story/story.jsonl#lineageDistribution`·`test/gameplay_metrics_test.dart`·`tool/benchmark_game.dart`에서 함께 판정하고 `legacy-picker.png` Canvas header에 표시합니다. 성능 축은 home/event/ending/ledger/relationship/companion 6개 대표 Canvas page를 동일 `Scene.paint` 경로로 반복 측정해 평균 8,000µs 미만을 강제하며, `test/canvas_render_perf_test.dart`가 SSOT `contentBudget`와 직접 대조합니다. 상세 계약은 story/story.jsonl의 gameplayKpis·relationshipDesign·contentBudget와 lib/choice_impact.dart·lib/companion_scene_archive_painter.dart·tool/verify_gameplay_fun.dart에 있습니다.
+게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 166/166 effectful choice, 71/71 divergent scene, 166/166 multi-axis choice, 72/166 trade-off choice(0.4337), 29 gated choice, 36/36 companion choice impact와 36/36 companion choice foresight이며, 활동 카드의 즉시 효과와 다음 사건/목표를 함께 보여 주는 `activityForecastHorizonGolden`까지 purity 축의 fail-closed 게이트로 연결됩니다. 계승 프로필은 5개 SSOT 일정 정책을 각각 재생해 프로필당 관측 4개 엔딩·4개 route signature와 3개 서로 다른 fingerprint를 만들며, 이 증적은 `story/story.jsonl#lineageDistribution`·`test/gameplay_metrics_test.dart`·`tool/benchmark_game.dart`에서 함께 판정하고 `legacy-picker.png` Canvas header에 표시합니다. 성능 축은 home/event/ending/ledger/relationship/companion 6개 대표 Canvas page를 동일 `Scene.paint` 경로로 반복 측정해 평균 8,000µs 미만을 강제하며, `test/canvas_render_perf_test.dart`가 SSOT `contentBudget`와 직접 대조합니다. 상세 계약은 story/story.jsonl의 gameplayKpis·relationshipDesign·contentBudget와 lib/choice_impact.dart·lib/companion_scene_archive_painter.dart·tool/verify_gameplay_fun.dart에 있습니다.
 
 스토리와 활동 정의의 단일 원천은 [`story/story.jsonl`](story/story.jsonl)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `characters`는 노아와 세 동료의 역할·이름 key·portrait asset/frame을 선언하며, 94개 사건 선택은 `speakerId → locale key → portrait frame`으로 같은 상반신 대화 컴포넌트를 재사용합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, `assets/lumen-personality-sheet.png`는 고요·다정·용감 성격의 3프레임 상반신 시트입니다. 두 PNG는 SSOT의 `assetRefs`와 각 personality/character의 `portraitAsset`/`portraitFrame`으로 연결되어 Canvas 일러스트와 사건 대화에서 표시됩니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
@@ -140,7 +140,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 | `kind` | 다정한 연결자 | 틸·크림 / 꽃 모티프 / frame 1 |
 | `bold` | 용감한 개척자 | 코랄·황토 / 나침반 모티프 / frame 2 |
 
-현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개 + 동행 선택 36개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6, 장면당 2-way 기록 루프), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 narrative backbone 612줄 + 동행 선택 label/response 72줄 = authored dialogue unit 684개, ko/en locale 1157키, 성격×동료 3×3 공명 matrix(매칭 3개·선택 유대 +1), 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상을 CI에서 자동 검증합니다.
+현재 지표: 본편 47개 + 사이드 장면 24개 = authored scene 71개, 본편 선택 94개 + 사이드 선택 72개 + 동행 선택 36개, 장소 6개, 활동별 미니 이벤트 10개, 동료 독립 장면 18개(3명×6, 장면당 2-way 기록 루프), 핵심 엔딩 6개 + 실패·중립·관계 변형 18개, SSOT 산식상 narrative backbone 612줄 + 동행 선택 label/response 72줄 = authored dialogue unit 684개, ko/en locale 1164키, 성격×동료 3×3 공명 matrix(매칭 3개·선택 유대 +1), 11개 authored 분기 축의 2,048개 scenario vector와 122,880개 route input, 5개 일정 정책 실험의 distinct ending/signature 3개 이상, 활동 horizon 예고 Golden을 CI에서 자동 검증합니다.
 
 계승 관계 회고 지표는 `stargazer→lumi`, `gardener→bora`, `pathfinder→taro` target companion epilogue가 동일 replay와 5,000회 benchmark에서 각각 재현되는지 추가로 확인합니다. 더불어 각 프로필 × 5개 일정 정책의 엔딩·서명 fingerprint가 replay에서 동일하고 서로 달라야 합니다.
 

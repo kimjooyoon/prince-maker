@@ -68,6 +68,14 @@ void main() {
   final companionChoiceForesight = companionChoices
       .where((choice) => ChoiceImpact.from(choice).effectful)
       .length;
+  final activityForecastHorizonGolden =
+      File('test/goldens/activity-forecast.png').existsSync() &&
+          File('test/activity_forecast_golden_test.dart')
+              .readAsStringSync()
+              .contains('home shows deterministic activity forecasts') &&
+          File('lib/main.dart')
+              .readAsStringSync()
+              .contains('localizedActivityHorizon');
   final metrics = {
     'authoredChoices': choices.length,
     'effectfulChoices': impactful,
@@ -100,15 +108,16 @@ void main() {
         : companionChoiceForesight / companionChoices.length,
     'companionSceneChoiceForesightGolden':
         File('test/goldens/companion-scene-choice.png').existsSync() &&
-        File('test/companion_scene_golden_test.dart')
-            .readAsStringSync()
-            .contains('companion-scene-choice.png') &&
-        File('lib/companion_scene_archive_painter.dart')
-            .readAsStringSync()
-            .contains('localizedChoiceEffect(choice)') &&
-        File('lib/companion_scene_archive_painter.dart')
-            .readAsStringSync()
-            .contains('drawChoiceImpact'),
+            File('test/companion_scene_golden_test.dart')
+                .readAsStringSync()
+                .contains('companion-scene-choice.png') &&
+            File('lib/companion_scene_archive_painter.dart')
+                .readAsStringSync()
+                .contains('localizedChoiceEffect(choice)') &&
+            File('lib/companion_scene_archive_painter.dart')
+                .readAsStringSync()
+                .contains('drawChoiceImpact'),
+    'activityForecastHorizonGolden': activityForecastHorizonGolden,
   };
   final contract = (story['gameplayKpis'] as Map).cast<String, dynamic>(),
       current = (contract['current'] as Map).cast<String, dynamic>();
@@ -127,7 +136,9 @@ void main() {
       current['companionSceneChoiceForesightRate'] !=
           metrics['companionSceneChoiceForesightRate'] ||
       current['companionSceneChoiceForesightGolden'] !=
-          metrics['companionSceneChoiceForesightGolden']) {
+          metrics['companionSceneChoiceForesightGolden'] ||
+      current['activityForecastHorizonGolden'] !=
+          metrics['activityForecastHorizonGolden']) {
     fail('SSOT gameplay KPI drift');
   }
   final approved = choices.length >= 166 &&
@@ -144,9 +155,11 @@ void main() {
       metrics['companionSceneChoiceImpactRate'] == 1.0 &&
       metrics['companionSceneChoiceForesightRate'] == 1.0 &&
       metrics['companionSceneChoiceForesightGolden'] == true;
+  final horizonApproved = metrics['activityForecastHorizonGolden'] == true;
   final report = {
     'schema': 'lumen-gameplay-fun-verdict-v1',
-    'decision': approved && companionApproved ? 'approve' : 'reject',
+    'decision':
+        approved && companionApproved && horizonApproved ? 'approve' : 'reject',
     'source': 'story/story.jsonl#gameplayKpis',
     'metrics': metrics,
     'targets': contract['targets'],
@@ -162,5 +175,5 @@ void main() {
   file.writeAsStringSync(
       const JsonEncoder.withIndent('  ').convert(report) + '\n');
   stdout.writeln('GAMEPLAY_FUN_OK: ' + jsonEncode(metrics));
-  if (!(approved && companionApproved)) exit(1);
+  if (!(approved && companionApproved && horizonApproved)) exit(1);
 }
