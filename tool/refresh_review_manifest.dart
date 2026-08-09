@@ -23,6 +23,7 @@ void main() {
     'tool/refresh_review_manifest.dart',
     'tool/verify_scenario_variants.dart',
     'tool/trilemma_verdict.dart',
+    'test/ci_gate_test.dart',
     'test/canvas_surface_test.dart',
     'lib/canvas_scene_fingerprint.dart',
     'test/canvas_scene_fingerprint_test.dart',

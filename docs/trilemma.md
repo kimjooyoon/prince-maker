@@ -19,6 +19,8 @@ SSOT 콘텐츠 → GameWorld 전이 → Canvas/Golden 증거
 
 기계 판정은 `build/trilemma-verdict.json`에 세 축을 별도로 남긴다. 완전성은 SSOT·scenario enumeration·생성 문서·review manifest·정적 분석·Golden·99% quality score, 순수성은 scenario·gameplay-fun KPI·quality score·benchmark·replay, 성능은 benchmark·quality score·Flutter test와 CI Wasm build를 필수 조건으로 가진다. 로컬에서는 Wasm을 제외한 동일 규칙을 실행하고, GitHub Actions의 `--ci` 모드에서는 Wasm까지 포함한다. 어느 축이든 `fail` 또는 `missingChecks`가 있으면 `SYSTEM_APPROVAL`도 `REJECT`다. 특히 순수성은 `gameplay-fun` KPI와 `quality-score` 게이트를 직접 요구한다.
 
+`tool/ci_gate.dart#evaluateChecks`는 첫 실패로 단락하지 않고 모든 검사를 실행해 완전성·순수성·성능의 pass/fail/exitCode를 함께 기록한다. 세 축의 required check 중 하나라도 실패하거나 누락되면 집계된 증거 전체가 fail-closed로 거절된다.
+
 판정 파일의 `closure`는 `story/story.jsonl#root` → `docs/trilemma-contract.jsonl#axes` → `docs/review-manifest.jsonl#entries`의 source digest, 순서가 고정된 전체 gate digest, 최종 `decisionHash`를 연결한다. `verifyTrilemmaReceipt`가 이 chain을 다시 계산하므로 Golden·benchmark 결과가 다른 SSOT나 stale contract에서 나온 경우에는 세 축의 숫자가 통과해도 시스템 승인이 성립하지 않는다.
 
 렌더링 품질도 별도 추론이 아니라 `render-quality-preconditions` 게이트로 판정한다. `docs/render-quality-contract.jsonl`의 viewport·입력 역변환·Golden 선행조건이 누락되면 세 축 전체가 거절된다.

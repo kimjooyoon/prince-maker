@@ -29,6 +29,8 @@ void main() {
   final story = decodeJsonl(File('story/story.jsonl').readAsStringSync());
   final decision =
       (story['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
+  final gatePolicy =
+      (story['ciGatePolicy'] as Map? ?? {}).cast<String, dynamic>();
   if (!workflow.contains('pull_request:') ||
       !workflow.contains('push:') ||
       !workflow.contains('workflow_dispatch:') ||
@@ -65,6 +67,18 @@ void main() {
           .readAsStringSync()
           .contains("'jsonl-contract'")) {
     fail('CI must force JSONL and decision proof precondition gates');
+  }
+  final gateSource = File('tool/ci_gate.dart').readAsStringSync();
+  final gateTest = File('test/ci_gate_test.dart').readAsStringSync();
+  if (gatePolicy['schema'] != 'lumen-ci-gate-v1' ||
+      gatePolicy['failureAggregation'] != 'run-all-checks' ||
+      gatePolicy['requiredAxes'].toString() !=
+          '[completeness, purity, performance]' ||
+      gatePolicy['humanApprovalRequired'] != false ||
+      gatePolicy['failureMode'] != 'fail-closed' ||
+      !gateSource.contains('evaluateChecks') ||
+      !gateTest.contains('gate evidence continues after a failure')) {
+    fail('CI must record every axis gate result before fail-closed adjudication');
   }
   final trilemmaSource = File('tool/trilemma_verdict.dart').readAsStringSync();
   if (!trilemmaSource.contains("'gameplay-fun'") ||
