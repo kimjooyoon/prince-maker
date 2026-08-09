@@ -4,6 +4,7 @@ import 'design_tokens.dart';
 import 'canvas_choice_impact.dart';
 import 'activity_forecast.dart';
 import 'activity_localization.dart';
+import 'memory_forecast.dart';
 
 class LocaleCatalog {
   const LocaleCatalog(this.bundles);
@@ -206,6 +207,18 @@ String localizedChoiceCondition(Map choice) {
   }
   return localized('ui.event.condition.none',
       koreanFallback ? '조건 없음' : 'No condition');
+}
+
+String localizedChoiceMemoryImpact(
+    Map<String, dynamic> choice, List<Map<String, dynamic>> fateThreads) {
+  final forecast = forecastChoiceMemory(choice, fateThreads);
+  if (forecast == null) return '';
+  final title = forecast.titleKey == null
+      ? forecast.fallbackTitle
+      : localized(forecast.titleKey!, forecast.fallbackTitle);
+  return _replace(
+      localized('ui.event.memoryImpact', 'Memory impact · {title}'),
+      {'title': title});
 }
 
 String localizedHistoryLabel(Map<String, dynamic> story, String raw) {

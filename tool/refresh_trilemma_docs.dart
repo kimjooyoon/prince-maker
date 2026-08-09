@@ -143,6 +143,11 @@ String render(String source) {
     output = output.replaceAll(
         '활동 horizon Golden', '활동 horizon Golden·활동 피로 위험 Golden');
   }
+  if (!output.contains('memory impact forecast Golden')) {
+    output = output.replaceAll(
+        '활동 horizon Golden·활동 피로 위험 Golden',
+        '활동 horizon Golden·활동 피로 위험 Golden·memory impact forecast Golden');
+  }
   return output;
 }
 

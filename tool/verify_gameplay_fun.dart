@@ -92,6 +92,19 @@ void main() {
       File('test/activity_forecast_test.dart')
           .readAsStringSync()
           .contains('recovery window follows the injected SSOT rest delta');
+  final memoryImpactGolden =
+      File('test/goldens/memory-forecast.png').existsSync() &&
+          File('test/memory_forecast_test.dart').existsSync() &&
+          File('test/memory_forecast_golden_test.dart')
+              .readAsStringSync()
+              .contains('event shows the authored memory impact before commit') &&
+          File('lib/main.dart').readAsStringSync().contains('drawChoiceEcho') &&
+          File('lib/i18n.dart')
+              .readAsStringSync()
+              .contains('localizedChoiceMemoryImpact') &&
+          File('lib/memory_forecast.dart')
+              .readAsStringSync()
+              .contains('forecastChoiceMemory');
   final metrics = {
     'authoredChoices': choices.length,
     'effectfulChoices': impactful,
@@ -135,6 +148,7 @@ void main() {
                 .contains('drawChoiceImpact'),
     'activityForecastHorizonGolden': activityForecastHorizonGolden,
     'activityRiskForecastGolden': activityRiskForecastGolden,
+    'memoryImpactGolden': memoryImpactGolden,
   };
   final contract = (story['gameplayKpis'] as Map).cast<String, dynamic>(),
       current = (contract['current'] as Map).cast<String, dynamic>();
@@ -157,7 +171,8 @@ void main() {
       current['activityForecastHorizonGolden'] !=
           metrics['activityForecastHorizonGolden'] ||
       current['activityRiskForecastGolden'] !=
-          metrics['activityRiskForecastGolden']) {
+          metrics['activityRiskForecastGolden'] ||
+      current['memoryImpactGolden'] != metrics['memoryImpactGolden']) {
     fail('SSOT gameplay KPI drift');
   }
   final approved = choices.length >= 166 &&
@@ -176,10 +191,13 @@ void main() {
       metrics['companionSceneChoiceForesightGolden'] == true;
   final horizonApproved = metrics['activityForecastHorizonGolden'] == true &&
       metrics['activityRiskForecastGolden'] == true;
+  final memoryApproved = metrics['memoryImpactGolden'] == true;
   final report = {
     'schema': 'lumen-gameplay-fun-verdict-v1',
     'decision':
-        approved && companionApproved && horizonApproved ? 'approve' : 'reject',
+        approved && companionApproved && horizonApproved && memoryApproved
+            ? 'approve'
+            : 'reject',
     'source': 'story/story.jsonl#gameplayKpis',
     'metrics': metrics,
     'targets': contract['targets'],
@@ -195,5 +213,7 @@ void main() {
   file.writeAsStringSync(
       const JsonEncoder.withIndent('  ').convert(report) + '\n');
   stdout.writeln('GAMEPLAY_FUN_OK: ' + jsonEncode(metrics));
-  if (!(approved && companionApproved && horizonApproved)) exit(1);
+  if (!(approved && companionApproved && horizonApproved && memoryApproved)) {
+    exit(1);
+  }
 }

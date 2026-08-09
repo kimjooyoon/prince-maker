@@ -339,11 +339,14 @@ void refreshHashes(Map<String, dynamic> story) {
     'lib/activity_forecast.dart#recoveryDaysToClearFatigue',
     'lib/activity_localization.dart#localizedActivityResult',
     'lib/i18n.dart#localizedActivityRisk',
+    'lib/memory_forecast.dart#forecastChoiceMemory',
     'lib/activity_journal_painter.dart#activityJournalEntries',
     'test/activity_forecast_test.dart#fatigue and talent forecast is deterministic',
     'test/activity_forecast_test.dart#recovery window follows the injected SSOT rest delta',
     'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
     'test/activity_risk_golden_test.dart#home explains deterministic fatigue risk before spending the day',
+    'test/memory_forecast_test.dart#choice maps to an authored fate thread',
+    'test/memory_forecast_golden_test.dart#event shows the authored memory impact before commit',
     'test/activity_localization_test.dart#activity result localizes deterministic reflection',
     'test/activity_reflection_golden_test.dart#event shows localized activity reflection after day spend',
     'test/activity_journal_test.dart#activity journal opens only recorded reflection pages',
@@ -4785,6 +4788,7 @@ void main() {
     'ui.save.location': '장소 발견 · {name}',
     'ui.save.record': '기록이 갱신되었습니다.',
     'ui.event.memoryNeeded': '기억 단서',
+    'ui.event.memoryImpact': '기억 영향 · {title}',
     'ui.event.continue': '하나를 골라 이야기를 이어갑니다.',
     'ui.event.activityReflection': '활동의 잔향 · {title}',
     'ui.journal.title': '활동 회고 일지',
@@ -4971,6 +4975,7 @@ void main() {
     'ui.save.location': 'Location discovered · {name}',
     'ui.save.record': 'A record was updated.',
     'ui.event.memoryNeeded': 'memory clue',
+    'ui.event.memoryImpact': 'Memory impact · {title}',
     'ui.event.continue': 'Choose one path to continue the story.',
     'ui.event.activityReflection': 'Activity reflection · {title}',
     'ui.journal.title': 'Activity reflection journal',
@@ -5467,6 +5472,7 @@ void main() {
       'companionSceneChoiceForesightGolden': true,
       'activityForecastHorizonGolden': true,
       'activityRiskForecastGolden': true,
+      'memoryImpactGolden': true,
     },
     'current': {
       'authoredChoices': choices.length,
@@ -5501,6 +5507,7 @@ void main() {
       'companionSceneChoiceForesightGolden': true,
       'activityForecastHorizonGolden': true,
       'activityRiskForecastGolden': true,
+      'memoryImpactGolden': true,
     },
     'definitions': {
       'choiceImpactRate': 'effectful authored choices / authored choices',
@@ -5523,6 +5530,8 @@ void main() {
           'activity-forecast.png fixes immediate effects plus the next authored event or milestone on every activity card',
       'activityRiskForecastGolden':
           'activity-risk.png fixes fatigue guard, strained threshold, deterministic recovery days and steady-pace risk copy before a day is spent',
+      'memoryImpactGolden':
+          'memory-forecast.png fixes the authored fate-thread title shown before an event choice is committed',
     },
     'evidence': [
       'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
@@ -5532,6 +5541,8 @@ void main() {
       'test/companion_scene_golden_test.dart#companion scene archive records a scene',
       'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
       'test/activity_risk_golden_test.dart#home explains deterministic fatigue risk before spending the day',
+      'test/memory_forecast_test.dart#choice maps to an authored fate thread',
+      'test/memory_forecast_golden_test.dart#event shows the authored memory impact before commit',
     ],
   };
   final dimensions = (story['scenarioCompleteness']['dimensions'] as List)

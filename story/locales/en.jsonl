@@ -1167,3 +1167,4 @@
 {"type":"entry","key":"ui.home.risk.strained","value":"High fatigue · rest {days}d"}
 {"type":"entry","key":"ui.home.risk.recovery","value":"Recovery · fatigue {delta} · ready in {days}d"}
 {"type":"entry","key":"ui.home.risk.steady","value":"Steady pace"}
+{"type":"entry","key":"ui.event.memoryImpact","value":"Memory impact · {title}"}

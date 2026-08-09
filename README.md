@@ -33,6 +33,7 @@ git config core.hooksPath .githooks
 ![용감한 개척자 성격 일러스트 Golden](test/goldens/personality-bold.png)
 ![활동 선택 전 결정론적 forecast Golden](test/goldens/activity-forecast.png)
 ![피로 위험을 설명하는 활동 선택 Golden](test/goldens/activity-risk.png)
+![선택 전 authored 기억 영향 forecast Golden](test/goldens/memory-forecast.png)
 ![English 활동 reflection Golden](test/goldens/activity-reflection-en.png)
 ![English 활동 회고 일지 Golden](test/goldens/activity-journal-en.png)
 ![한국어 활동 회고 일지 Golden](test/goldens/activity-journal-ko.png)
@@ -96,7 +97,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 
 ## SSOT와 게임성 지표
 
-게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 166/166 effectful choice, 71/71 divergent scene, 166/166 multi-axis choice, 72/166 trade-off choice(0.4337), 29 gated choice, 36/36 companion choice impact와 36/36 companion choice foresight이며, 활동 카드의 즉시 효과와 다음 사건/목표를 함께 보여 주는 `activityForecastHorizonGolden`과 피로 감쇠·과로·결정론적 회복 소요일을 명시하는 `activityRiskForecastGolden`까지 purity 축의 fail-closed 게이트로 연결됩니다. 계승 프로필은 5개 SSOT 일정 정책을 각각 재생해 프로필당 관측 4개 엔딩·4개 route signature와 3개 서로 다른 fingerprint를 만들며, 이 증적은 `story/story.jsonl#lineageDistribution`·`test/gameplay_metrics_test.dart`·`tool/benchmark_game.dart`에서 함께 판정하고 `legacy-picker.png` Canvas header에 표시합니다. 성능 축은 home/event/ending/ledger/relationship/companion 6개 대표 Canvas page를 동일 `Scene.paint` 경로로 반복 측정해 평균 8,000µs 미만을 강제하며, `test/canvas_render_perf_test.dart`가 SSOT `contentBudget`와 직접 대조합니다. 상세 계약은 story/story.jsonl의 gameplayKpis·relationshipDesign·contentBudget와 lib/choice_impact.dart·lib/companion_scene_archive_painter.dart·tool/verify_gameplay_fun.dart에 있습니다.
+게임성 KPI는 SSOT의 authored choice를 직접 계산합니다: 166/166 effectful choice, 71/71 divergent scene, 166/166 multi-axis choice, 72/166 trade-off choice(0.4337), 29 gated choice, 36/36 companion choice impact와 36/36 companion choice foresight이며, 활동 카드의 즉시 효과와 다음 사건/목표를 함께 보여 주는 `activityForecastHorizonGolden`, 피로 감쇠·과로·결정론적 회복 소요일을 명시하는 `activityRiskForecastGolden`, 선택 전 authored fate-thread 제목을 고정하는 `memoryImpactGolden`까지 purity 축의 fail-closed 게이트로 연결됩니다. 계승 프로필은 5개 SSOT 일정 정책을 각각 재생해 프로필당 관측 4개 엔딩·4개 route signature와 3개 서로 다른 fingerprint를 만들며, 이 증적은 `story/story.jsonl#lineageDistribution`·`test/gameplay_metrics_test.dart`·`tool/benchmark_game.dart`에서 함께 판정하고 `legacy-picker.png` Canvas header에 표시합니다. 성능 축은 home/event/ending/ledger/relationship/companion 6개 대표 Canvas page를 동일 `Scene.paint` 경로로 반복 측정해 평균 8,000µs 미만을 강제하며, `test/canvas_render_perf_test.dart`가 SSOT `contentBudget`와 직접 대조합니다. 상세 계약은 story/story.jsonl의 gameplayKpis·relationshipDesign·contentBudget와 lib/choice_impact.dart·lib/companion_scene_archive_painter.dart·tool/verify_gameplay_fun.dart에 있습니다.
 
 스토리와 활동 정의의 단일 원천은 [`story/story.jsonl`](story/story.jsonl)입니다. 화면은 이 데이터의 제목·배경·주인공·성격별 이름·말투·대사를 읽고, 활동은 동일한 선언형 레지스트리로 렌더링합니다. `characters`는 노아와 세 동료의 역할·이름 key·portrait asset/frame을 선언하며, 94개 사건 선택은 `speakerId → locale key → portrait frame`으로 같은 상반신 대화 컴포넌트를 재사용합니다. `assets/noa-sprite-sheet.png`는 독창적인 2등신 노아의 차분·호기심·결의 표정 시트이며, `assets/lumen-personality-sheet.png`는 고요·다정·용감 성격의 3프레임 상반신 시트입니다. 두 PNG는 SSOT의 `assetRefs`와 각 personality/character의 `portraitAsset`/`portraitFrame`으로 연결되어 Canvas 일러스트와 사건 대화에서 표시됩니다. 핵심 폐쇄루프는 1주 선택, 스탯/은화 변화, 다음 주 피드백이며 테스트가 그 전이를 고정합니다.
 
@@ -115,7 +116,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
 ![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
 
-캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 104장입니다.
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 105장입니다.
 
 ### 감정·이벤트 일러스트 매트릭스
 
@@ -125,7 +126,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 
 동행 장면은 카드 첫 탭에서 선택을 열고 두 번째 탭에서 2-way 선택을 확정합니다. 확정 전 두 선택 모두 수치 결과 문구와 보상·비용 막대를 보여 주며, 선택은 성장축·피로·유대·memory flag·응답 대사와 엔딩 route signature에 반영됩니다. 잠금·중복·잘못된 입력은 localized reject banner로 남습니다. 대표 Canvas 증거는 [`companion-scenes.png`](test/goldens/companion-scenes.png)·[`companion-scene-choice.png`](test/goldens/companion-scene-choice.png)·[`companion-scene-recorded.png`](test/goldens/companion-scene-recorded.png)·[`companion-scene-recorded-en.png`](test/goldens/companion-scene-recorded-en.png)·세 동료 혼합 상태 [`companion-scene-lumi-mixed.png`](test/goldens/companion-scene-lumi-mixed.png)·[`companion-scene-bora-mixed.png`](test/goldens/companion-scene-bora-mixed.png)·[`companion-scene-taro-mixed.png`](test/goldens/companion-scene-taro-mixed.png)·잠금 피드백 [`companion-scene-locked.png`](test/goldens/companion-scene-locked.png)로 고정합니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·horizon·피로 위험·회복 창·English 활동 reflection·ko/en 활동 회고 일지·엔딩 뒤 계승 프로필 선택·새 회차 적용 피드백·동행 장면의 선택·잠금·혼합 상태도 각각 Golden으로 고정하며, 전체 Golden 증적은 104장입니다.
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·horizon·피로 위험·회복 창·선택 전 authored 기억 영향·English 활동 reflection·ko/en 활동 회고 일지·엔딩 뒤 계승 프로필 선택·새 회차 적용 피드백·동행 장면의 선택·잠금·혼합 상태도 각각 Golden으로 고정하며, 전체 Golden 증적은 105장입니다.
 
 ### 캐릭터 일러스트·감정표현 설계
 

@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: dd73c71619fb912f98827294abca32d8f01b4edebc538bf295f429a2e2c2ac93 -->
+<!-- ssot-sha256: 961faa4cfe1b96b7b994466f70bb86688abc1ce3db522605330cfdd5f966cda2 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -56,7 +56,7 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **1168** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **684**
+- locale 최소 키: **1169** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **684**
 - 산식: narrative backbone 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; companion choice variants add 72 label/response lines for 684 total authored dialogue units; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
@@ -78,6 +78,7 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 - 동행 선택 사전 예고: 1.0 · Golden `companion-scene-choice.png fixes the pre-commit forecast surface and the painter must call both localizedChoiceEffect and drawChoiceImpact`
 - 활동 선택 horizon: Golden `true` · activity-forecast.png fixes immediate effects plus the next authored event or milestone on every activity card
 - 활동 피로 위험/회복 창: Golden `true` · activity-risk.png fixes fatigue guard, strained threshold, deterministic recovery days and steady-pace risk copy before a day is spent
+- 선택 기억 영향: Golden `true` · memory-forecast.png fixes the authored fate-thread title shown before an event choice is committed
 
 ## 이벤트 스토밍 증적
 
@@ -215,8 +216,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `d138453d56b6cd606797e0fb877c3b8942b43a16c678cdea3d04ce30f777c61a`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `25df9db31d75b3c12245c64bfe2de1876889433e52fa4094c99ba53d612ca750`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `52ddd0e66f3ca2b69fce1801494ec4b21d0292f4acf20cc0428bc77a6040dc76`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `0432485a5cf01f5ba29cf157cee5babda49187d16a0fe4d7d6406b03bc471a74`
 
 ## 성격
 
