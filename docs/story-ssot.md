@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 961faa4cfe1b96b7b994466f70bb86688abc1ce3db522605330cfdd5f966cda2 -->
+<!-- ssot-sha256: 01b636ac1a9e0be05bf9ce4efdc70ee2e77ee0d70f5891a6644f39d0745e5d07 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -78,7 +78,7 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 - 동행 선택 사전 예고: 1.0 · Golden `companion-scene-choice.png fixes the pre-commit forecast surface and the painter must call both localizedChoiceEffect and drawChoiceImpact`
 - 활동 선택 horizon: Golden `true` · activity-forecast.png fixes immediate effects plus the next authored event or milestone on every activity card
 - 활동 피로 위험/회복 창: Golden `true` · activity-risk.png fixes fatigue guard, strained threshold, deterministic recovery days and steady-pace risk copy before a day is spent
-- 선택 기억 영향: Golden `true` · memory-forecast.png fixes the authored fate-thread title shown before an event choice is committed
+- 선택 기억 영향: Golden `true` · memory-forecast.png fixes the authored fate-thread title and detail shown before an event choice is committed
 
 ## 이벤트 스토밍 증적
 
@@ -216,8 +216,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `52ddd0e66f3ca2b69fce1801494ec4b21d0292f4acf20cc0428bc77a6040dc76`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `0432485a5cf01f5ba29cf157cee5babda49187d16a0fe4d7d6406b03bc471a74`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `fafdc8cb28c8183d9f08db42dadcf190e5bcbc810514afad344c74a1e6d6a6bd`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `94c854dccd82b90425814b0c68f55ae93ac43e64a6b09232d6e31a456464054b`
 
 ## 성격
 

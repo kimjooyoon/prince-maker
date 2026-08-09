@@ -216,9 +216,13 @@ String localizedChoiceMemoryImpact(
   final title = forecast.titleKey == null
       ? forecast.fallbackTitle
       : localized(forecast.titleKey!, forecast.fallbackTitle);
-  return _replace(
-      localized('ui.event.memoryImpact', 'Memory impact · {title}'),
-      {'title': title});
+  var template = localized(
+      'ui.event.memoryImpact', 'Memory impact · {title}: {detail}');
+  final detail = forecast.detailKey == null
+      ? ''
+      : localized(forecast.detailKey!, '');
+  if (detail.isEmpty) template = template.replaceAll(': {detail}', '');
+  return _replace(template, {'title': title, 'detail': detail});
 }
 
 String localizedHistoryLabel(Map<String, dynamic> story, String raw) {

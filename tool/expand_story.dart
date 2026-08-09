@@ -4788,7 +4788,7 @@ void main() {
     'ui.save.location': '장소 발견 · {name}',
     'ui.save.record': '기록이 갱신되었습니다.',
     'ui.event.memoryNeeded': '기억 단서',
-    'ui.event.memoryImpact': '기억 영향 · {title}',
+    'ui.event.memoryImpact': '기억 영향 · {title}: {detail}',
     'ui.event.continue': '하나를 골라 이야기를 이어갑니다.',
     'ui.event.activityReflection': '활동의 잔향 · {title}',
     'ui.journal.title': '활동 회고 일지',
@@ -4975,7 +4975,7 @@ void main() {
     'ui.save.location': 'Location discovered · {name}',
     'ui.save.record': 'A record was updated.',
     'ui.event.memoryNeeded': 'memory clue',
-    'ui.event.memoryImpact': 'Memory impact · {title}',
+    'ui.event.memoryImpact': 'Memory impact · {title}: {detail}',
     'ui.event.continue': 'Choose one path to continue the story.',
     'ui.event.activityReflection': 'Activity reflection · {title}',
     'ui.journal.title': 'Activity reflection journal',
@@ -5531,7 +5531,7 @@ void main() {
       'activityRiskForecastGolden':
           'activity-risk.png fixes fatigue guard, strained threshold, deterministic recovery days and steady-pace risk copy before a day is spent',
       'memoryImpactGolden':
-          'memory-forecast.png fixes the authored fate-thread title shown before an event choice is committed',
+          'memory-forecast.png fixes the authored fate-thread title and detail shown before an event choice is committed',
     },
     'evidence': [
       'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
