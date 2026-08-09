@@ -40,6 +40,11 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       .whereType<File>()
       .where((file) => file.uri.pathSegments.last == 'activity-risk.png')
       .length;
+  final memoryImpactGoldens = Directory('test/goldens')
+      .listSync()
+      .whereType<File>()
+      .where((file) => file.uri.pathSegments.last == 'memory-forecast.png')
+      .length;
   final activityReflectionGoldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
@@ -119,6 +124,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               (story['personalities'] as List? ?? const []).length,
           'activityForecastGoldens': activityForecastGoldens,
           'activityRiskForecastGoldens': activityRiskForecastGoldens,
+          'memoryImpactGoldens': memoryImpactGoldens,
           'activityReflectionGoldens': activityReflectionGoldens,
           'activityJournalGoldens': activityJournalGoldens,
           'companionScenes': companionScenes.length,
@@ -147,6 +153,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/player_facing_golden_test.dart#all personality illustration pages render deterministic portraits',
           'test/activity_forecast_golden_test.dart#home shows deterministic activity forecasts',
           'test/activity_risk_golden_test.dart#home explains deterministic fatigue risk before spending the day',
+          'test/memory_forecast_test.dart#choice maps to an authored fate thread',
+          'test/memory_forecast_golden_test.dart#event shows the authored memory impact before commit',
           'test/activity_forecast_test.dart#recovery window follows the injected SSOT rest delta',
           'test/activity_reflection_golden_test.dart#event shows localized activity reflection after day spend',
           'test/activity_journal_golden_test.dart#activity journal renders deterministic reflection pages',
@@ -212,6 +220,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'activityRiskForecastDeterminism': true,
           'activityRiskForecastGolden':
               gameplayTargets['activityRiskForecastGolden'],
+          'memoryImpactGoldens': memoryImpactGoldens,
+          'memoryImpactGolden': gameplayTargets['memoryImpactGolden'],
           'activityReflectionGoldens': activityReflectionGoldens,
           'activityReflectionDeterminism': true,
           'activityJournalGoldens': activityJournalGoldens,
@@ -249,6 +259,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/activity_risk_golden_test.dart#home explains deterministic fatigue risk before spending the day',
           'test/activity_forecast_test.dart#recovery window follows the injected SSOT rest delta',
           'test/activity_localization_test.dart#activity result localizes deterministic reflection',
+          'test/memory_forecast_test.dart#choice maps to an authored fate thread',
+          'test/memory_forecast_golden_test.dart#event shows the authored memory impact before commit',
           'test/activity_journal_test.dart#activity journal opens only recorded reflection pages',
           'test/companion_scene_test.dart#companion scene resolver and record loop',
           'test/companion_scene_test.dart#companion choice is recalled by the next authored scene',
@@ -300,6 +312,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'checksumReplayMustMatch': true,
           'activityForecastDeterminism': true,
           'activityRiskForecastDeterminism': true,
+          'memoryForecastDeterminism': true,
           'companionSceneReplay': true,
           'companionSceneChoiceModes': 2,
           'companionSceneRouteTrace': true,

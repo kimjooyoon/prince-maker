@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_engine_decision.dart -->
-<!-- ssot-sha256: dd73c71619fb912f98827294abca32d8f01b4edebc538bf295f429a2e2c2ac93 -->
+<!-- ssot-sha256: 961faa4cfe1b96b7b994466f70bb86688abc1ce3db522605330cfdd5f966cda2 -->
 <!-- source-ref: story/story.jsonl#engineDecision -->
 
 # 렌더러 결정 계약

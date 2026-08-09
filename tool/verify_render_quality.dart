@@ -82,6 +82,8 @@ void main() {
   final activityForecastGoldenTest =
       read('test/activity_forecast_golden_test.dart');
   final activityRiskGoldenTest = read('test/activity_risk_golden_test.dart');
+  final memoryForecastGoldenTest =
+      read('test/memory_forecast_golden_test.dart');
   final activityReflectionGoldenTest =
       read('test/activity_reflection_golden_test.dart');
   final activityJournalGoldenTest =
@@ -168,6 +170,10 @@ void main() {
       'home explains deterministic fatigue risk before spending the day');
   requireText('test/activity_risk_golden_test.dart', activityRiskGoldenTest,
       'goldens/activity-risk.png');
+  requireText('test/memory_forecast_golden_test.dart', memoryForecastGoldenTest,
+      'event shows the authored memory impact before commit');
+  requireText('test/memory_forecast_golden_test.dart', memoryForecastGoldenTest,
+      'goldens/memory-forecast.png');
   requireText(
       'test/activity_reflection_golden_test.dart',
       activityReflectionGoldenTest,

@@ -1379,13 +1379,16 @@ class Scene extends CustomPainter {
   }
 
   void drawChoiceEcho(Canvas c, Map<String, dynamic> choice, Offset origin) {
-    final flag = choice['setsFlag'] as String?;
-    if (flag == null) return;
+    final memory = localizedChoiceMemoryImpact(
+        choice,
+        (s['fateThreads'] as List? ?? const [])
+            .whereType<Map>()
+            .map((item) => item.cast<String, dynamic>())
+            .toList());
+    if (memory.isEmpty) return;
     txt(
         c,
-        activeLocale == 'ko'
-            ? '나비효과 · 다음 장에 남음'
-            : 'Butterfly effect · carried forward',
+        memory,
         origin,
         10,
         teal,
