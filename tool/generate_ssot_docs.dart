@@ -95,6 +95,8 @@ String render(Map<String, dynamic> s, String hash) {
       '- 교환 선택 비율: **${gameplay['current']['tradeoffRate']}** · 목표 **${gameplay['targets']['minimumTradeoffRate']}** · `${gameplay['definitions']['tradeoffRate']}`');
   b.writeln(
       '- 선택 영향 ${gameplay['current']['choiceImpactRate']} · 사건 분기 ${gameplay['current']['eventDivergenceRate']} · 다축 영향 ${gameplay['current']['multiAxisImpactRate']} · 조건부 선택 ${gameplay['current']['gatedChoices']}');
+  b.writeln(
+      '- 동행 선택 사전 예고: ${gameplay['current']['companionSceneChoiceForesightRate']} · Golden `${gameplay['definitions']['companionSceneChoiceForesightGolden']}`');
   b.writeln('\n## 이벤트 스토밍 증적\n');
   b.writeln(
       '전체 authored 단위는 **${eventStormNodes}개 노드**로 `Trigger → Command → Policy → Domain event → Feedback` 원장에 생성된다. 본편·사이드 선택 ${gameplay['current']['authoredChoices']}개는 효과·피드백 연결률 1.0을 만족하며, 상세 원장은 [`docs/event-storm.jsonl`](event-storm.jsonl), 기계 판정은 `tool/verify_event_storm.dart#event-storm-gate`가 담당한다.');
