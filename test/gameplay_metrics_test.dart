@@ -115,10 +115,15 @@ void main() {
         .toSet();
     final endings = routes.map((route) => '${route['ending']}').toSet();
     final targetEndings = story.legacyProfiles
-        .expand((profile) => (profile['endingIds'] as List).map((id) => '$id'))
+        .map((profile) => '${profile['targetEndingId']}')
         .toSet();
     expect(ids, hasLength(3));
     expect(signatures, hasLength(3));
+    expect(targetEndings, hasLength(3));
+    expect(
+        story.legacyProfiles.every((profile) =>
+            (profile['endingIds'] as List).contains(profile['targetEndingId'])),
+        isTrue);
     expect(endings.every(targetEndings.contains), isTrue);
     expect(endings, hasLength(3));
     for (var i = 0; i < ids.length; i++) {

@@ -1168,3 +1168,4 @@
 {"type":"entry","key":"ui.home.risk.recovery","value":"Recovery · fatigue {delta} · ready in {days}d"}
 {"type":"entry","key":"ui.home.risk.steady","value":"Steady pace"}
 {"type":"entry","key":"ui.event.memoryImpact","value":"Memory impact · {title}: {detail}"}
+{"type":"entry","key":"ui.ending.legacyRouteForecast","value":"Forecast · {ending}"}

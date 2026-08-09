@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 01b636ac1a9e0be05bf9ce4efdc70ee2e77ee0d70f5891a6644f39d0745e5d07 -->
+<!-- ssot-sha256: 7ab46a2ef919dc81b2043580a1c44278d54d13776e2d39bc14c3851a9b57b911 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -56,7 +56,7 @@
 
 ## 대사 구성 기준
 
-- locale 최소 키: **1169** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **684**
+- locale 최소 키: **1170** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **684**
 - 산식: narrative backbone 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; companion choice variants add 72 label/response lines for 684 total authored dialogue units; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
@@ -216,8 +216,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `fafdc8cb28c8183d9f08db42dadcf190e5bcbc810514afad344c74a1e6d6a6bd`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `94c854dccd82b90425814b0c68f55ae93ac43e64a6b09232d6e31a456464054b`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `4c4232911a882d9ca16444cec1d179fe9a44c05a6e4e7c37690aeae2fb74105d`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `afa86785706d92a16b70143d7f0889a0581bedc28e09d2853199d7f5d4233322`
 
 ## 성격
 
@@ -270,9 +270,9 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 회차 계승 프로필
 
-- **별읽기의 유산** (`stargazer`): 엔딩 stargazer, stargazer-master · 지혜 시작 보너스 +2 · `legacy.stargazer.title`
-- **정원의 유산** (`gardener`): 엔딩 gardener, gardener-master · 공감 시작 보너스 +2 · `legacy.gardener.title`
-- **길잡이의 유산** (`pathfinder`): 엔딩 pathfinder, pathfinder-master · 용기 시작 보너스 +2 · `legacy.pathfinder.title`
+- **별읽기의 유산** (`stargazer`): 엔딩 stargazer, stargazer-master · target `stargazer-master` · 지혜 시작 보너스 +2 · `legacy.stargazer.title`
+- **정원의 유산** (`gardener`): 엔딩 gardener, gardener-master · target `gardener-master` · 공감 시작 보너스 +2 · `legacy.gardener.title`
+- **길잡이의 유산** (`pathfinder`): 엔딩 pathfinder, pathfinder-master · target `pathfinder-master` · 용기 시작 보너스 +2 · `legacy.pathfinder.title`
 
 ## 활동
 

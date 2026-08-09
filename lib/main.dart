@@ -27,6 +27,7 @@ import 'canvas_ui_kit.dart';
 import 'canvas_choice_impact.dart';
 import 'event_art.dart';
 import 'legacy_profile_catalog.dart';
+import 'legacy_profile_forecast.dart';
 import 'companion_scene_archive_painter.dart';
 import 'companion_scene_layout.dart';
 
@@ -563,7 +564,7 @@ class _Game extends State<Game> {
       if (y < 100 && x > 590)
         toggleLocale();
       else if (y >= 600 &&
-          y < 655 &&
+          y < 675 &&
           widget.story['legacySelection'] is Map &&
           unlockedLegacyProfiles(widget.story, collectionEntries).isNotEmpty) {
         final profiles =
@@ -2894,6 +2895,7 @@ class Scene extends CustomPainter {
           id = '${profile['id']}',
           selected = id == selectedLegacyId,
           x = 24 + i * 238.0,
+          route = legacyProfileForecast(s, profile),
           companion = (s['companions'] as List? ?? const [])
               .whereType<Map>()
               .firstWhere(
@@ -2903,8 +2905,12 @@ class Scene extends CustomPainter {
               localized('${profile['titleKey']}', '${profile['title'] ?? id}'),
           companionName = localized('${companion['nameKey']}',
               '${companion['name'] ?? profile['companionId'] ?? ''}'),
-          stat = localizedStat('${profile['stat']}');
-      box(c, Rect.fromLTWH(x, 600, 226, 54), selected ? teal : Colors.white,
+          stat = localizedStat('${profile['stat']}'),
+          target = route['verified'] == true
+              ? localized('${route['targetEndingTitleKey']}',
+                  '${route['targetEndingTitle']}')
+              : '—';
+      box(c, Rect.fromLTWH(x, 600, 226, 70), selected ? teal : Colors.white,
           radius: 14, stroke: teal, shadow: selected);
       txt(c, '${selected ? '✦ ' : ''}$title', Offset(x + 12, 610), 9,
           selected ? Colors.white : ink,
@@ -2912,6 +2918,15 @@ class Scene extends CustomPainter {
       txt(c, '$companionName · $stat +${profile['bonus'] ?? 0}',
           Offset(x + 12, 630), 8, selected ? Colors.white70 : teal,
           maxWidth: 202, maxLines: 1);
+      txt(
+          c,
+          formatUi('ui.ending.legacyRouteForecast', '→ {ending}',
+              {'ending': target}),
+          Offset(x + 12, 648),
+          8,
+          selected ? Colors.white70 : teal,
+          maxWidth: 202,
+          maxLines: 1);
     }
   }
 

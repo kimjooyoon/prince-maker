@@ -427,8 +427,10 @@ void refreshHashes(Map<String, dynamic> story) {
     'test/quality_score_test.dart#quality score weights are a deterministic closed sum',
     'test/trilemma_verdict_test.dart#closed-loop-receipt',
     'lib/legacy_profile_catalog.dart#unlockedLegacyProfiles',
+    'lib/legacy_profile_forecast.dart#legacyProfileForecast',
     'lib/main.dart#legacyProfile',
     'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order',
+    'test/legacy_profile_catalog_test.dart#legacy profile forecast resolves the authored target and companion',
     'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
   ];
   refs.removeWhere((entry) =>
@@ -4857,6 +4859,7 @@ void main() {
     'ui.ending.legacyTitle': '다음 회차 계승 선택',
     'ui.ending.legacyForecast':
         '정책 {policies} · 검증 엔딩 {endings} · 서명 {signatures}',
+    'ui.ending.legacyRouteForecast': '예고 · {ending}',
     'ui.relationship.label': '관계 상태',
     'ui.relationship.state.unformed': '아직 얽히지 않음',
     'ui.relationship.state.balanced': '나란한 동행',
@@ -5050,6 +5053,7 @@ void main() {
     'ui.ending.legacyTitle': 'Choose a next-run legacy',
     'ui.ending.legacyForecast':
         'Policies {policies} · verified endings {endings} · signatures {signatures}',
+    'ui.ending.legacyRouteForecast': 'Forecast · {ending}',
     'ui.relationship.label': 'Relationship state',
     'ui.relationship.state.unformed': 'Not yet woven',
     'ui.relationship.state.balanced': 'Side-by-side',
@@ -5288,6 +5292,16 @@ void main() {
         '2^11 unconditional authored branch vectors × 5 activity policies × 3 personality routes × 4 legacy contexts = 122,880 route inputs; the CI enumerator replays all 2,048 branch vectors and requires at least 2,000 distinct deterministic scenario traces.',
     'evidence': 'tool/verify_scenario_variants.dart#scenario-case-enumerator',
   };
+  final legacyProfiles = (story['legacyProfiles'] as List? ?? const [])
+      .whereType<Map>()
+      .map((profile) => profile.cast<String, dynamic>())
+      .toList();
+  if (legacyProfiles.any((profile) =>
+      '${profile['targetEndingId'] ?? ''}'.isEmpty ||
+      '${profile['companionId'] ?? ''}'.isEmpty)) {
+    throw StateError(
+        'legacy profile forecast requires targetEndingId and companionId');
+  }
   story['legacySelection'] = {
     'schema': 'lumen-legacy-selection-v1',
     'purpose':
@@ -5299,9 +5313,12 @@ void main() {
     'effect': 'selected profile id becomes the next GameSession legacyId',
     'homeFeedback':
         'selected profile title, stat, and bonus are visible on the next-run home Canvas',
+    'forecast':
+        'each visible profile exposes its explicit targetEndingId and companionId before selection',
     'systemOwner': 'lumen-rule-engine',
     'evidence': [
       'lib/legacy_profile_catalog.dart#unlockedLegacyProfiles',
+      'lib/legacy_profile_forecast.dart#legacyProfileForecast',
       'lib/main.dart#legacyProfile',
       'lib/main.dart#legacyPicker',
       'test/legacy_profile_catalog_test.dart#collection unlocks profiles in stable order',
@@ -5318,7 +5335,7 @@ void main() {
     'observedDistinctSignaturesPerProfile': 4,
     'distinctProfileFingerprints': 3,
     'rule':
-        'replay every legacy profile under every SSOT activity policy; preserve the ending and route-signature sets and include a declared target ending',
+        'replay every legacy profile under every SSOT activity policy; preserve the ending and route-signature sets and match each explicit targetEndingId',
     'evidence': [
       'tool/benchmark_game.dart#profile-policy-distribution',
       'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies',
@@ -5473,6 +5490,7 @@ void main() {
       'activityForecastHorizonGolden': true,
       'activityRiskForecastGolden': true,
       'memoryImpactGolden': true,
+      'legacyTargetForecastGolden': true,
     },
     'current': {
       'authoredChoices': choices.length,
@@ -5508,6 +5526,7 @@ void main() {
       'activityForecastHorizonGolden': true,
       'activityRiskForecastGolden': true,
       'memoryImpactGolden': true,
+      'legacyTargetForecastGolden': true,
     },
     'definitions': {
       'choiceImpactRate': 'effectful authored choices / authored choices',
@@ -5532,6 +5551,8 @@ void main() {
           'activity-risk.png fixes fatigue guard, strained threshold, deterministic recovery days and steady-pace risk copy before a day is spent',
       'memoryImpactGolden':
           'memory-forecast.png fixes the authored fate-thread title and detail shown before an event choice is committed',
+      'legacyTargetForecastGolden':
+          'legacy-picker.png fixes the explicit target ending shown on every next-run profile card',
     },
     'evidence': [
       'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
@@ -5543,6 +5564,7 @@ void main() {
       'test/activity_risk_golden_test.dart#home explains deterministic fatigue risk before spending the day',
       'test/memory_forecast_test.dart#choice maps to an authored fate thread',
       'test/memory_forecast_golden_test.dart#event shows the authored memory impact before commit',
+      'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
     ],
   };
   final dimensions = (story['scenarioCompleteness']['dimensions'] as List)

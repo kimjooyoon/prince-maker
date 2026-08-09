@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:prince_maker/choice_impact.dart';
 import 'package:prince_maker/jsonl.dart';
+import 'package:prince_maker/legacy_profile_forecast.dart';
 
 Never fail(String message) {
   stderr.writeln('GAMEPLAY_FUN_GATE_FAIL: $message');
@@ -105,6 +106,19 @@ void main() {
           File('lib/memory_forecast.dart')
               .readAsStringSync()
               .contains('forecastChoiceMemory');
+  final legacyProfiles = (story['legacyProfiles'] as List? ?? const [])
+      .cast<Map<String, dynamic>>();
+  final legacyTargetForecastGolden = File('test/goldens/legacy-picker.png')
+          .existsSync() &&
+      File('test/golden_test.dart')
+          .readAsStringSync()
+          .contains('ending exposes deterministic next-run legacy picker') &&
+      File('lib/main.dart')
+          .readAsStringSync()
+          .contains('legacyProfileForecast') &&
+      legacyProfiles.isNotEmpty &&
+      legacyProfiles.every((profile) =>
+          legacyProfileForecast(story, profile)['verified'] == true);
   final metrics = {
     'authoredChoices': choices.length,
     'effectfulChoices': impactful,
@@ -149,6 +163,7 @@ void main() {
     'activityForecastHorizonGolden': activityForecastHorizonGolden,
     'activityRiskForecastGolden': activityRiskForecastGolden,
     'memoryImpactGolden': memoryImpactGolden,
+    'legacyTargetForecastGolden': legacyTargetForecastGolden,
   };
   final contract = (story['gameplayKpis'] as Map).cast<String, dynamic>(),
       current = (contract['current'] as Map).cast<String, dynamic>();
@@ -172,7 +187,9 @@ void main() {
           metrics['activityForecastHorizonGolden'] ||
       current['activityRiskForecastGolden'] !=
           metrics['activityRiskForecastGolden'] ||
-      current['memoryImpactGolden'] != metrics['memoryImpactGolden']) {
+      current['memoryImpactGolden'] != metrics['memoryImpactGolden'] ||
+      current['legacyTargetForecastGolden'] !=
+          metrics['legacyTargetForecastGolden']) {
     fail('SSOT gameplay KPI drift');
   }
   final approved = choices.length >= 166 &&
@@ -192,10 +209,11 @@ void main() {
   final horizonApproved = metrics['activityForecastHorizonGolden'] == true &&
       metrics['activityRiskForecastGolden'] == true;
   final memoryApproved = metrics['memoryImpactGolden'] == true;
+  final legacyApproved = metrics['legacyTargetForecastGolden'] == true;
   final report = {
     'schema': 'lumen-gameplay-fun-verdict-v1',
     'decision':
-        approved && companionApproved && horizonApproved && memoryApproved
+        approved && companionApproved && horizonApproved && memoryApproved && legacyApproved
             ? 'approve'
             : 'reject',
     'source': 'story/story.jsonl#gameplayKpis',
@@ -213,7 +231,7 @@ void main() {
   file.writeAsStringSync(
       const JsonEncoder.withIndent('  ').convert(report) + '\n');
   stdout.writeln('GAMEPLAY_FUN_OK: ' + jsonEncode(metrics));
-  if (!(approved && companionApproved && horizonApproved && memoryApproved)) {
+  if (!(approved && companionApproved && horizonApproved && memoryApproved && legacyApproved)) {
     exit(1);
   }
 }
