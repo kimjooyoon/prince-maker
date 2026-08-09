@@ -61,6 +61,9 @@ void verifyTrilemmaContract(String storyHash,
       purity['lineageDistributionPolicies'] != 5 ||
       (purity['lineageDistributionMinEndings'] as int? ?? 0) < 3 ||
       (purity['lineageDistributionMinSignatures'] as int? ?? 0) < 3 ||
+      (purity['lineageDistributionObservedEndings'] as int? ?? 0) < 4 ||
+      (purity['lineageDistributionObservedSignatures'] as int? ?? 0) < 4 ||
+      (purity['lineageDistributionFingerprints'] as int? ?? 0) < 3 ||
       purity['lineageDistributionReplay'] != true ||
       purity['deterministicReplay'] != true ||
       (purity['choiceImpactRate'] as num? ?? 0) < 1.0 ||
@@ -94,6 +97,9 @@ void verifyTrilemmaContract(String storyHash,
       performance['lineageDistributionPolicies'] != 5 ||
       (performance['lineageDistributionMinEndings'] as int? ?? 0) < 3 ||
       (performance['lineageDistributionMinSignatures'] as int? ?? 0) < 3 ||
+      (performance['lineageDistributionObservedEndings'] as int? ?? 0) < 4 ||
+      (performance['lineageDistributionObservedSignatures'] as int? ?? 0) < 4 ||
+      (performance['lineageDistributionFingerprints'] as int? ?? 0) < 3 ||
       performance['lineageDistributionReplay'] != true ||
       performance['checksumReplayMustMatch'] != true ||
       performance['activityForecastDeterminism'] != true ||
@@ -362,10 +368,18 @@ void main() {
       (lineageDistribution['minimumDistinctSignaturesPerProfile'] as int? ??
               0) <
           3 ||
+      (lineageDistribution['observedDistinctEndingsPerProfile'] as int? ?? 0) <
+          4 ||
+      (lineageDistribution['observedDistinctSignaturesPerProfile'] as int? ??
+              0) <
+          4 ||
+      (lineageDistribution['distinctProfileFingerprints'] as int? ?? 0) < 3 ||
       !lineageEvidence
           .contains('tool/benchmark_game.dart#profile-policy-distribution') ||
       !lineageEvidence.contains(
-          'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies')) {
+          'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies') ||
+      !lineageEvidence.contains(
+          'test/golden_test.dart#ending exposes deterministic next-run legacy picker')) {
     fail(
         'legacy profile policy distribution must be an explicit SSOT contract');
   }

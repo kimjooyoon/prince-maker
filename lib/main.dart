@@ -2854,15 +2854,25 @@ class Scene extends CustomPainter {
     if (s['legacySelection'] is! Map) return;
     final profiles = unlockedLegacyProfiles(s, collectionEntries);
     if (profiles.isEmpty) return;
+    final forecast = legacyPolicyForecast(s),
+        forecastText = forecast['verified'] == true
+            ? formatUi(
+                'ui.ending.legacyForecast',
+                'Policies {policies} · verified endings {endings} · signatures {signatures}',
+                {
+                  'policies': forecast['policies'],
+                  'endings': forecast['endings'],
+                  'signatures': forecast['signatures'],
+                })
+            : '';
     txt(
         c,
-        localized('ui.ending.legacyTitle',
-            activeLocale == 'ko' ? '다음 회차 계승 선택' : 'Choose a next-run legacy'),
+        '${localized('ui.ending.legacyTitle', activeLocale == 'ko' ? '다음 회차 계승 선택' : 'Choose a next-run legacy')}${forecastText.isEmpty ? '' : ' · $forecastText'}',
         const Offset(24, 578),
         10,
         teal,
         bold: true,
-        maxWidth: 330);
+        maxWidth: 700);
     for (var i = 0; i < profiles.length && i < 3; i++) {
       final profile = profiles[i],
           id = '${profile['id']}',

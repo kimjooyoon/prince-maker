@@ -44,4 +44,24 @@ void main() {
     ]);
     expect(profiles, hasLength(1));
   });
+
+  test('legacy policy forecast projects only the verified SSOT contract', () {
+    final forecast = legacyPolicyForecast(const {
+      'lineageDistribution': {
+        'schema': 'lumen-lineage-distribution-v1',
+        'policyCount': 5,
+        'observedDistinctEndingsPerProfile': 4,
+        'observedDistinctSignaturesPerProfile': 4,
+        'distinctProfileFingerprints': 3,
+      }
+    });
+    expect(forecast, {
+      'verified': true,
+      'policies': 5,
+      'endings': 4,
+      'signatures': 4,
+      'fingerprints': 3,
+    });
+    expect(legacyPolicyForecast(const {})['verified'], false);
+  });
 }

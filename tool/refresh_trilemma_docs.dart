@@ -42,6 +42,11 @@ String render(String source) {
     output = output.replaceAll('3개 계승 프로필·3개 프로필별 선택 보정',
         '3개 계승 프로필·엔딩 뒤 계승 프로필 선택 Golden(ko/en)·3개 프로필별 선택 보정');
   }
+  if (!output.contains('계승 policy forecast Canvas Golden')) {
+    output = output.replaceAll(
+        '엔딩 뒤 계승 프로필 선택 Golden(ko/en)·3개 프로필별 선택 보정',
+        '엔딩 뒤 계승 프로필 선택 Golden(ko/en)·계승 policy forecast Canvas Golden·3개 프로필별 선택 보정');
+  }
   if (!output.contains('explicit ending picker')) {
     output = output.replaceAll('collection-driven legacy unlock',
         'collection-driven legacy unlock with explicit ending picker');
@@ -79,6 +84,11 @@ String render(String source) {
     output = output.replaceAll(
         '프로필의 성장축을 결정론적으로 선택하고 시작 스탯 변형을 적용한다.',
         '프로필의 성장축을 결정론적으로 선택하고 시작 스탯 변형을 적용한다. `lineageDistribution`은 각 프로필을 5개 SSOT 일정 정책으로 재생해 최소 3개 ending·3개 signature와 서로 다른 fingerprint를 요구한다.');
+  }
+  if (!output.contains('관측 4개 ending·4개 signature')) {
+    output = output.replaceAll(
+        '`lineageDistribution`은 각 프로필을 5개 SSOT 일정 정책으로 재생해 최소 3개 ending·3개 signature와 서로 다른 fingerprint를 요구한다.',
+        '`lineageDistribution`은 각 프로필을 5개 SSOT 일정 정책으로 재생해 최소 3개 ending·3개 signature와 서로 다른 fingerprint를 요구한다. 관측 4개 ending·4개 signature·3개 fingerprint를 benchmark가 정확히 대조하고, `legacy-picker.png` Canvas forecast가 같은 SSOT 수치를 표시한다.');
   }
   if (!output.contains('5개 정책 × 3개 프로필 ending/signature 분포')) {
     output = output.replaceAll('3개 lineage 분포·계승 프로필 순환을 계약으로 고정한다.',

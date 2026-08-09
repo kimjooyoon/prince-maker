@@ -1159,3 +1159,4 @@
 {"type":"entry","key":"ui.companionScenes.notice.duplicate","value":"This scene is already recorded."}
 {"type":"entry","key":"ui.companionScenes.notice.invalid","value":"The rule engine rejected this input."}
 {"type":"entry","key":"ui.companionScenes.notice.recorded","value":"The selected record was saved."}
+{"type":"entry","key":"ui.ending.legacyForecast","value":"Policies {policies} · verified endings {endings} · signatures {signatures}"}

@@ -174,6 +174,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               lineageDistribution['minimumDistinctEndingsPerProfile'],
           'lineageDistributionMinSignatures':
               lineageDistribution['minimumDistinctSignaturesPerProfile'],
+          'lineageDistributionObservedEndings':
+              lineageDistribution['observedDistinctEndingsPerProfile'],
+          'lineageDistributionObservedSignatures':
+              lineageDistribution['observedDistinctSignaturesPerProfile'],
+          'lineageDistributionFingerprints':
+              lineageDistribution['distinctProfileFingerprints'],
           'lineageDistributionReplay': true,
           'deterministicReplay': true,
           'choiceImpactRate': gameplayTargets['choiceImpactRate'],
@@ -213,6 +219,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         'evidence': [
           'test/gameplay_metrics_test.dart#route-variety',
           'test/gameplay_metrics_test.dart#each legacy profile keeps a deterministic distribution across policies',
+          'test/legacy_profile_catalog_test.dart#legacy policy forecast projects only the verified SSOT contract',
           'test/purity_integration_test.dart#same-schedule-budget-outcomes',
           'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
           'tool/verify_quality_score.dart#quality-score-99',
@@ -261,6 +268,12 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               lineageDistribution['minimumDistinctEndingsPerProfile'],
           'lineageDistributionMinSignatures':
               lineageDistribution['minimumDistinctSignaturesPerProfile'],
+          'lineageDistributionObservedEndings':
+              lineageDistribution['observedDistinctEndingsPerProfile'],
+          'lineageDistributionObservedSignatures':
+              lineageDistribution['observedDistinctSignaturesPerProfile'],
+          'lineageDistributionFingerprints':
+              lineageDistribution['distinctProfileFingerprints'],
           'lineageDistributionReplay': true,
           'checksumReplayMustMatch': true,
           'activityForecastDeterminism': true,
@@ -275,6 +288,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         'evidence': [
           'tool/benchmark_game.dart#ssot-campaign-throughput-signatures',
           'tool/benchmark_game.dart#profile-policy-distribution',
+          'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
           'tool/benchmark_game.dart#companion-scene-replay-checksum',
           'test/companion_scene_test.dart#companion archive canvas projection stays within the frame budget',
           'lib/activity_forecast.dart#forecastActivity',

@@ -4833,6 +4833,7 @@ void main() {
     'ui.closure.nextPage': '다음 장으로 →',
     'ui.closure.link': '결과는 시스템 영수증과 다음 선택에 연결됩니다.',
     'ui.ending.legacyTitle': '다음 회차 계승 선택',
+    'ui.ending.legacyForecast': '정책 {policies} · 검증 엔딩 {endings} · 서명 {signatures}',
     'ui.relationship.label': '관계 상태',
     'ui.relationship.state.unformed': '아직 얽히지 않음',
     'ui.relationship.state.balanced': '나란한 동행',
@@ -5019,6 +5020,7 @@ void main() {
     'ui.closure.link':
         'The result is linked to the system receipt and next choice.',
     'ui.ending.legacyTitle': 'Choose a next-run legacy',
+    'ui.ending.legacyForecast': 'Policies {policies} · verified endings {endings} · signatures {signatures}',
     'ui.relationship.label': 'Relationship state',
     'ui.relationship.state.unformed': 'Not yet woven',
     'ui.relationship.state.balanced': 'Side-by-side',
@@ -5283,6 +5285,9 @@ void main() {
     'profileCount': (story['legacyProfiles'] as List).length,
     'minimumDistinctEndingsPerProfile': 3,
     'minimumDistinctSignaturesPerProfile': 3,
+    'observedDistinctEndingsPerProfile': 4,
+    'observedDistinctSignaturesPerProfile': 4,
+    'distinctProfileFingerprints': 3,
     'rule':
         'replay every legacy profile under every SSOT activity policy; preserve the ending and route-signature sets and include a declared target ending',
     'evidence': [

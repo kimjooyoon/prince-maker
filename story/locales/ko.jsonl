@@ -1159,3 +1159,4 @@
 {"type":"entry","key":"ui.companionScenes.notice.duplicate","value":"이 장면은 이미 기록되었습니다."}
 {"type":"entry","key":"ui.companionScenes.notice.invalid","value":"시스템이 이 기록 입력을 거절했습니다."}
 {"type":"entry","key":"ui.companionScenes.notice.recorded","value":"선택한 기록이 저장되었습니다."}
+{"type":"entry","key":"ui.ending.legacyForecast","value":"정책 {policies} · 검증 엔딩 {endings} · 서명 {signatures}"}

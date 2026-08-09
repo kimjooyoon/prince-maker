@@ -22,3 +22,25 @@ String? defaultLegacyProfileId(
   final profiles = unlockedLegacyProfiles(story, collectionEntries);
   return profiles.isEmpty ? null : '${profiles.first['id']}';
 }
+
+/// Player-facing projection of the benchmark-verified replay space.
+Map<String, dynamic> legacyPolicyForecast(Map<String, dynamic> story) {
+  final contract =
+      (story['lineageDistribution'] as Map? ?? {}).cast<String, dynamic>();
+  final policies = contract['policyCount'] as int? ?? 0,
+      endings = contract['observedDistinctEndingsPerProfile'] as int? ?? 0,
+      signatures =
+          contract['observedDistinctSignaturesPerProfile'] as int? ?? 0,
+      fingerprints = contract['distinctProfileFingerprints'] as int? ?? 0;
+  return {
+    'verified': contract['schema'] == 'lumen-lineage-distribution-v1' &&
+        policies > 0 &&
+        endings > 0 &&
+        signatures > 0 &&
+        fingerprints > 0,
+    'policies': policies,
+    'endings': endings,
+    'signatures': signatures,
+    'fingerprints': fingerprints,
+  };
+}
