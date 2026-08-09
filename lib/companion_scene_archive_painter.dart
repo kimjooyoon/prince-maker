@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'canvas_ui_kit.dart';
+import 'canvas_choice_impact.dart';
 import 'companion_scene_layout.dart';
 import 'design_tokens.dart';
 import 'game_core.dart';
@@ -250,15 +251,25 @@ class CompanionSceneArchivePainter {
             lines: available ? 1 : 2);
       }
       if (available && choices.length >= 2) {
-        CanvasUiKit.button(c, CompanionSceneLayout.choiceRect(i, 0),
-            tr('${choices[0]['labelKey']}', '${choices[0]['label']}'),
-            state: pending ? CanvasUiState.selected : CanvasUiState.idle,
-            accent: teal,
-            fontSize: 8,
-            radius: 5);
-        CanvasUiKit.button(c, CompanionSceneLayout.choiceRect(i, 1),
-            tr('${choices[1]['labelKey']}', '${choices[1]['label']}'),
-            accent: teal, fontSize: 8, radius: 5);
+        for (var choiceIndex = 0; choiceIndex < 2; choiceIndex++) {
+          final choice = choices[choiceIndex],
+              rect = CompanionSceneLayout.choiceRect(i, choiceIndex),
+              preview = localizedChoiceEffect(choice);
+          // Keep the forecast beside the action so both consequences are
+          // visible before the player commits.
+          t(c, preview, Offset(rect.left, card.top + 80), 6, teal,
+              width: rect.width, lines: 1);
+          CanvasUiKit.button(c, rect,
+              tr('${choice['labelKey']}', '${choice['label']}'),
+              state: choiceIndex == 0 && pending
+                  ? CanvasUiState.selected
+                  : CanvasUiState.idle,
+              accent: teal,
+              fontSize: 8,
+              radius: 5);
+          drawChoiceImpact(
+              c, Rect.fromLTWH(rect.left, rect.bottom - 4, rect.width, 3), choice);
+        }
       }
     }
     CanvasUiKit.button(c, CompanionSceneLayout.previousRect,

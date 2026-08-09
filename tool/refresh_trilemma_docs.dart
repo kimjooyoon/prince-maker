@@ -97,6 +97,11 @@ String render(String source) {
       .replaceAll(
           RegExp(r'72/166 trade-off choices(?:·36/36 companion choices)+'),
           '72/166 trade-off choices·36/36 companion choices');
+  if (!output.contains('36/36 companion choice foresight')) {
+    output = output.replaceAll(
+        '72/166(0.4337) trade-off 선택과 36/36 companion choice impact',
+        '72/166(0.4337) trade-off 선택과 36/36 companion choice impact·36/36 companion choice foresight');
+  }
   return output;
 }
 

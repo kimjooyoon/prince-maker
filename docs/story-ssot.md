@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: a0a295281f3bd9c744f8dc1d6363bd46e1dac9aaa5d70acf80afef9c5fa9ea72 -->
+<!-- ssot-sha256: 70eb0e11c634da76024c3103024067e8cea621b453f98322da3abeab0902e43c -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -75,6 +75,7 @@
 authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 선택이다.
 - 교환 선택 비율: **0.43373493975903615** · 목표 **0.4** · `choices with at least one positive and one negative numeric axis / choices`
 - 선택 영향 1.0 · 사건 분기 1.0 · 다축 영향 1.0 · 조건부 선택 29
+- 동행 선택 사전 예고: 1.0 · Golden `companion-scene-choice.png fixes the pre-commit forecast surface and the painter must call both localizedChoiceEffect and drawChoiceImpact`
 
 ## 이벤트 스토밍 증적
 

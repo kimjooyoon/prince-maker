@@ -5405,6 +5405,9 @@ void main() {
               choice['requiresStat'] != null ||
               choice['requiresBondId'] != null ||
               choice['requiresFlag'] != null)
+          .length,
+      companionChoiceForesight = companionChoices
+          .where((choice) => ChoiceImpact.from(choice).effectful)
           .length;
   story['gameplayKpis'] = {
     'schema': 'lumen-gameplay-kpi-v1',
@@ -5417,6 +5420,8 @@ void main() {
       'minimumGatedChoices': 20,
       'companionSceneChoiceImpactRate': 1.0,
       'companionSceneChoiceCount': 36,
+      'companionSceneChoiceForesightRate': 1.0,
+      'companionSceneChoiceForesightGolden': true,
     },
     'current': {
       'authoredChoices': choices.length,
@@ -5445,6 +5450,10 @@ void main() {
                       choice['setsFlag'] is String)
                   .length /
               companionChoices.length,
+      'companionSceneChoiceForesightRate': companionChoices.isEmpty
+          ? 0.0
+          : companionChoiceForesight / companionChoices.length,
+      'companionSceneChoiceForesightGolden': true,
     },
     'definitions': {
       'choiceImpactRate': 'effectful authored choices / authored choices',
@@ -5459,12 +5468,17 @@ void main() {
           'matching personality and companion add one deterministic bond point',
       'companionSceneChoiceImpactRate':
           'companion choices with a stat delta and persisted memory flag / companion choices',
+      'companionSceneChoiceForesightRate':
+          'companion choices with a visible numeric forecast / companion choices',
+      'companionSceneChoiceForesightGolden':
+          'companion-scene-choice.png fixes the pre-commit forecast surface and the painter must call both localizedChoiceEffect and drawChoiceImpact',
     },
     'evidence': [
       'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
       'test/gameplay_metrics_test.dart#route-variety',
       'test/purity_integration_test.dart#same-schedule-budget-outcomes',
       'test/golden_test.dart#event choice shows a separated result banner',
+      'test/companion_scene_golden_test.dart#companion scene archive records a scene',
     ],
   };
   final dimensions = (story['scenarioCompleteness']['dimensions'] as List)
