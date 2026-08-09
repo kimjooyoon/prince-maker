@@ -119,6 +119,24 @@ void main() {
       legacyProfiles.isNotEmpty &&
       legacyProfiles.every((profile) =>
           legacyProfileForecast(story, profile)['verified'] == true);
+  final receiptGoldenTest = File('test/system_receipt_golden_test.dart')
+          .existsSync()
+      ? File('test/system_receipt_golden_test.dart').readAsStringSync()
+      : '';
+  final systemDecisionReceiptGolden =
+      File('test/goldens/system-receipt.png').existsSync() &&
+          receiptGoldenTest.contains("matchesGoldenFile('goldens/system-receipt.png')") &&
+          receiptGoldenTest.contains('approval:approved') &&
+          receiptGoldenTest.contains('approval:rejected') &&
+          File('lib/decision_receipt.dart')
+              .readAsStringSync()
+              .contains('static DecisionReceipt? parse') &&
+          File('lib/game_core.dart')
+              .readAsStringSync()
+              .contains('SystemDecisionPolicy') &&
+          File('test/decision_receipt_test.dart')
+              .readAsStringSync()
+              .contains('fails closed for malformed approval status');
   final metrics = {
     'authoredChoices': choices.length,
     'effectfulChoices': impactful,
@@ -164,6 +182,7 @@ void main() {
     'activityRiskForecastGolden': activityRiskForecastGolden,
     'memoryImpactGolden': memoryImpactGolden,
     'legacyTargetForecastGolden': legacyTargetForecastGolden,
+    'systemDecisionReceiptGolden': systemDecisionReceiptGolden,
   };
   final contract = (story['gameplayKpis'] as Map).cast<String, dynamic>(),
       current = (contract['current'] as Map).cast<String, dynamic>();
@@ -189,7 +208,9 @@ void main() {
           metrics['activityRiskForecastGolden'] ||
       current['memoryImpactGolden'] != metrics['memoryImpactGolden'] ||
       current['legacyTargetForecastGolden'] !=
-          metrics['legacyTargetForecastGolden']) {
+          metrics['legacyTargetForecastGolden'] ||
+      current['systemDecisionReceiptGolden'] !=
+          metrics['systemDecisionReceiptGolden']) {
     fail('SSOT gameplay KPI drift');
   }
   final approved = choices.length >= 166 &&
@@ -210,10 +231,11 @@ void main() {
       metrics['activityRiskForecastGolden'] == true;
   final memoryApproved = metrics['memoryImpactGolden'] == true;
   final legacyApproved = metrics['legacyTargetForecastGolden'] == true;
+  final receiptApproved = metrics['systemDecisionReceiptGolden'] == true;
   final report = {
     'schema': 'lumen-gameplay-fun-verdict-v1',
     'decision':
-        approved && companionApproved && horizonApproved && memoryApproved && legacyApproved
+        approved && companionApproved && horizonApproved && memoryApproved && legacyApproved && receiptApproved
             ? 'approve'
             : 'reject',
     'source': 'story/story.jsonl#gameplayKpis',
@@ -231,7 +253,7 @@ void main() {
   file.writeAsStringSync(
       const JsonEncoder.withIndent('  ').convert(report) + '\n');
   stdout.writeln('GAMEPLAY_FUN_OK: ' + jsonEncode(metrics));
-  if (!(approved && companionApproved && horizonApproved && memoryApproved && legacyApproved)) {
+  if (!(approved && companionApproved && horizonApproved && memoryApproved && legacyApproved && receiptApproved)) {
     exit(1);
   }
 }

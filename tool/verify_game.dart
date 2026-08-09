@@ -39,6 +39,8 @@ void verifyTrilemmaContract(String storyHash,
       (complete['memoryImpactGoldens'] as int? ?? 0) < 1 ||
       (complete['activityReflectionGoldens'] as int? ?? 0) < 1 ||
       (complete['activityJournalGoldens'] as int? ?? 0) < 2 ||
+      (complete['systemDecisionReceiptGoldens'] as int? ?? 0) < 1 ||
+      complete['systemDecisionReceiptEvidence'] != true ||
       (complete['companionScenes'] as int? ?? 0) < 18 ||
       (complete['companionSceneChoices'] as int? ?? 0) < 36 ||
       complete['companionSceneChoiceBranching'] != true ||
@@ -83,6 +85,9 @@ void verifyTrilemmaContract(String storyHash,
       purity['activityReflectionDeterminism'] != true ||
       (purity['activityJournalGoldens'] as int? ?? 0) < 2 ||
       purity['activityJournalDeterminism'] != true ||
+      (purity['systemDecisionReceiptGoldens'] as int? ?? 0) < 1 ||
+      purity['systemDecisionReceiptGolden'] != true ||
+      purity['systemDecisionReceiptEvidence'] != true ||
       (purity['companionScenes'] as int? ?? 0) < 18 ||
       (purity['companionSceneChoices'] as int? ?? 0) < 36 ||
       purity['companionSceneChoiceBranching'] != true ||

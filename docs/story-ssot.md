@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 7ab46a2ef919dc81b2043580a1c44278d54d13776e2d39bc14c3851a9b57b911 -->
+<!-- ssot-sha256: 640dacf9d6a2d5bed200233833d0292e462e4dd6feaf81ec9d5234c84589c36d -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -10,6 +10,7 @@
 
 판정 주체: **Lumen Ledger System** · 모드 `system-adjudicated` · 사람 승인 필요 여부 `false` · 실패 모드 `fail-closed`
 책임 증적: 모든 승인·거절을 규칙·입력·결정 영수증으로 추적하고 replay에서 같은 판정을 재현한다.
+시각 책임 증적: system decision receipt Golden `true` · 승인·거절·owner·contract·rule·chained hashes
 - `terminal-window` · activity|story-choice · endingWeek 이후 입력은 거절
 - `input-contract` · activity|story-choice · 미등록 성장축·조건 미충족 입력은 거절
 - `replay-receipt` · accepted decision · 승인 영수증을 immutable trace에 추가

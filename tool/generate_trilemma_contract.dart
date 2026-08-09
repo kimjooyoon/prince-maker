@@ -56,6 +56,19 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
     final name = file.uri.pathSegments.last;
     return name.startsWith('activity-journal-') && name.endsWith('.png');
   }).length;
+  final systemDecisionReceiptGoldens = Directory('test/goldens')
+      .listSync()
+      .whereType<File>()
+      .where((file) => file.uri.pathSegments.last == 'system-receipt.png')
+      .length;
+  final systemReceiptGoldenTest = File('test/system_receipt_golden_test.dart')
+          .existsSync()
+      ? File('test/system_receipt_golden_test.dart').readAsStringSync()
+      : '';
+  final systemDecisionReceiptEvidence =
+      systemReceiptGoldenTest.contains("matchesGoldenFile('goldens/system-receipt.png')") &&
+          systemReceiptGoldenTest.contains('approval:approved') &&
+          systemReceiptGoldenTest.contains('approval:rejected');
   final dialogue = (story['dialogueMetrics'] as Map).cast<String, dynamic>();
   final scenarioCases =
       (story['scenarioVariantBudget'] as Map).cast<String, dynamic>();
@@ -127,6 +140,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'memoryImpactGoldens': memoryImpactGoldens,
           'activityReflectionGoldens': activityReflectionGoldens,
           'activityJournalGoldens': activityJournalGoldens,
+          'systemDecisionReceiptGoldens': systemDecisionReceiptGoldens,
+          'systemDecisionReceiptEvidence': systemDecisionReceiptEvidence,
           'companionScenes': companionScenes.length,
           'companionSceneChoices': companionSceneChoices,
           'companionSceneChoiceBranching': companionScenes.isNotEmpty &&
@@ -158,6 +173,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/activity_forecast_test.dart#recovery window follows the injected SSOT rest delta',
           'test/activity_reflection_golden_test.dart#event shows localized activity reflection after day spend',
           'test/activity_journal_golden_test.dart#activity journal renders deterministic reflection pages',
+          'test/system_receipt_golden_test.dart#ledger renders system-owned decision receipts',
           'test/companion_scene_test.dart#companion scene resolver and record loop',
           'test/companion_scene_test.dart#companion choice is recalled by the next authored scene',
           'test/companion_scene_test.dart#companion archive canvas projection stays within the frame budget',
@@ -226,6 +242,10 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'activityReflectionDeterminism': true,
           'activityJournalGoldens': activityJournalGoldens,
           'activityJournalDeterminism': true,
+          'systemDecisionReceiptGoldens': systemDecisionReceiptGoldens,
+          'systemDecisionReceiptGolden':
+              gameplayTargets['systemDecisionReceiptGolden'],
+          'systemDecisionReceiptEvidence': systemDecisionReceiptEvidence,
           'companionScenes': companionScenes.length,
           'companionSceneChoices': companionSceneChoices,
           'companionSceneChoiceBranching': companionScenes.isNotEmpty &&
@@ -268,6 +288,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/companion_scene_golden_test.dart#companion scene archive records a scene',
           'test/save_state_test.dart#save round trip preserves player-facing archive positions',
           'test/companion_scene_golden_test.dart#saved companion position resumes the same Golden surface',
+          'test/system_receipt_golden_test.dart#ledger renders system-owned decision receipts',
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/trilemma_verdict.dart#axis-verdict',
           'tool/trilemma_verdict.dart#closed-loop-receipt',

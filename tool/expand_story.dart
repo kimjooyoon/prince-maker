@@ -5491,6 +5491,7 @@ void main() {
       'activityRiskForecastGolden': true,
       'memoryImpactGolden': true,
       'legacyTargetForecastGolden': true,
+      'systemDecisionReceiptGolden': true,
     },
     'current': {
       'authoredChoices': choices.length,
@@ -5527,6 +5528,7 @@ void main() {
       'activityRiskForecastGolden': true,
       'memoryImpactGolden': true,
       'legacyTargetForecastGolden': true,
+      'systemDecisionReceiptGolden': true,
     },
     'definitions': {
       'choiceImpactRate': 'effectful authored choices / authored choices',
@@ -5553,6 +5555,8 @@ void main() {
           'memory-forecast.png fixes the authored fate-thread title and detail shown before an event choice is committed',
       'legacyTargetForecastGolden':
           'legacy-picker.png fixes the explicit target ending shown on every next-run profile card',
+      'systemDecisionReceiptGolden':
+          'system-receipt.png fixes approved and rejected decision receipts with owner, contract, rule and chained hashes',
     },
     'evidence': [
       'tool/verify_gameplay_fun.dart#gameplay-purity-kpi-gate',
@@ -5565,6 +5569,8 @@ void main() {
       'test/memory_forecast_test.dart#choice maps to an authored fate thread',
       'test/memory_forecast_golden_test.dart#event shows the authored memory impact before commit',
       'test/golden_test.dart#ending exposes deterministic next-run legacy picker',
+      'test/system_receipt_golden_test.dart#ledger renders system-owned decision receipts',
+      'test/gameplay_metrics_test.dart#system receipt Golden binds approved and rejected decisions',
     ],
   };
   final dimensions = (story['scenarioCompleteness']['dimensions'] as List)
