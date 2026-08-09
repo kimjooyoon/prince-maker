@@ -50,6 +50,13 @@ Map<String, dynamic> lineageGoldenStory({
         }
       ],
       'milestones': <Map<String, dynamic>>[],
+      'lineageDistribution': {
+        'schema': 'lumen-lineage-distribution-v1',
+        'policyCount': 5,
+        'observedDistinctEndingsPerProfile': 4,
+        'observedDistinctSignaturesPerProfile': 4,
+        'distinctProfileFingerprints': 3,
+      },
     };
 
 Future<void> reachGoldenEnding(WidgetTester tester, Map<String, dynamic> story,

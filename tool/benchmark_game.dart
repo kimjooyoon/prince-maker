@@ -105,7 +105,9 @@ CampaignMetrics runCampaigns(Map<String, dynamic> source, int campaigns) {
                     session.world.progress[0]!.flags[c['requiresFlag']] ==
                         true))
             .toList();
-        final choice = available[(i + week) % available.length];
+        final choice = legacyProfile == null
+            ? available[(i + week) % available.length]
+            : available.first;
         final targetCompanion = legacyProfile?['companionId'] as String?;
         final legacyChoice = available.where((candidate) {
           final hasLegacyBonus =
@@ -246,16 +248,23 @@ void main() {
         return (first.lineageCompanions[id] ?? const <String>{})
             .contains(target);
       });
+  final lineageFingerprints = profileIds.map((id) {
+    final endings = (first.lineageEndings[id] ?? const <String>{}).toList()
+      ..sort();
+    return endings.join('|');
+  }).toSet();
   final lineageDistributionEvidence = story.legacyProfiles.every((profile) {
     final id = '${profile['id']}';
-    return (first.lineageEndings[id]?.length ?? 0) >=
-            (lineageDistribution['minimumDistinctEndingsPerProfile'] as int? ??
-                3) &&
-        (first.lineageSignatures[id]?.length ?? 0) >=
-            (lineageDistribution['minimumDistinctSignaturesPerProfile']
+    return (first.lineageEndings[id]?.length ?? 0) ==
+            (lineageDistribution['observedDistinctEndingsPerProfile'] as int? ??
+                0) &&
+        (first.lineageSignatures[id]?.length ?? 0) ==
+            (lineageDistribution['observedDistinctSignaturesPerProfile']
                     as int? ??
-                3);
+                0);
   });
+  final lineageFingerprintEvidence = lineageFingerprints.length ==
+      (lineageDistribution['distinctProfileFingerprints'] as int? ?? 0);
   final lineageSummary = profileIds.map((id) {
     final target = story.legacyProfiles
         .firstWhere((profile) => profile['id'] == id)['companionId'];
@@ -284,6 +293,7 @@ void main() {
       lineageCompanionEvidence &&
       lineageDistribution['policyCount'] == 5 &&
       lineageDistributionEvidence &&
+      lineageFingerprintEvidence &&
       sameSetMap(replay.lineageEndings, first.lineageEndings) &&
       sameSetMap(replay.lineageSignatures, first.lineageSignatures) &&
       sameSetMap(replay.lineageCompanions, first.lineageCompanions);
@@ -315,6 +325,8 @@ void main() {
     'lineageCompanionEvidence': lineageCompanionEvidence,
     'lineageDistributionPolicies': lineageDistribution['policyCount'],
     'lineageDistributionEvidence': lineageDistributionEvidence,
+    'lineageDistributionFingerprints': lineageFingerprints.length,
+    'lineageFingerprintEvidence': lineageFingerprintEvidence,
   };
   final reportFile = File('build/benchmark-verdict.json')
     ..parent.createSync(recursive: true);
