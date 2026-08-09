@@ -8,8 +8,8 @@ String hash(String path) =>
 void main() {
   final file = File('docs/review-manifest.jsonl');
   final manifest = decodeJsonl(file.readAsStringSync());
-  final entries =
-      (manifest['reviewedFiles'] as List).cast<Map<String, dynamic>>();
+  final entries = (manifest['reviewedFiles'] as List)
+      .cast<Map<String, dynamic>>();
   final known = {for (final entry in entries) entry['path'] as String: entry};
   for (final entry in entries) {
     final path = entry['path'] as String;
@@ -89,6 +89,8 @@ void main() {
     'test/system_receipt_golden_test.dart',
     'docs/render-quality-contract.jsonl',
     'tool/verify_render_quality.dart',
+    'lib/golden_tolerance.dart',
+    'test/golden_tolerance_test.dart',
     'tool/verify_gameplay_fun.dart',
     'lib/memory_forecast.dart',
     'test/memory_forecast_test.dart',
@@ -234,20 +236,31 @@ void main() {
     'design/image-design-matrix.jsonl',
     'docs/engine-decision.jsonl',
     'docs/engine-decision.md',
-    ...['daon', 'biyo', 'luka', 'hez']
-        .map((id) => 'assets/generated/character-emotions/$id.png'),
+    ...[
+      'daon',
+      'biyo',
+      'luka',
+      'hez',
+    ].map((id) => 'assets/generated/character-emotions/$id.png'),
     ...List.generate(
-        47,
-        (index) =>
-            'assets/generated/event-illustrations/event-${index + 2}.png'),
+      47,
+      (index) => 'assets/generated/event-illustrations/event-${index + 2}.png',
+    ),
   ]) {
     if (!known.containsKey(path)) {
-      entries
-          .add({'path': path, 'ref': '$path#reviewed', 'sha256': hash(path)});
+      entries.add({
+        'path': path,
+        'ref': '$path#reviewed',
+        'sha256': hash(path),
+      });
     }
   }
-  file.writeAsStringSync(encodeJsonl(manifest,
+  file.writeAsStringSync(
+    encodeJsonl(
+      manifest,
       schema: 'lumen-document-jsonl-v1',
-      document: 'docs/review-manifest.jsonl'));
+      document: 'docs/review-manifest.jsonl',
+    ),
+  );
   stdout.writeln('REVIEW_MANIFEST_REFRESHED: ${entries.length} files');
 }

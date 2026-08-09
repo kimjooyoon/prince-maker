@@ -9,7 +9,9 @@ String sha(String path) =>
 Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
   final events = (story['events'] as List).cast<Map<String, dynamic>>();
   final choices = events.fold<int>(
-      0, (sum, event) => sum + (event['choices'] as List).length);
+    0,
+    (sum, event) => sum + (event['choices'] as List).length,
+  );
   final goldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
@@ -18,17 +20,19 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
   final companionSceneGoldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
-      .where((file) => [
-            'companion-scenes.png',
-            'companion-scene-choice.png',
-            'companion-scene-recorded.png',
-            'companion-scene-recorded-en.png',
-            'companion-scene-lumi-mixed.png',
-            'companion-scene-bora-mixed.png',
-            'companion-scene-taro-mixed.png',
-            'companion-scene-locked.png',
-            'companion-scene-choice-recall.png',
-          ].contains(file.uri.pathSegments.last))
+      .where(
+        (file) => [
+          'companion-scenes.png',
+          'companion-scene-choice.png',
+          'companion-scene-recorded.png',
+          'companion-scene-recorded-en.png',
+          'companion-scene-lumi-mixed.png',
+          'companion-scene-bora-mixed.png',
+          'companion-scene-taro-mixed.png',
+          'companion-scene-locked.png',
+          'companion-scene-choice-recall.png',
+        ].contains(file.uri.pathSegments.last),
+      )
       .length;
   final activityForecastGoldens = Directory('test/goldens')
       .listSync()
@@ -49,61 +53,89 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       .listSync()
       .whereType<File>()
       .where(
-          (file) => file.uri.pathSegments.last == 'activity-reflection-en.png')
+        (file) => file.uri.pathSegments.last == 'activity-reflection-en.png',
+      )
       .length;
-  final activityJournalGoldens =
-      Directory('test/goldens').listSync().whereType<File>().where((file) {
-    final name = file.uri.pathSegments.last;
-    return name.startsWith('activity-journal-') && name.endsWith('.png');
-  }).length;
+  final activityJournalGoldens = Directory('test/goldens')
+      .listSync()
+      .whereType<File>()
+      .where((file) {
+        final name = file.uri.pathSegments.last;
+        return name.startsWith('activity-journal-') && name.endsWith('.png');
+      })
+      .length;
   final systemDecisionReceiptGoldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
       .where((file) => file.uri.pathSegments.last == 'system-receipt.png')
       .length;
-  final systemReceiptGoldenTest = File('test/system_receipt_golden_test.dart')
-          .existsSync()
+  final systemReceiptGoldenTest =
+      File('test/system_receipt_golden_test.dart').existsSync()
       ? File('test/system_receipt_golden_test.dart').readAsStringSync()
       : '';
   final systemDecisionReceiptEvidence =
-      systemReceiptGoldenTest.contains("matchesGoldenFile('goldens/system-receipt.png')") &&
-          systemReceiptGoldenTest.contains('approval:approved') &&
-          systemReceiptGoldenTest.contains('approval:rejected');
+      systemReceiptGoldenTest.contains(
+        "matchesGoldenFile('goldens/system-receipt.png')",
+      ) &&
+      systemReceiptGoldenTest.contains('approval:approved') &&
+      systemReceiptGoldenTest.contains('approval:rejected');
+  final goldenToleranceSource = File('lib/golden_tolerance.dart').existsSync()
+      ? File('lib/golden_tolerance.dart').readAsStringSync()
+      : '';
+  final goldenToleranceTest =
+      File('test/golden_tolerance_test.dart').existsSync()
+      ? File('test/golden_tolerance_test.dart').readAsStringSync()
+      : '';
+  final goldenToleranceBoundaryEvidence =
+      goldenToleranceSource.contains('canvasGoldenTolerance = 0.025') &&
+      goldenToleranceSource.contains('diffPercent.isFinite') &&
+      goldenToleranceTest.contains(
+        'golden tolerance accepts exact and boundary diff',
+      ) &&
+      goldenToleranceTest.contains(
+        'golden tolerance fails closed above boundary and for non-finite diff',
+      );
   final dialogue = (story['dialogueMetrics'] as Map).cast<String, dynamic>();
-  final scenarioCases =
-      (story['scenarioVariantBudget'] as Map).cast<String, dynamic>();
-  final narrative =
-      (story['narrativeLoop'] as Map? ?? {}).cast<String, dynamic>();
-  final gameplay =
-      (story['gameplayKpis'] as Map? ?? {}).cast<String, dynamic>();
-  final gameplayTargets =
-      (gameplay['targets'] as Map? ?? {}).cast<String, dynamic>();
-  final lineageDistribution =
-      (story['lineageDistribution'] as Map? ?? {}).cast<String, dynamic>();
-  final contentBudget =
-      (story['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
+  final scenarioCases = (story['scenarioVariantBudget'] as Map)
+      .cast<String, dynamic>();
+  final narrative = (story['narrativeLoop'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final gameplay = (story['gameplayKpis'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final gameplayTargets = (gameplay['targets'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final lineageDistribution = (story['lineageDistribution'] as Map? ?? {})
+      .cast<String, dynamic>();
+  final contentBudget = (story['contentBudget'] as Map? ?? {})
+      .cast<String, dynamic>();
   final quests = (story['companionQuests'] as List? ?? const []).cast<Map>();
-  final companionScenes =
-      (story['companionScenes'] as List? ?? const []).cast<Map>();
-  final companionSceneChoices = companionScenes.fold<int>(0,
-      (sum, scene) => sum + ((scene['choices'] as List? ?? const []).length));
-  final saveUiStateEvidence = File('test/save_state_test.dart')
-          .readAsStringSync()
-          .contains(
-              'save round trip preserves player-facing archive positions') &&
-      File('test/companion_scene_golden_test.dart')
-          .readAsStringSync()
-          .contains('saved companion position resumes the same Golden surface');
+  final companionScenes = (story['companionScenes'] as List? ?? const [])
+      .cast<Map>();
+  final companionSceneChoices = companionScenes.fold<int>(
+    0,
+    (sum, scene) => sum + ((scene['choices'] as List? ?? const []).length),
+  );
+  final saveUiStateEvidence =
+      File('test/save_state_test.dart').readAsStringSync().contains(
+        'save round trip preserves player-facing archive positions',
+      ) &&
+      File('test/companion_scene_golden_test.dart').readAsStringSync().contains(
+        'saved companion position resumes the same Golden surface',
+      );
   final companionRenderBudgetEvidence = File('test/companion_scene_test.dart')
       .readAsStringSync()
       .contains(
-          'companion archive canvas projection stays within the frame budget');
+        'companion archive canvas projection stays within the frame budget',
+      );
   final canvasRenderBudgetEvidence = File('test/canvas_render_perf_test.dart')
       .readAsStringSync()
       .contains('full Canvas pages stay within the deterministic frame budget');
   final questStages = quests.fold<int>(
-      0, (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length));
-  final eventStormNodes = events.length +
+    0,
+    (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length),
+  );
+  final eventStormNodes =
+      events.length +
       (story['sideScenes'] as List? ?? const []).length +
       (story['companionScenes'] as List? ?? const []).length +
       (story['activityScenes'] as List? ?? const []).length +
@@ -128,7 +160,9 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'sideSceneChoices': (story['sideScenes'] as List? ?? const [])
               .cast<Map>()
               .fold<int>(
-                  0, (sum, scene) => sum + (scene['choices'] as List).length),
+                0,
+                (sum, scene) => sum + (scene['choices'] as List).length,
+              ),
           'narrativeFateThreads': narrative['fateThreadCount'],
           'companionQuestStages': questStages,
           'personalityCompanionRoutes':
@@ -142,17 +176,23 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'activityJournalGoldens': activityJournalGoldens,
           'systemDecisionReceiptGoldens': systemDecisionReceiptGoldens,
           'systemDecisionReceiptEvidence': systemDecisionReceiptEvidence,
+          'goldenToleranceBoundaryEvidence': goldenToleranceBoundaryEvidence,
           'companionScenes': companionScenes.length,
           'companionSceneChoices': companionSceneChoices,
-          'companionSceneChoiceBranching': companionScenes.isNotEmpty &&
-              companionScenes.every((scene) =>
-                  ((scene['choices'] as List? ?? const []).length) == 2),
+          'companionSceneChoiceBranching':
+              companionScenes.isNotEmpty &&
+              companionScenes.every(
+                (scene) =>
+                    ((scene['choices'] as List? ?? const []).length) == 2,
+              ),
           'companionSceneChoiceImpactRate':
               gameplayTargets['companionSceneChoiceImpactRate'],
           'companionSceneGoldens': companionSceneGoldens,
-          'companionSceneBondReward': companionScenes.isNotEmpty &&
-              companionScenes
-                  .every((scene) => (scene['bondDelta'] as int?) == 1),
+          'companionSceneBondReward':
+              companionScenes.isNotEmpty &&
+              companionScenes.every(
+                (scene) => (scene['bondDelta'] as int?) == 1,
+              ),
           'saveUiStateContinuity': saveUiStateEvidence,
           'goldens': goldens,
           'localeKeys': dialogue['minimumLocaleKeys'],
@@ -174,6 +214,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/activity_reflection_golden_test.dart#event shows localized activity reflection after day spend',
           'test/activity_journal_golden_test.dart#activity journal renders deterministic reflection pages',
           'test/system_receipt_golden_test.dart#ledger renders system-owned decision receipts',
+          'test/golden_tolerance_test.dart#golden tolerance accepts exact and boundary diff',
           'test/companion_scene_test.dart#companion scene resolver and record loop',
           'test/companion_scene_test.dart#companion choice is recalled by the next authored scene',
           'test/companion_scene_test.dart#companion archive canvas projection stays within the frame budget',
@@ -248,15 +289,20 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'systemDecisionReceiptEvidence': systemDecisionReceiptEvidence,
           'companionScenes': companionScenes.length,
           'companionSceneChoices': companionSceneChoices,
-          'companionSceneChoiceBranching': companionScenes.isNotEmpty &&
-              companionScenes.every((scene) =>
-                  ((scene['choices'] as List? ?? const []).length) == 2),
+          'companionSceneChoiceBranching':
+              companionScenes.isNotEmpty &&
+              companionScenes.every(
+                (scene) =>
+                    ((scene['choices'] as List? ?? const []).length) == 2,
+              ),
           'companionSceneChoiceImpactRate':
               gameplayTargets['companionSceneChoiceImpactRate'],
           'companionSceneGoldens': companionSceneGoldens,
-          'companionSceneBondReward': companionScenes.isNotEmpty &&
-              companionScenes
-                  .every((scene) => (scene['bondDelta'] as int?) == 1),
+          'companionSceneBondReward':
+              companionScenes.isNotEmpty &&
+              companionScenes.every(
+                (scene) => (scene['bondDelta'] as int?) == 1,
+              ),
           'companionSceneDeterminism': true,
           'saveUiStateContinuity': saveUiStateEvidence,
           'matchedPersonalityCompanionRoutes':
@@ -301,15 +347,18 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         'unit': 'campaign-throughput',
         'guardrails': {
           'campaigns': 5000,
-          'transitionBudget': 5000 *
+          'transitionBudget':
+              5000 *
               ((story['endingWeek'] as int) -
                   1 +
                   events.length +
                   companionScenes.length),
           'companionSceneTransitions': 5000 * companionScenes.length,
-          'systemApproval': (story['decisionSystem'] as Map?)?['mode'] ==
+          'systemApproval':
+              (story['decisionSystem'] as Map?)?['mode'] ==
               'system-adjudicated',
-          'failClosed': (story['decisionSystem'] as Map?)?['failureMode'] ==
+          'failClosed':
+              (story['decisionSystem'] as Map?)?['failureMode'] ==
               'fail-closed',
           'maxMillis': 24000,
           'minSignatures': 3,
@@ -360,7 +409,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'tool/verify_decision_proof.dart#decision-proof-preconditions',
           'tool/trilemma_verdict.dart#axis-verdict',
           'tool/trilemma_verdict.dart#closed-loop-receipt',
-          'test/trilemma_verdict_test.dart#closed-loop-receipt'
+          'test/trilemma_verdict_test.dart#closed-loop-receipt',
         ],
       },
     ],
@@ -370,9 +419,11 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
 void main(List<String> args) {
   const input = 'story/story.jsonl';
   final source = decodeJsonl(File(input).readAsStringSync());
-  final output = encodeJsonl(buildContract(source, sha(input)),
-      schema: 'lumen-document-jsonl-v1',
-      document: 'docs/trilemma-contract.jsonl');
+  final output = encodeJsonl(
+    buildContract(source, sha(input)),
+    schema: 'lumen-document-jsonl-v1',
+    document: 'docs/trilemma-contract.jsonl',
+  );
   const path = 'docs/trilemma-contract.jsonl';
   if (args.contains('--check')) {
     if (!File(path).existsSync() || File(path).readAsStringSync() != output) {

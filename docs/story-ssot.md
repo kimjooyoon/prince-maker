@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: 640dacf9d6a2d5bed200233833d0292e462e4dd6feaf81ec9d5234c84589c36d -->
+<!-- ssot-sha256: ae2943f6df2169d6110e942b7175dfb2817ebd6893f8eb7e2d91e411dac777d9 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -19,6 +19,7 @@
 
 선택: **`flutter-canvas-wasm`** · `select the maximum weighted architectural-fit score` · [결정 매트릭스](engine-decision.md)
 점수 의미: normalized architectural fit for this turn-based Canvas game; not a claim of measured engine throughput
+Golden 정책: 비정확 Canvas diff는 최대 **2.5%**까지 허용하며, 경계값 승인·초과/비유한값 거절은 `exactly-at-boundary acceptance and above-boundary/non-finite rejection are executable tests`로 실행 검증한다.
 
 ## 48주 진행도
 
