@@ -952,6 +952,7 @@ void main() {
       ? Directory('test/goldens')
           .listSync()
           .whereType<File>()
+          .where((file) => file.path.endsWith('.png'))
           .map((f) => f.uri.pathSegments.last)
           .toSet()
       : <String>{};
@@ -967,6 +968,16 @@ void main() {
   final scenarioEvidence = File('docs/scenario-completeness.md').existsSync()
       ? File('docs/scenario-completeness.md').readAsStringSync()
       : '';
+  final completenessEvidence = File('docs/game-completeness.md').existsSync()
+      ? File('docs/game-completeness.md').readAsStringSync()
+      : '';
+  final goldenCount = goldenFiles.length;
+  if (!readmeEvidence.contains('전체 Canvas Golden 증적은 ${goldenCount}장') ||
+      !completenessEvidence.contains('Golden | $goldenCount |') ||
+      !scenarioEvidence.contains('$goldenCount Golden,')) {
+    fail(
+        'Golden inventory is out of sync: files=$goldenCount, README/docs/scenario evidence must agree');
+  }
   final mainEvidence = File('lib/main.dart').existsSync()
       ? File('lib/main.dart').readAsStringSync()
       : '';
@@ -1136,5 +1147,5 @@ void main() {
     fail(
         'completeness score below 99%: $score% · failed=${dimensions.entries.where((entry) => !entry.value).map((entry) => entry.key).join(',')}');
   stdout.writeln(
-      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} companions=${companions.length} personalityCompanionRoutes=${personalityCompanionRoutes.length} events=${events.length} endings=${endings.length} fateThreads=${fateThreads.length} questStages=$companionQuestStages codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
+      'GAME_GATE_OK: activities=${activities.length} personalities=${people.length} companions=${companions.length} personalityCompanionRoutes=${personalityCompanionRoutes.length} events=${events.length} endings=${endings.length} fateThreads=${fateThreads.length} questStages=$companionQuestStages codeRefs=${refs.length} assetRefs=${assetRefs.length} fontRefs=${fontRefs.length} goldens=$goldenCount scenarioCases=${scenarioVariantBudget['verifiedReachableCases']} routeInputs=${scenarioVariantBudget['routeInputCases']} score=$score% dimensions=${dimensions.entries.where((e) => e.value).map((e) => e.key).join(',')}');
 }

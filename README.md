@@ -114,7 +114,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
 ![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
 
-캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 102장입니다.
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 103장입니다.
 
 ### 감정·이벤트 일러스트 매트릭스
 
@@ -124,7 +124,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 
 동행 장면은 카드 첫 탭에서 선택을 열고 두 번째 탭에서 2-way 선택을 확정합니다. 선택은 성장축·피로·유대·memory flag·응답 대사와 엔딩 route signature에 반영되며, 잠금·중복·잘못된 입력은 localized reject banner로 남습니다. 대표 Canvas 증거는 [`companion-scenes.png`](test/goldens/companion-scenes.png)·[`companion-scene-choice.png`](test/goldens/companion-scene-choice.png)·[`companion-scene-recorded.png`](test/goldens/companion-scene-recorded.png)·[`companion-scene-recorded-en.png`](test/goldens/companion-scene-recorded-en.png)·세 동료 혼합 상태 [`companion-scene-lumi-mixed.png`](test/goldens/companion-scene-lumi-mixed.png)·[`companion-scene-bora-mixed.png`](test/goldens/companion-scene-bora-mixed.png)·[`companion-scene-taro-mixed.png`](test/goldens/companion-scene-taro-mixed.png)·잠금 피드백 [`companion-scene-locked.png`](test/goldens/companion-scene-locked.png)로 고정합니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·English 활동 reflection·ko/en 활동 회고 일지·엔딩 뒤 계승 프로필 선택·새 회차 적용 피드백·동행 장면의 선택·잠금·혼합 상태도 각각 Golden으로 고정하며, 전체 Golden 증적은 102장입니다.
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·English 활동 reflection·ko/en 활동 회고 일지·엔딩 뒤 계승 프로필 선택·새 회차 적용 피드백·동행 장면의 선택·잠금·혼합 상태도 각각 Golden으로 고정하며, 전체 Golden 증적은 103장입니다.
 
 ### 캐릭터 일러스트·감정표현 설계
 

@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_development_goals.dart -->
-<!-- source-sha256: 2177dd700e22b1af0609cd395d5f7b07379a4e6e383ea2ce5c7a4448de813287|b7364b70172dcad6970c16f6dd30e065fa460bde1e4cabe5b38e85b766174cf7|54f7446b3f856ff631eb54b74f32850b725c236249796cc73518cef9a26b567e|9d80bd6b9a33f3a171456ce2098c6d3c3323c6042a9aa31fa888f815408641a8 -->
+<!-- source-sha256: 38ff99bd7cbd86ae90dc5529461bc1e7a111d491501e4a8f1ab3ac174c18260e|a304bfca84284553165c584fc9510dc57e088805d429c0be7c84cf6f32971013|54f7446b3f856ff631eb54b74f32850b725c236249796cc73518cef9a26b567e|b061899d1934a3e62c3d30aa94c4d0d4bd776ddee48afd8d54ad363d50e27c70 -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 정량 개발목표 원장
@@ -47,7 +47,7 @@
 | `narrative-relationship-units` | narrative-unit | **32** | 3 companions + 6 fate threads + 9 quest stages + 6 locations + 3 legacy profiles + 5 exclusive follow-ups | relationship, memory, discovery and replay depth |
 | `exploration-units` | replay-unit | **694928** | 2048 branch vectors + 122880 route inputs + 5,000 campaigns + 565000 transitions | branch enumeration, route variety and deterministic throughput |
 | `visual-locale-units` | presentation-unit | **2610** | 103 Goldens + 2 locales × 1160 keys + 108 code refs + 78 asset refs + 1 font refs | visual regression, localization and traceable production assets |
-| `verification-units` | proof-unit | **101** | 21 local CI checks + 1 Wasm CI check + 63 Dart test files + 3 render preconditions + 4 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
+| `verification-units` | proof-unit | **102** | 21 local CI checks + 1 Wasm CI check + 64 Dart test files + 3 render preconditions + 4 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
 
 ## 선행조건과 증거
 

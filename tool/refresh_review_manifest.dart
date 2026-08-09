@@ -119,6 +119,7 @@ void main() {
     'test/goldens/legacy-picker-selected.png',
     'test/goldens/legacy-home.png',
     'test/golden_test.dart',
+    'test/golden_inventory_test.dart',
     'test/goldens/player-home-en.png',
     'test/goldens/personality-quiet.png',
     'test/goldens/personality-kind.png',
