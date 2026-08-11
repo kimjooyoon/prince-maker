@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: c348635d4ef31e0d1466461525332a172393f29dc6cefa02aee78b73ef30edbf -->
+<!-- ssot-sha256: bb3906303e6ec5bdfb7cdfd911afbfdd1bc216fe032c9045850e0953a20236cb -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -25,6 +25,11 @@
 선택: **`flutter-canvas-wasm`** · `select the maximum weighted architectural-fit score` · [결정 매트릭스](engine-decision.md)
 점수 의미: normalized architectural fit for this turn-based Canvas game; not a claim of measured engine throughput
 Golden 정책: 비정확 Canvas diff는 최대 **2.5%**까지 허용하며, 경계값 승인·초과/비유한값 거절은 `exactly-at-boundary acceptance and above-boundary/non-finite rejection are executable tests`로 실행 검증한다.
+
+## Star Cellar 미니게임 계약
+
+`star-cellar`는 7×5 결정론적 방에서 빛 조각 3개를 모으고 잔광을 피하는 Canvas 루프다. 시작 마음 3개, 통과 보상 은화 2개이며 seed는 `17 + week*11 + persona*7 + selected`로 계산한다.
+엔진 `lib/star_cellar.dart#StarCellarEngine` · 렌더러 `lib/star_cellar_painter.dart#StarCellarPainter` · 증적 `test/star_cellar_test.dart#deterministic replay keeps the same room trace`, `test/star_cellar_golden_test.dart#star cellar renders the authored room in ko and en`
 
 ## 48주 진행도
 
@@ -63,7 +68,7 @@ Golden 정책: 비정확 Canvas diff는 최대 **2.5%**까지 허용하며, 경�
 
 ## 대사 구성 기준
 
-- locale 최소 키: **1170** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **684**
+- locale 최소 키: **1187** · 한 캠페인 최소 대사 줄: **63** · 최소 노출 서사 단위: **240** · 전체 authored 대사 줄: **684**
 - 산식: narrative backbone 612 = existing campaign 216 + 24 side scenes × 10 lines + 18 companion scenes × 5 lines + 10 activity mini-events × 3 lines + 18 ending variants × 2 lines; companion choice variants add 72 label/response lines for 684 total authored dialogue units; mandatory route exposes 63 authored dialogue lines and 240 narrative units
 
 ## 최소 플레이타임 계약
@@ -223,8 +228,8 @@ authored 선택 166개 중 72개가 보상과 비용을 동시에 갖는 교환 
 
 ## 대사 로케일
 
-- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `4c4232911a882d9ca16444cec1d179fe9a44c05a6e4e7c37690aeae2fb74105d`
-- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `afa86785706d92a16b70143d7f0889a0581bedc28e09d2853199d7f5d4233322`
+- [`story/locales/ko.jsonl#catalog`](../story/locales/ko.jsonl) · SHA-256 `7f52e3bc0826f9692c8513bc09bfbbd568c355e2a2f2e8c22ca0592f6aaf0ccc`
+- [`story/locales/en.jsonl#catalog`](../story/locales/en.jsonl) · SHA-256 `b7922f6a702efe512aa2446f1bef252438bc98bca350b27200a79da05738c108`
 
 ## 성격
 

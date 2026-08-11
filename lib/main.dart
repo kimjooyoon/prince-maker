@@ -30,6 +30,24 @@ import 'legacy_profile_catalog.dart';
 import 'legacy_profile_forecast.dart';
 import 'companion_scene_archive_painter.dart';
 import 'companion_scene_layout.dart';
+import 'star_cellar.dart';
+import 'star_cellar_painter.dart';
+
+const _defaultCellarState = CellarState(
+  seed: 17,
+  turn: 0,
+  hearts: 3,
+  score: 0,
+  player: CellarPoint(3, 4),
+  wisps: [CellarPoint(1, 1), CellarPoint(5, 1)],
+  shards: [
+    CellarPoint(1, 3),
+    CellarPoint(5, 3),
+    CellarPoint(3, 1),
+  ],
+  exit: CellarPoint(3, 0),
+  trace: ['start:star-cellar'],
+);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,6 +95,7 @@ class _Game extends State<Game> {
   bool finished = false;
   String? selectedLegacyId;
   String? pendingCompanionSceneId;
+  CellarState cellar = StarCellarEngine.initial();
   final history = <String>[];
   final stats = {'지혜': 4, '공감': 5, '용기': 3},
       bonds = {'lumi': 0, 'bora': 0, 'taro': 0};
@@ -126,6 +145,25 @@ class _Game extends State<Game> {
         setActiveLocale(locale, catalog);
         persistUiState();
       });
+
+  void openStarCellar() => setState(() {
+        cellar = StarCellarEngine.initial(
+            seed: 17 + week * 11 + persona * 7 + selected);
+        page = 14;
+        persistUiState();
+      });
+
+  void stepStarCellar(CellarAction action) {
+    final next = StarCellarEngine.step(cellar, action);
+    setState(() {
+      cellar = next;
+      if (next.won && flags['star-cellar-cleared'] != true) {
+        session.completeStarCellar(score: next.score, turn: next.turn);
+        sync();
+      }
+      persistUiState();
+    });
+  }
   List<Activity> get activities => activitiesFromStory(widget.story);
   List<Map<String, dynamic>> get sideScenes => session.story.sideScenes;
   Map<String, dynamic>? get activeSideScene => sideScenes.isEmpty
@@ -543,6 +581,8 @@ class _Game extends State<Game> {
       toggleLocale();
     } else if (page == 0 && y < 100 && x >= 420) {
       setState(() => page = 12);
+    } else if (page == 0 && y >= 150 && y < 205 && x >= 590) {
+      openStarCellar();
     } else if (page == 1) {
       if (y < 100 && x > 590)
         toggleLocale();
@@ -736,6 +776,18 @@ class _Game extends State<Game> {
             index = CompanionSceneLayout.cardIndexAt(logical, scenes.length);
         if (index != null) chooseCompanionScene(index);
       }
+    } else if (page == 14) {
+      if (y < 100 && x > 590) {
+        toggleLocale();
+      } else if (StarCellarPainter.backAt(logical)) {
+        setState(() {
+          page = 0;
+          persistUiState();
+        });
+      } else {
+        final action = StarCellarPainter.actionAt(logical);
+        if (action != null) stepStarCellar(action);
+      }
     } else if (y > 655 && x >= 590) {
       setState(() => page = 11);
     } else if (y > 655 && x >= 200 && x < 410) {
@@ -821,6 +873,8 @@ class _Game extends State<Game> {
   }
 
   String semanticCanvasLabel() {
+    if (page == 14)
+      return tr('ui.miniGame.title', '별지하실 · Star Cellar');
     if (page == 13) {
       final scenes = companionScenesForCurrent(),
           person = session.story.companions[companionSceneIndex
@@ -857,6 +911,30 @@ class _Game extends State<Game> {
                   child: const SizedBox.expand())));
 
   List<Widget> semanticControls(Size viewport) {
+    if (page == 14) {
+      final controls = <Widget>[];
+      controls.add(semanticButton(
+          viewport,
+          const Rect.fromLTWH(24, 640, 140, 42),
+          tr('ui.miniGame.back', '← 루멘으로'),
+          () => setState(() {
+                page = 0;
+                persistUiState();
+              })));
+      for (final entry in StarCellarPainter.actionRects.entries) {
+        final label = switch (entry.key) {
+          CellarAction.up => tr('ui.miniGame.up', '위로 이동'),
+          CellarAction.down => tr('ui.miniGame.down', '아래로 이동'),
+          CellarAction.left => tr('ui.miniGame.left', '왼쪽 이동'),
+          CellarAction.right => tr('ui.miniGame.right', '오른쪽 이동'),
+          CellarAction.pulse => tr('ui.miniGame.pulse', '펄스'),
+          CellarAction.reset => tr('ui.miniGame.reset', '다시 시작'),
+        };
+        controls.add(semanticButton(viewport, entry.value, label,
+            () => stepStarCellar(entry.key)));
+      }
+      return controls;
+    }
     if (page != 13 || session.story.companions.isEmpty) return const [];
     final controls = <Widget>[], scenes = companionScenesForCurrent();
     controls.add(semanticButton(
@@ -935,7 +1013,7 @@ class _Game extends State<Game> {
                     child: Stack(children: [
                   CustomPaint(
                       key: ValueKey(
-                          '$page-$week-$persona-$eventIndex${pendingCompanionSceneId == null ? (lastResult.startsWith('companion-scene-rejected:') ? '-rejected-${lastResult.split(':').last}' : '') : '-pending'}${locale == 'ko' ? '' : '-$locale'}'),
+                          '$page-$week-$persona-$eventIndex${page == 14 ? '-${cellar.turn}-${cellar.hearts}-${cellar.shards.length}-${cellar.won}-${cellar.lost}' : ''}${pendingCompanionSceneId == null ? (lastResult.startsWith('companion-scene-rejected:') ? '-rejected-${lastResult.split(':').last}' : '') : '-pending'}${locale == 'ko' ? '' : '-$locale'}'),
                       painter: Scene(
                           widget.story,
                           week,
@@ -969,7 +1047,8 @@ class _Game extends State<Game> {
                           companionSceneIndex,
                           pendingCompanionSceneId,
                           locale,
-                          widget.locales),
+                          widget.locales,
+                          cellar: cellar),
                       size: viewport),
                   if (rosterImage != null)
                     const SizedBox(key: ValueKey('roster-ready')),
@@ -1014,7 +1093,9 @@ class Scene extends CustomPainter {
       this.companionSceneIndex,
       this.pendingCompanionSceneId,
       this.locale,
-      this.locales) {
+      this.locales, {
+    this.cellar = _defaultCellarState,
+  }) {
     repaintKey = canvasSceneFingerprint([
       s.hashCode,
       week,
@@ -1055,6 +1136,7 @@ class Scene extends CustomPainter {
       legacyId,
       companionSceneIndex,
       pendingCompanionSceneId,
+      cellar.fingerprint,
       locale,
       locales.hashCode,
     ]);
@@ -1085,6 +1167,7 @@ class Scene extends CustomPainter {
   final String? legacyId;
   final int companionSceneIndex;
   final String? pendingCompanionSceneId;
+  final CellarState cellar;
   final String locale;
   final Map<String, Map<String, String>> locales;
   late final String repaintKey;
@@ -1573,6 +1656,12 @@ class Scene extends CustomPainter {
       c.restore();
       return;
     }
+    if (page == 14) {
+      StarCellarPainter(cellar, localized).paint(c);
+      drawLocaleToggle(c, activeLocale, activeCatalog);
+      c.restore();
+      return;
+    }
     home(c);
     drawLocaleToggle(c, activeLocale, activeCatalog);
     drawFeedbackBanner(c, localizedResult(), localizedLine(),
@@ -1828,6 +1917,11 @@ class Scene extends CustomPainter {
         radius: 12, stroke: teal);
     txt(c, localized('ui.home.bondsButton', 'Bonds'), const Offset(624, 668),
         11, teal,
+        bold: true, maxWidth: 98);
+    box(c, const Rect.fromLTWH(608, 150, 128, 34), twilight,
+        radius: 12, stroke: teal);
+    txt(c, localized('ui.home.miniGame', 'Star cellar'), const Offset(624, 160),
+        10, teal,
         bold: true, maxWidth: 98);
   }
 

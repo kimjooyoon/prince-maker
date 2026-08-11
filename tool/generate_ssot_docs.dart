@@ -6,55 +6,56 @@ String sha(String path) =>
     sha256.convert(File(path).readAsBytesSync()).toString();
 String render(Map<String, dynamic> s, String hash) {
   final people = (s['personalities'] as List).cast<Map<String, dynamic>>();
-  final characterArchive = (s['characterArchive'] as List? ?? const [])
-      .cast<Map<String, dynamic>>();
-  final companions = (s['companions'] as List? ?? [])
-      .cast<Map<String, dynamic>>();
+  final characterArchive =
+      (s['characterArchive'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final companions =
+      (s['companions'] as List? ?? []).cast<Map<String, dynamic>>();
   final personalityCompanionRoutes =
       (s['personalityCompanionRoutes'] as List? ?? const [])
           .cast<Map<String, dynamic>>();
-  final legacyProfiles = (s['legacyProfiles'] as List? ?? [])
-      .cast<Map<String, dynamic>>();
+  final legacyProfiles =
+      (s['legacyProfiles'] as List? ?? []).cast<Map<String, dynamic>>();
   final acts = (s['activities'] as List).cast<Map<String, dynamic>>();
   final events = (s['events'] as List).cast<Map<String, dynamic>>();
-  final sideScenes = (s['sideScenes'] as List? ?? const [])
-      .cast<Map<String, dynamic>>();
-  final companionScenes = (s['companionScenes'] as List? ?? const [])
-      .cast<Map<String, dynamic>>();
-  final activityScenes = (s['activityScenes'] as List? ?? const [])
-      .cast<Map<String, dynamic>>();
-  final endingVariants = (s['endingVariants'] as List? ?? const [])
-      .cast<Map<String, dynamic>>();
+  final sideScenes =
+      (s['sideScenes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final companionScenes =
+      (s['companionScenes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final activityScenes =
+      (s['activityScenes'] as List? ?? const []).cast<Map<String, dynamic>>();
+  final endingVariants =
+      (s['endingVariants'] as List? ?? const []).cast<Map<String, dynamic>>();
   final endings = (s['endings'] as List).cast<Map<String, dynamic>>();
-  final milestones = (s['milestones'] as List? ?? [])
-      .cast<Map<String, dynamic>>();
-  final fateThreads = (s['fateThreads'] as List? ?? [])
-      .cast<Map<String, dynamic>>();
-  final companionQuests = (s['companionQuests'] as List? ?? [])
-      .cast<Map<String, dynamic>>();
+  final milestones =
+      (s['milestones'] as List? ?? []).cast<Map<String, dynamic>>();
+  final fateThreads =
+      (s['fateThreads'] as List? ?? []).cast<Map<String, dynamic>>();
+  final companionQuests =
+      (s['companionQuests'] as List? ?? []).cast<Map<String, dynamic>>();
   final assets = (s['assetRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final fonts = (s['fontRefs'] as List? ?? []).cast<Map<String, dynamic>>();
   final locales = (s['localeRefs'] as List? ?? []).cast<Map<String, dynamic>>();
-  final progression = (s['progression'] as List? ?? [])
-      .cast<Map<String, dynamic>>();
+  final progression =
+      (s['progression'] as List? ?? []).cast<Map<String, dynamic>>();
   final dialogue = (s['dialogueMetrics'] as Map? ?? {}).cast<String, dynamic>();
-  final scenario = (s['scenarioCompleteness'] as Map? ?? {})
-      .cast<String, dynamic>();
+  final scenario =
+      (s['scenarioCompleteness'] as Map? ?? {}).cast<String, dynamic>();
   final decision = (s['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
   final ciGate = (s['ciGatePolicy'] as Map? ?? {}).cast<String, dynamic>();
   final engine = (s['engineDecision'] as Map? ?? {}).cast<String, dynamic>();
+  final miniGame =
+      (s['miniGameContract'] as Map? ?? {}).cast<String, dynamic>();
   final campaignWeeks =
       (s['campaignWeeks'] as int?) ?? ((s['endingWeek'] as int) - 1);
   final budget = (s['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
-  final scenarioVariants = (s['scenarioVariantBudget'] as Map? ?? {})
-      .cast<String, dynamic>();
+  final scenarioVariants =
+      (s['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
   final gameplay = (s['gameplayKpis'] as Map? ?? {}).cast<String, dynamic>();
-  final renderQuality = (s['renderQualityKpis'] as Map? ?? {})
-      .cast<String, dynamic>();
-  final endingDesign = (s['endingDesign'] as Map? ?? {})
-      .cast<String, dynamic>();
-  final eventStormNodes =
-      events.length +
+  final renderQuality =
+      (s['renderQualityKpis'] as Map? ?? {}).cast<String, dynamic>();
+  final endingDesign =
+      (s['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
+  final eventStormNodes = events.length +
       sideScenes.length +
       companionScenes.length +
       activityScenes.length +
@@ -90,6 +91,13 @@ String render(Map<String, dynamic> s, String hash) {
   b.writeln('점수 의미: ${engine['scoreMeaning']}');
   b.writeln(
     'Golden 정책: 비정확 Canvas diff는 최대 **${renderQuality['current']['goldenTolerance'] * 100}%**까지 허용하며, 경계값 승인·초과/비유한값 거절은 `${renderQuality['definitions']['goldenToleranceBoundaryEvidence']}`로 실행 검증한다.',
+  );
+  b.writeln('\n## Star Cellar 미니게임 계약\n');
+  b.writeln(
+    '`${miniGame['id']}`는 ${miniGame['grid']['width']}×${miniGame['grid']['height']} 결정론적 방에서 빛 조각 ${miniGame['requiredShards']}개를 모으고 잔광을 피하는 Canvas 루프다. 시작 마음 ${miniGame['startingHearts']}개, 통과 보상 은화 ${miniGame['rewardCoins']}개이며 seed는 `${miniGame['deterministicSeed']}`로 계산한다.',
+  );
+  b.writeln(
+    '엔진 `${miniGame['coreRef']}` · 렌더러 `${miniGame['renderRef']}` · 증적 `${(miniGame['evidence'] as List? ?? const []).join('`, `')}`',
   );
   b.writeln('\n## ${campaignWeeks}주 진행도\n');
   for (final c in progression)
@@ -293,8 +301,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       companionScenes = (s['companionScenes'] as List? ?? const []).length,
       activityScenes = (s['activityScenes'] as List? ?? const []).length,
       endingVariants = (s['endingVariants'] as List? ?? const []).length,
-      eventStormNodes =
-          events.length +
+      eventStormNodes = events.length +
           sideScenes +
           companionScenes +
           activityScenes +
@@ -307,10 +314,10 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       ),
       goldens = Directory('test/goldens').existsSync()
           ? Directory('test/goldens')
-                .listSync()
-                .whereType<File>()
-                .where((f) => f.path.endsWith('.png'))
-                .length
+              .listSync()
+              .whereType<File>()
+              .where((f) => f.path.endsWith('.png'))
+              .length
           : 0,
       progression = (s['progression'] as List? ?? []).length,
       chapterContracts = (s['progression'] as List? ?? [])
@@ -323,6 +330,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       gameplay = (s['gameplayKpis'] as Map? ?? {}),
       ciGate = (s['ciGatePolicy'] as Map? ?? {}),
       renderQuality = (s['renderQualityKpis'] as Map? ?? {}),
+      miniGame = (s['miniGameContract'] as Map? ?? {}),
       endingDesign = (s['endingDesign'] as Map? ?? {}),
       personalityCompanionRoutes =
           (s['personalityCompanionRoutes'] as List? ?? const [])
@@ -381,6 +389,9 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   );
   b.writeln(
     '| 렌더러 결정 | `${(s['engineDecision'] as Map?)?['selectedOption'] ?? 'none'}` | SSOT `engineDecision` · Golden/WASM 적합도 계약 |',
+  );
+  b.writeln(
+    '| 미니게임 | `${miniGame['id']}` · ${miniGame['grid']['width']}×${miniGame['grid']['height']} · Golden 2장 | `miniGameContract` · 결정론적 replay + Canvas ko/en |',
   );
   b.writeln('| 활동 | $acts | `activities.length` |');
   b.writeln('| 성격 | $people | `personalities.length` |');

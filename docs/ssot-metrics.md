@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: c348635d4ef31e0d1466461525332a172393f29dc6cefa02aee78b73ef30edbf -->
+<!-- ssot-sha256: bb3906303e6ec5bdfb7cdfd911afbfdd1bc216fe032c9045850e0953a20236cb -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -19,6 +19,7 @@
 | 시스템 판정 | lumen-ledger | SSOT `decisionSystem` · fail-closed receipt |
 | CI 실패 집계 | run-all-checks | SSOT `ciGatePolicy` · 모든 검사 결과 기록 후 fail-closed |
 | 렌더러 결정 | `flutter-canvas-wasm` | SSOT `engineDecision` · Golden/WASM 적합도 계약 |
+| 미니게임 | `star-cellar` · 7×5 · Golden 2장 | `miniGameContract` · 결정론적 replay + Canvas ko/en |
 | 활동 | 5 | `activities.length` |
 | 성격 | 3 | `personalities.length` |
 | 성격 × 동료 공명 | 9 (3 matched) | `personalityCompanionRoutes` · matching choice bond +1 |
@@ -39,15 +40,15 @@
 | 시스템 판정 영수증 Golden | true | `gameplayKpis.current.systemDecisionReceiptGolden` · `test/goldens/system-receipt.png` 승인·거절·hash 표면 |
 | Canvas Golden diff 허용오차 | 2.5% | `renderQualityKpis.current.goldenTolerance` · `test/golden_tolerance_test.dart` 경계/초과/비유한값 판정 |
 | 엔딩 | 6 | `endings.length` |
-| Canvas Golden | 105 | `test/goldens/*.png` |
-| 코드 ref | 124 | `codeRefs.length` |
+| Canvas Golden | 107 | `test/goldens/*.png` |
+| 코드 ref | 128 | `codeRefs.length` |
 | 이미지 ref | 78 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
 | 스토리 막 | 16 | `progression.length` · 1–3주 / 4–6주 / 7–9주 / 10–12주 / 13–15주 / 16–18주 / 19–21주 / 22–24주 / 25–27주 / 28–30주 / 31–33주 / 34–36주 / 37–39주 / 40–42주 / 43–45주 / 46–48주 |
 | 막 계약 | 16/16 | 각 막의 `contract` 공개·압력·선택·결산 선언 |
 | 시나리오 완전성 차원 | 8 | `scenarioCompleteness.dimensions.length` |
-| locale 최소 키 | 1170 | `dialogueMetrics.minimumLocaleKeys` |
+| locale 최소 키 | 1187 | `dialogueMetrics.minimumLocaleKeys` |
 | 캠페인 최소 대사 줄 | 63 | 48주 authored 사건 선택 노출 기준 |
 | 캠페인 최소 서사 단위 | 240 | 성격·사건 제목/본문·선택·엔딩 |
 

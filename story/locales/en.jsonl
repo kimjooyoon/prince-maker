@@ -1169,3 +1169,20 @@
 {"type":"entry","key":"ui.home.risk.steady","value":"Steady pace"}
 {"type":"entry","key":"ui.event.memoryImpact","value":"Memory impact · {title}: {detail}"}
 {"type":"entry","key":"ui.ending.legacyRouteForecast","value":"Forecast · {ending}"}
+{"type":"entry","key":"ui.home.miniGame","value":"Star cellar"}
+{"type":"entry","key":"ui.miniGame.title","value":"Star Cellar"}
+{"type":"entry","key":"ui.miniGame.subtitle","value":"Gather the light and sidestep the wavering heart."}
+{"type":"entry","key":"ui.miniGame.hud","value":"HEARTS {hearts} · SHARDS {shards}/3 · TURN {turn}"}
+{"type":"entry","key":"ui.miniGame.goal","value":"The room's promise"}
+{"type":"entry","key":"ui.miniGame.help","value":"Gather three light shards to open the exit.\nStanding with a red wisp costs one heart.\nPulse changes the wisp direction."}
+{"type":"entry","key":"ui.miniGame.exit","value":"EXIT"}
+{"type":"entry","key":"ui.miniGame.ready","value":"Choose one tile at a time and find the next light."}
+{"type":"entry","key":"ui.miniGame.won","value":"Room cleared · silver record +{score}"}
+{"type":"entry","key":"ui.miniGame.lost","value":"A wisp touched you · walk again"}
+{"type":"entry","key":"ui.miniGame.back","value":"← Back to Lumen"}
+{"type":"entry","key":"ui.miniGame.pulse","value":"Pulse"}
+{"type":"entry","key":"ui.miniGame.reset","value":"Restart"}
+{"type":"entry","key":"ui.miniGame.up","value":"Move up"}
+{"type":"entry","key":"ui.miniGame.down","value":"Move down"}
+{"type":"entry","key":"ui.miniGame.left","value":"Move left"}
+{"type":"entry","key":"ui.miniGame.right","value":"Move right"}

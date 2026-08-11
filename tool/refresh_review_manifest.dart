@@ -8,8 +8,8 @@ String hash(String path) =>
 void main() {
   final file = File('docs/review-manifest.jsonl');
   final manifest = decodeJsonl(file.readAsStringSync());
-  final entries = (manifest['reviewedFiles'] as List)
-      .cast<Map<String, dynamic>>();
+  final entries =
+      (manifest['reviewedFiles'] as List).cast<Map<String, dynamic>>();
   final known = {for (final entry in entries) entry['path'] as String: entry};
   for (final entry in entries) {
     final path = entry['path'] as String;
@@ -234,6 +234,12 @@ void main() {
     'assets/generated/side-scene-illustrations/quarry.png',
     'tool/generate_image_matrix.dart',
     'test/image_design_matrix_test.dart',
+    'lib/star_cellar.dart',
+    'lib/star_cellar_painter.dart',
+    'test/star_cellar_test.dart',
+    'test/star_cellar_golden_test.dart',
+    'test/goldens/star-cellar.png',
+    'test/goldens/star-cellar-en.png',
     'design/image-design-matrix.jsonl',
     'docs/engine-decision.jsonl',
     'docs/engine-decision.md',
