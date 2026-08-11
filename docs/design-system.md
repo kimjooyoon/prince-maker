@@ -2,6 +2,8 @@
 
 프린스 메이커의 장기 개발을 위한 재활용 가능한 시각 설계 기준입니다. 현재는 Canvas 전용 토큰을 먼저 고정하고, 이후 이벤트·상점·저장 슬롯·엔딩 갤러리도 동일 규칙으로 확장합니다.
 
+이번 버전의 canonical 계약은 `story/story.jsonl#designSystemContract`이며, 사람이 읽는 선택 근거는 [`design-decision-log.md`](design-decision-log.md), token JSONL은 [`../design/tokens.jsonl`](../design/tokens.jsonl)입니다. 새 화면은 `CanvasUiKit.variantPanel`의 `panel / card / button / hud / dialogue / status / locked` 중 하나를 선택하고, `idle / selected / disabled / warning / success / danger` 상태를 선언합니다.
+
 ## 원칙
 
 - 원작의 캐릭터·화면·문구를 재사용하지 않는 독자 세계관과 실루엣
@@ -11,6 +13,13 @@
 - 한글 텍스트는 번들 폰트로 고정하고, 활동 장식 아이콘은 폰트 글리프 대신 Canvas 벡터로 그려 플랫폼별 tofu를 차단
 - 상반신 대화 화면은 `portrait_page`, 성격별 PNG 프레임은 `personality_portrait`, 막 결산의 관계 대화는 `relationship_scene_panel`, 성장 계획 화면은 `choice_card`, 결과 화면은 `ending_panel`을 조합
 - 특정 작품을 복제하지 않는 어두운 이세계 판타지 감성은 황혼 surface·기록 카드·선택 후 귀환 피드백으로 표현
+- 접근성 label은 Canvas를 가리지 않는 투명 Flutter `Semantics` overlay로 제공하며 logical 기준 44px hit target을 유지
+
+## 설계 결정과 증적
+
+홈·성격 선택·상반신 일러스트·동행 장면·Star Cellar는 모두 `ink / twilight` 구조, `sun` 진행 안내, `teal / mint` 회복·성공, `warning / coral` 주의·거절을 공유합니다. warning을 danger와 분리한 이유와 저작권 회피 원칙은 [`design-decision-log.md`](design-decision-log.md)에 기록합니다.
+
+새 named variant 행렬은 한국어·영어 Golden [`test/goldens/design-system-ko.png`](../test/goldens/design-system-ko.png), [`test/goldens/design-system-en.png`](../test/goldens/design-system-en.png)으로 고정하고, 기존 별지하실 화면은 [`test/goldens/star-cellar.png`](../test/goldens/star-cellar.png), [`test/goldens/star-cellar-en.png`](../test/goldens/star-cellar-en.png)으로 회귀를 감시합니다.
 
 ## 재활용 단위
 

@@ -1186,3 +1186,32 @@
 {"type":"entry","key":"ui.miniGame.down","value":"아래로 이동"}
 {"type":"entry","key":"ui.miniGame.left","value":"왼쪽 이동"}
 {"type":"entry","key":"ui.miniGame.right","value":"오른쪽 이동"}
+{"type":"entry","key":"ui.accessibility.locale","value":"언어 바꾸기"}
+{"type":"entry","key":"ui.accessibility.journal","value":"회고 일지 열기"}
+{"type":"entry","key":"ui.accessibility.starCellar","value":"별지하실 열기"}
+{"type":"entry","key":"ui.accessibility.save","value":"저장·복원 열기"}
+{"type":"entry","key":"ui.accessibility.illustration","value":"성격 상반신 열기"}
+{"type":"entry","key":"ui.accessibility.spend","value":"하루 보내기"}
+{"type":"entry","key":"ui.accessibility.ledger","value":"운명 기록 열기"}
+{"type":"entry","key":"ui.accessibility.characters","value":"캐릭터 도감 열기"}
+{"type":"entry","key":"ui.accessibility.environments","value":"환경 아틀라스 열기"}
+{"type":"entry","key":"ui.accessibility.bonds","value":"관계 기록 열기"}
+{"type":"entry","key":"ui.accessibility.activity","value":"활동 선택"}
+{"type":"entry","key":"ui.accessibility.personality","value":"성격 선택"}
+{"type":"entry","key":"ui.accessibility.backHome","value":"홈으로 돌아가기"}
+{"type":"entry","key":"ui.design.title","value":"루멘 Canvas 언어"}
+{"type":"entry","key":"ui.design.subtitle","value":"홈·상반신·동행·별지하실을 잇는 하나의 조용한 문법."}
+{"type":"entry","key":"ui.design.hud","value":"HUD · 막 / 주차 / 스탯 리듬"}
+{"type":"entry","key":"ui.design.hudHint","value":"잉크는 방향을 잡고, 별빛 골드는 다음 의미 있는 행동을 표시합니다."}
+{"type":"entry","key":"ui.design.card","value":"카드"}
+{"type":"entry","key":"ui.design.cardHint","value":"선택은 행동이 되기 전에 충분히 읽을 수 있어야 합니다."}
+{"type":"entry","key":"ui.design.status","value":"준비"}
+{"type":"entry","key":"ui.design.dialogue","value":"대화 상자"}
+{"type":"entry","key":"ui.design.dialogueHint","value":"화자·대사·장소가 하나의 읽기 순서를 공유합니다."}
+{"type":"entry","key":"ui.design.warning","value":"주의 · 피로에는 느린 속도가 필요합니다"}
+{"type":"entry","key":"ui.design.warningHint","value":"주의는 거절을 뜻하는 위험과 구분해 안내로 읽히게 합니다."}
+{"type":"entry","key":"ui.design.rules","value":"재사용 규칙"}
+{"type":"entry","key":"ui.design.rule.touch","value":"최소 터치 44px"}
+{"type":"entry","key":"ui.design.rule.state","value":"idle · selected · locked · success · warning · danger"}
+{"type":"entry","key":"ui.design.rule.copy","value":"ko/en 카피는 locale JSONL에 둡니다"}
+{"type":"entry","key":"ui.design.footer","value":"독자 무드: 황혼 잉크, 별빛 안내, 민트 회복, 코랄 주의."}

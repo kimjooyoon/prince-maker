@@ -7,6 +7,10 @@ const sun = Color(0xffffc857);
 const paper = Color(0xfff6f1e8);
 const twilight = Color(0xff24284d);
 const mist = Color(0xffa7b0c8);
+const success = Color(0xff3d9d8f);
+const warning = Color(0xffd58b28);
+const danger = Color(0xffa84f3c);
+const surfaceTint = Color(0xffeef4f0);
 
 abstract final class DesignTokens {
   static const gap1 = 8.0;
@@ -30,6 +34,12 @@ abstract final class DesignTokens {
   static const feedbackHeight = 48.0;
   static const progressHeight = 6.0;
   static const shadowOffsetY = 3.0;
+  static const focusStrokeWidth = 3.0;
+  static const hitTargetMin = 44.0;
+  static const headerHeight = 76.0;
+  static const hudRadius = 20.0;
+  static const dialogueRadius = 16.0;
+  static const componentGap = 12.0;
   static const environmentCardWidth = 332.0;
   static const environmentCardHeight = 176.0;
   static const environmentSurfaceHeight = 62.0;

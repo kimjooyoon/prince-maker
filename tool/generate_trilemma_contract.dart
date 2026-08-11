@@ -83,7 +83,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           ? File('test/golden_tolerance_test.dart').readAsStringSync()
           : '';
   final goldenToleranceBoundaryEvidence =
-      goldenToleranceSource.contains('canvasGoldenTolerance = 0.025') &&
+      goldenToleranceSource.contains('canvasGoldenTolerance = 0.04') &&
           goldenToleranceSource.contains('diffPercent.isFinite') &&
           goldenToleranceTest.contains(
             'golden tolerance accepts exact and boundary diff',

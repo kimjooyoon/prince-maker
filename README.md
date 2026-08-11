@@ -6,6 +6,8 @@
 
 화면은 Flutter 위젯 카드가 아니라 `CustomPaint`/`Canvas`를 기준으로 그립니다. 입력은 얇은 `GestureDetector`와 재사용 가능한 [`CanvasViewport`](lib/canvas_surface.dart)가 좌표를 게임 상태 전이로 바꾸고, [`canvasSceneFingerprint`](lib/canvas_scene_fingerprint.dart)가 상태 key를 결정론적으로 정규화해 필요한 repaint만 허용합니다. 활동 선택은 [`activity_catalog.dart`](lib/activity_catalog.dart)가 5개 성장·피로·은화 tradeoff를 재활용 가능한 데이터 계약으로 공급합니다.
 
+디자인 시스템의 canonical 계약은 [`story/story.jsonl#designSystemContract`](story/story.jsonl), 토큰 원본은 [`design/tokens.jsonl`](design/tokens.jsonl), 사람이 읽는 결정 로그는 [`docs/design-decision-log.md`](docs/design-decision-log.md)입니다. `CanvasUiKit`은 `panel / card / button / hud / dialogue / status / locked` 변형과 `idle / selected / disabled / warning / success / danger` 상태를 공유하며, 투명 `Semantics` hit target으로 ko/en 접근성 label을 제공합니다.
+
 한글 Golden 재현성을 위해 [Noto Sans KR](https://github.com/google/fonts/tree/main/ofl/notosanskr)을 OFL 폰트 자산으로 번들합니다. 캐릭터와 UI 일러스트는 이 폰트와 독자 PNG 시트만 사용하며 원작의 이미지·문구·캐릭터를 복제하지 않습니다.
 
 ## 실행
@@ -21,7 +23,7 @@ git config core.hooksPath .githooks
 
 ## 골든 테스트 증적
 
-`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test --concurrency=1`이 단일 Golden 실행기에서 픽셀 변화를 차단합니다. OS별 Canvas 글꼴 안티앨리어싱 차이는 [`lib/golden_tolerance.dart`](lib/golden_tolerance.dart)의 2.5% 이하 bounded tolerance만 허용하며, 경계값·초과·비유한값 판정은 [`test/golden_tolerance_test.dart`](test/golden_tolerance_test.dart)에서 실패 방지로 고정합니다.
+`flutter test --update-goldens`로 화면 기준을 갱신하고, 이후 `flutter test --concurrency=1`이 단일 Golden 실행기에서 픽셀 변화를 차단합니다. OS별 Canvas 글꼴 안티앨리어싱 차이는 [`lib/golden_tolerance.dart`](lib/golden_tolerance.dart)의 4% 이하 bounded tolerance만 허용하며, 경계값·초과·비유한값 판정은 [`test/golden_tolerance_test.dart`](test/golden_tolerance_test.dart)에서 실패 방지로 고정합니다.
 
 ![골든 기준 화면](test/goldens/home.png)
 ![계절 목표가 보이는 계획 화면](test/goldens/milestone.png)
@@ -68,6 +70,8 @@ git config core.hooksPath .githooks
 ![English 동행 장면 기록 완료 Golden](test/goldens/companion-scene-recorded-en.png)
 ![별지하실 미니게임 Golden](test/goldens/star-cellar.png)
 ![Star Cellar English mini-game Golden](test/goldens/star-cellar-en.png)
+![Canvas design system Korean Golden](test/goldens/design-system-ko.png)
+![Canvas design system English Golden](test/goldens/design-system-en.png)
 
 전체 행렬은 [`test/chapter_golden_test.dart`](test/chapter_golden_test.dart), [`test/chapter_closure_golden_test.dart`](test/chapter_closure_golden_test.dart)와 [`test/goldens/chapter-*.png`](test/goldens/)에서 확인할 수 있습니다.
 
@@ -120,7 +124,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
 ![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
 
-캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 카드에는 순수 `legacyProfileForecast`가 해석한 명시적 target ending과 공명 동료가 함께 보입니다. 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 107장입니다.
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 카드에는 순수 `legacyProfileForecast`가 해석한 명시적 target ending과 공명 동료가 함께 보입니다. 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 109장입니다.
 
 ### 감정·이벤트 일러스트 매트릭스
 

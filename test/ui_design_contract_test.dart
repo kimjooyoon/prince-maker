@@ -2,9 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:prince_maker/jsonl.dart';
 
 void main() {
   test('design token catalog covers every game UI surface', () {
+    final document =
+        decodeJsonl(File('design/tokens.jsonl').readAsStringSync());
     final lines = File('design/tokens.jsonl').readAsLinesSync();
     final componentLine =
         lines.firstWhere((line) => jsonDecode(line)['key'] == 'components');
@@ -55,5 +58,22 @@ void main() {
         containsAll(['idle', 'selected']));
     expect(components['relationship_archive_panel']['states'],
         containsAll(['resolved', 'replayable']));
+    final variants = document['canvasComponentVariants'] as List;
+    expect(
+        variants,
+        containsAll([
+          'panel',
+          'card',
+          'button',
+          'hud',
+          'dialogue',
+          'status',
+          'locked'
+        ]));
+    final states = document['uiStates'] as List;
+    expect(
+        states,
+        containsAll(
+            ['idle', 'selected', 'disabled', 'warning', 'success', 'danger']));
   });
 }

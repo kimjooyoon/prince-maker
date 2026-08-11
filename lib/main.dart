@@ -164,6 +164,7 @@ class _Game extends State<Game> {
       persistUiState();
     });
   }
+
   List<Activity> get activities => activitiesFromStory(widget.story);
   List<Map<String, dynamic>> get sideScenes => session.story.sideScenes;
   Map<String, dynamic>? get activeSideScene => sideScenes.isEmpty
@@ -873,18 +874,20 @@ class _Game extends State<Game> {
   }
 
   String semanticCanvasLabel() {
-    if (page == 14)
-      return tr('ui.miniGame.title', '별지하실 · Star Cellar');
+    if (page == 14) return tr('ui.miniGame.title', '별지하실 · Star Cellar');
     if (page == 13) {
       final scenes = companionScenesForCurrent(),
-          person = session.story.companions[companionSceneIndex
-              .clamp(0, session.story.companions.length - 1)],
+          person = session.story.companions[companionSceneIndex.clamp(
+              0, session.story.companions.length - 1)],
           done = scenes.where((scene) => scene['completed'] == true).length;
-      return '${tr('${person['nameKey']}', '${person['name']}')} · ${tr('ui.companionScenes.title', '동행 장면 기록')} · ${formatUi('ui.companionScenes.progress', '기록 {done}/{total}', {'done': done, 'total': scenes.length})}';
+      return '${tr('${person['nameKey']}', '${person['name']}')} · ${tr('ui.companionScenes.title', '동행 장면 기록')} · ${formatUi('ui.companionScenes.progress', '기록 {done}/{total}', {
+            'done': done,
+            'total': scenes.length
+          })}';
     }
     if (page == 3) {
-      final event = session.story.events[eventIndex.clamp(
-          0, session.story.events.isEmpty ? 0 : session.story.events.length - 1)];
+      final event = session.story.events[eventIndex.clamp(0,
+          session.story.events.isEmpty ? 0 : session.story.events.length - 1)];
       return '${tr('${event['titleKey']}', '${event['title']}')} · ${tr('ui.event.small', 'A small event · week {week}').replaceAll('{week}', '${event['week']}')}';
     }
     return tr('ui.accessibility.canvas', 'Lumen game screen');
@@ -892,13 +895,15 @@ class _Game extends State<Game> {
 
   Rect semanticPhysicalRect(ui.Rect logical, Size viewport) {
     final frame = CanvasViewport.frame(viewport);
-    return Rect.fromLTWH(frame.offset.dx + logical.left * frame.scale,
+    return Rect.fromLTWH(
+        frame.offset.dx + logical.left * frame.scale,
         frame.offset.dy + logical.top * frame.scale,
-        logical.width * frame.scale, logical.height * frame.scale);
+        logical.width * frame.scale,
+        logical.height * frame.scale);
   }
 
-  Widget semanticButton(Size viewport, ui.Rect logical, String label,
-          VoidCallback onTap) =>
+  Widget semanticButton(
+          Size viewport, ui.Rect logical, String label, VoidCallback onTap) =>
       Positioned.fromRect(
           rect: semanticPhysicalRect(logical, viewport),
           child: Semantics(
@@ -911,8 +916,10 @@ class _Game extends State<Game> {
                   child: const SizedBox.expand())));
 
   List<Widget> semanticControls(Size viewport) {
+    final controls = <Widget>[];
+    controls.add(semanticButton(viewport, const Rect.fromLTWH(600, 24, 120, 40),
+        tr('ui.accessibility.locale', 'Change language'), toggleLocale));
     if (page == 14) {
-      final controls = <Widget>[];
       controls.add(semanticButton(
           viewport,
           const Rect.fromLTWH(24, 640, 140, 42),
@@ -930,13 +937,101 @@ class _Game extends State<Game> {
           CellarAction.pulse => tr('ui.miniGame.pulse', '펄스'),
           CellarAction.reset => tr('ui.miniGame.reset', '다시 시작'),
         };
-        controls.add(semanticButton(viewport, entry.value, label,
-            () => stepStarCellar(entry.key)));
+        controls.add(semanticButton(
+            viewport, entry.value, label, () => stepStarCellar(entry.key)));
       }
       return controls;
     }
-    if (page != 13 || session.story.companions.isEmpty) return const [];
-    final controls = <Widget>[], scenes = companionScenesForCurrent();
+    if (page == 0) {
+      controls.addAll([
+        semanticButton(
+            viewport,
+            const Rect.fromLTWH(420, 24, 160, 40),
+            tr('ui.accessibility.journal', 'Open reflection journal'),
+            () => setState(() => page = 12)),
+        semanticButton(
+            viewport,
+            const Rect.fromLTWH(608, 150, 128, 34),
+            tr('ui.accessibility.starCellar', 'Open Star Cellar'),
+            openStarCellar),
+        semanticButton(
+            viewport,
+            const Rect.fromLTWH(260, 500, 150, 54),
+            tr('ui.accessibility.save', 'Open save and restore'),
+            () => setState(() => page = 4)),
+        semanticButton(
+            viewport,
+            const Rect.fromLTWH(430, 500, 150, 54),
+            tr('ui.accessibility.illustration', 'Open personality portrait'),
+            () => setState(() => page = 1)),
+        semanticButton(viewport, const Rect.fromLTWH(590, 500, 146, 54),
+            tr('ui.accessibility.spend', 'Spend the day'), next),
+        semanticButton(
+            viewport,
+            const Rect.fromLTWH(24, 660, 170, 30),
+            tr('ui.accessibility.ledger', 'Open fate ledger'),
+            () => setState(() => page = 5)),
+        semanticButton(
+            viewport,
+            const Rect.fromLTWH(210, 660, 180, 30),
+            tr('ui.accessibility.characters', 'Open character archive'),
+            () => setState(() => page = 7)),
+        semanticButton(
+            viewport,
+            const Rect.fromLTWH(410, 660, 180, 30),
+            tr('ui.accessibility.environments', 'Open environment atlas'),
+            () => setState(() => page = 8)),
+        semanticButton(
+            viewport,
+            const Rect.fromLTWH(608, 660, 128, 30),
+            tr('ui.accessibility.bonds', 'Open relationship archive'),
+            () => setState(() => page = 11)),
+      ]);
+      for (var i = 0; i < activities.length; i++) {
+        final row = i < 3 ? 0 : 1, col = i < 3 ? i : i - 3;
+        controls.add(semanticButton(
+            viewport,
+            Rect.fromLTWH(24 + col * 236.0, row == 0 ? 270 : 363, 220, 88),
+            '${localizedActivityLabel(activities[i].id, activities[i].label)} · ${tr('ui.accessibility.activity', 'Choose activity')}',
+            () => select(i)));
+      }
+      return controls;
+    }
+    if (page == 1) {
+      for (var i = 0; i < 3; i++) {
+        final person = session.story.personalities[i];
+        controls.add(semanticButton(
+            viewport,
+            Rect.fromLTWH(i * 245.0, 180, 245, 300),
+            '${tr('${person['nameKey']}', '${person['name']}')} · ${tr('ui.accessibility.personality', 'Choose personality')}',
+            () => setState(() {
+                  persona = i;
+                  session.world.progress[0]!.persona = i;
+                })));
+      }
+      controls.add(semanticButton(
+          viewport,
+          const Rect.fromLTWH(560, 620, 176, 42),
+          tr('ui.accessibility.backHome', 'Back to home'),
+          () => setState(() => page = 0)));
+      return controls;
+    }
+    if (page == 3) {
+      final event = session
+          .story.events[eventIndex.clamp(0, session.story.events.length - 1)];
+      final choices = (event['choices'] as List? ?? const []).cast<Map>();
+      for (var i = 0; i < choices.length && i < 2; i++) {
+        final choice = choices[i];
+        controls.add(semanticButton(
+            viewport,
+            Rect.fromLTWH(24 + i * 380.0, 260, 332, 210),
+            '${tr('${choice['labelKey']}', '${choice['label']}')} · ${localizedChoiceCondition(choice)}',
+            () => chooseEvent(i)));
+      }
+      return controls;
+    }
+    if (page != 13 || session.story.companions.isEmpty) return controls;
+    final scenes = companionScenesForCurrent();
     controls.add(semanticButton(
         viewport,
         CompanionSceneLayout.previousRect,
@@ -1011,89 +1106,90 @@ class _Game extends State<Game> {
                     label: semanticCanvasLabel(),
                     liveRegion: lastResult.isNotEmpty,
                     child: Stack(children: [
-                  CustomPaint(
-                      key: ValueKey(
-                          '$page-$week-$persona-$eventIndex${page == 14 ? '-${cellar.turn}-${cellar.hearts}-${cellar.shards.length}-${cellar.won}-${cellar.lost}' : ''}${pendingCompanionSceneId == null ? (lastResult.startsWith('companion-scene-rejected:') ? '-rejected-${lastResult.split(':').last}' : '') : '-pending'}${locale == 'ko' ? '' : '-$locale'}'),
-                      painter: Scene(
-                          widget.story,
-                          week,
-                          coins,
-                          fatigue,
-                          selected,
-                          stats,
-                          bonds,
-                          milestones,
-                          flags,
-                          lastResult,
-                          lastLine,
-                          page,
-                          persona,
-                          image,
-                          personaImage,
-                          rosterImage,
-                          characterEmotionImages,
-                          eventIllustrationImages,
-                          sideSceneIllustrationImages,
-                          history,
-                          eventIndex,
-                          sideSceneCursor,
-                          archiveCharacterIndex,
-                          archiveEmotionIndex,
-                          snapshot().encode(),
-                          activities,
-                          collectionEntries,
-                          selectedLegacyId,
-                          session.legacyId,
-                          companionSceneIndex,
-                          pendingCompanionSceneId,
-                          locale,
-                          widget.locales,
-                          cellar: cellar),
-                      size: viewport),
-                  if (rosterImage != null)
-                    const SizedBox(key: ValueKey('roster-ready')),
-                  if (characterEmotionImages.isNotEmpty)
-                    const SizedBox(key: ValueKey('character-emotion-ready')),
-                  ...semanticControls(viewport),
-                ])));
+                      CustomPaint(
+                          key: ValueKey(
+                              '$page-$week-$persona-$eventIndex${page == 14 ? '-${cellar.turn}-${cellar.hearts}-${cellar.shards.length}-${cellar.won}-${cellar.lost}' : ''}${pendingCompanionSceneId == null ? (lastResult.startsWith('companion-scene-rejected:') ? '-rejected-${lastResult.split(':').last}' : '') : '-pending'}${locale == 'ko' ? '' : '-$locale'}'),
+                          painter: Scene(
+                              widget.story,
+                              week,
+                              coins,
+                              fatigue,
+                              selected,
+                              stats,
+                              bonds,
+                              milestones,
+                              flags,
+                              lastResult,
+                              lastLine,
+                              page,
+                              persona,
+                              image,
+                              personaImage,
+                              rosterImage,
+                              characterEmotionImages,
+                              eventIllustrationImages,
+                              sideSceneIllustrationImages,
+                              history,
+                              eventIndex,
+                              sideSceneCursor,
+                              archiveCharacterIndex,
+                              archiveEmotionIndex,
+                              snapshot().encode(),
+                              activities,
+                              collectionEntries,
+                              selectedLegacyId,
+                              session.legacyId,
+                              companionSceneIndex,
+                              pendingCompanionSceneId,
+                              locale,
+                              widget.locales,
+                              cellar: cellar),
+                          size: viewport),
+                      if (rosterImage != null)
+                        const SizedBox(key: ValueKey('roster-ready')),
+                      if (characterEmotionImages.isNotEmpty)
+                        const SizedBox(
+                            key: ValueKey('character-emotion-ready')),
+                      ...semanticControls(viewport),
+                    ])));
           }))));
 }
 
 class Scene extends CustomPainter {
   Scene(
-      this.s,
-      this.week,
-      this.coins,
-      this.fatigue,
-      this.selected,
-      this.stats,
-      this.bonds,
-      this.milestones,
-      this.flags,
-      this.lastResult,
-      this.lastLine,
-      this.page,
-      this.persona,
-      this.image,
-      this.personaImage,
-      this.rosterImage,
-      this.characterEmotionImages,
-      this.eventIllustrationImages,
-      this.sideSceneIllustrationImages,
-      this.history,
-      this.eventIndex,
-      this.sideSceneCursor,
-      this.archiveCharacterIndex,
-      this.archiveEmotionIndex,
-      this.saveCode,
-      this.activities,
-      this.collectionEntries,
-      this.selectedLegacyId,
-      this.legacyId,
-      this.companionSceneIndex,
-      this.pendingCompanionSceneId,
-      this.locale,
-      this.locales, {
+    this.s,
+    this.week,
+    this.coins,
+    this.fatigue,
+    this.selected,
+    this.stats,
+    this.bonds,
+    this.milestones,
+    this.flags,
+    this.lastResult,
+    this.lastLine,
+    this.page,
+    this.persona,
+    this.image,
+    this.personaImage,
+    this.rosterImage,
+    this.characterEmotionImages,
+    this.eventIllustrationImages,
+    this.sideSceneIllustrationImages,
+    this.history,
+    this.eventIndex,
+    this.sideSceneCursor,
+    this.archiveCharacterIndex,
+    this.archiveEmotionIndex,
+    this.saveCode,
+    this.activities,
+    this.collectionEntries,
+    this.selectedLegacyId,
+    this.legacyId,
+    this.companionSceneIndex,
+    this.pendingCompanionSceneId,
+    this.locale,
+    this.locales, {
     this.cellar = _defaultCellarState,
   }) {
     repaintKey = canvasSceneFingerprint([
@@ -1470,14 +1566,7 @@ class Scene extends CustomPainter {
             .map((item) => item.cast<String, dynamic>())
             .toList());
     if (memory.isEmpty) return;
-    txt(
-        c,
-        memory,
-        origin,
-        10,
-        teal,
-        bold: true,
-        maxWidth: 290);
+    txt(c, memory, origin, 10, teal, bold: true, maxWidth: 290);
   }
 
   void portrait(Canvas c, Rect d, int n) {
@@ -2971,10 +3060,10 @@ class Scene extends CustomPainter {
                 'ui.ending.legacyForecast',
                 'Policies {policies} · verified endings {endings} · signatures {signatures}',
                 {
-                  'policies': forecast['policies'],
-                  'endings': forecast['endings'],
-                  'signatures': forecast['signatures'],
-                })
+                    'policies': forecast['policies'],
+                    'endings': forecast['endings'],
+                    'signatures': forecast['signatures'],
+                  })
             : '';
     txt(
         c,

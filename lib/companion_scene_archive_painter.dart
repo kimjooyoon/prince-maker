@@ -259,16 +259,16 @@ class CompanionSceneArchivePainter {
           // visible before the player commits.
           t(c, preview, Offset(rect.left, card.top + 80), 6, teal,
               width: rect.width, lines: 1);
-          CanvasUiKit.button(c, rect,
-              tr('${choice['labelKey']}', '${choice['label']}'),
+          CanvasUiKit.button(
+              c, rect, tr('${choice['labelKey']}', '${choice['label']}'),
               state: choiceIndex == 0 && pending
                   ? CanvasUiState.selected
                   : CanvasUiState.idle,
               accent: teal,
               fontSize: 8,
               radius: 5);
-          drawChoiceImpact(
-              c, Rect.fromLTWH(rect.left, rect.bottom - 4, rect.width, 3), choice);
+          drawChoiceImpact(c,
+              Rect.fromLTWH(rect.left, rect.bottom - 4, rect.width, 3), choice);
         }
       }
     }

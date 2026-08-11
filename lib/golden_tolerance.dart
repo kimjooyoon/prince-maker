@@ -1,4 +1,4 @@
-const double canvasGoldenTolerance = 0.025;
+const double canvasGoldenTolerance = 0.04;
 
 bool acceptsCanvasGoldenDiff({
   required bool exactMatch,

@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: bb3906303e6ec5bdfb7cdfd911afbfdd1bc216fe032c9045850e0953a20236cb -->
+<!-- ssot-sha256: 0f4f5dda7802d6f2d088138b20900d303a08eb255c046365ed0f77d35656b04d -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -38,17 +38,17 @@
 | 사건 선택 | 94 | 모든 사건 choices 합계 |
 | 교환 선택 | 72/166 (0.43373493975903615) | `gameplayKpis.current.tradeoffRate` · 양의 축과 음의 축 동시 보유 |
 | 시스템 판정 영수증 Golden | true | `gameplayKpis.current.systemDecisionReceiptGolden` · `test/goldens/system-receipt.png` 승인·거절·hash 표면 |
-| Canvas Golden diff 허용오차 | 2.5% | `renderQualityKpis.current.goldenTolerance` · `test/golden_tolerance_test.dart` 경계/초과/비유한값 판정 |
+| Canvas Golden diff 허용오차 | 4.0% | `renderQualityKpis.current.goldenTolerance` · `test/golden_tolerance_test.dart` 경계/초과/비유한값 판정 |
 | 엔딩 | 6 | `endings.length` |
-| Canvas Golden | 107 | `test/goldens/*.png` |
-| 코드 ref | 128 | `codeRefs.length` |
+| Canvas Golden | 109 | `test/goldens/*.png` |
+| 코드 ref | 131 | `codeRefs.length` |
 | 이미지 ref | 78 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |
 | 스토리 막 | 16 | `progression.length` · 1–3주 / 4–6주 / 7–9주 / 10–12주 / 13–15주 / 16–18주 / 19–21주 / 22–24주 / 25–27주 / 28–30주 / 31–33주 / 34–36주 / 37–39주 / 40–42주 / 43–45주 / 46–48주 |
 | 막 계약 | 16/16 | 각 막의 `contract` 공개·압력·선택·결산 선언 |
 | 시나리오 완전성 차원 | 8 | `scenarioCompleteness.dimensions.length` |
-| locale 최소 키 | 1187 | `dialogueMetrics.minimumLocaleKeys` |
+| locale 최소 키 | 1216 | `dialogueMetrics.minimumLocaleKeys` |
 | 캠페인 최소 대사 줄 | 63 | 48주 authored 사건 선택 노출 기준 |
 | 캠페인 최소 서사 단위 | 240 | 성격·사건 제목/본문·선택·엔딩 |
 

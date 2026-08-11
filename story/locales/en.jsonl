@@ -1186,3 +1186,32 @@
 {"type":"entry","key":"ui.miniGame.down","value":"Move down"}
 {"type":"entry","key":"ui.miniGame.left","value":"Move left"}
 {"type":"entry","key":"ui.miniGame.right","value":"Move right"}
+{"type":"entry","key":"ui.accessibility.locale","value":"Change language"}
+{"type":"entry","key":"ui.accessibility.journal","value":"Open reflection journal"}
+{"type":"entry","key":"ui.accessibility.starCellar","value":"Open Star Cellar"}
+{"type":"entry","key":"ui.accessibility.save","value":"Open save and restore"}
+{"type":"entry","key":"ui.accessibility.illustration","value":"Open personality portrait"}
+{"type":"entry","key":"ui.accessibility.spend","value":"Spend the day"}
+{"type":"entry","key":"ui.accessibility.ledger","value":"Open fate ledger"}
+{"type":"entry","key":"ui.accessibility.characters","value":"Open character archive"}
+{"type":"entry","key":"ui.accessibility.environments","value":"Open environment atlas"}
+{"type":"entry","key":"ui.accessibility.bonds","value":"Open relationship archive"}
+{"type":"entry","key":"ui.accessibility.activity","value":"Choose activity"}
+{"type":"entry","key":"ui.accessibility.personality","value":"Choose personality"}
+{"type":"entry","key":"ui.accessibility.backHome","value":"Back to home"}
+{"type":"entry","key":"ui.design.title","value":"Lumen Canvas language"}
+{"type":"entry","key":"ui.design.subtitle","value":"One quiet grammar for home, portrait, companion, and Star Cellar."}
+{"type":"entry","key":"ui.design.hud","value":"HUD · chapter / week / stat rhythm"}
+{"type":"entry","key":"ui.design.hudHint","value":"Ink carries orientation; star-gold marks the next meaningful action."}
+{"type":"entry","key":"ui.design.card","value":"CARD"}
+{"type":"entry","key":"ui.design.cardHint","value":"A choice stays readable before it becomes an action."}
+{"type":"entry","key":"ui.design.status","value":"READY"}
+{"type":"entry","key":"ui.design.dialogue","value":"DIALOGUE BOX"}
+{"type":"entry","key":"ui.design.dialogueHint","value":"Speaker, line, and location share one reading order."}
+{"type":"entry","key":"ui.design.warning","value":"WARNING · fatigue needs a softer pace"}
+{"type":"entry","key":"ui.design.warningHint","value":"Warning is distinct from danger so guidance never looks like a system rejection."}
+{"type":"entry","key":"ui.design.rules","value":"REUSE RULES"}
+{"type":"entry","key":"ui.design.rule.touch","value":"44px minimum touch target"}
+{"type":"entry","key":"ui.design.rule.state","value":"idle · selected · locked · success · warning · danger"}
+{"type":"entry","key":"ui.design.rule.copy","value":"ko/en copy lives in locale JSONL"}
+{"type":"entry","key":"ui.design.footer","value":"Original mood: twilight ink, star-gold guidance, mint recovery, coral caution."}
