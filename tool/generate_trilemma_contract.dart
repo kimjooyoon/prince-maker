@@ -56,14 +56,11 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         (file) => file.uri.pathSegments.last == 'activity-reflection-en.png',
       )
       .length;
-  final activityJournalGoldens = Directory('test/goldens')
-      .listSync()
-      .whereType<File>()
-      .where((file) {
-        final name = file.uri.pathSegments.last;
-        return name.startsWith('activity-journal-') && name.endsWith('.png');
-      })
-      .length;
+  final activityJournalGoldens =
+      Directory('test/goldens').listSync().whereType<File>().where((file) {
+    final name = file.uri.pathSegments.last;
+    return name.startsWith('activity-journal-') && name.endsWith('.png');
+  }).length;
   final systemDecisionReceiptGoldens = Directory('test/goldens')
       .listSync()
       .whereType<File>()
@@ -71,10 +68,9 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       .length;
   final systemReceiptGoldenTest =
       File('test/system_receipt_golden_test.dart').existsSync()
-      ? File('test/system_receipt_golden_test.dart').readAsStringSync()
-      : '';
-  final systemDecisionReceiptEvidence =
-      systemReceiptGoldenTest.contains(
+          ? File('test/system_receipt_golden_test.dart').readAsStringSync()
+          : '';
+  final systemDecisionReceiptEvidence = systemReceiptGoldenTest.contains(
         "matchesGoldenFile('goldens/system-receipt.png')",
       ) &&
       systemReceiptGoldenTest.contains('approval:approved') &&
@@ -84,68 +80,79 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       : '';
   final goldenToleranceTest =
       File('test/golden_tolerance_test.dart').existsSync()
-      ? File('test/golden_tolerance_test.dart').readAsStringSync()
-      : '';
+          ? File('test/golden_tolerance_test.dart').readAsStringSync()
+          : '';
   final goldenToleranceBoundaryEvidence =
       goldenToleranceSource.contains('canvasGoldenTolerance = 0.025') &&
-      goldenToleranceSource.contains('diffPercent.isFinite') &&
-      goldenToleranceTest.contains(
-        'golden tolerance accepts exact and boundary diff',
-      ) &&
-      goldenToleranceTest.contains(
-        'golden tolerance fails closed above boundary and for non-finite diff',
-      );
+          goldenToleranceSource.contains('diffPercent.isFinite') &&
+          goldenToleranceTest.contains(
+            'golden tolerance accepts exact and boundary diff',
+          ) &&
+          goldenToleranceTest.contains(
+            'golden tolerance fails closed above boundary and for non-finite diff',
+          );
   final ciGatePolicy =
       (story['ciGatePolicy'] as Map? ?? {}).cast<String, dynamic>();
   final ciGateSource = File('tool/ci_gate.dart').readAsStringSync();
   final ciGateTest = File('test/ci_gate_test.dart').readAsStringSync();
   final allGateResultsRecorded =
       ciGatePolicy['failureAggregation'] == 'run-all-checks' &&
-      ciGatePolicy['humanApprovalRequired'] == false &&
-      ciGatePolicy['failureMode'] == 'fail-closed' &&
-      ciGateSource.contains('evaluateChecks') &&
-      ciGateTest.contains('gate evidence continues after a failure');
+          ciGatePolicy['humanApprovalRequired'] == false &&
+          ciGatePolicy['failureMode'] == 'fail-closed' &&
+          ciGateSource.contains('evaluateChecks') &&
+          ciGateTest.contains('gate evidence continues after a failure');
   final dialogue = (story['dialogueMetrics'] as Map).cast<String, dynamic>();
-  final scenarioCases = (story['scenarioVariantBudget'] as Map)
-      .cast<String, dynamic>();
-  final narrative = (story['narrativeLoop'] as Map? ?? {})
-      .cast<String, dynamic>();
-  final gameplay = (story['gameplayKpis'] as Map? ?? {})
-      .cast<String, dynamic>();
-  final gameplayTargets = (gameplay['targets'] as Map? ?? {})
-      .cast<String, dynamic>();
-  final lineageDistribution = (story['lineageDistribution'] as Map? ?? {})
-      .cast<String, dynamic>();
-  final contentBudget = (story['contentBudget'] as Map? ?? {})
-      .cast<String, dynamic>();
+  final scenarioCases =
+      (story['scenarioVariantBudget'] as Map).cast<String, dynamic>();
+  final narrative =
+      (story['narrativeLoop'] as Map? ?? {}).cast<String, dynamic>();
+  final gameplay =
+      (story['gameplayKpis'] as Map? ?? {}).cast<String, dynamic>();
+  final gameplayTargets =
+      (gameplay['targets'] as Map? ?? {}).cast<String, dynamic>();
+  final lineageDistribution =
+      (story['lineageDistribution'] as Map? ?? {}).cast<String, dynamic>();
+  final contentBudget =
+      (story['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
+  final miniGame =
+      (story['miniGameContract'] as Map? ?? {}).cast<String, dynamic>();
   final quests = (story['companionQuests'] as List? ?? const []).cast<Map>();
-  final companionScenes = (story['companionScenes'] as List? ?? const [])
-      .cast<Map>();
+  final companionScenes =
+      (story['companionScenes'] as List? ?? const []).cast<Map>();
   final companionSceneChoices = companionScenes.fold<int>(
     0,
     (sum, scene) => sum + ((scene['choices'] as List? ?? const []).length),
   );
-  final saveUiStateEvidence =
-      File('test/save_state_test.dart').readAsStringSync().contains(
-        'save round trip preserves player-facing archive positions',
-      ) &&
+  final saveUiStateEvidence = File('test/save_state_test.dart')
+          .readAsStringSync()
+          .contains(
+            'save round trip preserves player-facing archive positions',
+          ) &&
       File('test/companion_scene_golden_test.dart').readAsStringSync().contains(
-        'saved companion position resumes the same Golden surface',
-      );
-  final companionRenderBudgetEvidence = File('test/companion_scene_test.dart')
-      .readAsStringSync()
-      .contains(
-        'companion archive canvas projection stays within the frame budget',
-      );
+            'saved companion position resumes the same Golden surface',
+          );
+  final companionRenderBudgetEvidence =
+      File('test/companion_scene_test.dart').readAsStringSync().contains(
+            'companion archive canvas projection stays within the frame budget',
+          );
   final canvasRenderBudgetEvidence = File('test/canvas_render_perf_test.dart')
       .readAsStringSync()
       .contains('full Canvas pages stay within the deterministic frame budget');
+  final miniGameReplayEvidence =
+      File('test/star_cellar_test.dart').existsSync() &&
+          File('test/star_cellar_test.dart')
+              .readAsStringSync()
+              .contains('deterministic replay keeps the same room trace');
+  final miniGameGoldenEvidence =
+      File('test/star_cellar_golden_test.dart').existsSync() &&
+          File('test/star_cellar_golden_test.dart')
+              .readAsStringSync()
+              .contains('goldens/star-cellar-en.png');
   final questStages = quests.fold<int>(
     0,
     (sum, quest) => sum + ((quest['stages'] as List? ?? const []).length),
   );
-  final eventStormNodes =
-      events.length +
+  final eventStormNodes = events.length +
       (story['sideScenes'] as List? ?? const []).length +
       (story['companionScenes'] as List? ?? const []).length +
       (story['activityScenes'] as List? ?? const []).length +
@@ -167,12 +174,11 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'authoredScenes':
               events.length + (story['sideScenes'] as List? ?? const []).length,
           'eventStormNodes': eventStormNodes,
-          'sideSceneChoices': (story['sideScenes'] as List? ?? const [])
-              .cast<Map>()
-              .fold<int>(
-                0,
-                (sum, scene) => sum + (scene['choices'] as List).length,
-              ),
+          'sideSceneChoices':
+              (story['sideScenes'] as List? ?? const []).cast<Map>().fold<int>(
+                    0,
+                    (sum, scene) => sum + (scene['choices'] as List).length,
+                  ),
           'narrativeFateThreads': narrative['fateThreadCount'],
           'companionQuestStages': questStages,
           'personalityCompanionRoutes':
@@ -188,10 +194,15 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'systemDecisionReceiptEvidence': systemDecisionReceiptEvidence,
           'goldenToleranceBoundaryEvidence': goldenToleranceBoundaryEvidence,
           'allGateResultsRecorded': allGateResultsRecorded,
+          'miniGameContract': miniGame['id'] == 'star-cellar' &&
+              miniGame['grid'] is Map &&
+              miniGame['requiredShards'] == 3 &&
+              miniGame['startingHearts'] == 3,
+          'miniGameGoldens': miniGameGoldenEvidence ? 2 : 0,
+          'miniGameReplayEvidence': miniGameReplayEvidence,
           'companionScenes': companionScenes.length,
           'companionSceneChoices': companionSceneChoices,
-          'companionSceneChoiceBranching':
-              companionScenes.isNotEmpty &&
+          'companionSceneChoiceBranching': companionScenes.isNotEmpty &&
               companionScenes.every(
                 (scene) =>
                     ((scene['choices'] as List? ?? const []).length) == 2,
@@ -199,8 +210,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'companionSceneChoiceImpactRate':
               gameplayTargets['companionSceneChoiceImpactRate'],
           'companionSceneGoldens': companionSceneGoldens,
-          'companionSceneBondReward':
-              companionScenes.isNotEmpty &&
+          'companionSceneBondReward': companionScenes.isNotEmpty &&
               companionScenes.every(
                 (scene) => (scene['bondDelta'] as int?) == 1,
               ),
@@ -240,6 +250,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/trilemma_verdict_test.dart#closed-loop-receipt',
           'tool/ci_gate.dart#evaluateChecks',
           'test/ci_gate_test.dart#gate evidence continues after a failure and keeps every status',
+          'test/star_cellar_test.dart#deterministic replay keeps the same room trace',
+          'test/star_cellar_golden_test.dart#star cellar renders the authored room in ko and en',
         ],
       },
       {
@@ -301,10 +313,11 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
               gameplayTargets['systemDecisionReceiptGolden'],
           'systemDecisionReceiptEvidence': systemDecisionReceiptEvidence,
           'allGateResultsRecorded': allGateResultsRecorded,
+          'miniGameReplayEvidence': miniGameReplayEvidence,
+          'miniGameGoldenEvidence': miniGameGoldenEvidence,
           'companionScenes': companionScenes.length,
           'companionSceneChoices': companionSceneChoices,
-          'companionSceneChoiceBranching':
-              companionScenes.isNotEmpty &&
+          'companionSceneChoiceBranching': companionScenes.isNotEmpty &&
               companionScenes.every(
                 (scene) =>
                     ((scene['choices'] as List? ?? const []).length) == 2,
@@ -312,8 +325,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'companionSceneChoiceImpactRate':
               gameplayTargets['companionSceneChoiceImpactRate'],
           'companionSceneGoldens': companionSceneGoldens,
-          'companionSceneBondReward':
-              companionScenes.isNotEmpty &&
+          'companionSceneBondReward': companionScenes.isNotEmpty &&
               companionScenes.every(
                 (scene) => (scene['bondDelta'] as int?) == 1,
               ),
@@ -355,6 +367,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/trilemma_verdict_test.dart#closed-loop-receipt',
           'tool/ci_gate.dart#evaluateChecks',
           'test/ci_gate_test.dart#gate evidence continues after a failure and keeps every status',
+          'test/star_cellar_test.dart#deterministic replay keeps the same room trace',
+          'test/star_cellar_golden_test.dart#star cellar renders the authored room in ko and en',
         ],
       },
       {
@@ -363,18 +377,15 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
         'unit': 'campaign-throughput',
         'guardrails': {
           'campaigns': 5000,
-          'transitionBudget':
-              5000 *
+          'transitionBudget': 5000 *
               ((story['endingWeek'] as int) -
                   1 +
                   events.length +
                   companionScenes.length),
           'companionSceneTransitions': 5000 * companionScenes.length,
-          'systemApproval':
-              (story['decisionSystem'] as Map?)?['mode'] ==
+          'systemApproval': (story['decisionSystem'] as Map?)?['mode'] ==
               'system-adjudicated',
-          'failClosed':
-              (story['decisionSystem'] as Map?)?['failureMode'] ==
+          'failClosed': (story['decisionSystem'] as Map?)?['failureMode'] ==
               'fail-closed',
           'allGateResultsRecorded': allGateResultsRecorded,
           'maxMillis': 24000,
@@ -409,6 +420,9 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'canvasRenderPages':
               (contentBudget['canvasRenderPages'] as List? ?? const []).length,
           'canvasRenderBudgetEvidence': canvasRenderBudgetEvidence,
+          'miniGameReplayEvidence': miniGameReplayEvidence,
+          'miniGameGoldenEvidence': miniGameGoldenEvidence,
+          'miniGameTransitionBudgetMicros': 8000,
           'minCompanionScenes': 3,
           'qualityScoreTarget': qualityScoreTarget,
         },
@@ -429,6 +443,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'test/trilemma_verdict_test.dart#closed-loop-receipt',
           'tool/ci_gate.dart#evaluateChecks',
           'test/ci_gate_test.dart#gate evidence continues after a failure and keeps every status',
+          'test/star_cellar_test.dart#deterministic replay keeps the same room trace',
+          'test/star_cellar_golden_test.dart#star cellar renders the authored room in ko and en',
         ],
       },
     ],

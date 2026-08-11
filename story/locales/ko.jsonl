@@ -1169,3 +1169,20 @@
 {"type":"entry","key":"ui.home.risk.steady","value":"안정적인 속도"}
 {"type":"entry","key":"ui.event.memoryImpact","value":"기억 영향 · {title}: {detail}"}
 {"type":"entry","key":"ui.ending.legacyRouteForecast","value":"예고 · {ending}"}
+{"type":"entry","key":"ui.home.miniGame","value":"별지하실"}
+{"type":"entry","key":"ui.miniGame.title","value":"별지하실 · Star Cellar"}
+{"type":"entry","key":"ui.miniGame.subtitle","value":"빛을 모으고, 흔들리는 마음을 피한다."}
+{"type":"entry","key":"ui.miniGame.hud","value":"HEARTS {hearts} · SHARDS {shards}/3 · TURN {turn}"}
+{"type":"entry","key":"ui.miniGame.goal","value":"방의 약속"}
+{"type":"entry","key":"ui.miniGame.help","value":"빛 조각 3개를 모으면 출구가 열린다.\n붉은 잔광과 같은 칸에 서면 마음이 하나 흔들린다.\n펄스는 잔광의 방향을 바꾼다."}
+{"type":"entry","key":"ui.miniGame.exit","value":"출구"}
+{"type":"entry","key":"ui.miniGame.ready","value":"한 칸씩 선택해 다음 빛을 찾자."}
+{"type":"entry","key":"ui.miniGame.won","value":"방을 통과했다 · 은빛 기록 +{score}"}
+{"type":"entry","key":"ui.miniGame.lost","value":"잔광에 닿았다 · 다시 걸을 수 있다"}
+{"type":"entry","key":"ui.miniGame.back","value":"← 루멘으로"}
+{"type":"entry","key":"ui.miniGame.pulse","value":"펄스"}
+{"type":"entry","key":"ui.miniGame.reset","value":"다시 시작"}
+{"type":"entry","key":"ui.miniGame.up","value":"위로 이동"}
+{"type":"entry","key":"ui.miniGame.down","value":"아래로 이동"}
+{"type":"entry","key":"ui.miniGame.left","value":"왼쪽 이동"}
+{"type":"entry","key":"ui.miniGame.right","value":"오른쪽 이동"}

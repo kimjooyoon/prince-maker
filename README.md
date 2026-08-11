@@ -66,6 +66,8 @@ git config core.hooksPath .githooks
 ![동행 독립 장면 잠금·기록 Golden](test/goldens/companion-scenes.png)
 ![동행 장면 기록 완료 Golden](test/goldens/companion-scene-recorded.png)
 ![English 동행 장면 기록 완료 Golden](test/goldens/companion-scene-recorded-en.png)
+![별지하실 미니게임 Golden](test/goldens/star-cellar.png)
+![Star Cellar English mini-game Golden](test/goldens/star-cellar-en.png)
 
 전체 행렬은 [`test/chapter_golden_test.dart`](test/chapter_golden_test.dart), [`test/chapter_closure_golden_test.dart`](test/chapter_closure_golden_test.dart)와 [`test/goldens/chapter-*.png`](test/goldens/)에서 확인할 수 있습니다.
 
@@ -118,7 +120,7 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 ![도란 걱정 표정 Golden](test/goldens/character-art-doran-concern.png)
 ![Doran English character art Golden](test/goldens/character-art-doran-concern-en.png)
 
-캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 카드에는 순수 `legacyProfileForecast`가 해석한 명시적 target ending과 공명 동료가 함께 보입니다. 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 105장입니다.
+캐릭터 아트 상세 페이지의 ko/en·표정 전환은 위 3개 Golden과 [`test/character_art_golden_test.dart`](test/character_art_golden_test.dart)로 고정되며, 성격별 상반신 페이지는 `personality-quiet/kind/bold.png`로 고정됩니다. 엔딩 뒤에는 collection과 SSOT 계승 계약이 공개한 프로필을 자동 선택하지 않고 다음 회차 계승 카드에서 직접 고를 수 있으며, 카드에는 순수 `legacyProfileForecast`가 해석한 명시적 target ending과 공명 동료가 함께 보입니다. 선택 결과는 `GameSession.legacyId`와 2주차 authored 보정으로 재생되고 새 회차 홈에 프로필·성장축·보정값이 표시됩니다. 전체 Canvas Golden 증적은 107장입니다.
 
 ### 감정·이벤트 일러스트 매트릭스
 
@@ -128,7 +130,9 @@ Canvas의 실제 보이는 컨트롤과 입력 좌표는 [`test/player_input_con
 
 동행 장면은 카드 첫 탭에서 선택을 열고 두 번째 탭에서 2-way 선택을 확정합니다. 확정 전 두 선택 모두 수치 결과 문구와 보상·비용 막대를 보여 주며, 선택은 성장축·피로·유대·memory flag·응답 대사와 엔딩 route signature에 반영됩니다. 잠금·중복·잘못된 입력은 localized reject banner로 남습니다. 대표 Canvas 증거는 [`companion-scenes.png`](test/goldens/companion-scenes.png)·[`companion-scene-choice.png`](test/goldens/companion-scene-choice.png)·[`companion-scene-recorded.png`](test/goldens/companion-scene-recorded.png)·[`companion-scene-recorded-en.png`](test/goldens/companion-scene-recorded-en.png)·세 동료 혼합 상태 [`companion-scene-lumi-mixed.png`](test/goldens/companion-scene-lumi-mixed.png)·[`companion-scene-bora-mixed.png`](test/goldens/companion-scene-bora-mixed.png)·[`companion-scene-taro-mixed.png`](test/goldens/companion-scene-taro-mixed.png)·잠금 피드백 [`companion-scene-locked.png`](test/goldens/companion-scene-locked.png)로 고정합니다.
 
-환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·horizon·피로 위험·회복 창·선택 전 authored 기억의 제목·원인 설명·English 활동 reflection·ko/en 활동 회고 일지·명시적 target ending이 보이는 엔딩 뒤 계승 프로필 선택·새 회차 적용 피드백·동행 장면의 선택·잠금·혼합 상태도 각각 Golden으로 고정하며, 전체 Golden 증적은 105장입니다.
+환경 아틀라스는 [`story/story.jsonl`](story/story.jsonl)의 6개 장소를 `environmentsFromStory`로 재사용해, 모티프·날씨·활동·성장축의 게임플레이 약속을 [`test/goldens/environment-atlas.png`](test/goldens/environment-atlas.png)와 [`test/goldens/environment-atlas-en.png`](test/goldens/environment-atlas-en.png)으로 고정합니다. Canvas UI Kit의 다섯 상태와 사이드 씬 위치·메뉴 카피, 활동 선택 전 forecast·horizon·피로 위험·회복 창·선택 전 authored 기억의 제목·원인 설명·English 활동 reflection·ko/en 활동 회고 일지·명시적 target ending이 보이는 엔딩 뒤 계승 프로필 선택·새 회차 적용 피드백·동행 장면의 선택·잠금·혼합 상태, 그리고 별지하실 미니게임의 ko/en 화면도 각각 Golden으로 고정하며, 전체 Golden 증적은 107장입니다.
+
+별지하실은 방 회피·수집 장르의 감각만 참고한 독창적 Canvas 미니게임입니다. 기존 작품의 캐릭터·방·아이템·그래픽을 복제하지 않고, 7×5 칸에서 빛 조각 3개를 모아 출구를 여는 턴 기반 규칙을 [`story/story.jsonl`](story/story.jsonl)의 `miniGameContract`로 선언합니다. `StarCellarEngine`의 seed·turn·trace는 결정론적으로 재생되고, 승리는 `GameSession.completeStarCellar`의 시스템 판정 영수증과 은화 보상으로 본편 원장에 연결됩니다.
 
 ### 캐릭터 일러스트·감정표현 설계
 

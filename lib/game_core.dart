@@ -26,6 +26,7 @@ abstract interface class StoryPort {
   Map<String, dynamic> get decisionSystem;
   Map<String, dynamic> get endingDesign;
   Map<String, dynamic> get scenarioVariantBudget;
+  Map<String, dynamic> get miniGameContract;
   Map<String, dynamic> get relationshipDesign;
   int get endingWeek;
   int get campaignWeeks;
@@ -83,6 +84,12 @@ class JsonStoryAdapter implements StoryPort {
       (source['endingDesign'] as Map? ?? {}).cast<String, dynamic>();
   late final Map<String, dynamic> _scenarioVariantBudget =
       (source['scenarioVariantBudget'] as Map? ?? {}).cast<String, dynamic>();
+  late final Map<String, dynamic> _miniGameContract =
+      (source['miniGameContract'] as Map? ?? const {
+        'schema': 'lumen-mini-game-v1',
+        'id': 'star-cellar',
+        'rewardCoins': 2,
+      }).cast<String, dynamic>();
   late final Map<String, dynamic> _relationshipDesign =
       _readRelationshipDesign();
   late final int _endingWeek = source['endingWeek'] as int? ?? 12;
@@ -128,6 +135,8 @@ class JsonStoryAdapter implements StoryPort {
   Map<String, dynamic> get endingDesign => _endingDesign;
   @override
   Map<String, dynamic> get scenarioVariantBudget => _scenarioVariantBudget;
+  @override
+  Map<String, dynamic> get miniGameContract => _miniGameContract;
   @override
   Map<String, dynamic> get relationshipDesign => _relationshipDesign;
 
@@ -575,6 +584,11 @@ class CompanionSceneRecorded extends GameEvent {
   final String? setsFlag;
 }
 
+class StarCellarCleared extends GameEvent {
+  const StarCellarCleared(this.score, this.turn, this.rewardCoins);
+  final int score, turn, rewardCoins;
+}
+
 class PersonalityCompanionResonanceApplied extends GameEvent {
   const PersonalityCompanionResonanceApplied(
       this.routeId, this.companionId, this.bonus);
@@ -716,6 +730,13 @@ class GameWorld {
             .add('companion-scene:$id|companion:$companionId|bond+$bondDelta');
         p.trace.add(
             'companion-choice:$id|choice:$choiceId|stat:$stat${statDelta >= 0 ? '+' : ''}$statDelta|fatigue:${fatigueDelta >= 0 ? '+' : ''}$fatigueDelta${setsFlag == null ? '' : '|flag:$setsFlag'}');
+      case StarCellarCleared(:final score, :final turn, :final rewardCoins):
+        p.flags['star-cellar-cleared'] = true;
+        p.coins += rewardCoins;
+        p.lastResult = '별지하실 통과 · 은화 +$rewardCoins · 기록 $score점';
+        p.lastLine = '';
+        p.trace.add(
+            'mini-game:star-cellar|score:$score|turn:$turn|reward:$rewardCoins');
       case PersonalityCompanionResonanceApplied(
           :final routeId,
           :final companionId,
@@ -1064,6 +1085,24 @@ class GameSession {
         (choice['fatigueDelta'] as int?) ?? 0,
         (choice['bondDelta'] as int?) ?? (scene['bondDelta'] as int? ?? 1),
         choice['setsFlag'] as String?));
+    persist();
+  }
+
+  void completeStarCellar({required int score, required int turn}) {
+    final p = world.progress[0]!, contract = story.miniGameContract;
+    final reward = (contract['rewardCoins'] as int?) ?? 2,
+        ready = contract['id'] == 'star-cellar' &&
+            score > 0 &&
+            turn > 0 &&
+            p.flags['star-cellar-cleared'] != true;
+    final receipt =
+        _decision('mini-game', 'star-cellar', conditions: ready);
+    if (!receipt.approved) {
+      _recordRejected(receipt, 'mini-game-rejected:star-cellar');
+      return;
+    }
+    world.dispatch(SystemDecisionApproved(receipt));
+    world.dispatch(StarCellarCleared(score, turn, reward));
     persist();
   }
 

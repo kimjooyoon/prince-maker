@@ -224,6 +224,10 @@ String render(String source) {
     '`system-receipt.png`는 승인·거절 trace',
     '`system-receipt.png` Golden은 승인·거절 trace',
   );
+  if (!output.contains('Star Cellar')) {
+    output +=
+        '\n\n## Star Cellar 미니게임\n\n`story/story.jsonl#miniGameContract`가 7×5 방, 빛 조각 3개, 시작 마음 3개, 결정론적 seed를 선언한다. `StarCellarEngine`은 동일 seed와 action sequence에서 같은 trace를 만들고, `GameSession.completeStarCellar`는 시스템 승인 영수증과 은화 2개 보상으로 본편 원장에 연결한다. ko/en Canvas 기준 화면은 `test/goldens/star-cellar.png`와 `test/goldens/star-cellar-en.png`이다.\n';
+  }
   if (!output.contains('2.5% Golden diff boundary')) {
     output = output.replaceAll(
       '`system-receipt.png` Golden은 승인·거절 trace의 owner·contract·rule·decisionHash를 재현한다.',
