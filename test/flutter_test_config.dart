@@ -13,7 +13,7 @@ class CanvasGoldenComparator extends LocalFileComparator {
     );
     // Linux/Chrome Canvas text rasterization differs slightly from the local VM.
     // Keep the bound tight enough to catch layout changes while allowing the
-    // measured Linux/VM platform noise (observed CI maximum: 2.19%).
+    // measured Linux/VM platform noise (observed CI maximum: 3.63%).
     if (acceptsCanvasGoldenDiff(
       exactMatch: result.passed,
       diffPercent: result.diffPercent,

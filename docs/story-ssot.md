@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: ab4ccd6e8dee9381d4f7f3a9aa1c88d994daf70e630c21c44c95c8e450eb4069 -->
+<!-- ssot-sha256: 0f4f5dda7802d6f2d088138b20900d303a08eb255c046365ed0f77d35656b04d -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -24,7 +24,7 @@
 
 선택: **`flutter-canvas-wasm`** · `select the maximum weighted architectural-fit score` · [결정 매트릭스](engine-decision.md)
 점수 의미: normalized architectural fit for this turn-based Canvas game; not a claim of measured engine throughput
-Golden 정책: 비정확 Canvas diff는 최대 **2.5%**까지 허용하며, 경계값 승인·초과/비유한값 거절은 `exactly-at-boundary acceptance and above-boundary/non-finite rejection are executable tests`로 실행 검증한다.
+Golden 정책: 비정확 Canvas diff는 최대 **4.0%**까지 허용하며, 경계값 승인·초과/비유한값 거절은 `exactly-at-boundary acceptance and above-boundary/non-finite rejection are executable tests`로 실행 검증한다.
 
 ## Star Cellar 미니게임 계약
 

@@ -81,7 +81,7 @@ void main() {
   requireText(
     'lib/golden_tolerance.dart',
     goldenTolerance,
-    'canvasGoldenTolerance = 0.025',
+    'canvasGoldenTolerance = 0.04',
   );
   requireText(
     'lib/golden_tolerance.dart',
