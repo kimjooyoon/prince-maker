@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_development_goals.dart -->
-<!-- source-sha256: 1cea8fc12bf34b4fbf6fcde110f545a390a608cc9a416fee04d4a86a2bee15fa|9496fdd2befe1de55457517799525040fcd2ac9cad34f4b7b6c5ed62c4f834d3|1ce94c96d1e2f54e039a51d7d63e78a84f26b615ff18ebf5c70c8c63f7ef1bc3|f136c7f52e41a3fe1952be4d4af77133e303fe62f6da812a6cd202f252fba69c -->
+<!-- source-sha256: ab4ccd6e8dee9381d4f7f3a9aa1c88d994daf70e630c21c44c95c8e450eb4069|0e5e93e455eecb55800baf1a4295ca0e81293410325150dc4c7fcbbe4bb19fa5|1ce94c96d1e2f54e039a51d7d63e78a84f26b615ff18ebf5c70c8c63f7ef1bc3|615202b3590e0a5c615e2fa5f445a45be54b7f8910207c88a0a211cbe78d666b -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 정량 개발목표 원장

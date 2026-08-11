@@ -90,12 +90,8 @@ class CompanionSceneArchivePainter {
     t(c, tr('ui.companionScenes.subtitle', '유대와 막의 조건이 여는 독립 기록'),
         const Offset(25, 60), 12, teal,
         width: 650);
-    CanvasUiKit.variantPanel(c, const Rect.fromLTWH(24, 96, 712, 106),
-        variant: CanvasComponentVariant.hud,
-        state: CanvasUiState.selected,
-        accent: teal,
-        stroke: teal,
-        shadow: true);
+    CanvasUiKit.statePanel(c, const Rect.fromLTWH(24, 96, 712, 106),
+        state: CanvasUiState.selected, accent: teal, shadow: true);
     portrait(c, person, const Rect.fromLTWH(42, 108, 74, 82));
     t(c, tr('${person['nameKey']}', '${person['name']}'),
         const Offset(135, 115), 20, Colors.white,

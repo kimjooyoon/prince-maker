@@ -18,6 +18,8 @@ void main() {
   testWidgets('named Canvas variants render the ko design evidence',
       (tester) async {
     final locale = await loadLocale('ko');
+    expect(locale['ui.design.title'], isNotEmpty);
+    expect(locale['ui.design.title'], isNot(equals('Lumen Canvas language')));
     await tester.pumpWidget(SizedBox(
         width: 760,
         height: 700,
@@ -33,6 +35,7 @@ void main() {
   testWidgets('named Canvas variants render the en design evidence',
       (tester) async {
     final locale = await loadLocale('en');
+    expect(locale['ui.design.title'], 'Lumen Canvas language');
     await tester.pumpWidget(SizedBox(
         width: 760,
         height: 700,
