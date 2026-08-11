@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_development_goals.dart -->
-<!-- source-sha256: ae2943f6df2169d6110e942b7175dfb2817ebd6893f8eb7e2d91e411dac777d9|69d8dbd2ea4904bf18d66681b19db977afd25322c1512fa76a18beeffb84d22f|1ce94c96d1e2f54e039a51d7d63e78a84f26b615ff18ebf5c70c8c63f7ef1bc3|81b962e603c3dc968f395d6e8cfe56f0c85a990f5a62b2cc4032ccaf00f11fcc -->
+<!-- source-sha256: c348635d4ef31e0d1466461525332a172393f29dc6cefa02aee78b73ef30edbf|00d6e6f1df8a1d8bb69f24a2f2464a13cc37b6dbb56e638c6ad077a75d99c103|1ce94c96d1e2f54e039a51d7d63e78a84f26b615ff18ebf5c70c8c63f7ef1bc3|8be075a6c46bfed285ce283e3447c1f8649aabbef5e7258cc4614d5da86b9d9a -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 정량 개발목표 원장
@@ -37,7 +37,7 @@
 | `G3-narrative-depth` | completeness | P1 | 관계·기억·계승 서사 깊이 · `{"fateThreads":6,"companionQuestStages":9,"endings":6,"legacyProfiles":3,"unit":"authored-narrative-units"}` | `{"fateThreads":6,"companionQuestStages":9,"endings":6,"legacyProfiles":3}` | `{fateThreads: 0, companionQuestStages: 0, endings: 0, legacyProfiles: 0}` | contract-satisfied; runtime-proof-required |
 | `G4-presentation` | completeness | P1 | 시각·locale 품질 증적 · `{"goldens":30,"locales":2,"keysPerLocale":1170,"renderPreconditions":3,"renderProofs":5,"unit":"presentation-proof-units"}` | `{"goldens":105,"locales":2,"keysPerLocale":1170,"renderPreconditions":3,"renderProofs":5}` | `{goldens: 0, locales: 0, keysPerLocale: 0, renderPreconditions: 0, renderProofs: 0}` | contract-satisfied; runtime-proof-required |
 | `G5-deterministic-throughput` | performance | P0 | 결정론적 처리량과 replay · `{"campaigns":5000,"transitions":565000,"maxMillis":24000,"unit":"benchmark-contract"}` | `{"campaigns":5000,"transitions":565000,"maxMillis":24000,"checksumReplayMustMatch":true,"formula":"campaigns × (endingWeek − 1 + events + companion scenes) and replay checksum equality"}` | `{campaigns: 0, transitions: 0, maxMillis: 0}` | runtime-measured-by-benchmark |
-| `G6-accountable-delivery` | performance | P0 | 책임 추적 가능한 납품 · `{"ciChecks":22,"codeRefs":24,"decisionProofFields":14,"unit":"delivery-proof-units"}` | `{"ciChecks":22,"localCiChecks":21,"wasmCiChecks":1,"codeRefs":123,"decisionProofFields":14,"assetRefs":78,"fontRefs":1,"localeRefs":2,"systemAdjudicated":true,"failClosed":true}` | `{ciChecks: 0, codeRefs: 0, decisionProofFields: 0}` | contract-satisfied; runtime-proof-required |
+| `G6-accountable-delivery` | performance | P0 | 책임 추적 가능한 납품 · `{"ciChecks":22,"codeRefs":24,"decisionProofFields":14,"unit":"delivery-proof-units"}` | `{"ciChecks":22,"localCiChecks":21,"wasmCiChecks":1,"codeRefs":124,"decisionProofFields":14,"assetRefs":78,"fontRefs":1,"localeRefs":2,"systemAdjudicated":true,"failClosed":true}` | `{ciChecks: 0, codeRefs: 0, decisionProofFields: 0}` | contract-satisfied; runtime-proof-required |
 
 ## 투입·증적 원장
 
@@ -46,8 +46,8 @@
 | `authored-content-units` | content-unit | **369** | 48 weeks + 16 chapters + 47 main events + 24 side scenes + 94 main choices + 72 side choices + 10 activity mini-events + 18 companion scenes + 18 ending variants + 16 milestones + 6 core endings | authored campaign content and closure work |
 | `narrative-relationship-units` | narrative-unit | **32** | 3 companions + 6 fate threads + 9 quest stages + 6 locations + 3 legacy profiles + 5 exclusive follow-ups | relationship, memory, discovery and replay depth |
 | `exploration-units` | replay-unit | **694928** | 2048 branch vectors + 122880 route inputs + 5,000 campaigns + 565000 transitions | branch enumeration, route variety and deterministic throughput |
-| `visual-locale-units` | presentation-unit | **2647** | 105 Goldens + 2 locales × 1170 keys + 123 code refs + 78 asset refs + 1 font refs | visual regression, localization and traceable production assets |
-| `verification-units` | proof-unit | **109** | 21 local CI checks + 1 Wasm CI check + 70 Dart test files + 3 render preconditions + 5 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
+| `visual-locale-units` | presentation-unit | **2648** | 105 Goldens + 2 locales × 1170 keys + 124 code refs + 78 asset refs + 1 font refs | visual regression, localization and traceable production assets |
+| `verification-units` | proof-unit | **110** | 21 local CI checks + 1 Wasm CI check + 71 Dart test files + 3 render preconditions + 5 render proofs + 14 decision precondition fields | repeatable automated proof and release readiness |
 
 ## 선행조건과 증거
 

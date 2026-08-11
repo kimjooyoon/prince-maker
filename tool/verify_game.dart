@@ -44,6 +44,7 @@ void verifyTrilemmaContract(
       (complete['systemDecisionReceiptGoldens'] as int? ?? 0) < 1 ||
       complete['systemDecisionReceiptEvidence'] != true ||
       complete['goldenToleranceBoundaryEvidence'] != true ||
+      complete['allGateResultsRecorded'] != true ||
       (complete['companionScenes'] as int? ?? 0) < 18 ||
       (complete['companionSceneChoices'] as int? ?? 0) < 36 ||
       complete['companionSceneChoiceBranching'] != true ||
@@ -91,6 +92,7 @@ void verifyTrilemmaContract(
       (purity['systemDecisionReceiptGoldens'] as int? ?? 0) < 1 ||
       purity['systemDecisionReceiptGolden'] != true ||
       purity['systemDecisionReceiptEvidence'] != true ||
+      purity['allGateResultsRecorded'] != true ||
       (purity['companionScenes'] as int? ?? 0) < 18 ||
       (purity['companionSceneChoices'] as int? ?? 0) < 36 ||
       purity['companionSceneChoiceBranching'] != true ||
@@ -131,7 +133,8 @@ void verifyTrilemmaContract(
       (performance['minCompanionScenes'] as int? ?? 0) < 3 ||
       performance['qualityScoreTarget'] != qualityScoreTarget ||
       performance['systemApproval'] != true ||
-      performance['failClosed'] != true) {
+      performance['failClosed'] != true ||
+      performance['allGateResultsRecorded'] != true) {
     fail('trilemma targets or guardrails are below the project contract');
   }
 }

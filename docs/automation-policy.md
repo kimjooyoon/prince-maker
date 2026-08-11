@@ -8,7 +8,7 @@
 SYSTEM_APPROVAL: APPROVE
 ```
 
-하나라도 실패하면 즉시 중단하고 `SYSTEM_APPROVAL: REJECT`를 남긴다. 결과 증적은 무시되지 않도록 `build/ci-verdict.json`과 완전성·순수성·성능 축별 판정인 `build/trilemma-verdict.json`에 기록한다. 두 파일은 빌드 산출물이므로 Git에 커밋하지 않는다.
+검사는 첫 실패로 단락하지 않고 끝까지 실행해 각 결과를 기록한다. 하나라도 실패하면 `SYSTEM_APPROVAL: REJECT`를 남긴다. 결과 증적은 무시되지 않도록 `build/ci-verdict.json`과 완전성·순수성·성능 축별 판정인 `build/trilemma-verdict.json`에 기록한다. 두 파일은 빌드 산출물이므로 Git에 커밋하지 않는다.
 
 ## 동일한 검증 경로
 

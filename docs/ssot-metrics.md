@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: ae2943f6df2169d6110e942b7175dfb2817ebd6893f8eb7e2d91e411dac777d9 -->
+<!-- ssot-sha256: c348635d4ef31e0d1466461525332a172393f29dc6cefa02aee78b73ef30edbf -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · SSOT 자동 품질 지표
@@ -17,6 +17,7 @@
 | 나비효과 기록 | 6 | `fateThreads.length` · authored memory flag 기반 |
 | 동료 퀘스트 | 3개 / 9 stages | `companionQuests` · 동료별 3단계 |
 | 시스템 판정 | lumen-ledger | SSOT `decisionSystem` · fail-closed receipt |
+| CI 실패 집계 | run-all-checks | SSOT `ciGatePolicy` · 모든 검사 결과 기록 후 fail-closed |
 | 렌더러 결정 | `flutter-canvas-wasm` | SSOT `engineDecision` · Golden/WASM 적합도 계약 |
 | 활동 | 5 | `activities.length` |
 | 성격 | 3 | `personalities.length` |
@@ -39,7 +40,7 @@
 | Canvas Golden diff 허용오차 | 2.5% | `renderQualityKpis.current.goldenTolerance` · `test/golden_tolerance_test.dart` 경계/초과/비유한값 판정 |
 | 엔딩 | 6 | `endings.length` |
 | Canvas Golden | 105 | `test/goldens/*.png` |
-| 코드 ref | 123 | `codeRefs.length` |
+| 코드 ref | 124 | `codeRefs.length` |
 | 이미지 ref | 78 | `assetRefs.length` |
 | 폰트 ref | 1 | `fontRefs.length` |
 | 대사 locale | 2 | `localeRefs.length` |

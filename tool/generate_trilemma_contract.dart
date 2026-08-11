@@ -95,6 +95,16 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
       goldenToleranceTest.contains(
         'golden tolerance fails closed above boundary and for non-finite diff',
       );
+  final ciGatePolicy =
+      (story['ciGatePolicy'] as Map? ?? {}).cast<String, dynamic>();
+  final ciGateSource = File('tool/ci_gate.dart').readAsStringSync();
+  final ciGateTest = File('test/ci_gate_test.dart').readAsStringSync();
+  final allGateResultsRecorded =
+      ciGatePolicy['failureAggregation'] == 'run-all-checks' &&
+      ciGatePolicy['humanApprovalRequired'] == false &&
+      ciGatePolicy['failureMode'] == 'fail-closed' &&
+      ciGateSource.contains('evaluateChecks') &&
+      ciGateTest.contains('gate evidence continues after a failure');
   final dialogue = (story['dialogueMetrics'] as Map).cast<String, dynamic>();
   final scenarioCases = (story['scenarioVariantBudget'] as Map)
       .cast<String, dynamic>();
@@ -177,6 +187,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'systemDecisionReceiptGoldens': systemDecisionReceiptGoldens,
           'systemDecisionReceiptEvidence': systemDecisionReceiptEvidence,
           'goldenToleranceBoundaryEvidence': goldenToleranceBoundaryEvidence,
+          'allGateResultsRecorded': allGateResultsRecorded,
           'companionScenes': companionScenes.length,
           'companionSceneChoices': companionSceneChoices,
           'companionSceneChoiceBranching':
@@ -227,6 +238,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'tool/trilemma_verdict.dart#axis-verdict',
           'tool/trilemma_verdict.dart#closed-loop-receipt',
           'test/trilemma_verdict_test.dart#closed-loop-receipt',
+          'tool/ci_gate.dart#evaluateChecks',
+          'test/ci_gate_test.dart#gate evidence continues after a failure and keeps every status',
         ],
       },
       {
@@ -287,6 +300,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'systemDecisionReceiptGolden':
               gameplayTargets['systemDecisionReceiptGolden'],
           'systemDecisionReceiptEvidence': systemDecisionReceiptEvidence,
+          'allGateResultsRecorded': allGateResultsRecorded,
           'companionScenes': companionScenes.length,
           'companionSceneChoices': companionSceneChoices,
           'companionSceneChoiceBranching':
@@ -339,6 +353,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'tool/trilemma_verdict.dart#axis-verdict',
           'tool/trilemma_verdict.dart#closed-loop-receipt',
           'test/trilemma_verdict_test.dart#closed-loop-receipt',
+          'tool/ci_gate.dart#evaluateChecks',
+          'test/ci_gate_test.dart#gate evidence continues after a failure and keeps every status',
         ],
       },
       {
@@ -360,6 +376,7 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'failClosed':
               (story['decisionSystem'] as Map?)?['failureMode'] ==
               'fail-closed',
+          'allGateResultsRecorded': allGateResultsRecorded,
           'maxMillis': 24000,
           'minSignatures': 3,
           'lineageProfiles': (story['legacyProfiles'] as List? ?? []).length,
@@ -410,6 +427,8 @@ Map<String, dynamic> buildContract(Map<String, dynamic> story, String hash) {
           'tool/trilemma_verdict.dart#axis-verdict',
           'tool/trilemma_verdict.dart#closed-loop-receipt',
           'test/trilemma_verdict_test.dart#closed-loop-receipt',
+          'tool/ci_gate.dart#evaluateChecks',
+          'test/ci_gate_test.dart#gate evidence continues after a failure and keeps every status',
         ],
       },
     ],

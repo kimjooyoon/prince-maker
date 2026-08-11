@@ -41,6 +41,7 @@ String render(Map<String, dynamic> s, String hash) {
   final scenario = (s['scenarioCompleteness'] as Map? ?? {})
       .cast<String, dynamic>();
   final decision = (s['decisionSystem'] as Map? ?? {}).cast<String, dynamic>();
+  final ciGate = (s['ciGatePolicy'] as Map? ?? {}).cast<String, dynamic>();
   final engine = (s['engineDecision'] as Map? ?? {}).cast<String, dynamic>();
   final campaignWeeks =
       (s['campaignWeeks'] as int?) ?? ((s['endingWeek'] as int) - 1);
@@ -75,6 +76,13 @@ String render(Map<String, dynamic> s, String hash) {
   );
   for (final rule in (decision['rules'] as List? ?? const []))
     b.writeln('- `${rule['id']}` · ${rule['scope']} · ${rule['effect']}');
+  b.writeln('\n## CI 게이트 증적\n');
+  b.writeln(
+    '실패 집계: **`${ciGate['failureAggregation']}`** · 세 축 `${(ciGate['requiredAxes'] as List? ?? const []).join(' · ')}` · 사람 승인 필요 여부 `${ciGate['humanApprovalRequired']}` · 실패 모드 `${ciGate['failureMode']}`',
+  );
+  b.writeln(
+    '모든 검사를 끝까지 실행한 뒤 각 상태를 기록하고, 하나라도 실패하면 전체 시스템 판정을 거절한다. 실행 증거: `${(ciGate['evidence'] as List? ?? const []).join('`, `')}`',
+  );
   b.writeln('\n## 렌더러 결정 계약\n');
   b.writeln(
     '선택: **`${engine['selectedOption']}`** · `${engine['decisionRule']}` · [결정 매트릭스](engine-decision.md)',
@@ -313,6 +321,7 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
       budget = (s['contentBudget'] as Map? ?? {}),
       scenarioVariants = (s['scenarioVariantBudget'] as Map? ?? {}),
       gameplay = (s['gameplayKpis'] as Map? ?? {}),
+      ciGate = (s['ciGatePolicy'] as Map? ?? {}),
       renderQuality = (s['renderQualityKpis'] as Map? ?? {}),
       endingDesign = (s['endingDesign'] as Map? ?? {}),
       personalityCompanionRoutes =
@@ -366,6 +375,9 @@ String renderMetrics(Map<String, dynamic> s, String hash) {
   );
   b.writeln(
     '| 시스템 판정 | ${(s['decisionSystem'] as Map?)?['id'] ?? 'none'} | SSOT `decisionSystem` · fail-closed receipt |',
+  );
+  b.writeln(
+    '| CI 실패 집계 | ${ciGate['failureAggregation']} | SSOT `ciGatePolicy` · 모든 검사 결과 기록 후 fail-closed |',
   );
   b.writeln(
     '| 렌더러 결정 | `${(s['engineDecision'] as Map?)?['selectedOption'] ?? 'none'}` | SSOT `engineDecision` · Golden/WASM 적합도 계약 |',

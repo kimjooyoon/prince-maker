@@ -10,6 +10,22 @@ class GateCheck {
   final List<String> arguments;
 }
 
+typedef GateRunner = Future<int> Function(GateCheck check);
+
+Future<List<Map<String, dynamic>>> evaluateChecks(
+    List<GateCheck> checks, GateRunner runner) async {
+  final results = <Map<String, dynamic>>[];
+  for (final check in checks) {
+    final exitCode = await runner(check);
+    results.add({
+      'id': check.id,
+      'status': exitCode == 0 ? 'pass' : 'fail',
+      'exitCode': exitCode,
+    });
+  }
+  return results;
+}
+
 Future<int> runCheck(GateCheck check) async {
   stdout.writeln('SYSTEM_GATE_START: ${check.id}');
   try {
@@ -91,20 +107,8 @@ Future<void> main(List<String> args) async {
         ['run', 'tool/verify_development_goals.dart']),
   ];
 
-  final results = <Map<String, dynamic>>[];
-  var approved = true;
-  for (final check in checks) {
-    final exitCode = await runCheck(check);
-    results.add({
-      'id': check.id,
-      'status': exitCode == 0 ? 'pass' : 'fail',
-      'exitCode': exitCode,
-    });
-    if (exitCode != 0) {
-      approved = false;
-      break;
-    }
-  }
+  final results = await evaluateChecks(checks, runCheck),
+      approved = results.every((result) => result['status'] == 'pass');
   writeVerdict(mode, results, approved: approved);
   final trilemma = writeTrilemmaVerdict(mode, results),
       trilemmaApproved = trilemma['decision'] == 'approve',

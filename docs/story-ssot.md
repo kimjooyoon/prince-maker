@@ -1,5 +1,5 @@
 <!-- generated: tool/generate_ssot_docs.dart -->
-<!-- ssot-sha256: ae2943f6df2169d6110e942b7175dfb2817ebd6893f8eb7e2d91e411dac777d9 -->
+<!-- ssot-sha256: c348635d4ef31e0d1466461525332a172393f29dc6cefa02aee78b73ef30edbf -->
 <!-- source-ref: story/story.jsonl#root -->
 
 # 프린스 메이커 · 스토리 SSOT
@@ -14,6 +14,11 @@
 - `terminal-window` · activity|story-choice · endingWeek 이후 입력은 거절
 - `input-contract` · activity|story-choice · 미등록 성장축·조건 미충족 입력은 거절
 - `replay-receipt` · accepted decision · 승인 영수증을 immutable trace에 추가
+
+## CI 게이트 증적
+
+실패 집계: **`run-all-checks`** · 세 축 `completeness · purity · performance` · 사람 승인 필요 여부 `false` · 실패 모드 `fail-closed`
+모든 검사를 끝까지 실행한 뒤 각 상태를 기록하고, 하나라도 실패하면 전체 시스템 판정을 거절한다. 실행 증거: `tool/ci_gate.dart#evaluateChecks`, `test/ci_gate_test.dart#gate evidence continues after a failure and keeps every status`
 
 ## 렌더러 결정 계약
 
