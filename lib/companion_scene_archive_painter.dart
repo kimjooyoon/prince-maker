@@ -90,8 +90,12 @@ class CompanionSceneArchivePainter {
     t(c, tr('ui.companionScenes.subtitle', '유대와 막의 조건이 여는 독립 기록'),
         const Offset(25, 60), 12, teal,
         width: 650);
-    CanvasUiKit.statePanel(c, const Rect.fromLTWH(24, 96, 712, 106),
-        state: CanvasUiState.selected, accent: teal, shadow: true);
+    CanvasUiKit.variantPanel(c, const Rect.fromLTWH(24, 96, 712, 106),
+        variant: CanvasComponentVariant.hud,
+        state: CanvasUiState.selected,
+        accent: teal,
+        stroke: teal,
+        shadow: true);
     portrait(c, person, const Rect.fromLTWH(42, 108, 74, 82));
     t(c, tr('${person['nameKey']}', '${person['name']}'),
         const Offset(135, 115), 20, Colors.white,
@@ -259,16 +263,16 @@ class CompanionSceneArchivePainter {
           // visible before the player commits.
           t(c, preview, Offset(rect.left, card.top + 80), 6, teal,
               width: rect.width, lines: 1);
-          CanvasUiKit.button(c, rect,
-              tr('${choice['labelKey']}', '${choice['label']}'),
+          CanvasUiKit.button(
+              c, rect, tr('${choice['labelKey']}', '${choice['label']}'),
               state: choiceIndex == 0 && pending
                   ? CanvasUiState.selected
                   : CanvasUiState.idle,
               accent: teal,
               fontSize: 8,
               radius: 5);
-          drawChoiceImpact(
-              c, Rect.fromLTWH(rect.left, rect.bottom - 4, rect.width, 3), choice);
+          drawChoiceImpact(c,
+              Rect.fromLTWH(rect.left, rect.bottom - 4, rect.width, 3), choice);
         }
       }
     }

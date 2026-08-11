@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'design_tokens.dart';
+import 'canvas_ui_kit.dart';
 import 'star_cellar.dart';
 
 class StarCellarPainter {
@@ -52,18 +53,11 @@ class StarCellarPainter {
     painter.paint(c, point);
   }
 
-  void _panel(Canvas c, Rect rect, Color fill, {Color stroke = teal}) {
-    c.drawRRect(
-      RRect.fromRectAndRadius(rect, const Radius.circular(18)),
-      Paint()..color = fill,
-    );
-    c.drawRRect(
-      RRect.fromRectAndRadius(rect, const Radius.circular(18)),
-      Paint()
-        ..color = stroke
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2,
-    );
+  void _panel(Canvas c, Rect rect, Color fill,
+      {Color stroke = teal,
+      CanvasComponentVariant variant = CanvasComponentVariant.card}) {
+    CanvasUiKit.variantPanel(c, rect,
+        variant: variant, fill: fill, stroke: stroke, shadow: false);
   }
 
   void _point(Canvas c, CellarPoint point, Color color, {double radius = 18}) {
@@ -107,7 +101,8 @@ class StarCellarPainter {
       bold: true,
       width: 220,
     );
-    _panel(c, room, twilight, stroke: mist);
+    _panel(c, room, twilight,
+        stroke: mist, variant: CanvasComponentVariant.hud);
     for (var y = 0; y < StarCellarEngine.height; y++) {
       for (var x = 0; x < StarCellarEngine.width; x++) {
         final r = Rect.fromLTWH(
@@ -159,6 +154,7 @@ class StarCellarPainter {
       const Rect.fromLTWH(520, 132, 216, 365),
       Colors.white,
       stroke: teal,
+      variant: CanvasComponentVariant.panel,
     );
     _text(
       c,
@@ -199,6 +195,7 @@ class StarCellarPainter {
         entry.value,
         entry.key == CellarAction.pulse ? sun : paper,
         stroke: teal,
+        variant: CanvasComponentVariant.button,
       );
       final label = switch (entry.key) {
         CellarAction.up => '↑',
@@ -223,6 +220,7 @@ class StarCellarPainter {
       const Rect.fromLTWH(24, 640, 140, 42),
       Colors.white,
       stroke: teal,
+      variant: CanvasComponentVariant.button,
     );
     _text(
       c,

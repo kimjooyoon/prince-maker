@@ -45,6 +45,8 @@ String render(Map<String, dynamic> s, String hash) {
   final engine = (s['engineDecision'] as Map? ?? {}).cast<String, dynamic>();
   final miniGame =
       (s['miniGameContract'] as Map? ?? {}).cast<String, dynamic>();
+  final designSystem =
+      (s['designSystemContract'] as Map? ?? const {}).cast<String, dynamic>();
   final campaignWeeks =
       (s['campaignWeeks'] as int?) ?? ((s['endingWeek'] as int) - 1);
   final budget = (s['contentBudget'] as Map? ?? {}).cast<String, dynamic>();
@@ -98,6 +100,16 @@ String render(Map<String, dynamic> s, String hash) {
   );
   b.writeln(
     '엔진 `${miniGame['coreRef']}` · 렌더러 `${miniGame['renderRef']}` · 증적 `${(miniGame['evidence'] as List? ?? const []).join('`, `')}`',
+  );
+  b.writeln('\n## Canvas 디자인 시스템 계약\n');
+  b.writeln(
+    '`${designSystem['name']}`는 ${designSystem['renderer']}에서 ${designSystem['purpose']}을 담당한다. 화면 좌표계 `${designSystem['layout']['logicalCanvas']}`, 최소 터치 타깃 `${designSystem['layout']['minimumTouchTarget']}px`, 변형 ${(designSystem['variants'] as List? ?? const []).join(' · ')}, 상태 ${(designSystem['states'] as List? ?? const []).join(' · ')}.',
+  );
+  b.writeln(
+    '접근성: `${designSystem['accessibility']['semanticOverlay']}` · label coverage ${(designSystem['accessibility']['labelCoverage'] as List? ?? const []).join(', ')}',
+  );
+  b.writeln(
+    '독창성 원칙: ${designSystem['originality']} · 결정 로그 `${designSystem['decisionLog']}` · 증적 ${(designSystem['evidence'] as List? ?? const []).join('`, `')}`',
   );
   b.writeln('\n## ${campaignWeeks}주 진행도\n');
   for (final c in progression)
